@@ -51,12 +51,12 @@ namespace EquipmentManagementSystem.Models
         public string Model { get; set; }
         
         [Display(Name="启用时间")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString="{0:yyyy-MM-dd}", ApplyFormatInEditMode=true)]
         public DateTime StartUsingDate { get; set; }
 
         [Range(1,100)]
+        [Display(Name="校准周期")]
         public int CalibrationCycle { get; set; }
 
         [Display(Name="状态")]
@@ -71,6 +71,7 @@ namespace EquipmentManagementSystem.Models
         [StringLength(500)]
         public string Remark { get; set; }
 
+        
         public Assert assert { get; set; }
         public ICollection<Project> Projects { get; set; }
         public ProjectTeam projectTeam { get; set; }

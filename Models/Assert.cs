@@ -6,8 +6,7 @@ namespace EquipmentManagementSystem.Models
 {
     public class Assert
     {
-        [Key]
-        public Instrument instrumentID { get; set; }
+        public int ID { get; set; }
 
         [Display(Name="编码")]
         [StringLength(50)]
@@ -25,6 +24,9 @@ namespace EquipmentManagementSystem.Models
 
         [Display(Name="备注")]
         public string Remark { get; set; }
-        public Instrument instruments { get; set; }
+
+        [Display(Name="编号")]
+        public string instrumentId { get; set; }
+        public Instrument instrument { get; set; }
     }
 }
