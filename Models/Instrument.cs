@@ -15,14 +15,10 @@ namespace EquipmentManagementSystem.Models
 
         [Display(Name="创建时间")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString="{0:yyyy-MM-dd}", ApplyFormatInEditMode=true)]
         public DateTime CreatedDate { get; set; }
 
         [Display(Name="修改时间")]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString="{0:yyyy-MM-dd}", ApplyFormatInEditMode=true)]
         public DateTime ModifiedDate { get; set; }
 
         [Required]
