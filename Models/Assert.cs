@@ -17,6 +17,10 @@ namespace EquipmentManagementSystem.Models
         [StringLength(50,MinimumLength=1)]
         public string Name { get; set; }
 
+        [Display(Name="入账日期")]
+        [DataType(DataType.Date)]
+        public DateTime EntryDate { get; set; }
+
         [Required]
         [Display(Name="来源单位")]
         [StringLength(50,MinimumLength=1)]
@@ -27,6 +31,7 @@ namespace EquipmentManagementSystem.Models
 
         [Display(Name="编号")]
         public string instrumentId { get; set; }
+        
         public Instrument instrument { get; set; }
     }
 }

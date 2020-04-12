@@ -5,14 +5,17 @@ namespace EquipmentManagementSystem.Models
 {
     public enum Result
     {
-        Failed, Passed
+        [Display(Name="不合格")]
+        Failed, 
+        [Display(Name="合格")]
+        Passed
     }
     public class Calibration
     {
-        public int Id { get; set; }
+        public int ID { get; set; }
 
         [Display(Name="设备编号")]
-        public string InstrumentId { get; set; }
+        public string InstrumentID { get; set; }
 
         [Display(Name="执行时间")]
         [DataType(DataType.Date)]

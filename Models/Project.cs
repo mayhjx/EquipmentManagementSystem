@@ -13,7 +13,7 @@ namespace EquipmentManagementSystem.Models
         [StringLength(50, MinimumLength=1)]
         public string Name { get; set; }
 
-        public string instrumentId { get; set; }
+        public string instrumentID { get; set; }
         public Instrument instrument { get; set; }
         
     }

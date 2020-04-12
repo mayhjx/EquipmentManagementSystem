@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace EquipmentManagementSystem.Models
@@ -9,6 +10,7 @@ namespace EquipmentManagementSystem.Models
 
         [Display(Name="仪器编号")]
         public string instrumentID { get; set;}
+        public Instrument instrument { get; set; }
 
         [Required]
         [Display(Name="序列号")]
@@ -25,6 +27,6 @@ namespace EquipmentManagementSystem.Models
         [StringLength(50,MinimumLength=1)]
         public string Model { get; set; }
 
-        public Instrument instrument { get; set; }
+        public ICollection<Malfunction> malfunctions { get; set; }
     }
 }

@@ -30,8 +30,8 @@ namespace EquipmentManagementSystem.Data
             modelBuilder.Entity<ProjectTeam>().ToTable("ProjectTeam");
             modelBuilder.Entity<Project>().ToTable("Project");
 
-            modelBuilder.Entity<Instrument>().Property(i => i.CreatedDate).HasDefaultValueSql("datetime('now', 'localtime')");
-            modelBuilder.Entity<Instrument>().Property(i => i.ModifiedDate).HasDefaultValueSql("datetime('now', 'localtime')");
+            modelBuilder.Entity<Instrument>().Property(i => i.CreatedDate).ValueGeneratedOnAdd().HasDefaultValueSql("datetime('now', 'localtime')");
+            modelBuilder.Entity<Instrument>().Property(i => i.ModifiedDate).ValueGeneratedOnAddOrUpdate().HasDefaultValueSql("datetime('now', 'localtime')");
         }
     }
 }
