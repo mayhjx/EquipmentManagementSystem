@@ -21,7 +21,9 @@ namespace EquipmentManagementSystem.Pages.Malfunctions
 
         public IActionResult OnGet()
         {
-        ViewData["componentID"] = new SelectList(_context.components, "ID", "Model");
+        
+            ViewData["componentID"] = new SelectList(_context.components, "ID", "Model");
+            ViewData["instrumentID"] = new SelectList(_context.Instruments, "ID", "ID");
             return Page();
         }
 

@@ -36,6 +36,7 @@ namespace EquipmentManagementSystem.Migrations
                     Location = table.Column<string>(maxLength: 50, nullable: false),
                     Principal = table.Column<string>(maxLength: 10, nullable: false),
                     Remark = table.Column<string>(maxLength: 999, nullable: true),
+                    NewSystemCode = table.Column<string>(maxLength: 50, nullable: true),
                     ProjectTeamID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -174,6 +175,7 @@ namespace EquipmentManagementSystem.Migrations
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    instrumentID = table.Column<string>(nullable: true),
                     componentID = table.Column<int>(nullable: false),
                     Category = table.Column<string>(maxLength: 50, nullable: false),
                     Problem = table.Column<string>(maxLength: 50, nullable: false),
@@ -198,6 +200,12 @@ namespace EquipmentManagementSystem.Migrations
                         principalTable: "Component",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Malfunction_Instrument_instrumentID",
+                        column: x => x.instrumentID,
+                        principalTable: "Instrument",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -219,7 +227,8 @@ namespace EquipmentManagementSystem.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Computer_InstrumentID",
                 table: "Computer",
-                column: "InstrumentID");
+                column: "InstrumentID",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Instrument_ProjectTeamID",
@@ -230,6 +239,11 @@ namespace EquipmentManagementSystem.Migrations
                 name: "IX_Malfunction_componentID",
                 table: "Malfunction",
                 column: "componentID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Malfunction_instrumentID",
+                table: "Malfunction",
+                column: "instrumentID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Project_instrumentID",

@@ -7,11 +7,10 @@ namespace EquipmentManagementSystem.Models
     {
         public int ID { get; set; }
 
-        // [Required]
-        // [Display(Name="设备编号")]
-        // public string instrumentID { get; set;}
+        [Display(Name="设备编号")]
+        public string instrumentID { get; set;}
         
-        // public Instrument instrument { get; set; }
+        public Instrument instrument { get; set; }
 
         [Display(Name="部件")]
         public int componentID { get; set; }

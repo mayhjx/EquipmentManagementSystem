@@ -61,6 +61,12 @@ namespace EquipmentManagementSystem.Models
         [StringLength(999)]
         public string Remark { get; set; }
 
+        [StringLength(50)]
+        public string NewSystemCode { get; set; }
+
+        [Display(Name="设备电脑")]
+        public Computer computer { get; set; }
+
         [Display(Name="资产信息")]
         public Assert assert { get; set; }
 
@@ -72,6 +78,7 @@ namespace EquipmentManagementSystem.Models
 
         [Display(Name="部件")]
         public ICollection<Component> components { get; set; }
+
 
     }
 

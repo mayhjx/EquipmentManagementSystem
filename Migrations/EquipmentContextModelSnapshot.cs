@@ -134,7 +134,8 @@ namespace EquipmentManagementSystem.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("InstrumentID");
+                    b.HasIndex("InstrumentID")
+                        .IsUnique();
 
                     b.ToTable("Computer");
                 });
@@ -168,6 +169,10 @@ namespace EquipmentManagementSystem.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("NewSystemCode")
                         .HasColumnType("TEXT")
                         .HasMaxLength(50);
 
@@ -257,9 +262,14 @@ namespace EquipmentManagementSystem.Migrations
                     b.Property<int>("componentID")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("instrumentID")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("ID");
 
                     b.HasIndex("componentID");
+
+                    b.HasIndex("instrumentID");
 
                     b.ToTable("Malfunction");
                 });
@@ -334,8 +344,8 @@ namespace EquipmentManagementSystem.Migrations
             modelBuilder.Entity("EquipmentManagementSystem.Models.Computer", b =>
                 {
                     b.HasOne("EquipmentManagementSystem.Models.Instrument", "instrument")
-                        .WithMany()
-                        .HasForeignKey("InstrumentID");
+                        .WithOne("computer")
+                        .HasForeignKey("EquipmentManagementSystem.Models.Computer", "InstrumentID");
                 });
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.Instrument", b =>
@@ -352,6 +362,10 @@ namespace EquipmentManagementSystem.Migrations
                         .HasForeignKey("componentID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("EquipmentManagementSystem.Models.Instrument", "instrument")
+                        .WithMany()
+                        .HasForeignKey("instrumentID");
                 });
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.Project", b =>

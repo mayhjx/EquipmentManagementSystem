@@ -31,13 +31,17 @@ namespace EquipmentManagementSystem.Pages.Malfunctions
             }
 
             Malfunction = await _context.Malfunction
-                .Include(m => m.component).FirstOrDefaultAsync(m => m.ID == id);
+                .Include(m => m.component)
+                .Include(m => m.instrument)
+                .FirstOrDefaultAsync(m => m.ID == id);
 
             if (Malfunction == null)
             {
                 return NotFound();
             }
-           ViewData["componentID"] = new SelectList(_context.components, "ID", "Model");
+            ViewData["componentID"] = new SelectList(_context.components, "ID", "Model");
+            ViewData["instrumentID"] = new SelectList(_context.Instruments, "ID", "ID");
+
             return Page();
         }
 
