@@ -21,7 +21,7 @@ namespace EquipmentManagementSystem.Pages.Calibrations
 
         public IActionResult OnGet()
         {
-        ViewData["InstrumentID"] = new SelectList(_context.Instruments, "ID", "ID");
+            ViewData["InstrumentID"] = new SelectList(_context.Instruments, "ID", "ID");
             return Page();
         }
 

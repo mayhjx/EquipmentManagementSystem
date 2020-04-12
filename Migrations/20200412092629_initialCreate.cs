@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EquipmentManagementSystem.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class initialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -26,7 +26,6 @@ namespace EquipmentManagementSystem.Migrations
                 {
                     ID = table.Column<string>(nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false, defaultValueSql: "datetime('now', 'localtime')"),
-                    Timestamp = table.Column<byte[]>(rowVersion: true, nullable: true),
                     ModifiedDate = table.Column<DateTime>(nullable: false, defaultValueSql: "datetime('now', 'localtime')"),
                     Platform = table.Column<string>(maxLength: 50, nullable: false),
                     Name = table.Column<string>(maxLength: 50, nullable: false),
@@ -149,21 +148,22 @@ namespace EquipmentManagementSystem.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(maxLength: 50, nullable: false),
                     instrumentID = table.Column<string>(nullable: true),
-                    ProjectTeamID = table.Column<int>(nullable: true)
+                    ProjectTeamName = table.Column<string>(nullable: false),
+                    projectTeamID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Project", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Project_ProjectTeam_ProjectTeamID",
-                        column: x => x.ProjectTeamID,
-                        principalTable: "ProjectTeam",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_Project_Instrument_instrumentID",
                         column: x => x.instrumentID,
                         principalTable: "Instrument",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Project_ProjectTeam_projectTeamID",
+                        column: x => x.projectTeamID,
+                        principalTable: "ProjectTeam",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -178,14 +178,14 @@ namespace EquipmentManagementSystem.Migrations
                     Category = table.Column<string>(maxLength: 50, nullable: false),
                     Problem = table.Column<string>(maxLength: 50, nullable: false),
                     Reason = table.Column<string>(maxLength: 50, nullable: false),
-                    FoundTime = table.Column<DateTime>(nullable: false),
-                    StartTrackTime = table.Column<DateTime>(nullable: false),
-                    ReportTime = table.Column<DateTime>(nullable: false),
+                    FoundTime = table.Column<string>(nullable: true),
+                    StartTrackTime = table.Column<string>(nullable: true),
+                    ReportTime = table.Column<string>(nullable: true),
                     FollowUpPeople = table.Column<string>(maxLength: 10, nullable: false),
-                    DebuggingTime = table.Column<DateTime>(nullable: false),
-                    PlaceOrderTime = table.Column<DateTime>(nullable: false),
-                    AccessoriesArrivalTime = table.Column<DateTime>(nullable: false),
-                    EngineerArrivalTime = table.Column<DateTime>(nullable: false),
+                    DebuggingTime = table.Column<string>(nullable: true),
+                    PlaceOrderTime = table.Column<string>(nullable: true),
+                    AccessoriesArrivalTime = table.Column<string>(nullable: true),
+                    EngineerArrivalTime = table.Column<string>(nullable: true),
                     Solutions = table.Column<string>(nullable: true),
                     Remark = table.Column<string>(nullable: true)
                 },
@@ -232,14 +232,14 @@ namespace EquipmentManagementSystem.Migrations
                 column: "componentID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Project_ProjectTeamID",
-                table: "Project",
-                column: "ProjectTeamID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Project_instrumentID",
                 table: "Project",
                 column: "instrumentID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Project_projectTeamID",
+                table: "Project",
+                column: "projectTeamID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

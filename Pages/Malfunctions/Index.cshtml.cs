@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 
-namespace EquipmentManagementSystem.Pages.Malfuntions
+namespace EquipmentManagementSystem.Pages.Malfunctions
 {
     public class IndexModel : PageModel
     {

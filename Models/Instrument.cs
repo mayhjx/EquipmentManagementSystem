@@ -17,10 +17,6 @@ namespace EquipmentManagementSystem.Models
         public DateTime CreatedDate { get; set; }
 
         // SQLite 有bug
-        [Timestamp]
-        public byte[] Timestamp { get; set; }
-
-        // SQLite 有bug
         [Display(Name="修改时间")]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime ModifiedDate { get; set; }

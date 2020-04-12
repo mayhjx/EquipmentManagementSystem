@@ -31,13 +31,17 @@ namespace EquipmentManagementSystem.Pages.Projects
             }
 
             Project = await _context.projects
-                .Include(p => p.instrument).FirstOrDefaultAsync(m => m.ID == id);
+                .Include(p => p.instrument)
+                .Include(p => p.projectTeam)
+                .FirstOrDefaultAsync(m => m.ID == id);
 
             if (Project == null)
             {
                 return NotFound();
             }
-           ViewData["instrumentID"] = new SelectList(_context.Instruments, "ID", "ID");
+            ViewData["instrumentID"] = new SelectList(_context.Instruments, "ID", "ID");
+            ViewData["projectTeamID"] = new SelectList(_context.projectTeams, "Name", "Name");
+
             return Page();
         }
 

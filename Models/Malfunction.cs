@@ -34,13 +34,13 @@ namespace EquipmentManagementSystem.Models
         public string Reason { get; set; }
 
         [Display(Name="发现时间")]
-        public DateTime FoundTime { get; set; }
+        public string FoundTime { get; set; }
 
         [Display(Name="排查开始时间")]
-        public DateTime StartTrackTime { get; set; }
+        public string StartTrackTime { get; set; }
 
         [Display(Name="报修时间")]
-        public DateTime ReportTime { get; set; }
+        public string ReportTime { get; set; }
 
         [Required]
         [Display(Name="跟进人")]
@@ -48,16 +48,16 @@ namespace EquipmentManagementSystem.Models
         public string FollowUpPeople { get; set; }
 
         [Display(Name="排除时间")]
-        public DateTime DebuggingTime { get; set; }
+        public string DebuggingTime { get; set; }
 
         [Display(Name="配件下单时间")]      
-        public DateTime PlaceOrderTime { get; set; }
+        public string PlaceOrderTime { get; set; }
 
         [Display(Name="配件到达时间")]      
-        public DateTime AccessoriesArrivalTime { get; set; }
+        public string AccessoriesArrivalTime { get; set; }
 
         [Display(Name="工程师上门时间")]      
-        public DateTime EngineerArrivalTime { get; set; }
+        public string EngineerArrivalTime { get; set; }
 
         [Display(Name="解决措施")]
         public string Solutions { get; set; }

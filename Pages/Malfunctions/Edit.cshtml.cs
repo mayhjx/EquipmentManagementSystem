@@ -4,17 +4,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 
-namespace EquipmentManagementSystem.Pages.Malfuntions
+namespace EquipmentManagementSystem.Pages.Malfunctions
 {
-    public class DeleteModel : PageModel
+    public class EditModel : PageModel
     {
         private readonly EquipmentManagementSystem.Data.EquipmentContext _context;
 
-        public DeleteModel(EquipmentManagementSystem.Data.EquipmentContext context)
+        public EditModel(EquipmentManagementSystem.Data.EquipmentContext context)
         {
             _context = context;
         }
@@ -36,25 +37,43 @@ namespace EquipmentManagementSystem.Pages.Malfuntions
             {
                 return NotFound();
             }
+           ViewData["componentID"] = new SelectList(_context.components, "ID", "Model");
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://aka.ms/RazorPagesCRUD.
+        public async Task<IActionResult> OnPostAsync()
         {
-            if (id == null)
+            if (!ModelState.IsValid)
             {
-                return NotFound();
+                return Page();
             }
 
-            Malfunction = await _context.Malfunction.FindAsync(id);
+            _context.Attach(Malfunction).State = EntityState.Modified;
 
-            if (Malfunction != null)
+            try
             {
-                _context.Malfunction.Remove(Malfunction);
                 await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!MalfunctionExists(Malfunction.ID))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
             }
 
             return RedirectToPage("./Index");
+        }
+
+        private bool MalfunctionExists(int id)
+        {
+            return _context.Malfunction.Any(e => e.ID == id);
         }
     }
 }

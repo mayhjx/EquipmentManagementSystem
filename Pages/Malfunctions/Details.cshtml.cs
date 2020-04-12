@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 
-namespace EquipmentManagementSystem.Pages.Projects
+namespace EquipmentManagementSystem.Pages.Malfunctions
 {
     public class DetailsModel : PageModel
     {
@@ -19,7 +19,7 @@ namespace EquipmentManagementSystem.Pages.Projects
             _context = context;
         }
 
-        public Project Project { get; set; }
+        public Malfunction Malfunction { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,12 +28,10 @@ namespace EquipmentManagementSystem.Pages.Projects
                 return NotFound();
             }
 
-            Project = await _context.projects
-                .Include(p => p.instrument)
-                .Include(p => p.projectTeam)
-                .FirstOrDefaultAsync(m => m.ID == id);
+            Malfunction = await _context.Malfunction
+                .Include(m => m.component).FirstOrDefaultAsync(m => m.ID == id);
 
-            if (Project == null)
+            if (Malfunction == null)
             {
                 return NotFound();
             }

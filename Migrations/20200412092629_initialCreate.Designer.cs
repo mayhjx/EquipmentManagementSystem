@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EquipmentManagementSystem.Migrations
 {
     [DbContext(typeof(EquipmentContext))]
-    [Migration("20200412074807_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20200412092629_initialCreate")]
+    partial class initialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -196,11 +196,6 @@ namespace EquipmentManagementSystem.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("INTEGER");
 
-                    b.Property<byte[]>("Timestamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("BLOB");
-
                     b.HasKey("ID");
 
                     b.HasIndex("ProjectTeamID");
@@ -214,7 +209,7 @@ namespace EquipmentManagementSystem.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("AccessoriesArrivalTime")
+                    b.Property<string>("AccessoriesArrivalTime")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Category")
@@ -222,10 +217,10 @@ namespace EquipmentManagementSystem.Migrations
                         .HasColumnType("TEXT")
                         .HasMaxLength(50);
 
-                    b.Property<DateTime>("DebuggingTime")
+                    b.Property<string>("DebuggingTime")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("EngineerArrivalTime")
+                    b.Property<string>("EngineerArrivalTime")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("FollowUpPeople")
@@ -233,10 +228,10 @@ namespace EquipmentManagementSystem.Migrations
                         .HasColumnType("TEXT")
                         .HasMaxLength(10);
 
-                    b.Property<DateTime>("FoundTime")
+                    b.Property<string>("FoundTime")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("PlaceOrderTime")
+                    b.Property<string>("PlaceOrderTime")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Problem")
@@ -252,13 +247,13 @@ namespace EquipmentManagementSystem.Migrations
                     b.Property<string>("Remark")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("ReportTime")
+                    b.Property<string>("ReportTime")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Solutions")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("StartTrackTime")
+                    b.Property<string>("StartTrackTime")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("componentID")
@@ -282,17 +277,21 @@ namespace EquipmentManagementSystem.Migrations
                         .HasColumnType("TEXT")
                         .HasMaxLength(50);
 
-                    b.Property<int?>("ProjectTeamID")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("ProjectTeamName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("instrumentID")
                         .HasColumnType("TEXT");
 
+                    b.Property<int?>("projectTeamID")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("ID");
 
-                    b.HasIndex("ProjectTeamID");
-
                     b.HasIndex("instrumentID");
+
+                    b.HasIndex("projectTeamID");
 
                     b.ToTable("Project");
                 });
@@ -359,13 +358,13 @@ namespace EquipmentManagementSystem.Migrations
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.Project", b =>
                 {
-                    b.HasOne("EquipmentManagementSystem.Models.ProjectTeam", null)
-                        .WithMany("Projects")
-                        .HasForeignKey("ProjectTeamID");
-
                     b.HasOne("EquipmentManagementSystem.Models.Instrument", "instrument")
                         .WithMany("Projects")
                         .HasForeignKey("instrumentID");
+
+                    b.HasOne("EquipmentManagementSystem.Models.ProjectTeam", "projectTeam")
+                        .WithMany("Projects")
+                        .HasForeignKey("projectTeamID");
                 });
 #pragma warning restore 612, 618
         }

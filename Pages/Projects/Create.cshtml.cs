@@ -21,7 +21,8 @@ namespace EquipmentManagementSystem.Pages.Projects
 
         public IActionResult OnGet()
         {
-        ViewData["instrumentID"] = new SelectList(_context.Instruments, "ID", "ID");
+            ViewData["instrumentID"] = new SelectList(_context.Instruments, "ID", "ID");
+            ViewData["projectTeamID"] = new SelectList(_context.projectTeams, "Name", "Name");
             return Page();
         }
 

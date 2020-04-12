@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 
-namespace EquipmentManagementSystem.Pages.Malfuntions
+namespace EquipmentManagementSystem.Pages.Malfunctions
 {
     public class CreateModel : PageModel
     {

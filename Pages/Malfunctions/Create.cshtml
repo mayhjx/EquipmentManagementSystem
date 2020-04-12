@@ -1,11 +1,11 @@
 @page
-@model EquipmentManagementSystem.Pages.Malfuntions.EditModel
+@model EquipmentManagementSystem.Pages.Malfunctions.CreateModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Create";
 }
 
-<h1>Edit</h1>
+<h1>Create</h1>
 
 <h4>Malfunction</h4>
 <hr />
@@ -13,11 +13,9 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Malfunction.ID" />
             <div class="form-group">
                 <label asp-for="Malfunction.componentID" class="control-label"></label>
-                <select asp-for="Malfunction.componentID" class="form-control" asp-items="ViewBag.componentID"></select>
-                <span asp-validation-for="Malfunction.componentID" class="text-danger"></span>
+                <select asp-for="Malfunction.componentID" class ="form-control" asp-items="ViewBag.componentID"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Malfunction.Category" class="control-label"></label>
@@ -36,17 +34,17 @@
             </div>
             <div class="form-group">
                 <label asp-for="Malfunction.FoundTime" class="control-label"></label>
-                <input asp-for="Malfunction.FoundTime" class="form-control" />
+                <input type="datetime-local" asp-for="Malfunction.FoundTime" class="form-control" />
                 <span asp-validation-for="Malfunction.FoundTime" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Malfunction.StartTrackTime" class="control-label"></label>
-                <input asp-for="Malfunction.StartTrackTime" class="form-control" />
+                <input type="datetime-local" asp-for="Malfunction.StartTrackTime" class="form-control" />
                 <span asp-validation-for="Malfunction.StartTrackTime" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Malfunction.ReportTime" class="control-label"></label>
-                <input asp-for="Malfunction.ReportTime" class="form-control" />
+                <input type="datetime-local" asp-for="Malfunction.ReportTime" class="form-control" />
                 <span asp-validation-for="Malfunction.ReportTime" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -56,22 +54,22 @@
             </div>
             <div class="form-group">
                 <label asp-for="Malfunction.DebuggingTime" class="control-label"></label>
-                <input asp-for="Malfunction.DebuggingTime" class="form-control" />
+                <input type="datetime-local" asp-for="Malfunction.DebuggingTime" class="form-control" />
                 <span asp-validation-for="Malfunction.DebuggingTime" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Malfunction.PlaceOrderTime" class="control-label"></label>
-                <input asp-for="Malfunction.PlaceOrderTime" class="form-control" />
+                <input type="datetime-local" asp-for="Malfunction.PlaceOrderTime" class="form-control" />
                 <span asp-validation-for="Malfunction.PlaceOrderTime" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Malfunction.AccessoriesArrivalTime" class="control-label"></label>
-                <input asp-for="Malfunction.AccessoriesArrivalTime" class="form-control" />
+                <input type="datetime-local" asp-for="Malfunction.AccessoriesArrivalTime" class="form-control" />
                 <span asp-validation-for="Malfunction.AccessoriesArrivalTime" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Malfunction.EngineerArrivalTime" class="control-label"></label>
-                <input asp-for="Malfunction.EngineerArrivalTime" class="form-control" />
+                <input type="datetime-local" asp-for="Malfunction.EngineerArrivalTime" class="form-control" />
                 <span asp-validation-for="Malfunction.EngineerArrivalTime" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -85,14 +83,14 @@
                 <span asp-validation-for="Malfunction.Remark" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="Index">Back to List</a>
 </div>
 
 @section Scripts {
