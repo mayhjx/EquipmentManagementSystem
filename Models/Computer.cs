@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace EquipmentManagementSystem.Models
 {
-    public class computer
+    public class Computer
     {
         public int ID { get; set; }
 
@@ -13,7 +13,7 @@ namespace EquipmentManagementSystem.Models
 
         public string password { get; set; }
 
-        public Instrument InstrumentID { get; set; }
+        public string InstrumentID { get; set; }
         public Instrument instrument { get; set; }
 
     }

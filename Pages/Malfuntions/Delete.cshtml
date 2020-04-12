@@ -1,0 +1,106 @@
+@page
+@model EquipmentManagementSystem.Pages.Malfuntions.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Malfunction</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Malfunction.component)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Malfunction.component.Model)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Malfunction.Category)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Malfunction.Category)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Malfunction.Problem)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Malfunction.Problem)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Malfunction.Reason)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Malfunction.Reason)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Malfunction.FoundTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Malfunction.FoundTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Malfunction.StartTrackTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Malfunction.StartTrackTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Malfunction.ReportTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Malfunction.ReportTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Malfunction.FollowUpPeople)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Malfunction.FollowUpPeople)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Malfunction.DebuggingTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Malfunction.DebuggingTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Malfunction.PlaceOrderTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Malfunction.PlaceOrderTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Malfunction.AccessoriesArrivalTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Malfunction.AccessoriesArrivalTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Malfunction.EngineerArrivalTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Malfunction.EngineerArrivalTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Malfunction.Solutions)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Malfunction.Solutions)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Malfunction.Remark)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Malfunction.Remark)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="Malfunction.ID" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-page="./Index">Back to List</a>
+    </form>
+</div>

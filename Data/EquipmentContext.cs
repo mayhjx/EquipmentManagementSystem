@@ -33,5 +33,9 @@ namespace EquipmentManagementSystem.Data
             modelBuilder.Entity<Instrument>().Property(i => i.CreatedDate).ValueGeneratedOnAdd().HasDefaultValueSql("datetime('now', 'localtime')");
             modelBuilder.Entity<Instrument>().Property(i => i.ModifiedDate).ValueGeneratedOnAddOrUpdate().HasDefaultValueSql("datetime('now', 'localtime')");
         }
+
+        public DbSet<EquipmentManagementSystem.Models.Malfunction> Malfunction { get; set; }
+
+        public DbSet<EquipmentManagementSystem.Models.Computer> Computer { get; set; }
     }
 }

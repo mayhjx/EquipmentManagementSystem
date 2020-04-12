@@ -11,14 +11,16 @@ namespace EquipmentManagementSystem.Models
         [Display(Name="编号")]
         [RegularExpression(@"^[A-Z]+-[A-Z0-9]+$")]
         public string ID { get; set; }
-
+        
         [Display(Name="创建时间")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime CreatedDate { get; set; }
 
+        // SQLite 有bug
         [Timestamp]
         public byte[] Timestamp { get; set; }
 
+        // SQLite 有bug
         [Display(Name="修改时间")]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime ModifiedDate { get; set; }

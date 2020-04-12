@@ -1,0 +1,66 @@
+@page
+@model EquipmentManagementSystem.Pages.Asserts.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Assert[0].Code)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Assert[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Assert[0].EntryDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Assert[0].SourceUnit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Assert[0].Remark)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Assert[0].instrument)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Assert) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EntryDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SourceUnit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Remark)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.instrument.ID)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
+using EquipmentManagementSystem.Data;
 
 namespace EquipmentManagementSystem
 {
@@ -25,6 +26,9 @@ namespace EquipmentManagementSystem
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+
+            services.AddDbContext<EquipmentContext>(options =>
+                    options.UseSqlite(Configuration.GetConnectionString("EquipmentContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
