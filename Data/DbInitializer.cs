@@ -105,7 +105,7 @@ namespace EquipmentManagementSystem.Data
 
                 context.asserts.Add(
                     new Assert{
-                        instrumentId=data[0],
+                        InstrumentId=data[0],
                         Code = data[1],
                         Name = data[2],
                         EntryDate = datetime,
@@ -133,7 +133,7 @@ namespace EquipmentManagementSystem.Data
 
                 context.components.Add(
                     new Component{
-                        instrumentID = data[0],
+                        InstrumentID = data[0],
                         SerialNumber = data[1],
                         Name = data[2],
                         Model = data[3]

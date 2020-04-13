@@ -71,8 +71,11 @@ namespace EquipmentManagementSystem.Models
         [Display(Name="资产信息")]
         public Assert assert { get; set; }
 
+        [Display(Name="所属项目组")]
+        public ProjectTeam projectTeam { get; set; }
+
         [Display(Name="检测项目")]
-        public ICollection<Project> Projects { get; set; }
+        public ICollection<Project> projects { get; set; }
 
         [Display(Name="校准信息")]
         public ICollection<Calibration> calibrations { get; set; }

@@ -17,6 +17,8 @@ namespace EquipmentManagementSystem.Models
         [Display(Name="设备编号")]
         public string InstrumentID { get; set; }
 
+        public Instrument instrument { get;set; }
+
         [Display(Name="检定/校验日期")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString="{0:yyyy-MM-dd}", ApplyFormatInEditMode=true)]
@@ -34,6 +36,5 @@ namespace EquipmentManagementSystem.Models
         [Display(Name="经办人")]
         public string Calibrator { get; set; }
 
-        public Instrument instrument { get;set; }
     }
 }

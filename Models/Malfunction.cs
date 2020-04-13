@@ -8,12 +8,12 @@ namespace EquipmentManagementSystem.Models
         public int ID { get; set; }
 
         [Display(Name="设备编号")]
-        public string instrumentID { get; set;}
+        public string InstrumentID { get; set;}
         
         public Instrument instrument { get; set; }
 
         [Display(Name="部件")]
-        public int componentID { get; set; }
+        public int ComponentID { get; set; }
 
         public Component component { get; set; }
 
@@ -32,6 +32,7 @@ namespace EquipmentManagementSystem.Models
         [StringLength(50,MinimumLength=1)]
         public string Reason { get; set; }
 
+        [Required]
         [Display(Name="发现时间")]
         public string FoundTime { get; set; }
 

@@ -9,7 +9,7 @@ namespace EquipmentManagementSystem.Models
         public int ID { get; set; }
 
         [Display(Name="仪器编号")]
-        public string instrumentID { get; set;}
+        public string InstrumentID { get; set;}
         public Instrument instrument { get; set; }
 
         [Required]

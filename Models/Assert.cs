@@ -9,7 +9,7 @@ namespace EquipmentManagementSystem.Models
         public int ID { get; set; }
 
         [Display(Name="编号")]
-        public string instrumentId { get; set; }
+        public string InstrumentId { get; set; }
         
         public Instrument instrument { get; set; }
         
@@ -33,7 +33,5 @@ namespace EquipmentManagementSystem.Models
 
         [Display(Name="备注")]
         public string Remark { get; set; }
-
-        
     }
 }

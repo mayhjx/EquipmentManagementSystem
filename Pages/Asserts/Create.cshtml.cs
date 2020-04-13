@@ -21,7 +21,7 @@ namespace EquipmentManagementSystem.Pages.Asserts
 
         public IActionResult OnGet()
         {
-        ViewData["instrumentId"] = new SelectList(_context.Instruments, "ID", "ID");
+            ViewData["instrumentId"] = new SelectList(_context.Instruments, "ID", "ID");
             return Page();
         }
 
