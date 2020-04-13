@@ -72,6 +72,7 @@ namespace EquipmentManagementSystem.Models
         public Assert assert { get; set; }
 
         [Display(Name="所属项目组")]
+        public string ProjectTeamName { get; set; }
         public ProjectTeam projectTeam { get; set; }
 
         [Display(Name="检测项目")]
@@ -89,10 +90,14 @@ namespace EquipmentManagementSystem.Models
 
     public enum Status {
         
-        [Display(Name="使用中")]
+        [Display(Name="正常")]
         Using,
         [Display(Name="故障")]
         Malfunctoin,
+        [Display(Name = "停用")]
+        StopUsing,
+        [Display(Name = "调拨")]
+        Allocate,
         [Display(Name="报废")]
         Scrapped
     }
