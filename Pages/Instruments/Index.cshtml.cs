@@ -13,9 +13,9 @@ namespace EquipmentManagementSystem.Pages.Instruments
 {
     public class IndexModel : PageModel
     {
-        private readonly EquipmentManagementSystem.Data.EquipmentContext _context;
+        private readonly EquipmentContext _context;
 
-        public IndexModel(EquipmentManagementSystem.Data.EquipmentContext context)
+        public IndexModel(EquipmentContext context)
         {
             _context = context;
         }
@@ -29,7 +29,8 @@ namespace EquipmentManagementSystem.Pages.Instruments
         {
             // Instrument = await _context.Instruments.OrderBy(n => n.ID).ToListAsync();
             var instruments = from i in _context.Instruments
-                            select i;
+                              .Include(i => i.calibrations)
+                                select i;
             if (!string.IsNullOrEmpty(SearchString))
             {
                 instruments = instruments.Where(s => s.ID.Contains(SearchString));
