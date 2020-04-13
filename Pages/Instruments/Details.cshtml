@@ -65,20 +65,15 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Instrument.Principal)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Instrument.Remark)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Instrument.Remark)
-        </dd>
+        
 
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Instrument.components) <a asp-page="../Components/Create">(Create New)</a>
+            @Html.DisplayNameFor(model => model.Instrument.components) <a asp-page="../Components/Create">(新建)</a>
         </dt>
         <dd class="col-sm-10">
             <table class="table">
                 <tr>
-                    <th>@Html.DisplayNameFor(model => model.Instrument.components.First().SerialNumber)</th>
+                    @* <th>@Html.DisplayNameFor(model => model.Instrument.components.First().SerialNumber)</th> *@
                     <th>@Html.DisplayNameFor(model => model.Instrument.components.First().Name)</th>
                     <th>@Html.DisplayNameFor(model => model.Instrument.components.First().Model)</th>
                     <th></th>
@@ -86,7 +81,7 @@
                 @foreach (var item in Model.Instrument.components)
                 {
                     <tr>
-                        <td>@Html.DisplayFor(modelItem => item.SerialNumber)</td>
+                        @* <td>@Html.DisplayFor(modelItem => item.SerialNumber)</td> *@
                         <td>@Html.DisplayFor(modelItem => item.Name)</td>
                         <td>@Html.DisplayFor(modelItem => item.Model)</td>
                         <td>
@@ -100,33 +95,37 @@
         </dd>
 
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Instrument.assert) <a asp-page="../Asserts/Create">(Create New)</a>
+            @Html.DisplayNameFor(model => model.Instrument.malfunctions.First().ID) <a asp-page="../Malfunctions/Create">(新建)</a>
         </dt>
         <dd class="col-sm-10">
             <table class="table">
                 <tr>
-                    <th>@Html.DisplayNameFor(model => model.Instrument.assert.Code)</th>
-                    <th>@Html.DisplayNameFor(model => model.Instrument.assert.EntryDate)</th>
-                    <th>@Html.DisplayNameFor(model => model.Instrument.assert.SourceUnit)</th>
-                    <th>@Html.DisplayNameFor(model => model.Instrument.assert.Remark)</th>
+                    <th>@Html.DisplayNameFor(model => model.Instrument.malfunctions.First().FoundTime)</th>
+                    <th>@Html.DisplayNameFor(model => model.Instrument.malfunctions.First().Problem)</th>
+                    <th>@Html.DisplayNameFor(model => model.Instrument.malfunctions.First().DebuggingTime)</th>
+                    <th>@Html.DisplayNameFor(model => model.Instrument.malfunctions.First().FollowUpPeople)</th>
                     <th></th>
                 </tr>
+                @foreach (var item in Model.Instrument.malfunctions)
+                {
                     <tr>
-                        <td>@Html.DisplayFor(model => model.Instrument.assert.Code)</td>
-                        <td>@Html.DisplayFor(model => model.Instrument.assert.EntryDate)</td>
-                        <td>@Html.DisplayFor(model => model.Instrument.assert.SourceUnit)</td>
-                        <td>@Html.DisplayFor(model => model.Instrument.assert.Remark)</td>
+                        <td>@Html.DisplayFor(modelItem => item.FoundTime)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Problem)</td>
+                        <td>@Html.DisplayFor(modelItem => item.DebuggingTime)</td>
+                        <td>@Html.DisplayFor(modelItem => item.FollowUpPeople)</td>
                         <td>
-                            <a asp-page="../Asserts/Edit" asp-route-id="@Model.Instrument.assert.ID">Edit</a> |
-                            <a asp-page="../Asserts/Details" asp-route-id="@Model.Instrument.assert.ID">Details</a> |
-                            <a asp-page="../Asserts/Delete" asp-route-id="@Model.Instrument.assert.ID">Delete</a>
+                            <a asp-page="../Malfunctions/Edit" asp-route-id="@item.ID">Edit</a> |
+                            <a asp-page="../Malfunctions/Details" asp-route-id="@item.ID">Details</a> |
+                            <a asp-page="../Malfunctions/Delete" asp-route-id="@item.ID">Delete</a>
                         </td>
                     </tr>
+                    
+                }
             </table>
         </dd>
 
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Instrument.calibrations) <a asp-page="../Calibrations/Create">(Create New)</a>
+            @Html.DisplayNameFor(model => model.Instrument.calibrations) <a asp-page="../Calibrations/Create">(新建)</a>
         </dt>
         <dd class="col-sm-10">
             <table class="table">
@@ -153,6 +152,40 @@
                 }
             </table>
         </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Instrument.assert) <a asp-page="../Asserts/Create">(新建)</a>
+        </dt>
+        <dd class="col-sm-10">
+            <table class="table">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Instrument.assert.Code)</th>
+                    <th>@Html.DisplayNameFor(model => model.Instrument.assert.EntryDate)</th>
+                    <th>@Html.DisplayNameFor(model => model.Instrument.assert.SourceUnit)</th>
+                    <th>@Html.DisplayNameFor(model => model.Instrument.assert.Remark)</th>
+                    <th></th>
+                </tr>
+                    <tr>
+                        <td>@Html.DisplayFor(model => model.Instrument.assert.Code)</td>
+                        <td>@Html.DisplayFor(model => model.Instrument.assert.EntryDate)</td>
+                        <td>@Html.DisplayFor(model => model.Instrument.assert.SourceUnit)</td>
+                        <td>@Html.DisplayFor(model => model.Instrument.assert.Remark)</td>
+                        <td>
+                            <a asp-page="../Asserts/Edit" asp-route-id="@Model.Instrument.assert.ID">Edit</a> |
+                            <a asp-page="../Asserts/Details" asp-route-id="@Model.Instrument.assert.ID">Details</a> |
+                            <a asp-page="../Asserts/Delete" asp-route-id="@Model.Instrument.assert.ID">Delete</a>
+                        </td>
+                    </tr>
+            </table>
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Instrument.Remark)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Instrument.Remark)
+        </dd>
+
     </dl>
 </div>
 <div>

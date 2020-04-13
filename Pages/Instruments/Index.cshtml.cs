@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EquipmentManagementSystem.Pages.Instruments
 {
@@ -21,9 +22,19 @@ namespace EquipmentManagementSystem.Pages.Instruments
 
         public IList<Instrument> Instrument { get;set; }
 
+        [BindProperty(SupportsGet=true)]
+        public string SearchString { get; set; }
+
         public async Task OnGetAsync()
         {
-            Instrument = await _context.Instruments.ToListAsync();
+            // Instrument = await _context.Instruments.OrderBy(n => n.ID).ToListAsync();
+            var instruments = from i in _context.Instruments
+                            select i;
+            if (!string.IsNullOrEmpty(SearchString))
+            {
+                instruments = instruments.Where(s => s.ID.Contains(SearchString));
+            }
+            Instrument = await instruments.OrderBy(m => m.ID).ToListAsync();
         }
     }
 }

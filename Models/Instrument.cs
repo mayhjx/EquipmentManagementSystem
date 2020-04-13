@@ -83,7 +83,8 @@ namespace EquipmentManagementSystem.Models
         [Display(Name="部件")]
         public ICollection<Component> components { get; set; }
 
-
+        [Display(Name="故障")]
+        public ICollection<Malfunction> malfunctions { get; set; }
     }
 
     public enum Status {

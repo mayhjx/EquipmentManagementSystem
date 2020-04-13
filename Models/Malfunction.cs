@@ -4,7 +4,8 @@ using System.ComponentModel.DataAnnotations;
 namespace EquipmentManagementSystem.Models
 {
     public class Malfunction
-    {
+    {   
+        [Display(Name="故障信息")]
         public int ID { get; set; }
 
         [Display(Name="设备编号")]
@@ -32,11 +33,12 @@ namespace EquipmentManagementSystem.Models
         [StringLength(50,MinimumLength=1)]
         public string Reason { get; set; }
 
-        [Required]
         [Display(Name="发现时间")]
-        public string FoundTime { get; set; }
+        [DataType(DataType.DateTime)]
+        public DateTime FoundTime { get; set; }
 
         [Display(Name="排查开始时间")]
+        [DataType(DataType.DateTime)]
         public string StartTrackTime { get; set; }
 
         [Display(Name="报修时间")]

@@ -20,8 +20,8 @@ namespace EquipmentManagementSystem.Pages.Components
         }
 
         public IActionResult OnGet()
-        {
-        ViewData["instrumentID"] = new SelectList(_context.Instruments, "ID", "ID");
+        {   
+            ViewData["instrumentID"] = new SelectList(_context.Instruments, "ID", "ID");
             return Page();
         }
 

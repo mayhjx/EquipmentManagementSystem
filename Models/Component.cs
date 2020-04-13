@@ -27,6 +27,6 @@ namespace EquipmentManagementSystem.Models
         [StringLength(50,MinimumLength=1)]
         public string Model { get; set; }
 
-        public ICollection<Malfunction> malfunctions { get; set; }
+        // public ICollection<Malfunction> malfunctions { get; set; }
     }
 }

@@ -140,7 +140,7 @@ namespace EquipmentManagementSystem.Data
                     }
                 );
             }
-            context.SaveChangesAsync();
+            context.SaveChanges();
         }
 
         private static string[] Reader(string filepath)
@@ -150,8 +150,9 @@ namespace EquipmentManagementSystem.Data
             {
                 return text;
             }
-            var sr = new StreamReader(filepath, Encoding.Default);
-            text = sr.ReadToEnd().Split("\r\n");
+            // var sr = new StreamReader(filepath, Encoding.Default);
+            // text = sr.ReadToEnd().Split("\r\n");
+            text = File.ReadLines(filepath).ToArray();
             return text;
         }
     }
