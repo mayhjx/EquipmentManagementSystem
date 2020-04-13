@@ -17,7 +17,7 @@ namespace EquipmentManagementSystem.Data
             InsertCalibration(context);
             InsertAssert(context);
             InsertComponent(context);
-
+            InsertProjectTeam(context);
         }
 
         private static void InsertInstrument(EquipmentContext context)
@@ -49,7 +49,8 @@ namespace EquipmentManagementSystem.Data
                         Location=data[7],
                         Principal=data[8],
                         NewSystemCode=data[9],
-                        Remark=data[10]
+                        ProjectTeamName = data[10],
+                        Remark=data[11]
                     }
                 );
             }
@@ -143,6 +144,31 @@ namespace EquipmentManagementSystem.Data
             context.SaveChanges();
         }
 
+        private static void InsertProjectTeam(EquipmentContext context)
+        {
+            if (context.projectTeams.Any())
+            {
+                return;   // DB has been seeded
+            }
+
+            string[] Datas = Reader(@"C:\Users\lihua\source\repos\EquipmentManagementSystem\wwwroot\ProjectTeams.csv");
+
+            foreach (var line in Datas.Skip(1))
+            {
+                if (line.Trim() == "") continue;
+                var data = line.Split(",");
+
+                context.projectTeams.Add(
+                    new ProjectTeam
+                    {
+                        Name = data[0],
+                        projects = data[1],
+                    }
+                );
+            }
+            context.SaveChanges();
+        }
+
         private static string[] Reader(string filepath)
         {
             string[] text = {};
@@ -150,9 +176,9 @@ namespace EquipmentManagementSystem.Data
             {
                 return text;
             }
-            // var sr = new StreamReader(filepath, Encoding.Default);
-            // text = sr.ReadToEnd().Split("\r\n");
-            text = File.ReadLines(filepath).ToArray();
+            var sr = new StreamReader(filepath, Encoding.Default);
+            text = sr.ReadToEnd().Split("\r\n");
+            //text = File.ReadLines(filepath).ToArray();
             return text;
         }
     }
