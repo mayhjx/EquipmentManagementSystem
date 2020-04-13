@@ -17,18 +17,18 @@ namespace EquipmentManagementSystem.Models
         [Display(Name="设备编号")]
         public string InstrumentID { get; set; }
 
-        [Display(Name="执行时间")]
+        [Display(Name="检定/校验日期")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString="{0:yyyy-MM-dd}", ApplyFormatInEditMode=true)]
         public DateTime Date { get; set; }
 
         [Required]
-        [Display(Name="结果")]
-        public Result Result { get; set; }
-
-        [Required]
         [Display(Name="检定/校准单位")]
         public string Unit { get; set; }
+        
+        [Required]
+        [Display(Name="结果")]
+        public Result Result { get; set; }
 
         [Required]
         [Display(Name="经办人")]

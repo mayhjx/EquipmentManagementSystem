@@ -14,6 +14,9 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.Calibration[0].InstrumentID)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Calibration[0].Date)
             </th>
             <th>
@@ -25,15 +28,15 @@
             <th>
                 @Html.DisplayNameFor(model => model.Calibration[0].Calibrator)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Calibration[0].InstrumentID)
-            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model.Calibration) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.instrument.ID)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
@@ -45,9 +48,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Calibrator)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.instrument.ID)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |

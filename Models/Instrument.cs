@@ -61,7 +61,8 @@ namespace EquipmentManagementSystem.Models
         [StringLength(999)]
         public string Remark { get; set; }
 
-        [StringLength(50)]
+        [Display(Name="新系统编号")]
+        [StringLength(10)]
         public string NewSystemCode { get; set; }
 
         [Display(Name="设备电脑")]

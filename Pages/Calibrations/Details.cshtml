@@ -12,6 +12,12 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Calibration.InstrumentID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Calibration.instrument.ID)
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Calibration.Date)
         </dt>
         <dd class="col-sm-10">
@@ -34,12 +40,6 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Calibration.Calibrator)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Calibration.instrument)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Calibration.instrument.ID)
         </dd>
     </dl>
 </div>
