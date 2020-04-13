@@ -8,6 +8,11 @@ namespace EquipmentManagementSystem.Models
     {
         public int ID { get; set; }
 
+        [Display(Name="编号")]
+        public string instrumentId { get; set; }
+        
+        public Instrument instrument { get; set; }
+        
         [Display(Name="编码")]
         [StringLength(50)]
         public string Code { get; set; }
@@ -29,9 +34,6 @@ namespace EquipmentManagementSystem.Models
         [Display(Name="备注")]
         public string Remark { get; set; }
 
-        [Display(Name="编号")]
-        public string instrumentId { get; set; }
         
-        public Instrument instrument { get; set; }
     }
 }

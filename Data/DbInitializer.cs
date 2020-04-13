@@ -15,6 +15,8 @@ namespace EquipmentManagementSystem.Data
 
             InsertInstrument(context);
             InsertCalibration(context);
+            InsertAssert(context);
+            InsertComponent(context);
 
         }
 
@@ -31,10 +33,10 @@ namespace EquipmentManagementSystem.Data
             {
                 if (line.Trim() == "") continue;
                 var data = line.Split(",");
-                // 无启用日期转换
+                // 无日期转换
                 DateTime datetime;
                 DateTime.TryParse(data[3], out datetime); 
-                
+
                 context.Instruments.Add(
                     new Instrument{
                         ID=data[0],
@@ -67,7 +69,7 @@ namespace EquipmentManagementSystem.Data
             {
                 if (line.Trim() == "") continue;
                 var data = line.Split(",");
-                // 无启用日期转换
+                // 无日期转换
                 DateTime datetime;
                 DateTime.TryParse(data[1], out datetime); 
 
@@ -78,11 +80,67 @@ namespace EquipmentManagementSystem.Data
                         Unit=data[2],
                         Result=Result.Passed,
                         Calibrator=data[4],
-
                     }
                 );
             }
             context.SaveChanges();
+        }
+
+        private static void InsertAssert(EquipmentContext context)
+        {
+            if (context.asserts.Any())
+            {
+                return;   // DB has been seeded
+            }
+
+            string [] Datas = Reader(@"C:\Users\lihua\source\repos\EquipmentManagementSystem\wwwroot\Asserts.csv");
+
+            foreach (var line in Datas.Skip(1))
+            {
+                if (line.Trim() == "") continue;
+                var data = line.Split(",");
+                // 无日期转换
+                DateTime datetime;
+                DateTime.TryParse(data[3], out datetime); 
+
+                context.asserts.Add(
+                    new Assert{
+                        instrumentId=data[0],
+                        Code = data[1],
+                        Name = data[2],
+                        EntryDate = datetime,
+                        SourceUnit = data[4],
+                        Remark = data[5]
+                    }
+                );
+            }
+            context.SaveChanges();
+        }
+
+        private static void InsertComponent(EquipmentContext context)
+        {
+            if (context.components.Any())
+            {
+                return;   // DB has been seeded
+            }
+
+            string[] Datas = Reader(@"C:\Users\lihua\source\repos\EquipmentManagementSystem\wwwroot\Components.csv");
+
+            foreach (var line in Datas.Skip(1))
+            {
+                if (line.Trim() == "") continue;
+                var data = line.Split(",");
+
+                context.components.Add(
+                    new Component{
+                        instrumentID = data[0],
+                        SerialNumber = data[1],
+                        Name = data[2],
+                        Model = data[3]
+                    }
+                );
+            }
+            context.SaveChangesAsync();
         }
 
         private static string[] Reader(string filepath)

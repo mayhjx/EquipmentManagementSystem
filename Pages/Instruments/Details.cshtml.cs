@@ -28,7 +28,14 @@ namespace EquipmentManagementSystem.Pages.Instruments
                 return NotFound();
             }
 
-            Instrument = await _context.Instruments.FirstOrDefaultAsync(m => m.ID == id);
+            // Instrument = await _context.Instruments.FirstOrDefaultAsync(m => m.ID == id);
+            Instrument = await _context.Instruments
+                        .Include(a => a.assert)
+                        .Include(c => c.calibrations)
+                        .Include(c => c.components)
+                        .AsNoTracking()
+                        .FirstOrDefaultAsync(m => m.ID == id);
+                            
 
             if (Instrument == null)
             {

@@ -17,18 +17,6 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Instrument.ID)
         </dd>
-        @* <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Instrument.Timestamp)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Instrument.Timestamp)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Instrument.ModifiedDate)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Instrument.ModifiedDate)
-        </dd> *@
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Instrument.Platform)
         </dt>
@@ -82,6 +70,61 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Instrument.Remark)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Instrument.assert) <a asp-page="../Asserts/Create">(Create New)</a>
+        </dt>
+        <dd class="col-sm-10">
+            <table class="table">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Instrument.assert.Code)</th>
+                    <th>@Html.DisplayNameFor(model => model.Instrument.assert.EntryDate)</th>
+                    <th>@Html.DisplayNameFor(model => model.Instrument.assert.SourceUnit)</th>
+                    <th>@Html.DisplayNameFor(model => model.Instrument.assert.Remark)</th>
+                    <th></th>
+                </tr>
+                    <tr>
+                        <td>@Html.DisplayFor(model => model.Instrument.assert.Code)</td>
+                        <td>@Html.DisplayFor(model => model.Instrument.assert.EntryDate)</td>
+                        <td>@Html.DisplayFor(model => model.Instrument.assert.SourceUnit)</td>
+                        <td>@Html.DisplayFor(model => model.Instrument.assert.Remark)</td>
+                        <td>
+                            <a asp-page="../Asserts/Edit" asp-route-id="@Model.Instrument.assert.ID">Edit</a> |
+                            <a asp-page="../Asserts/Details" asp-route-id="@Model.Instrument.assert.ID">Details</a> |
+                            <a asp-page="../Asserts/Delete" asp-route-id="@Model.Instrument.assert.ID">Delete</a>
+                        </td>
+                    </tr>
+            </table>
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Instrument.calibrations) <a asp-page="../Calibrations/Create">(Create New)</a>
+        </dt>
+        <dd class="col-sm-10">
+            <table class="table">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Instrument.calibrations.First().Date)</th>
+                    <th>@Html.DisplayNameFor(model => model.Instrument.calibrations.First().Unit)</th>
+                    <th>@Html.DisplayNameFor(model => model.Instrument.calibrations.First().Result)</th>
+                    <th>@Html.DisplayNameFor(model => model.Instrument.calibrations.First().Calibrator)</th>
+                    <th></th>
+                </tr>
+                @foreach (var item in Model.Instrument.calibrations)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Date)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Unit)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Result)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Calibrator)</td>
+                        <td>
+                            <a asp-page="../Calibrations/Edit" asp-route-id="@item.ID">Edit</a> |
+                            <a asp-page="../Calibrations/Details" asp-route-id="@item.ID">Details</a> |
+                            <a asp-page="../Calibrations/Delete" asp-route-id="@item.ID">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </table>
         </dd>
     </dl>
 </div>
