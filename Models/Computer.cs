@@ -8,7 +8,6 @@ namespace EquipmentManagementSystem.Models
         public int ID { get; set; }
         
         [Display(Name="设备编号")]
-
         public string InstrumentID { get; set; }
         public Instrument instrument { get; set; }
 
@@ -18,6 +17,6 @@ namespace EquipmentManagementSystem.Models
         public string Account { get; set; }
 
         [Display(Name="密码")]
-        public string password { get; set; }
+        public string Password { get; set; }
     }
 }

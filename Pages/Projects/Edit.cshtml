@@ -24,11 +24,11 @@
                 <select asp-for="Project.instrumentID" class="form-control" asp-items="ViewBag.instrumentID"></select>
                 <span asp-validation-for="Project.instrumentID" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="Project.ProjectTeamName" class="control-label"></label>
                 <select asp-for="Project.ProjectTeamName" class="form-control" asp-items="ViewBag.projectTeamID"></select>
                 <span asp-validation-for="Project.ProjectTeamName" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

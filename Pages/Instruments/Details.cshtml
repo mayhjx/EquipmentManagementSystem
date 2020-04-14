@@ -51,16 +51,40 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <ul class="list-unstyled text-lg">
-                            <li>@Html.DisplayNameFor(model => model.Instrument.Platform): @Html.DisplayFor(model => model.Instrument.Platform)</li>
-                            <li>@Html.DisplayNameFor(model => model.Instrument.Name): @Html.DisplayFor(model => model.Instrument.Name)</li>
-                            <li>@Html.DisplayNameFor(model => model.Instrument.CalibrationCycle): @Html.DisplayFor(model => model.Instrument.CalibrationCycle)</li>
-                            <li>@Html.DisplayNameFor(model => model.Instrument.MetrologicalCharacteristics): @Html.DisplayFor(model => model.Instrument.MetrologicalCharacteristics)</li>
-                            <li>@Html.DisplayNameFor(model => model.Instrument.Location): @Html.DisplayFor(model => model.Instrument.Location)</li>
-                            <li>@Html.DisplayNameFor(model => model.Instrument.Principal): @Html.DisplayFor(model => model.Instrument.Principal)</li>
-                            <li>@Html.DisplayNameFor(model => model.Instrument.ProjectTeamName): @Html.DisplayFor(model => model.Instrument.ProjectTeamName)</li>
-                        </ul>
-
+                        <table class="table table-sm">
+                            <tr>
+                                <td>@Html.DisplayNameFor(model => model.Instrument.Platform)</td>
+                                <td>@Html.DisplayFor(model => model.Instrument.Platform)</td>
+                            </tr>
+                            <tr>
+                                <td>@Html.DisplayNameFor(model => model.Instrument.Name)</td>
+                                <td>@Html.DisplayFor(model => model.Instrument.Name)</td>
+                            </tr>
+                            <tr>
+                                <td>@Html.DisplayNameFor(model => model.Instrument.CalibrationCycle)</td>
+                                <td>@Html.DisplayFor(model => model.Instrument.CalibrationCycle)</td>
+                            </tr>
+                            <tr>
+                                <td>@Html.DisplayNameFor(model => model.Instrument.MetrologicalCharacteristics)</td>
+                                <td>@Html.DisplayFor(model => model.Instrument.MetrologicalCharacteristics)</td>
+                            </tr>
+                            <tr>
+                                <td>@Html.DisplayNameFor(model => model.Instrument.Location)</td>
+                                <td>@Html.DisplayFor(model => model.Instrument.Location)</td>
+                            </tr>
+                            <tr>
+                                <td>@Html.DisplayNameFor(model => model.Instrument.Principal)</td>
+                                <td>@Html.DisplayFor(model => model.Instrument.Principal)</td>
+                            </tr>
+                            <tr>
+                                <td>@Html.DisplayNameFor(model => model.Instrument.ProjectTeamName)</td>
+                                <td>@Html.DisplayFor(model => model.Instrument.ProjectTeamName)</td>
+                            </tr>
+                            <tr>
+                                <td>@Html.DisplayNameFor(model => model.Instrument.NewSystemCode)</td>
+                                <td>@Html.DisplayFor(model => model.Instrument.NewSystemCode)</td>
+                            </tr>
+                        </table>
                     </div>
                     <!-- /.card-body -->
                 </div>

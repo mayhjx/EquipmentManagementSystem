@@ -25,11 +25,11 @@
                 <select asp-for="Malfunction.ComponentID" class="form-control" asp-items="ViewBag.componentID"></select>
                 <span asp-validation-for="Malfunction.ComponentID" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="Malfunction.Category" class="control-label"></label>
                 <input asp-for="Malfunction.Category" class="form-control" />
                 <span asp-validation-for="Malfunction.Category" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <label asp-for="Malfunction.Problem" class="control-label"></label>
                 <input asp-for="Malfunction.Problem" class="form-control" />

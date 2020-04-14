@@ -1,23 +1,25 @@
-using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using System;
 using System.IO;
 using System.Text;
 using System.Linq;
+using Microsoft.AspNetCore.Hosting;
 
 namespace EquipmentManagementSystem.Data
 {
     public static class DbInitializer
     {
-        public static void Initialize(EquipmentContext context)
+        private static string Path;
+        public static void Initialize(EquipmentContext context, string wwwrootPath)
         {
+            Path = wwwrootPath;
             context.Database.EnsureCreated();
 
             InsertInstrument(context);
             InsertCalibration(context);
             InsertAssert(context);
             InsertComponent(context);
-            InsertProjectTeam(context);
+            //InsertProjectTeam(context);
         }
 
         private static void InsertInstrument(EquipmentContext context)
@@ -27,7 +29,7 @@ namespace EquipmentManagementSystem.Data
                 return;   // DB has been seeded
             }
 
-            string [] Datas = Reader(@"C:\Users\lihua\source\repos\EquipmentManagementSystem\wwwroot\Instruments.csv");
+            string[] Datas = Reader(Path + "/Instruments.csv");
 
             foreach (var line in Datas.Skip(1))
             {
@@ -64,7 +66,7 @@ namespace EquipmentManagementSystem.Data
                 return;   // DB has been seeded
             }
 
-            string [] Datas = Reader(@"C:\Users\lihua\source\repos\EquipmentManagementSystem\wwwroot\Calibrations.csv");
+            string [] Datas = Reader(Path + "/Calibrations.csv");
 
             foreach (var line in Datas.Skip(1))
             {
@@ -94,7 +96,7 @@ namespace EquipmentManagementSystem.Data
                 return;   // DB has been seeded
             }
 
-            string [] Datas = Reader(@"C:\Users\lihua\source\repos\EquipmentManagementSystem\wwwroot\Asserts.csv");
+            string [] Datas = Reader(Path + "/Asserts.csv");
 
             foreach (var line in Datas.Skip(1))
             {
@@ -125,7 +127,7 @@ namespace EquipmentManagementSystem.Data
                 return;   // DB has been seeded
             }
 
-            string[] Datas = Reader(@"C:\Users\lihua\source\repos\EquipmentManagementSystem\wwwroot\Components.csv");
+            string[] Datas = Reader(Path + "/Components.csv");
 
             foreach (var line in Datas.Skip(1))
             {
@@ -145,30 +147,30 @@ namespace EquipmentManagementSystem.Data
             context.SaveChanges();
         }
 
-        private static void InsertProjectTeam(EquipmentContext context)
-        {
-            if (context.projectTeams.Any())
-            {
-                return;   // DB has been seeded
-            }
+        //private static void InsertProjectTeam(EquipmentContext context)
+        //{
+        //    if (context.projectTeams.Any())
+        //    {
+        //        return;   // DB has been seeded
+        //    }
 
-            string[] Datas = Reader(@"C:\Users\lihua\source\repos\EquipmentManagementSystem\wwwroot\ProjectTeams.csv");
+        //    string[] Datas = Reader(Path + "/ProjectTeams.csv");
 
-            foreach (var line in Datas.Skip(1))
-            {
-                if (line.Trim() == "") continue;
-                var data = line.Split(",");
+        //    foreach (var line in Datas.Skip(1))
+        //    {
+        //        if (line.Trim() == "") continue;
+        //        var data = line.Split(",");
 
-                context.projectTeams.Add(
-                    new ProjectTeam
-                    {
-                        Name = data[0],
-                        projects = data[1],
-                    }
-                );
-            }
-            context.SaveChanges();
-        }
+        //        context.projectTeams.Add(
+        //            new ProjectTeam
+        //            {
+        //                Name = data[0],
+        //                projects = data[1],
+        //            }
+        //        );
+        //    }
+        //    context.SaveChanges();
+        //}
 
         private static string[] Reader(string filepath)
         {

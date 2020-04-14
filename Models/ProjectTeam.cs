@@ -14,8 +14,7 @@ namespace EquipmentManagementSystem.Models
         public string Name { get; set; }
 
         [Display(Name="检测项目")]
-        [StringLength(500)]
-        public string projects { get; set; }
+        public ICollection<Project> projects { get; set; }
 
         [Display(Name = "仪器")]
         public ICollection<Instrument> instruments { get; set; }
