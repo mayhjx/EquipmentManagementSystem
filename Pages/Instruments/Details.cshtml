@@ -2,193 +2,222 @@
 @model EquipmentManagementSystem.Pages.Instruments.DetailsModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "详细信息";
 }
 
-<h1>Details</h1>
+    <div class="invoice p-3 mb-3">
+        <!-- title row -->
+        <div class="row">
+            <div class="col-12">
+                <h3>
+                    @Html.DisplayFor(mdoel => Model.Instrument.ID)
+                    @{
+                        var status = Model.Instrument.Status.ToString();
+                        if (status == "Using")
+                        {
+                            <small class="bg-green">正常</small>
+                        }
+                        else if (status == "Malfunction")
+                        {
+                            <small class="bg-yellow">故障</small>
+                        }
+                        else if (status == "StopUsing")
+                        {
+                            <small class="bg-yellow">停用</small>
+                        }
+                        else if (status == "Allocate")
+                        {
+                            <small class="bg-red">调拨</small>
+                        }
+                        else if (status == "Scrapped")
+                        {
+                            <small class="bg-red">报废</small>
+                        }
+                    }
+                    <small class="float-right">@Html.DisplayNameFor(model => model.Instrument.StartUsingDate): @Html.DisplayFor(model => model.Instrument.StartUsingDate)</small>
+                </h3>
+            </div>
+            <!-- /.col -->
+        </div>
+        <br />
+        <!-- info row -->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            基础信息
+                        </h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <ul class="list-unstyled text-lg">
+                            <li>@Html.DisplayNameFor(model => model.Instrument.Platform): @Html.DisplayFor(model => model.Instrument.Platform)</li>
+                            <li>@Html.DisplayNameFor(model => model.Instrument.Name): @Html.DisplayFor(model => model.Instrument.Name)</li>
+                            <li>@Html.DisplayNameFor(model => model.Instrument.CalibrationCycle): @Html.DisplayFor(model => model.Instrument.CalibrationCycle)</li>
+                            <li>@Html.DisplayNameFor(model => model.Instrument.MetrologicalCharacteristics): @Html.DisplayFor(model => model.Instrument.MetrologicalCharacteristics)</li>
+                            <li>@Html.DisplayNameFor(model => model.Instrument.Location): @Html.DisplayFor(model => model.Instrument.Location)</li>
+                            <li>@Html.DisplayNameFor(model => model.Instrument.Principal): @Html.DisplayFor(model => model.Instrument.Principal)</li>
+                            <li>@Html.DisplayNameFor(model => model.Instrument.ProjectTeamName): @Html.DisplayFor(model => model.Instrument.ProjectTeamName)</li>
+                        </ul>
 
-<div>
-    <h4>Instrument</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Instrument.ID)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Instrument.ID)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Instrument.Platform)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Instrument.Platform)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Instrument.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Instrument.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Instrument.StartUsingDate)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Instrument.StartUsingDate)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Instrument.CalibrationCycle)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Instrument.CalibrationCycle)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Instrument.MetrologicalCharacteristics)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Instrument.MetrologicalCharacteristics)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Instrument.Status)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Instrument.Status)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Instrument.Location)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Instrument.Location)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Instrument.Principal)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Instrument.Principal)
-        </dd>
-        
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Instrument.components) <a asp-page="../Components/Create">(新建)</a>
-        </dt>
-        <dd class="col-sm-10">
-            <table class="table">
-                <tr>
-                    @* <th>@Html.DisplayNameFor(model => model.Instrument.components.First().SerialNumber)</th> *@
-                    <th>@Html.DisplayNameFor(model => model.Instrument.components.First().Name)</th>
-                    <th>@Html.DisplayNameFor(model => model.Instrument.components.First().Model)</th>
-                    <th></th>
-                </tr>
-                @foreach (var item in Model.Instrument.components)
-                {
-                    <tr>
-                        @* <td>@Html.DisplayFor(modelItem => item.SerialNumber)</td> *@
-                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Model)</td>
-                        <td>
-                            <a asp-page="../Components/Edit" asp-route-id="@item.ID">Edit</a> |
-                            <a asp-page="../Components/Details" asp-route-id="@item.ID">Details</a> |
-                            <a asp-page="../Components/Delete" asp-route-id="@item.ID">Delete</a>
-                        </td>
-                    </tr>
-                }
-            </table>
-        </dd>
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            校准信息<a asp-page="../Calibrations/Create">（新建）</a>
+                        </h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table class="table">
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.Instrument.calibrations.First().Date)</th>
+                                <th>@Html.DisplayNameFor(model => model.Instrument.calibrations.First().Unit)</th>
+                                <th>@Html.DisplayNameFor(model => model.Instrument.calibrations.First().Result)</th>
+                                <th>@Html.DisplayNameFor(model => model.Instrument.calibrations.First().Calibrator)</th>
+                                <th></th>
+                            </tr>
+                            @foreach (var item in Model.Instrument.calibrations)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.Date)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Unit)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Result)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Calibrator)</td>
+                                    <td>
+                                        <a asp-page="../Calibrations/Edit" asp-route-id="@item.ID">编辑</a> |
+                                        @*<a asp-page="../Calibrations/Details" asp-route-id="@item.ID">Details</a> |*@
+                                        <a asp-page="../Calibrations/Delete" asp-route-id="@item.ID">删除</a>
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Instrument.malfunctions.First().ID) <a asp-page="../Malfunctions/Create">(新建)</a>
-        </dt>
-        <dd class="col-sm-10">
-            <table class="table">
-                <tr>
-                    <th>@Html.DisplayNameFor(model => model.Instrument.malfunctions.First().FoundTime)</th>
-                    <th>@Html.DisplayNameFor(model => model.Instrument.malfunctions.First().Problem)</th>
-                    <th>@Html.DisplayNameFor(model => model.Instrument.malfunctions.First().DebuggingTime)</th>
-                    <th>@Html.DisplayNameFor(model => model.Instrument.malfunctions.First().FollowUpPeople)</th>
-                    <th></th>
-                </tr>
-                @foreach (var item in Model.Instrument.malfunctions)
-                {
-                    <tr>
-                        <td>@Html.DisplayFor(modelItem => item.FoundTime)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Problem)</td>
-                        <td>@Html.DisplayFor(modelItem => item.DebuggingTime)</td>
-                        <td>@Html.DisplayFor(modelItem => item.FollowUpPeople)</td>
-                        <td>
-                            <a asp-page="../Malfunctions/Edit" asp-route-id="@item.ID">Edit</a> |
-                            <a asp-page="../Malfunctions/Details" asp-route-id="@item.ID">Details</a> |
-                            <a asp-page="../Malfunctions/Delete" asp-route-id="@item.ID">Delete</a>
-                        </td>
-                    </tr>
-                    
-                }
-            </table>
-        </dd>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Instrument.calibrations) <a asp-page="../Calibrations/Create">(新建)</a>
-        </dt>
-        <dd class="col-sm-10">
-            <table class="table">
-                <tr>
-                    <th>@Html.DisplayNameFor(model => model.Instrument.calibrations.First().Date)</th>
-                    <th>@Html.DisplayNameFor(model => model.Instrument.calibrations.First().Unit)</th>
-                    <th>@Html.DisplayNameFor(model => model.Instrument.calibrations.First().Result)</th>
-                    <th>@Html.DisplayNameFor(model => model.Instrument.calibrations.First().Calibrator)</th>
-                    <th></th>
-                </tr>
-                @foreach (var item in Model.Instrument.calibrations)
-                {
-                    <tr>
-                        <td>@Html.DisplayFor(modelItem => item.Date)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Unit)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Result)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Calibrator)</td>
-                        <td>
-                            <a asp-page="../Calibrations/Edit" asp-route-id="@item.ID">Edit</a> |
-                            <a asp-page="../Calibrations/Details" asp-route-id="@item.ID">Details</a> |
-                            <a asp-page="../Calibrations/Delete" asp-route-id="@item.ID">Delete</a>
-                        </td>
-                    </tr>
-                }
-            </table>
-        </dd>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Instrument.assert) <a asp-page="../Asserts/Create">(新建)</a>
-        </dt>
-        <dd class="col-sm-10">
-            <table class="table">
-                <tr>
-                    <th>@Html.DisplayNameFor(model => model.Instrument.assert.Code)</th>
-                    <th>@Html.DisplayNameFor(model => model.Instrument.assert.EntryDate)</th>
-                    <th>@Html.DisplayNameFor(model => model.Instrument.assert.SourceUnit)</th>
-                    <th>@Html.DisplayNameFor(model => model.Instrument.assert.Remark)</th>
-                    <th></th>
-                </tr>
-                    <tr>
-                        <td>@Html.DisplayFor(model => model.Instrument.assert.Code)</td>
-                        <td>@Html.DisplayFor(model => model.Instrument.assert.EntryDate)</td>
-                        <td>@Html.DisplayFor(model => model.Instrument.assert.SourceUnit)</td>
-                        <td>@Html.DisplayFor(model => model.Instrument.assert.Remark)</td>
-                        <td>
-                            <a asp-page="../Asserts/Edit" asp-route-id="@Model.Instrument.assert.ID">Edit</a> |
-                            <a asp-page="../Asserts/Details" asp-route-id="@Model.Instrument.assert.ID">Details</a> |
-                            <a asp-page="../Asserts/Delete" asp-route-id="@Model.Instrument.assert.ID">Delete</a>
-                        </td>
-                    </tr>
-            </table>
-        </dd>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Instrument.Remark)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Instrument.Remark)
-        </dd>
+        </div>
+        <!-- /.row -->
+        <!-- Table row -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            部件信息<a asp-page="../Components/Create">（新建）</a>
+                        </h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table class="table">
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.Instrument.components.First().SerialNumber)</th>
+                                <th>@Html.DisplayNameFor(model => model.Instrument.components.First().Brand)</th>
+                                <th>@Html.DisplayNameFor(model => model.Instrument.components.First().Model)</th>
+                                <th>@Html.DisplayNameFor(model => model.Instrument.components.First().Name)</th>
+                                <th></th>
+                            </tr>
+                            @foreach (var item in Model.Instrument.components)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.SerialNumber)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Brand)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Model)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
 
-    </dl>
-</div>
-<div>
-    <a asp-page="./Edit" asp-route-id="@Model.Instrument.ID">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
-</div>
+                                    <td>
+                                        <a asp-page="../Components/Edit" asp-route-id="@item.ID">编辑</a> |
+                                        @*<a asp-page="../Components/Details" asp-route-id="@item.ID">详情</a> |*@
+                                        <a asp-page="../Components/Delete" asp-route-id="@item.ID">删除</a>
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            故障信息<a asp-page="../Malfunctions/Create">（新建）</a>
+                        </h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table class="table">
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.Instrument.malfunctions.First().FoundTime)</th>
+                                <th>@Html.DisplayNameFor(model => model.Instrument.malfunctions.First().Problem)</th>
+                                <th>@Html.DisplayNameFor(model => model.Instrument.malfunctions.First().DebuggingTime)</th>
+                                <th>@Html.DisplayNameFor(model => model.Instrument.malfunctions.First().FollowUpPeople)</th>
+                                <th></th>
+                            </tr>
+                            @foreach (var item in Model.Instrument.malfunctions)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.FoundTime)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Problem)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.DebuggingTime)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.FollowUpPeople)</td>
+                                    <td>
+                                        <a asp-page="../Malfunctions/Edit" asp-route-id="@item.ID">编辑</a> |
+                                        <a asp-page="../Malfunctions/Details" asp-route-id="@item.ID">详情</a> |
+                                        <a asp-page="../Malfunctions/Delete" asp-route-id="@item.ID">删除</a>
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+
+        </div>
+        <!-- /.row -->
+
+        <div class="row">
+            <div class="col-12">
+                <p class="lead">备注</p>
+                @Html.DisplayFor(model => model.Instrument.Remark)
+            </div>
+            <!-- /.col -->
+        </div>
+        <br />
+        <!-- /.row -->
+        <!-- this row will not appear when printing -->
+        <div class="row no-print">
+            <div class="col-12">
+                @*<a href="invoice-print.html" target="_blank" class="btn btn-default float-right"><i class="fas fa-print"></i> 打印</a>*@
+                <div>
+                    <a asp-page="./Edit" asp-route-id="@Model.Instrument.ID">
+                        <input type="button" class="btn btn-primary" value="编辑">
+                    </a>
+
+                    <a asp-page="./Index">
+                        <input type="button" class="btn btn-primary" value="返回" style="margin-left: 5px;">
+                    </a>
+
+                    <button onclick="javescript:window.print()" type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
+                        <i class="fas fa-download"></i> Generate PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>

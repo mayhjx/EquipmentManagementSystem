@@ -31,7 +31,7 @@ namespace EquipmentManagementSystem.Models
         [StringLength(50, MinimumLength=1)]
         public string Name { get; set; }
         
-        [Display(Name="启用时间")]
+        [Display(Name="启用日期")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString="{0:yyyy-MM-dd}", ApplyFormatInEditMode=true)]
         public DateTime StartUsingDate { get; set; }
@@ -81,10 +81,10 @@ namespace EquipmentManagementSystem.Models
         [Display(Name="校准信息")]
         public ICollection<Calibration> calibrations { get; set; }
 
-        [Display(Name="部件")]
+        [Display(Name="部件信息")]
         public ICollection<Component> components { get; set; }
 
-        [Display(Name="故障")]
+        [Display(Name="故障信息")]
         public ICollection<Malfunction> malfunctions { get; set; }
     }
 
@@ -93,7 +93,7 @@ namespace EquipmentManagementSystem.Models
         [Display(Name="正常")]
         Using,
         [Display(Name="故障")]
-        Malfunctoin,
+        Malfunction,
         [Display(Name = "停用")]
         StopUsing,
         [Display(Name = "调拨")]

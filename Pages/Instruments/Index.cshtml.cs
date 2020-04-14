@@ -22,19 +22,13 @@ namespace EquipmentManagementSystem.Pages.Instruments
 
         public IList<Instrument> Instrument { get;set; }
 
-        [BindProperty(SupportsGet=true)]
-        public string SearchString { get; set; }
-
         public async Task OnGetAsync()
         {
-            // Instrument = await _context.Instruments.OrderBy(n => n.ID).ToListAsync();
+            //Instrument = await _context.Instruments.OrderBy(n => n.ID).ToListAsync();
             var instruments = from i in _context.Instruments
                               .Include(i => i.calibrations)
-                                select i;
-            if (!string.IsNullOrEmpty(SearchString))
-            {
-                instruments = instruments.Where(s => s.ID.Contains(SearchString));
-            }
+                              select i;
+
             Instrument = await instruments.OrderBy(m => m.ID).ToListAsync();
         }
     }

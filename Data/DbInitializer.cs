@@ -137,7 +137,8 @@ namespace EquipmentManagementSystem.Data
                         InstrumentID = data[0],
                         SerialNumber = data[1],
                         Name = data[2],
-                        Model = data[3]
+                        Model = data[3],
+                        Brand = data[4],
                     }
                 );
             }
