@@ -2,7 +2,7 @@
 @model IndexModel
 @{
     ViewData["Title"] = "看板";
-    ViewData["Head"] = "看板";
+    // ViewData["Head"] = "看板";
 }
 
 <div class="row">
@@ -32,29 +32,29 @@
                     <tbody>
                         @foreach (var item in Model.InstrumentOfExpire)
                         {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ID)
-                                </td>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ID)
+                            </td>
 
-                                <td>
-                                    @if (item.calibrations != null)
+                            <td>
+                                @if (item.calibrations != null)
                                     {
                                         var lastCalibrationDateTime = item.calibrations.Last().Date;
                                         if (lastCalibrationDateTime != DateTime.Parse("0001-01-01"))
                                         {
-                                            @(lastCalibrationDateTime.AddYears(item.CalibrationCycle).AddDays(-1).ToShortDateString())
+                                @(lastCalibrationDateTime.AddYears(item.CalibrationCycle).AddDays(-1).ToShortDateString())
                                         }
                                     }
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ProjectTeamName)
-                                </td>
-                            </tr>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ProjectTeamName)
+                            </td>
+                        </tr>
                         }
                     </tbody>
 
-                    
+
                 </table>
             </div>
             <!-- /.card-body -->
