@@ -5,7 +5,6 @@ namespace EquipmentManagementSystem.Models
 {
     public class Malfunction
     {   
-        [Display(Name="故障信息")]
         public int ID { get; set; }
 
         [Display(Name="设备编号")]
@@ -17,11 +16,6 @@ namespace EquipmentManagementSystem.Models
         public int ComponentID { get; set; }
 
         public Component component { get; set; }
-
-        [Required]
-        [Display(Name="类别")]
-        [StringLength(50,MinimumLength=1)]
-        public string Category { get; set; }
 
         [Required]
         [Display(Name="现象/问题")]
@@ -50,16 +44,16 @@ namespace EquipmentManagementSystem.Models
         public string FollowUpPeople { get; set; }
 
         [Display(Name="排除时间")]
-        public string DebuggingTime { get; set; }
+        public DateTime DebuggingTime { get; set; }
 
         [Display(Name="配件下单时间")]      
-        public string PlaceOrderTime { get; set; }
+        public DateTime PlaceOrderTime { get; set; }
 
         [Display(Name="配件到达时间")]      
-        public string AccessoriesArrivalTime { get; set; }
+        public DateTime AccessoriesArrivalTime { get; set; }
 
         [Display(Name="工程师上门时间")]      
-        public string EngineerArrivalTime { get; set; }
+        public DateTime EngineerArrivalTime { get; set; }
 
         [Display(Name="解决措施")]
         public string Solutions { get; set; }

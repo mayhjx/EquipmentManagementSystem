@@ -29,9 +29,10 @@ namespace EquipmentManagementSystem
                 try
                 {
                     var context = services.GetRequiredService<EquipmentContext>();
+                    var wwwrootPath = services.GetRequiredService<IWebHostEnvironment>().WebRootPath;
                     // Create the DB if no DB exists 不用老是在命令行输入dotnet ef...
                     // context.Database.EnsureCreated(); 
-                    DbInitializer.Initialize(context);
+                    DbInitializer.Initialize(context, wwwrootPath);
                 }
                 catch (Exception ex)
                 {
