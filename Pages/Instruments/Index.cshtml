@@ -2,7 +2,9 @@
 @model EquipmentManagementSystem.Pages.Instruments.IndexModel
 
 @{
-    ViewData["Title"] = "设备信息一览";
+    ViewData["Title"] = "台账";
+    ViewData["Head"] = "台账";
+
 }
 
 <div class="card-header">
@@ -34,6 +36,9 @@
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.Instrument[0].Location)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Instrument[0].Status)
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.Instrument[0].Remark)
@@ -68,6 +73,31 @@
                                     @Html.DisplayFor(modelItem => item.Location)
                                 </td>
                                 <td>
+                                    @{
+                                        var status = item.Status.ToString();
+                                        if (status == "Using")
+                                        {
+                                            <span class="bg-green">正常</span>
+                                        }
+                                        else if (status == "Malfunction")
+                                        {
+                                            <span class="bg-yellow">故障</span>
+                                        }
+                                        else if (status == "StopUsing")
+                                        {
+                                            <span class="bg-yellow">停用</span>
+                                        }
+                                        else if (status == "Allocate")
+                                        {
+                                            <span class="bg-red">调拨</span>
+                                        }
+                                        else if (status == "Scrapped")
+                                        {
+                                            <span class="bg-red">报废</span>
+                                        }
+                                    }
+                                </td>
+                                <td>
                                     @Html.DisplayFor(modelItem => item.Remark)
                                 </td>
                                 <td>
@@ -99,6 +129,7 @@
                 "info": true,
                 "autoWidth": true,
                 "responsive": true,
+                "processing": true,
             });
         });
     </script>

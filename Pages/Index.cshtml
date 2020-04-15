@@ -1,10 +1,64 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "看板";
+    ViewData["Head"] = "看板";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    @*<p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>*@
+<div class="row">
+    <div class="col-md-4">
+        <div class="card card-warning card-outline">
+            <div class="card-header">
+                <h3 class="card-title">
+                    需校准设备
+                </h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.InstrumentOfExpire[0].ID)
+                            </th>
+                            <th>
+                                到期日期
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.InstrumentOfExpire[0].ProjectTeamName)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.InstrumentOfExpire)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ID)
+                                </td>
+
+                                <td>
+                                    @if (item.calibrations != null)
+                                    {
+                                        var lastCalibrationDateTime = item.calibrations.Last().Date;
+                                        if (lastCalibrationDateTime != DateTime.Parse("0001-01-01"))
+                                        {
+                                            @(lastCalibrationDateTime.AddYears(item.CalibrationCycle).AddDays(-1).ToShortDateString())
+                                        }
+                                    }
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ProjectTeamName)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                    
+                </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
 </div>
