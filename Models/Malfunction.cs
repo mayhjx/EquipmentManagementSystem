@@ -25,11 +25,10 @@ namespace EquipmentManagementSystem.Models
 
     public class Malfunction
     {
-
         public int ID { get; set; }
 
         [Display(Name = "故障领域")]
-        public Fields field { get; set; }
+        public Fields Field { get; set; }
 
         [Display(Name = "设备编号")]
         public string InstrumentID { get; set; }
@@ -85,5 +84,15 @@ namespace EquipmentManagementSystem.Models
         [Display(Name = "备注")]
         public string Remark { get; set; }
 
+        [Display(Name = "状态")]
+        public WorkOrderStatus WorkOrderStatus { get; set; }
+    }
+
+    public enum WorkOrderStatus
+    {
+        [Display(Name = "跟进中")]
+        FollowUp,
+        [Display(Name = "已完成")]
+        Completed,
     }
 }

@@ -2,22 +2,23 @@
 @model EquipmentManagementSystem.Pages.Malfunctions.IndexModel
 
 @{
-    ViewData["Title"] = "故障";
+    ViewData["Title"] = "故障跟进";
 }
 
-<h3>故障信息</h3>
-
 <p>
-    <a asp-page="Create">新建</a>
+    <a asp-page="Create">新建故障工单</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.Malfunction[0].WorkOrderStatus)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Malfunction[0].InstrumentID)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Malfunction[0].ComponentID)
+                @Html.DisplayNameFor(model => model.Malfunction[0].Field)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Malfunction[0].Problem)
@@ -48,10 +49,13 @@
         {
             <tr>
                 <td>
+                    @Html.DisplayFor(modelItem => item.WorkOrderStatus)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.InstrumentID)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ComponentID)
+                    @Html.DisplayFor(modelItem => item.Field)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Problem)

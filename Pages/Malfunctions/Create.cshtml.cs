@@ -1,34 +1,34 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using EquipmentManagementSystem.Data;
+using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using EquipmentManagementSystem.Data;
-using EquipmentManagementSystem.Models;
+using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions
 {
     public class CreateModel : PageModel
     {
-        private readonly EquipmentManagementSystem.Data.EquipmentContext _context;
+        private readonly EquipmentContext _context;
 
-        public CreateModel(EquipmentManagementSystem.Data.EquipmentContext context)
+        public CreateModel(EquipmentContext context)
         {
             _context = context;
         }
 
+        public SelectList InstrumentOptions { get; set; }
+
         public IActionResult OnGet()
         {
-        
-            ViewData["componentID"] = new SelectList(_context.components, "ID", "Model");
-            ViewData["instrumentID"] = new SelectList(_context.Instruments, "ID", "ID");
+            InstrumentOptions = new SelectList(_context.Instruments, "ID", "ID");
+            ViewData["componentID"] = new SelectList(_context.components, "ID", "Name");
+            //ViewData["instrumentID"] = new SelectList(_context.Instruments, "ID", "ID");
             return Page();
         }
 
         [BindProperty]
         public Malfunction Malfunction { get; set; }
+
 
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.
