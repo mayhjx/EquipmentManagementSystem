@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200420071131_addMalfunctionsFields.cs" />
+    <Compile Remove="Migrations\20200420071131_addMalfunctionsFields.Designer.cs" />
+    <Compile Remove="Migrations\20200420071421_addMalfunctionsFiels.cs" />
+    <Compile Remove="Migrations\20200420071421_addMalfunctionsFiels.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="Pages\Shared\starter.cshtml" />
   </ItemGroup>
 
@@ -21,12 +28,6 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.3" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.design" Version="3.1.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Equipment.db">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

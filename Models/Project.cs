@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace EquipmentManagementSystem.Models
@@ -9,16 +7,16 @@ namespace EquipmentManagementSystem.Models
         public int ID { get; set; }
 
         [Required]
-        [Display(Name="名称")]
-        [StringLength(50, MinimumLength=1)]
+        [Display(Name = "名称")]
+        [StringLength(50, MinimumLength = 1)]
         public string Name { get; set; }
 
-        [Display(Name="仪器编号")]
+        [Display(Name = "仪器编号")]
         public string instrumentID { get; set; }
         public Instrument instrument { get; set; }
-        
-        [Display(Name="项目组")]
+
+        [Display(Name = "所属项目组")]
         public ProjectTeam projectTeam { get; set; }
-        
+
     }
 }
