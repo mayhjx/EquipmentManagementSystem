@@ -24,8 +24,8 @@ namespace EquipmentManagementSystem.Pages.Malfunctions
                 return NotFound();
             }
 
-            Malfunction = await _context.Malfunction
-                .Include(m => m.component)
+            Malfunction = await _context.Malfunctions
+                .Include(m => m.Component)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.ID == id);
 

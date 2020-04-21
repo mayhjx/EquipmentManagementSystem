@@ -36,7 +36,7 @@ namespace EquipmentManagementSystem.Pages.Computers
                 return Page();
             }
 
-            _context.Computer.Add(Computer);
+            _context.Computers.Add(Computer);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

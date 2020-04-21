@@ -30,7 +30,7 @@ namespace EquipmentManagementSystem.Pages.Components
                 return NotFound();
             }
 
-            Component = await _context.components
+            Component = await _context.Components
                 .Include(c => c.instrument).FirstOrDefaultAsync(m => m.ID == id);
 
             if (Component == null)
@@ -73,7 +73,7 @@ namespace EquipmentManagementSystem.Pages.Components
 
         private bool ComponentExists(int id)
         {
-            return _context.components.Any(e => e.ID == id);
+            return _context.Components.Any(e => e.ID == id);
         }
     }
 }

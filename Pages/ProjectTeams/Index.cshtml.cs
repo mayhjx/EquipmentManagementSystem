@@ -23,7 +23,7 @@ namespace EquipmentManagementSystem.Pages.ProjectTeams
 
         public async Task OnGetAsync()
         {
-            ProjectTeam = await _context.projectTeams.ToListAsync();
+            ProjectTeam = await _context.ProjectTeams.ToListAsync();
         }
     }
 }

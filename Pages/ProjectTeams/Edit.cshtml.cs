@@ -30,7 +30,7 @@ namespace EquipmentManagementSystem.Pages.ProjectTeams
                 return NotFound();
             }
 
-            ProjectTeam = await _context.projectTeams.FirstOrDefaultAsync(m => m.ID == id);
+            ProjectTeam = await _context.ProjectTeams.FirstOrDefaultAsync(m => m.ID == id);
 
             if (ProjectTeam == null)
             {
@@ -71,7 +71,7 @@ namespace EquipmentManagementSystem.Pages.ProjectTeams
 
         private bool ProjectTeamExists(int id)
         {
-            return _context.projectTeams.Any(e => e.ID == id);
+            return _context.ProjectTeams.Any(e => e.ID == id);
         }
     }
 }

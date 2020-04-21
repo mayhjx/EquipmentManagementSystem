@@ -37,7 +37,7 @@ namespace EquipmentManagementSystem.Pages.Asserts
                 return Page();
             }
 
-            _context.asserts.Add(Assert);
+            _context.Asserts.Add(Assert);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

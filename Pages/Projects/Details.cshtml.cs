@@ -28,7 +28,7 @@ namespace EquipmentManagementSystem.Pages.Projects
                 return NotFound();
             }
 
-            Project = await _context.projects
+            Project = await _context.Projects
                 .Include(p => p.instrument)
                 .Include(p => p.projectTeam)
                 .FirstOrDefaultAsync(m => m.ID == id);

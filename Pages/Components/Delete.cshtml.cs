@@ -29,7 +29,7 @@ namespace EquipmentManagementSystem.Pages.Components
                 return NotFound();
             }
 
-            Component = await _context.components
+            Component = await _context.Components
                 .Include(c => c.instrument).FirstOrDefaultAsync(m => m.ID == id);
 
             if (Component == null)
@@ -46,11 +46,11 @@ namespace EquipmentManagementSystem.Pages.Components
                 return NotFound();
             }
 
-            Component = await _context.components.FindAsync(id);
+            Component = await _context.Components.FindAsync(id);
 
             if (Component != null)
             {
-                _context.components.Remove(Component);
+                _context.Components.Remove(Component);
                 await _context.SaveChangesAsync();
             }
 

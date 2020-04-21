@@ -28,7 +28,7 @@ namespace EquipmentManagementSystem.Pages.Components
                 return NotFound();
             }
 
-            Component = await _context.components
+            Component = await _context.Components
                 .Include(c => c.instrument).FirstOrDefaultAsync(m => m.ID == id);
 
             if (Component == null)

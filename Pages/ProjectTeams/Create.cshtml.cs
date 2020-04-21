@@ -36,7 +36,7 @@ namespace EquipmentManagementSystem.Pages.ProjectTeams
                 return Page();
             }
 
-            _context.projectTeams.Add(ProjectTeam);
+            _context.ProjectTeams.Add(ProjectTeam);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

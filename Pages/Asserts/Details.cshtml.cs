@@ -28,7 +28,7 @@ namespace EquipmentManagementSystem.Pages.Asserts
                 return NotFound();
             }
 
-            Assert = await _context.asserts
+            Assert = await _context.Asserts
                 .Include(a => a.instrument).FirstOrDefaultAsync(m => m.ID == id);
 
             if (Assert == null)

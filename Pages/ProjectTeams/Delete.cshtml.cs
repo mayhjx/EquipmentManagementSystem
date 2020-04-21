@@ -29,7 +29,7 @@ namespace EquipmentManagementSystem.Pages.ProjectTeams
                 return NotFound();
             }
 
-            ProjectTeam = await _context.projectTeams.FirstOrDefaultAsync(m => m.ID == id);
+            ProjectTeam = await _context.ProjectTeams.FirstOrDefaultAsync(m => m.ID == id);
 
             if (ProjectTeam == null)
             {
@@ -45,11 +45,11 @@ namespace EquipmentManagementSystem.Pages.ProjectTeams
                 return NotFound();
             }
 
-            ProjectTeam = await _context.projectTeams.FindAsync(id);
+            ProjectTeam = await _context.ProjectTeams.FindAsync(id);
 
             if (ProjectTeam != null)
             {
-                _context.projectTeams.Remove(ProjectTeam);
+                _context.ProjectTeams.Remove(ProjectTeam);
                 await _context.SaveChangesAsync();
             }
 

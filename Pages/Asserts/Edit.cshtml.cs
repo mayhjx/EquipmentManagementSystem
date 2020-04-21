@@ -30,7 +30,7 @@ namespace EquipmentManagementSystem.Pages.Asserts
                 return NotFound();
             }
 
-            Assert = await _context.asserts
+            Assert = await _context.Asserts
                 .Include(a => a.instrument).FirstOrDefaultAsync(m => m.ID == id);
 
             if (Assert == null)
@@ -73,7 +73,7 @@ namespace EquipmentManagementSystem.Pages.Asserts
 
         private bool AssertExists(int id)
         {
-            return _context.asserts.Any(e => e.ID == id);
+            return _context.Asserts.Any(e => e.ID == id);
         }
     }
 }

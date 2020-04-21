@@ -12,9 +12,6 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Malfunction[0].WorkOrderStatus)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Malfunction[0].InstrumentID)
             </th>
             <th>
@@ -33,10 +30,10 @@
                 @Html.DisplayNameFor(model => model.Malfunction[0].ReportTime)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Malfunction[0].FollowUpPeople)
+                @Html.DisplayNameFor(model => model.Malfunction[0].DebuggingTime)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Malfunction[0].DebuggingTime)
+                @Html.DisplayNameFor(model => model.Malfunction[0].FollowUpPeople)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Malfunction[0].Remark)
@@ -48,9 +45,6 @@
         @foreach (var item in Model.Malfunction)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.WorkOrderStatus)
-                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.InstrumentID)
                 </td>
@@ -64,16 +58,16 @@
                     @Html.DisplayFor(modelItem => item.Reason)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.FoundTime)
+                    @(item.FoundTime.ToString() == DateTime.MinValue.ToString() ? string.Empty : item.FoundTime.ToString())
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ReportTime)
+                    @(item.ReportTime.ToString() == DateTime.MinValue.ToString() ? string.Empty : item.ReportTime.ToString())
+                </td>
+                <td>
+                    @(item.DebuggingTime.ToString() == DateTime.MinValue.ToString() ? string.Empty : item.DebuggingTime.ToString())
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.FollowUpPeople)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DebuggingTime)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Remark)

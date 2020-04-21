@@ -23,7 +23,7 @@ namespace EquipmentManagementSystem.Pages.Computers
 
         public async Task OnGetAsync()
         {
-            Computer = await _context.Computer.ToListAsync();
+            Computer = await _context.Computers.ToListAsync();
         }
     }
 }

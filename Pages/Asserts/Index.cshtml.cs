@@ -23,7 +23,7 @@ namespace EquipmentManagementSystem.Pages.Asserts
 
         public async Task OnGetAsync()
         {
-            Assert = await _context.asserts
+            Assert = await _context.Asserts
                 .Include(a => a.instrument).ToListAsync();
         }
     }

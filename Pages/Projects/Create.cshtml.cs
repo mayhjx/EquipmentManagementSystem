@@ -22,7 +22,7 @@ namespace EquipmentManagementSystem.Pages.Projects
         public IActionResult OnGet()
         {
             ViewData["instrumentID"] = new SelectList(_context.Instruments, "ID", "ID");
-            ViewData["projectTeamID"] = new SelectList(_context.projectTeams, "Name", "Name");
+            ViewData["projectTeamID"] = new SelectList(_context.ProjectTeams, "Name", "Name");
             return Page();
         }
 
@@ -38,7 +38,7 @@ namespace EquipmentManagementSystem.Pages.Projects
                 return Page();
             }
 
-            _context.projects.Add(Project);
+            _context.Projects.Add(Project);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

@@ -23,7 +23,7 @@ namespace EquipmentManagementSystem.Pages.Projects
 
         public async Task OnGetAsync()
         {
-            Project = await _context.projects
+            Project = await _context.Projects
                 .Include(p => p.instrument).ToListAsync();
         }
     }

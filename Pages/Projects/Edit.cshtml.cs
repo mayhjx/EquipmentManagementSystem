@@ -30,7 +30,7 @@ namespace EquipmentManagementSystem.Pages.Projects
                 return NotFound();
             }
 
-            Project = await _context.projects
+            Project = await _context.Projects
                 .Include(p => p.instrument)
                 .Include(p => p.projectTeam)
                 .FirstOrDefaultAsync(m => m.ID == id);
@@ -40,7 +40,7 @@ namespace EquipmentManagementSystem.Pages.Projects
                 return NotFound();
             }
             ViewData["instrumentID"] = new SelectList(_context.Instruments, "ID", "ID");
-            ViewData["projectTeamID"] = new SelectList(_context.projectTeams, "Name", "Name");
+            ViewData["projectTeamID"] = new SelectList(_context.ProjectTeams, "Name", "Name");
 
             return Page();
         }
@@ -77,7 +77,7 @@ namespace EquipmentManagementSystem.Pages.Projects
 
         private bool ProjectExists(int id)
         {
-            return _context.projects.Any(e => e.ID == id);
+            return _context.Projects.Any(e => e.ID == id);
         }
     }
 }

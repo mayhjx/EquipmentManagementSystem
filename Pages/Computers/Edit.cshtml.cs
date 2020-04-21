@@ -30,7 +30,7 @@ namespace EquipmentManagementSystem.Pages.Computers
                 return NotFound();
             }
 
-            Computer = await _context.Computer.FirstOrDefaultAsync(m => m.ID == id);
+            Computer = await _context.Computers.FirstOrDefaultAsync(m => m.ID == id);
 
             if (Computer == null)
             {
@@ -71,7 +71,7 @@ namespace EquipmentManagementSystem.Pages.Computers
 
         private bool ComputerExists(int id)
         {
-            return _context.Computer.Any(e => e.ID == id);
+            return _context.Computers.Any(e => e.ID == id);
         }
     }
 }

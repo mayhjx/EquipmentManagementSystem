@@ -23,7 +23,7 @@ namespace EquipmentManagementSystem.Pages.Components
 
         public async Task OnGetAsync()
         {
-            Component = await _context.components
+            Component = await _context.Components
                 .Include(c => c.instrument).ToListAsync();
         }
     }

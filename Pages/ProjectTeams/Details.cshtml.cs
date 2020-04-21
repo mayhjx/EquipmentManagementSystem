@@ -28,7 +28,7 @@ namespace EquipmentManagementSystem.Pages.ProjectTeams
                 return NotFound();
             }
 
-            ProjectTeam = await _context.projectTeams.FirstOrDefaultAsync(m => m.ID == id);
+            ProjectTeam = await _context.ProjectTeams.FirstOrDefaultAsync(m => m.ID == id);
 
             if (ProjectTeam == null)
             {

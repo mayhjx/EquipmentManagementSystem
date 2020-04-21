@@ -37,7 +37,7 @@ namespace EquipmentManagementSystem.Pages.Components
                 return Page();
             }
 
-            _context.components.Add(Component);
+            _context.Components.Add(Component);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

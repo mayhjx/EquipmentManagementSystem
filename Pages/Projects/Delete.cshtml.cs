@@ -29,7 +29,7 @@ namespace EquipmentManagementSystem.Pages.Projects
                 return NotFound();
             }
 
-            Project = await _context.projects
+            Project = await _context.Projects
                 .Include(p => p.instrument).FirstOrDefaultAsync(m => m.ID == id);
 
             if (Project == null)
@@ -46,11 +46,11 @@ namespace EquipmentManagementSystem.Pages.Projects
                 return NotFound();
             }
 
-            Project = await _context.projects.FindAsync(id);
+            Project = await _context.Projects.FindAsync(id);
 
             if (Project != null)
             {
-                _context.projects.Remove(Project);
+                _context.Projects.Remove(Project);
                 await _context.SaveChangesAsync();
             }
 

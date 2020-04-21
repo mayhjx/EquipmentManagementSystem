@@ -29,7 +29,7 @@ namespace EquipmentManagementSystem.Pages.Computers
                 return NotFound();
             }
 
-            Computer = await _context.Computer.FirstOrDefaultAsync(m => m.ID == id);
+            Computer = await _context.Computers.FirstOrDefaultAsync(m => m.ID == id);
 
             if (Computer == null)
             {
@@ -45,11 +45,11 @@ namespace EquipmentManagementSystem.Pages.Computers
                 return NotFound();
             }
 
-            Computer = await _context.Computer.FindAsync(id);
+            Computer = await _context.Computers.FindAsync(id);
 
             if (Computer != null)
             {
-                _context.Computer.Remove(Computer);
+                _context.Computers.Remove(Computer);
                 await _context.SaveChangesAsync();
             }
 
