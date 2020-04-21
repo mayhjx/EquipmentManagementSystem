@@ -1,25 +1,24 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using EquipmentManagementSystem.Models;
 using Microsoft.EntityFrameworkCore;
-using EquipmentManagementSystem.Models;
 
 namespace EquipmentManagementSystem.Data
 {
     public class EquipmentContext : DbContext
     {
-        public EquipmentContext (DbContextOptions<EquipmentContext> options)
+        public EquipmentContext(DbContextOptions<EquipmentContext> options)
             : base(options)
         {
         }
 
         public DbSet<Instrument> Instruments { get; set; }
-        public DbSet<Calibration> Calibrations { get; set;}
-        public DbSet<Component> components { get; set;}
-        public DbSet<Assert> asserts { get; set;}
-        public DbSet<ProjectTeam> projectTeams { get; set;}
-        public DbSet<Project> projects { get; set;}
+        public DbSet<Calibration> Calibrations { get; set; }
+        public DbSet<Component> Components { get; set; }
+        public DbSet<Assert> Asserts { get; set; }
+        public DbSet<ProjectTeam> ProjectTeams { get; set; }
+        public DbSet<Project> Projects { get; set; }
+        public DbSet<Malfunction> Malfunctions { get; set; }
+        public DbSet<Computer> Computers { get; set; }
+        public DbSet<WorkOrder> WorkOrders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -34,8 +33,6 @@ namespace EquipmentManagementSystem.Data
             modelBuilder.Entity<Instrument>().Property(i => i.ModifiedDate).ValueGeneratedOnAddOrUpdate().HasDefaultValueSql("datetime('now', 'localtime')");
         }
 
-        public DbSet<EquipmentManagementSystem.Models.Malfunction> Malfunction { get; set; }
 
-        public DbSet<EquipmentManagementSystem.Models.Computer> Computer { get; set; }
     }
 }

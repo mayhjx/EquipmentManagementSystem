@@ -91,7 +91,7 @@ namespace EquipmentManagementSystem.Data
 
         private static void InsertAssert(EquipmentContext context)
         {
-            if (context.asserts.Any())
+            if (context.Asserts.Any())
             {
                 return;   // DB has been seeded
             }
@@ -106,7 +106,7 @@ namespace EquipmentManagementSystem.Data
                 DateTime datetime;
                 DateTime.TryParse(data[3], out datetime); 
 
-                context.asserts.Add(
+                context.Asserts.Add(
                     new Assert{
                         InstrumentId=data[0],
                         Code = data[1],
@@ -122,7 +122,7 @@ namespace EquipmentManagementSystem.Data
 
         private static void InsertComponent(EquipmentContext context)
         {
-            if (context.components.Any())
+            if (context.Components.Any())
             {
                 return;   // DB has been seeded
             }
@@ -134,7 +134,7 @@ namespace EquipmentManagementSystem.Data
                 if (line.Trim() == "") continue;
                 var data = line.Split(",");
 
-                context.components.Add(
+                context.Components.Add(
                     new Component{
                         InstrumentID = data[0],
                         SerialNumber = data[1],
