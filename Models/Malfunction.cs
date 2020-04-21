@@ -33,12 +33,12 @@ namespace EquipmentManagementSystem.Models
         [Display(Name = "设备编号")]
         public string InstrumentID { get; set; }
 
-        public Instrument instrument { get; set; }
+        public Instrument Instrument { get; set; }
 
         [Display(Name = "部件")]
         public int ComponentID { get; set; }
 
-        public Component component { get; set; }
+        public Component Component { get; set; }
 
         [Required]
         [Display(Name = "现象/问题")]
@@ -83,16 +83,7 @@ namespace EquipmentManagementSystem.Models
 
         [Display(Name = "备注")]
         public string Remark { get; set; }
-
-        [Display(Name = "状态")]
-        public WorkOrderStatus WorkOrderStatus { get; set; }
     }
 
-    public enum WorkOrderStatus
-    {
-        [Display(Name = "跟进中")]
-        FollowUp,
-        [Display(Name = "已完成")]
-        Completed,
-    }
+
 }
