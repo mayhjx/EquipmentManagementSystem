@@ -1,13 +1,11 @@
-﻿using System;
+﻿using EquipmentManagementSystem.Data;
+using EquipmentManagementSystem.Models;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
-using EquipmentManagementSystem.Models;
-using EquipmentManagementSystem.Data;
-using Microsoft.EntityFrameworkCore;
 
 
 namespace EquipmentManagementSystem.Pages
@@ -34,14 +32,14 @@ namespace EquipmentManagementSystem.Pages
             InstrumentOfExpire = (from m in _context.Instruments
                                 .Include(m => m.calibrations)
                                 .AsEnumerable()
-                                where m.calibrations.Last().Date != DateTime.Parse("0001-01-01")
-                                let remainDay = m.calibrations.Last().Date.AddYears(m.CalibrationCycle) - DateTime.Today
-                                where remainDay.Days < 30 // 到期前30天内
-                                select m).ToList();
+                                  where (m.calibrations.Count > 0 && m.calibrations.Last().Date != DateTime.MinValue)
+                                  let remainDay = m.calibrations.Last().Date.AddYears(m.CalibrationCycle) - DateTime.Today
+                                  where remainDay.Days < 30 // 到期前30天内
+                                  select m).ToList();
 
             Instruments = (from m in _context.Instruments
                            select m).ToList();
-                             
+
         }
     }
 }

@@ -3,8 +3,6 @@
 
 @{
     ViewData["Title"] = "台账";
-    ViewData["Head"] = "台账";
-
 }
 
 <div class="card-header">
@@ -57,10 +55,10 @@
                                     @Html.DisplayFor(modelItem => item.Name)
                                 </td>
                                 <td>
-                                    @if (item.calibrations != null)
+                                    @if (item.calibrations.Count > 0)
                                     {
                                         var lastCalibrationDateTime = item.calibrations.Last().Date;
-                                        if (lastCalibrationDateTime != DateTime.Parse("0001-01-01"))
+                                        if (lastCalibrationDateTime != DateTime.MinValue)
                                         {
                                             @(lastCalibrationDateTime.AddYears(item.CalibrationCycle).AddDays(-1).ToShortDateString())
                                         }

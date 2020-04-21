@@ -182,7 +182,7 @@
                     <table class="table">
                         <tr>
                             <th>@Html.DisplayNameFor(model => model.Instrument.malfunctions.First().FoundTime)</th>
-                            <th>@Html.DisplayNameFor(model => model.Instrument.malfunctions.First().Problem)</th>
+                            @*<th>@Html.DisplayNameFor(model => model.Instrument.malfunctions.First().Problem)</th>*@
                             <th>@Html.DisplayNameFor(model => model.Instrument.malfunctions.First().DebuggingTime)</th>
                             <th>@Html.DisplayNameFor(model => model.Instrument.malfunctions.First().FollowUpPeople)</th>
                             <th></th>
@@ -191,8 +191,11 @@
                         {
                             <tr>
                                 <td>@Html.DisplayFor(modelItem => item.FoundTime)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Problem)</td>
-                                <td>@Html.DisplayFor(modelItem => item.DebuggingTime)</td>
+                                @*<td>@Html.DisplayFor(modelItem => item.Problem)</td>*@
+                                @*<td>@Html.DisplayFor(modelItem => item.DebuggingTime)</td>*@
+                                <td>
+                                    @(item.DebuggingTime.ToString() == DateTime.MinValue.ToString() ? string.Empty : item.DebuggingTime.ToString())
+                                </td>
                                 <td>@Html.DisplayFor(modelItem => item.FollowUpPeople)</td>
                                 <td>
                                     <a asp-page="../Malfunctions/Edit" asp-route-id="@item.ID">编辑</a> |
