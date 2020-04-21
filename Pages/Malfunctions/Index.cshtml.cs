@@ -1,8 +1,12 @@
-﻿using EquipmentManagementSystem.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using EquipmentManagementSystem.Data;
+using EquipmentManagementSystem.Models;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions
 {
@@ -15,12 +19,12 @@ namespace EquipmentManagementSystem.Pages.Malfunctions
             _context = context;
         }
 
-        public IList<Malfunction> Malfunction { get; set; }
+        public IList<Malfunction> Malfunction { get;set; }
 
         public async Task OnGetAsync()
         {
             Malfunction = await _context.Malfunctions
-                .Include(m => m.Component).ToListAsync();
+                .Include(m => m.Instrument).ToListAsync();
         }
     }
 }

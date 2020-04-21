@@ -1,10 +1,13 @@
-﻿using EquipmentManagementSystem.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading.Tasks;
+using EquipmentManagementSystem.Data;
+using EquipmentManagementSystem.Models;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions
 {
@@ -28,17 +31,13 @@ namespace EquipmentManagementSystem.Pages.Malfunctions
             }
 
             Malfunction = await _context.Malfunctions
-                .Include(m => m.Component)
-                .Include(m => m.Instrument)
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .Include(m => m.Instrument).FirstOrDefaultAsync(m => m.ID == id);
 
             if (Malfunction == null)
             {
                 return NotFound();
             }
-            ViewData["componentID"] = new SelectList(_context.Components, "ID", "Model");
-            ViewData["instrumentID"] = new SelectList(_context.Instruments, "ID", "ID");
-
+           ViewData["InstrumentID"] = new SelectList(_context.Instruments, "ID", "ID");
             return Page();
         }
 

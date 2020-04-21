@@ -1,4 +1,4 @@
-@page
+﻿@page
 @model EquipmentManagementSystem.Pages.Malfunctions.EditModel
 
 @{
@@ -14,31 +14,15 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Malfunction.ID" />
-
             <div class="form-group">
                 <label asp-for="Malfunction.InstrumentID" class="control-label"></label>
-                <select asp-for="Malfunction.InstrumentID" class="form-control" asp-items="ViewBag.instrumentID"></select>
+                <select asp-for="Malfunction.InstrumentID" class="form-control" asp-items="ViewBag.InstrumentID"></select>
                 <span asp-validation-for="Malfunction.InstrumentID" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Malfunction.ComponentID" class="control-label"></label>
-                <select asp-for="Malfunction.ComponentID" class="form-control" asp-items="ViewBag.componentID"></select>
-                <span asp-validation-for="Malfunction.ComponentID" class="text-danger"></span>
-            </div>
-            @*<div class="form-group">
-                <label asp-for="Malfunction.Category" class="control-label"></label>
-                <input asp-for="Malfunction.Category" class="form-control" />
-                <span asp-validation-for="Malfunction.Category" class="text-danger"></span>
-            </div>*@
-            <div class="form-group">
-                <label asp-for="Malfunction.Problem" class="control-label"></label>
-                <input asp-for="Malfunction.Problem" class="form-control" />
-                <span asp-validation-for="Malfunction.Problem" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Malfunction.Reason" class="control-label"></label>
-                <input asp-for="Malfunction.Reason" class="form-control" />
-                <span asp-validation-for="Malfunction.Reason" class="text-danger"></span>
+                <label asp-for="Malfunction.FieldName" class="control-label"></label>
+                <input asp-for="Malfunction.FieldName" class="form-control" />
+                <span asp-validation-for="Malfunction.FieldName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Malfunction.FoundTime" class="control-label"></label>

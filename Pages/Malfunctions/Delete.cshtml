@@ -13,28 +13,16 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Malfunction.Component)
+            @Html.DisplayNameFor(model => model.Malfunction.Instrument)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Malfunction.Component.Model)
-        </dd>
-        @*<dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Malfunction.Category)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Malfunction.Category)
-            </dd>*@
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Malfunction.Problem)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Malfunction.Problem)
+            @Html.DisplayFor(model => model.Malfunction.Instrument.ID)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Malfunction.Reason)
+            @Html.DisplayNameFor(model => model.Malfunction.FieldName)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Malfunction.Reason)
+            @Html.DisplayFor(model => model.Malfunction.FieldName)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Malfunction.FoundTime)
@@ -97,7 +85,7 @@
             @Html.DisplayFor(model => model.Malfunction.Remark)
         </dd>
     </dl>
-
+    
     <form method="post">
         <input type="hidden" asp-for="Malfunction.ID" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
