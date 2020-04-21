@@ -44,12 +44,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="Instrument.Status" class="control-label"></label>
-                <select asp-for="Instrument.Status" class="form-control">
-                    <option value="0">正常</option>
-                    <option value="1">故障</option>
-                    <option value="2">停用</option>
-                    <option value="3">调拨</option>
-                    <option value="4">报废</option>
+                <select asp-for="Instrument.Status" class="form-control" asp-items="@Html.GetEnumSelectList<EquipmentManagementSystem.Models.Status>()">
+                    <option value=""></option>
                 </select>
                 <span asp-validation-for="Instrument.Status" class="text-danger"></span>
             </div>

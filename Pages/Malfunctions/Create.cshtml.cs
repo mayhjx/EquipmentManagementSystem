@@ -17,12 +17,13 @@ namespace EquipmentManagementSystem.Pages.Malfunctions
         }
 
         public SelectList InstrumentOptions { get; set; }
+        public SelectList ComponentOptions { get; set; }
+
 
         public IActionResult OnGet()
         {
             InstrumentOptions = new SelectList(_context.Instruments, "ID", "ID");
-            ViewData["componentID"] = new SelectList(_context.components, "ID", "Name");
-            //ViewData["instrumentID"] = new SelectList(_context.Instruments, "ID", "ID");
+            ComponentOptions = new SelectList(_context.components, "ID", "Name");
             return Page();
         }
 
