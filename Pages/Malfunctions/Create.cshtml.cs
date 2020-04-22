@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using EquipmentManagementSystem.Data;
-using EquipmentManagementSystem.Models;
+using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions
 {
@@ -21,15 +17,15 @@ namespace EquipmentManagementSystem.Pages.Malfunctions
 
         public IActionResult OnGet()
         {
-            ViewData["InstrumentID"] = new SelectList(_context.Instruments, "ID", "ID");
-            ViewData["FieldOptions"] = new SelectList(_context.MalfunctionFields, "ID", "Name");
+            ViewData["InstrumentOption"] = new SelectList(_context.Instruments, "ID", "ID");
+            ViewData["FieldOption"] = new SelectList(_context.MalfunctionFields, "ID", "Name");
+
+
             return Page();
         }
 
         [BindProperty]
         public Malfunction Malfunction { get; set; }
-
-        //public MalfunctionField MalfunctionField { get; set; }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.

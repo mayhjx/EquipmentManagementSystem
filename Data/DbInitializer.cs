@@ -19,6 +19,9 @@ namespace EquipmentManagementSystem.Data
             InsertAssert(context, Path + "/Asserts.csv");
             InsertComponent(context, Path + "/Components.csv");
             InsertMalfunctionField(context, Path + "/MalfunctionField.csv");
+            InsertMalfunctionPart(context, Path + "/MalfunctionParts.csv");
+            InsertMalfunctionProblem(context, Path + "/MalfunctionProblems.csv");
+            InsertMalfunctionReason(context, Path + "/MalfunctionReasons.csv");
         }
 
         private static void InsertInstrument(EquipmentContext context, string filepath)
@@ -168,6 +171,81 @@ namespace EquipmentManagementSystem.Data
                     new MalfunctionField
                     {
                         Name = data[0],
+                    }
+                );
+            }
+            context.SaveChanges();
+        }
+
+        private static void InsertMalfunctionPart(EquipmentContext context, string filepath)
+        {
+            if (context.MalfunctionParts.Any())
+            {
+                return;   // DB has been seeded
+            }
+
+            string[] Datas = Reader(filepath);
+
+            foreach (var line in Datas.Skip(1))
+            {
+                if (line.Trim() == "") continue;
+                var data = line.Split(",");
+
+                context.MalfunctionParts.Add(
+                    new MalfunctionPart
+                    {
+                        MalfunctionFieldID = int.Parse(data[0]),
+                        Name = data[1],
+                    }
+                );
+            }
+            context.SaveChanges();
+        }
+
+        private static void InsertMalfunctionProblem(EquipmentContext context, string filepath)
+        {
+            if (context.MalfunctionProblems.Any())
+            {
+                return;   // DB has been seeded
+            }
+
+            string[] Datas = Reader(filepath);
+
+            foreach (var line in Datas.Skip(1))
+            {
+                if (line.Trim() == "") continue;
+                var data = line.Split(",");
+
+                context.MalfunctionProblems.Add(
+                    new MalfunctionProblem
+                    {
+                        MalfunctionPartID = int.Parse(data[0]),
+                        Describe = data[1],
+                    }
+                );
+            }
+            context.SaveChanges();
+        }
+
+        private static void InsertMalfunctionReason(EquipmentContext context, string filepath)
+        {
+            if (context.MalfunctionReasons.Any())
+            {
+                return;   // DB has been seeded
+            }
+
+            string[] Datas = Reader(filepath);
+
+            foreach (var line in Datas.Skip(1))
+            {
+                if (line.Trim() == "") continue;
+                var data = line.Split(",");
+
+                context.MalfunctionReasons.Add(
+                    new MalfunctionReason
+                    {
+                        MalfunctionProblemID = int.Parse(data[0]),
+                        Reason = data[1],
                     }
                 );
             }

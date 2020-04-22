@@ -5,114 +5,114 @@
     ViewData["Title"] = "台账";
 }
 
-    <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">设备信息一览 <a asp-page="Create">（新建）</a> </h3>
-        </div>
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">设备信息一览 <a asp-page="Create">（新建）</a> </h3>
+    </div>
 
-        <div class="card-body">
-            <div id="index_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                <div class="row">
-                    <div class="col-sm-12 col-md-6"></div>
-                    <div class="col-sm-12 col-md-6"></div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <table id="index" class="table table-hover dataTable dtr-inline">
-                            <thead>
+    <div class="card-body">
+        <div id="index_wrapper" class="dataTables_wrapper dt-bootstrap4">
+            <div class="row">
+                <div class="col-sm-12 col-md-6"></div>
+                <div class="col-sm-12 col-md-6"></div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <table id="index" class="table table-hover dataTable dtr-inline">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Instrument[0].ID)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Instrument[0].Name)
+                                </th>
+                                <th>
+                                    计划@(Html.DisplayNameFor(model => model.Instrument[0].calibrations.First().Date))
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Instrument[0].ProjectTeamName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Instrument[0].Location)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Instrument[0].Status)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Instrument[0].Remark)
+                                </th>
+                                <th>&nbsp</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Instrument)
+                            {
                                 <tr>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.Instrument[0].ID)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.Instrument[0].Name)
-                                    </th>
-                                    <th>
-                                        计划@(Html.DisplayNameFor(model => model.Instrument[0].calibrations.First().Date))
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.Instrument[0].ProjectTeamName)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.Instrument[0].Location)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.Instrument[0].Status)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.Instrument[0].Remark)
-                                    </th>
-                                    <th>&nbsp</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model.Instrument)
-                                {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.ID)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Name)
-                                        </td>
-                                        <td>
-                                            @if (item.calibrations.Count > 0)
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ID)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        @if (item.calibrations.Count > 0)
+                                        {
+                                            var lastCalibrationDateTime = item.calibrations.Last().Date;
+                                            if (lastCalibrationDateTime != DateTime.MinValue)
                                             {
-                                                var lastCalibrationDateTime = item.calibrations.Last().Date;
-                                                if (lastCalibrationDateTime != DateTime.MinValue)
-                                                {
-                                                    @(lastCalibrationDateTime.AddYears(item.CalibrationCycle).AddDays(-1).ToShortDateString())
-                                                }
+                                                @(lastCalibrationDateTime.AddYears(item.CalibrationCycle).AddDays(-1).ToShortDateString())
                                             }
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.ProjectTeamName)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Location)
-                                        </td>
-                                        <td>
-                                            @{
-                                                var status = item.Status.ToString();
-                                                if (status == "Using")
-                                                {
-                                                    <span class="bg-green">正常</span>
-                                                }
-                                                else if (status == "Malfunction")
-                                                {
-                                                    <span class="bg-yellow">故障</span>
-                                                }
-                                                else if (status == "StopUsing")
-                                                {
-                                                    <span class="bg-yellow">停用</span>
-                                                }
-                                                else if (status == "Allocate")
-                                                {
-                                                    <span class="bg-red">调拨</span>
-                                                }
-                                                else if (status == "Scrapped")
-                                                {
-                                                    <span class="bg-red">报废</span>
-                                                }
+                                        }
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ProjectTeamName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Location)
+                                    </td>
+                                    <td>
+                                        @{
+                                            var status = item.Status.ToString();
+                                            if (status == "Using")
+                                            {
+                                                <span class="bg-green">正常</span>
                                             }
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Remark)
-                                        </td>
-                                        <td>
-                                            <a asp-page="./Edit" asp-route-id="@item.ID">编辑</a> |
-                                            <a asp-page="./Details" asp-route-id="@item.ID">详细信息</a> |
-                                            <a asp-page="./Delete" asp-route-id="@item.ID">删除</a>
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
+                                            else if (status == "Malfunction")
+                                            {
+                                                <span class="bg-yellow">故障</span>
+                                            }
+                                            else if (status == "StopUsing")
+                                            {
+                                                <span class="bg-yellow">停用</span>
+                                            }
+                                            else if (status == "Allocate")
+                                            {
+                                                <span class="bg-red">调拨</span>
+                                            }
+                                            else if (status == "Scrapped")
+                                            {
+                                                <span class="bg-red">报废</span>
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Remark)
+                                    </td>
+                                    <td>
+                                        @*<a asp-page="./Edit" asp-route-id="@item.ID">编辑</a> |*@
+                                        <a asp-page="./Details" asp-route-id="@item.ID">详细信息</a> |
+                                        @*<a asp-page="./Delete" asp-route-id="@item.ID">删除</a>*@
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 @section Scripts {
     <script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>

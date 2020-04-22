@@ -4,36 +4,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace EquipmentManagementSystem.Models
 {
-    //public enum Fields
-    //{
-    //    [Display(Name = "进样系统（自动进样器）")]
-    //    SamplingSystem,
-    //    [Display(Name = "输液系统（泵）")]
-    //    InfusionSystem,
-    //    [Display(Name = "分离系统（色谱柱）")]
-    //    SeparationSystem,
-    //    [Display(Name = "离子源")]
-    //    IonSource,
-    //    [Display(Name = "真空系统")]
-    //    VacuumSystem,
-    //    [Display(Name = "透镜系统")]
-    //    LensSystem,
-    //    [Display(Name = "质量分析器Q1")]
-    //    QualityAnalyzerQ1,
-    //    [Display(Name = "碰撞池")]
-    //    CollisionPool,
-    //    [Display(Name = "质量分析器Q3")]
-    //    QualityAnalyzerQ3,
-    //    [Display(Name = "检测器")]
-    //    DetectionSystem,
-    //    [Display(Name = "机械泵")]
-    //    MechanicalPumps,
-    //    [Display(Name = "分子涡轮泵")]
-    //    MolecularTurbinePump,
-    //    [Display(Name = "数据系统（软件、通讯）")]
-    //    DataSystem
-    //}
-
     public class Malfunction
     {
         public int ID { get; set; }
@@ -43,22 +13,30 @@ namespace EquipmentManagementSystem.Models
         public Instrument Instrument { get; set; }
 
         [Display(Name = "部位")]
-        public string FieldName { get; set; }
         public ICollection<MalfunctionField> Field { get; set; }
 
-        [Display(Name = "现象/问题")]
-        public ICollection<MalfunctionProblem> Problem { get; set; }
+        [Display(Name = "部件")]
+        public ICollection<MalfunctionPart> Part { get; set; }
 
-        [Display(Name = "可能原因")]
-        public ICollection<MalfunctionReason> Reason { get; set; }
+        [Display(Name = "问题/现象")]
+        public ICollection<MalfunctionProblem> MalfunctionProblem { get; set; }
+
+        [Display(Name = "原因")]
+        public ICollection<MalfunctionReason> MalfunctionReason { get; set; }
+
+        [Display(Name = "开始时间")]
+        [DataType(DataType.DateTime)]
+        public DateTime BeginTime { get; set; }
 
         [Display(Name = "发现时间")]
         [DataType(DataType.DateTime)]
-        public DateTime FoundTime { get; set; }
+        public DateTime FoundedTime { get; set; }
 
-        [Display(Name = "排查开始时间")]
-        [DataType(DataType.DateTime)]
-        public DateTime? StartTrackTime { get; set; }
+        [Display(Name = "结束时间")]
+        public DateTime? EndTime { get; set; }
+
+        [Display(Name = "排查记录")]
+        public ICollection<MalfunctionInvestigation> Investigation { get; set; }
 
         [Display(Name = "报修时间")]
         public DateTime? ReportTime { get; set; }
@@ -67,9 +45,6 @@ namespace EquipmentManagementSystem.Models
         [Display(Name = "跟进人")]
         [StringLength(10, MinimumLength = 1)]
         public string FollowUpPeople { get; set; }
-
-        [Display(Name = "排除时间")]
-        public DateTime? DebuggingTime { get; set; }
 
         [Display(Name = "配件下单时间")]
         public DateTime? PlaceOrderTime { get; set; }

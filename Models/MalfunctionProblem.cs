@@ -11,6 +11,10 @@ namespace EquipmentManagementSystem.Models
         public string Describe { get; set; }
 
         [Display(Name = "可能原因")]
-        public ICollection<MalfunctionReason> Problem { get; set; }
+        public ICollection<MalfunctionReason> Reasons { get; set; }
+
+        [Display(Name = "故障部件")]
+        public int MalfunctionPartID { get; set; }
+        public MalfunctionPart MalfunctionPart { get; set; }
     }
 }

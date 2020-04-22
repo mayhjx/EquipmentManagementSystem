@@ -10,7 +10,10 @@ namespace EquipmentManagementSystem.Models
         [Display(Name = "部位")]
         public string Name { get; set; }
 
-        [Display(Name = "问题/现象")]
-        public ICollection<MalfunctionProblem> Problem { get; set; }
+        [Display(Name = "部件")]
+        public ICollection<MalfunctionPart> MalfunctionParts { get; set; }
+
+        [Display(Name = "故障信息")]
+        public Malfunction Malfunction { get; set; }
     }
 }

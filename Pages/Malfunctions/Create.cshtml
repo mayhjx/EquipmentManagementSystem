@@ -2,9 +2,12 @@
 @model EquipmentManagementSystem.Pages.Malfunctions.CreateModel
 
 @{
-    ViewData["Title"] = "新建工单";
+    ViewData["Title"] = "Create";
 }
 
+<h1>Create</h1>
+
+<h4>Malfunction</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -12,31 +15,26 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Malfunction.InstrumentID" class="control-label"></label>
-                <input list="option" asp-for="Malfunction.InstrumentID" class="form-control" />
-                <datalist id="option">
-                    @foreach(var item in ViewBag.InstrumentID)
-                    {
-                        <option value="@item.Value">@item.Text</option>
-                    }
-                </datalist>
+                <select asp-for="Malfunction.InstrumentID" class="form-control" asp-items="ViewBag.InstrumentOption"></select>
             </div>
             <div class="form-group">
-                <label asp-for="Malfunction.FieldName" class="control-label"></label>
-                @*<input asp-for="Malfunction.FieldName" class="form-control" />*@
-                <select asp-for="Malfunction.FieldName" class="form-control" asp-items="ViewBag.FieldOptions">
-                    <option value=""></option>
-                </select>
-                <span asp-validation-for="Malfunction.FieldName" class="text-danger"></span>
+                <label asp-for="Malfunction.Field" class="control-label"></label>
+                <select asp-for="Malfunction.Field" class="form-control" asp-items="ViewBag.FieldOption"></select>
             </div>
             <div class="form-group">
-                <label asp-for="Malfunction.FoundTime" class="control-label"></label>
-                <input asp-for="Malfunction.FoundTime" class="form-control" />
-                <span asp-validation-for="Malfunction.FoundTime" class="text-danger"></span>
+                <label asp-for="Malfunction.BeginTime" class="control-label"></label>
+                <input asp-for="Malfunction.BeginTime" class="form-control" />
+                <span asp-validation-for="Malfunction.BeginTime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Malfunction.StartTrackTime" class="control-label"></label>
-                <input asp-for="Malfunction.StartTrackTime" class="form-control" />
-                <span asp-validation-for="Malfunction.StartTrackTime" class="text-danger"></span>
+                <label asp-for="Malfunction.FoundedTime" class="control-label"></label>
+                <input asp-for="Malfunction.FoundedTime" class="form-control" />
+                <span asp-validation-for="Malfunction.FoundedTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Malfunction.EndTime" class="control-label"></label>
+                <input asp-for="Malfunction.EndTime" class="form-control" />
+                <span asp-validation-for="Malfunction.EndTime" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Malfunction.ReportTime" class="control-label"></label>
@@ -47,11 +45,6 @@
                 <label asp-for="Malfunction.FollowUpPeople" class="control-label"></label>
                 <input asp-for="Malfunction.FollowUpPeople" class="form-control" />
                 <span asp-validation-for="Malfunction.FollowUpPeople" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Malfunction.DebuggingTime" class="control-label"></label>
-                <input asp-for="Malfunction.DebuggingTime" class="form-control" />
-                <span asp-validation-for="Malfunction.DebuggingTime" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Malfunction.PlaceOrderTime" class="control-label"></label>
@@ -77,6 +70,11 @@
                 <label asp-for="Malfunction.Remark" class="control-label"></label>
                 <input asp-for="Malfunction.Remark" class="form-control" />
                 <span asp-validation-for="Malfunction.Remark" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Malfunction.Status" class="control-label"></label>
+                <select asp-for="Malfunction.Status" class="form-control" asp-items="@Html.GetEnumSelectList<EquipmentManagementSystem.Models.MalfunctionStatus>()"></select>
+                <span asp-validation-for="Malfunction.Status" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

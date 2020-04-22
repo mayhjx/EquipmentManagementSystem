@@ -26,20 +26,26 @@ namespace EquipmentManagementSystem.Data
 
         public DbSet<MalfunctionReason> MalfunctionReasons { get; set; }
 
+        public DbSet<MalfunctionInvestigation> MalfunctionInvestigations { get; set; }
+
+        public DbSet<MalfunctionPart> MalfunctionParts { get; set; }
+
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Instrument>().ToTable("Instrument");
             modelBuilder.Entity<Calibration>().ToTable("Calibration");
             modelBuilder.Entity<Component>().ToTable("Component");
             modelBuilder.Entity<Assert>().ToTable("Assert");
+            modelBuilder.Entity<Computer>().ToTable("Computer");
             modelBuilder.Entity<ProjectTeam>().ToTable("ProjectTeam");
             modelBuilder.Entity<Project>().ToTable("Project");
             modelBuilder.Entity<Malfunction>().ToTable("Malfunction");
             modelBuilder.Entity<MalfunctionField>().ToTable("MalfunctionField");
             modelBuilder.Entity<MalfunctionProblem>().ToTable("MalfunctionProblem");
             modelBuilder.Entity<MalfunctionReason>().ToTable("MalfunctionReason");
-
-            modelBuilder.Entity<Computer>().ToTable("Computer");
+            modelBuilder.Entity<MalfunctionInvestigation>().ToTable("MalfunctionInvestigation");
 
 
             modelBuilder.Entity<Instrument>().Property(i => i.CreatedDate).ValueGeneratedOnAdd().HasDefaultValueSql("datetime('now', 'localtime')");

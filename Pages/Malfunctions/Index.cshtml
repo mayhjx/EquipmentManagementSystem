@@ -2,127 +2,101 @@
 @model EquipmentManagementSystem.Pages.Malfunctions.IndexModel
 
 @{
-    ViewData["Title"] = "故障工单";
+    ViewData["Title"] = "故障列表";
 }
 
-<div class="card">
-    <div class="card-header">
-        <h3 class="card-title">
-            <a asp-page="Create">新建</a>
-        </h3>
-    </div>
-    <div class="card-body">
-        <table class="table" id="index">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Malfunction[0].InstrumentID)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Malfunction[0].FieldName)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Malfunction[0].FoundTime)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Malfunction[0].StartTrackTime)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Malfunction[0].ReportTime)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Malfunction[0].FollowUpPeople)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Malfunction[0].DebuggingTime)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Malfunction[0].PlaceOrderTime)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Malfunction[0].AccessoriesArrivalTime)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Malfunction[0].EngineerArrivalTime)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Malfunction[0].Solutions)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Malfunction[0].Remark)
-                    </th>
-                    <th>&nbsp</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.Malfunction)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Instrument.ID)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.FieldName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.FoundTime)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.StartTrackTime)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ReportTime)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.FollowUpPeople)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DebuggingTime)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.PlaceOrderTime)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.AccessoriesArrivalTime)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.EngineerArrivalTime)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Solutions)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Remark)
-                        </td>
-                        <td>
-                            <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
-                            <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
-                            <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-</div>
+<p>
+    <a asp-page="Create">新建</a>
+</p>
 
-@section scripts{
-    <script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-    <script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-    <script>
-        $(function () {
-            $('#index').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-            });
-        });
-    </script>
-}
-
-
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Malfunction[0].InstrumentID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Malfunction[0].BeginTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Malfunction[0].FoundedTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Malfunction[0].EndTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Malfunction[0].ReportTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Malfunction[0].FollowUpPeople)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Malfunction[0].PlaceOrderTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Malfunction[0].AccessoriesArrivalTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Malfunction[0].EngineerArrivalTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Malfunction[0].Solutions)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Malfunction[0].Remark)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Malfunction[0].Status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Malfunction)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Instrument.ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BeginTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FoundedTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReportTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FollowUpPeople)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PlaceOrderTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AccessoriesArrivalTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EngineerArrivalTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Solutions)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Remark)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

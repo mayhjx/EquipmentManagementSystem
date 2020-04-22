@@ -1,6 +1,4 @@
-﻿
-
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace EquipmentManagementSystem.Models
 {
@@ -10,5 +8,9 @@ namespace EquipmentManagementSystem.Models
 
         [Display(Name = "原因")]
         public string Reason { get; set; }
+
+        [Display(Name = "问题")]
+        public int MalfunctionProblemID { get; set; }
+        public MalfunctionProblem MalfunctionProblem { get; set; }
     }
 }

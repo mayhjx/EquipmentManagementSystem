@@ -30,4 +30,8 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.design" Version="3.1.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\Projects\" />
+  </ItemGroup>
+
 </Project>

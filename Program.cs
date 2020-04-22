@@ -1,13 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using EquipmentManagementSystem.Data;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.DependencyInjection;
-using EquipmentManagementSystem.Data;
+using System;
 
 namespace EquipmentManagementSystem
 {
@@ -22,23 +18,22 @@ namespace EquipmentManagementSystem
 
         private static void CreateDbIfNotExists(IHost host)
         {
-            using (var scope = host.Services.CreateScope())
-            {
-                var services = scope.ServiceProvider;
+            using var scope = host.Services.CreateScope();
+            var services = scope.ServiceProvider;
 
-                try
-                {
-                    var context = services.GetRequiredService<EquipmentContext>();
-                    var wwwrootPath = services.GetRequiredService<IWebHostEnvironment>().WebRootPath;
-                    // Create the DB if no DB exists 不用老是在命令行输入dotnet ef...
-                    // context.Database.EnsureCreated(); 
-                    DbInitializer.Initialize(context, wwwrootPath);
-                }
-                catch (Exception ex)
-                {
-                    var logger = services.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "An error occurred creating the DB.");
-                }
+            try
+            {
+                var context = services.GetRequiredService<EquipmentContext>();
+                var wwwrootPath = services.GetRequiredService<IWebHostEnvironment>().WebRootPath;
+                // Create the DB if no DB exists 不用老是在命令行输入dotnet ef...
+                // context.Database.EnsureCreated(); 
+                DbInitializer.Initialize(context, wwwrootPath);
+            }
+            catch (Exception ex)
+            {
+                var logger = services.GetRequiredService<ILogger<Program>>();
+                logger.LogError(ex, "An error occurred creating the DB.");
+                throw ex;
             }
         }
         public static IHostBuilder CreateHostBuilder(string[] args) =>

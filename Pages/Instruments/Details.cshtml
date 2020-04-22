@@ -181,21 +181,21 @@
                 <div class="card-body">
                     <table class="table">
                         <tr>
-                            <th>@Html.DisplayNameFor(model => model.Instrument.malfunctions.First().FoundTime)</th>
+                            <th>@Html.DisplayNameFor(model => model.Instrument.malfunctions.First().BeginTime)</th>
                             @*<th>@Html.DisplayNameFor(model => model.Instrument.malfunctions.First().Problem)</th>*@
-                            <th>@Html.DisplayNameFor(model => model.Instrument.malfunctions.First().DebuggingTime)</th>
+                            <th>@Html.DisplayNameFor(model => model.Instrument.malfunctions.First().EndTime)</th>
                             <th>@Html.DisplayNameFor(model => model.Instrument.malfunctions.First().FollowUpPeople)</th>
                             <th></th>
                         </tr>
                         @foreach (var item in Model.Instrument.malfunctions)
                         {
                             <tr>
-                                <td>@Html.DisplayFor(modelItem => item.FoundTime)</td>
+                                <td>@Html.DisplayFor(modelItem => item.BeginTime)</td>
                                 @*<td>@Html.DisplayFor(modelItem => item.Problem)</td>*@
-                                @*<td>@Html.DisplayFor(modelItem => item.DebuggingTime)</td>*@
-                                <td>
-                                    @(item.DebuggingTime.ToString() == DateTime.MinValue.ToString() ? string.Empty : item.DebuggingTime.ToString())
-                                </td>
+                                <td>@Html.DisplayFor(modelItem => item.EndTime)</td>
+                                @*<td>
+                                        @(item.EndTime.ToString() == DateTime.MinValue.ToString() ? string.Empty : item.EndTime.ToString())
+                                    </td>*@
                                 <td>@Html.DisplayFor(modelItem => item.FollowUpPeople)</td>
                                 <td>
                                     <a asp-page="../Malfunctions/Edit" asp-route-id="@item.ID">编辑</a> |
