@@ -91,7 +91,7 @@
             <!-- /.card -->
         </div>
 
-        <div class="col-md-8">
+        <div class="col-md-4">
             <div class="card card-primary card-outline">
                 <div class="card-header">
                     <h3 class="card-title">
@@ -193,9 +193,6 @@
                                 <td>@Html.DisplayFor(modelItem => item.BeginTime)</td>
                                 @*<td>@Html.DisplayFor(modelItem => item.Problem)</td>*@
                                 <td>@Html.DisplayFor(modelItem => item.EndTime)</td>
-                                @*<td>
-                                        @(item.EndTime.ToString() == DateTime.MinValue.ToString() ? string.Empty : item.EndTime.ToString())
-                                    </td>*@
                                 <td>@Html.DisplayFor(modelItem => item.FollowUpPeople)</td>
                                 <td>
                                     <a asp-page="../Malfunctions/Edit" asp-route-id="@item.ID">编辑</a> |
