@@ -1,0 +1,2 @@
+﻿Instrument.cs增加IsMalFunction字段
+EquipmentContext中仪器和故障部分分开
