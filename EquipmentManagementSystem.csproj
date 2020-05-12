@@ -9,6 +9,8 @@
 		<Compile Remove="Migrations\20200420071131_addMalfunctionsFields.Designer.cs" />
 		<Compile Remove="Migrations\20200420071421_addMalfunctionsFiels.cs" />
 		<Compile Remove="Migrations\20200420071421_addMalfunctionsFiels.Designer.cs" />
+		<Compile Remove="Migrations\Identity\20200512081022_InitialUsertable.cs" />
+		<Compile Remove="Migrations\Identity\20200512081022_InitialUsertable.Designer.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
