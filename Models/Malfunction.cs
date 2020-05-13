@@ -13,16 +13,16 @@ namespace EquipmentManagementSystem.Models
         public Instrument Instrument { get; set; }
 
         [Display(Name = "部位")]
-        public ICollection<MalfunctionField> Field { get; set; }
+        public MalfunctionField Field { get; set; }
 
         [Display(Name = "部件")]
-        public ICollection<MalfunctionPart> Part { get; set; }
+        public MalfunctionPart Part { get; set; }
 
         [Display(Name = "问题/现象")]
-        public ICollection<MalfunctionProblem> MalfunctionProblem { get; set; }
+        public MalfunctionProblem MalfunctionProblem { get; set; }
 
         [Display(Name = "原因")]
-        public ICollection<MalfunctionReason> MalfunctionReason { get; set; }
+        public MalfunctionReason MalfunctionReason { get; set; }
 
         [Display(Name = "开始时间")]
         [DataType(DataType.DateTime)]

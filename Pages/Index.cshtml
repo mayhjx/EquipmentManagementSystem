@@ -31,25 +31,25 @@
                     <tbody>
                         @foreach (var item in Model.InstrumentOfExpire)
                         {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ID)
-                            </td>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ID)
+                                </td>
 
-                            <td>
-                                @if (item.calibrations != null)
+                                <td>
+                                    @if (item.Calibrations != null)
                                     {
-                                        var lastCalibrationDateTime = item.calibrations.Last().Date;
+                                        var lastCalibrationDateTime = item.Calibrations.Last().Date;
                                         if (lastCalibrationDateTime != DateTime.Parse("0001-01-01"))
                                         {
-                                @(lastCalibrationDateTime.AddYears(item.CalibrationCycle).AddDays(-1).ToShortDateString())
+                                            @(lastCalibrationDateTime.AddYears(item.CalibrationCycle).AddDays(-1).ToShortDateString())
                                         }
                                     }
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ProjectTeamName)
-                            </td>
-                        </tr>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ProjectTeamName)
+                                </td>
+                            </tr>
                         }
                     </tbody>
                 </table>
@@ -77,7 +77,7 @@
                                 @Html.DisplayNameFor(model => model.Malfunctions[0].InstrumentID)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Malfunctions[0].MalfunctionProblem.First().Describe)
+                                @Html.DisplayNameFor(model => model.Malfunctions[0].MalfunctionProblem.Describe)
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.Malfunctions[0].FollowUpPeople)
@@ -87,18 +87,18 @@
                     <tbody>
                         @foreach (var item in Model.Malfunctions)
                         {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.InstrumentID)
-                            </td>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.InstrumentID)
+                                </td>
 
-                            <td>
-                                @*@Html.DisplayFor(modelItem => item.MalfunctionProblem)*@
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.FollowUpPeople)
-                            </td>
-                        </tr>
+                                <td>
+                                    @*@Html.DisplayFor(modelItem => item.MalfunctionProblem)*@
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FollowUpPeople)
+                                </td>
+                            </tr>
                         }
                     </tbody>
                 </table>

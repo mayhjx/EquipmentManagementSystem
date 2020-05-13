@@ -102,13 +102,13 @@
                 <div class="card-body">
                     <table class="table">
                         <tr>
-                            <th>@Html.DisplayNameFor(model => model.Instrument.calibrations.First().Date)</th>
-                            <th>@Html.DisplayNameFor(model => model.Instrument.calibrations.First().Unit)</th>
-                            <th>@Html.DisplayNameFor(model => model.Instrument.calibrations.First().Result)</th>
-                            <th>@Html.DisplayNameFor(model => model.Instrument.calibrations.First().Calibrator)</th>
+                            <th>@Html.DisplayNameFor(model => model.Instrument.Calibrations.First().Date)</th>
+                            <th>@Html.DisplayNameFor(model => model.Instrument.Calibrations.First().Unit)</th>
+                            <th>@Html.DisplayNameFor(model => model.Instrument.Calibrations.First().Result)</th>
+                            <th>@Html.DisplayNameFor(model => model.Instrument.Calibrations.First().Calibrator)</th>
                             <th></th>
                         </tr>
-                        @foreach (var item in Model.Instrument.calibrations)
+                        @foreach (var item in Model.Instrument.Calibrations)
                         {
                             <tr>
                                 <td>@Html.DisplayFor(modelItem => item.Date)</td>
@@ -143,13 +143,13 @@
                 <div class="card-body">
                     <table class="table">
                         <tr>
-                            <th>@Html.DisplayNameFor(model => model.Instrument.components.First().Name)</th>
-                            <th>@Html.DisplayNameFor(model => model.Instrument.components.First().Brand)</th>
-                            <th>@Html.DisplayNameFor(model => model.Instrument.components.First().Model)</th>
-                            <th>@Html.DisplayNameFor(model => model.Instrument.components.First().SerialNumber)</th>
+                            <th>@Html.DisplayNameFor(model => model.Instrument.Components.First().Name)</th>
+                            <th>@Html.DisplayNameFor(model => model.Instrument.Components.First().Brand)</th>
+                            <th>@Html.DisplayNameFor(model => model.Instrument.Components.First().Model)</th>
+                            <th>@Html.DisplayNameFor(model => model.Instrument.Components.First().SerialNumber)</th>
                             <th></th>
                         </tr>
-                        @foreach (var item in Model.Instrument.components)
+                        @foreach (var item in Model.Instrument.Components)
                         {
                             <tr>
                                 <td>@Html.DisplayFor(modelItem => item.Name)</td>
@@ -181,13 +181,13 @@
                 <div class="card-body">
                     <table class="table">
                         <tr>
-                            <th>@Html.DisplayNameFor(model => model.Instrument.malfunctions.First().BeginTime)</th>
-                            @*<th>@Html.DisplayNameFor(model => model.Instrument.malfunctions.First().Problem)</th>*@
-                            <th>@Html.DisplayNameFor(model => model.Instrument.malfunctions.First().EndTime)</th>
-                            <th>@Html.DisplayNameFor(model => model.Instrument.malfunctions.First().FollowUpPeople)</th>
+                            <th>@Html.DisplayNameFor(model => model.Instrument.Malfunctions.First().BeginTime)</th>
+                            @*<th>@Html.DisplayNameFor(model => model.Instrument.Malfunctions.First().Problem)</th>*@
+                            <th>@Html.DisplayNameFor(model => model.Instrument.Malfunctions.First().EndTime)</th>
+                            <th>@Html.DisplayNameFor(model => model.Instrument.Malfunctions.First().FollowUpPeople)</th>
                             <th></th>
                         </tr>
-                        @foreach (var item in Model.Instrument.malfunctions)
+                        @foreach (var item in Model.Instrument.Malfunctions)
                         {
                             <tr>
                                 <td>@Html.DisplayFor(modelItem => item.BeginTime)</td>

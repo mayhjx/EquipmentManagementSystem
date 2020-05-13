@@ -45,7 +45,7 @@ namespace EquipmentManagementSystem.Models
         public string MetrologicalCharacteristics { get; set; }
 
         [Display(Name = "状态")]
-        public Status Status { get; set; }
+        public InstrumentStatus Status { get; set; }
 
         [Required]
         [Display(Name = "存放位置")]
@@ -66,29 +66,29 @@ namespace EquipmentManagementSystem.Models
         public string NewSystemCode { get; set; }
 
         [Display(Name = "设备电脑")]
-        public Computer computer { get; set; }
+        public Computer Computer { get; set; }
 
         [Display(Name = "资产信息")]
-        public Assert assert { get; set; }
+        public Assert Assert { get; set; }
 
         [Display(Name = "所属项目组")]
         public string ProjectTeamName { get; set; }
-        public ProjectTeam projectTeam { get; set; }
+        public ProjectTeam ProjectTeam { get; set; }
 
-        [Display(Name = "检测项目")]
-        public ICollection<Project> projects { get; set; }
+        //[Display(Name = "检测项目")]
+        //public ICollection<Project> projects { get; set; }
 
         [Display(Name = "校准信息")]
-        public ICollection<Calibration> calibrations { get; set; }
+        public ICollection<Calibration> Calibrations { get; set; }
 
         [Display(Name = "部件信息")]
-        public ICollection<Component> components { get; set; }
+        public ICollection<Component> Components { get; set; }
 
         [Display(Name = "故障信息")]
-        public ICollection<Malfunction> malfunctions { get; set; }
+        public ICollection<Malfunction> Malfunctions { get; set; }
     }
 
-    public enum Status
+    public enum InstrumentStatus
     {
 
         [Display(Name = "正常")]

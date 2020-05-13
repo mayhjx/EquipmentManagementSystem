@@ -28,7 +28,7 @@
                                     @Html.DisplayNameFor(model => model.Instrument[0].Name)
                                 </th>
                                 <th>
-                                    计划@(Html.DisplayNameFor(model => model.Instrument[0].calibrations.First().Date))
+                                    计划@(Html.DisplayNameFor(model => model.Instrument[0].Calibrations.First().Date))
                                 </th>
                                 <th>
                                     @Html.DisplayNameFor(model => model.Instrument[0].ProjectTeamName)
@@ -56,9 +56,9 @@
                                         @Html.DisplayFor(modelItem => item.Name)
                                     </td>
                                     <td>
-                                        @if (item.calibrations.Count > 0)
+                                        @if (item.Calibrations.Count > 0)
                                         {
-                                            var lastCalibrationDateTime = item.calibrations.Last().Date;
+                                            var lastCalibrationDateTime = item.Calibrations.Last().Date;
                                             if (lastCalibrationDateTime != DateTime.MinValue)
                                             {
                                                 @(lastCalibrationDateTime.AddYears(item.CalibrationCycle).AddDays(-1).ToShortDateString())

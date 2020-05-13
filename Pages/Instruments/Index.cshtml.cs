@@ -26,7 +26,7 @@ namespace EquipmentManagementSystem.Pages.Instruments
         {
             //Instrument = await _context.Instruments.OrderBy(n => n.ID).ToListAsync();
             var instruments = from i in _context.Instruments
-                              .Include(i => i.calibrations)
+                              .Include(i => i.Calibrations)
                               select i;
 
             Instrument = await instruments.OrderBy(m => m.ID).ToListAsync();

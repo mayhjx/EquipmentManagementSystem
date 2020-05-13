@@ -31,10 +31,10 @@ namespace EquipmentManagementSystem.Pages
         {
 
             InstrumentOfExpire = (from m in _context.Instruments
-                                .Include(m => m.calibrations)
+                                .Include(m => m.Calibrations)
                                 .AsEnumerable()
-                                  where (m.calibrations.Count > 0 && m.calibrations.Last().Date != DateTime.MinValue)
-                                  let remainDay = m.calibrations.Last().Date.AddYears(m.CalibrationCycle) - DateTime.Today
+                                  where (m.Calibrations.Count > 0 && m.Calibrations.Last().Date != DateTime.MinValue)
+                                  let remainDay = m.Calibrations.Last().Date.AddYears(m.CalibrationCycle) - DateTime.Today
                                   where remainDay.Days < 30 // 到期前30天内
                                   select m).ToList();
 

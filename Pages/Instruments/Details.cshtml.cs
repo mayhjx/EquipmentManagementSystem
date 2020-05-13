@@ -30,10 +30,10 @@ namespace EquipmentManagementSystem.Pages.Instruments
 
             // Instrument = await _context.Instruments.FirstOrDefaultAsync(m => m.ID == id);
             Instrument = await _context.Instruments
-                        .Include(a => a.assert)
-                        .Include(b => b.calibrations)
-                        .Include(c => c.components)
-                        .Include(d => d.malfunctions)
+                        .Include(a => a.Assert)
+                        .Include(b => b.Calibrations)
+                        .Include(c => c.Components)
+                        .Include(d => d.Malfunctions)
                         .AsNoTracking()
                         .FirstOrDefaultAsync(m => m.ID == id);
                             

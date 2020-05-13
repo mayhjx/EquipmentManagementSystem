@@ -50,7 +50,7 @@ namespace EquipmentManagementSystem.Data
                         StartUsingDate = datetime,
                         CalibrationCycle = int.Parse(data[4]),
                         MetrologicalCharacteristics = data[5],
-                        Status = Status.Using,
+                        Status = InstrumentStatus.Using,
                         Location = data[7],
                         Principal = data[8],
                         NewSystemCode = data[9],
