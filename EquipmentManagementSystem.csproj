@@ -38,4 +38,13 @@
 		<Folder Include="Pages\Projects\" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Update="Equipment.db">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Identity.db">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
 </Project>
