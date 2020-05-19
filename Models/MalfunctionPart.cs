@@ -14,7 +14,7 @@ namespace EquipmentManagementSystem.Models
         public ICollection<MalfunctionProblem> Problem { get; set; }
 
         [Display(Name = "故障部位")]
-        public int MalfunctionFieldID { get; set; }
-        public MalfunctionField MalfunctionField { get; set; }
+        public int MalfunctionID { get; set; }
+        public Malfunction Malfunction { get; set; }
     }
 }

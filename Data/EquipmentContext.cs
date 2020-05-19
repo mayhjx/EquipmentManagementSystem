@@ -18,17 +18,17 @@ namespace EquipmentManagementSystem.Data
         public DbSet<Project> Projects { get; set; }
         public DbSet<Computer> Computers { get; set; }
 
-        public DbSet<Malfunction> Malfunctions { get; set; }
+        //public DbSet<Malfunction> Malfunctions { get; set; }
 
-        public DbSet<MalfunctionField> MalfunctionFields { get; set; }
+        //public DbSet<MalfunctionField> MalfunctionFields { get; set; }
 
-        public DbSet<MalfunctionProblem> MalfunctionProblems { get; set; }
+        //public DbSet<MalfunctionProblem> MalfunctionProblems { get; set; }
 
-        public DbSet<MalfunctionReason> MalfunctionReasons { get; set; }
+        //public DbSet<MalfunctionReason> MalfunctionReasons { get; set; }
 
-        public DbSet<MalfunctionInvestigation> MalfunctionInvestigations { get; set; }
+        //public DbSet<MalfunctionInvestigation> MalfunctionInvestigations { get; set; }
 
-        public DbSet<MalfunctionPart> MalfunctionParts { get; set; }
+        //public DbSet<MalfunctionPart> MalfunctionParts { get; set; }
 
 
 
@@ -41,15 +41,15 @@ namespace EquipmentManagementSystem.Data
             modelBuilder.Entity<Computer>().ToTable("Computer");
             modelBuilder.Entity<ProjectTeam>().ToTable("ProjectTeam");
             modelBuilder.Entity<Project>().ToTable("Project");
-            modelBuilder.Entity<Malfunction>().ToTable("Malfunction");
-            modelBuilder.Entity<MalfunctionField>().ToTable("MalfunctionField");
-            modelBuilder.Entity<MalfunctionProblem>().ToTable("MalfunctionProblem");
-            modelBuilder.Entity<MalfunctionReason>().ToTable("MalfunctionReason");
-            modelBuilder.Entity<MalfunctionInvestigation>().ToTable("MalfunctionInvestigation");
+            //modelBuilder.Entity<Malfunction>().ToTable("Malfunction");
+            //modelBuilder.Entity<MalfunctionField>().ToTable("MalfunctionField");
+            //modelBuilder.Entity<MalfunctionProblem>().ToTable("MalfunctionProblem");
+            //modelBuilder.Entity<MalfunctionReason>().ToTable("MalfunctionReason");
+            //modelBuilder.Entity<MalfunctionInvestigation>().ToTable("MalfunctionInvestigation");
 
 
-            modelBuilder.Entity<Instrument>().Property(i => i.CreatedDate).ValueGeneratedOnAdd().HasDefaultValueSql("datetime('now', 'localtime')");
-            modelBuilder.Entity<Instrument>().Property(i => i.ModifiedDate).ValueGeneratedOnAddOrUpdate().HasDefaultValueSql("datetime('now', 'localtime')");
+            //modelBuilder.Entity<Instrument>().Property(i => i.CreatedDate).ValueGeneratedOnAdd().HasDefaultValueSql("datetime('now', 'localtime')");
+            //modelBuilder.Entity<Instrument>().Property(i => i.ModifiedDate).ValueGeneratedOnAddOrUpdate().HasDefaultValueSql("datetime('now', 'localtime')");
         }
 
     }

@@ -1,13 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using EquipmentManagementSystem.Data;
-using EquipmentManagementSystem.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Calibrations
 {
@@ -37,7 +34,7 @@ namespace EquipmentManagementSystem.Pages.Calibrations
             {
                 return NotFound();
             }
-           ViewData["InstrumentID"] = new SelectList(_context.Instruments, "ID", "ID");
+            ViewData["InstrumentID"] = new SelectList(_context.Instruments, "ID", "ID");
             return Page();
         }
 
@@ -68,7 +65,7 @@ namespace EquipmentManagementSystem.Pages.Calibrations
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("../Instruments/Index");
         }
 
         private bool CalibrationExists(int id)

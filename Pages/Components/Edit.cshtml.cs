@@ -1,13 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using EquipmentManagementSystem.Data;
-using EquipmentManagementSystem.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Components
 {
@@ -31,13 +28,13 @@ namespace EquipmentManagementSystem.Pages.Components
             }
 
             Component = await _context.Components
-                .Include(c => c.instrument).FirstOrDefaultAsync(m => m.ID == id);
+                .Include(c => c.Instrument).FirstOrDefaultAsync(m => m.ID == id);
 
             if (Component == null)
             {
                 return NotFound();
             }
-           ViewData["instrumentID"] = new SelectList(_context.Instruments, "ID", "ID");
+            ViewData["instrumentID"] = new SelectList(_context.Instruments, "ID", "ID");
             return Page();
         }
 

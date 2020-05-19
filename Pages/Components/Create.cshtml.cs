@@ -1,12 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using EquipmentManagementSystem.Data;
-using EquipmentManagementSystem.Models;
+using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Components
 {
@@ -19,9 +15,16 @@ namespace EquipmentManagementSystem.Pages.Components
             _context = context;
         }
 
-        public IActionResult OnGet()
-        {   
-            ViewData["instrumentID"] = new SelectList(_context.Instruments, "ID", "ID");
+        public IActionResult OnGet(string? id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                ViewData["InstrumentID"] = new SelectList(_context.Instruments, "ID", "ID");
+            }
+            else
+            {
+                ViewData["InstrumentID"] = id;
+            }
             return Page();
         }
 

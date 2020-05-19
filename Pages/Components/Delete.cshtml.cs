@@ -30,7 +30,7 @@ namespace EquipmentManagementSystem.Pages.Components
             }
 
             Component = await _context.Components
-                .Include(c => c.instrument).FirstOrDefaultAsync(m => m.ID == id);
+                .Include(c => c.Instrument).FirstOrDefaultAsync(m => m.ID == id);
 
             if (Component == null)
             {

@@ -60,50 +60,5 @@
         <!-- /.card -->
     </div>
 
-    <div class="col-md-4">
 
-        <div class="card card-danger card-outline">
-            <div class="card-header">
-                <h3 class="card-title">
-                    需跟进故障
-                </h3>
-            </div>
-            <!-- /.card-header -->
-            <div class="card-body">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Malfunctions[0].InstrumentID)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Malfunctions[0].MalfunctionProblem.Describe)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Malfunctions[0].FollowUpPeople)
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.Malfunctions)
-                        {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.InstrumentID)
-                                </td>
-
-                                <td>
-                                    @*@Html.DisplayFor(modelItem => item.MalfunctionProblem)*@
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.FollowUpPeople)
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-            <!-- /.card-body -->
-        </div>
-    </div>
 </div>

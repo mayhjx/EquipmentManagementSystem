@@ -1,46 +1,64 @@
-@page
+﻿@page "{id?}"
 @model EquipmentManagementSystem.Pages.Components.CreateModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "新建";
 }
 
-<h1>Create</h1>
-
-<h4>Component</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Component.InstrumentID" class="control-label"></label>
-                <select asp-for="Component.InstrumentID" class ="form-control" asp-items="ViewBag.instrumentID"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Component.SerialNumber" class="control-label"></label>
-                <input asp-for="Component.SerialNumber" class="form-control" />
-                <span asp-validation-for="Component.SerialNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Component.Name" class="control-label"></label>
-                <input asp-for="Component.Name" class="form-control" />
-                <span asp-validation-for="Component.Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Component.Model" class="control-label"></label>
-                <input asp-for="Component.Model" class="form-control" />
-                <span asp-validation-for="Component.Model" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<div class="invoice p-3 mb-3">
+    <div class="row">
+        <div class="col-md-3">
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Component.InstrumentID" class="control-label"></label>
+                    @if (ViewBag.InstrumentID is string)
+                    {
+                        <input asp-for="Component.InstrumentID" value="@ViewBag.InstrumentID" disabled class="form-control" />
+                    }
+                    else
+                    {
+                        <select asp-for="Component.InstrumentID" asp-items="@ViewBag.InstrumentID" class="form-control"></select>
+                    }
+                </div>
+                <div class="form-group">
+                    <label asp-for="Component.SerialNumber" class="control-label"></label>
+                    <input asp-for="Component.SerialNumber" class="form-control" />
+                    <span asp-validation-for="Component.SerialNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Component.Name" class="control-label"></label>
+                    <input asp-for="Component.Name" class="form-control" />
+                    <span asp-validation-for="Component.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Component.Model" class="control-label"></label>
+                    <input asp-for="Component.Model" class="form-control" />
+                    <span asp-validation-for="Component.Model" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Component.Brand" class="control-label"></label>
+                    <input asp-for="Component.Brand" class="form-control" />
+                    <span asp-validation-for="Component.Brand" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="新建" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-page="Index">Back to List</a>
+    <div>
+        @if (ViewBag.InstrumentID is string)
+        {
+            <a asp-page="../Instruments/Details" asp-route-id="@ViewBag.InstrumentID">返回</a>
+        }
+        else
+        {
+            <a asp-page="../Instruments/Index">返回</a>
+        }
+    </div>
 </div>
 
 @section Scripts {

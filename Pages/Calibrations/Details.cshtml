@@ -1,14 +1,13 @@
-@page
+﻿@page
 @model EquipmentManagementSystem.Pages.Calibrations.DetailsModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "详细信息";
 }
 
-<h1>Details</h1>
 
 <div>
-    <h4>Calibration</h4>
+
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -44,6 +43,6 @@
     </dl>
 </div>
 <div>
-    <a asp-page="./Edit" asp-route-id="@Model.Calibration.ID">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="./Edit" asp-route-id="@Model.Calibration.ID">编辑</a> |
+    <a asp-page="../Instruments/Details" asp-route-id="@Model.Calibration.InstrumentID">返回</a>
 </div>

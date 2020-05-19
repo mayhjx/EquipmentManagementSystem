@@ -5,75 +5,86 @@
     ViewData["Title"] = "新建";
 }
 
-<h3>新建</h3>
-
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post" role="form">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Instrument.ID" class="control-label"></label>
-                <input asp-for="Instrument.ID" class="form-control" />
-                <span asp-validation-for="Instrument.ID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Instrument.Platform" class="control-label"></label>
-                <input asp-for="Instrument.Platform" class="form-control" />
-                <span asp-validation-for="Instrument.Platform" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Instrument.Name" class="control-label"></label>
-                <input asp-for="Instrument.Name" class="form-control" />
-                <span asp-validation-for="Instrument.Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Instrument.StartUsingDate" class="control-label"></label>
-                <input asp-for="Instrument.StartUsingDate" class="form-control" />
-                <span asp-validation-for="Instrument.StartUsingDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Instrument.CalibrationCycle" class="control-label"></label>
-                <input asp-for="Instrument.CalibrationCycle" class="form-control" />
-                <span asp-validation-for="Instrument.CalibrationCycle" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Instrument.MetrologicalCharacteristics" class="control-label"></label>
-                <input asp-for="Instrument.MetrologicalCharacteristics" class="form-control" />
-                <span asp-validation-for="Instrument.MetrologicalCharacteristics" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Instrument.Status" class="control-label"></label>
-                <select asp-for="Instrument.Status" class="form-control" asp-items="@Html.GetEnumSelectList<EquipmentManagementSystem.Models.InstrumentStatus>()">
-                    <option value=""></option>
-                </select>
-                <span asp-validation-for="Instrument.Status" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Instrument.Location" class="control-label"></label>
-                <input asp-for="Instrument.Location" class="form-control" />
-                <span asp-validation-for="Instrument.Location" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Instrument.Principal" class="control-label"></label>
-                <input asp-for="Instrument.Principal" class="form-control" />
-                <span asp-validation-for="Instrument.Principal" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Instrument.Remark" class="control-label"></label>
-                @* <input asp-for="Instrument.Remark" class="form-control" /> *@
-                <textarea asp-for="Instrument.Remark" class="form-control"></textarea>
-                <span asp-validation-for="Instrument.Remark" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="新建" class="btn btn-primary" />
-            </div>
-        </form>
+<div class="invoice p-3 mb-3">
+    <div class="row">
+        <div class="col-md-12">
+            <form method="post" role="form">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label asp-for="Instrument.ID" class="control-label"></label>
+                        <input asp-for="Instrument.ID" class="form-control" />
+                        <span asp-validation-for="Instrument.ID" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col">
+                        <label asp-for="Instrument.Platform" class="control-label"></label>
+                        <input asp-for="Instrument.Platform" class="form-control" />
+                        <span asp-validation-for="Instrument.Platform" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col">
+                        <label asp-for="Instrument.Name" class="control-label"></label>
+                        <input asp-for="Instrument.Name" class="form-control" />
+                        <span asp-validation-for="Instrument.Name" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label asp-for="Instrument.StartUsingDate" class="control-label"></label>
+                        <input asp-for="Instrument.StartUsingDate" class="form-control" />
+                        <span asp-validation-for="Instrument.StartUsingDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col">
+                        <label asp-for="Instrument.CalibrationCycle" class="control-label"></label>
+                        <input asp-for="Instrument.CalibrationCycle" class="form-control" />
+                        <span asp-validation-for="Instrument.CalibrationCycle" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col">
+                        <label asp-for="Instrument.MetrologicalCharacteristics" class="control-label"></label>
+                        <input asp-for="Instrument.MetrologicalCharacteristics" class="form-control" />
+                        <span asp-validation-for="Instrument.MetrologicalCharacteristics" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label asp-for="Instrument.Location" class="control-label"></label>
+                        <input asp-for="Instrument.Location" class="form-control" />
+                        <span asp-validation-for="Instrument.Location" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col">
+                        <label asp-for="Instrument.Principal" class="control-label"></label>
+                        <input asp-for="Instrument.Principal" class="form-control" />
+                        <span asp-validation-for="Instrument.Principal" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col">
+                        <label asp-for="Instrument.NewSystemCode" class="control-label"></label>
+                        <input asp-for="Instrument.NewSystemCode" class="form-control" />
+                        <span asp-validation-for="Instrument.NewSystemCode" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-2">
+                        <label asp-for="Instrument.Status" class="control-label"></label>
+                        <select asp-for="Instrument.Status" class="form-control" asp-items="@Html.GetEnumSelectList<EquipmentManagementSystem.Models.InstrumentStatus>()">
+                        </select>
+                        <span asp-validation-for="Instrument.Status" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Instrument.Remark" class="control-label"></label>
+                    <textarea asp-for="Instrument.Remark" class="form-control"></textarea>
+                    <span asp-validation-for="Instrument.Remark" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="新建" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-page="Index">返回</a>
+    <div>
+        <a asp-page="Index">返回</a>
+    </div>
 </div>
 
 @section Scripts {

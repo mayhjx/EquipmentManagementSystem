@@ -12,15 +12,6 @@ namespace EquipmentManagementSystem.Models
         [RegularExpression(@"^[A-Z]+-[A-Z0-9]+$")]
         public string ID { get; set; }
 
-        [Display(Name = "创建时间")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public DateTime CreatedDate { get; set; }
-
-        // SQLite 有bug
-        [Display(Name = "修改时间")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime ModifiedDate { get; set; }
-
         [Required]
         [Display(Name = "平台")]
         [StringLength(50, MinimumLength = 1)]
@@ -36,7 +27,7 @@ namespace EquipmentManagementSystem.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime StartUsingDate { get; set; }
 
-        [Range(1, 5)]
+        [Range(1, 100)]
         [Display(Name = "校准周期（年）")]
         public int CalibrationCycle { get; set; }
 
@@ -65,15 +56,15 @@ namespace EquipmentManagementSystem.Models
         [StringLength(10)]
         public string NewSystemCode { get; set; }
 
-        [Display(Name = "设备电脑")]
-        public Computer Computer { get; set; }
+        //[Display(Name = "设备电脑")]
+        //public Computer Computer { get; set; }
 
         [Display(Name = "资产信息")]
         public Assert Assert { get; set; }
 
         [Display(Name = "所属项目组")]
         public string ProjectTeamName { get; set; }
-        public ProjectTeam ProjectTeam { get; set; }
+        //public ProjectTeam ProjectTeam { get; set; }
 
         //[Display(Name = "检测项目")]
         //public ICollection<Project> projects { get; set; }

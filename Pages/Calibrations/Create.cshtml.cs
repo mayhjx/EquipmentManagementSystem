@@ -1,27 +1,31 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using EquipmentManagementSystem.Data;
+using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using EquipmentManagementSystem.Data;
-using EquipmentManagementSystem.Models;
+using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Calibrations
 {
     public class CreateModel : PageModel
     {
-        private readonly EquipmentManagementSystem.Data.EquipmentContext _context;
+        private readonly EquipmentContext _context;
 
-        public CreateModel(EquipmentManagementSystem.Data.EquipmentContext context)
+        public CreateModel(EquipmentContext context)
         {
             _context = context;
         }
 
-        public IActionResult OnGet()
+        public IActionResult OnGet(string? id)
         {
-            ViewData["InstrumentID"] = new SelectList(_context.Instruments, "ID", "ID");
+            if (string.IsNullOrEmpty(id))
+            {
+                ViewData["InstrumentID"] = new SelectList(_context.Instruments, "ID", "ID");
+            }
+            else
+            {
+                ViewData["InstrumentID"] = id;
+            }
             return Page();
         }
 
@@ -40,7 +44,7 @@ namespace EquipmentManagementSystem.Pages.Calibrations
             _context.Calibrations.Add(Calibration);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("../Instruments/Index");
         }
     }
 }

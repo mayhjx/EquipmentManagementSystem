@@ -12,11 +12,10 @@ namespace EquipmentManagementSystem.Models
         public string InstrumentID { get; set; }
         public Instrument Instrument { get; set; }
 
-        [Display(Name = "部位")]
-        public MalfunctionField Field { get; set; }
 
         [Display(Name = "部件")]
         public MalfunctionPart Part { get; set; }
+
 
         [Display(Name = "问题/现象")]
         public MalfunctionProblem MalfunctionProblem { get; set; }

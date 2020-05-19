@@ -38,8 +38,8 @@ namespace EquipmentManagementSystem.Pages
                                   where remainDay.Days < 30 // 到期前30天内
                                   select m).ToList();
 
-            Malfunctions = (from m in _context.Malfunctions
-                            select m).ToList();
+            //Malfunctions = (from m in _context.Malfunctions
+            //                select m).ToList();
 
             Instruments = (from m in _context.Instruments
                            select m).ToList();

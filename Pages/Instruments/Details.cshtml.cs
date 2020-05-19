@@ -1,12 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using EquipmentManagementSystem.Data;
-using EquipmentManagementSystem.Models;
+using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Instruments
 {
@@ -33,10 +29,10 @@ namespace EquipmentManagementSystem.Pages.Instruments
                         .Include(a => a.Assert)
                         .Include(b => b.Calibrations)
                         .Include(c => c.Components)
-                        .Include(d => d.Malfunctions)
+                        //.Include(d => d.Malfunctions)
                         .AsNoTracking()
                         .FirstOrDefaultAsync(m => m.ID == id);
-                            
+
             if (Instrument == null)
             {
                 return NotFound();
