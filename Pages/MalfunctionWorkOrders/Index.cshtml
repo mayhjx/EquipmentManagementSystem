@@ -1,0 +1,62 @@
+﻿@page
+@model EquipmentManagementSystem.Pages.MalfunctionWorkOrders.IndexModel
+
+@{
+    ViewData["Title"] = "工单列表";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MalfunctionWorkOrder[0].InstrumentID)
+            </th>
+            <th>
+                故障描述
+            </th>
+            <th>
+                开始时间
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MalfunctionWorkOrder[0].CreatedTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MalfunctionWorkOrder[0].Progress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MalfunctionWorkOrder[0].Creator)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.MalfunctionWorkOrder)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Instrument.ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MalfuntionInfo.Part) + @Html.DisplayFor(modelItem => item.MalfuntionInfo.Phenomenon)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MalfuntionInfo.FoundedTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Creator)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Progress)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.ID">编辑</a> |
+                    <a asp-page="./Details" asp-route-id="@item.ID">查看</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.ID">删除</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
