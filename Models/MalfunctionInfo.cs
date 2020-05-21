@@ -8,6 +8,8 @@ namespace EquipmentManagementSystem.Models
     /// </summary>
     public class MalfunctionInfo
     {
+        public int ID { get; set; }
+
         [Display(Name = "开始时间")]
         [DataType(DataType.DateTime)]
         public DateTime BeginTime { get; set; }

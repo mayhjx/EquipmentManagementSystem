@@ -8,6 +8,8 @@ namespace EquipmentManagementSystem.Models
     /// </summary>
     public class Validation
     {
+        public int ID { get; set; }
+
         [Display(Name = "故障结束时间")]
         public DateTime? EndTime { get; set; }
 

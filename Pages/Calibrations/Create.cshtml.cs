@@ -16,7 +16,7 @@ namespace EquipmentManagementSystem.Pages.Calibrations
             _context = context;
         }
 
-        public IActionResult OnGet(string? id)
+        public IActionResult OnGet(string id)
         {
             if (string.IsNullOrEmpty(id))
             {

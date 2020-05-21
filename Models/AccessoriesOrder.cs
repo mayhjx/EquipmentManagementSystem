@@ -8,6 +8,8 @@ namespace EquipmentManagementSystem.Models
     /// </summary>
     public class AccessoriesOrder
     {
+        public int ID { get; set; }
+
         [Display(Name = "配件名称")]
         public string Name { get; set; }
 

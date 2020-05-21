@@ -8,6 +8,8 @@ namespace EquipmentManagementSystem.Models
     /// </summary>
     public class RepairRequest
     {
+        public int ID { get; set; }
+
         [Display(Name = "报修时间")]
         public DateTime? RepairTime { get; set; }
 

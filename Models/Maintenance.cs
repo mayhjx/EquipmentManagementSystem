@@ -7,6 +7,8 @@ namespace EquipmentManagementSystem.Models
     /// </summary>
     public class Maintenance
     {
+        public int ID { get; set; }
+
         [Display(Name = "维修人")]
         public string Repairer { get; set; }
 
