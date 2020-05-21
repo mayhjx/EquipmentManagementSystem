@@ -21,7 +21,7 @@
                         <thead>
                             <tr>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.MalfunctionWorkOrder[0].MalfunctionInfo.InstrumentID)
+                                    @Html.DisplayNameFor(model => model.MalfunctionWorkOrder[0].InstrumentID)
                                 </th>
                                 <th>
                                     故障描述
@@ -46,7 +46,7 @@
                             {
                                 <tr>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.MalfunctionInfo.InstrumentID)
+                                        @Html.DisplayFor(modelItem => item.InstrumentID)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.MalfunctionInfo.Part)@Html.DisplayFor(modelItem => item.MalfunctionInfo.Phenomenon)

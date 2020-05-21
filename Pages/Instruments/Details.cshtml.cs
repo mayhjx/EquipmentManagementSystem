@@ -1,4 +1,5 @@
-﻿using EquipmentManagementSystem.Models;
+﻿using EquipmentManagementSystem.Data;
+using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -8,9 +9,9 @@ namespace EquipmentManagementSystem.Pages.Instruments
 {
     public class DetailsModel : PageModel
     {
-        private readonly EquipmentManagementSystem.Data.EquipmentContext _context;
+        private readonly EquipmentContext _context;
 
-        public DetailsModel(EquipmentManagementSystem.Data.EquipmentContext context)
+        public DetailsModel(EquipmentContext context)
         {
             _context = context;
         }
@@ -29,7 +30,10 @@ namespace EquipmentManagementSystem.Pages.Instruments
                         .Include(a => a.Assert)
                         .Include(b => b.Calibrations)
                         .Include(c => c.Components)
-                        //.Include(d => d.Malfunctions)
+                        .Include(d => d.MalfunctionWorkOrder)
+                        .ThenInclude(e => e.MalfunctionInfo)
+                        .Include(d => d.MalfunctionWorkOrder)
+                        .ThenInclude(e => e.Validation)
                         .AsNoTracking()
                         .FirstOrDefaultAsync(m => m.ID == id);
 

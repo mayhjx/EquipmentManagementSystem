@@ -11,7 +11,7 @@
     <div class="row">
         <div class="col-md-12">
             <h3>
-                @Html.DisplayFor(mdoel => Model.MalfunctionWorkOrder.MalfunctionInfo.InstrumentID)
+                @Html.DisplayFor(mdoel => Model.MalfunctionWorkOrder.InstrumentID)
             </h3>
         </div>
     </div>
@@ -21,10 +21,15 @@
             <div class="card card-primary card-outline">
                 <div class="card-header">
                     <h3 class="card-title">
-                        故障信息
+                        <i class="fa fa-info-circle" aria-hidden="true"></i> 故障信息
                         @Html.DisplayFor(model => model.MalfunctionWorkOrder.MalfunctionInfo.IsConfirm)
                         负责人确认
                     </h3>
+                    <div class="card-tools">
+                        <a asp-page="../MalfunctionInfos/Edit" asp-route-id="@Model.MalfunctionWorkOrder.ID">
+                            <input type="button" class="btn btn-primary" value="编辑">
+                        </a>
+                    </div>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -95,7 +100,7 @@
             <div class="card card-primary card-outline">
                 <div class="card-header">
                     <h3 class="card-title">
-                        故障排查
+                        <i class="fa fa-search" aria-hidden="true"></i> 故障排查
                     </h3>
                 </div>
                 <!-- /.card-header -->
@@ -165,7 +170,7 @@
             <div class="card card-primary card-outline">
                 <div class="card-header">
                     <h3 class="card-title">
-                        故障维修
+                        <i class="fa fa-wrench" aria-hidden="true"></i> 故障维修
                     </h3>
                 </div>
                 <!-- /.card-header -->
@@ -197,7 +202,7 @@
             <div class="card card-primary card-outline">
                 <div class="card-header">
                     <h3 class="card-title">
-                        性能验证
+                        <i class="fa fa-file" aria-hidden="true"></i> 性能验证
                     </h3>
                 </div>
                 <!-- /.card-header -->

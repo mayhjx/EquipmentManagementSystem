@@ -10,9 +10,9 @@ namespace EquipmentManagementSystem.Models
     {
         public int ID { get; set; }
 
-        //[Display(Name = "设备编号")]
-        //public string InstrumentID { get; set; }
-        //public Instrument Instrument { get; set; }
+        [Display(Name = "设备编号")]
+        public string InstrumentID { get; set; }
+        public Instrument Instrument { get; set; }
 
         [Display(Name = "进度")]
         public string Progress { get; set; }

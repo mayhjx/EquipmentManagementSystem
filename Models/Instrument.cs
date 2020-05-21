@@ -76,7 +76,7 @@ namespace EquipmentManagementSystem.Models
         public ICollection<Component> Components { get; set; }
 
         [Display(Name = "故障信息")]
-        public ICollection<MalfunctionWorkOrder> Malfunctions { get; set; }
+        public ICollection<MalfunctionWorkOrder> MalfunctionWorkOrder { get; set; }
     }
 
     public enum InstrumentStatus

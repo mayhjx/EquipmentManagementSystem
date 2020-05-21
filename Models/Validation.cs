@@ -10,7 +10,7 @@ namespace EquipmentManagementSystem.Models
     {
         public int ID { get; set; }
 
-        [Display(Name = "故障结束时间")]
+        [Display(Name = "结束时间")]
         public DateTime? EndTime { get; set; }
 
         [Display(Name = "故障修复后性能验证报告")]
