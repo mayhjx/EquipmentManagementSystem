@@ -18,7 +18,7 @@ namespace EquipmentManagementSystem.Models
         public DateTime? EndTime { get; set; }
 
         [Display(Name = "排查人员")]
-        public string Staff { get; set; }
+        public string Operator { get; set; }
 
         [Display(Name = "措施")]
         public string Measures { get; set; }

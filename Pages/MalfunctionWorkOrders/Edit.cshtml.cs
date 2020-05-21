@@ -28,7 +28,7 @@ namespace EquipmentManagementSystem.Pages.MalfunctionWorkOrders
             }
 
             MalfunctionWorkOrder = await _context.MalfunctionWorkOrder
-                .Include(m => m.Instrument).FirstOrDefaultAsync(m => m.ID == id);
+                .FirstOrDefaultAsync(m => m.ID == id);
 
             if (MalfunctionWorkOrder == null)
             {

@@ -14,11 +14,11 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="MalfunctionWorkOrder.ID" />
-            <div class="form-group">
-                <label asp-for="MalfunctionWorkOrder.InstrumentID" class="control-label"></label>
-                <select asp-for="MalfunctionWorkOrder.InstrumentID" class="form-control" asp-items="ViewBag.InstrumentID"></select>
-                <span asp-validation-for="MalfunctionWorkOrder.InstrumentID" class="text-danger"></span>
-            </div>
+            @*<div class="form-group">
+                    <label asp-for="MalfunctionWorkOrder.InstrumentID" class="control-label"></label>
+                    <select asp-for="MalfunctionWorkOrder.InstrumentID" class="form-control" asp-items="ViewBag.InstrumentID"></select>
+                    <span asp-validation-for="MalfunctionWorkOrder.InstrumentID" class="text-danger"></span>
+                </div>*@
             <div class="form-group">
                 <label asp-for="MalfunctionWorkOrder.Progress" class="control-label"></label>
                 <input asp-for="MalfunctionWorkOrder.Progress" class="form-control" />

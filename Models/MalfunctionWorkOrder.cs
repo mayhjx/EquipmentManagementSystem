@@ -10,9 +10,9 @@ namespace EquipmentManagementSystem.Models
     {
         public int ID { get; set; }
 
-        [Display(Name = "设备编号")]
-        public string InstrumentID { get; set; }
-        public Instrument Instrument { get; set; }
+        //[Display(Name = "设备编号")]
+        //public string InstrumentID { get; set; }
+        //public Instrument Instrument { get; set; }
 
         [Display(Name = "进度")]
         public string Progress { get; set; }
@@ -26,7 +26,7 @@ namespace EquipmentManagementSystem.Models
         public DateTime CreatedTime { get; set; }
 
         [Display(Name = "故障信息")]
-        public MalfunctionInfo MalfuntionInfo { get; set; }
+        public MalfunctionInfo MalfunctionInfo { get; set; }
 
         [Display(Name = "故障排查")]
         public Investigation Investigation { get; set; }

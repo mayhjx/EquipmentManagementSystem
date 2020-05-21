@@ -10,6 +10,10 @@ namespace EquipmentManagementSystem.Models
     {
         public int ID { get; set; }
 
+        [Display(Name = "设备编号")]
+        public string InstrumentID { get; set; }
+        public Instrument Instrument { get; set; }
+
         [Display(Name = "开始时间")]
         [DataType(DataType.DateTime)]
         public DateTime BeginTime { get; set; }
@@ -25,10 +29,10 @@ namespace EquipmentManagementSystem.Models
         public string Part { get; set; }
 
         [Display(Name = "故障现象")]
-        public MalfunctionPhenomenon Phenomenon { get; set; }
+        public string Phenomenon { get; set; }
 
         [Display(Name = "可能原因")]
-        public MalfunctionReason Reason { get; set; }
+        public string Reason { get; set; }
 
         [Display(Name = "备注")]
         public string Remark { get; set; }

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using EquipmentManagementSystem.Data;
-using EquipmentManagementSystem.Models;
+using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.MalfunctionWorkOrders
 {
@@ -29,7 +25,13 @@ namespace EquipmentManagementSystem.Pages.MalfunctionWorkOrders
             }
 
             MalfunctionWorkOrder = await _context.MalfunctionWorkOrder
-                .Include(m => m.Instrument).FirstOrDefaultAsync(m => m.ID == id);
+                                    .Include(m => m.MalfunctionInfo)
+                                    .Include(m => m.Investigation)
+                                    .Include(m => m.RepairRequest)
+                                    .Include(m => m.AccessoriesOrder)
+
+                                    .AsNoTracking()
+                                    .FirstOrDefaultAsync(m => m.ID == id);
 
             if (MalfunctionWorkOrder == null)
             {

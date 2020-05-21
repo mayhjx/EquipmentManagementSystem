@@ -1,4 +1,5 @@
-﻿using EquipmentManagementSystem.Models;
+﻿using EquipmentManagementSystem.Data;
+using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -8,9 +9,9 @@ namespace EquipmentManagementSystem.Pages.MalfunctionWorkOrders
 {
     public class CreateModel : PageModel
     {
-        private readonly EquipmentManagementSystem.Data.MalfunctionContext _context;
+        private readonly MalfunctionContext _context;
 
-        public CreateModel(EquipmentManagementSystem.Data.MalfunctionContext context)
+        public CreateModel(MalfunctionContext context)
         {
             _context = context;
         }
@@ -34,6 +35,7 @@ namespace EquipmentManagementSystem.Pages.MalfunctionWorkOrders
             }
 
             _context.MalfunctionWorkOrder.Add(MalfunctionWorkOrder);
+
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
