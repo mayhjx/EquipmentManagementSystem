@@ -38,8 +38,7 @@ namespace EquipmentManagementSystem.Data
                 if (line.Trim() == "") continue;
                 var data = line.Split(",");
                 // 无日期转换
-                DateTime datetime;
-                DateTime.TryParse(data[3], out datetime);
+                DateTime.TryParse(data[3], out DateTime datetime);
 
                 context.Instruments.Add(
                     new Instrument
@@ -76,8 +75,7 @@ namespace EquipmentManagementSystem.Data
                 if (line.Trim() == "") continue;
                 var data = line.Split(",");
                 // 无日期转换
-                DateTime datetime;
-                DateTime.TryParse(data[1], out datetime);
+                DateTime.TryParse(data[1], out DateTime datetime);
 
                 context.Calibrations.Add(
                     new Calibration
@@ -107,8 +105,7 @@ namespace EquipmentManagementSystem.Data
                 if (line.Trim() == "") continue;
                 var data = line.Split(",");
                 // 无日期转换
-                DateTime datetime;
-                DateTime.TryParse(data[3], out datetime);
+                DateTime.TryParse(data[3], out DateTime datetime);
 
                 context.Asserts.Add(
                     new Assert
