@@ -17,7 +17,7 @@ namespace EquipmentManagementSystem.Models
         [Display(Name = "设备编号")]
         public string InstrumentID { get; set; }
 
-        public Instrument instrument { get; set; }
+        public Instrument Instrument { get; set; }
 
         [Display(Name = "检定/校验日期")]
         [DataType(DataType.Date)]

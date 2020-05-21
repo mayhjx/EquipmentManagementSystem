@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace EquipmentManagementSystem.Models
 {
@@ -18,6 +17,6 @@ namespace EquipmentManagementSystem.Models
         public string Remark { get; set; }
 
         [Display(Name = "附件")]
-        public IFormFile Attachment { get; set; }
+        public string Attachment { get; set; }
     }
 }

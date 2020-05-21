@@ -26,22 +26,22 @@ namespace EquipmentManagementSystem.Models
         public DateTime CreatedTime { get; set; }
 
         [Display(Name = "故障信息")]
-        public MalfunctionInfo? MalfuntionInfo { get; set; }
+        public MalfunctionInfo MalfuntionInfo { get; set; }
 
         [Display(Name = "故障排查")]
-        public Investigation? Investigation { get; set; }
+        public Investigation Investigation { get; set; }
 
         [Display(Name = "维修申请")]
-        public RepairRequest? RepairRequest { get; set; }
+        public RepairRequest RepairRequest { get; set; }
 
         [Display(Name = "配件下单")]
-        public AccessoriesOrder? AccessoriesOrder { get; set; }
+        public AccessoriesOrder AccessoriesOrder { get; set; }
 
         [Display(Name = "故障维修")]
-        public Maintenance? Maintenance { get; set; }
+        public Maintenance Maintenance { get; set; }
 
         [Display(Name = "性能验证")]
-        public Validation? Validation { get; set; }
+        public Validation Validation { get; set; }
     }
 
     //public enum MalfunctionStatus

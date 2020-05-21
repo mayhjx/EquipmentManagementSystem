@@ -24,7 +24,7 @@ namespace EquipmentManagementSystem.Pages.Calibrations
         public async Task OnGetAsync()
         {
             Calibration = await _context.Calibrations
-                .Include(c => c.instrument).ToListAsync();
+                .Include(c => c.Instrument).ToListAsync();
         }
     }
 }

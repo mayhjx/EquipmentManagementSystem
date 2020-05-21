@@ -2,7 +2,6 @@
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,12 +10,10 @@ namespace EquipmentManagementSystem.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
         private readonly EquipmentContext _context;
 
-        public IndexModel(ILogger<IndexModel> logger, EquipmentContext context)
+        public IndexModel(EquipmentContext context)
         {
-            _logger = logger;
             _context = context;
         }
 

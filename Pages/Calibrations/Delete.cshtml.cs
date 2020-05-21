@@ -26,7 +26,7 @@ namespace EquipmentManagementSystem.Pages.Calibrations
             }
 
             Calibration = await _context.Calibrations
-                .Include(c => c.instrument).FirstOrDefaultAsync(m => m.ID == id);
+                .Include(c => c.Instrument).FirstOrDefaultAsync(m => m.ID == id);
 
             if (Calibration == null)
             {

@@ -15,7 +15,7 @@ namespace EquipmentManagementSystem.Pages.Components
             _context = context;
         }
 
-        public IActionResult OnGet(string? id)
+        public IActionResult OnGet(string id)
         {
             if (string.IsNullOrEmpty(id))
             {
