@@ -4,7 +4,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace EquipmentManagementSystem.Models
 {
-    public class MalfunctionInvestigation
+    /// <summary>
+    /// 故障排查
+    /// </summary>
+    public class Investigation
     {
         public int ID { get; set; }
 

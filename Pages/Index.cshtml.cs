@@ -25,7 +25,7 @@ namespace EquipmentManagementSystem.Pages
         // 快到期设备
         public IList<Instrument> InstrumentOfExpire { get; set; }
 
-        public IList<Malfunction> Malfunctions { get; set; }
+        //public IList<MalfunctionWorkOrder> Malfunctions { get; set; }
 
         public void OnGet()
         {

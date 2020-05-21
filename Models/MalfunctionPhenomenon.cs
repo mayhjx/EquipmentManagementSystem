@@ -2,11 +2,11 @@
 
 namespace EquipmentManagementSystem.Models
 {
-    public class MalfunctionPart
+    public class MalfunctionPhenomenon
     {
         public int ID { get; set; }
 
-        [Display(Name = "故障部件")]
-        public string Name { get; set; }
+        [Display(Name = "故障现象")]
+        public string Phenomenon { get; set; }
     }
 }

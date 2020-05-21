@@ -24,6 +24,9 @@ namespace EquipmentManagementSystem
 
             services.AddDbContext<EquipmentContext>(options =>
                     options.UseSqlite(Configuration.GetConnectionString("EquipmentContext")));
+
+            services.AddDbContext<MalfunctionContext>(options =>
+                    options.UseSqlite(Configuration.GetConnectionString("EquipmentContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
