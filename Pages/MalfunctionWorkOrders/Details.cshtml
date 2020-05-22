@@ -8,26 +8,6 @@
 
 <div class="invoice p-3 mb-3">
     <!-- title row -->
-    @*<div class="row">
-            <div class="col-md-2">
-                <h3>
-                    @Html.DisplayFor(mdoel => Model.MalfunctionWorkOrder.InstrumentID)
-                </h3>
-            </div>
-            <div class="col-md-2">
-                @Html.DisplayNameFor(mdoel => Model.MalfunctionWorkOrder.Progress)
-                @Html.DisplayFor(mdoel => Model.MalfunctionWorkOrder.Progress)
-
-            </div>
-            <div class="col-md-2">
-                @Html.DisplayNameFor(mdoel => Model.MalfunctionWorkOrder.Creator)
-                @Html.DisplayFor(mdoel => Model.MalfunctionWorkOrder.Creator)
-            </div>
-            <div class="col-md-3">
-                @Html.DisplayNameFor(mdoel => Model.MalfunctionWorkOrder.CreatedTime)
-                @Html.DisplayFor(mdoel => Model.MalfunctionWorkOrder.CreatedTime)
-            </div>
-        </div>*@
     <ul class="list-inline">
         <li class="list-inline-item">
             <h3>
@@ -64,12 +44,6 @@
                         }
                     </h3>
                     <div class="card-tools">
-                        @*<div class="row">
-                                <div class="custom-control custom-checkbox">
-                                    <input class="custom-control-input" asp-for="@Model.MalfunctionWorkOrder.MalfunctionInfo.IsConfirm" />
-                                    <label class="custom-control-label">设备负责人确认</label>
-                                </div>
-                            </div>*@
                         <a asp-page="../MalfunctionInfos/Edit" asp-route-id="@Model.MalfunctionWorkOrder.ID">
                             <input type="button" class="btn btn-outline-primary btn-sm" value="编辑">
                         </a>
@@ -237,7 +211,7 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <table class="table table-sm table-bordered">
+                    <table class="table table-sm table-borderless">
                         <tr>
                             <td>@Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.Repairer)</td>
                             <td>@Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.Repairer)</td>
@@ -282,7 +256,7 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <table class="table table-sm table-bordered">
+                    <table class="table table-sm table-borderless">
                         <tr>
                             <td>@Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.EndTime)</td>
                             <td>@Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.EndTime)</td>
