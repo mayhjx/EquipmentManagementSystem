@@ -1,4 +1,5 @@
-﻿using EquipmentManagementSystem.Models;
+﻿using EquipmentManagementSystem.Data;
+using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -8,9 +9,9 @@ namespace EquipmentManagementSystem.Pages.MalfunctionWorkOrders
 {
     public class DetailsModel : PageModel
     {
-        private readonly EquipmentManagementSystem.Data.MalfunctionContext _context;
+        private readonly MalfunctionContext _context;
 
-        public DetailsModel(EquipmentManagementSystem.Data.MalfunctionContext context)
+        public DetailsModel(MalfunctionContext context)
         {
             _context = context;
         }
@@ -29,7 +30,6 @@ namespace EquipmentManagementSystem.Pages.MalfunctionWorkOrders
                                     .Include(m => m.Investigation)
                                     .Include(m => m.RepairRequest)
                                     .Include(m => m.AccessoriesOrder)
-
                                     .AsNoTracking()
                                     .FirstOrDefaultAsync(m => m.ID == id);
 

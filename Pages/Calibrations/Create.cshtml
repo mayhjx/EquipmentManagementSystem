@@ -15,7 +15,7 @@
                     <label asp-for="Calibration.InstrumentID" class="control-label"></label>
                     @if (ViewBag.InstrumentID is string)
                     {
-                        <input asp-for="Calibration.InstrumentID" value="@ViewBag.InstrumentID" disabled class="form-control" />
+                        <input asp-for="Calibration.InstrumentID" value="@ViewBag.InstrumentID" readonly class="form-control" />
                     }
                     else
                     {

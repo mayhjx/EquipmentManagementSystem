@@ -1,4 +1,5 @@
-﻿using EquipmentManagementSystem.Models;
+﻿using EquipmentManagementSystem.Data;
+using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -8,9 +9,9 @@ namespace EquipmentManagementSystem.Pages.MalfunctionWorkOrders
 {
     public class DeleteModel : PageModel
     {
-        private readonly EquipmentManagementSystem.Data.MalfunctionContext _context;
+        private readonly MalfunctionContext _context;
 
-        public DeleteModel(EquipmentManagementSystem.Data.MalfunctionContext context)
+        public DeleteModel(MalfunctionContext context)
         {
             _context = context;
         }

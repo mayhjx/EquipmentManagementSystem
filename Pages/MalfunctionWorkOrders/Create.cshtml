@@ -11,7 +11,7 @@
         <div class="col-md-2">
             <form method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input hidden type="datetime" value="@DateTime.Now.ToString("yyyy-MM-dd HH:mm")" asp-for="MalfunctionWorkOrder.CreatedTime" disabled />
+                <input hidden type="datetime" value="@DateTime.Now.ToString("yyyy-MM-dd HH:mm")" asp-for="MalfunctionWorkOrder.CreatedTime" />
                 <div class="form-group">
                     <label asp-for="MalfunctionWorkOrder.InstrumentID" class="control-label"></label>
                     <select asp-for="MalfunctionWorkOrder.InstrumentID" class="form-control" asp-items="ViewBag.InstrumentID"></select>

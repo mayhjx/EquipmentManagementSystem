@@ -65,7 +65,7 @@ namespace EquipmentManagementSystem.Pages.Components
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("../Instruments/Index");
         }
 
         private bool ComponentExists(int id)
