@@ -191,17 +191,17 @@
                         </tr>
                         @foreach (var item in Model.Instrument.MalfunctionWorkOrder)
                         {
-                    <tr>
-                        <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.BeginTime)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Validation.EndTime)</td>
-                        <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.Part)</td>
-                        <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.Phenomenon)</td>
-                        <td>
-                            <a asp-page="../MalfunctionWorkOrders/Edit" asp-route-id="@item.ID">编辑</a> |
-                            <a asp-page="../MalfunctionWorkOrders/Details" asp-route-id="@item.ID">查看</a> |
-                            <a asp-page="../MalfunctionWorkOrders/Delete" asp-route-id="@item.ID">删除</a>
-                        </td>
-                    </tr>
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.BeginTime)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Validation.EndTime)</td>
+                                <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.Part)</td>
+                                <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.Phenomenon)</td>
+                                <td>
+                                    <a asp-page="../Malfunctions/MalfunctionWorkOrders/Edit" asp-route-id="@item.ID">编辑</a> |
+                                    <a asp-page="../Malfunctions/MalfunctionWorkOrders/Details" asp-route-id="@item.ID">查看</a> |
+                                    <a asp-page="../Malfunctions/MalfunctionWorkOrders/Delete" asp-route-id="@item.ID">删除</a>
+                                </td>
+                            </tr>
                         }
                     </table>
                 </div>

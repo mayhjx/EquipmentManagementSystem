@@ -1,0 +1,55 @@
+﻿@page
+@model EquipmentManagementSystem.Pages.Malfunctions.Validate.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Validation</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Validation.EndTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Validation.EndTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Validation.PerformanceReportFile)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Validation.PerformanceReportFile)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Validation.EffectReportFile)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Validation.EffectReportFile)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Validation.Summary)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Validation.Summary)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Validation.Attachment)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Validation.Attachment)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Validation.IsConfirm)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Validation.IsConfirm)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Validation.ID">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

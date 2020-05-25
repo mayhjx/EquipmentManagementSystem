@@ -1,0 +1,66 @@
+﻿@page
+@model EquipmentManagementSystem.Pages.Malfunctions.Validate.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Validation[0].EndTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Validation[0].PerformanceReportFile)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Validation[0].EffectReportFile)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Validation[0].Summary)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Validation[0].Attachment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Validation[0].IsConfirm)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Validation) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PerformanceReportFile)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EffectReportFile)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Summary)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Attachment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsConfirm)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

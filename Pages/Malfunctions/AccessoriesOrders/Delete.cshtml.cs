@@ -8,19 +8,19 @@ using Microsoft.EntityFrameworkCore;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 
-namespace EquipmentManagementSystem.Pages.MalfunctionInfos
+namespace EquipmentManagementSystem.Pages.Malfunctions.AccessoriesOrders
 {
     public class DeleteModel : PageModel
     {
-        private readonly MalfunctionContext _context;
+        private readonly EquipmentManagementSystem.Data.MalfunctionContext _context;
 
-        public DeleteModel(MalfunctionContext context)
+        public DeleteModel(EquipmentManagementSystem.Data.MalfunctionContext context)
         {
             _context = context;
         }
 
         [BindProperty]
-        public MalfunctionInfo MalfunctionInfo { get; set; }
+        public AccessoriesOrder AccessoriesOrder { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,9 +29,9 @@ namespace EquipmentManagementSystem.Pages.MalfunctionInfos
                 return NotFound();
             }
 
-            MalfunctionInfo = await _context.MalfunctionInfo.FirstOrDefaultAsync(m => m.ID == id);
+            AccessoriesOrder = await _context.AccessoriesOrder.FirstOrDefaultAsync(m => m.ID == id);
 
-            if (MalfunctionInfo == null)
+            if (AccessoriesOrder == null)
             {
                 return NotFound();
             }
@@ -45,11 +45,11 @@ namespace EquipmentManagementSystem.Pages.MalfunctionInfos
                 return NotFound();
             }
 
-            MalfunctionInfo = await _context.MalfunctionInfo.FindAsync(id);
+            AccessoriesOrder = await _context.AccessoriesOrder.FindAsync(id);
 
-            if (MalfunctionInfo != null)
+            if (AccessoriesOrder != null)
             {
-                _context.MalfunctionInfo.Remove(MalfunctionInfo);
+                _context.AccessoriesOrder.Remove(AccessoriesOrder);
                 await _context.SaveChangesAsync();
             }
 

@@ -11,7 +11,7 @@ namespace EquipmentManagementSystem.Models
         public int ID { get; set; }
 
         [Display(Name = "报修时间")]
-        public DateTime? RepairTime { get; set; }
+        public DateTime? RequestTime { get; set; }
 
         [Display(Name = "预约时间")]
         public DateTime? BookingsTime { get; set; }

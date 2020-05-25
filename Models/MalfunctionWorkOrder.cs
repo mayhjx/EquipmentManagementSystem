@@ -43,13 +43,4 @@ namespace EquipmentManagementSystem.Models
         [Display(Name = "性能验证")]
         public Validation Validation { get; set; }
     }
-
-    //public enum MalfunctionStatus
-    //{
-    //    [Display(Name = "跟进中")]
-    //    FollowUp,
-    //    [Display(Name = "已完成")]
-    //    Finished
-    //}
-
 }

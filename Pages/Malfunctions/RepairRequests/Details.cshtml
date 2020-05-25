@@ -1,0 +1,49 @@
+﻿@page
+@model EquipmentManagementSystem.Pages.Malfunctions.RepairRequests.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>RepairRequest</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RepairRequest.RequestTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RepairRequest.RequestTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RepairRequest.BookingsTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RepairRequest.BookingsTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RepairRequest.Fixer)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RepairRequest.Fixer)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RepairRequest.Engineer)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RepairRequest.Engineer)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RepairRequest.IsConfirm)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RepairRequest.IsConfirm)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.RepairRequest.ID">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

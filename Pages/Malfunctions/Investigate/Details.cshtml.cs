@@ -8,18 +8,18 @@ using Microsoft.EntityFrameworkCore;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 
-namespace EquipmentManagementSystem.Pages.MalfunctionInfos
+namespace EquipmentManagementSystem.Pages.Malfunctions.Investigate
 {
     public class DetailsModel : PageModel
     {
-        private readonly MalfunctionContext _context;
+        private readonly EquipmentManagementSystem.Data.MalfunctionContext _context;
 
-        public DetailsModel(MalfunctionContext context)
+        public DetailsModel(EquipmentManagementSystem.Data.MalfunctionContext context)
         {
             _context = context;
         }
 
-        public MalfunctionInfo MalfunctionInfo { get; set; }
+        public Investigation Investigation { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,9 +28,9 @@ namespace EquipmentManagementSystem.Pages.MalfunctionInfos
                 return NotFound();
             }
 
-            MalfunctionInfo = await _context.MalfunctionInfo.FirstOrDefaultAsync(m => m.ID == id);
+            Investigation = await _context.Investigation.FirstOrDefaultAsync(m => m.ID == id);
 
-            if (MalfunctionInfo == null)
+            if (Investigation == null)
             {
                 return NotFound();
             }

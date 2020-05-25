@@ -1,0 +1,58 @@
+﻿@page
+@model EquipmentManagementSystem.Pages.Malfunctions.Validate.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Validation</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Validation.EndTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Validation.EndTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Validation.PerformanceReportFile)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Validation.PerformanceReportFile)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Validation.EffectReportFile)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Validation.EffectReportFile)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Validation.Summary)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Validation.Summary)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Validation.Attachment)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Validation.Attachment)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Validation.IsConfirm)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Validation.IsConfirm)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="Validation.ID" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-page="./Index">Back to List</a>
+    </form>
+</div>

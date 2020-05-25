@@ -8,22 +8,22 @@ using Microsoft.EntityFrameworkCore;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 
-namespace EquipmentManagementSystem.Pages.MalfunctionInfos
+namespace EquipmentManagementSystem.Pages.Malfunctions.Validate
 {
     public class IndexModel : PageModel
     {
-        private readonly MalfunctionContext _context;
+        private readonly EquipmentManagementSystem.Data.MalfunctionContext _context;
 
-        public IndexModel(MalfunctionContext context)
+        public IndexModel(EquipmentManagementSystem.Data.MalfunctionContext context)
         {
             _context = context;
         }
 
-        public IList<MalfunctionInfo> MalfunctionInfo { get;set; }
+        public IList<Validation> Validation { get;set; }
 
         public async Task OnGetAsync()
         {
-            MalfunctionInfo = await _context.MalfunctionInfo.ToListAsync();
+            Validation = await _context.Validation.ToListAsync();
         }
     }
 }

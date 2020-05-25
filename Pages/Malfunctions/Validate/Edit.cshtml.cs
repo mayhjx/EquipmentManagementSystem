@@ -9,19 +9,19 @@ using Microsoft.EntityFrameworkCore;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 
-namespace EquipmentManagementSystem.Pages.MalfunctionInfos
+namespace EquipmentManagementSystem.Pages.Malfunctions.Validate
 {
     public class EditModel : PageModel
     {
-        private readonly MalfunctionContext _context;
+        private readonly EquipmentManagementSystem.Data.MalfunctionContext _context;
 
-        public EditModel(MalfunctionContext context)
+        public EditModel(EquipmentManagementSystem.Data.MalfunctionContext context)
         {
             _context = context;
         }
 
         [BindProperty]
-        public MalfunctionInfo MalfunctionInfo { get; set; }
+        public Validation Validation { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,9 +30,9 @@ namespace EquipmentManagementSystem.Pages.MalfunctionInfos
                 return NotFound();
             }
 
-            MalfunctionInfo = await _context.MalfunctionInfo.FirstOrDefaultAsync(m => m.ID == id);
+            Validation = await _context.Validation.FirstOrDefaultAsync(m => m.ID == id);
 
-            if (MalfunctionInfo == null)
+            if (Validation == null)
             {
                 return NotFound();
             }
@@ -48,7 +48,7 @@ namespace EquipmentManagementSystem.Pages.MalfunctionInfos
                 return Page();
             }
 
-            _context.Attach(MalfunctionInfo).State = EntityState.Modified;
+            _context.Attach(Validation).State = EntityState.Modified;
 
             try
             {
@@ -56,7 +56,7 @@ namespace EquipmentManagementSystem.Pages.MalfunctionInfos
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MalfunctionInfoExists(MalfunctionInfo.ID))
+                if (!ValidationExists(Validation.ID))
                 {
                     return NotFound();
                 }
@@ -69,9 +69,9 @@ namespace EquipmentManagementSystem.Pages.MalfunctionInfos
             return RedirectToPage("./Index");
         }
 
-        private bool MalfunctionInfoExists(int id)
+        private bool ValidationExists(int id)
         {
-            return _context.MalfunctionInfo.Any(e => e.ID == id);
+            return _context.Validation.Any(e => e.ID == id);
         }
     }
 }

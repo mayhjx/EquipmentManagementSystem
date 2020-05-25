@@ -8,13 +8,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 
-namespace EquipmentManagementSystem.Pages.MalfunctionInfos
+namespace EquipmentManagementSystem.Pages.Malfunctions.Maintain
 {
     public class CreateModel : PageModel
     {
-        private readonly MalfunctionContext _context;
+        private readonly EquipmentManagementSystem.Data.MalfunctionContext _context;
 
-        public CreateModel(MalfunctionContext context)
+        public CreateModel(EquipmentManagementSystem.Data.MalfunctionContext context)
         {
             _context = context;
         }
@@ -25,7 +25,7 @@ namespace EquipmentManagementSystem.Pages.MalfunctionInfos
         }
 
         [BindProperty]
-        public MalfunctionInfo MalfunctionInfo { get; set; }
+        public Maintenance Maintenance { get; set; }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.
@@ -36,7 +36,7 @@ namespace EquipmentManagementSystem.Pages.MalfunctionInfos
                 return Page();
             }
 
-            _context.MalfunctionInfo.Add(MalfunctionInfo);
+            _context.Maintenance.Add(Maintenance);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

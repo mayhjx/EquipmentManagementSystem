@@ -1,0 +1,46 @@
+﻿@page
+@model EquipmentManagementSystem.Pages.Malfunctions.Investigate.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Investigation</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Investigation.BeginTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Investigation.BeginTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Investigation.EndTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Investigation.EndTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Investigation.Operator)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Investigation.Operator)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Investigation.Measures)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Investigation.Measures)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="Investigation.ID" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-page="./Index">Back to List</a>
+    </form>
+</div>

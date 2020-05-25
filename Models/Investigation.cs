@@ -12,7 +12,7 @@ namespace EquipmentManagementSystem.Models
         public int ID { get; set; }
 
         [Display(Name = "排查开始时间")]
-        public DateTime BeginTime { get; set; }
+        public DateTime? BeginTime { get; set; }
 
         [Display(Name = "排查结束时间")]
         public DateTime? EndTime { get; set; }
