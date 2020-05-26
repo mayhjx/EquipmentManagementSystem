@@ -14,9 +14,11 @@ namespace EquipmentManagementSystem.Models
         public MalfunctionWorkOrder MalfunctionWorkOrder { get; set; }
 
         [Display(Name = "报修时间")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime? RequestTime { get; set; }
 
         [Display(Name = "预约时间")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime? BookingsTime { get; set; }
 
         [Display(Name = "报修人")]

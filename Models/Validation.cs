@@ -14,6 +14,7 @@ namespace EquipmentManagementSystem.Models
         public MalfunctionWorkOrder MalfunctionWorkOrder { get; set; }
 
         [Display(Name = "结束时间")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime? EndTime { get; set; }
 
         [Display(Name = "故障修复后性能验证报告")]
