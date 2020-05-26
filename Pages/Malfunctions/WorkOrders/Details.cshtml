@@ -8,12 +8,10 @@
 
 <div class="invoice p-3 mb-3">
     <!-- title row -->
+    <h3>
+        @Html.DisplayFor(mdoel => Model.MalfunctionWorkOrder.InstrumentID)
+    </h3>
     <ul class="list-inline">
-        <li class="list-inline-item">
-            <h3>
-                @Html.DisplayFor(mdoel => Model.MalfunctionWorkOrder.InstrumentID)
-            </h3>
-        </li>
         <li class="list-inline-item">
             @Html.DisplayNameFor(mdoel => Model.MalfunctionWorkOrder.Progress)：
             @Html.DisplayFor(mdoel => Model.MalfunctionWorkOrder.Progress)

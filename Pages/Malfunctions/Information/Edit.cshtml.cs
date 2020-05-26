@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using EquipmentManagementSystem.Data;
-using EquipmentManagementSystem.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions.Information
 {
@@ -30,7 +26,9 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Information
                 return NotFound();
             }
 
-            MalfunctionInfo = await _context.MalfunctionInfo.FirstOrDefaultAsync(m => m.ID == id);
+            MalfunctionInfo = await _context.MalfunctionInfo
+                                .Include(m => m.MalfunctionWorkOrder)
+                                .FirstOrDefaultAsync(m => m.ID == id);
 
             if (MalfunctionInfo == null)
             {

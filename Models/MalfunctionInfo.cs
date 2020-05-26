@@ -10,9 +10,8 @@ namespace EquipmentManagementSystem.Models
     {
         public int ID { get; set; }
 
-        //[Display(Name = "设备编号")]
-        //public string InstrumentID { get; set; }
-        //public Instrument Instrument { get; set; }
+        public int MalfunctionWorkOrderID { get; set; }
+        public MalfunctionWorkOrder MalfunctionWorkOrder { get; set; }
 
         [Display(Name = "开始时间")]
         [DataType(DataType.DateTime)]

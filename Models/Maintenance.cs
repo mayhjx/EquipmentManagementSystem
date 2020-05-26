@@ -9,6 +9,9 @@ namespace EquipmentManagementSystem.Models
     {
         public int ID { get; set; }
 
+        public int MalfunctionWorkOrderID { get; set; }
+        public MalfunctionWorkOrder MalfunctionWorkOrder { get; set; }
+
         [Display(Name = "维修人")]
         public string Repairer { get; set; }
 

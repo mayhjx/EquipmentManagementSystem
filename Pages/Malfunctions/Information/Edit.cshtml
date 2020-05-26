@@ -2,18 +2,17 @@
 @model EquipmentManagementSystem.Pages.Malfunctions.Information.EditModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "编辑";
 }
 
-<h1>Edit</h1>
-
-<h4>MalfunctionInfo</h4>
+<h4>故障信息</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="MalfunctionInfo.ID" />
+            <input type="hidden" asp-for="MalfunctionInfo.MalfunctionWorkOrderID" />
             <div class="form-group">
                 <label asp-for="MalfunctionInfo.BeginTime" class="control-label"></label>
                 <input asp-for="MalfunctionInfo.BeginTime" class="form-control" />
@@ -26,7 +25,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="MalfunctionInfo.Type" class="control-label"></label>
-                <select asp-for="MalfunctionInfo.Type" class="form-control"></select>
+                <select asp-for="MalfunctionInfo.Type" class="form-control" asp-items="@Html.GetEnumSelectList<EquipmentManagementSystem.Models.MalfunctionType>()"></select>
                 <span asp-validation-for="MalfunctionInfo.Type" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -46,12 +45,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="MalfunctionInfo.Remark" class="control-label"></label>
-                <input asp-for="MalfunctionInfo.Remark" class="form-control" />
+                <textarea asp-for="MalfunctionInfo.Remark" class="form-control" rows="3"></textarea>
                 <span asp-validation-for="MalfunctionInfo.Remark" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="MalfunctionInfo.Attachment" class="control-label"></label>
-                <input asp-for="MalfunctionInfo.Attachment" class="form-control" />
+                <input asp-for="MalfunctionInfo.Attachment" class="form-control" readonly />
                 <span asp-validation-for="MalfunctionInfo.Attachment" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
@@ -60,14 +59,14 @@
                 </label>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="保存" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="../WorkOrders/Details" asp-route-id="@Model.MalfunctionInfo.MalfunctionWorkOrderID">返回</a>
 </div>
 
 @section Scripts {

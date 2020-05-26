@@ -7,7 +7,7 @@
 
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">工单列表 <a asp-page="Create">（新建）</a> </h3>
+        <h3 class="card-title">工单列表 <a asp-page="Create"><input type="button" class="btn btn-primary btn-sm" value="新建" /></a></h3>
     </div>
 
     <div class="card-body">
@@ -34,12 +34,13 @@
                                     @Html.DisplayNameFor(model => model.MalfunctionWorkOrder[0].CreatedTime)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.MalfunctionWorkOrder[0].Progress)
-                                </th>
-                                <th>
                                     @Html.DisplayNameFor(model => model.MalfunctionWorkOrder[0].Creator)
                                 </th>
-                                <th></th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.MalfunctionWorkOrder[0].Progress)
+                                </th>
+
+                                @*<th></th>*@
                             </tr>
                         </thead>
                         <tbody>
@@ -47,28 +48,28 @@
                             {
                                 <tr>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.InstrumentID)
+                                        <a asp-page="./Details" asp-route-id="@item.ID">@Html.DisplayFor(modelItem => item.InstrumentID)</a>
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.MalfunctionInfo.Part)@Html.DisplayFor(modelItem => item.MalfunctionInfo.Phenomenon)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.MalfunctionInfo.FoundedTime)
+                                        @Html.DisplayFor(modelItem => item.MalfunctionInfo.BeginTime)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.CreatedTime)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Progress)
-                                    </td>
-                                    <td>
                                         @Html.DisplayFor(modelItem => item.Creator)
                                     </td>
                                     <td>
-                                        <a asp-page="./Edit" asp-route-id="@item.ID">编辑</a> |
-                                        <a asp-page="./Details" asp-route-id="@item.ID">查看</a> |
-                                        <a asp-page="./Delete" asp-route-id="@item.ID">删除</a>
+                                        @Html.DisplayFor(modelItem => item.Progress)
                                     </td>
+                                    @*<td>
+                                            <a asp-page="./Edit" asp-route-id="@item.ID">编辑</a> |
+                                            <a asp-page="./Details" asp-route-id="@item.ID">详细信息</a> |
+                                            <a asp-page="./Delete" asp-route-id="@item.ID">删除</a>
+                                        </td>*@
                                 </tr>
                             }
                         </tbody>

@@ -34,7 +34,19 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
                 return Page();
             }
 
+            // 改变故障设备的状态
+            MalfunctionWorkOrder.Instrument = await _context.Set<Instrument>().FindAsync(MalfunctionWorkOrder.InstrumentID);
+            MalfunctionWorkOrder.Instrument.Status = InstrumentStatus.Malfunction;
+
+            // 新建工单内容
+            MalfunctionWorkOrder.Investigation = new Investigation { };
+            MalfunctionWorkOrder.RepairRequest = new RepairRequest { };
+            MalfunctionWorkOrder.AccessoriesOrder = new AccessoriesOrder { };
+            MalfunctionWorkOrder.Maintenance = new Maintenance { };
+            MalfunctionWorkOrder.Validation = new Validation { };
+
             _context.MalfunctionWorkOrder.Add(MalfunctionWorkOrder);
+
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

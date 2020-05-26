@@ -10,6 +10,9 @@ namespace EquipmentManagementSystem.Models
     {
         public int ID { get; set; }
 
+        public int MalfunctionWorkOrderID { get; set; }
+        public MalfunctionWorkOrder MalfunctionWorkOrder { get; set; }
+
         [Display(Name = "结束时间")]
         public DateTime? EndTime { get; set; }
 

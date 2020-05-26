@@ -25,7 +25,13 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
             }
 
             MalfunctionWorkOrder = await _context.MalfunctionWorkOrder
-                .Include(m => m.Instrument).FirstOrDefaultAsync(m => m.ID == id);
+                                    .Include(m => m.Instrument)
+                                    .Include(m => m.MalfunctionInfo)
+                                    .Include(m => m.Investigation)
+                                    .Include(m => m.RepairRequest)
+                                    .Include(m => m.AccessoriesOrder)
+                                    .AsNoTracking()
+                                    .FirstOrDefaultAsync(m => m.ID == id);
 
             if (MalfunctionWorkOrder == null)
             {

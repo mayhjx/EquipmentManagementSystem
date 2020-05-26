@@ -21,7 +21,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
         public async Task OnGetAsync()
         {
             MalfunctionWorkOrder = await _context.MalfunctionWorkOrder
-                                    .Include(m => m.Instrument)
+                                    .Include(m => m.MalfunctionInfo)
                                     .AsNoTracking()
                                     .ToListAsync();
         }

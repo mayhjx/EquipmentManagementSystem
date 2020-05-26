@@ -11,6 +11,9 @@ namespace EquipmentManagementSystem.Models
     {
         public int ID { get; set; }
 
+        public int MalfunctionWorkOrderID { get; set; }
+        public MalfunctionWorkOrder MalfunctionWorkOrder { get; set; }
+
         [Display(Name = "排查开始时间")]
         public DateTime? BeginTime { get; set; }
 

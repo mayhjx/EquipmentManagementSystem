@@ -15,7 +15,7 @@ namespace EquipmentManagementSystem.Models
         public Instrument Instrument { get; set; }
 
         [Display(Name = "进度")]
-        public string Progress { get; set; }
+        public WorkOrderProgress Progress { get; set; }
 
         [Required]
         [Display(Name = "建单人")]
@@ -42,5 +42,21 @@ namespace EquipmentManagementSystem.Models
 
         [Display(Name = "性能验证")]
         public Validation Validation { get; set; }
+    }
+
+    public enum WorkOrderProgress
+    {
+        [Display(Name = "排查中")]
+        Investigating,
+        [Display(Name = "已排查")]
+        Investigated,
+        [Display(Name = "已报修")]
+        RepairRequested,
+        [Display(Name = "等待配件")]
+        Waiting,
+        [Display(Name = "维修中")]
+        Repairing,
+        [Display(Name = "已验证")]
+        Validated,
     }
 }
