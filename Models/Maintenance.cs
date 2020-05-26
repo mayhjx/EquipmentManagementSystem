@@ -20,5 +20,6 @@ namespace EquipmentManagementSystem.Models
 
         [Display(Name = "附件")]
         public string Attachment { get; set; }
+
     }
 }

@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using EquipmentManagementSystem.Data;
-using EquipmentManagementSystem.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
 {
@@ -21,7 +18,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
 
         public IActionResult OnGet()
         {
-        ViewData["InstrumentID"] = new SelectList(_context.Set<Instrument>(), "ID", "ID");
+            ViewData["InstrumentID"] = new SelectList(_context.Set<Instrument>().OrderBy(m => m.ID), "ID", "ID");
             return Page();
         }
 

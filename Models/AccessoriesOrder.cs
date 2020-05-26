@@ -14,12 +14,13 @@ namespace EquipmentManagementSystem.Models
         public string Name { get; set; }
 
         [Display(Name = "下单时间")]
-        public DateTime PlaceTime { get; set; }
+        public DateTime? PlaceTime { get; set; }
 
         [Display(Name = "到达时间")]
-        public DateTime ArrivalTime { get; set; }
+        public DateTime? ArrivalTime { get; set; }
 
         [Display(Name = "备注")]
         public string Remark { get; set; }
+
     }
 }
