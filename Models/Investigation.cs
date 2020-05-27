@@ -15,11 +15,11 @@ namespace EquipmentManagementSystem.Models
         public MalfunctionWorkOrder MalfunctionWorkOrder { get; set; }
 
         [Display(Name = "排查开始时间")]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
         public DateTime? BeginTime { get; set; }
 
         [Display(Name = "排查结束时间")]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
         public DateTime? EndTime { get; set; }
 
         [Display(Name = "排查人员")]

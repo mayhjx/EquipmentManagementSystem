@@ -13,8 +13,8 @@ namespace EquipmentManagementSystem.Models
         public int MalfunctionWorkOrderID { get; set; }
         public MalfunctionWorkOrder MalfunctionWorkOrder { get; set; }
 
-        [Display(Name = "结束时间")]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}", ApplyFormatInEditMode = true)]
+        [Display(Name = "验证时间")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
         public DateTime? EndTime { get; set; }
 
         [Display(Name = "故障修复后性能验证报告")]
