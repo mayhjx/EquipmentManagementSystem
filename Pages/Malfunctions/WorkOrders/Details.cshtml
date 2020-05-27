@@ -242,32 +242,38 @@
                 <!-- /.card-header -->
                 <div class="card-body">
                     <div class="row">
-                        <dl class="row">
-                            <dt class="col-md-4">
-                                @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.Repairer)
-                            </dt>
-                            <dd class="col-md-8">
-                                @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.Repairer)
-                            </dd>
-                            <dt class="col-md-4">
-                                @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.Solution)
-                            </dt>
-                            <dd class="col-md-8">
-                                @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.Solution)
-                            </dd>
-                            <dt class="col-md-4">
-                                @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.Remark)
-                            </dt>
-                            <dd class="col-md-8">
-                                @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.Remark)
-                            </dd>
-                            <dt class="col-md-4">
-                                @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.Attachment)
-                            </dt>
-                            <dd class="col-md-8">
-                                @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.Attachment)
-                            </dd>
-                        </dl>
+                        <div class="col-md-6">
+                            <dl class="row">
+                                <dt class="col-sm-4">
+                                    @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.Repairer)
+                                </dt>
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.Repairer)
+                                </dd>
+                                <dt class="col-sm-4">
+                                    @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.Solution)
+                                </dt>
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.Solution)
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="col-md-6">
+                            <dl class="row">
+                                <dt class="col-sm-4">
+                                    @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.Remark)
+                                </dt>
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.Remark)
+                                </dd>
+                                <dt class="col-sm-4">
+                                    @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.Attachment)
+                                </dt>
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.Attachment)
+                                </dd>
+                            </dl>
+                        </div>
                     </div>
                 </div>
                 <!-- /.card-body -->
@@ -297,38 +303,44 @@
                 <!-- /.card-header -->
                 <div class="card-body">
                     <div class="row">
-                        <dl class="row">
-                            <dt class="col-md-4">
-                                @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.EndTime)
-                            </dt>
-                            <dd class="col-md-8">
-                                @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.EndTime)
-                            </dd>
-                            <dt class="col-md-4">
-                                @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.PerformanceReportFile)
-                            </dt>
-                            <dd class="col-md-8">
-                                @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.PerformanceReportFile)
-                            </dd>
-                            <dt class="col-md-4">
-                                @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.EffectReportFile)
-                            </dt>
-                            <dd class="col-md-8">
-                                @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.EffectReportFile)
-                            </dd>
-                            <dt class="col-md-4">
-                                @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.Summary)
-                            </dt>
-                            <dd class="col-md-8">
-                                @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.Summary)
-                            </dd>
-                            <dt class="col-md-4">
-                                @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.Attachment)
-                            </dt>
-                            <dd class="col-md-8">
-                                @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.Attachment)
-                            </dd>
-                        </dl>
+                        <div class="col-md-6">
+                            <dl class="row">
+                                <dt class="col-sm-4">
+                                    @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.EndTime)
+                                </dt>
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.EndTime)
+                                </dd>
+                                <dt class="col-sm-4">
+                                    @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.PerformanceReportFile)
+                                </dt>
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.PerformanceReportFile)
+                                </dd>
+                                <dt class="col-sm-4">
+                                    @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.EffectReportFile)
+                                </dt>
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.EffectReportFile)
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="col-md-6">
+                            <dl class="row">
+                                <dt class="col-sm-4">
+                                    @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.Summary)
+                                </dt>
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.Summary)
+                                </dd>
+                                <dt class="col-sm-4">
+                                    @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.Attachment)
+                                </dt>
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.Attachment)
+                                </dd>
+                            </dl>
+                        </div>
                     </div>
                 </div>
                 <!-- /.card-body -->

@@ -1,7 +1,6 @@
 ﻿using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
@@ -34,7 +33,7 @@ namespace EquipmentManagementSystem.Pages.Components
             {
                 return NotFound();
             }
-            ViewData["instrumentID"] = new SelectList(_context.Instruments, "ID", "ID");
+            //ViewData["instrumentID"] = new SelectList(_context.Instruments, "ID", "ID");
             return Page();
         }
 

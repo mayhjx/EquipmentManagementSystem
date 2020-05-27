@@ -2,58 +2,59 @@
 @model EquipmentManagementSystem.Pages.Malfunctions.Validate.EditModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "编辑";
 }
 
-<h1>Edit</h1>
-
-<h4>Validation</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Validation.ID" />
-            <input type="hidden" asp-for="Validation.MalfunctionWorkOrderID" />
-            <div class="form-group">
-                <label asp-for="Validation.EndTime" class="control-label"></label>
-                <input asp-for="Validation.EndTime" class="form-control" />
-                <span asp-validation-for="Validation.EndTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Validation.PerformanceReportFile" class="control-label"></label>
-                <input asp-for="Validation.PerformanceReportFile" class="form-control" />
-                <span asp-validation-for="Validation.PerformanceReportFile" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Validation.EffectReportFile" class="control-label"></label>
-                <input asp-for="Validation.EffectReportFile" class="form-control" />
-                <span asp-validation-for="Validation.EffectReportFile" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Validation.Summary" class="control-label"></label>
-                <input asp-for="Validation.Summary" class="form-control" />
-                <span asp-validation-for="Validation.Summary" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Validation.Attachment" class="control-label"></label>
-                <input asp-for="Validation.Attachment" class="form-control" />
-                <span asp-validation-for="Validation.Attachment" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Validation.IsConfirm" /> @Html.DisplayNameFor(model => model.Validation.IsConfirm)
-                </label>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+<div class="invoice p-3 mb-3">
+    <h4>性能验证</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Validation.ID" />
+                <input type="hidden" asp-for="Validation.MalfunctionWorkOrderID" />
+                <div class="form-group">
+                    <label asp-for="Validation.EndTime" class="control-label"></label>
+                    <input asp-for="Validation.EndTime" class="form-control" />
+                    <span asp-validation-for="Validation.EndTime" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Validation.PerformanceReportFile" class="control-label"></label>
+                    <input asp-for="Validation.PerformanceReportFile" class="form-control" />
+                    <span asp-validation-for="Validation.PerformanceReportFile" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Validation.EffectReportFile" class="control-label"></label>
+                    <input asp-for="Validation.EffectReportFile" class="form-control" />
+                    <span asp-validation-for="Validation.EffectReportFile" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Validation.Summary" class="control-label"></label>
+                    <input asp-for="Validation.Summary" class="form-control" />
+                    <span asp-validation-for="Validation.Summary" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Validation.Attachment" class="control-label"></label>
+                    <input asp-for="Validation.Attachment" class="form-control" />
+                    <span asp-validation-for="Validation.Attachment" class="text-danger"></span>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="Validation.IsConfirm" /> @Html.DisplayNameFor(model => model.Validation.IsConfirm)
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="保存" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-page="./Index">Back to List</a>
+    <div>
+        @*<a asp-page="./Index">返回</a>*@
+        <a asp-page="../WorkOrders/Details" asp-route-id="@Model.Validation.MalfunctionWorkOrderID">返回</a>
+    </div>
 </div>
 
 @section Scripts {
