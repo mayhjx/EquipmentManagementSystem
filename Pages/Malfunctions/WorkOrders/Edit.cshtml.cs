@@ -19,6 +19,10 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
         [BindProperty]
         public MalfunctionWorkOrder MalfunctionWorkOrder { get; set; }
 
+        [BindProperty]
+        public MalfunctionInfo MalfunctionInfo { get; set; }
+
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -27,7 +31,6 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
             }
 
             MalfunctionWorkOrder = await _context.MalfunctionWorkOrder
-                                    .Include(m => m.Instrument)
                                     .FirstOrDefaultAsync(m => m.ID == id);
 
             if (MalfunctionWorkOrder == null)

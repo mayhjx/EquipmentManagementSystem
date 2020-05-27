@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using EquipmentManagementSystem.Data;
-using EquipmentManagementSystem.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions.Validate
 {
@@ -66,7 +62,8 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Validate
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("../WorkOrders/Details", new { id = Validation.MalfunctionWorkOrderID });
+            //return RedirectToPage("./Index");
         }
 
         private bool ValidationExists(int id)

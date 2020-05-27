@@ -197,9 +197,9 @@
                                 <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.Part)</td>
                                 <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.Phenomenon)</td>
                                 <td>
-                                    <a asp-page="../Malfunctions/MalfunctionWorkOrders/Edit" asp-route-id="@item.ID">编辑</a> |
-                                    <a asp-page="../Malfunctions/MalfunctionWorkOrders/Details" asp-route-id="@item.ID">查看</a> |
-                                    <a asp-page="../Malfunctions/MalfunctionWorkOrders/Delete" asp-route-id="@item.ID">删除</a>
+                                    @*<a asp-page="../Malfunctions/WorkOrders/Edit" asp-route-id="@item.ID">编辑</a> |*@
+                                    <a asp-page="../Malfunctions/WorkOrders/Details" asp-route-id="@item.ID">查看</a> |
+                                    <a asp-page="../Malfunctions/WorkOrders/Delete" asp-route-id="@item.ID">删除</a>
                                 </td>
                             </tr>
                         }

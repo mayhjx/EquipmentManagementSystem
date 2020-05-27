@@ -26,6 +26,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Information
                 return NotFound();
             }
 
+
             MalfunctionInfo = await _context.MalfunctionInfo
                                 .Include(m => m.MalfunctionWorkOrder)
                                 .FirstOrDefaultAsync(m => m.ID == id);
@@ -34,6 +35,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Information
             {
                 return NotFound();
             }
+
             return Page();
         }
 
@@ -41,6 +43,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Information
         // more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
+
             if (!ModelState.IsValid)
             {
                 return Page();
@@ -64,7 +67,9 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Information
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("../WorkOrders/Details", new { id = MalfunctionInfo.MalfunctionWorkOrderID });
+
+            //return RedirectToPage("./Index");
         }
 
         private bool MalfunctionInfoExists(int id)

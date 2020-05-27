@@ -3,6 +3,9 @@
 
 @{
     ViewData["Title"] = "详细信息";
+    var MalfunctionIsComfirm = Model.MalfunctionWorkOrder.MalfunctionInfo != null && Model.MalfunctionWorkOrder.MalfunctionInfo.IsConfirm ? true : false;
+    var RepairRequestIsComfirm = Model.MalfunctionWorkOrder.RepairRequest != null && Model.MalfunctionWorkOrder.RepairRequest.IsConfirm ? true : false;
+    var ValidationIsComfirm = Model.MalfunctionWorkOrder.Validation != null && Model.MalfunctionWorkOrder.Validation.IsConfirm ? true : false;
 }
 
 
@@ -32,7 +35,7 @@
                 <div class="card-header">
                     <h3 class="card-title">
                         <i class="fa fa-info-circle" aria-hidden="true"></i> 故障信息
-                        @if (Model.MalfunctionWorkOrder.MalfunctionInfo != null && Model.MalfunctionWorkOrder.MalfunctionInfo.IsConfirm)
+                        @if (MalfunctionIsComfirm)
                         {
                             <span class="badge badge-success">设备负责人已确认</span>
                         }
@@ -117,7 +120,7 @@
                 <div class="card-header">
                     <h3 class="card-title">
                         <i class="fa fa-search" aria-hidden="true"></i> 故障排查
-                        @if (Model.MalfunctionWorkOrder.RepairRequest != null && Model.MalfunctionWorkOrder.RepairRequest.IsConfirm)
+                        @if (RepairRequestIsComfirm)
                         {
                             <span class="badge badge-success">设备主任已确认</span>
                         }
@@ -285,7 +288,7 @@
                 <div class="card-header">
                     <h3 class="card-title">
                         <i class="fa fa-file" aria-hidden="true"></i> 性能验证
-                        @if (Model.MalfunctionWorkOrder.Validation != null && Model.MalfunctionWorkOrder.Validation.IsConfirm)
+                        @if (ValidationIsComfirm)
                         {
                             <span class="badge badge-success">设备主任已确认</span>
                         }
@@ -351,13 +354,13 @@
 
     <div class="row no-print">
         <div class="col-md-12">
-            @*<a href="invoice-print.html" target="_blank" class="btn btn-default float-right"><i class="fas fa-print"></i> 打印</a>*@
             <div>
                 <a asp-page="./Edit" asp-route-id="@Model.MalfunctionWorkOrder.ID">
                     <input type="button" class="btn btn-primary" value="编辑">
                 </a>
 
-                <a asp-page="./Index">
+                @*<a asp-page="./Index">*@
+                <a href="javascript:history.back(-1);">
                     <input type="button" class="btn btn-default" value="返回" style="margin-left: 5px;">
                 </a>
 

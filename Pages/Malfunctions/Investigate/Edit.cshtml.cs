@@ -62,7 +62,9 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Investigate
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("../WorkOrders/Details", new { id = Investigation.MalfunctionWorkOrderID });
+
+            //return RedirectToPage("./Index");
         }
 
         private bool InvestigationExists(int id)
