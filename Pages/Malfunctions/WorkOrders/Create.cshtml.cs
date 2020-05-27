@@ -16,9 +16,22 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
             _context = context;
         }
 
-        public IActionResult OnGet()
+        //public IActionResult OnGet()
+        //{
+        //    ViewData["InstrumentID"] = new SelectList(_context.Set<Instrument>().OrderBy(m => m.ID), "ID", "ID");
+        //    return Page();
+        //}
+
+        public IActionResult OnGet(string id)
         {
-            ViewData["InstrumentID"] = new SelectList(_context.Set<Instrument>().OrderBy(m => m.ID), "ID", "ID");
+            if (string.IsNullOrEmpty(id))
+            {
+                ViewData["InstrumentID"] = new SelectList(_context.Set<Instrument>().OrderBy(m => m.ID), "ID", "ID");
+            }
+            else
+            {
+                ViewData["InstrumentID"] = id;
+            }
             return Page();
         }
 

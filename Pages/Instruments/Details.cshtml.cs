@@ -31,9 +31,9 @@ namespace EquipmentManagementSystem.Pages.Instruments
                         .Include(b => b.Calibrations)
                         .Include(c => c.Components)
                         .Include(d => d.MalfunctionWorkOrder)
-                        .ThenInclude(e => e.MalfunctionInfo)
+                            .ThenInclude(e => e.MalfunctionInfo)
                         .Include(d => d.MalfunctionWorkOrder)
-                        .ThenInclude(e => e.Validation)
+                            .ThenInclude(e => e.Validation)
                         .AsNoTracking()
                         .FirstOrDefaultAsync(m => m.ID == id);
 

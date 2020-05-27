@@ -8,7 +8,7 @@
 <div class="invoice p-3 mb-3">
     <!-- title row -->
     <div class="row">
-        <div class="col-12">
+        <div class="col-md-6">
             <h3>
                 @Html.DisplayFor(mdoel => Model.Instrument.ID)
                 @{
@@ -36,6 +36,14 @@
                 }
             </h3>
         </div>
+        <div class="col-md-6 no-print">
+            <a asp-page="./Index">
+                <input type="button" class="btn btn-default float-right" value="返回" style="margin-left: 5px;">
+            </a>
+            <button onclick="javescript:window.print()" type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
+                <i class="fas fa-download"></i> Generate PDF
+            </button>
+        </div>
         <!-- /.col -->
     </div>
     <br />
@@ -47,46 +55,52 @@
                     <h3 class="card-title">
                         基础信息
                     </h3>
+                    <div class="card-tools">
+                        <a asp-page="./Edit" asp-route-id="@Model.Instrument.ID">
+                            <input type="button" class="btn btn-outline-primary btn-sm" value="编辑">
+                        </a>
+                    </div>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <table class="table table-sm">
-                        <tr>
-                            <td>@Html.DisplayNameFor(model => model.Instrument.Platform)</td>
-                            <td>@Html.DisplayFor(model => model.Instrument.Platform)</td>
-                        </tr>
-                        <tr>
-                            <td>@Html.DisplayNameFor(model => model.Instrument.Name)</td>
-                            <td>@Html.DisplayFor(model => model.Instrument.Name)</td>
-                        </tr>
-                        <tr>
-                            <td>@Html.DisplayNameFor(model => model.Instrument.StartUsingDate)</td>
-                            <td>@Html.DisplayFor(model => model.Instrument.StartUsingDate)</td>
-                        </tr>
-                        <tr>
-                            <td>@Html.DisplayNameFor(model => model.Instrument.CalibrationCycle)</td>
-                            <td>@Html.DisplayFor(model => model.Instrument.CalibrationCycle)</td>
-                        </tr>
-                        <tr>
-                            <td>@Html.DisplayNameFor(model => model.Instrument.MetrologicalCharacteristics)</td>
-                            <td>@Html.DisplayFor(model => model.Instrument.MetrologicalCharacteristics)</td>
-                        </tr>
-                        <tr>
-                            <td>@Html.DisplayNameFor(model => model.Instrument.Location)</td>
-                            <td>@Html.DisplayFor(model => model.Instrument.Location)</td>
-                        </tr>
-                        <tr>
-                            <td>@Html.DisplayNameFor(model => model.Instrument.Principal)</td>
-                            <td>@Html.DisplayFor(model => model.Instrument.Principal)</td>
-                        </tr>
-                        <tr>
-                            <td>@Html.DisplayNameFor(model => model.Instrument.ProjectTeamName)</td>
-                            <td>@Html.DisplayFor(model => model.Instrument.ProjectTeamName)</td>
-                        </tr>
-                        <tr>
-                            <td>@Html.DisplayNameFor(model => model.Instrument.NewSystemCode)</td>
-                            <td>@Html.DisplayFor(model => model.Instrument.NewSystemCode)</td>
-                        </tr>
+                    <table class="table table-sm table-borderless">
+                        <tbody>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.Instrument.Platform)</th>
+                                <td>@Html.DisplayFor(model => model.Instrument.Platform)</td>
+
+                                <th>@Html.DisplayNameFor(model => model.Instrument.Location)</th>
+                                <td>@Html.DisplayFor(model => model.Instrument.Location)</td>
+                            </tr>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.Instrument.Name)</th>
+                                <td>@Html.DisplayFor(model => model.Instrument.Name)</td>
+
+                                <th>@Html.DisplayNameFor(model => model.Instrument.Principal)</th>
+                                <td>@Html.DisplayFor(model => model.Instrument.Principal)</td>
+                            </tr>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.Instrument.StartUsingDate)</th>
+                                <td>@Html.DisplayFor(model => model.Instrument.StartUsingDate)</td>
+
+                                <th>@Html.DisplayNameFor(model => model.Instrument.ProjectTeamName)</th>
+                                <td>@Html.DisplayFor(model => model.Instrument.ProjectTeamName)</td>
+                            </tr>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.Instrument.CalibrationCycle)</th>
+                                <td>@Html.DisplayFor(model => model.Instrument.CalibrationCycle)</td>
+
+                                <th>@Html.DisplayNameFor(model => model.Instrument.NewSystemCode)</th>
+                                <td>@Html.DisplayFor(model => model.Instrument.NewSystemCode)</td>
+                            </tr>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.Instrument.MetrologicalCharacteristics)</th>
+                                <td>@Html.DisplayFor(model => model.Instrument.MetrologicalCharacteristics)</td>
+
+                                <th>@Html.DisplayNameFor(model => model.Instrument.Remark)</th>
+                                <td>@Html.DisplayFor(model => model.Instrument.Remark)</td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
                 <!-- /.card-body -->
@@ -95,36 +109,46 @@
         </div>
 
         <div class="col-md-6">
-            <div class="card card-primary card-outline">
+            <div class="card card-primary card-outline height-control">
                 <div class="card-header">
                     <h3 class="card-title">
-                        校准信息<a asp-page="../Calibrations/Create" asp-route-id="@Model.Instrument.ID">（新建）</a>
+                        校准信息
                     </h3>
+                    <div class="card-tools">
+                        <a asp-page="../Calibrations/Create" asp-route-id="@Model.Instrument.ID">
+                            <input type="button" class="btn btn-outline-primary btn-sm" value="新建">
+                        </a>
+                    </div>
                 </div>
+
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <table class="table">
-                        <tr>
-                            <th>@Html.DisplayNameFor(model => model.Instrument.Calibrations.First().Date)</th>
-                            <th>@Html.DisplayNameFor(model => model.Instrument.Calibrations.First().Unit)</th>
-                            <th>@Html.DisplayNameFor(model => model.Instrument.Calibrations.First().Result)</th>
-                            <th>@Html.DisplayNameFor(model => model.Instrument.Calibrations.First().Calibrator)</th>
-                            <th></th>
-                        </tr>
-                        @foreach (var item in Model.Instrument.Calibrations)
-                        {
+                    <table class="table table-sm">
+                        <thead>
                             <tr>
-                                <td>@Html.DisplayFor(modelItem => item.Date)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Unit)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Result)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Calibrator)</td>
-                                <td>
-                                    <a asp-page="../Calibrations/Edit" asp-route-id="@item.ID">编辑</a> |
-                                    @*<a asp-page="../Calibrations/Details" asp-route-id="@item.ID">Details</a> |*@
-                                    <a asp-page="../Calibrations/Delete" asp-route-id="@item.ID">删除</a>
-                                </td>
+                                <th>@Html.DisplayNameFor(model => model.Instrument.Calibrations.First().Date)</th>
+                                <th>@Html.DisplayNameFor(model => model.Instrument.Calibrations.First().Unit)</th>
+                                <th>@Html.DisplayNameFor(model => model.Instrument.Calibrations.First().Result)</th>
+                                <th>@Html.DisplayNameFor(model => model.Instrument.Calibrations.First().Calibrator)</th>
+                                <th></th>
                             </tr>
-                        }
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Instrument.Calibrations)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.Date)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Unit)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Result)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Calibrator)</td>
+                                    <td>
+                                        <a asp-page="../Calibrations/Edit" asp-route-id="@item.ID">编辑</a> |
+                                        @*<a asp-page="../Calibrations/Details" asp-route-id="@item.ID">Details</a> |*@
+                                        <a asp-page="../Calibrations/Delete" asp-route-id="@item.ID">删除</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
                     </table>
                 </div>
                 <!-- /.card-body -->
@@ -136,36 +160,45 @@
     <!-- Table row -->
     <div class="row">
         <div class="col-md-6">
-            <div class="card card-primary card-outline">
+            <div class="card card-primary card-outline height-control">
                 <div class="card-header">
                     <h3 class="card-title">
-                        部件信息<a asp-page="../Components/Create" asp-route-id="@Model.Instrument.ID">（新建）</a>
+                        部件信息
                     </h3>
+                    <div class="card-tools">
+                        <a asp-page="../Components/Create" asp-route-id="@Model.Instrument.ID">
+                            <input type="button" class="btn btn-outline-primary btn-sm" value="新建">
+                        </a>
+                    </div>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <table class="table">
-                        <tr>
-                            <th>@Html.DisplayNameFor(model => model.Instrument.Components.First().Name)</th>
-                            <th>@Html.DisplayNameFor(model => model.Instrument.Components.First().Brand)</th>
-                            <th>@Html.DisplayNameFor(model => model.Instrument.Components.First().Model)</th>
-                            <th>@Html.DisplayNameFor(model => model.Instrument.Components.First().SerialNumber)</th>
-                            <th></th>
-                        </tr>
-                        @foreach (var item in Model.Instrument.Components)
-                        {
+                    <table class="table table-sm">
+                        <thead>
                             <tr>
-                                <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Brand)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Model)</td>
-                                <td>@Html.DisplayFor(modelItem => item.SerialNumber)</td>
-                                <td>
-                                    <a asp-page="../Components/Edit" asp-route-id="@item.ID">编辑</a> |
-                                    @*<a asp-page="../Components/Details" asp-route-id="@item.ID">详情</a> |*@
-                                    <a asp-page="../Components/Delete" asp-route-id="@item.ID">删除</a>
-                                </td>
+                                <th>@Html.DisplayNameFor(model => model.Instrument.Components.First().Name)</th>
+                                <th>@Html.DisplayNameFor(model => model.Instrument.Components.First().Brand)</th>
+                                <th>@Html.DisplayNameFor(model => model.Instrument.Components.First().Model)</th>
+                                <th>@Html.DisplayNameFor(model => model.Instrument.Components.First().SerialNumber)</th>
+                                <th></th>
                             </tr>
-                        }
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Instrument.Components)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Brand)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Model)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.SerialNumber)</td>
+                                    <td>
+                                        <a asp-page="../Components/Edit" asp-route-id="@item.ID">编辑</a> |
+                                        @*<a asp-page="../Components/Details" asp-route-id="@item.ID">详情</a> |*@
+                                        <a asp-page="../Components/Delete" asp-route-id="@item.ID">删除</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
                     </table>
                 </div>
                 <!-- /.card-body -->
@@ -173,72 +206,68 @@
             <!-- /.card -->
         </div>
         <div class="col-md-6">
-            <div class="card card-primary card-outline">
+            <div class="card card-primary card-outline height-control">
                 <div class="card-header">
                     <h3 class="card-title">
-                        故障信息<a asp-page="../MalfunctionWorkOrders/Create" asp-route-id="@Model.Instrument.ID">（新建）</a>
+                        故障信息
                     </h3>
+                    <div class="card-tools">
+                        <a asp-page="../Malfunctions/WorkOrders/Create" asp-route-id="@Model.Instrument.ID">
+                            <input type="button" class="btn btn-outline-primary btn-sm" value="新建">
+                        </a>
+                    </div>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <table class="table">
-                        <tr>
-                            <th>@Html.DisplayNameFor(model => model.Instrument.MalfunctionWorkOrder.First().MalfunctionInfo.BeginTime)</th>
-                            <th>@Html.DisplayNameFor(model => model.Instrument.MalfunctionWorkOrder.First().Validation.EndTime)</th>
-                            <th>@Html.DisplayNameFor(model => model.Instrument.MalfunctionWorkOrder.First().MalfunctionInfo.Part)</th>
-                            <th>@Html.DisplayNameFor(model => model.Instrument.MalfunctionWorkOrder.First().MalfunctionInfo.Phenomenon)</th>
-                            <th></th>
-                        </tr>
-                        @foreach (var item in Model.Instrument.MalfunctionWorkOrder)
-                        {
+                    <table class="table table-sm">
+                        <thead>
                             <tr>
-                                <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.BeginTime)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Validation.EndTime)</td>
-                                <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.Part)</td>
-                                <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.Phenomenon)</td>
-                                <td>
-                                    @*<a asp-page="../Malfunctions/WorkOrders/Edit" asp-route-id="@item.ID">编辑</a> |*@
-                                    <a asp-page="../Malfunctions/WorkOrders/Details" asp-route-id="@item.ID">查看</a> |
-                                    <a asp-page="../Malfunctions/WorkOrders/Delete" asp-route-id="@item.ID">删除</a>
-                                </td>
+                                <th>@Html.DisplayNameFor(model => model.Instrument.MalfunctionWorkOrder.First().MalfunctionInfo.BeginTime)</th>
+                                <th>@Html.DisplayNameFor(model => model.Instrument.MalfunctionWorkOrder.First().Validation.EndTime)</th>
+                                <th>@Html.DisplayNameFor(model => model.Instrument.MalfunctionWorkOrder.First().MalfunctionInfo.Part)</th>
+                                <th>@Html.DisplayNameFor(model => model.Instrument.MalfunctionWorkOrder.First().MalfunctionInfo.Phenomenon)</th>
+                                <th></th>
                             </tr>
-                        }
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Instrument.MalfunctionWorkOrder)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.BeginTime)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Validation.EndTime)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.Part)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.Phenomenon)</td>
+                                    <td>
+                                        @*<a asp-page="../Malfunctions/WorkOrders/Edit" asp-route-id="@item.ID">编辑</a> |*@
+                                        <a asp-page="../Malfunctions/WorkOrders/Details" asp-route-id="@item.ID">查看</a> |
+                                        <a asp-page="../Malfunctions/WorkOrders/Delete" asp-route-id="@item.ID">删除</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
                     </table>
                 </div>
                 <!-- /.card-body -->
             </div>
             <!-- /.card -->
         </div>
-
-
     </div>
-    <!-- /.row -->
 
-    <div class="row">
-        <div class="col-12">
-            <p class="lead">备注</p>
-            @Html.DisplayFor(model => model.Instrument.Remark)
-        </div>
-        <!-- /.col -->
-    </div>
-    <br />
-    <!-- /.row -->
     <!-- this row will not appear when printing -->
     <div class="row no-print">
         <div class="col-12">
-            @*<a href="invoice-print.html" target="_blank" class="btn btn-default float-right"><i class="fas fa-print"></i> 打印</a>*@
             <div>
-                <a asp-page="./Edit" asp-route-id="@Model.Instrument.ID">
-                    <input type="button" class="btn btn-primary" value="编辑">
-                </a>
+                @*<a asp-page="./Edit" asp-route-id="@Model.Instrument.ID">
+                        <input type="button" class="btn btn-primary" value="编辑">
+                    </a>
 
-                <a asp-page="./Index">
-                    <input type="button" class="btn btn-default" value="返回" style="margin-left: 5px;">
-                </a>
+                    <a asp-page="./Index">
+                        <input type="button" class="btn btn-default" value="返回" style="margin-left: 5px;">
+                    </a>*@
 
-                <button onclick="javescript:window.print()" type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
-                    <i class="fas fa-download"></i> Generate PDF
-                </button>
+                @*<button onclick="javescript:window.print()" type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
+                        <i class="fas fa-download"></i> Generate PDF
+                    </button>*@
             </div>
         </div>
     </div>

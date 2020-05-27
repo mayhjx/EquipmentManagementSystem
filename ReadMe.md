@@ -7,3 +7,6 @@ TODO:
 Done:
 EquipmentContext中仪器和故障部分分开
 新建工单时更新故障设备的状态
+
+Q:
+验证报告一般多大？

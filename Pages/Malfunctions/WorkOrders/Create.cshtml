@@ -13,7 +13,14 @@
                 <input hidden type="datetime" value="@DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")" asp-for="MalfunctionWorkOrder.CreatedTime" />
                 <div class="form-group">
                     <label asp-for="MalfunctionWorkOrder.InstrumentID" class="control-label"></label>
-                    <select asp-for="MalfunctionWorkOrder.InstrumentID" class="form-control" asp-items="ViewBag.InstrumentID"></select>
+                    @if (ViewBag.InstrumentID is string)
+                    {
+                        <input asp-for="MalfunctionWorkOrder.InstrumentID" value="@ViewBag.InstrumentID" class="form-control" readonly />
+                    }
+                    else
+                    {
+                        <select asp-for="MalfunctionWorkOrder.InstrumentID" class="form-control" asp-items="ViewBag.InstrumentID"></select>
+                    }
                 </div>
                 <div class="form-group">
                     <label asp-for="MalfunctionWorkOrder.MalfunctionInfo.Type" class="control-label"></label>
