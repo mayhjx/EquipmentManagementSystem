@@ -31,7 +31,7 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="MalfunctionInfo.Part" class="control-label"></label>
-                    <input asp-for="MalfunctionInfo.Part" class="form-control" />
+                    <input asp-for="MalfunctionInfo.Part" class="form-control" required />
                     <span asp-validation-for="MalfunctionInfo.Part" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -41,7 +41,7 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="MalfunctionInfo.Reason" class="control-label"></label>
-                    <input asp-for="MalfunctionInfo.Reason" class="form-control" />
+                    <input asp-for="MalfunctionInfo.Reason" class="form-control" required />
                     <span asp-validation-for="MalfunctionInfo.Reason" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -51,7 +51,7 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="MalfunctionInfo.Attachment" class="control-label"></label>
-                    <input asp-for="MalfunctionInfo.Attachment" class="form-control" readonly />
+                    <input type="file" asp-for="MalfunctionInfo.Attachment" class="form-control-file" disabled />
                     <span asp-validation-for="MalfunctionInfo.Attachment" class="text-danger"></span>
                 </div>
                 <div class="form-group form-check">

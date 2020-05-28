@@ -14,24 +14,35 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="Investigation.ID" />
                 <input type="hidden" asp-for="Investigation.MalfunctionWorkOrderID" />
+                @*绑定*@
+                <input type="hidden" asp-for="Investigation.MalfunctionWorkOrder.ID" />
+                <input type="hidden" asp-for="Investigation.MalfunctionWorkOrder.CreatedTime" />
+                <input type="hidden" asp-for="Investigation.MalfunctionWorkOrder.Creator" />
+                <input type="hidden" asp-for="Investigation.MalfunctionWorkOrder.InstrumentID" />
+
+                <div class="form-group">
+                    <label asp-for="Investigation.MalfunctionWorkOrder.Progress" class="control-label"></label>
+                    <select asp-for="Investigation.MalfunctionWorkOrder.Progress" class="form-control" asp-items="@Html.GetEnumSelectList<EquipmentManagementSystem.Models.WorkOrderProgress>()"></select>
+                    <span asp-validation-for="Investigation.MalfunctionWorkOrder.Progress" class="text-danger"></span>
+                </div>
                 <div class="form-group">
                     <label asp-for="Investigation.BeginTime" class="control-label"></label>
-                    <input asp-for="Investigation.BeginTime" class="form-control" />
+                    <input asp-for="Investigation.BeginTime" class="form-control" required />
                     <span asp-validation-for="Investigation.BeginTime" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Investigation.EndTime" class="control-label"></label>
-                    <input asp-for="Investigation.EndTime" class="form-control" />
+                    <input asp-for="Investigation.EndTime" class="form-control" required />
                     <span asp-validation-for="Investigation.EndTime" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Investigation.Operator" class="control-label"></label>
-                    <input asp-for="Investigation.Operator" class="form-control" />
+                    <input asp-for="Investigation.Operator" class="form-control" required />
                     <span asp-validation-for="Investigation.Operator" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Investigation.Measures" class="control-label"></label>
-                    <input asp-for="Investigation.Measures" class="form-control" />
+                    <input asp-for="Investigation.Measures" class="form-control" required />
                     <span asp-validation-for="Investigation.Measures" class="text-danger"></span>
                 </div>
                 <div class="form-group">

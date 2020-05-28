@@ -17,7 +17,6 @@ namespace EquipmentManagementSystem.Models
         [Display(Name = "进度")]
         public WorkOrderProgress Progress { get; set; }
 
-        [Required]
         [StringLength(50)]
         [Display(Name = "建单人")]
         public string Creator { get; set; }

@@ -26,7 +26,9 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Investigate
                 return NotFound();
             }
 
-            Investigation = await _context.Investigation.FirstOrDefaultAsync(m => m.ID == id);
+            Investigation = await _context.Investigation
+                                        .Include(m => m.MalfunctionWorkOrder)
+                                        .FirstOrDefaultAsync(m => m.ID == id);
 
             if (Investigation == null)
             {
@@ -45,6 +47,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Investigate
             }
 
             _context.Attach(Investigation).State = EntityState.Modified;
+            _context.Attach(Investigation.MalfunctionWorkOrder).State = EntityState.Modified;
 
             try
             {

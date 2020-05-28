@@ -28,7 +28,8 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="MalfunctionWorkOrder.MalfunctionInfo.Phenomenon" class="control-label"></label>
-                    <input asp-for="MalfunctionWorkOrder.MalfunctionInfo.Phenomenon" class="form-control" />
+                    <input asp-for="MalfunctionWorkOrder.MalfunctionInfo.Phenomenon" class="form-control" required />
+                    <span asp-validation-for="MalfunctionWorkOrder.MalfunctionInfo.Phenomenon" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="MalfunctionWorkOrder.MalfunctionInfo.BeginTime" class="control-label"></label>
@@ -46,14 +47,14 @@
                     <span asp-validation-for="MalfunctionWorkOrder.Creator" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="MalfunctionWorkOrder.MalfunctionInfo.Remark" class="control-label"></label>
-                    <textarea asp-for="MalfunctionWorkOrder.MalfunctionInfo.Remark" class="form-control" rows="3"></textarea>
-                    <span asp-validation-for="MalfunctionWorkOrder.MalfunctionInfo.Remark" class="text-danger"></span>
-                </div>
-                <div class="form-group">
                     <label asp-for="MalfunctionWorkOrder.Progress" class="control-label"></label>
                     <select asp-for="MalfunctionWorkOrder.Progress" class="form-control" asp-items="@Html.GetEnumSelectList<EquipmentManagementSystem.Models.WorkOrderProgress>()"></select>
                     <span asp-validation-for="MalfunctionWorkOrder.Progress" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="MalfunctionWorkOrder.MalfunctionInfo.Remark" class="control-label"></label>
+                    <textarea asp-for="MalfunctionWorkOrder.MalfunctionInfo.Remark" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="MalfunctionWorkOrder.MalfunctionInfo.Remark" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <input type="submit" value="新建" class="btn btn-primary" />

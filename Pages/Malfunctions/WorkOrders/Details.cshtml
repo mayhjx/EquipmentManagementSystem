@@ -33,22 +33,22 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-5">
             <div class="card card-primary card-outline">
                 <div class="card-header">
                     <h3 class="card-title">
                         <i class="fa fa-info-circle" aria-hidden="true"></i> 故障信息
-                        @if (MalfunctionIsComfirm)
-                        {
-                            <span class="badge badge-success">设备负责人已确认</span>
-                        }
-                        else
-                        {
-                            <span class="badge badge-warning">设备负责人未确认</span>
-                        }
                     </h3>
+                    @if (MalfunctionIsComfirm)
+                    {
+                        <span class="badge badge-success">设备负责人已确认</span>
+                    }
+                    else
+                    {
+                        <span class="badge badge-warning">设备负责人未确认</span>
+                    }
                     <div class="card-tools">
-                        <a asp-page="../Information/Edit" asp-route-id="@Model.MalfunctionWorkOrder.ID">
+                        <a asp-page="../Information/Edit" asp-route-id="@Model.MalfunctionWorkOrder.MalfunctionInfo.ID">
                             <input type="button" class="btn btn-outline-primary btn-sm" value="编辑">
                         </a>
                     </div>
@@ -121,7 +121,7 @@
         @if (MalfunctionIsComfirm)
         {
             // 若故障信息未确认则不显示故障排查模块
-            <div class="col-md-6">
+            <div class="col-md-7">
                 <div class="card card-primary card-outline">
                     <div class="card-header">
                         <h3 class="card-title">
@@ -135,11 +135,11 @@
                                 <span class="badge badge-warning">设备主任未确认</span>
                             }
                         </h3>
-                        <div class="card-tools">
-                            <a asp-page="../Investigate/Edit" asp-route-id="@Model.MalfunctionWorkOrder.ID">
-                                <input type="button" class="btn btn-outline-primary btn-sm" value="编辑">
-                            </a>
-                        </div>
+                        @*<div class="card-tools">
+                                <a asp-page="../Investigate/Edit" asp-route-id="@Model.MalfunctionWorkOrder.ID">
+                                    <input type="button" class="btn btn-outline-primary btn-sm" value="编辑">
+                                </a>
+                            </div>*@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -171,6 +171,11 @@
                                         @Html.DisplayFor(model => model.MalfunctionWorkOrder.Investigation.Measures)
                                     </dd>
                                 </dl>
+                                <div class="card-tools">
+                                    <a asp-page="../Investigate/Edit" asp-route-id="@Model.MalfunctionWorkOrder.Investigation.ID">
+                                        <input type="button" class="btn btn-outline-primary btn-sm" value="编辑">
+                                    </a>
+                                </div>
                             </div>
                             <div class="col-md-4">
                                 <dl class="row">
@@ -199,6 +204,11 @@
                                         @Html.DisplayFor(model => model.MalfunctionWorkOrder.RepairRequest.Engineer)
                                     </dd>
                                 </dl>
+                                <div class="card-tools">
+                                    <a asp-page="../RepairRequests/Edit" asp-route-id="@Model.MalfunctionWorkOrder.RepairRequest.ID">
+                                        <input type="button" class="btn btn-outline-primary btn-sm" value="编辑">
+                                    </a>
+                                </div>
                             </div>
                             <div class="col-md-4">
                                 <dl class="row">
@@ -227,6 +237,11 @@
                                         @Html.DisplayFor(model => model.MalfunctionWorkOrder.AccessoriesOrder.Remark)
                                     </dd>
                                 </dl>
+                                <div class="card-tools">
+                                    <a asp-page="../AccessoriesOrders/Edit" asp-route-id="@Model.MalfunctionWorkOrder.AccessoriesOrder.ID">
+                                        <input type="button" class="btn btn-outline-primary btn-sm" value="编辑">
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -246,7 +261,7 @@
                             <i class="fa fa-wrench" aria-hidden="true"></i> 故障维修
                         </h3>
                         <div class="card-tools">
-                            <a asp-page="../Maintain/Edit" asp-route-id="@Model.MalfunctionWorkOrder.ID">
+                            <a asp-page="../Maintain/Edit" asp-route-id="@Model.MalfunctionWorkOrder.Maintenance.ID">
                                 <input type="button" class="btn btn-outline-primary btn-sm" value="编辑">
                             </a>
                         </div>
@@ -307,7 +322,7 @@
                             }
                         </h3>
                         <div class="card-tools">
-                            <a asp-page="../Validate/Edit" asp-route-id="@Model.MalfunctionWorkOrder.ID">
+                            <a asp-page="../Validate/Edit" asp-route-id="@Model.MalfunctionWorkOrder.Validation.ID">
                                 <input type="button" class="btn btn-outline-primary btn-sm" value="编辑">
                             </a>
                         </div>
