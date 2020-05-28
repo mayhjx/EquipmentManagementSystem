@@ -11,23 +11,24 @@ namespace EquipmentManagementSystem.Pages
     public class IndexModel : PageModel
     {
         private readonly EquipmentContext _context;
+        private readonly MalfunctionContext _malfunctionContext;
 
-        public IndexModel(EquipmentContext context)
+        public IndexModel(EquipmentContext context, MalfunctionContext malfunctionContext)
         {
             _context = context;
+            _malfunctionContext = malfunctionContext;
         }
-
-        public IList<Instrument> Instruments { get; set; }
 
         // 快到期设备
         public IList<Instrument> InstrumentOfExpire { get; set; }
 
-        //public IList<MalfunctionWorkOrder> Malfunctions { get; set; }
+        public IList<MalfunctionWorkOrder> MalfunctionWorkOrder { get; set; }
 
         public void OnGet()
         {
 
             InstrumentOfExpire = (from m in _context.Instruments
+                                .AsNoTracking()
                                 .Include(m => m.Calibrations)
                                 .AsEnumerable()
                                   where (m.Calibrations.Count > 0 && m.Calibrations.Last().Date != DateTime.MinValue)
@@ -35,12 +36,12 @@ namespace EquipmentManagementSystem.Pages
                                   where remainDay.Days < 30 // 到期前30天内
                                   select m).ToList();
 
-            //Malfunctions = (from m in _context.Malfunctions
-            //                select m).ToList();
-
-            Instruments = (from m in _context.Instruments
-                           select m).ToList();
-
+            MalfunctionWorkOrder = (from m in _malfunctionContext.MalfunctionWorkOrder
+                                    .AsNoTracking()
+                                    .Include(m => m.MalfunctionInfo)
+                                    .AsEnumerable()
+                                    where m.Progress != WorkOrderProgress.Validated
+                                    select m).ToList();
         }
     }
 }

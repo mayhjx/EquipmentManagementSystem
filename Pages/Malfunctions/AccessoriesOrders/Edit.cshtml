@@ -16,12 +16,12 @@
                 <input type="hidden" asp-for="AccessoriesOrder.MalfunctionWorkOrderID" />
                 <div class="form-group">
                     <label asp-for="AccessoriesOrder.Name" class="control-label"></label>
-                    <input asp-for="AccessoriesOrder.Name" class="form-control" />
+                    <input asp-for="AccessoriesOrder.Name" class="form-control" required />
                     <span asp-validation-for="AccessoriesOrder.Name" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="AccessoriesOrder.PlaceTime" class="control-label"></label>
-                    <input asp-for="AccessoriesOrder.PlaceTime" class="form-control" />
+                    <input asp-for="AccessoriesOrder.PlaceTime" class="form-control" required />
                     <span asp-validation-for="AccessoriesOrder.PlaceTime" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -31,7 +31,7 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="AccessoriesOrder.Remark" class="control-label"></label>
-                    <input asp-for="AccessoriesOrder.Remark" class="form-control" />
+                    <textarea asp-for="AccessoriesOrder.Remark" class="form-control" rows="3"></textarea>
                     <span asp-validation-for="AccessoriesOrder.Remark" class="text-danger"></span>
                 </div>
                 <div class="form-group">

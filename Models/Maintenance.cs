@@ -20,11 +20,14 @@ namespace EquipmentManagementSystem.Models
         [StringLength(999)]
         public string Solution { get; set; }
 
+        [Display(Name = "是否为关键部位？")]
+        public bool IsCritical { get; set; }
+
         [Display(Name = "备注")]
         [StringLength(999)]
         public string Remark { get; set; }
 
-        [Display(Name = "附件")]
+        [Display(Name = "工程师服务报告")]
         [StringLength(100)]
         public string Attachment { get; set; }
 

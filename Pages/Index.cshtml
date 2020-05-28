@@ -6,7 +6,7 @@
 
 <div class="row">
     <div class="col-md-4">
-        <div class="card card-warning card-outline">
+        <div class="card card-warning card-outline height-control">
             <div class="card-header">
                 <h3 class="card-title">
                     需校准设备
@@ -48,6 +48,51 @@
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.ProjectTeamName)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card card-warning card-outline height-control">
+            <div class="card-header">
+                <h3 class="card-title">
+                    需跟进工单
+                </h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.MalfunctionWorkOrder[0].InstrumentID)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.MalfunctionWorkOrder[0].Progress)
+                            </th>
+                            <th>
+                                故障描述
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.MalfunctionWorkOrder)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.InstrumentID)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Progress)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MalfunctionInfo.Part)@Html.DisplayFor(modelItem => item.MalfunctionInfo.Phenomenon)
                                 </td>
                             </tr>
                         }

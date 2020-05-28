@@ -3,9 +3,17 @@
 
 @{
     ViewData["Title"] = "详细信息";
+    // 故障信息是否确认
     var MalfunctionIsComfirm = Model.MalfunctionWorkOrder.MalfunctionInfo != null && Model.MalfunctionWorkOrder.MalfunctionInfo.IsConfirm ? true : false;
+    // 维修申请是否确认
     var RepairRequestIsComfirm = Model.MalfunctionWorkOrder.RepairRequest != null && Model.MalfunctionWorkOrder.RepairRequest.IsConfirm ? true : false;
+    // 性能验证是否确认
     var ValidationIsComfirm = Model.MalfunctionWorkOrder.Validation != null && Model.MalfunctionWorkOrder.Validation.IsConfirm ? true : false;
+
+    var IsCompleted = MalfunctionIsComfirm && RepairRequestIsComfirm && ValidationIsComfirm;
+
+    // 是否为关键部位故障
+    var MaintainIsCritical = Model.MalfunctionWorkOrder.Maintenance != null && Model.MalfunctionWorkOrder.Maintenance.IsCritical ? true : false;
 }
 
 
@@ -20,6 +28,7 @@
                 <li class="list-inline-item">
                     @Html.DisplayNameFor(mdoel => Model.MalfunctionWorkOrder.Progress)：
                     @Html.DisplayFor(mdoel => Model.MalfunctionWorkOrder.Progress)
+                    <span class="badge badge-success">设备负责人已确认</span>
                 </li>
                 <li class="list-inline-item">
                     @Html.DisplayNameFor(mdoel => Model.MalfunctionWorkOrder.Creator)：
@@ -283,6 +292,12 @@
                                     <dd class="col-sm-8">
                                         @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.Solution)
                                     </dd>
+                                    <dt class="col-sm-4">
+                                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.IsCritical)
+                                    </dt>
+                                    <dd class="col-sm-8">
+                                        @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.IsCritical)
+                                    </dd>
                                 </dl>
                             </div>
                             <div class="col-md-6">
@@ -307,6 +322,9 @@
                 </div>
                 <!-- /.card -->
             </div>
+        }
+        @if (MaintainIsCritical)
+        {
             <div class="col-md-6">
                 <div class="card card-primary card-outline">
                     <div class="card-header">
@@ -380,16 +398,20 @@
     <div class="row no-print">
         <div class="col-md-12">
             <div>
-                @*<a asp-page="./Edit" asp-route-id="@Model.MalfunctionWorkOrder.ID">
-                        <input type="button" class="btn btn-primary" value="编辑">
-                    </a>*@
                 <a asp-page="./Index">
-                    <input type="button" class="btn btn-default" value="返回" style="margin-left: 5px;">
+                    <input type="button" class="btn btn-default" value="返回" style="margin-right: 5px;">
                 </a>
-                @*<button onclick="javescript:window.print()" type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
+                @if (IsCompleted)
+                {
+                    @*<a asp-page="./Edit" asp-route-id="@Model.MalfunctionWorkOrder.ID">
+                            <input type="button" class="btn btn-primary" value="完成">
+                        </a>*@
+                    <button onclick="javescript:window.print()" type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
                         <i class="fas fa-download"></i> Generate PDF
-                    </button>*@
+                    </button>
+                }
             </div>
         </div>
     </div>
+
 </div>

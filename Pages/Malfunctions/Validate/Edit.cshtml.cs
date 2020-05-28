@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions.Validate
@@ -35,40 +34,74 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Validate
             return Page();
         }
 
+
+        public async Task<IActionResult> OnPostAsync(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Validation = await _context.Validation
+                                .Include(m => m.MalfunctionWorkOrder)
+                                .FirstAsync(m => m.ID == id);
+
+            if (Validation == null)
+            {
+                return NotFound();
+            }
+
+            if (await TryUpdateModelAsync<Validation>(
+                    Validation,
+                    "Validation",
+                    i => i.EndTime, i => i.PerformanceReportFile, i => i.EffectReportFile, i => i.IsConfirm, i => i.Summary, i => i.Attachment))
+            {
+                // 如果进度在已保修之前则更新已报修
+                if (Validation.MalfunctionWorkOrder.Progress < WorkOrderProgress.Validated)
+                {
+                    Validation.MalfunctionWorkOrder.Progress = WorkOrderProgress.Validated;
+                }
+                await _context.SaveChangesAsync();
+                return RedirectToPage("../WorkOrders/Details", new { id = Validation.MalfunctionWorkOrderID });
+            }
+
+            return Page();
+        }
+
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
-        {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+        //public async Task<IActionResult> OnPostAsync()
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return Page();
+        //    }
 
-            _context.Attach(Validation).State = EntityState.Modified;
+        //    _context.Attach(Validation).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ValidationExists(Validation.ID))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!ValidationExists(Validation.ID))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return RedirectToPage("../WorkOrders/Details", new { id = Validation.MalfunctionWorkOrderID });
-            //return RedirectToPage("./Index");
-        }
+        //    return RedirectToPage("../WorkOrders/Details", new { id = Validation.MalfunctionWorkOrderID });
+        //    //return RedirectToPage("./Index");
+        //}
 
-        private bool ValidationExists(int id)
-        {
-            return _context.Validation.Any(e => e.ID == id);
-        }
+        //private bool ValidationExists(int id)
+        //{
+        //    return _context.Validation.Any(e => e.ID == id);
+        //}
     }
 }

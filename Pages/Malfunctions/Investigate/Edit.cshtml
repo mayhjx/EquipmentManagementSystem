@@ -14,17 +14,6 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="Investigation.ID" />
                 <input type="hidden" asp-for="Investigation.MalfunctionWorkOrderID" />
-                @*绑定*@
-                <input type="hidden" asp-for="Investigation.MalfunctionWorkOrder.ID" />
-                <input type="hidden" asp-for="Investigation.MalfunctionWorkOrder.CreatedTime" />
-                <input type="hidden" asp-for="Investigation.MalfunctionWorkOrder.Creator" />
-                <input type="hidden" asp-for="Investigation.MalfunctionWorkOrder.InstrumentID" />
-
-                <div class="form-group">
-                    <label asp-for="Investigation.MalfunctionWorkOrder.Progress" class="control-label"></label>
-                    <select asp-for="Investigation.MalfunctionWorkOrder.Progress" class="form-control" asp-items="@Html.GetEnumSelectList<EquipmentManagementSystem.Models.WorkOrderProgress>()"></select>
-                    <span asp-validation-for="Investigation.MalfunctionWorkOrder.Progress" class="text-danger"></span>
-                </div>
                 <div class="form-group">
                     <label asp-for="Investigation.BeginTime" class="control-label"></label>
                     <input asp-for="Investigation.BeginTime" class="form-control" required />

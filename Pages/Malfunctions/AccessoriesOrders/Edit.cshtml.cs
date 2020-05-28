@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions.AccessoriesOrders
@@ -35,40 +34,73 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.AccessoriesOrders
             return Page();
         }
 
+        public async Task<IActionResult> OnPostAsync(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            AccessoriesOrder = await _context.AccessoriesOrder
+                                .Include(m => m.MalfunctionWorkOrder)
+                                .FirstAsync(m => m.ID == id);
+
+            if (AccessoriesOrder == null)
+            {
+                return NotFound();
+            }
+
+            if (await TryUpdateModelAsync<AccessoriesOrder>(
+                    AccessoriesOrder,
+                    "AccessoriesOrder",
+                    i => i.Name, i => i.PlaceTime, i => i.ArrivalTime, i => i.Remark))
+            {
+                // 如果进度在已保修之前则更新已报修
+                if (AccessoriesOrder.MalfunctionWorkOrder.Progress < WorkOrderProgress.Waiting)
+                {
+                    AccessoriesOrder.MalfunctionWorkOrder.Progress = WorkOrderProgress.Waiting;
+                }
+                await _context.SaveChangesAsync();
+                return RedirectToPage("../WorkOrders/Details", new { id = AccessoriesOrder.MalfunctionWorkOrderID });
+            }
+
+            return Page();
+        }
+
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
-        {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+        //public async Task<IActionResult> OnPostAsync()
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return Page();
+        //    }
 
-            _context.Attach(AccessoriesOrder).State = EntityState.Modified;
+        //    _context.Attach(AccessoriesOrder).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AccessoriesOrderExists(AccessoriesOrder.ID))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-            return RedirectToPage("../WorkOrders/Details", new { id = AccessoriesOrder.MalfunctionWorkOrderID });
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!AccessoriesOrderExists(AccessoriesOrder.ID))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
+        //    return RedirectToPage("../WorkOrders/Details", new { id = AccessoriesOrder.MalfunctionWorkOrderID });
 
-            //return RedirectToPage("./Index");
-        }
+        //    //return RedirectToPage("./Index");
+        //}
 
-        private bool AccessoriesOrderExists(int id)
-        {
-            return _context.AccessoriesOrder.Any(e => e.ID == id);
-        }
+        //private bool AccessoriesOrderExists(int id)
+        //{
+        //    return _context.AccessoriesOrder.Any(e => e.ID == id);
+        //}
     }
 }

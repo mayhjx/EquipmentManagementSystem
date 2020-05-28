@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions.Investigate
@@ -27,8 +26,8 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Investigate
             }
 
             Investigation = await _context.Investigation
-                                        .Include(m => m.MalfunctionWorkOrder)
-                                        .FirstOrDefaultAsync(m => m.ID == id);
+                            .Include(m => m.MalfunctionWorkOrder)
+                            .FirstOrDefaultAsync(m => m.ID == id);
 
             if (Investigation == null)
             {
@@ -39,40 +38,70 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Investigate
 
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (!ModelState.IsValid)
+            if (id == null)
             {
-                return Page();
+                return NotFound();
             }
 
-            _context.Attach(Investigation).State = EntityState.Modified;
-            _context.Attach(Investigation.MalfunctionWorkOrder).State = EntityState.Modified;
+            Investigation = await _context.Investigation
+                                .Include(m => m.MalfunctionWorkOrder)
+                                .FirstAsync(m => m.ID == id);
 
-            try
+            if (Investigation == null)
             {
+                return NotFound();
+            }
+
+            if (await TryUpdateModelAsync<Investigation>(
+                    Investigation,
+                    "Investigation",
+                    i => i.BeginTime, i => i.EndTime, i => i.Operator, i => i.Measures))
+            {
+                // 如果进度在排查中之前则更新已排查
+                if (Investigation.MalfunctionWorkOrder.Progress < WorkOrderProgress.Investigated)
+                {
+                    Investigation.MalfunctionWorkOrder.Progress = WorkOrderProgress.Investigated;
+                }
                 await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!InvestigationExists(Investigation.ID))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return RedirectToPage("../WorkOrders/Details", new { id = Investigation.MalfunctionWorkOrderID });
             }
 
-            return RedirectToPage("../WorkOrders/Details", new { id = Investigation.MalfunctionWorkOrderID });
+            return Page();
+            //if (!ModelState.IsValid)
+            //{
+            //    return Page();
+            //}
+
+            //_context.Attach(Investigation).State = EntityState.Modified;
+
+            //Investigation.MalfunctionWorkOrder.Progress = WorkOrderProgress.Investigated;
+
+            //try
+            //{
+            //    await _context.SaveChangesAsync();
+            //}
+            //catch (DbUpdateConcurrencyException)
+            //{
+            //    if (!InvestigationExists(Investigation.ID))
+            //    {
+            //        return NotFound();
+            //    }
+            //    else
+            //    {
+            //        throw;
+            //    }
+            //}
+
+            //return RedirectToPage("../WorkOrders/Details", new { id = Investigation.MalfunctionWorkOrderID });
 
             //return RedirectToPage("./Index");
         }
 
-        private bool InvestigationExists(int id)
-        {
-            return _context.Investigation.Any(e => e.ID == id);
-        }
+        //private bool InvestigationExists(int id)
+        //{
+        //    return _context.Investigation.Any(e => e.ID == id);
+        //}
     }
 }
