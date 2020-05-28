@@ -13,15 +13,19 @@ namespace EquipmentManagementSystem.Models
         public MalfunctionWorkOrder MalfunctionWorkOrder { get; set; }
 
         [Display(Name = "维修人")]
+        [StringLength(50)]
         public string Repairer { get; set; }
 
         [Display(Name = "解决措施")]
+        [StringLength(999)]
         public string Solution { get; set; }
 
         [Display(Name = "备注")]
+        [StringLength(999)]
         public string Remark { get; set; }
 
         [Display(Name = "附件")]
+        [StringLength(100)]
         public string Attachment { get; set; }
 
     }

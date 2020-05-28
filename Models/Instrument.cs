@@ -56,18 +56,19 @@ namespace EquipmentManagementSystem.Models
         [StringLength(10)]
         public string NewSystemCode { get; set; }
 
-        //[Display(Name = "设备电脑")]
-        //public Computer Computer { get; set; }
+        [Display(Name = "设备电脑")]
+        public Computer Computer { get; set; }
 
         [Display(Name = "资产信息")]
         public Assert Assert { get; set; }
 
         [Display(Name = "所属项目组")]
+        [StringLength(50)]
         public string ProjectTeamName { get; set; }
-        //public ProjectTeam ProjectTeam { get; set; }
 
-        //[Display(Name = "检测项目")]
-        //public ICollection<Project> projects { get; set; }
+        [Display(Name = "检测项目")]
+        [StringLength(100)]
+        public string Projects { get; set; }
 
         [Display(Name = "校准信息")]
         public ICollection<Calibration> Calibrations { get; set; }

@@ -31,6 +31,7 @@ namespace EquipmentManagementSystem.Models
         public string SourceUnit { get; set; }
 
         [Display(Name = "备注")]
+        [StringLength(999)]
         public string Remark { get; set; }
     }
 }

@@ -22,9 +22,11 @@ namespace EquipmentManagementSystem.Models
         public DateTime? BookingsTime { get; set; }
 
         [Display(Name = "报修人")]
+        [StringLength(50)]
         public string Fixer { get; set; }
 
         [Display(Name = "对接工程师")]
+        [StringLength(50)]
         public string Engineer { get; set; }
 
         [Display(Name = "是否确认")]

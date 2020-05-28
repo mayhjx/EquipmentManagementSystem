@@ -23,9 +23,11 @@ namespace EquipmentManagementSystem.Models
         public DateTime? EndTime { get; set; }
 
         [Display(Name = "排查人员")]
+        [StringLength(50)]
         public string Operator { get; set; }
 
         [Display(Name = "措施")]
+        [StringLength(999)]
         public string Measures { get; set; }
     }
 }

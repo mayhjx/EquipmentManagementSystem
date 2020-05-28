@@ -54,7 +54,8 @@ namespace EquipmentManagementSystem.Data
                         Principal = data[8],
                         NewSystemCode = data[9],
                         ProjectTeamName = data[10],
-                        Remark = data[11]
+                        Projects = data[11],
+                        Remark = data[12]
                     }
                 );
             }

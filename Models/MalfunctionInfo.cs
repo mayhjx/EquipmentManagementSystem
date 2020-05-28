@@ -27,18 +27,23 @@ namespace EquipmentManagementSystem.Models
         public MalfunctionType Type { get; set; }
 
         [Display(Name = "故障部件")]
+        [StringLength(50)]
         public string Part { get; set; }
 
         [Display(Name = "故障现象")]
+        [StringLength(50)]
         public string Phenomenon { get; set; }
 
         [Display(Name = "可能原因")]
+        [StringLength(50)]
         public string Reason { get; set; }
 
         [Display(Name = "备注")]
+        [StringLength(999)]
         public string Remark { get; set; }
 
         [Display(Name = "附件")]
+        [StringLength(100)]
         public string Attachment { get; set; }
 
         [Display(Name = "是否确认")]

@@ -18,15 +18,19 @@ namespace EquipmentManagementSystem.Models
         public DateTime? EndTime { get; set; }
 
         [Display(Name = "故障修复后性能验证报告")]
+        [StringLength(100)]
         public string PerformanceReportFile { get; set; }
 
         [Display(Name = "故障前病人结果评估报告")]
+        [StringLength(100)]
         public string EffectReportFile { get; set; }
 
         [Display(Name = "总结分析")]
+        [StringLength(999)]
         public string Summary { get; set; }
 
         [Display(Name = "附件")]
+        [StringLength(100)]
         public string Attachment { get; set; }
 
         [Display(Name = "是否确认")]

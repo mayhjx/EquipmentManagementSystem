@@ -14,6 +14,7 @@ namespace EquipmentManagementSystem.Models
         public MalfunctionWorkOrder MalfunctionWorkOrder { get; set; }
 
         [Display(Name = "配件名称")]
+        [StringLength(50)]
         public string Name { get; set; }
 
         [Display(Name = "下单时间")]
@@ -25,6 +26,7 @@ namespace EquipmentManagementSystem.Models
         public DateTime? ArrivalTime { get; set; }
 
         [Display(Name = "备注")]
+        [StringLength(999)]
         public string Remark { get; set; }
 
     }

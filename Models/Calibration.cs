@@ -25,6 +25,7 @@ namespace EquipmentManagementSystem.Models
         public DateTime Date { get; set; }
 
         [Required]
+        [StringLength(50)]
         [Display(Name = "检定/校准单位")]
         public string Unit { get; set; }
 
@@ -33,6 +34,7 @@ namespace EquipmentManagementSystem.Models
         public Result Result { get; set; }
 
         [Required]
+        [StringLength(50)]
         [Display(Name = "经办人")]
         public string Calibrator { get; set; }
 
