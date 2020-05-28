@@ -81,23 +81,23 @@
                                             var status = item.Status.ToString();
                                             if (status == "Using")
                                             {
-                                                <span class="bg-green">正常</span>
+                                                <span class="badge badge-success">正常</span>
                                             }
                                             else if (status == "Malfunction")
                                             {
-                                                <span class="bg-yellow">故障</span>
+                                                <span class="badge badge-warning">故障</span>
                                             }
                                             else if (status == "StopUsing")
                                             {
-                                                <span class="bg-yellow">停用</span>
+                                                <span class="badge badge-warning">停用</span>
                                             }
                                             else if (status == "Allocate")
                                             {
-                                                <span class="bg-red">调拨</span>
+                                                <span class="badge badge-danger">调拨</span>
                                             }
                                             else if (status == "Scrapped")
                                             {
-                                                <span class="bg-red">报废</span>
+                                                <span class="badge badge-danger">报废</span>
                                             }
                                         }
                                     </td>

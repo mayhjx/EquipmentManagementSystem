@@ -20,21 +20,23 @@
 <div class="invoice p-3 mb-3">
     <!-- title row -->
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <ul class="list-inline">
                 <li class="list-inline-item">
-                    <h3>@Html.DisplayFor(mdoel => Model.MalfunctionWorkOrder.InstrumentID)</h3>
+                    <h3>
+                        @Html.DisplayFor(mdoel => Model.MalfunctionWorkOrder.InstrumentID)
+                        <span class="badge badge-primary">@Html.DisplayFor(mdoel => Model.MalfunctionWorkOrder.Progress)</span>
+                    </h3>
                 </li>
-                <li class="list-inline-item">
-                    @Html.DisplayNameFor(mdoel => Model.MalfunctionWorkOrder.Progress)：
-                    @Html.DisplayFor(mdoel => Model.MalfunctionWorkOrder.Progress)
-                    <span class="badge badge-success">设备负责人已确认</span>
-                </li>
-                <li class="list-inline-item">
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <ul class="list-unstyled text-right">
+                <li>
                     @Html.DisplayNameFor(mdoel => Model.MalfunctionWorkOrder.Creator)：
                     @Html.DisplayFor(mdoel => Model.MalfunctionWorkOrder.Creator)
                 </li>
-                <li class="list-inline-item">
+                <li>
                     @Html.DisplayNameFor(mdoel => Model.MalfunctionWorkOrder.CreatedTime)：
                     @Html.DisplayFor(mdoel => Model.MalfunctionWorkOrder.CreatedTime)
                 </li>
@@ -42,23 +44,24 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-5">
-            <div class="card card-primary card-outline">
+        <div class="col-md-6">
+            <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">
                         <i class="fa fa-info-circle" aria-hidden="true"></i> 故障信息
+
+                        @if (MalfunctionIsComfirm)
+                        {
+                            <span class="badge badge-success" style="margin-left: 5px;">设备负责人已确认</span>
+                        }
+                        else
+                        {
+                            <span class="badge badge-warning" style="margin-left: 5px;">设备负责人未确认</span>
+                        }
                     </h3>
-                    @if (MalfunctionIsComfirm)
-                    {
-                        <span class="badge badge-success">设备负责人已确认</span>
-                    }
-                    else
-                    {
-                        <span class="badge badge-warning">设备负责人未确认</span>
-                    }
                     <div class="card-tools">
                         <a asp-page="../Information/Edit" asp-route-id="@Model.MalfunctionWorkOrder.MalfunctionInfo.ID">
-                            <input type="button" class="btn btn-outline-primary btn-sm" value="编辑">
+                            <input type="button" class="btn btn-outline-primary btn-xs" value="编辑">
                         </a>
                     </div>
                 </div>
@@ -130,18 +133,18 @@
         @if (MalfunctionIsComfirm)
         {
             // 若故障信息未确认则不显示故障排查模块
-            <div class="col-md-7">
-                <div class="card card-primary card-outline">
+            <div class="col-md-6">
+                <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">
                             <i class="fa fa-search" aria-hidden="true"></i> 故障排查
                             @if (RepairRequestIsComfirm)
                             {
-                                <span class="badge badge-success">设备主任已确认</span>
+                                <span class="badge badge-success" style="margin-left: 5px;">设备主任已确认</span>
                             }
                             else
                             {
-                                <span class="badge badge-warning">设备主任未确认</span>
+                                <span class="badge badge-warning" style="margin-left: 5px;">设备主任未确认</span>
                             }
                         </h3>
                         @*<div class="card-tools">
@@ -182,7 +185,7 @@
                                 </dl>
                                 <div class="card-tools">
                                     <a asp-page="../Investigate/Edit" asp-route-id="@Model.MalfunctionWorkOrder.Investigation.ID">
-                                        <input type="button" class="btn btn-outline-primary btn-sm" value="编辑">
+                                        <input type="button" class="btn btn-outline-primary btn-xs" value="编辑">
                                     </a>
                                 </div>
                             </div>
@@ -215,7 +218,7 @@
                                 </dl>
                                 <div class="card-tools">
                                     <a asp-page="../RepairRequests/Edit" asp-route-id="@Model.MalfunctionWorkOrder.RepairRequest.ID">
-                                        <input type="button" class="btn btn-outline-primary btn-sm" value="编辑">
+                                        <input type="button" class="btn btn-outline-primary btn-xs" value="编辑">
                                     </a>
                                 </div>
                             </div>
@@ -248,7 +251,7 @@
                                 </dl>
                                 <div class="card-tools">
                                     <a asp-page="../AccessoriesOrders/Edit" asp-route-id="@Model.MalfunctionWorkOrder.AccessoriesOrder.ID">
-                                        <input type="button" class="btn btn-outline-primary btn-sm" value="编辑">
+                                        <input type="button" class="btn btn-outline-primary btn-xs" value="编辑">
                                     </a>
                                 </div>
                             </div>
@@ -264,14 +267,14 @@
         @if (RepairRequestIsComfirm)
         {
             <div class="col-md-6">
-                <div class="card card-primary card-outline">
+                <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">
                             <i class="fa fa-wrench" aria-hidden="true"></i> 故障维修
                         </h3>
                         <div class="card-tools">
                             <a asp-page="../Maintain/Edit" asp-route-id="@Model.MalfunctionWorkOrder.Maintenance.ID">
-                                <input type="button" class="btn btn-outline-primary btn-sm" value="编辑">
+                                <input type="button" class="btn btn-outline-primary btn-xs" value="编辑">
                             </a>
                         </div>
                     </div>
@@ -326,22 +329,23 @@
         @if (MaintainIsCritical)
         {
             <div class="col-md-6">
-                <div class="card card-primary card-outline">
+                <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">
                             <i class="fa fa-file" aria-hidden="true"></i> 性能验证
+
                             @if (ValidationIsComfirm)
                             {
-                                <span class="badge badge-success">设备主任已确认</span>
+                                <span class="badge badge-success" style="margin-left: 5px;">设备主任已确认</span>
                             }
                             else
                             {
-                                <span class="badge badge-warning">设备主任未确认</span>
+                                <span class="badge badge-warning" style="margin-left: 5px;">设备主任未确认</span>
                             }
                         </h3>
                         <div class="card-tools">
                             <a asp-page="../Validate/Edit" asp-route-id="@Model.MalfunctionWorkOrder.Validation.ID">
-                                <input type="button" class="btn btn-outline-primary btn-sm" value="编辑">
+                                <input type="button" class="btn btn-outline-primary btn-xs" value="编辑">
                             </a>
                         </div>
                     </div>

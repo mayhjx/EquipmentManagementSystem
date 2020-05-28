@@ -15,23 +15,23 @@
                     var status = Model.Instrument.Status.ToString();
                     if (status == "Using")
                     {
-                        <small class="bg-green">正常</small>
+                        <span class="badge badge-success">正常</span>
                     }
                     else if (status == "Malfunction")
                     {
-                        <small class="bg-yellow">故障</small>
+                        <span class="badge badge-warning">故障</span>
                     }
                     else if (status == "StopUsing")
                     {
-                        <small class="bg-yellow">停用</small>
+                        <span class="badge badge-warning">停用</span>
                     }
                     else if (status == "Allocate")
                     {
-                        <small class="bg-red">调拨</small>
+                        <span class="badge badge-danger">调拨</span>
                     }
                     else if (status == "Scrapped")
                     {
-                        <small class="bg-red">报废</small>
+                        <span class="badge badge-danger">报废</span>
                     }
                 }
             </h3>
@@ -42,14 +42,14 @@
     <!-- info row -->
     <div class="row">
         <div class="col-md-6">
-            <div class="card card-primary card-outline">
+            <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">
                         基础信息
                     </h3>
                     <div class="card-tools">
                         <a asp-page="./Edit" asp-route-id="@Model.Instrument.ID">
-                            <input type="button" class="btn btn-outline-primary btn-sm" value="编辑">
+                            <input type="button" class="btn btn-outline-primary btn-xs" value="编辑">
                         </a>
                     </div>
                 </div>
@@ -105,14 +105,14 @@
         </div>
 
         <div class="col-md-6">
-            <div class="card card-primary card-outline height-control">
+            <div class="card height-control">
                 <div class="card-header">
                     <h3 class="card-title">
                         校准信息
                     </h3>
                     <div class="card-tools">
                         <a asp-page="../Calibrations/Create" asp-route-id="@Model.Instrument.ID">
-                            <input type="button" class="btn btn-outline-primary btn-sm" value="新建">
+                            <input type="button" class="btn btn-outline-primary btn-xs" value="新建">
                         </a>
                     </div>
                 </div>
@@ -156,14 +156,14 @@
     <!-- Table row -->
     <div class="row">
         <div class="col-md-6">
-            <div class="card card-primary card-outline height-control">
+            <div class="card height-control">
                 <div class="card-header">
                     <h3 class="card-title">
                         部件信息
                     </h3>
                     <div class="card-tools">
                         <a asp-page="../Components/Create" asp-route-id="@Model.Instrument.ID">
-                            <input type="button" class="btn btn-outline-primary btn-sm" value="新建">
+                            <input type="button" class="btn btn-outline-primary btn-xs" value="新建">
                         </a>
                     </div>
                 </div>
@@ -202,14 +202,14 @@
             <!-- /.card -->
         </div>
         <div class="col-md-6">
-            <div class="card card-primary card-outline height-control">
+            <div class="card height-control">
                 <div class="card-header">
                     <h3 class="card-title">
                         故障信息
                     </h3>
                     <div class="card-tools">
                         <a asp-page="../Malfunctions/WorkOrders/Create" asp-route-id="@Model.Instrument.ID">
-                            <input type="button" class="btn btn-outline-primary btn-sm" value="新建">
+                            <input type="button" class="btn btn-outline-primary btn-xs" value="新建">
                         </a>
                     </div>
                 </div>
