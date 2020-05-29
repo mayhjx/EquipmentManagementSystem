@@ -40,7 +40,7 @@ namespace EquipmentManagementSystem.Pages
                                     .AsNoTracking()
                                     .Include(m => m.MalfunctionInfo)
                                     .AsEnumerable()
-                                    where m.Progress != WorkOrderProgress.Validated
+                                    where m.Progress != WorkOrderProgress.Completed
                                     select m).ToList();
         }
     }

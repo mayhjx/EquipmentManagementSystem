@@ -58,5 +58,7 @@ namespace EquipmentManagementSystem.Models
         Repairing,
         [Display(Name = "已验证")]
         Validated,
+        [Display(Name = "已完成")]
+        Completed,
     }
 }
