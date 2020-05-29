@@ -56,7 +56,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Validate
                     "Validation",
                     i => i.EndTime, i => i.PerformanceReportFile, i => i.EffectReportFile, i => i.IsConfirm, i => i.Summary, i => i.Attachment))
             {
-                // 如果进度在已保修之前则更新已报修
+                // 如果进度在已保修之前则更新已报修，设备状态更新为正常
                 if (Validation.MalfunctionWorkOrder.Progress < WorkOrderProgress.Validated)
                 {
                     Validation.MalfunctionWorkOrder.Progress = WorkOrderProgress.Validated;

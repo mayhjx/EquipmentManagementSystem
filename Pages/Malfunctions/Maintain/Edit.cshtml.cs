@@ -55,7 +55,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Maintain
                     "Maintenance",
                     i => i.Repairer, i => i.Solution, i => i.IsCritical, i => i.Remark, i => i.Attachment))
             {
-                // 如果进度在已保修之前则更新已报修
+                // 如果进度在维修中之前则更新为维修中
                 if (Maintenance.MalfunctionWorkOrder.Progress < WorkOrderProgress.Repairing)
                 {
                     Maintenance.MalfunctionWorkOrder.Progress = WorkOrderProgress.Repairing;

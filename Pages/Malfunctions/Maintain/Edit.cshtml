@@ -16,12 +16,12 @@
                 <input type="hidden" asp-for="Maintenance.MalfunctionWorkOrderID" />
                 <div class="form-group">
                     <label asp-for="Maintenance.Repairer" class="control-label"></label>
-                    <input asp-for="Maintenance.Repairer" class="form-control" />
+                    <input asp-for="Maintenance.Repairer" class="form-control" required />
                     <span asp-validation-for="Maintenance.Repairer" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Maintenance.Solution" class="control-label"></label>
-                    <input asp-for="Maintenance.Solution" class="form-control" />
+                    <input asp-for="Maintenance.Solution" class="form-control" required />
                     <span asp-validation-for="Maintenance.Solution" class="text-danger"></span>
                 </div>
                 <div class="form-group form-check">
