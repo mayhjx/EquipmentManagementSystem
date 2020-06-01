@@ -1,7 +1,13 @@
-﻿using EquipmentManagementSystem.Models;
+﻿using EquipmentManagementSystem.Data;
+using EquipmentManagementSystem.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,15 +15,27 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Information
 {
     public class EditModel : PageModel
     {
-        private readonly EquipmentManagementSystem.Data.MalfunctionContext _context;
+        private readonly MalfunctionContext _context;
+        private readonly string _targetFilePath;
 
-        public EditModel(EquipmentManagementSystem.Data.MalfunctionContext context)
+        public EditModel(MalfunctionContext context, IConfiguration config)
         {
             _context = context;
+            _targetFilePath = config.GetValue<string>("StoredFilesPath");
         }
 
         [BindProperty]
         public MalfunctionInfo MalfunctionInfo { get; set; }
+
+        public class Upload
+        {
+            [Required]
+            [Display(Name = "File")]
+            public IFormFile FormFile { get; set; }
+        }
+
+        [BindProperty]
+        public Upload FileUpload { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -35,7 +53,6 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Information
             {
                 return NotFound();
             }
-
             return Page();
         }
 
@@ -50,6 +67,12 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Information
             }
 
             _context.Attach(MalfunctionInfo).State = EntityState.Modified;
+            var filename = Path.GetFileName(FileUpload.FormFile.FileName);
+            var filepath = Path.Combine(_targetFilePath, filename);
+
+            MalfunctionInfo.Attachment = filename;
+            MalfunctionInfo.FilePath = filepath;
+            MalfunctionInfo.UploadTime = DateTime.Now;
 
             try
             {
@@ -67,9 +90,12 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Information
                 }
             }
 
-            return RedirectToPage("../WorkOrders/Details", new { id = MalfunctionInfo.MalfunctionWorkOrderID });
+            using (var fileStream = System.IO.File.Create(filepath))
+            {
+                await FileUpload.FormFile.CopyToAsync(fileStream);
+            }
 
-            //return RedirectToPage("./Index");
+            return RedirectToPage("../WorkOrders/Details", new { id = MalfunctionInfo.MalfunctionWorkOrderID });
         }
 
         private bool MalfunctionInfoExists(int id)

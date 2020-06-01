@@ -10,7 +10,7 @@
     <hr />
     <div class="row">
         <div class="col-md-4">
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="MalfunctionInfo.ID" />
                 <input type="hidden" asp-for="MalfunctionInfo.MalfunctionWorkOrderID" />
@@ -49,11 +49,24 @@
                     <textarea asp-for="MalfunctionInfo.Remark" class="form-control" rows="3"></textarea>
                     <span asp-validation-for="MalfunctionInfo.Remark" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="MalfunctionInfo.Attachment" class="control-label"></label>
-                    <input type="file" asp-for="MalfunctionInfo.Attachment" class="form-control-file" disabled />
-                    <span asp-validation-for="MalfunctionInfo.Attachment" class="text-danger"></span>
-                </div>
+                @if (Model.MalfunctionInfo.Attachment == null)
+                {
+                    <div class="form-group">
+                        <label asp-for="MalfunctionInfo.Attachment" class="control-label"></label>
+                        <input type="file" asp-for="FileUpload.FormFile" class="form-control-file" />
+                        <span asp-validation-for="FileUpload.FormFile" class="text-danger"></span>
+                    </div>
+                }
+                else
+                {
+                    <div class="form-group">
+                        <label asp-for="MalfunctionInfo.Attachment" class="control-label"></label>
+                        @*<input asp-for="MalfunctionInfo.Attachment" class="form-control" readonly />*@
+                        <a class="form-control-file">@Model.MalfunctionInfo.Attachment</a>
+                        <span asp-validation-for="MalfunctionInfo.Attachment" class="text-danger"></span>
+                    </div>
+                }
+
                 <div class="form-group form-check">
                     <label class="form-check-label">
                         <input class="form-check-input" asp-for="MalfunctionInfo.IsConfirm" /> @Html.DisplayNameFor(model => model.MalfunctionInfo.IsConfirm)

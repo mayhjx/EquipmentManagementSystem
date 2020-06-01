@@ -100,7 +100,9 @@
                                     @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.MalfunctionInfo.Attachment)
                                 </dt>
                                 <dd class="col-sm-8">
-                                    @Html.DisplayFor(model => model.MalfunctionWorkOrder.MalfunctionInfo.Attachment)
+                                    <a asp-page-handler="Download" asp-route-fileName="@Model.MalfunctionWorkOrder.MalfunctionInfo.Attachment">
+                                        @Html.DisplayFor(model => model.MalfunctionWorkOrder.MalfunctionInfo.Attachment)
+                                    </a>
                                 </dd>
                             </dl>
                         </div>

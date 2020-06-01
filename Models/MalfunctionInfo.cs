@@ -42,9 +42,15 @@ namespace EquipmentManagementSystem.Models
         [StringLength(999)]
         public string Remark { get; set; }
 
+        // 文件名
         [Display(Name = "附件")]
         [StringLength(100)]
         public string Attachment { get; set; }
+
+        public string FilePath { get; set; }
+
+        [Display(Name = "上传时间")]
+        public DateTime? UploadTime { get; set; }
 
         [Display(Name = "是否确认")]
         public bool IsConfirm { get; set; }
