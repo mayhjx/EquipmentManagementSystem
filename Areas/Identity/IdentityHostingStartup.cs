@@ -16,7 +16,7 @@ namespace EquipmentManagementSystem.Areas.Identity
             builder.ConfigureServices((context, services) =>
             {
                 services.AddDbContext<IdentityContext>(options =>
-                    options.UseSqlite(
+                    options.UseSqlServer(
                         context.Configuration.GetConnectionString("IdentityContextConnection")));
 
                 services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -27,7 +27,7 @@ namespace EquipmentManagementSystem.Areas.Identity
                     // Password settings.
                     options.Password.RequireDigit = true;
                     options.Password.RequireLowercase = true;
-                    options.Password.RequireNonAlphanumeric = true;
+                    options.Password.RequireNonAlphanumeric = false;
                     options.Password.RequireUppercase = false;
                     options.Password.RequiredLength = 6;
                     options.Password.RequiredUniqueChars = 1;

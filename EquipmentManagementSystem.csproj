@@ -17,8 +17,6 @@
 		<Compile Remove="Migrations\20200602074138_initial.Designer.cs" />
 		<Compile Remove="Migrations\20200602075538_initial.cs" />
 		<Compile Remove="Migrations\20200602075538_initial.Designer.cs" />
-		<Compile Remove="Migrations\Identity\20200512081022_InitialUsertable.cs" />
-		<Compile Remove="Migrations\Identity\20200512081022_InitialUsertable.Designer.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -41,12 +39,6 @@
 		</PackageReference>
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.3" />
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.design" Version="3.1.3" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Update="Identity.db">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
 	</ItemGroup>
 
 </Project>
