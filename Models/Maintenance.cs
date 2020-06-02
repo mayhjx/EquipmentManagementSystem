@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace EquipmentManagementSystem.Models
 {
@@ -27,9 +28,14 @@ namespace EquipmentManagementSystem.Models
         [StringLength(999)]
         public string Remark { get; set; }
 
+        public byte[] Attachment { get; set; }
+
         [Display(Name = "工程师服务报告")]
         [StringLength(100)]
-        public string Attachment { get; set; }
+        public string FileName { get; set; }
+
+        [Display(Name = "上传时间")]
+        public DateTime? UploadTime { get; set; }
 
     }
 }

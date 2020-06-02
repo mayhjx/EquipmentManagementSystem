@@ -1,5 +1,6 @@
 ﻿using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
+using EquipmentManagementSystem.Utilities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -7,8 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions.Information
@@ -16,12 +15,12 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Information
     public class EditModel : PageModel
     {
         private readonly MalfunctionContext _context;
-        private readonly string _targetFilePath;
+        private readonly long _fileSizeLimit;
 
         public EditModel(MalfunctionContext context, IConfiguration config)
         {
             _context = context;
-            _targetFilePath = config.GetValue<string>("StoredFilesPath");
+            _fileSizeLimit = config.GetValue<long>("FileSizeLimit");
         }
 
         [BindProperty]
@@ -29,7 +28,6 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Information
 
         public class Upload
         {
-            [Required]
             [Display(Name = "File")]
             public IFormFile FormFile { get; set; }
         }
@@ -46,7 +44,6 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Information
 
 
             MalfunctionInfo = await _context.MalfunctionInfo
-                                .Include(m => m.MalfunctionWorkOrder)
                                 .FirstOrDefaultAsync(m => m.ID == id);
 
             if (MalfunctionInfo == null)
@@ -56,51 +53,114 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Information
             return Page();
         }
 
+
+        public async Task<IActionResult> OnPostAsync(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            MalfunctionInfo = await _context.MalfunctionInfo
+                                .Include(m => m.MalfunctionWorkOrder)
+                                .FirstAsync(m => m.ID == id);
+
+            if (MalfunctionInfo == null)
+            {
+                return NotFound();
+            }
+
+            if (FileUpload.FormFile != null && FileUpload.FormFile.Length > 0)
+            {
+                var formFileContent =
+                    await FileHelpers.ProcessFormFile<Upload>(
+                        FileUpload.FormFile, ModelState, _fileSizeLimit);
+
+                if (!ModelState.IsValid)
+                {
+                    return Page();
+                }
+
+                if (await TryUpdateModelAsync<MalfunctionInfo>(
+                    MalfunctionInfo,
+                    "MalfunctionInfo",
+                    i => i.BeginTime, i => i.FoundedTime, i => i.Type, i => i.Part,
+                    i => i.Phenomenon, i => i.Reason, i => i.Remark, i => i.IsConfirm))
+                {
+                    MalfunctionInfo.Attachment = formFileContent;
+                    MalfunctionInfo.FileName = FileUpload.FormFile.FileName;
+                    MalfunctionInfo.UploadTime = DateTime.Now;
+
+                    await _context.SaveChangesAsync();
+                    return RedirectToPage("../WorkOrders/Details", new { id = MalfunctionInfo.MalfunctionWorkOrderID });
+                }
+            }
+            else
+            {
+                if (await TryUpdateModelAsync<MalfunctionInfo>(
+                    MalfunctionInfo,
+                    "MalfunctionInfo",
+                    i => i.BeginTime, i => i.FoundedTime, i => i.Type, i => i.Part,
+                    i => i.Phenomenon, i => i.Reason, i => i.Remark, i => i.IsConfirm))
+                {
+                    await _context.SaveChangesAsync();
+                    return RedirectToPage("../WorkOrders/Details", new { id = MalfunctionInfo.MalfunctionWorkOrderID });
+                }
+            }
+
+
+            return Page();
+        }
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
-        {
+        //public async Task<IActionResult> OnPostAsync()
+        //{
 
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return Page();
+        //    }
 
-            _context.Attach(MalfunctionInfo).State = EntityState.Modified;
-            var filename = Path.GetFileName(FileUpload.FormFile.FileName);
-            var filepath = Path.Combine(_targetFilePath, filename);
+        //    if (FileUpload.FormFile != null && FileUpload.FormFile.Length > 0)
+        //    {
+        //        var formFileContent =
+        //            await FileHelpers.ProcessFormFile<Upload>(
+        //                FileUpload.FormFile, ModelState, _fileSizeLimit);
 
-            MalfunctionInfo.Attachment = filename;
-            MalfunctionInfo.FilePath = filepath;
-            MalfunctionInfo.UploadTime = DateTime.Now;
+        //        if (!ModelState.IsValid)
+        //        {
+        //            return Page();
+        //        }
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!MalfunctionInfoExists(MalfunctionInfo.ID))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //        MalfunctionInfo.UploadTime = DateTime.Now;
+        //        MalfunctionInfo.Attachment = formFileContent;
+        //        MalfunctionInfo.FileName = FileUpload.FormFile.FileName;
+        //    }
 
-            using (var fileStream = System.IO.File.Create(filepath))
-            {
-                await FileUpload.FormFile.CopyToAsync(fileStream);
-            }
+        //    _context.Attach(MalfunctionInfo).State = EntityState.Modified;
 
-            return RedirectToPage("../WorkOrders/Details", new { id = MalfunctionInfo.MalfunctionWorkOrderID });
-        }
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!MalfunctionInfoExists(MalfunctionInfo.ID))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-        private bool MalfunctionInfoExists(int id)
-        {
-            return _context.MalfunctionInfo.Any(e => e.ID == id);
-        }
+        //    return RedirectToPage("../WorkOrders/Details", new { id = MalfunctionInfo.MalfunctionWorkOrderID });
+        //}
+
+        //private bool MalfunctionInfoExists(int id)
+        //{
+        //    return _context.MalfunctionInfo.Any(e => e.ID == id);
+        //}
     }
 }

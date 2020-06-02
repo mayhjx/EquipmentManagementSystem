@@ -97,11 +97,11 @@
                                     @Html.DisplayFor(model => model.MalfunctionWorkOrder.MalfunctionInfo.Remark)
                                 </dd>
                                 <dt class="col-sm-4">
-                                    @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.MalfunctionInfo.Attachment)
+                                    @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.MalfunctionInfo.FileName)
                                 </dt>
                                 <dd class="col-sm-8">
-                                    <a asp-page-handler="Download" asp-route-fileName="@Model.MalfunctionWorkOrder.MalfunctionInfo.Attachment">
-                                        @Html.DisplayFor(model => model.MalfunctionWorkOrder.MalfunctionInfo.Attachment)
+                                    <a asp-page="../Information/Index" asp-page-handler="Download" asp-route-id="@Model.MalfunctionWorkOrder.MalfunctionInfo.ID">
+                                        @Html.DisplayFor(model => model.MalfunctionWorkOrder.MalfunctionInfo.FileName)
                                     </a>
                                 </dd>
                             </dl>
@@ -176,7 +176,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4">
-                                <dl class="row text-sm">
+                                <dl class="row">
                                     <dt class="col-sm-5">
                                         @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Investigation.BeginTime)
                                     </dt>
@@ -204,7 +204,7 @@
                                 </dl>
                             </div>
                             <div class="col-md-4">
-                                <dl class="row text-sm">
+                                <dl class="row">
                                     <dt class="col-sm-5">
                                         @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.RepairRequest.RequestTime)
                                     </dt>
@@ -232,7 +232,7 @@
                                 </dl>
                             </div>
                             <div class="col-md-4">
-                                <dl class="row text-sm">
+                                <dl class="row">
                                     <dt class="col-sm-4">
                                         @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.AccessoriesOrder.Name)
                                     </dt>
@@ -320,10 +320,12 @@
                                         @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.Remark)
                                     </dd>
                                     <dt class="col-sm-4">
-                                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.Attachment)
+                                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.FileName)
                                     </dt>
                                     <dd class="col-sm-8">
-                                        @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.Attachment)
+                                        <a asp-page="../Maintain/Index" asp-page-handler="Download" asp-route-id="@Model.MalfunctionWorkOrder.Maintenance.ID">
+                                            @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.FileName)
+                                        </a>
                                     </dd>
                                 </dl>
                             </div>

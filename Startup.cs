@@ -4,9 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
-using System.IO;
 
 namespace EquipmentManagementSystem
 {
@@ -26,15 +24,6 @@ namespace EquipmentManagementSystem
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
-
-            var storedFilesPath = Configuration.GetValue<string>("StoredFilesPath");
-            if (!Directory.Exists(storedFilesPath))
-            {
-                Directory.CreateDirectory(storedFilesPath);
-            }
-
-            var physicalProvider = new PhysicalFileProvider(storedFilesPath);
-            services.AddSingleton<IFileProvider>(physicalProvider);
 
             if (Environment.IsDevelopment())
             {

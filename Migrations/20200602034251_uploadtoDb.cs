@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace EquipmentManagementSystem.Migrations.Malfunction
+namespace EquipmentManagementSystem.Migrations
 {
-    public partial class datetimenullable : Migration
+    public partial class uploadtoDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -240,7 +240,9 @@ namespace EquipmentManagementSystem.Migrations.Malfunction
                     Solution = table.Column<string>(maxLength: 999, nullable: true),
                     IsCritical = table.Column<bool>(nullable: false),
                     Remark = table.Column<string>(maxLength: 999, nullable: true),
-                    Attachment = table.Column<string>(maxLength: 100, nullable: true)
+                    Attachment = table.Column<byte[]>(nullable: true),
+                    FileName = table.Column<string>(maxLength: 100, nullable: true),
+                    UploadTime = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -267,8 +269,8 @@ namespace EquipmentManagementSystem.Migrations.Malfunction
                     Phenomenon = table.Column<string>(maxLength: 50, nullable: true),
                     Reason = table.Column<string>(maxLength: 50, nullable: true),
                     Remark = table.Column<string>(maxLength: 999, nullable: true),
-                    Attachment = table.Column<string>(maxLength: 100, nullable: true),
-                    FilePath = table.Column<string>(nullable: true),
+                    Attachment = table.Column<byte[]>(nullable: true),
+                    FileName = table.Column<string>(maxLength: 100, nullable: true),
                     UploadTime = table.Column<DateTime>(nullable: true),
                     IsConfirm = table.Column<bool>(nullable: false)
                 },
