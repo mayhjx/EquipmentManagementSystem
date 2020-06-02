@@ -477,11 +477,17 @@ namespace EquipmentManagementSystem.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Attachment")
+                    b.Property<byte[]>("Attachment")
+                        .HasColumnType("BLOB");
+
+                    b.Property<string>("AttachmentName")
                         .HasColumnType("TEXT")
                         .HasMaxLength(100);
 
-                    b.Property<string>("EffectReportFile")
+                    b.Property<byte[]>("EffectReportFile")
+                        .HasColumnType("BLOB");
+
+                    b.Property<string>("EffectReportFileName")
                         .HasColumnType("TEXT")
                         .HasMaxLength(100);
 
@@ -494,7 +500,10 @@ namespace EquipmentManagementSystem.Migrations
                     b.Property<int>("MalfunctionWorkOrderID")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("PerformanceReportFile")
+                    b.Property<byte[]>("PerformanceReportFile")
+                        .HasColumnType("BLOB");
+
+                    b.Property<string>("PerformanceReportFileName")
                         .HasColumnType("TEXT")
                         .HasMaxLength(100);
 

@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EquipmentManagementSystem.Migrations
 {
     [DbContext(typeof(MalfunctionContext))]
-    [Migration("20200602034251_uploadtoDb")]
-    partial class uploadtoDb
+    [Migration("20200602060532_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -479,11 +479,17 @@ namespace EquipmentManagementSystem.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Attachment")
+                    b.Property<byte[]>("Attachment")
+                        .HasColumnType("BLOB");
+
+                    b.Property<string>("AttachmentName")
                         .HasColumnType("TEXT")
                         .HasMaxLength(100);
 
-                    b.Property<string>("EffectReportFile")
+                    b.Property<byte[]>("EffectReportFile")
+                        .HasColumnType("BLOB");
+
+                    b.Property<string>("EffectReportFileName")
                         .HasColumnType("TEXT")
                         .HasMaxLength(100);
 
@@ -496,7 +502,10 @@ namespace EquipmentManagementSystem.Migrations
                     b.Property<int>("MalfunctionWorkOrderID")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("PerformanceReportFile")
+                    b.Property<byte[]>("PerformanceReportFile")
+                        .HasColumnType("BLOB");
+
+                    b.Property<string>("PerformanceReportFileName")
                         .HasColumnType("TEXT")
                         .HasMaxLength(100);
 

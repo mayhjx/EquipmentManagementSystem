@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EquipmentManagementSystem.Migrations
 {
-    public partial class uploadtoDb : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -317,10 +317,13 @@ namespace EquipmentManagementSystem.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     MalfunctionWorkOrderID = table.Column<int>(nullable: false),
                     EndTime = table.Column<DateTime>(nullable: true),
-                    PerformanceReportFile = table.Column<string>(maxLength: 100, nullable: true),
-                    EffectReportFile = table.Column<string>(maxLength: 100, nullable: true),
+                    PerformanceReportFileName = table.Column<string>(maxLength: 100, nullable: true),
+                    PerformanceReportFile = table.Column<byte[]>(nullable: true),
+                    EffectReportFileName = table.Column<string>(maxLength: 100, nullable: true),
+                    EffectReportFile = table.Column<byte[]>(nullable: true),
                     Summary = table.Column<string>(maxLength: 999, nullable: true),
-                    Attachment = table.Column<string>(maxLength: 100, nullable: true),
+                    Attachment = table.Column<byte[]>(nullable: true),
+                    AttachmentName = table.Column<string>(maxLength: 100, nullable: true),
                     IsConfirm = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>

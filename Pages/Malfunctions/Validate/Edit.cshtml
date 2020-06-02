@@ -10,7 +10,7 @@
     <hr />
     <div class="row">
         <div class="col-md-4">
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="Validation.ID" />
                 <input type="hidden" asp-for="Validation.MalfunctionWorkOrderID" />
@@ -20,14 +20,16 @@
                     <span asp-validation-for="Validation.EndTime" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Validation.PerformanceReportFile" class="control-label"></label>
-                    <input asp-for="Validation.PerformanceReportFile" type="file" class="form-control-file" disabled />
-                    <span asp-validation-for="Validation.PerformanceReportFile" class="text-danger"></span>
+                    <label asp-for="Validation.PerformanceReportFileName" class="control-label"></label>
+                    （提示：再次上传时会覆盖原有附件）
+                    <input asp-for="FileUpload.PerformanceReportFile" type="file" class="form-control-file" />
+                    <h6>@Html.DisplayFor(model => model.Validation.PerformanceReportFileName)</h6>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Validation.EffectReportFile" class="control-label"></label>
-                    <input asp-for="Validation.EffectReportFile" type="file" class="form-control-file" disabled />
-                    <span asp-validation-for="Validation.EffectReportFile" class="text-danger"></span>
+                    <label asp-for="Validation.EffectReportFileName" class="control-label"></label>
+                    （提示：再次上传时会覆盖原有附件）
+                    <input asp-for="FileUpload.EffectReportFile" type="file" class="form-control-file" />
+                    <h6>@Html.DisplayFor(model => model.Validation.EffectReportFileName)</h6>
                 </div>
                 <div class="form-group">
                     <label asp-for="Validation.Summary" class="control-label"></label>
@@ -36,8 +38,9 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Validation.Attachment" class="control-label"></label>
-                    <input asp-for="Validation.Attachment" type="file" class="form-control-file" disabled />
-                    <span asp-validation-for="Validation.Attachment" class="text-danger"></span>
+                    （提示：再次上传时会覆盖原有附件）
+                    <input asp-for="FileUpload.Attachment" type="file" class="form-control-file" />
+                    <h6>@Html.DisplayFor(model => model.Validation.AttachmentName)</h6>
                 </div>
                 <div class="form-group form-check">
                     <label class="form-check-label">

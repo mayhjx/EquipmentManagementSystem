@@ -374,16 +374,20 @@
                                         @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.EndTime)
                                     </dd>
                                     <dt class="col-sm-4">
-                                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.PerformanceReportFile)
+                                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.PerformanceReportFileName)
                                     </dt>
                                     <dd class="col-sm-8">
-                                        @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.PerformanceReportFile)
+                                        <a asp-page="../Validate/Index" asp-page-handler="DownloadPerformanceReportFile" asp-route-id="@Model.MalfunctionWorkOrder.Validation.ID">
+                                            @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.PerformanceReportFileName)
+                                        </a>
                                     </dd>
                                     <dt class="col-sm-4">
-                                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.EffectReportFile)
+                                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.EffectReportFileName)
                                     </dt>
                                     <dd class="col-sm-8">
-                                        @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.EffectReportFile)
+                                        <a asp-page="../Validate/Index" asp-page-handler="DownloadEffectReportFile" asp-route-id="@Model.MalfunctionWorkOrder.Validation.ID">
+                                            @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.EffectReportFileName)
+                                        </a>
                                     </dd>
                                 </dl>
                             </div>
@@ -396,10 +400,12 @@
                                         @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.Summary)
                                     </dd>
                                     <dt class="col-sm-4">
-                                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.Attachment)
+                                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.AttachmentName)
                                     </dt>
                                     <dd class="col-sm-8">
-                                        @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.Attachment)
+                                        <a asp-page="../Validate/Index" asp-page-handler="DownloadAttachment" asp-route-id="@Model.MalfunctionWorkOrder.Validation.ID">
+                                            @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.AttachmentName)
+                                        </a>
                                     </dd>
                                 </dl>
                             </div>
@@ -415,9 +421,9 @@
     <div class="row no-print">
         <div class="col-md-12">
             <div>
-                <a asp-page="./Index">
-                    <input type="button" class="btn btn-default" value="返回" style="margin-right: 5px;">
-                </a>
+                @*<a asp-page="./Index">
+                        <input type="button" class="btn btn-default" value="返回" style="margin-right: 5px;">
+                    </a>*@
                 @if (IsComfirmAll && !IsCompleted)
                 {
                     <a asp-page="./Edit" asp-route-id="@Model.MalfunctionWorkOrder.ID">
