@@ -49,22 +49,12 @@
                     <textarea asp-for="MalfunctionInfo.Remark" class="form-control" rows="3"></textarea>
                     <span asp-validation-for="MalfunctionInfo.Remark" class="text-danger"></span>
                 </div>
-                @if (Model.MalfunctionInfo.Attachment == null)
-                {
-                    <div class="form-group">
-                        <label asp-for="MalfunctionInfo.FileName" class="control-label"></label>
-                        <input type="file" asp-for="FileUpload.FormFile" class="form-control-file" />
-                    </div>
-                }
-                else
-                {
-                    <div class="form-group">
-                        <label asp-for="MalfunctionInfo.FileName" class="control-label"></label>
-                        ：@Html.DisplayFor(model => model.MalfunctionInfo.FileName)
-                        <h6>（提示：上传时会覆盖已上传文件）</h6>
-                        <input type="file" asp-for="FileUpload.FormFile" class="form-control-file" />
-                    </div>
-                }
+                <div class="form-group">
+                    <label asp-for="MalfunctionInfo.FileName" class="control-label"></label>
+                    （提示：再次上传时会覆盖原有附件）
+                    <input type="file" asp-for="FileUpload.FormFile" class="form-control-file" />
+                    <h6>@Html.DisplayFor(model => model.MalfunctionInfo.FileName)</h6>
+                </div>
                 <div class="form-group form-check">
                     <label class="form-check-label">
                         <input class="form-check-input" asp-for="MalfunctionInfo.IsConfirm" /> @Html.DisplayNameFor(model => model.MalfunctionInfo.IsConfirm)
