@@ -67,7 +67,6 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Maintain
                 return NotFound();
             }
 
-
             if (await TryUpdateModelAsync<Maintenance>(
                     Maintenance,
                     "Maintenance",

@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
-using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Reflection;
 using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Utilities
@@ -17,7 +15,7 @@ namespace EquipmentManagementSystem.Utilities
             ModelStateDictionary modelState, long sizeLimit)
         {
 
-            var fieldDisplayName = string.Empty;
+            //var fieldDisplayName = string.Empty;
 
             // 允许的文件后缀
             string[] permittedExtensions = { ".zip", ".rar", ".7z", ".csv", ".doc", ".docx" };
@@ -27,19 +25,19 @@ namespace EquipmentManagementSystem.Utilities
             // property associated with this IFormFile. If a display
             // name isn't found, error messages simply won't show
             // a display name.
-            MemberInfo property =
-                    typeof(T).GetProperty(
-                        formFile.Name.Substring(formFile.Name.IndexOf(".",
-                        StringComparison.Ordinal) + 1));
+            //MemberInfo property =
+            //        typeof(T).GetProperty(
+            //            formFile.Name.Substring(formFile.Name.IndexOf(".",
+            //            StringComparison.Ordinal) + 1));
 
-            if (property != null)
-            {
-                if (property.GetCustomAttribute(typeof(DisplayAttribute)) is
-                    DisplayAttribute displayAttribute)
-                {
-                    fieldDisplayName = $"{displayAttribute.Name}";
-                }
-            }
+            //if (property != null)
+            //{
+            //    if (property.GetCustomAttribute(typeof(DisplayAttribute)) is
+            //        DisplayAttribute displayAttribute)
+            //    {
+            //        fieldDisplayName = $"{displayAttribute.Name}";
+            //    }
+            //}
 
             // Don't trust the file name sent by the client. To display
             // the file name, HTML-encode the value.
@@ -51,7 +49,7 @@ namespace EquipmentManagementSystem.Utilities
             if (formFile.Length == 0)
             {
                 modelState.AddModelError(formFile.Name,
-                    $"{fieldDisplayName}({trustedFileNameForDisplay}) is empty.");
+                    $"{trustedFileNameForDisplay}是空文件。");
 
                 return new byte[0];
             }
@@ -60,8 +58,8 @@ namespace EquipmentManagementSystem.Utilities
             {
                 var megabyteSizeLimit = sizeLimit / 1048576;
                 modelState.AddModelError(formFile.Name,
-                                    $"{fieldDisplayName}({trustedFileNameForDisplay}) exceeds " +
-                                    $"{megabyteSizeLimit:N1} MB.");
+                                    $"{trustedFileNameForDisplay} 文件大小超过 " +
+                                    $"{megabyteSizeLimit:N1} MB。");
 
                 return new byte[0];
             }
@@ -75,15 +73,14 @@ namespace EquipmentManagementSystem.Utilities
                     if (memoryStream.Length == 0)
                     {
                         modelState.AddModelError(formFile.Name,
-                            $"{fieldDisplayName}({trustedFileNameForDisplay}) is empty.");
+                            $"{trustedFileNameForDisplay}是空文件。");
                     }
 
                     if (!IsValidFileExtension(formFile.FileName, memoryStream, permittedExtensions))
                     {
                         modelState.AddModelError(formFile.Name,
-                            $"{fieldDisplayName}({trustedFileNameForDisplay}) file " +
-                            "type isn't permitted or the file's signature " +
-                            "doesn't match the file's extension.");
+                            $"{trustedFileNameForDisplay}文件类型不符， " +
+                            $"允许的文件类型为：{string.Join("，", permittedExtensions)}");
                     }
                     else
                     {
@@ -94,8 +91,8 @@ namespace EquipmentManagementSystem.Utilities
             catch (Exception ex)
             {
                 modelState.AddModelError(formFile.Name,
-                    $"{fieldDisplayName}({trustedFileNameForDisplay}) upload failed. " +
-                    $"Please contact the Help Desk for support. Error: {ex.HResult}");
+                    $"上传文件({trustedFileNameForDisplay})失败，" +
+                    $"错误信息：{ex.HResult}");
             }
 
             return new byte[0];

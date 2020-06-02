@@ -11,6 +11,12 @@
 		<Compile Remove="Migrations\20200420071421_addMalfunctionsFiels.Designer.cs" />
 		<Compile Remove="Migrations\20200528010217_Initial.cs" />
 		<Compile Remove="Migrations\20200528010217_Initial.Designer.cs" />
+		<Compile Remove="Migrations\20200602073238_initial.cs" />
+		<Compile Remove="Migrations\20200602073238_initial.Designer.cs" />
+		<Compile Remove="Migrations\20200602074138_initial.cs" />
+		<Compile Remove="Migrations\20200602074138_initial.Designer.cs" />
+		<Compile Remove="Migrations\20200602075538_initial.cs" />
+		<Compile Remove="Migrations\20200602075538_initial.Designer.cs" />
 		<Compile Remove="Migrations\Identity\20200512081022_InitialUsertable.cs" />
 		<Compile Remove="Migrations\Identity\20200512081022_InitialUsertable.Designer.cs" />
 	</ItemGroup>

@@ -35,7 +35,7 @@ namespace EquipmentManagementSystem.Migrations
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -48,7 +48,7 @@ namespace EquipmentManagementSystem.Migrations
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Phenomenon = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -61,7 +61,7 @@ namespace EquipmentManagementSystem.Migrations
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Reason = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -74,7 +74,7 @@ namespace EquipmentManagementSystem.Migrations
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     InstrumentId = table.Column<string>(nullable: true),
                     Code = table.Column<string>(maxLength: 50, nullable: true),
                     Name = table.Column<string>(maxLength: 50, nullable: false),
@@ -98,7 +98,7 @@ namespace EquipmentManagementSystem.Migrations
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     InstrumentID = table.Column<string>(nullable: true),
                     Date = table.Column<DateTime>(nullable: false),
                     Unit = table.Column<string>(maxLength: 50, nullable: false),
@@ -121,7 +121,7 @@ namespace EquipmentManagementSystem.Migrations
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     InstrumentID = table.Column<string>(nullable: true),
                     SerialNumber = table.Column<string>(maxLength: 50, nullable: false),
                     Name = table.Column<string>(maxLength: 50, nullable: false),
@@ -144,7 +144,7 @@ namespace EquipmentManagementSystem.Migrations
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     InstrumentID = table.Column<string>(nullable: true),
                     IP = table.Column<string>(maxLength: 50, nullable: true),
                     Account = table.Column<string>(maxLength: 50, nullable: true),
@@ -166,7 +166,7 @@ namespace EquipmentManagementSystem.Migrations
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     InstrumentID = table.Column<string>(nullable: true),
                     Progress = table.Column<int>(nullable: false),
                     Creator = table.Column<string>(maxLength: 50, nullable: true),
@@ -188,7 +188,7 @@ namespace EquipmentManagementSystem.Migrations
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     MalfunctionWorkOrderID = table.Column<int>(nullable: false),
                     Name = table.Column<string>(maxLength: 50, nullable: true),
                     PlaceTime = table.Column<DateTime>(nullable: true),
@@ -211,7 +211,7 @@ namespace EquipmentManagementSystem.Migrations
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     MalfunctionWorkOrderID = table.Column<int>(nullable: false),
                     BeginTime = table.Column<DateTime>(nullable: true),
                     EndTime = table.Column<DateTime>(nullable: true),
@@ -234,7 +234,7 @@ namespace EquipmentManagementSystem.Migrations
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     MalfunctionWorkOrderID = table.Column<int>(nullable: false),
                     Repairer = table.Column<string>(maxLength: 50, nullable: true),
                     Solution = table.Column<string>(maxLength: 999, nullable: true),
@@ -260,7 +260,7 @@ namespace EquipmentManagementSystem.Migrations
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     MalfunctionWorkOrderID = table.Column<int>(nullable: false),
                     BeginTime = table.Column<DateTime>(nullable: false),
                     FoundedTime = table.Column<DateTime>(nullable: false),
@@ -290,7 +290,7 @@ namespace EquipmentManagementSystem.Migrations
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     MalfunctionWorkOrderID = table.Column<int>(nullable: false),
                     RequestTime = table.Column<DateTime>(nullable: true),
                     BookingsTime = table.Column<DateTime>(nullable: true),
@@ -314,7 +314,7 @@ namespace EquipmentManagementSystem.Migrations
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     MalfunctionWorkOrderID = table.Column<int>(nullable: false),
                     EndTime = table.Column<DateTime>(nullable: true),
                     PerformanceReportFileName = table.Column<string>(maxLength: 100, nullable: true),
@@ -347,7 +347,8 @@ namespace EquipmentManagementSystem.Migrations
                 name: "IX_Assert_InstrumentId",
                 table: "Assert",
                 column: "InstrumentId",
-                unique: true);
+                unique: true,
+                filter: "[InstrumentId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Calibration_InstrumentID",
@@ -363,7 +364,8 @@ namespace EquipmentManagementSystem.Migrations
                 name: "IX_Computer_InstrumentID",
                 table: "Computer",
                 column: "InstrumentID",
-                unique: true);
+                unique: true,
+                filter: "[InstrumentID] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Investigation_MalfunctionWorkOrderID",
