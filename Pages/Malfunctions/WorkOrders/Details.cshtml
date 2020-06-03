@@ -177,46 +177,50 @@
                         <div class="row">
                             <div class="form-group form-inline col-md-12">
                                 <div class="form-check col-md-4">
-                                    <input id="investigate" type="radio" class="form-check-input" name="r1" onclick="showlink()" checked>
-                                    <label class="form-check-label">故障排查</label>
+                                    <label class="form-check-label">
+                                        <input id="investigate" type="radio" class="form-check-input" name="r1" onclick="showlink()" checked>
+                                        故障排查
+                                    </label>
                                 </div>
-
                                 <div class="form-check col-md-4">
-                                    <input id="request" type="radio" class="form-check-input" name="r1" onclick="showlink()">
-                                    <label class="form-check-label">维修申请</label>
+                                    <label class="form-check-label">
+                                        <input id="request" type="radio" class="form-check-input" name="r1" onclick="showlink()">
+                                        维修申请
+                                    </label>
                                 </div>
-
                                 <div class="form-check col-md-4">
-                                    <input id="order" type="radio" class="form-check-input" name="r1" onclick="showlink()">
-                                    <label class="form-check-label">配件下单</label>
+                                    <label class="form-check-label">
+                                        <input id="order" type="radio" class="form-check-input" name="r1" onclick="showlink()">
+                                        配件下单
+                                    </label>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-4">
                                 <dl class="row">
-                                    <dt class="col-sm-6">
+                                    <dt class="col-sm-4">
                                         @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Investigation.BeginTime)
                                     </dt>
-                                    <dd class="col-sm-6">
+                                    <dd class="col-sm-8">
                                         @Html.DisplayFor(model => model.MalfunctionWorkOrder.Investigation.BeginTime)
                                     </dd>
-                                    <dt class="col-sm-6">
+                                    <dt class="col-sm-4">
                                         @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Investigation.EndTime)
                                     </dt>
-                                    <dd class="col-sm-6">
+                                    <dd class="col-sm-8">
                                         @Html.DisplayFor(model => model.MalfunctionWorkOrder.Investigation.EndTime)
                                     </dd>
-                                    <dt class="col-sm-6">
+                                    <dt class="col-sm-4">
                                         @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Investigation.Operator)
                                     </dt>
-                                    <dd class="col-sm-6">
+                                    <dd class="col-sm-8">
                                         @Html.DisplayFor(model => model.MalfunctionWorkOrder.Investigation.Operator)
                                     </dd>
-                                    <dt class="col-sm-6">
+                                    <dt class="col-sm-4">
                                         @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Investigation.Measures)
                                     </dt>
-                                    <dd class="col-sm-6">
+                                    <dd class="col-sm-8">
                                         @Html.DisplayFor(model => model.MalfunctionWorkOrder.Investigation.Measures)
                                     </dd>
                                 </dl>
@@ -325,12 +329,6 @@
                                     <dd class="col-sm-6">
                                         @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.Solution)
                                     </dd>
-                                    @*<dt class="col-sm-6">
-                                            @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.IsCritical)
-                                        </dt>
-                                        <dd class="col-sm-6">
-                                            @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.IsCritical)
-                                        </dd>*@
                                 </dl>
                             </div>
                             <div class="col-md-6">
@@ -464,29 +462,38 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>
         function showlink() {
-            var investigate = document.getElementById("investigate");
-            var request = document.getElementById("request");
-            var order = document.getElementById("order");
+            var investigate_ratio = document.getElementById("investigate");
+            var request_ratio = document.getElementById("request");
+            var order_ratio = document.getElementById("order");
 
-            if (investigate.checked) {
-                document.getElementById("investigate-a").removeAttribute("hidden");
+            var investigate_a = document.getElementById("investigate-a");
+            var request_a = document.getElementById("request-a");
+            var order_a = document.getElementById("order-a");
+
+            if (investigate_a !== null) {
+                if (investigate_ratio.checked) {
+                    investigate_a.removeAttribute("hidden");
+                }
+                else {
+                    investigate_a.setAttribute("hidden", "");
+                }
             }
-            else {
-                document.getElementById("investigate-a").setAttribute("hidden", "");
+            if (request_a !== null) {
+                if (request_ratio.checked) {
+                    request_a.removeAttribute("hidden");
+                }
+                else {
+                    request_a.setAttribute("hidden", "");
+                }
             }
 
-            if (request.checked) {
-                document.getElementById("request-a").removeAttribute("hidden");
-            }
-            else {
-                document.getElementById("request-a").setAttribute("hidden", "");
-            }
-
-            if (order.checked) {
-                document.getElementById("order-a").removeAttribute("hidden");
-            }
-            else {
-                document.getElementById("order-a").setAttribute("hidden", "");
+            if (order_a !== null) {
+                if (order_ratio.checked) {
+                    order_a.removeAttribute("hidden");
+                }
+                else {
+                    order_a.setAttribute("hidden", "");
+                }
             }
         }
     </script>

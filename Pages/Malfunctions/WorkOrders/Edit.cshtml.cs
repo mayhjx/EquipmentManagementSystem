@@ -62,7 +62,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
                     "MalfunctionWorkOrder",
                     i => i.InstrumentID, i => i.Progress, i => i.CreatedTime, i => i.Creator))
             {
-                if (MalfunctionWorkOrder.Progress == WorkOrderProgress.Validated)
+                if (MalfunctionWorkOrder.Progress < WorkOrderProgress.Completed)
                     MalfunctionWorkOrder.Progress = WorkOrderProgress.Completed;
 
                 if (MalfunctionWorkOrder.Instrument.Status == InstrumentStatus.Malfunction)
