@@ -18,10 +18,6 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
         [BindProperty]
         public MalfunctionWorkOrder MalfunctionWorkOrder { get; set; }
 
-        [BindProperty]
-        public MalfunctionInfo MalfunctionInfo { get; set; }
-
-
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
