@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Net;
+using System.Net.Mime;
 using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions.Maintain
@@ -51,6 +53,24 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Maintain
             return Page();
         }
 
+        public async Task<IActionResult> OnGetDownloadAsync(int? id)
+        {
+            if (id == null)
+            {
+                return Page();
+            }
+
+            var requestFile = await _context.Maintenance.SingleOrDefaultAsync(m => m.ID == id);
+
+            if (requestFile == null)
+            {
+                return Page();
+            }
+
+            // Don't display the untrusted file name in the UI. HTML-encode the value.
+            return File(requestFile.Attachment, MediaTypeNames.Application.Octet, WebUtility.HtmlEncode(requestFile.FileName));
+        }
+
         public async Task<IActionResult> OnPostAsync(int? id)
         {
             if (id == null)
@@ -72,7 +92,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Maintain
                     "Maintenance",
                     i => i.Repairer, i => i.Solution, i => i.IsCritical, i => i.Remark))
             {
-                // 如果进度在维修中之前则更新为维修中
+                // 更新进度
                 if (Maintenance.MalfunctionWorkOrder.Progress < WorkOrderProgress.Repairing)
                 {
                     Maintenance.MalfunctionWorkOrder.Progress = WorkOrderProgress.Repairing;

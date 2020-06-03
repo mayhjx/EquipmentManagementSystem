@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.ComponentModel.DataAnnotations;
+using System.Net;
+using System.Net.Mime;
 using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions.Validate
@@ -56,6 +58,59 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Validate
             return Page();
         }
 
+        public async Task<IActionResult> OnGetDownloadAttachmentAsync(int? id)
+        {
+            if (id == null)
+            {
+                return Page();
+            }
+
+            var requestFile = await _context.Validation.SingleOrDefaultAsync(m => m.ID == id);
+
+            if (requestFile == null)
+            {
+                return Page();
+            }
+
+            // Don't display the untrusted file name in the UI. HTML-encode the value.
+            return File(requestFile.Attachment, MediaTypeNames.Application.Octet, WebUtility.HtmlEncode(requestFile.AttachmentName));
+        }
+
+        public async Task<IActionResult> OnGetDownloadPerformanceReportFileAsync(int? id)
+        {
+            if (id == null)
+            {
+                return Page();
+            }
+
+            var requestFile = await _context.Validation.SingleOrDefaultAsync(m => m.ID == id);
+
+            if (requestFile == null)
+            {
+                return Page();
+            }
+
+            // Don't display the untrusted file name in the UI. HTML-encode the value.
+            return File(requestFile.PerformanceReportFile, MediaTypeNames.Application.Octet, WebUtility.HtmlEncode(requestFile.PerformanceReportFileName));
+        }
+
+        public async Task<IActionResult> OnGetDownloadEffectReportFileAsync(int? id)
+        {
+            if (id == null)
+            {
+                return Page();
+            }
+
+            var requestFile = await _context.Validation.SingleOrDefaultAsync(m => m.ID == id);
+
+            if (requestFile == null)
+            {
+                return Page();
+            }
+
+            // Don't display the untrusted file name in the UI. HTML-encode the value.
+            return File(requestFile.EffectReportFile, MediaTypeNames.Application.Octet, WebUtility.HtmlEncode(requestFile.EffectReportFileName));
+        }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
@@ -78,7 +133,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Validate
                     "Validation",
                     i => i.EndTime, i => i.IsConfirm, i => i.Summary))
             {
-                // 如果进度在已保修之前则更新已报修，设备状态更新为正常
+                // 更新进度
                 if (Validation.MalfunctionWorkOrder.Progress < WorkOrderProgress.Validated)
                 {
                     Validation.MalfunctionWorkOrder.Progress = WorkOrderProgress.Validated;

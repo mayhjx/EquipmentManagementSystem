@@ -5,7 +5,7 @@
     ViewData["Title"] = "详细信息";
 
     // 故障信息是否确认
-    var MalfunctionIsComfirm = Model.MalfunctionWorkOrder.MalfunctionInfo?.IsConfirm ?? false;
+    var InfomationIsComfirm = Model.MalfunctionWorkOrder.MalfunctionInfo?.IsConfirm ?? false;
     // 维修申请是否确认
     var RepairRequestIsComfirm = Model.MalfunctionWorkOrder.RepairRequest?.IsConfirm ?? false;
     // 性能验证是否确认
@@ -15,8 +15,8 @@
     // 是否为关键部位故障
     var MaintainIsCritical = Model.MalfunctionWorkOrder.Maintenance?.IsCritical ?? false;
 
-    var IsComfirmAll = (MalfunctionIsComfirm && RepairRequestIsComfirm && MaintainIsComplete && !MaintainIsCritical) ||
-                        (MalfunctionIsComfirm && RepairRequestIsComfirm && MaintainIsCritical && ValidationIsComfirm);
+    var IsComfirmAll = (InfomationIsComfirm && RepairRequestIsComfirm && MaintainIsComplete && !MaintainIsCritical) ||
+                        (InfomationIsComfirm && RepairRequestIsComfirm && MaintainIsCritical && ValidationIsComfirm);
 
     // 工单是否完成
     var IsCompleted = Model.MalfunctionWorkOrder.Progress == Models.WorkOrderProgress.Completed;
@@ -55,7 +55,7 @@
                 <div class="card-header">
                     <h3 class="card-title">
                         <i class="fa fa-info-circle" aria-hidden="true"></i> 故障信息
-                        @if (MalfunctionIsComfirm)
+                        @if (InfomationIsComfirm)
                         {
                             <span class="badge badge-success" style="margin-left: 5px;">设备负责人已确认</span>
                         }
@@ -100,7 +100,7 @@
                                     @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.MalfunctionInfo.FileName)
                                 </dt>
                                 <dd class="col-sm-8">
-                                    <a asp-page="../Information/Index" asp-page-handler="Download" asp-route-id="@Model.MalfunctionWorkOrder.MalfunctionInfo.ID">
+                                    <a asp-page="../Information/Edit" asp-page-handler="Download" asp-route-id="@Model.MalfunctionWorkOrder.MalfunctionInfo.ID">
                                         @Html.DisplayFor(model => model.MalfunctionWorkOrder.MalfunctionInfo.FileName)
                                     </a>
                                 </dd>
@@ -140,7 +140,7 @@
             </div>
             <!-- /.card -->
         </div>
-        @if (MalfunctionIsComfirm)
+        @if (InfomationIsComfirm)
         {
             // 若故障信息未确认则不显示故障排查模块
             <div class="col-md-6">
@@ -160,14 +160,14 @@
                         @if (!IsCompleted)
                         {
                             <div class="card-tools">
-                                <a asp-page="../Investigate/Edit" asp-route-id="@Model.MalfunctionWorkOrder.Investigation.ID">
-                                    <input type="button" class="btn btn-outline-primary btn-xs" value="故障排查编辑">
+                                <a id="investigate-a" asp-page="../Investigate/Edit" asp-route-id="@Model.MalfunctionWorkOrder.Investigation.ID">
+                                    <input type="button" class="btn btn-outline-primary btn-xs" value="编辑">
                                 </a>
-                                <a asp-page="../RepairRequests/Edit" asp-route-id="@Model.MalfunctionWorkOrder.RepairRequest.ID">
-                                    <input type="button" class="btn btn-outline-primary btn-xs" value="维修申请编辑">
+                                <a hidden id="request-a" asp-page="../RepairRequests/Edit" asp-route-id="@Model.MalfunctionWorkOrder.RepairRequest.ID">
+                                    <input type="button" class="btn btn-outline-primary btn-xs" value="编辑">
                                 </a>
-                                <a asp-page="../AccessoriesOrders/Edit" asp-route-id="@Model.MalfunctionWorkOrder.AccessoriesOrder.ID">
-                                    <input type="button" class="btn btn-outline-primary btn-xs" value="配件下单编辑">
+                                <a hidden id="order-a" asp-page="../AccessoriesOrders/Edit" asp-route-id="@Model.MalfunctionWorkOrder.AccessoriesOrder.ID">
+                                    <input type="button" class="btn btn-outline-primary btn-xs" value="编辑">
                                 </a>
                             </div>
                         }
@@ -175,30 +175,48 @@
                     <!-- /.card-header -->
                     <div class="card-body">
                         <div class="row">
+                            <div class="form-group form-inline col-md-12">
+                                <div class="form-check col-md-4">
+                                    <input id="investigate" type="radio" class="form-check-input" name="r1" onclick="showlink()" checked>
+                                    <label class="form-check-label">故障排查</label>
+                                </div>
+
+                                <div class="form-check col-md-4">
+                                    <input id="request" type="radio" class="form-check-input" name="r1" onclick="showlink()">
+                                    <label class="form-check-label">维修申请</label>
+                                </div>
+
+                                <div class="form-check col-md-4">
+                                    <input id="order" type="radio" class="form-check-input" name="r1" onclick="showlink()">
+                                    <label class="form-check-label">配件下单</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-4">
                                 <dl class="row">
-                                    <dt class="col-sm-5">
+                                    <dt class="col-sm-6">
                                         @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Investigation.BeginTime)
                                     </dt>
-                                    <dd class="col-sm-7">
+                                    <dd class="col-sm-6">
                                         @Html.DisplayFor(model => model.MalfunctionWorkOrder.Investigation.BeginTime)
                                     </dd>
-                                    <dt class="col-sm-5">
+                                    <dt class="col-sm-6">
                                         @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Investigation.EndTime)
                                     </dt>
-                                    <dd class="col-sm-7">
+                                    <dd class="col-sm-6">
                                         @Html.DisplayFor(model => model.MalfunctionWorkOrder.Investigation.EndTime)
                                     </dd>
-                                    <dt class="col-sm-5">
+                                    <dt class="col-sm-6">
                                         @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Investigation.Operator)
                                     </dt>
-                                    <dd class="col-sm-7">
+                                    <dd class="col-sm-6">
                                         @Html.DisplayFor(model => model.MalfunctionWorkOrder.Investigation.Operator)
                                     </dd>
-                                    <dt class="col-sm-5">
+                                    <dt class="col-sm-6">
                                         @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Investigation.Measures)
                                     </dt>
-                                    <dd class="col-sm-7">
+                                    <dd class="col-sm-6">
                                         @Html.DisplayFor(model => model.MalfunctionWorkOrder.Investigation.Measures)
                                     </dd>
                                 </dl>
@@ -277,6 +295,10 @@
                         <h3 class="card-title">
                             <i class="fa fa-wrench" aria-hidden="true"></i> 故障维修
                         </h3>
+                        @if (MaintainIsCritical)
+                        {
+                            <span class="badge badge-success" style="margin-left: 5px;">关键部位故障</span>
+                        }
                         @if (!IsCompleted)
                         {
                             <div class="card-tools">
@@ -291,24 +313,24 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <dl class="row">
-                                    <dt class="col-sm-4">
+                                    <dt class="col-sm-6">
                                         @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.Repairer)
                                     </dt>
-                                    <dd class="col-sm-8">
+                                    <dd class="col-sm-6">
                                         @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.Repairer)
                                     </dd>
-                                    <dt class="col-sm-4">
+                                    <dt class="col-sm-6">
                                         @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.Solution)
                                     </dt>
-                                    <dd class="col-sm-8">
+                                    <dd class="col-sm-6">
                                         @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.Solution)
                                     </dd>
-                                    <dt class="col-sm-4">
-                                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.IsCritical)
-                                    </dt>
-                                    <dd class="col-sm-8">
-                                        @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.IsCritical)
-                                    </dd>
+                                    @*<dt class="col-sm-6">
+                                            @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.IsCritical)
+                                        </dt>
+                                        <dd class="col-sm-6">
+                                            @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.IsCritical)
+                                        </dd>*@
                                 </dl>
                             </div>
                             <div class="col-md-6">
@@ -323,7 +345,7 @@
                                         @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.FileName)
                                     </dt>
                                     <dd class="col-sm-8">
-                                        <a asp-page="../Maintain/Index" asp-page-handler="Download" asp-route-id="@Model.MalfunctionWorkOrder.Maintenance.ID">
+                                        <a asp-page="../Maintain/Edit" asp-page-handler="Download" asp-route-id="@Model.MalfunctionWorkOrder.Maintenance.ID">
                                             @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.FileName)
                                         </a>
                                     </dd>
@@ -367,25 +389,25 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <dl class="row">
-                                    <dt class="col-sm-4">
+                                    <dt class="col-sm-6">
                                         @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.EndTime)
                                     </dt>
-                                    <dd class="col-sm-8">
+                                    <dd class="col-sm-6">
                                         @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.EndTime)
                                     </dd>
-                                    <dt class="col-sm-4">
+                                    <dt class="col-sm-6">
                                         @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.PerformanceReportFileName)
                                     </dt>
-                                    <dd class="col-sm-8">
-                                        <a asp-page="../Validate/Index" asp-page-handler="DownloadPerformanceReportFile" asp-route-id="@Model.MalfunctionWorkOrder.Validation.ID">
+                                    <dd class="col-sm-6">
+                                        <a asp-page="../Validate/Edit" asp-page-handler="DownloadPerformanceReportFile" asp-route-id="@Model.MalfunctionWorkOrder.Validation.ID">
                                             @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.PerformanceReportFileName)
                                         </a>
                                     </dd>
-                                    <dt class="col-sm-4">
+                                    <dt class="col-sm-6">
                                         @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.EffectReportFileName)
                                     </dt>
-                                    <dd class="col-sm-8">
-                                        <a asp-page="../Validate/Index" asp-page-handler="DownloadEffectReportFile" asp-route-id="@Model.MalfunctionWorkOrder.Validation.ID">
+                                    <dd class="col-sm-6">
+                                        <a asp-page="../Validate/Edit" asp-page-handler="DownloadEffectReportFile" asp-route-id="@Model.MalfunctionWorkOrder.Validation.ID">
                                             @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.EffectReportFileName)
                                         </a>
                                     </dd>
@@ -403,7 +425,7 @@
                                         @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.AttachmentName)
                                     </dt>
                                     <dd class="col-sm-8">
-                                        <a asp-page="../Validate/Index" asp-page-handler="DownloadAttachment" asp-route-id="@Model.MalfunctionWorkOrder.Validation.ID">
+                                        <a asp-page="../Validate/Edit" asp-page-handler="DownloadAttachment" asp-route-id="@Model.MalfunctionWorkOrder.Validation.ID">
                                             @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.AttachmentName)
                                         </a>
                                     </dd>
@@ -436,5 +458,36 @@
             </div>
         </div>
     </div>
-
 </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        function showlink() {
+            var investigate = document.getElementById("investigate");
+            var request = document.getElementById("request");
+            var order = document.getElementById("order");
+
+            if (investigate.checked) {
+                document.getElementById("investigate-a").removeAttribute("hidden");
+            }
+            else {
+                document.getElementById("investigate-a").setAttribute("hidden", "");
+            }
+
+            if (request.checked) {
+                document.getElementById("request-a").removeAttribute("hidden");
+            }
+            else {
+                document.getElementById("request-a").setAttribute("hidden", "");
+            }
+
+            if (order.checked) {
+                document.getElementById("order-a").removeAttribute("hidden");
+            }
+            else {
+                document.getElementById("order-a").setAttribute("hidden", "");
+            }
+        }
+    </script>
+}

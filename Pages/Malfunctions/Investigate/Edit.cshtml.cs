@@ -26,7 +26,6 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Investigate
             }
 
             Investigation = await _context.Investigation
-                            .Include(m => m.MalfunctionWorkOrder)
                             .FirstOrDefaultAsync(m => m.ID == id);
 
             if (Investigation == null)

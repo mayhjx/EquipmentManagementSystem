@@ -55,7 +55,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.AccessoriesOrders
                     "AccessoriesOrder",
                     i => i.Name, i => i.PlaceTime, i => i.ArrivalTime, i => i.Remark))
             {
-                // 如果进度在已保修之前则更新已报修
+                // 更新进度
                 if (AccessoriesOrder.MalfunctionWorkOrder.Progress < WorkOrderProgress.Waiting)
                 {
                     AccessoriesOrder.MalfunctionWorkOrder.Progress = WorkOrderProgress.Waiting;
@@ -66,41 +66,5 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.AccessoriesOrders
 
             return Page();
         }
-
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://aka.ms/RazorPagesCRUD.
-        //public async Task<IActionResult> OnPostAsync()
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return Page();
-        //    }
-
-        //    _context.Attach(AccessoriesOrder).State = EntityState.Modified;
-
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!AccessoriesOrderExists(AccessoriesOrder.ID))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-        //    return RedirectToPage("../WorkOrders/Details", new { id = AccessoriesOrder.MalfunctionWorkOrderID });
-
-        //    //return RedirectToPage("./Index");
-        //}
-
-        //private bool AccessoriesOrderExists(int id)
-        //{
-        //    return _context.AccessoriesOrder.Any(e => e.ID == id);
-        //}
     }
 }

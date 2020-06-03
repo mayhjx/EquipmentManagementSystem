@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Net;
+using System.Net.Mime;
 using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions.Information
@@ -53,6 +55,23 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Information
             return Page();
         }
 
+        public async Task<IActionResult> OnGetDownloadAsync(int? id)
+        {
+            if (id == null)
+            {
+                return Page();
+            }
+
+            var requestFile = await _context.MalfunctionInfo.SingleOrDefaultAsync(m => m.ID == id);
+
+            if (requestFile == null)
+            {
+                return Page();
+            }
+
+            // Don't display the untrusted file name in the UI. HTML-encode the value.
+            return File(requestFile.Attachment, MediaTypeNames.Application.Octet, WebUtility.HtmlEncode(requestFile.FileName));
+        }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
@@ -62,7 +81,6 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Information
             }
 
             MalfunctionInfo = await _context.MalfunctionInfo
-                                .Include(m => m.MalfunctionWorkOrder)
                                 .FirstAsync(m => m.ID == id);
 
             if (MalfunctionInfo == null)
@@ -76,6 +94,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Information
                     i => i.BeginTime, i => i.FoundedTime, i => i.Type, i => i.Part,
                     i => i.Phenomenon, i => i.Reason, i => i.Remark, i => i.IsConfirm))
             {
+                // 上传附件
                 if (FileUpload.FormFile != null && FileUpload.FormFile.Length > 0)
                 {
                     var formFileContent =
