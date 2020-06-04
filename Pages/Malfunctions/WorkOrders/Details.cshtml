@@ -298,11 +298,11 @@
                     <div class="card-header">
                         <h3 class="card-title">
                             <i class="fa fa-wrench" aria-hidden="true"></i> 故障维修
+                            @if (MaintainIsCritical)
+                            {
+                                <span class="badge badge-success" style="margin-left: 5px;">关键部位故障</span>
+                            }
                         </h3>
-                        @if (MaintainIsCritical)
-                        {
-                            <span class="badge badge-success" style="margin-left: 5px;">关键部位故障</span>
-                        }
                         @if (!IsCompleted)
                         {
                             <div class="card-tools">
