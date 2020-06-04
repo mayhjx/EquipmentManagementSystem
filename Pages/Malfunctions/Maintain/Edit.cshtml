@@ -24,6 +24,11 @@
                     <input asp-for="Maintenance.Solution" class="form-control" required />
                     <span asp-validation-for="Maintenance.Solution" class="text-danger"></span>
                 </div>
+                <div class="form-group">
+                    <label asp-for="Maintenance.EndTime" class="control-label"></label>
+                    <input asp-for="Maintenance.EndTime" class="form-control" required />
+                    <span asp-validation-for="Maintenance.EndTime" class="text-danger"></span>
+                </div>
                 <div class="form-group form-check">
                     <label class="form-check-label">
                         <input class="form-check-input" asp-for="Maintenance.IsCritical" /> @Html.DisplayNameFor(model => model.Maintenance.IsCritical)
@@ -40,7 +45,7 @@
                     （提示：再次上传时会覆盖原有附件）
                     <input type="file" asp-for="FileUpload.FormFile" class="form-control-file" />
                     <span asp-validation-for="FileUpload.FormFile" class="text-danger"></span>
-                    <h6>@Html.DisplayFor(model => model.Maintenance.FileName)</h6>
+                    <h6>已上传附件：@Html.DisplayFor(model => model.Maintenance.FileName)</h6>
                 </div>
                 <div class="form-group">
                     <input type="submit" value="保存" class="btn btn-primary" />

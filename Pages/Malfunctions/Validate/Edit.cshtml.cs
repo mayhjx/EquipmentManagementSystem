@@ -29,11 +29,8 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Validate
 
         public class Upload
         {
-            [Display(Name = "故障修复后性能验证报告")]
+            [Display(Name = "性能验证报告")]
             public IFormFile PerformanceReportFile { get; set; }
-
-            [Display(Name = "故障前病人结果评估报告")]
-            public IFormFile EffectReportFile { get; set; }
 
             [Display(Name = "附件")]
             public IFormFile Attachment { get; set; }
@@ -94,24 +91,6 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Validate
             return File(requestFile.PerformanceReportFile, MediaTypeNames.Application.Octet, WebUtility.HtmlEncode(requestFile.PerformanceReportFileName));
         }
 
-        public async Task<IActionResult> OnGetDownloadEffectReportFileAsync(int? id)
-        {
-            if (id == null)
-            {
-                return Page();
-            }
-
-            var requestFile = await _context.Validation.SingleOrDefaultAsync(m => m.ID == id);
-
-            if (requestFile == null)
-            {
-                return Page();
-            }
-
-            // Don't display the untrusted file name in the UI. HTML-encode the value.
-            return File(requestFile.EffectReportFile, MediaTypeNames.Application.Octet, WebUtility.HtmlEncode(requestFile.EffectReportFileName));
-        }
-
         public async Task<IActionResult> OnPostAsync(int? id)
         {
             if (id == null)
@@ -131,7 +110,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Validate
             if (await TryUpdateModelAsync<Validation>(
                     Validation,
                     "Validation",
-                    i => i.EndTime, i => i.IsConfirm, i => i.Summary))
+                    i => i.FinishedTime, i => i.IsConfirm, i => i.Summary))
             {
                 // 更新进度
                 if (Validation.MalfunctionWorkOrder.Progress < WorkOrderProgress.Validated)
@@ -153,22 +132,6 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Validate
 
                     Validation.PerformanceReportFile = formFileContent;
                     Validation.PerformanceReportFileName = FileUpload.PerformanceReportFile.FileName;
-                }
-
-                // 上传故障前病人结果评估报告
-                if (FileUpload.EffectReportFile != null && FileUpload.EffectReportFile.Length > 0)
-                {
-                    var formFileContent =
-                        await FileHelpers.ProcessFormFile<Upload>(
-                            FileUpload.EffectReportFile, ModelState, _fileSizeLimit);
-
-                    if (!ModelState.IsValid)
-                    {
-                        return Page();
-                    }
-
-                    Validation.EffectReportFile = formFileContent;
-                    Validation.EffectReportFileName = FileUpload.EffectReportFile.FileName;
                 }
 
                 // 上传附件

@@ -15,9 +15,9 @@
                 <input type="hidden" asp-for="Validation.ID" />
                 <input type="hidden" asp-for="Validation.MalfunctionWorkOrderID" />
                 <div class="form-group">
-                    <label asp-for="Validation.EndTime" class="control-label"></label>
-                    <input asp-for="Validation.EndTime" class="form-control" required />
-                    <span asp-validation-for="Validation.EndTime" class="text-danger"></span>
+                    <label asp-for="Validation.FinishedTime" class="control-label"></label>
+                    <input asp-for="Validation.FinishedTime" class="form-control" required />
+                    <span asp-validation-for="Validation.FinishedTime" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Validation.PerformanceReportFileName" class="control-label"></label>
@@ -25,13 +25,6 @@
                     <input asp-for="FileUpload.PerformanceReportFile" type="file" class="form-control-file" />
                     <span asp-validation-for="FileUpload.PerformanceReportFile" class="text-danger"></span>
                     <h6>@Html.DisplayFor(model => model.Validation.PerformanceReportFileName)</h6>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Validation.EffectReportFileName" class="control-label"></label>
-                    （提示：再次上传时会覆盖原有附件）
-                    <input asp-for="FileUpload.EffectReportFile" type="file" class="form-control-file" />
-                    <span asp-validation-for="FileUpload.EffectReportFile" class="text-danger"></span>
-                    <h6>@Html.DisplayFor(model => model.Validation.EffectReportFileName)</h6>
                 </div>
                 <div class="form-group">
                     <label asp-for="Validation.Summary" class="control-label"></label>

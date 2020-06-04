@@ -90,12 +90,12 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Maintain
             if (await TryUpdateModelAsync<Maintenance>(
                     Maintenance,
                     "Maintenance",
-                    i => i.Repairer, i => i.Solution, i => i.IsCritical, i => i.Remark))
+                    i => i.Repairer, i => i.Solution, i => i.EndTime, i => i.IsCritical, i => i.Remark))
             {
                 // 更新进度
-                if (Maintenance.MalfunctionWorkOrder.Progress < WorkOrderProgress.Repairing)
+                if (Maintenance.MalfunctionWorkOrder.Progress < WorkOrderProgress.Repaired)
                 {
-                    Maintenance.MalfunctionWorkOrder.Progress = WorkOrderProgress.Repairing;
+                    Maintenance.MalfunctionWorkOrder.Progress = WorkOrderProgress.Repaired;
                 }
 
                 if (FileUpload.FormFile != null && FileUpload.FormFile.Length > 0)
