@@ -18,7 +18,7 @@ namespace EquipmentManagementSystem.Utilities
             //var fieldDisplayName = string.Empty;
 
             // 允许的文件后缀
-            string[] permittedExtensions = { ".zip", ".rar", ".7z", ".csv", ".doc", ".docx" };
+            string[] permittedExtensions = { ".zip", ".rar", ".7z", ".csv", ".xlsx", ".doc", ".docx", ".jpg", ".jpeg", ".png" };
 
 
             // Use reflection to obtain the display name for the model
@@ -49,7 +49,7 @@ namespace EquipmentManagementSystem.Utilities
             if (formFile.Length == 0)
             {
                 modelState.AddModelError(formFile.Name,
-                    $"{trustedFileNameForDisplay}是空文件。");
+                    $"{trustedFileNameForDisplay} 是空文件。");
 
                 return new byte[0];
             }
@@ -73,13 +73,13 @@ namespace EquipmentManagementSystem.Utilities
                     if (memoryStream.Length == 0)
                     {
                         modelState.AddModelError(formFile.Name,
-                            $"{trustedFileNameForDisplay}是空文件。");
+                            $"{trustedFileNameForDisplay} 是空文件。");
                     }
 
                     if (!IsValidFileExtension(formFile.FileName, memoryStream, permittedExtensions))
                     {
                         modelState.AddModelError(formFile.Name,
-                            $"{trustedFileNameForDisplay}文件类型不符， " +
+                            $"{trustedFileNameForDisplay} 文件类型不符， " +
                             $"允许的文件类型为：{string.Join("，", permittedExtensions)}");
                     }
                     else
