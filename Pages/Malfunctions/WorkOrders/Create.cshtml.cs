@@ -63,7 +63,6 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Details", new { MalfunctionWorkOrder.ID });
-            //return RedirectToPage("./Index");
         }
     }
 }

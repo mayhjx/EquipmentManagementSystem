@@ -24,7 +24,7 @@
                     （提示：再次上传时会覆盖原有附件）
                     <input asp-for="FileUpload.PerformanceReportFile" type="file" class="form-control-file" />
                     <span asp-validation-for="FileUpload.PerformanceReportFile" class="text-danger"></span>
-                    <h6>@Html.DisplayFor(model => model.Validation.PerformanceReportFileName)</h6>
+                    <h6>已上传附件：@Html.DisplayFor(model => model.Validation.PerformanceReportFileName)</h6>
                 </div>
                 <div class="form-group">
                     <label asp-for="Validation.Summary" class="control-label"></label>
@@ -36,7 +36,7 @@
                     （提示：再次上传时会覆盖原有附件）
                     <input asp-for="FileUpload.Attachment" type="file" class="form-control-file" />
                     <span asp-validation-for="FileUpload.Attachment" class="text-danger"></span>
-                    <h6>@Html.DisplayFor(model => model.Validation.AttachmentName)</h6>
+                    <h6>已上传附件：@Html.DisplayFor(model => model.Validation.AttachmentName)</h6>
                 </div>
                 <div class="form-group form-check">
                     <label class="form-check-label">
