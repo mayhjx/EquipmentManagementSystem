@@ -18,7 +18,7 @@ namespace EquipmentManagementSystem.Utilities
             //var fieldDisplayName = string.Empty;
 
             // 允许的文件后缀
-            string[] permittedExtensions = { ".zip", ".rar", ".7z", ".csv", ".xlsx", ".doc", ".docx", ".jpg", ".jpeg", ".png" };
+            string[] permittedExtensions = { ".zip", ".rar", ".7z", ".csv", ".xlsx", ".xls", ".docx", ".doc", ".pptx", ".ppt", ".pdf", ".jpg", ".jpeg", ".png" };
 
 
             // Use reflection to obtain the display name for the model
