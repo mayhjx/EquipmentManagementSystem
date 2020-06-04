@@ -12,14 +12,7 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="Component.InstrumentID" class="control-label"></label>
-                    @if (ViewBag.InstrumentID is string)
-                    {
-                        <input asp-for="Component.InstrumentID" value="@ViewBag.InstrumentID" class="form-control" readonly />
-                    }
-                    else
-                    {
-                        <select asp-for="Component.InstrumentID" asp-items="@ViewBag.InstrumentID" class="form-control"></select>
-                    }
+                    <select asp-for="Component.InstrumentID" asp-items="@ViewBag.InstrumentID" class="form-control"></select>
                 </div>
                 <div class="form-group">
                     <label asp-for="Component.SerialNumber" class="control-label"></label>
@@ -49,14 +42,7 @@
     </div>
 
     <div>
-        @if (ViewBag.InstrumentID is string)
-        {
-            <a asp-page="../Instruments/Details" asp-route-id="@ViewBag.InstrumentID">返回</a>
-        }
-        else
-        {
-            <a asp-page="../Instruments/Index">返回</a>
-        }
+        <a asp-page="../Instruments/Details" asp-route-id="@ViewBag.InstrumentID.SelectedValue">返回</a>
     </div>
 </div>
 

@@ -30,7 +30,7 @@ namespace EquipmentManagementSystem.Models
         public string Unit { get; set; }
 
         [Required]
-        [Display(Name = "结果")]
+        [Display(Name = "检定/校验结果")]
         public Result Result { get; set; }
 
         [Required]

@@ -26,12 +26,13 @@ namespace EquipmentManagementSystem.Pages.Calibrations
             }
 
             Calibration = await _context.Calibrations
-                .Include(c => c.Instrument).FirstOrDefaultAsync(m => m.ID == id);
+                            .FirstOrDefaultAsync(m => m.ID == id);
 
             if (Calibration == null)
             {
                 return NotFound();
             }
+
             return Page();
         }
 
@@ -43,6 +44,7 @@ namespace EquipmentManagementSystem.Pages.Calibrations
             }
 
             Calibration = await _context.Calibrations.FindAsync(id);
+            var instrumentID = Calibration.InstrumentID;
 
             if (Calibration != null)
             {
@@ -50,7 +52,8 @@ namespace EquipmentManagementSystem.Pages.Calibrations
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("../Instruments/Index");
+            return RedirectToPage("../Instruments/Details", new { id = instrumentID });
+            //return RedirectToPage("../Instruments/Index");
         }
     }
 }

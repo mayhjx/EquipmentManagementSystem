@@ -18,14 +18,7 @@ namespace EquipmentManagementSystem.Pages.Calibrations
 
         public IActionResult OnGet(string id)
         {
-            if (string.IsNullOrEmpty(id))
-            {
-                ViewData["InstrumentID"] = new SelectList(_context.Instruments, "ID", "ID");
-            }
-            else
-            {
-                ViewData["InstrumentID"] = id;
-            }
+            ViewData["InstrumentID"] = new SelectList(_context.Instruments, "ID", "ID", id);
             return Page();
         }
 
@@ -44,7 +37,7 @@ namespace EquipmentManagementSystem.Pages.Calibrations
             _context.Calibrations.Add(Calibration);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("../Instruments/Index");
+            return RedirectToPage("../Instruments/Details", new { id = Calibration.InstrumentID });
         }
     }
 }

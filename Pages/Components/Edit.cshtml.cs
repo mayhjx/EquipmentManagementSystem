@@ -27,7 +27,7 @@ namespace EquipmentManagementSystem.Pages.Components
             }
 
             Component = await _context.Components
-                .Include(c => c.Instrument).FirstOrDefaultAsync(m => m.ID == id);
+                        .FirstOrDefaultAsync(m => m.ID == id);
 
             if (Component == null)
             {
@@ -37,34 +37,44 @@ namespace EquipmentManagementSystem.Pages.Components
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (!ModelState.IsValid)
+            if (id == null)
             {
-                return Page();
+                return NotFound();
             }
 
-            _context.Attach(Component).State = EntityState.Modified;
+            Component = await _context.Components.FirstAsync(m => m.ID == id);
 
-            try
+            if (Component == null)
             {
-                await _context.SaveChangesAsync();
+                return NotFound();
             }
-            catch (DbUpdateConcurrencyException)
+
+            if (await TryUpdateModelAsync<Component>(
+                    Component,
+                    "Component",
+                    i => i.SerialNumber, i => i.Name, i => i.Model, i => i.Brand))
             {
-                if (!ComponentExists(Component.ID))
+                try
                 {
-                    return NotFound();
+                    await _context.SaveChangesAsync();
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
-                    throw;
+                    if (!ComponentExists(Component.ID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
-            }
 
-            return RedirectToPage("../Instruments/Index");
+                return RedirectToPage("../Instruments/Details", new { id = Component.InstrumentID });
+            }
+            return Page();
         }
 
         private bool ComponentExists(int id)

@@ -1,4 +1,4 @@
-@page
+﻿@page
 @model EquipmentManagementSystem.Pages.Asserts.EditModel
 
 @{
@@ -14,6 +14,11 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Assert.ID" />
+            <div class="form-group">
+                <label asp-for="Assert.InstrumentId" class="control-label"></label>
+                <select asp-for="Assert.InstrumentId" class="form-control" asp-items="ViewBag.instrumentId"></select>
+                <span asp-validation-for="Assert.InstrumentId" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Assert.Code" class="control-label"></label>
                 <input asp-for="Assert.Code" class="form-control" />
@@ -38,11 +43,6 @@
                 <label asp-for="Assert.Remark" class="control-label"></label>
                 <input asp-for="Assert.Remark" class="form-control" />
                 <span asp-validation-for="Assert.Remark" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Assert.InstrumentId" class="control-label"></label>
-                <select asp-for="Assert.InstrumentId" class="form-control" asp-items="ViewBag.instrumentId"></select>
-                <span asp-validation-for="Assert.InstrumentId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

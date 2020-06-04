@@ -1,12 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using EquipmentManagementSystem.Data;
-using EquipmentManagementSystem.Models;
+using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Components
 {
@@ -30,12 +26,13 @@ namespace EquipmentManagementSystem.Pages.Components
             }
 
             Component = await _context.Components
-                .Include(c => c.Instrument).FirstOrDefaultAsync(m => m.ID == id);
+                            .FirstOrDefaultAsync(m => m.ID == id);
 
             if (Component == null)
             {
                 return NotFound();
             }
+
             return Page();
         }
 
@@ -48,13 +45,15 @@ namespace EquipmentManagementSystem.Pages.Components
 
             Component = await _context.Components.FindAsync(id);
 
+            var instrumentID = Component.InstrumentID;
+
             if (Component != null)
             {
                 _context.Components.Remove(Component);
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("../Instruments/Details", new { id = instrumentID });
         }
     }
 }

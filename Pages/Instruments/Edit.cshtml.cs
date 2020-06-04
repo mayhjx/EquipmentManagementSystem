@@ -1,4 +1,5 @@
-﻿using EquipmentManagementSystem.Models;
+﻿using EquipmentManagementSystem.Data;
+using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -9,9 +10,9 @@ namespace EquipmentManagementSystem.Pages.Instruments
 {
     public class EditModel : PageModel
     {
-        private readonly EquipmentManagementSystem.Data.EquipmentContext _context;
+        private readonly EquipmentContext _context;
 
-        public EditModel(EquipmentManagementSystem.Data.EquipmentContext context)
+        public EditModel(EquipmentContext context)
         {
             _context = context;
         }
@@ -35,34 +36,46 @@ namespace EquipmentManagementSystem.Pages.Instruments
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(string id)
         {
-            if (!ModelState.IsValid)
+            if (id == null)
             {
-                return Page();
+                return NotFound();
             }
 
-            _context.Attach(Instrument).State = EntityState.Modified;
+            Instrument = await _context.Instruments.FirstAsync(m => m.ID == id);
 
-            try
+            if (Instrument == null)
             {
-                await _context.SaveChangesAsync();
+                return NotFound();
             }
-            catch (DbUpdateConcurrencyException)
+
+            if (await TryUpdateModelAsync<Instrument>(
+                    Instrument,
+                    "Instrument",
+                    i => i.Platform, i => i.Name, i => i.StartUsingDate, i => i.CalibrationCycle,
+                    i => i.MetrologicalCharacteristics, i => i.Status, i => i.Location, i => i.Principal,
+                    i => i.Remark, i => i.NewSystemCode))
             {
-                if (!InstrumentExists(Instrument.ID))
+                try
                 {
-                    return NotFound();
+                    await _context.SaveChangesAsync();
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
-                    throw;
+                    if (!InstrumentExists(Instrument.ID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
-            }
 
-            return RedirectToPage("./Index");
+                return RedirectToPage("../Instruments/Details", new { id = Instrument.ID });
+            }
+            return Page();
         }
 
         private bool InstrumentExists(string id)

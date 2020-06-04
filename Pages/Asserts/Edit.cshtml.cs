@@ -1,13 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using EquipmentManagementSystem.Data;
-using EquipmentManagementSystem.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Asserts
 {
@@ -31,44 +28,54 @@ namespace EquipmentManagementSystem.Pages.Asserts
             }
 
             Assert = await _context.Asserts
-                .Include(a => a.Instrument).FirstOrDefaultAsync(m => m.ID == id);
+                        .FirstOrDefaultAsync(m => m.ID == id);
 
             if (Assert == null)
             {
                 return NotFound();
             }
-           ViewData["instrumentId"] = new SelectList(_context.Instruments, "ID", "ID");
+            ViewData["instrumentId"] = new SelectList(_context.Instruments, "ID", "ID");
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (!ModelState.IsValid)
+            if (id == null)
             {
-                return Page();
+                return NotFound();
             }
 
-            _context.Attach(Assert).State = EntityState.Modified;
+            Assert = await _context.Asserts.FirstAsync(m => m.ID == id);
 
-            try
+            if (Assert == null)
             {
-                await _context.SaveChangesAsync();
+                return NotFound();
             }
-            catch (DbUpdateConcurrencyException)
+
+            if (await TryUpdateModelAsync<Assert>(
+                    Assert,
+                    "Assert",
+                    i => i.Code, i => i.Name, i => i.EntryDate, i => i.SourceUnit, i => i.Remark))
             {
-                if (!AssertExists(Assert.ID))
+                try
                 {
-                    return NotFound();
+                    await _context.SaveChangesAsync();
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
-                    throw;
+                    if (!AssertExists(Assert.ID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
-            }
 
-            return RedirectToPage("./Index");
+                return RedirectToPage("../Instruments/Details", new { id = Assert.InstrumentId });
+            }
+            return Page();
         }
 
         private bool AssertExists(int id)

@@ -17,14 +17,8 @@ namespace EquipmentManagementSystem.Pages.Components
 
         public IActionResult OnGet(string id)
         {
-            if (string.IsNullOrEmpty(id))
-            {
-                ViewData["InstrumentID"] = new SelectList(_context.Instruments, "ID", "ID");
-            }
-            else
-            {
-                ViewData["InstrumentID"] = id;
-            }
+
+            ViewData["InstrumentID"] = new SelectList(_context.Instruments, "ID", "ID", id);
             return Page();
         }
 
@@ -43,7 +37,7 @@ namespace EquipmentManagementSystem.Pages.Components
             _context.Components.Add(Component);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("../Instruments/Details", new { id = Component.InstrumentID });
         }
     }
 }
