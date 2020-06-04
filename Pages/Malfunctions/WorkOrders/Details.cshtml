@@ -91,18 +91,18 @@
                                     @Html.DisplayFor(model => model.MalfunctionWorkOrder.MalfunctionInfo.FoundedTime)
                                 </dd>
                                 <dt class="col-sm-4">
-                                    @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.MalfunctionInfo.Remark)
-                                </dt>
-                                <dd class="col-sm-8">
-                                    @Html.DisplayFor(model => model.MalfunctionWorkOrder.MalfunctionInfo.Remark)
-                                </dd>
-                                <dt class="col-sm-4">
                                     @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.MalfunctionInfo.FileName)
                                 </dt>
                                 <dd class="col-sm-8">
                                     <a asp-page="../Information/Edit" asp-page-handler="Download" asp-route-id="@Model.MalfunctionWorkOrder.MalfunctionInfo.ID">
                                         @Html.DisplayFor(model => model.MalfunctionWorkOrder.MalfunctionInfo.FileName)
                                     </a>
+                                </dd>
+                                <dt class="col-sm-4">
+                                    @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.MalfunctionInfo.Remark)
+                                </dt>
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(model => model.MalfunctionWorkOrder.MalfunctionInfo.Remark)
                                 </dd>
                             </dl>
                         </div>
@@ -317,28 +317,28 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <dl class="row">
-                                    <dt class="col-sm-6">
+                                    <dt class="col-sm-4">
                                         @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.Repairer)
                                     </dt>
-                                    <dd class="col-sm-6">
+                                    <dd class="col-sm-8">
                                         @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.Repairer)
                                     </dd>
-                                    <dt class="col-sm-6">
+                                    <dt class="col-sm-4">
                                         @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.Solution)
                                     </dt>
-                                    <dd class="col-sm-6">
+                                    <dd class="col-sm-8">
                                         @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.Solution)
+                                    </dd>
+                                    <dt class="col-sm-4">
+                                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.EndTime)
+                                    </dt>
+                                    <dd class="col-sm-8">
+                                        @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.EndTime)
                                     </dd>
                                 </dl>
                             </div>
                             <div class="col-md-6">
                                 <dl class="row">
-                                    <dt class="col-sm-4">
-                                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.Remark)
-                                    </dt>
-                                    <dd class="col-sm-8">
-                                        @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.Remark)
-                                    </dd>
                                     <dt class="col-sm-4">
                                         @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.FileName)
                                     </dt>
@@ -346,6 +346,12 @@
                                         <a asp-page="../Maintain/Edit" asp-page-handler="Download" asp-route-id="@Model.MalfunctionWorkOrder.Maintenance.ID">
                                             @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.FileName)
                                         </a>
+                                    </dd>
+                                    <dt class="col-sm-4">
+                                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.Remark)
+                                    </dt>
+                                    <dd class="col-sm-8">
+                                        @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.Remark)
                                     </dd>
                                 </dl>
                             </div>
@@ -387,26 +393,18 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <dl class="row">
-                                    <dt class="col-sm-6">
-                                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.EndTime)
+                                    <dt class="col-sm-4">
+                                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.FinishedTime)
                                     </dt>
-                                    <dd class="col-sm-6">
-                                        @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.EndTime)
+                                    <dd class="col-sm-8">
+                                        @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.FinishedTime)
                                     </dd>
-                                    <dt class="col-sm-6">
+                                    <dt class="col-sm-4">
                                         @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.PerformanceReportFileName)
                                     </dt>
-                                    <dd class="col-sm-6">
+                                    <dd class="col-sm-8">
                                         <a asp-page="../Validate/Edit" asp-page-handler="DownloadPerformanceReportFile" asp-route-id="@Model.MalfunctionWorkOrder.Validation.ID">
                                             @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.PerformanceReportFileName)
-                                        </a>
-                                    </dd>
-                                    <dt class="col-sm-6">
-                                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.EffectReportFileName)
-                                    </dt>
-                                    <dd class="col-sm-6">
-                                        <a asp-page="../Validate/Edit" asp-page-handler="DownloadEffectReportFile" asp-route-id="@Model.MalfunctionWorkOrder.Validation.ID">
-                                            @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.EffectReportFileName)
                                         </a>
                                     </dd>
                                 </dl>

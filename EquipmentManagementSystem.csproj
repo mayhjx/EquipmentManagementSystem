@@ -5,18 +5,18 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Compile Remove="Migrations\20200420071131_addMalfunctionsFields.cs" />
-		<Compile Remove="Migrations\20200420071131_addMalfunctionsFields.Designer.cs" />
-		<Compile Remove="Migrations\20200420071421_addMalfunctionsFiels.cs" />
-		<Compile Remove="Migrations\20200420071421_addMalfunctionsFiels.Designer.cs" />
-		<Compile Remove="Migrations\20200528010217_Initial.cs" />
-		<Compile Remove="Migrations\20200528010217_Initial.Designer.cs" />
-		<Compile Remove="Migrations\20200602073238_initial.cs" />
-		<Compile Remove="Migrations\20200602073238_initial.Designer.cs" />
-		<Compile Remove="Migrations\20200602074138_initial.cs" />
-		<Compile Remove="Migrations\20200602074138_initial.Designer.cs" />
-		<Compile Remove="Migrations\20200602075538_initial.cs" />
-		<Compile Remove="Migrations\20200602075538_initial.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200420071131_addMalfunctionsFields.cs" />
+		<Compile Remove="Data\Migrations\20200420071131_addMalfunctionsFields.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200420071421_addMalfunctionsFiels.cs" />
+		<Compile Remove="Data\Migrations\20200420071421_addMalfunctionsFiels.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200528010217_Initial.cs" />
+		<Compile Remove="Data\Migrations\20200528010217_Initial.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200602073238_initial.cs" />
+		<Compile Remove="Data\Migrations\20200602073238_initial.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200602074138_initial.cs" />
+		<Compile Remove="Data\Migrations\20200602074138_initial.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200602075538_initial.cs" />
+		<Compile Remove="Data\Migrations\20200602075538_initial.Designer.cs" />
 	</ItemGroup>
 
 	<ItemGroup>

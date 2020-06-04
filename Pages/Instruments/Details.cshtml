@@ -219,7 +219,7 @@
                         <thead>
                             <tr>
                                 <th>@Html.DisplayNameFor(model => model.Instrument.MalfunctionWorkOrder.First().MalfunctionInfo.BeginTime)</th>
-                                <th>@Html.DisplayNameFor(model => model.Instrument.MalfunctionWorkOrder.First().Validation.EndTime)</th>
+                                <th>@Html.DisplayNameFor(model => model.Instrument.MalfunctionWorkOrder.First().Validation.FinishedTime)</th>
                                 <th>@Html.DisplayNameFor(model => model.Instrument.MalfunctionWorkOrder.First().MalfunctionInfo.Part)</th>
                                 <th>@Html.DisplayNameFor(model => model.Instrument.MalfunctionWorkOrder.First().MalfunctionInfo.Phenomenon)</th>
                                 <th></th>
@@ -230,7 +230,7 @@
                             {
                                 <tr>
                                     <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.BeginTime)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Validation.EndTime)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Validation.FinishedTime)</td>
                                     <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.Part)</td>
                                     <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.Phenomenon)</td>
                                     <td>
