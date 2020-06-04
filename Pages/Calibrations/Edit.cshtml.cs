@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Calibrations
@@ -56,30 +55,12 @@ namespace EquipmentManagementSystem.Pages.Calibrations
                     "Calibration",
                     i => i.Date, i => i.Unit, i => i.Result, i => i.Calibrator))
             {
-                try
-                {
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CalibrationExists(Calibration.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                await _context.SaveChangesAsync();
 
                 return RedirectToPage("../Instruments/Details", new { id = Calibration.InstrumentID });
             }
             return Page();
         }
 
-        private bool CalibrationExists(int id)
-        {
-            return _context.Calibrations.Any(e => e.ID == id);
-        }
     }
 }

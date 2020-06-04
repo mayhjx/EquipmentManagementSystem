@@ -65,8 +65,31 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
                     MalfunctionWorkOrder.Instrument.Status = InstrumentStatus.Using;
 
                 await _context.SaveChangesAsync();
+
                 return RedirectToPage("../WorkOrders/Index");
             }
+
+            return Page();
+        }
+
+        // TODO更新工单进度为已完成
+        public async Task<IActionResult> OnPutCompleteWorkOrderAsync(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            MalfunctionWorkOrder = await _context.MalfunctionWorkOrder
+                                .FirstAsync(m => m.ID == id);
+
+            if (MalfunctionWorkOrder == null)
+            {
+                return NotFound();
+            }
+
+            MalfunctionWorkOrder.Progress = WorkOrderProgress.Completed;
+            await _context.SaveChangesAsync();
 
             return Page();
         }

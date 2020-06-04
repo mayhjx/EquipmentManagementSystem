@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Components
@@ -56,30 +55,11 @@ namespace EquipmentManagementSystem.Pages.Components
                     "Component",
                     i => i.SerialNumber, i => i.Name, i => i.Model, i => i.Brand))
             {
-                try
-                {
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ComponentExists(Component.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-
+                await _context.SaveChangesAsync();
                 return RedirectToPage("../Instruments/Details", new { id = Component.InstrumentID });
             }
             return Page();
         }
 
-        private bool ComponentExists(int id)
-        {
-            return _context.Components.Any(e => e.ID == id);
-        }
     }
 }

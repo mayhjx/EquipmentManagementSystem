@@ -60,7 +60,9 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.AccessoriesOrders
                 {
                     AccessoriesOrder.MalfunctionWorkOrder.Progress = WorkOrderProgress.Waiting;
                 }
+
                 await _context.SaveChangesAsync();
+
                 return RedirectToPage("../WorkOrders/Details", new { id = AccessoriesOrder.MalfunctionWorkOrderID });
             }
 

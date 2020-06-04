@@ -112,6 +112,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Information
                 }
 
                 await _context.SaveChangesAsync();
+
                 return RedirectToPage("../WorkOrders/Details", new { id = MalfunctionInfo.MalfunctionWorkOrderID });
             }
             return Page();

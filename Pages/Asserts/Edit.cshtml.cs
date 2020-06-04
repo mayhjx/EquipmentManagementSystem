@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Asserts
@@ -57,30 +56,12 @@ namespace EquipmentManagementSystem.Pages.Asserts
                     "Assert",
                     i => i.Code, i => i.Name, i => i.EntryDate, i => i.SourceUnit, i => i.Remark))
             {
-                try
-                {
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!AssertExists(Assert.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                await _context.SaveChangesAsync();
 
                 return RedirectToPage("../Instruments/Details", new { id = Assert.InstrumentId });
             }
             return Page();
         }
 
-        private bool AssertExists(int id)
-        {
-            return _context.Asserts.Any(e => e.ID == id);
-        }
     }
 }

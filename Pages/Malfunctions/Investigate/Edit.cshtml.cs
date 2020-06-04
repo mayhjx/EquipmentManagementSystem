@@ -68,39 +68,6 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Investigate
             }
 
             return Page();
-            //if (!ModelState.IsValid)
-            //{
-            //    return Page();
-            //}
-
-            //_context.Attach(Investigation).State = EntityState.Modified;
-
-            //Investigation.MalfunctionWorkOrder.Progress = WorkOrderProgress.Investigated;
-
-            //try
-            //{
-            //    await _context.SaveChangesAsync();
-            //}
-            //catch (DbUpdateConcurrencyException)
-            //{
-            //    if (!InvestigationExists(Investigation.ID))
-            //    {
-            //        return NotFound();
-            //    }
-            //    else
-            //    {
-            //        throw;
-            //    }
-            //}
-
-            //return RedirectToPage("../WorkOrders/Details", new { id = Investigation.MalfunctionWorkOrderID });
-
-            //return RedirectToPage("./Index");
         }
-
-        //private bool InvestigationExists(int id)
-        //{
-        //    return _context.Investigation.Any(e => e.ID == id);
-        //}
     }
 }

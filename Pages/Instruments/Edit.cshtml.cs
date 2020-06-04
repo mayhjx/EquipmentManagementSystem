@@ -3,7 +3,6 @@ using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Instruments
@@ -57,30 +56,10 @@ namespace EquipmentManagementSystem.Pages.Instruments
                     i => i.MetrologicalCharacteristics, i => i.Status, i => i.Location, i => i.Principal,
                     i => i.Remark, i => i.NewSystemCode))
             {
-                try
-                {
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!InstrumentExists(Instrument.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-
+                await _context.SaveChangesAsync();
                 return RedirectToPage("../Instruments/Details", new { id = Instrument.ID });
             }
             return Page();
-        }
-
-        private bool InstrumentExists(string id)
-        {
-            return _context.Instruments.Any(e => e.ID == id);
         }
     }
 }
