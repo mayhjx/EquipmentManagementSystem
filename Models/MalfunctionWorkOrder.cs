@@ -54,8 +54,8 @@ namespace EquipmentManagementSystem.Models
         RepairRequested,
         [Display(Name = "等待配件")]
         Waiting,
-        [Display(Name = "维修中")]
-        Repairing,
+        [Display(Name = "已维修")]
+        Repaired,
         [Display(Name = "已验证")]
         Validated,
         [Display(Name = "已完成")]

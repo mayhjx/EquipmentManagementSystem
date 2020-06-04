@@ -13,21 +13,15 @@ namespace EquipmentManagementSystem.Models
         public int MalfunctionWorkOrderID { get; set; }
         public MalfunctionWorkOrder MalfunctionWorkOrder { get; set; }
 
-        [Display(Name = "验证时间")]
+        [Display(Name = "验证完成时间")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
-        public DateTime? EndTime { get; set; }
+        public DateTime? FinishedTime { get; set; }
 
-        [Display(Name = "故障修复后性能验证报告")]
+        [Display(Name = "性能验证报告")]
         [StringLength(100)]
         public string PerformanceReportFileName { get; set; }
 
         public byte[] PerformanceReportFile { get; set; }
-
-        [Display(Name = "故障前病人结果评估报告")]
-        [StringLength(100)]
-        public string EffectReportFileName { get; set; }
-
-        public byte[] EffectReportFile { get; set; }
 
         [Display(Name = "总结分析")]
         [StringLength(999)]

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EquipmentManagementSystem.Migrations
 {
     [DbContext(typeof(MalfunctionContext))]
-    [Migration("20200602080858_initial")]
-    partial class initial
+    [Migration("20200604005531_AddMaintainEndTime")]
+    partial class AddMaintainEndTime
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -295,6 +295,9 @@ namespace EquipmentManagementSystem.Migrations
                     b.Property<byte[]>("Attachment")
                         .HasColumnType("varbinary(max)");
 
+                    b.Property<DateTime?>("EndTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("FileName")
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
@@ -502,13 +505,6 @@ namespace EquipmentManagementSystem.Migrations
                         .HasColumnType("varbinary(max)");
 
                     b.Property<string>("AttachmentName")
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
-
-                    b.Property<byte[]>("EffectReportFile")
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<string>("EffectReportFileName")
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 

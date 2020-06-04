@@ -21,6 +21,10 @@ namespace EquipmentManagementSystem.Models
         [StringLength(999)]
         public string Solution { get; set; }
 
+        [Display(Name = "维修结束时间")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
+        public DateTime? EndTime { get; set; }
+
         [Display(Name = "是否为关键部位？")]
         public bool IsCritical { get; set; }
 
