@@ -5,48 +5,48 @@
     ViewData["Title"] = "编辑";
 }
 
-<div class="invoice p-3 mb-3">
-    <h4>配件下单</h4>
-    <hr />
-    <div class="row">
-        <div class="col-md-4">
-            <form method="post">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="AccessoriesOrder.ID" />
-                <input type="hidden" asp-for="AccessoriesOrder.MalfunctionWorkOrderID" />
-                <div class="form-group">
-                    <label asp-for="AccessoriesOrder.Name" class="control-label"></label>
-                    <input asp-for="AccessoriesOrder.Name" class="form-control" required />
-                    <span asp-validation-for="AccessoriesOrder.Name" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="AccessoriesOrder.PlaceTime" class="control-label"></label>
-                    <input asp-for="AccessoriesOrder.PlaceTime" class="form-control" required />
-                    <span asp-validation-for="AccessoriesOrder.PlaceTime" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="AccessoriesOrder.ArrivalTime" class="control-label"></label>
-                    <input asp-for="AccessoriesOrder.ArrivalTime" class="form-control" />
-                    <span asp-validation-for="AccessoriesOrder.ArrivalTime" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="AccessoriesOrder.Remark" class="control-label"></label>
-                    <textarea asp-for="AccessoriesOrder.Remark" class="form-control" rows="3"></textarea>
-                    <span asp-validation-for="AccessoriesOrder.Remark" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="保存" class="btn btn-primary" />
-                </div>
-            </form>
+<div class="card">
+    <div class="card-header">
+        <h4>配件下单</h4>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-4">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="AccessoriesOrder.ID" />
+                    <input type="hidden" asp-for="AccessoriesOrder.MalfunctionWorkOrderID" />
+                    <div class="form-group">
+                        <label asp-for="AccessoriesOrder.Name" class="control-label"></label>
+                        <input asp-for="AccessoriesOrder.Name" class="form-control" required />
+                        <span asp-validation-for="AccessoriesOrder.Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AccessoriesOrder.PlaceTime" class="control-label"></label>
+                        <input asp-for="AccessoriesOrder.PlaceTime" class="form-control" required />
+                        <span asp-validation-for="AccessoriesOrder.PlaceTime" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AccessoriesOrder.ArrivalTime" class="control-label"></label>
+                        <input asp-for="AccessoriesOrder.ArrivalTime" class="form-control" />
+                        <span asp-validation-for="AccessoriesOrder.ArrivalTime" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AccessoriesOrder.Remark" class="control-label"></label>
+                        <textarea asp-for="AccessoriesOrder.Remark" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="AccessoriesOrder.Remark" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="保存" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div>
+            <a asp-page="../WorkOrders/Details" asp-route-id="@Model.AccessoriesOrder.MalfunctionWorkOrderID">返回</a>
         </div>
     </div>
-
-    <div>
-        @*<a asp-page="./Index">Back to List</a>*@
-        <a asp-page="../WorkOrders/Details" asp-route-id="@Model.AccessoriesOrder.MalfunctionWorkOrderID">返回</a>
-    </div>
 </div>
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

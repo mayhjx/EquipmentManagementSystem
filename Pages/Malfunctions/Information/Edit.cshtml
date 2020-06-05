@@ -5,74 +5,85 @@
     ViewData["Title"] = "编辑";
 }
 
-<div class="invoice p-3 mb-3">
-    <h4>故障信息</h4>
-    <hr />
-    <div class="row">
-        <div class="col-md-4">
-            <form method="post" enctype="multipart/form-data">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="MalfunctionInfo.ID" />
-                <input type="hidden" asp-for="MalfunctionInfo.MalfunctionWorkOrderID" />
-                <div class="form-group">
-                    <label asp-for="MalfunctionInfo.BeginTime" class="control-label"></label>
-                    <input asp-for="MalfunctionInfo.BeginTime" class="form-control" />
-                    <span asp-validation-for="MalfunctionInfo.BeginTime" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="MalfunctionInfo.FoundedTime" class="control-label"></label>
-                    <input asp-for="MalfunctionInfo.FoundedTime" class="form-control" />
-                    <span asp-validation-for="MalfunctionInfo.FoundedTime" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="MalfunctionInfo.Type" class="control-label"></label>
-                    <select asp-for="MalfunctionInfo.Type" class="form-control" asp-items="@Html.GetEnumSelectList<EquipmentManagementSystem.Models.MalfunctionType>()"></select>
-                    <span asp-validation-for="MalfunctionInfo.Type" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="MalfunctionInfo.Part" class="control-label"></label>
-                    <input asp-for="MalfunctionInfo.Part" class="form-control" />
-                    <span asp-validation-for="MalfunctionInfo.Part" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="MalfunctionInfo.Phenomenon" class="control-label"></label>
-                    <input asp-for="MalfunctionInfo.Phenomenon" class="form-control" />
-                    <span asp-validation-for="MalfunctionInfo.Phenomenon" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="MalfunctionInfo.Reason" class="control-label"></label>
-                    <input asp-for="MalfunctionInfo.Reason" class="form-control" required />
-                    <span asp-validation-for="MalfunctionInfo.Reason" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="MalfunctionInfo.Remark" class="control-label"></label>
-                    <textarea asp-for="MalfunctionInfo.Remark" class="form-control" rows="3"></textarea>
-                    <span asp-validation-for="MalfunctionInfo.Remark" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="MalfunctionInfo.FileName" class="control-label"></label>
-                    （提示：再次上传时会覆盖原有附件）
-                    <input type="file" asp-for="FileUpload.FormFile" class="form-control-file" />
-                    <span asp-validation-for="FileUpload.FormFile" class="text-danger"></span>
-                    <h6>已上传附件：@Html.DisplayFor(model => model.MalfunctionInfo.FileName)</h6>
-                </div>
-                <div class="form-group form-check">
-                    <label class="form-check-label">
-                        <input class="form-check-input" asp-for="MalfunctionInfo.IsConfirm" /> @Html.DisplayNameFor(model => model.MalfunctionInfo.IsConfirm)
-                    </label>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="保存" class="btn btn-primary" />
-                </div>
-            </form>
+
+<div class="card">
+    <div class="card-header">
+        <h4>故障信息</h4>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <form method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="MalfunctionInfo.ID" />
+                    <input type="hidden" asp-for="MalfunctionInfo.MalfunctionWorkOrderID" />
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <label asp-for="MalfunctionInfo.BeginTime" class="control-label"></label>
+                            <input asp-for="MalfunctionInfo.BeginTime" class="form-control" />
+                            <span asp-validation-for="MalfunctionInfo.BeginTime" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col">
+                            <label asp-for="MalfunctionInfo.FoundedTime" class="control-label"></label>
+                            <input asp-for="MalfunctionInfo.FoundedTime" class="form-control" />
+                            <span asp-validation-for="MalfunctionInfo.FoundedTime" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <label asp-for="MalfunctionInfo.Type" class="control-label"></label>
+                            <select asp-for="MalfunctionInfo.Type" class="form-control" asp-items="@Html.GetEnumSelectList<EquipmentManagementSystem.Models.MalfunctionType>()"></select>
+                            <span asp-validation-for="MalfunctionInfo.Type" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col">
+                            <label asp-for="MalfunctionInfo.Part" class="control-label"></label>
+                            <input asp-for="MalfunctionInfo.Part" class="form-control" />
+                            <span asp-validation-for="MalfunctionInfo.Part" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+
+                        <div class="form-group col">
+                            <label asp-for="MalfunctionInfo.Phenomenon" class="control-label"></label>
+                            <input asp-for="MalfunctionInfo.Phenomenon" class="form-control" />
+                            <span asp-validation-for="MalfunctionInfo.Phenomenon" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col">
+                            <label asp-for="MalfunctionInfo.Reason" class="control-label"></label>
+                            <input asp-for="MalfunctionInfo.Reason" class="form-control" required />
+                            <span asp-validation-for="MalfunctionInfo.Reason" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="MalfunctionInfo.Remark" class="control-label"></label>
+                        <textarea asp-for="MalfunctionInfo.Remark" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="MalfunctionInfo.Remark" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MalfunctionInfo.FileName" class="control-label"></label>
+                        （提示：再次上传时会覆盖原有附件）
+                        <input type="file" asp-for="FileUpload.FormFile" class="form-control-file" />
+                        <span asp-validation-for="FileUpload.FormFile" class="text-danger"></span>
+                        <h6>已上传附件：@Html.DisplayFor(model => model.MalfunctionInfo.FileName)</h6>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="MalfunctionInfo.IsConfirm" /> @Html.DisplayNameFor(model => model.MalfunctionInfo.IsConfirm)
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="保存" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div>
+            <a asp-page="../WorkOrders/Details" asp-route-id="@Model.MalfunctionInfo.MalfunctionWorkOrderID">返回</a>
         </div>
     </div>
-
-    <div>
-        <a asp-page="../WorkOrders/Details" asp-route-id="@Model.MalfunctionInfo.MalfunctionWorkOrderID">返回</a>
-    </div>
 </div>
-
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

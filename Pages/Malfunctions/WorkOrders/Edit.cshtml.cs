@@ -81,6 +81,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
             }
 
             MalfunctionWorkOrder = await _context.MalfunctionWorkOrder
+                                .Include(m => m.Instrument)
                                 .FirstAsync(m => m.ID == id);
 
             if (MalfunctionWorkOrder == null)
@@ -88,11 +89,22 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
                 return NotFound();
             }
 
-            MalfunctionWorkOrder.Progress = WorkOrderProgress.Completed;
-            await _context.SaveChangesAsync();
+            if (await TryUpdateModelAsync<MalfunctionWorkOrder>(
+                    MalfunctionWorkOrder,
+                    "MalfunctionWorkOrder",
+                    i => i.InstrumentID, i => i.Progress, i => i.CreatedTime, i => i.Creator))
+            {
+                if (MalfunctionWorkOrder.Progress < WorkOrderProgress.Completed)
+                    MalfunctionWorkOrder.Progress = WorkOrderProgress.Completed;
 
-            return new JsonResult("工单已完成！");
-            //return Page();
+                if (MalfunctionWorkOrder.Instrument.Status == InstrumentStatus.Malfunction)
+                    MalfunctionWorkOrder.Instrument.Status = InstrumentStatus.Using;
+
+                await _context.SaveChangesAsync();
+                return new JsonResult("工单已完成！");
+            }
+
+            return new JsonResult("出现错误！工单未完成");
         }
     }
 }
