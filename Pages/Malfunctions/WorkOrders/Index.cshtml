@@ -7,9 +7,9 @@
 
 <div class="card">
     <h4 class="card-header">
-        工单列表
+        工单一览
         <a asp-page="Create">
-            <input type="button" class="btn btn-outline-primary btn-sm" value="新建" style="margin-left: 10px;" />
+            <input type="button" class="btn btn-outline-primary btn-sm" value="新建工单" style="margin-left: 10px;" />
         </a>
     </h4>
 
@@ -68,8 +68,8 @@
                                         @Html.DisplayFor(modelItem => item.Progress)
                                     </td>
                                     <td>
-                                        <a asp-page="./Details" asp-route-id="@item.ID"><i class="fas fa-search fa-lg" aria-hidden="true"></i></a> |
-                                        <a asp-page="./Delete" asp-route-id="@item.ID"><i class="fas fa-times-circle fa-lg" aria-hidden="true"></i></a>
+                                        <a asp-page="./Details" asp-route-id="@item.ID"><i class="fas fa-search fa-lg" aria-hidden="true"></i></a>
+                                        @*| <a asp-page="./Delete" asp-route-id="@item.ID"><i class="fas fa-times-circle fa-lg" aria-hidden="true"></i></a>*@
                                     </td>
                                 </tr>
                             }
