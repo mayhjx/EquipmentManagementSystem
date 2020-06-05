@@ -5,52 +5,53 @@
     ViewData["Title"] = "编辑";
 }
 
-<div class="invoice p-3 mb-3">
-    <h4>维修申请</h4>
-    <hr />
-    <div class="row">
-        <div class="col-md-4">
-            <form method="post">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="RepairRequest.ID" />
-                <input type="hidden" asp-for="RepairRequest.MalfunctionWorkOrderID" />
-                <div class="form-group">
-                    <label asp-for="RepairRequest.RequestTime" class="control-label"></label>
-                    <input asp-for="RepairRequest.RequestTime" class="form-control" required />
-                    <span asp-validation-for="RepairRequest.RequestTime" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="RepairRequest.BookingsTime" class="control-label"></label>
-                    <input asp-for="RepairRequest.BookingsTime" class="form-control" required />
-                    <span asp-validation-for="RepairRequest.BookingsTime" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="RepairRequest.Fixer" class="control-label"></label>
-                    <input asp-for="RepairRequest.Fixer" class="form-control" required />
-                    <span asp-validation-for="RepairRequest.Fixer" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="RepairRequest.Engineer" class="control-label"></label>
-                    <input asp-for="RepairRequest.Engineer" class="form-control" required />
-                    <span asp-validation-for="RepairRequest.Engineer" class="text-danger"></span>
-                </div>
-                <div class="form-group form-check">
-                    <label class="form-check-label">
-                        <input class="form-check-input" asp-for="RepairRequest.IsConfirm" /> @Html.DisplayNameFor(model => model.RepairRequest.IsConfirm)
-                    </label>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="保存" class="btn btn-primary" />
-                </div>
-            </form>
+<div class="card">
+    <div class="card-header">
+        <h4>维修申请</h4>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-4">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="RepairRequest.ID" />
+                    <div class="form-group">
+                        <label asp-for="RepairRequest.RequestTime" class="control-label"></label>
+                        <input asp-for="RepairRequest.RequestTime" class="form-control" required />
+                        <span asp-validation-for="RepairRequest.RequestTime" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="RepairRequest.BookingsTime" class="control-label"></label>
+                        <input asp-for="RepairRequest.BookingsTime" class="form-control" required />
+                        <span asp-validation-for="RepairRequest.BookingsTime" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="RepairRequest.Fixer" class="control-label"></label>
+                        <input asp-for="RepairRequest.Fixer" class="form-control" required />
+                        <span asp-validation-for="RepairRequest.Fixer" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="RepairRequest.Engineer" class="control-label"></label>
+                        <input asp-for="RepairRequest.Engineer" class="form-control" required />
+                        <span asp-validation-for="RepairRequest.Engineer" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="RepairRequest.IsConfirm" /> @Html.DisplayNameFor(model => model.RepairRequest.IsConfirm)
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="保存" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div>
+            <a asp-page="../WorkOrders/Details" asp-route-id="@Model.RepairRequest.MalfunctionWorkOrderID">返回</a>
         </div>
     </div>
-
-    <div>
-        <a asp-page="../WorkOrders/Details" asp-route-id="@Model.RepairRequest.MalfunctionWorkOrderID">返回</a>
-    </div>
 </div>
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

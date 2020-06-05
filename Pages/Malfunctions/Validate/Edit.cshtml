@@ -5,53 +5,55 @@
     ViewData["Title"] = "编辑";
 }
 
-<div class="invoice p-3 mb-3">
-    <h4>性能验证</h4>
-    <hr />
-    <div class="row">
-        <div class="col-md-4">
-            <form method="post" enctype="multipart/form-data">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="Validation.ID" />
-                <input type="hidden" asp-for="Validation.MalfunctionWorkOrderID" />
-                <div class="form-group">
-                    <label asp-for="Validation.FinishedTime" class="control-label"></label>
-                    <input asp-for="Validation.FinishedTime" class="form-control" required />
-                    <span asp-validation-for="Validation.FinishedTime" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Validation.PerformanceReportFileName" class="control-label"></label>
-                    （提示：再次上传时会覆盖原有附件）
-                    <input asp-for="FileUpload.PerformanceReportFile" type="file" class="form-control-file" />
-                    <span asp-validation-for="FileUpload.PerformanceReportFile" class="text-danger"></span>
-                    <h6>已上传附件：@Html.DisplayFor(model => model.Validation.PerformanceReportFileName)</h6>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Validation.Summary" class="control-label"></label>
-                    <textarea asp-for="Validation.Summary" class="form-control" rows="3"></textarea>
-                    <span asp-validation-for="Validation.Summary" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Validation.AttachmentName" class="control-label"></label>
-                    （提示：再次上传时会覆盖原有附件）
-                    <input asp-for="FileUpload.Attachment" type="file" class="form-control-file" />
-                    <span asp-validation-for="FileUpload.Attachment" class="text-danger"></span>
-                    <h6>已上传附件：@Html.DisplayFor(model => model.Validation.AttachmentName)</h6>
-                </div>
-                <div class="form-group form-check">
-                    <label class="form-check-label">
-                        <input class="form-check-input" asp-for="Validation.IsConfirm" /> @Html.DisplayNameFor(model => model.Validation.IsConfirm)
-                    </label>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="保存" class="btn btn-primary" />
-                </div>
-            </form>
-        </div>
+<div class="card">
+    <div class="card-header">
+        <h4>性能验证</h4>
     </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-4">
+                <form method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Validation.ID" />
+                    <div class="form-group">
+                        <label asp-for="Validation.FinishedTime" class="control-label"></label>
+                        <input asp-for="Validation.FinishedTime" class="form-control" required />
+                        <span asp-validation-for="Validation.FinishedTime" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Validation.PerformanceReportFileName" class="control-label"></label>
+                        （提示：再次上传时会覆盖原有附件）
+                        <input asp-for="FileUpload.PerformanceReportFile" type="file" class="form-control-file" />
+                        <span asp-validation-for="FileUpload.PerformanceReportFile" class="text-danger"></span>
+                        <h6>已上传附件：@Html.DisplayFor(model => model.Validation.PerformanceReportFileName)</h6>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Validation.Summary" class="control-label"></label>
+                        <textarea asp-for="Validation.Summary" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="Validation.Summary" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Validation.AttachmentName" class="control-label"></label>
+                        （提示：再次上传时会覆盖原有附件）
+                        <input asp-for="FileUpload.Attachment" type="file" class="form-control-file" />
+                        <span asp-validation-for="FileUpload.Attachment" class="text-danger"></span>
+                        <h6>已上传附件：@Html.DisplayFor(model => model.Validation.AttachmentName)</h6>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Validation.IsConfirm" /> @Html.DisplayNameFor(model => model.Validation.IsConfirm)
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="保存" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
 
-    <div>
-        <a asp-page="../WorkOrders/Details" asp-route-id="@Model.Validation.MalfunctionWorkOrderID">返回</a>
+        <div>
+            <a asp-page="../WorkOrders/Details" asp-route-id="@Model.Validation.MalfunctionWorkOrderID">返回</a>
+        </div>
     </div>
 </div>
 

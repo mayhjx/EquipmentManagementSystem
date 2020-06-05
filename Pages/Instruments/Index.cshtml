@@ -6,14 +6,12 @@
 }
 
 <div class="card">
-    <div class="card-header">
-        <h3 class="card-title">
-            信息一览
-            <a asp-page="Create">
-                <input type="button" class="btn btn-outline-primary btn-sm" value="新增设备" style="margin-left: 10px;">
-            </a>
-        </h3>
-    </div>
+    <h4 class="card-header">
+        信息一览
+        <a asp-page="Create">
+            <input type="button" class="btn btn-outline-primary btn-sm" value="新增设备" style="margin-left: 10px;">
+        </a>
+    </h4>
 
     <div class="card-body">
         <div id="index_wrapper" class="dataTables_wrapper dt-bootstrap4">
@@ -106,7 +104,7 @@
                                     </td>
                                     <td>
                                         @*<a asp-page="./Edit" asp-route-id="@item.ID">编辑</a> |*@
-                                        <a asp-page="./Details" asp-route-id="@item.ID">详细信息</a>
+                                        <a asp-page="./Details" asp-route-id="@item.ID"><i class="fas fa-search fa-lg" aria-hidden="true"></i></a>
                                         @* | <a asp-page="./Delete" asp-route-id="@item.ID">删除</a>*@
                                     </td>
                                 </tr>

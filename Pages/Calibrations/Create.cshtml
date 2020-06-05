@@ -5,7 +5,6 @@
     ViewData["Title"] = "新建";
 }
 
-<hr />
 <div class="card">
     <div class="card-body">
         <div class="row">
@@ -24,7 +23,6 @@
                     <div class="form-group">
                         <label asp-for="Calibration.Result" class="control-label"></label>
                         <select asp-for="Calibration.Result" class="form-control" asp-items="@Html.GetEnumSelectList<EquipmentManagementSystem.Models.Result>()">
-                            <option value=""></option>
                         </select>
                         <span asp-validation-for="Calibration.Result" class="text-danger"></span>
                     </div>
