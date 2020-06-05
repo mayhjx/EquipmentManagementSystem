@@ -72,7 +72,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
             return Page();
         }
 
-        // TODO更新工单进度为已完成
+        // 更新工单进度为已完成
         public async Task<IActionResult> OnPutCompleteWorkOrderAsync(int? id)
         {
             if (id == null)
@@ -91,7 +91,8 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
             MalfunctionWorkOrder.Progress = WorkOrderProgress.Completed;
             await _context.SaveChangesAsync();
 
-            return Page();
+            return new JsonResult("工单已完成！");
+            //return Page();
         }
     }
 }
