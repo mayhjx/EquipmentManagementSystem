@@ -1,0 +1,57 @@
+﻿@page
+@using EquipmentManagementSystem.Models
+@model EquipmentManagementSystem.Areas.Identity.Pages.Account.UserManagement.IndexModel
+
+@inject RoleManager<IdentityRole> roleManager
+@inject UserManager<User> userManager
+
+
+@{
+    ViewData["Title"] = "用户管理";
+}
+
+
+<div class="card">
+    <h4 class="card-header">
+        <a asp-page="Create">
+            <input type="button" class="btn btn-outline-primary btn-sm" value="新增用户" style="margin-left: 10px;" />
+        </a>
+    </h4>
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.users[0].Number)</td>
+                    <td>@Html.DisplayNameFor(model => model.users[0].Name)</td>
+                    <td>@Html.DisplayNameFor(model => model.users[0].Email)</td>
+                    <td>角色</td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.users)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => item.Number)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.Email)
+                        </td>
+                        @{
+                            var role = await userManager.GetRolesAsync(item);
+                            <td>@role.FirstOrDefault()</td>
+                        }
+                        <td>
+                            <a asp-page="Edit" asp-route-name="@item.UserName">编辑</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

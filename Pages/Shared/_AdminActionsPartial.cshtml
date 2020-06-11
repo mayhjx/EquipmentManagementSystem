@@ -2,31 +2,38 @@
 @using EquipmentManagementSystem.Models
 @using EquipmentManagementSystem.Data
 
-
-@inject SignInManager<IdentityUser> signInManager
-@inject UserManager<IdentityUser> userManager
+@inject SignInManager<User> signInManager
+@inject UserManager<User> userManager
 
 @if (signInManager.IsSignedIn(User))
 {
-    var currentUser = await userManager.GetUserAsync(User);
+    //var currentUser = await userManager.GetUserAsync(User);
 
-    var isAdmin = currentUser != null
-        && await userManager.IsInRoleAsync(
-            currentUser,
-            "Administrator");
+    //var isAdmin = currentUser != null
+    //    && await userManager.IsInRoleAsync(
+    //        currentUser,
+    //        "Administrator");
 
-    if (isAdmin)
-    {
-        <li>
-            @*<a class="nav-link text-dark" asp-area="" asp-page="/Users/Index">User Manager</a>*@
-        </li>
-        <li class="nav-item">
-            <a asp-page="/Users/Index" class="nav-link">
-                <i class="nav-icon fas fa-wrench"></i>
-                <p>
-                    用户管理
-                </p>
-            </a>
-        </li>
-    }
+    //if (isAdmin)
+    //{
+    <li>
+        @*<a class="nav-link text-dark" asp-area="" asp-page="/Users/Index">User Manager</a>*@
+    </li>
+    <li class="nav-item">
+        <a asp-page="/Account/UserManagement/Index" asp-area="Identity" class="nav-link">
+            <i class="nav-icon fas fa-user"></i>
+            <p>
+                用户管理
+            </p>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a asp-page="/Account/RoleManagement/Index" asp-area="Identity" class="nav-link">
+            <i class="nav-icon fas fa-user"></i>
+            <p>
+                角色管理
+            </p>
+        </a>
+    </li>
+    //}
 }

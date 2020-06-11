@@ -1,0 +1,32 @@
+﻿@page
+@model EquipmentManagementSystem.Areas.Identity.Pages.Account.RoleManagement.IndexModel
+@{
+    ViewData["Title"] = "角色管理";
+}
+
+<div class="card col-md-4">
+    <h4 class="card-header">
+        <a asp-page="Create">
+            <input type="button" class="btn btn-outline-primary btn-sm" value="新增角色" style="margin-left: 10px;" />
+        </a>
+    </h4>
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>角色</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.roles)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => item.Name)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
