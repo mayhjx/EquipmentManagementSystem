@@ -1,3 +1,4 @@
+using EquipmentManagementSystem.Areas.Identity.Data;
 using EquipmentManagementSystem.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +14,7 @@ namespace EquipmentManagementSystem
         {
             var host = CreateHostBuilder(args).Build();
             CreateDbIfNotExists(host);
+            CreateAdminIfNotExists(host);
             host.Run();
         }
 
@@ -33,9 +35,28 @@ namespace EquipmentManagementSystem
             {
                 var logger = services.GetRequiredService<ILogger<Program>>();
                 logger.LogError(ex, "An error occurred creating the DB.");
-                throw ex;
+                //throw ex;
             }
         }
+
+        public static void CreateAdminIfNotExists(IHost host)
+        {
+            using (var scope = host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+
+                try
+                {
+                    AdminInitialize.InitializeAsync(services).Wait();
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "An error occurred creating the Admin.");
+                }
+            }
+        }
+
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
