@@ -1,6 +1,5 @@
 ﻿using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -9,7 +8,6 @@ using System.Linq;
 
 namespace EquipmentManagementSystem.Pages
 {
-    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly EquipmentContext _context;

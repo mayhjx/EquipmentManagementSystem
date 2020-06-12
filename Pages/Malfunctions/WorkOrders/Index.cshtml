@@ -65,11 +65,10 @@
                                         @Html.DisplayFor(modelItem => item.Creator)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Progress)
+                                        <span class="badge badge-primary text-md">@Html.DisplayFor(modelItem => item.Progress)</span>
                                     </td>
                                     <td>
                                         <a asp-page="./Details" asp-route-id="@item.ID"><i class="fas fa-search fa-lg" aria-hidden="true"></i></a>
-                                        @*| <a asp-page="./Delete" asp-route-id="@item.ID"><i class="fas fa-times-circle fa-lg" aria-hidden="true"></i></a>*@
                                     </td>
                                 </tr>
                             }
@@ -82,7 +81,6 @@
 </div>
 
 @section Scripts {
-    @*<script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>*@
     <script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
     <script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
     <script>
