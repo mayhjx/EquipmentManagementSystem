@@ -26,6 +26,10 @@ namespace EquipmentManagementSystem.Areas.Identity.Pages.Account.UserManagement
         public class InputModel
         {
             [Required]
+            [Display(Name = "项目组")]
+            public string Group { get; set; }
+
+            [Required]
             [Display(Name = "姓名")]
             public string Name { get; set; }
 
@@ -67,7 +71,7 @@ namespace EquipmentManagementSystem.Areas.Identity.Pages.Account.UserManagement
                 return Page();
             }
 
-            var user = new User { UserName = Input.Number, Name = Input.Name, Email = Input.Email, Number = Input.Number };
+            var user = new User { UserName = Input.Number, Name = Input.Name, Email = Input.Email, Number = Input.Number, Group = Input.Group };
             var result = await _userManager.CreateAsync(user, Input.Password);
 
             if (result.Succeeded)

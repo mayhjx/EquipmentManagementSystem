@@ -21,8 +21,9 @@
         <table class="table">
             <thead>
                 <tr>
-                    <td>@Html.DisplayNameFor(model => model.users[0].Number)</td>
+                    <td>@Html.DisplayNameFor(model => model.users[0].Group)</td>
                     <td>@Html.DisplayNameFor(model => model.users[0].Name)</td>
+                    <td>@Html.DisplayNameFor(model => model.users[0].Number)</td>
                     <td>@Html.DisplayNameFor(model => model.users[0].Email)</td>
                     <td>角色</td>
                     <td></td>
@@ -33,10 +34,13 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(model => item.Number)
+                            @Html.DisplayFor(model => item.Group)
                         </td>
                         <td>
                             @Html.DisplayFor(model => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.Number)
                         </td>
                         <td>
                             @Html.DisplayFor(model => item.Email)
