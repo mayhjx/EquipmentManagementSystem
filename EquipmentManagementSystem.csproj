@@ -17,6 +17,8 @@
 		<Compile Remove="Data\Migrations\20200602074138_initial.Designer.cs" />
 		<Compile Remove="Data\Migrations\20200602075538_initial.cs" />
 		<Compile Remove="Data\Migrations\20200602075538_initial.Designer.cs" />
+		<Compile Remove="Migrations\Equipment\20200612084308_addgroup_project_usagerecord.cs" />
+		<Compile Remove="Migrations\Equipment\20200612084308_addgroup_project_usagerecord.Designer.cs" />
 	</ItemGroup>
 
 	<ItemGroup>

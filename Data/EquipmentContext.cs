@@ -14,8 +14,10 @@ namespace EquipmentManagementSystem.Data
         public DbSet<Calibration> Calibrations { get; set; }
         public DbSet<Component> Components { get; set; }
         public DbSet<Assert> Asserts { get; set; }
-        //public DbSet<ProjectTeam> ProjectTeams { get; set; }
-        //public DbSet<Project> Projects { get; set; }
+        public DbSet<Project> Projects { get; set; }
+        public DbSet<Group> Groups { get; set; }
+        public DbSet<UsageRecord> UsageRecords { get; set; }
+
         //public DbSet<Computer> Computers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -24,9 +26,10 @@ namespace EquipmentManagementSystem.Data
             modelBuilder.Entity<Calibration>().ToTable("Calibration");
             modelBuilder.Entity<Component>().ToTable("Component");
             modelBuilder.Entity<Assert>().ToTable("Assert");
+            modelBuilder.Entity<Group>().ToTable("Group");
+            modelBuilder.Entity<Project>().ToTable("Project");
+            modelBuilder.Entity<UsageRecord>().ToTable("UsageRecord");
             //modelBuilder.Entity<Computer>().ToTable("Computer");
-            //modelBuilder.Entity<ProjectTeam>().ToTable("ProjectTeam");
-            //modelBuilder.Entity<Project>().ToTable("Project");
         }
     }
 }

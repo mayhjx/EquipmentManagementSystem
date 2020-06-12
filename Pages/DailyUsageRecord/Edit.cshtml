@@ -1,0 +1,60 @@
+﻿@page
+@model EquipmentManagementSystem.Pages.DailyUsageRecord.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>UsageRecord</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="UsageRecord.Id" />
+            <div class="form-group">
+                <label asp-for="UsageRecord.BeginTime" class="control-label"></label>
+                <input asp-for="UsageRecord.BeginTime" class="form-control" />
+                <span asp-validation-for="UsageRecord.BeginTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UsageRecord.EndTime" class="control-label"></label>
+                <input asp-for="UsageRecord.EndTime" class="form-control" />
+                <span asp-validation-for="UsageRecord.EndTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UsageRecord.SampleNumber" class="control-label"></label>
+                <input asp-for="UsageRecord.SampleNumber" class="form-control" />
+                <span asp-validation-for="UsageRecord.SampleNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UsageRecord.TestTime" class="control-label"></label>
+                <input asp-for="UsageRecord.TestTime" class="form-control" />
+                <span asp-validation-for="UsageRecord.TestTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UsageRecord.InstrumentId" class="control-label"></label>
+                <select asp-for="UsageRecord.InstrumentId" class="form-control" asp-items="ViewBag.InstrumentId"></select>
+                <span asp-validation-for="UsageRecord.InstrumentId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UsageRecord.ProjectName" class="control-label"></label>
+                <input asp-for="UsageRecord.ProjectName" class="form-control" />
+                <span asp-validation-for="UsageRecord.ProjectName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
