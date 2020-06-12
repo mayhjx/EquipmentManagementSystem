@@ -8,6 +8,12 @@
             <div class="col-md-4">
                 <form method="post" role="form">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="userToUpdate.Id" />
+                    <div class="form-group">
+                        <label asp-for="userToUpdate.Group" class="control-label"></label>
+                        <input asp-for="userToUpdate.Group" class="form-control" />
+                        <span asp-validation-for="userToUpdate.Group" class="text-danger"></span>
+                    </div>
                     <div class="form-group">
                         <label asp-for="userToUpdate.Name" class="control-label"></label>
                         <input asp-for="userToUpdate.Name" class="form-control" />
@@ -23,28 +29,70 @@
                         <input asp-for="userToUpdate.Email" class="form-control" />
                         <span asp-validation-for="userToUpdate.Email" class="text-danger"></span>
                     </div>
-                    @*<div class="form-group">
-                            <label asp-for="userToUpdate.Role" class="control-label"></label>
-                            <select asp-for="userToUpdate.Role" asp-items="@ViewBag.Roles" class="form-control"></select>
-                            <span asp-validation-for="userToUpdate.Role" class="text-danger"></span>
-                        </div>*@
+                    <div class="form-group">
+                        <label asp-for="role.Name" class="control-label"></label>
+                        <select asp-for="role.Name" asp-items="@ViewBag.Roles" class="form-control"></select>
+                        <span asp-validation-for="role.Name" class="text-danger"></span>
+                    </div>
                     @*<div class="form-group">
                             <label asp-for="userToUpdate.Password"></label>
                             <input asp-for="userToUpdate.Password" class="form-control" />
                             <span asp-validation-for="userToUpdate.Password" class="text-danger"></span>
                         </div>*@
                     <div class="form-group">
-                        <input type="submit" value="新建" class="btn btn-primary" />
+                        <a asp-page="Index"><input type="button" value="返回" class="btn btn-default" /></a>
+                        <input type="submit" value="保存" class="btn btn-primary" style="margin-left: 5px;" />
+                        <input type="button" value="删除" class="btn btn-danger float-right" data-toggle="modal" data-target="#modal-delete" />
                     </div>
                 </form>
             </div>
         </div>
-
-        <div>
-            <a asp-page="Index">返回</a>
+        <div class="modal fade" id="modal-delete">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title text-danger">警告</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>确认删除该用户？</p>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button id="delete" type="button" class="btn btn-danger">删除</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+    $("#delete").click(function () {
+             var options = {};
+             options.url = "/Identity/Account/UserManagement/Delete?name=@Model.userToUpdate.UserName&handler=Delete";
+             options.type = "POST";
+
+             options.beforeSend = function (xhr) {
+                 xhr.setRequestHeader("MY-XSRF-TOKEN",
+                     $('input:hidden[name="__RequestVerificationToken"]').val());
+             };
+
+             options.success = function () {
+             };
+
+             options.error = function () {
+                 alert("删除用户失败，请重试！");
+             };
+
+            options.complete = function () {
+                window.location = "Index";
+            };
+
+             $.ajax(options);
+         });
+    </script>
 }
