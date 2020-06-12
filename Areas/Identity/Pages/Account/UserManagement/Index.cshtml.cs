@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Areas.Identity.Pages.Account.UserManagement
@@ -21,7 +22,11 @@ namespace EquipmentManagementSystem.Areas.Identity.Pages.Account.UserManagement
 
         public async Task<IActionResult> OnGetAsync()
         {
-            users = await _userManager.Users.AsNoTracking().ToListAsync();
+            users = await _userManager.Users
+                .Where(u => u.UserName != "Admin")
+                .AsNoTracking()
+                .ToListAsync();
+
             return Page();
         }
     }

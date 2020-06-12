@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Areas.Identity.Pages.Account.RoleManagement
@@ -20,7 +21,7 @@ namespace EquipmentManagementSystem.Areas.Identity.Pages.Account.RoleManagement
 
         public async Task<IActionResult> OnGet()
         {
-            roles = await _roleManager.Roles.AsNoTracking().ToListAsync();
+            roles = await _roleManager.Roles.Where(u => u.Name != "Administrator").AsNoTracking().ToListAsync();
             return Page();
         }
     }

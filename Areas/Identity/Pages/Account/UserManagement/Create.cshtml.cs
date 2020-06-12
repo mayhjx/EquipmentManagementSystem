@@ -60,7 +60,8 @@ namespace EquipmentManagementSystem.Areas.Identity.Pages.Account.UserManagement
 
         public IActionResult OnGet()
         {
-            ViewData["Roles"] = new SelectList(_roleManager.Roles.ToList(), "Name", "Name");
+            //ViewData["Roles"] = new SelectList(_roleManager.Roles.ToList(), "Name", "Name");
+            ViewData["Roles"] = new SelectList(_roleManager.Roles.Where(u => u.Name != "Administrator").ToList(), "Name", "Name");
             return Page();
         }
 
