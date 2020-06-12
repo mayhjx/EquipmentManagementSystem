@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using EquipmentManagementSystem.Data;
-using EquipmentManagementSystem.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.DailyUsageRecord
 {
@@ -19,12 +15,14 @@ namespace EquipmentManagementSystem.Pages.DailyUsageRecord
             _context = context;
         }
 
-        public IList<UsageRecord> UsageRecord { get;set; }
+        public IList<UsageRecord> UsageRecord { get; set; }
 
         public async Task OnGetAsync()
         {
             UsageRecord = await _context.UsageRecords
-                .Include(u => u.Instrument).ToListAsync();
+                .Include(u => u.Instrument)
+                .AsNoTracking()
+                .ToListAsync();
         }
     }
 }

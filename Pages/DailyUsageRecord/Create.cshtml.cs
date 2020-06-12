@@ -1,27 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using EquipmentManagementSystem.Data;
+using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using EquipmentManagementSystem.Data;
-using EquipmentManagementSystem.Models;
+using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.DailyUsageRecord
 {
     public class CreateModel : PageModel
     {
-        private readonly EquipmentManagementSystem.Data.EquipmentContext _context;
+        private readonly EquipmentContext _context;
 
-        public CreateModel(EquipmentManagementSystem.Data.EquipmentContext context)
+        public CreateModel(EquipmentContext context)
         {
             _context = context;
         }
 
         public IActionResult OnGet()
         {
-        ViewData["InstrumentId"] = new SelectList(_context.Instruments, "ID", "ID");
+            ViewData["InstrumentId"] = new SelectList(_context.Instruments, "ID", "ID");
+            ViewData["Project"] = new SelectList(_context.Projects, "Name", "Name");
+
             return Page();
         }
 
