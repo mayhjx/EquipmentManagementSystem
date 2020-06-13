@@ -4,16 +4,71 @@
     ViewData["Title"] = "看板";
 }
 
+    <div class="row">
+        <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-info"><i class="fas fa-server"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">主检设备</span>
+                    <span class="info-box-number">@Model.InstrumentNumber</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-success"><i class="fas fa-cube"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">辅助设备</span>
+                    <span class="info-box-number">0</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-warning"><i class="fas fa-balance-scale-left"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">需校准设备</span>
+                    <span class="info-box-number">@Model.InstrumentOfExpire.Count</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-danger"><i class="far fa-star"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">需跟进工单</span>
+                    <span class="info-box-number">@Model.MalfunctionWorkOrderOfFollow.Count</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+    </div>
+
 <div class="row">
     <div class="col-md-4">
-        <div class="card card-warning card-outline height-control">
+        <div class="card height-control">
             <div class="card-header">
                 <h3 class="card-title">
                     需校准设备
                 </h3>
             </div>
             <!-- /.card-header -->
-            <div class="card-body">
+            <div class="card-body table-responsive">
                 <table class="table table-sm">
                     <thead>
                         <tr>
@@ -24,7 +79,7 @@
                                 到期日期
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.InstrumentOfExpire[0].ProjectTeamName)
+                                @Html.DisplayNameFor(model => model.InstrumentOfExpire[0].Group)
                             </th>
                         </tr>
                     </thead>
@@ -40,14 +95,14 @@
                                     @if (item.Calibrations != null)
                                     {
                                         var lastCalibrationDateTime = item.Calibrations.Last().Date;
-                                        if (lastCalibrationDateTime != DateTime.Parse("0001-01-01"))
+                                        if (lastCalibrationDateTime != null)
                                         {
                                             @(lastCalibrationDateTime.AddYears(item.CalibrationCycle).AddDays(-1).ToShortDateString())
                                         }
                                     }
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.ProjectTeamName)
+                                    @Html.DisplayFor(modelItem => item.Group)
                                 </td>
                             </tr>
                         }
@@ -58,7 +113,7 @@
         </div>
     </div>
     <div class="col-md-4">
-        <div class="card card-warning card-outline height-control">
+        <div class="card height-control">
             <div class="card-header">
                 <h3 class="card-title">
                     需跟进工单
@@ -70,10 +125,10 @@
                     <thead>
                         <tr>
                             <th>
-                                @Html.DisplayNameFor(model => model.MalfunctionWorkOrder[0].InstrumentID)
+                                @Html.DisplayNameFor(model => model.MalfunctionWorkOrderOfFollow[0].InstrumentID)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.MalfunctionWorkOrder[0].Progress)
+                                @Html.DisplayNameFor(model => model.MalfunctionWorkOrderOfFollow[0].Progress)
                             </th>
                             <th>
                                 故障描述
@@ -81,7 +136,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model.MalfunctionWorkOrder)
+                        @foreach (var item in Model.MalfunctionWorkOrderOfFollow)
                         {
                             <tr>
                                 <td>

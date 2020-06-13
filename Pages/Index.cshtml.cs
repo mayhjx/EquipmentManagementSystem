@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 
 namespace EquipmentManagementSystem.Pages
 {
@@ -18,14 +19,17 @@ namespace EquipmentManagementSystem.Pages
             _context = context;
             _malfunctionContext = malfunctionContext;
         }
+        
+        public int InstrumentNumber { get; set; }
 
         // 快到期设备
         public IList<Instrument> InstrumentOfExpire { get; set; }
 
-        public IList<MalfunctionWorkOrder> MalfunctionWorkOrder { get; set; }
+        public IList<MalfunctionWorkOrder> MalfunctionWorkOrderOfFollow { get; set; }
 
         public void OnGet()
         {
+            InstrumentNumber = _context.Instruments.Count();
 
             InstrumentOfExpire = (from m in _context.Instruments
                                 .AsNoTracking()
@@ -36,7 +40,7 @@ namespace EquipmentManagementSystem.Pages
                                   where remainDay.Days < 30 // 到期前30天内
                                   select m).ToList();
 
-            MalfunctionWorkOrder = (from m in _malfunctionContext.MalfunctionWorkOrder
+            MalfunctionWorkOrderOfFollow = (from m in _malfunctionContext.MalfunctionWorkOrder
                                     .AsNoTracking()
                                     .Include(m => m.MalfunctionInfo)
                                     .AsEnumerable()
