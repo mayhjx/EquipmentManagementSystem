@@ -1,7 +1,10 @@
-﻿using EquipmentManagementSystem.Models;
+﻿using EquipmentManagementSystem.Data;
+using EquipmentManagementSystem.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,11 +12,17 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
 {
     public class CreateModel : PageModel
     {
-        private readonly EquipmentManagementSystem.Data.MalfunctionContext _context;
+        private readonly MalfunctionContext _context;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
 
-        public CreateModel(EquipmentManagementSystem.Data.MalfunctionContext context)
+        public CreateModel(MalfunctionContext context,
+            SignInManager<User> signInManager,
+            UserManager<User> userManager)
         {
-            _context = context;
+            _context = context; 
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         public IActionResult OnGet(string id)
@@ -38,13 +47,20 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
             MalfunctionWorkOrder.Instrument = await _context.Set<Instrument>().FindAsync(MalfunctionWorkOrder.InstrumentID);
             MalfunctionWorkOrder.Instrument.Status = InstrumentStatus.Malfunction;
 
-            // 新建工单内容
+            // 新建工单关联的内容
             MalfunctionWorkOrder.Investigation = new Investigation { };
             MalfunctionWorkOrder.RepairRequest = new RepairRequest { };
             MalfunctionWorkOrder.AccessoriesOrder = new AccessoriesOrder { };
             MalfunctionWorkOrder.Maintenance = new Maintenance { };
             MalfunctionWorkOrder.Validation = new Validation { };
 
+            MalfunctionWorkOrder.CreatedTime = DateTime.Now;
+            if (_signInManager.IsSignedIn(User))
+            {
+                var user = await _userManager.GetUserAsync(User);
+                MalfunctionWorkOrder.Creator = user.Name;
+            }
+            
             _context.MalfunctionWorkOrder.Add(MalfunctionWorkOrder);
 
             await _context.SaveChangesAsync();
