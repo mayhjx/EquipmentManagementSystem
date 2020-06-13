@@ -50,6 +50,10 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
 
             if (MalfunctionWorkOrder != null)
             {
+                // 改变故障设备的状态
+                MalfunctionWorkOrder.Instrument = await _context.Set<Instrument>().FindAsync(MalfunctionWorkOrder.InstrumentID);
+                MalfunctionWorkOrder.Instrument.Status = InstrumentStatus.Using;
+
                 _context.MalfunctionWorkOrder.Remove(MalfunctionWorkOrder);
                 await _context.SaveChangesAsync();
             }
