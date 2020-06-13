@@ -56,9 +56,9 @@ namespace EquipmentManagementSystem.Pages.Instruments
             if (await TryUpdateModelAsync<Instrument>(
                     Instrument,
                     "Instrument",
-                    i => i.Platform, i => i.Name, i => i.StartUsingDate, i => i.CalibrationCycle,
-                    i => i.MetrologicalCharacteristics, i => i.Status, i => i.Location, i => i.Principal,
-                    i => i.Remark, i => i.NewSystemCode))
+                    i => i.Status, i => i.Platform, i => i.Name, i => i.StartUsingDate, 
+                    i => i.CalibrationCycle, i => i.MetrologicalCharacteristics,  i => i.Location,
+                    i => i.Principal, i => i.Group, i => i.Projects, i => i.NewSystemCode, i => i.Remark))
             {
                 await _context.SaveChangesAsync();
                 return RedirectToPage("../Instruments/Details", new { id = Instrument.ID });
