@@ -66,10 +66,13 @@
                         <span asp-validation-for="FileUpload.FormFile" class="text-danger"></span>
                         <h6>已上传附件：@Html.DisplayFor(model => model.MalfunctionInfo.FileName)</h6>
                     </div>
-                    <div class="form-group form-check">
-                        <label class="form-check-label">
-                            <input class="form-check-input" asp-for="MalfunctionInfo.IsConfirm" /> @Html.DisplayNameFor(model => model.MalfunctionInfo.IsConfirm)
-                        </label>
+                    <div class="form-group">
+                        <div class="icheck-primary">
+                            <input type="checkbox" asp-for="MalfunctionInfo.IsConfirm" id="check" /> 
+                            <label for="check">
+                                @Html.DisplayNameFor(model => model.MalfunctionInfo.IsConfirm)
+                            </label>
+                        </div>
                     </div>
                     <div class="form-group">
                         <input type="submit" value="保存" class="btn btn-primary" />

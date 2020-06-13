@@ -30,11 +30,16 @@
                         <input asp-for="Maintenance.EndTime" class="form-control" required />
                         <span asp-validation-for="Maintenance.EndTime" class="text-danger"></span>
                     </div>
-                    <div class="form-group form-check">
-                        <label class="form-check-label">
+                    <div class="form-group">
+                        @*<label class="form-check-label">
                             <input class="form-check-input" asp-for="Maintenance.IsCritical" /> @Html.DisplayNameFor(model => model.Maintenance.IsCritical)
-                        </label>
-                        <span asp-validation-for="Maintenance.IsCritical" class="text-danger"></span>
+                        </label>*@
+                        <div class="icheck-primary">
+                            <input type="checkbox" asp-for="Maintenance.IsCritical" id="check" />
+                            <label for="check">
+                                @Html.DisplayNameFor(model => model.Maintenance.IsCritical)
+                            </label>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label asp-for="Maintenance.Remark" class="control-label"></label>

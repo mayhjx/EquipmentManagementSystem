@@ -41,7 +41,7 @@
                 <div class="card h-100">
                     <div class="card-header">
                         <p class="card-title">
-                            <i class="fa fa-barcode" aria-hidden="true"></i> 基础信息
+                            <i class="fa fa-tag" aria-hidden="true"></i> 基础信息
                         </p>
                         <div class="card-tools">
                             <a asp-page="./Edit" asp-route-id="@Model.Instrument.ID">
@@ -71,8 +71,8 @@
                                     <th>@Html.DisplayNameFor(model => model.Instrument.StartUsingDate)</th>
                                     <td>@Html.DisplayFor(model => model.Instrument.StartUsingDate)</td>
 
-                                    <th>@Html.DisplayNameFor(model => model.Instrument.ProjectTeamName)</th>
-                                    <td>@Html.DisplayFor(model => model.Instrument.ProjectTeamName)</td>
+                                    <th>@Html.DisplayNameFor(model => model.Instrument.Group)</th>
+                                    <td>@Html.DisplayFor(model => model.Instrument.Group)</td>
                                 </tr>
                                 <tr>
                                     <th>@Html.DisplayNameFor(model => model.Instrument.CalibrationCycle)</th>
@@ -149,7 +149,7 @@
                 <div class="card height-control h-100">
                     <div class="card-header">
                         <p class="card-title">
-                            <i class="fa fa-cubes" aria-hidden="true"></i> 部件信息
+                            <i class="fa fa-cube" aria-hidden="true"></i> 部件信息
                         </p>
                         <div class="card-tools">
                             <a asp-page="../Components/Create" asp-route-id="@Model.Instrument.ID">
@@ -192,7 +192,7 @@
                 <div class="card height-control h-100">
                     <div class="card-header">
                         <p class="card-title">
-                            <i class="fa fa-wrench" aria-hidden="true"></i> 故障信息
+                            <i class="fa fa-tools" aria-hidden="true"></i> 故障信息
                         </p>
                         <div class="card-tools">
                             <a asp-page="../Malfunctions/WorkOrders/Create" asp-route-id="@Model.Instrument.ID">

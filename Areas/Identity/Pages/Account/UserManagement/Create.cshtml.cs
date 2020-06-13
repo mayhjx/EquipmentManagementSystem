@@ -38,7 +38,7 @@ namespace EquipmentManagementSystem.Areas.Identity.Pages.Account.UserManagement
             public string Number { get; set; }
 
             [Required]
-            [EmailAddress]
+            [EmailAddress(ErrorMessage = "输入的值不是有效的邮箱格式")]
             [Display(Name = "邮箱")]
             public string Email { get; set; }
 
@@ -47,14 +47,14 @@ namespace EquipmentManagementSystem.Areas.Identity.Pages.Account.UserManagement
             public string Role { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "{0}长度要求：大于等于{2}且小于{1}", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "密码")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
             [Display(Name = "确认密码")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Compare("Password", ErrorMessage = "确认密码与密码不一致")]
             public string ConfirmPassword { get; set; }
         }
 

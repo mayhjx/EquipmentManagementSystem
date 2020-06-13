@@ -177,28 +177,26 @@
                         <div class="card-body">
                             @if (!IsCompleted)
                             {
-                                <div class="row">
-                                    <div class="form-group form-inline col-md-12">
-                                        <div class="form-check col-md-4">
-                                            <label class="form-check-label">
-                                                <input id="investigate" type="radio" class="form-check-input" name="r1" onclick="showlink()" checked>
+                                    <div class="form-group clearfix row">
+                                        <div class="icheck-primary d-inline col-md-4">
+                                            <input id="investigate" type="radio" name="r1" onclick="showlink()" checked>
+                                            <label for="investigate">
                                                 故障排查
                                             </label>
                                         </div>
-                                        <div class="form-check col-md-4">
-                                            <label class="form-check-label">
-                                                <input id="request" type="radio" class="form-check-input" name="r1" onclick="showlink()">
-                                                维修申请
-                                            </label>
+                                        <div class="icheck-primary d-inline col-md-4">
+                                                <input id="request" type="radio" name="r1" onclick="showlink()">
+                                                <label for="request">
+                                                    维修申请
+                                                </label>
                                         </div>
-                                        <div class="form-check col-md-4">
-                                            <label class="form-check-label">
-                                                <input id="order" type="radio" class="form-check-input" name="r1" onclick="showlink()">
-                                                配件下单
-                                            </label>
+                                        <div class="icheck-primary d-inline col-md-4">
+                                                <input id="order" type="radio" name="r1" onclick="showlink()">
+                                                <label for="order">
+                                                    配件下单
+                                                </label>
                                         </div>
                                     </div>
-                                </div>
                             }
                             <div class="row">
                                 <div class="col-md-4">
