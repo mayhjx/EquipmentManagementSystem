@@ -34,7 +34,7 @@
                                     计划@(Html.DisplayNameFor(model => model.Instrument[0].Calibrations.First().Date))
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.Instrument[0].ProjectTeamName)
+                                    @Html.DisplayNameFor(model => model.Instrument[0].Group)
                                 </th>
                                 <th>
                                     @Html.DisplayNameFor(model => model.Instrument[0].Location)
@@ -69,7 +69,7 @@
                                         }
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.ProjectTeamName)
+                                        @Html.DisplayFor(modelItem => item.Group)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Location)

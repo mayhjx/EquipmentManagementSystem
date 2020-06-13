@@ -53,7 +53,7 @@ namespace EquipmentManagementSystem.Data
                         Location = data[7],
                         Principal = data[8],
                         NewSystemCode = data[9],
-                        ProjectTeamName = data[10],
+                        Group = data[10],
                         Projects = data[11],
                         Remark = data[12]
                     }

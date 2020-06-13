@@ -9,7 +9,8 @@ namespace EquipmentManagementSystem.Models
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Display(Name = "编号")]
-        [RegularExpression(@"^[A-Z]+-[A-Z0-9]+$")]
+        [Required]
+        [RegularExpression(@"^[A-Z]+-[A-Z]+[0-9]+$", ErrorMessage = "请按“字母-字母数字”（例：FXS-YZ01）的格式输入仪器编号")]
         public string ID { get; set; }
 
         [Required]
@@ -64,7 +65,7 @@ namespace EquipmentManagementSystem.Models
 
         [Display(Name = "所属项目组")]
         [StringLength(50)]
-        public string ProjectTeamName { get; set; }
+        public string Group { get; set; }
 
         [Display(Name = "检测项目")]
         [StringLength(100)]

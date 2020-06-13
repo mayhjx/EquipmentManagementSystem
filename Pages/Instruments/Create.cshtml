@@ -64,9 +64,11 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col">
-                            <label asp-for="Instrument.ProjectTeamName" class="control-label"></label>
-                            <input asp-for="Instrument.ProjectTeamName" class="form-control" />
-                            <span asp-validation-for="Instrument.ProjectTeamName" class="text-danger"></span>
+                            <label asp-for="Instrument.Group" class="control-label"></label>
+                            <select asp-for="Instrument.Group" class="form-control" asp-items="ViewBag.Group">
+                                <option></option>
+                            </select>
+                            <span asp-validation-for="Instrument.Group" class="text-danger"></span>
                         </div>
                         <div class="form-group col">
                             <label asp-for="Instrument.Projects" class="control-label"></label>

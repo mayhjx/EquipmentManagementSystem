@@ -2,6 +2,7 @@
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
@@ -32,6 +33,9 @@ namespace EquipmentManagementSystem.Pages.Instruments
             {
                 return NotFound();
             }
+
+            ViewData["Group"] = new SelectList(_context.Groups, "Name", "Name", Instrument.Group);
+
             return Page();
         }
 

@@ -2,6 +2,7 @@
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Instruments
@@ -17,6 +18,7 @@ namespace EquipmentManagementSystem.Pages.Instruments
 
         public IActionResult OnGet()
         {
+            ViewData["Group"] = new SelectList(_context.Groups, "Name", "Name");
             return Page();
         }
 
