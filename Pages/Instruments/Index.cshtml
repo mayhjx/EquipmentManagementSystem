@@ -14,104 +14,94 @@
     </h4>
 
     <div class="card-body">
-        <div id="index_wrapper" class="dataTables_wrapper dt-bootstrap4">
-            <div class="row">
-                <div class="col-sm-12 col-md-6"></div>
-                <div class="col-sm-12 col-md-6"></div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <table id="index" class="table table-hover dataTable dtr-inline">
-                        <thead>
-                            <tr>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Instrument[0].ID)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Instrument[0].Name)
-                                </th>
-                                <th>
-                                    计划@(Html.DisplayNameFor(model => model.Instrument[0].Calibrations.First().Date))
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Instrument[0].Group)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Instrument[0].Location)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Instrument[0].Status)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Instrument[0].Remark)
-                                </th>
-                                <th>&nbsp</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model.Instrument)
+        <table id="index" class="table table-hover text-nowrap">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Instrument[0].ID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Instrument[0].Name)
+                    </th>
+                    <th>
+                        计划@(Html.DisplayNameFor(model => model.Instrument[0].Calibrations.First().Date))
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Instrument[0].Group)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Instrument[0].Location)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Instrument[0].Status)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Instrument[0].Remark)
+                    </th>
+                    <th>&nbsp</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Instrument)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @if (item.Calibrations.Count > 0)
                             {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.ID)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Name)
-                                    </td>
-                                    <td>
-                                        @if (item.Calibrations.Count > 0)
-                                        {
-                                            var lastCalibrationDateTime = item.Calibrations.Last().Date;
-                                            if (lastCalibrationDateTime != DateTime.MinValue)
-                                            {
-                                                @(lastCalibrationDateTime.AddYears(item.CalibrationCycle).AddDays(-1).ToShortDateString())
-                                            }
-                                        }
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Group)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Location)
-                                    </td>
-                                    <td>
-                                        @{
-                                            var status = item.Status.ToString();
-                                            if (status == "Using")
-                                            {
-                                                <span class="badge badge-success text-md">正常</span>
-                                            }
-                                            else if (status == "Malfunction")
-                                            {
-                                                <span class="badge badge-warning text-md">故障</span>
-                                            }
-                                            else if (status == "StopUsing")
-                                            {
-                                                <span class="badge badge-warning text-md">停用</span>
-                                            }
-                                            else if (status == "Allocate")
-                                            {
-                                                <span class="badge badge-warning text-md">调拨</span>
-                                            }
-                                            else if (status == "Scrapped")
-                                            {
-                                                <span class="badge badge-danger text-md">报废</span>
-                                            }
-                                        }
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Remark)
-                                    </td>
-                                    <td>
-                                        <a asp-page="./Details" asp-route-id="@item.ID"><i class="fas fa-search fa-lg" aria-hidden="true"></i></a>
-                                    </td>
-                                </tr>
+                                var lastCalibrationDateTime = item.Calibrations.Last().Date;
+                                if (lastCalibrationDateTime != DateTime.MinValue)
+                                {
+                                    @(lastCalibrationDateTime.AddYears(item.CalibrationCycle).AddDays(-1).ToShortDateString())
+                                }
                             }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Group)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Location)
+                        </td>
+                        <td>
+                            @{
+                                var status = item.Status.ToString();
+                                if (status == "Using")
+                                {
+                                    <span class="badge badge-success text-md">正常</span>
+                                }
+                                else if (status == "Malfunction")
+                                {
+                                    <span class="badge badge-warning text-md">故障</span>
+                                }
+                                else if (status == "StopUsing")
+                                {
+                                    <span class="badge badge-warning text-md">停用</span>
+                                }
+                                else if (status == "Allocate")
+                                {
+                                    <span class="badge badge-warning text-md">调拨</span>
+                                }
+                                else if (status == "Scrapped")
+                                {
+                                    <span class="badge badge-danger text-md">报废</span>
+                                }
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Remark)
+                        </td>
+                        <td>
+                            <a asp-page="./Details" asp-route-id="@item.ID"><i class="fas fa-search fa-lg" aria-hidden="true"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 </div>
 
@@ -119,7 +109,7 @@
     <script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
     <script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
     <script>
-        $(function () {
+        $(document).ready(function () {
             $('#index').DataTable({
                 paging: true,
                 lengthChange: true,

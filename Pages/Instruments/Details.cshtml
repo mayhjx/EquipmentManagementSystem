@@ -45,7 +45,6 @@
                         </p>
                         <div class="card-tools">
                             <a asp-page="./Edit" asp-route-id="@Model.Instrument.ID">
-                                @*<input type="button" class="btn btn-outline-primary btn-xs" value="编辑">*@
                                 <i class="fas fa-edit fa-lg" aria-hidden="true"></i>
                             </a>
                         </div>
@@ -108,13 +107,12 @@
                         </p>
                         <div class="card-tools">
                             <a asp-page="../Calibrations/Create" asp-route-id="@Model.Instrument.ID">
-                                @*<input type="button" class="btn btn-outline-primary btn-xs" value="新建">*@
                                 <i class="fas fa-plus fa-lg" aria-hidden="true"></i>
                             </a>
                         </div>
                     </div>
                     <div class="card-body table-responsive">
-                        <table class="table table-sm">
+                        <table class="table table-sm text-nowrap">
                             <thead>
                                 <tr>
                                     <th>@Html.DisplayNameFor(model => model.Instrument.Calibrations.First().Date)</th>
@@ -153,13 +151,12 @@
                         </p>
                         <div class="card-tools">
                             <a asp-page="../Components/Create" asp-route-id="@Model.Instrument.ID">
-                                @*<input type="button" class="btn btn-outline-primary btn-xs" value="新建">*@
                                 <i class="fas fa-plus fa-lg" aria-hidden="true"></i>
                             </a>
                         </div>
                     </div>
                     <div class="card-body table-responsive">
-                        <table class="table table-sm">
+                        <table class="table table-sm text-nowrap">
                             <thead>
                                 <tr>
                                     <th>@Html.DisplayNameFor(model => model.Instrument.Components.First().Name)</th>
@@ -196,13 +193,12 @@
                         </p>
                         <div class="card-tools">
                             <a asp-page="../Malfunctions/WorkOrders/Create" asp-route-id="@Model.Instrument.ID">
-                                @*<input type="button" class="btn btn-outline-primary btn-xs" value="新建">*@
                                 <i class="fas fa-plus fa-lg" aria-hidden="true"></i>
                             </a>
                         </div>
                     </div>
                     <div class="card-body table-responsive">
-                        <table class="table table-sm">
+                        <table class="table table-sm text-nowrap">
                             <thead>
                                 <tr>
                                     <th>@Html.DisplayNameFor(model => model.Instrument.MalfunctionWorkOrder.First().MalfunctionInfo.BeginTime)</th>

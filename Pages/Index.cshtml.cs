@@ -35,10 +35,10 @@ namespace EquipmentManagementSystem.Pages
                                 .AsNoTracking()
                                 .Include(m => m.Calibrations)
                                 .AsEnumerable()
-                                  where (m.Calibrations.Count > 0 && m.Calibrations.Last().Date != DateTime.MinValue)
-                                  let remainDay = m.Calibrations.Last().Date.AddYears(m.CalibrationCycle) - DateTime.Today
-                                  where remainDay.Days < 30 // 到期前30天内
-                                  select m).ToList();
+                                where (m.Calibrations.Count > 0 && m.Calibrations.Last().Date != DateTime.MinValue)
+                                let remainDay = m.Calibrations.Last().Date.AddYears(m.CalibrationCycle) - DateTime.Today
+                                where remainDay.Days < 30 // 到期前30天内
+                                select m).ToList();
 
             MalfunctionWorkOrderOfFollow = (from m in _malfunctionContext.MalfunctionWorkOrder
                                     .AsNoTracking()

@@ -12,68 +12,68 @@
                 <form method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-row">
-                        <div class="form-group col">
+                        <div class="form-group col-md-4">
                             <label asp-for="Instrument.ID" class="control-label"></label>
                             <input asp-for="Instrument.ID" class="form-control" readonly />
                             <span asp-validation-for="Instrument.ID" class="text-danger"></span>
                         </div>
-                        <div class="form-group col">
+                        <div class="form-group col-md-4">
                             <label asp-for="Instrument.Platform" class="control-label"></label>
                             <input asp-for="Instrument.Platform" class="form-control" />
                             <span asp-validation-for="Instrument.Platform" class="text-danger"></span>
                         </div>
-                        <div class="form-group col">
+                        <div class="form-group col-md-4">
                             <label asp-for="Instrument.Name" class="control-label"></label>
                             <input asp-for="Instrument.Name" class="form-control" />
                             <span asp-validation-for="Instrument.Name" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col">
+                        <div class="form-group col-md-4">
                             <label asp-for="Instrument.StartUsingDate" class="control-label"></label>
                             <input asp-for="Instrument.StartUsingDate" class="form-control" />
                             <span asp-validation-for="Instrument.StartUsingDate" class="text-danger"></span>
                         </div>
-                        <div class="form-group col">
+                        <div class="form-group col-md-4">
                             <label asp-for="Instrument.CalibrationCycle" class="control-label"></label>
                             <input asp-for="Instrument.CalibrationCycle" class="form-control" />
                             <span asp-validation-for="Instrument.CalibrationCycle" class="text-danger"></span>
                         </div>
-                        <div class="form-group col">
+                        <div class="form-group col-md-4">
                             <label asp-for="Instrument.MetrologicalCharacteristics" class="control-label"></label>
                             <input asp-for="Instrument.MetrologicalCharacteristics" class="form-control" />
                             <span asp-validation-for="Instrument.MetrologicalCharacteristics" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col">
+                        <div class="form-group col-md-4">
                             <label asp-for="Instrument.Location" class="control-label"></label>
                             <input asp-for="Instrument.Location" class="form-control" />
                             <span asp-validation-for="Instrument.Location" class="text-danger"></span>
                         </div>
-                        <div class="form-group col">
+                        <div class="form-group col-md-4">
                             <label asp-for="Instrument.Principal" class="control-label"></label>
                             <input asp-for="Instrument.Principal" class="form-control" />
                             <span asp-validation-for="Instrument.Principal" class="text-danger"></span>
                         </div>
-                        <div class="form-group col">
+                        <div class="form-group col-md-4">
                             <label asp-for="Instrument.NewSystemCode" class="control-label"></label>
                             <input asp-for="Instrument.NewSystemCode" class="form-control" />
                             <span asp-validation-for="Instrument.NewSystemCode" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col">
+                        <div class="form-group col-md-4">
                             <label asp-for="Instrument.Group" class="control-label"></label>
                             <select asp-for="Instrument.Group" class="form-control" asp-items="ViewBag.Group"></select>
                             <span asp-validation-for="Instrument.Group" class="text-danger"></span>
                         </div>
-                        <div class="form-group col">
+                        <div class="form-group col-md-4">
                             <label asp-for="Instrument.Projects" class="control-label"></label>
                             <input asp-for="Instrument.Projects" class="form-control" />
                             <span asp-validation-for="Instrument.Projects" class="text-danger"></span>
                         </div>
-                        <div class="form-group col">
+                        <div class="form-group col-md-4">
                             <label asp-for="Instrument.Status" class="control-label"></label>
                             <select asp-for="Instrument.Status" class="form-control" asp-items="@Html.GetEnumSelectList<EquipmentManagementSystem.Models.InstrumentStatus>()">
                             </select>
