@@ -33,12 +33,6 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Maintain
         [BindProperty]
         public Maintenance Maintenance { get; set; }
 
-        public class Upload
-        {
-            [Display(Name = "File")]
-            public IFormFile FormFile { get; set; }
-        }
-
         [BindProperty]
         public Upload FileUpload { get; set; }
 
@@ -96,6 +90,12 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Maintain
                 return NotFound();
             }
 
+            // 如果工单已完成则跳转到工单详情页
+            if (Maintenance.MalfunctionWorkOrder.Progress == WorkOrderProgress.Completed)
+            {
+                return RedirectToPage("../WorkOrders/Details", new { id = Maintenance.MalfunctionWorkOrderID });
+            }
+
             var isAuthorized = await _authorizationService.AuthorizeAsync(User, Maintenance.MalfunctionWorkOrder, Operations.Update);
 
             if (!isAuthorized.Succeeded)
@@ -134,6 +134,12 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Maintain
                 return RedirectToPage("../WorkOrders/Details", new { id = Maintenance.MalfunctionWorkOrderID });
             }
             return Page();
+        }
+
+        public class Upload
+        {
+            [Display(Name = "File")]
+            public IFormFile FormFile { get; set; }
         }
     }
 }

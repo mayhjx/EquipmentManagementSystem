@@ -64,6 +64,12 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Investigate
                 return NotFound();
             }
 
+            // 如果工单已完成则跳转到工单详情页
+            if (Investigation.MalfunctionWorkOrder.Progress == WorkOrderProgress.Completed)
+            {
+                return RedirectToPage("../WorkOrders/Details", new { id = Investigation.MalfunctionWorkOrderID });
+            }
+
             var isAuthorized = await _authorizationService.AuthorizeAsync(User, Investigation.MalfunctionWorkOrder, Operations.Update);
 
             if (!isAuthorized.Succeeded)

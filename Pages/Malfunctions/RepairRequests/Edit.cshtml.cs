@@ -70,6 +70,12 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.RepairRequests
                 return Forbid();
             }
 
+            // 如果信息已确认或工单已完成则跳转到工单详情页
+            if (RepairRequest.IsConfirm || RepairRequest.MalfunctionWorkOrder.Progress == WorkOrderProgress.Completed)
+            {
+                return RedirectToPage("../WorkOrders/Details", new { id = RepairRequest.MalfunctionWorkOrderID });
+            }
+
             if (await TryUpdateModelAsync<RepairRequest>(
                     RepairRequest,
                     "RepairRequest",

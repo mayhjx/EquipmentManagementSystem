@@ -32,15 +32,6 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Validate
         [BindProperty]
         public Validation Validation { get; set; }
 
-        public class Upload
-        {
-            [Display(Name = "性能验证报告")]
-            public IFormFile PerformanceReportFile { get; set; }
-
-            [Display(Name = "附件")]
-            public IFormFile Attachment { get; set; }
-        }
-
         [BindProperty]
         public Upload FileUpload { get; set; }
 
@@ -110,6 +101,12 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Validate
                 return NotFound();
             }
 
+            // 如果信息已确认或工单已完成则跳转到工单详情页
+            if (Validation.IsConfirm || Validation.MalfunctionWorkOrder.Progress == WorkOrderProgress.Completed)
+            {
+                return RedirectToPage("../WorkOrders/Details", new { id = Validation.MalfunctionWorkOrderID });
+            }
+
             var isAuthorized = await _authorizationService.AuthorizeAsync(User, Validation.MalfunctionWorkOrder, Operations.Update);
 
             if (!isAuthorized.Succeeded)
@@ -164,6 +161,15 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Validate
                 return RedirectToPage("../WorkOrders/Details", new { id = Validation.MalfunctionWorkOrderID });
             }
             return Page();
+        }
+
+        public class Upload
+        {
+            [Display(Name = "性能验证报告")]
+            public IFormFile PerformanceReportFile { get; set; }
+
+            [Display(Name = "附件")]
+            public IFormFile Attachment { get; set; }
         }
     }
 }

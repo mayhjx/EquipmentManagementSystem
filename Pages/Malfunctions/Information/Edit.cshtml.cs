@@ -33,12 +33,6 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Information
         [BindProperty]
         public MalfunctionInfo MalfunctionInfo { get; set; }
 
-        public class Upload
-        {
-            [Display(Name = "File")]
-            public IFormFile FormFile { get; set; }
-        }
-
         [BindProperty]
         public Upload FileUpload { get; set; }
 
@@ -97,6 +91,12 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Information
                 return NotFound();
             }
 
+            // 如果信息已确认或工单已完成则跳转到工单详情页
+            if (MalfunctionInfo.IsConfirm || MalfunctionInfo.MalfunctionWorkOrder.Progress == WorkOrderProgress.Completed)
+            {
+                return RedirectToPage("../WorkOrders/Details", new { id = MalfunctionInfo.MalfunctionWorkOrderID });
+            }
+
             var isAuthorized = await _authorizationService.AuthorizeAsync(User, MalfunctionInfo.MalfunctionWorkOrder, Operations.Update);
 
             if (!isAuthorized.Succeeded)
@@ -132,6 +132,12 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Information
                 return RedirectToPage("../WorkOrders/Details", new { id = MalfunctionInfo.MalfunctionWorkOrderID });
             }
             return Page();
+        }
+
+        public class Upload
+        {
+            [Display(Name = "File")]
+            public IFormFile FormFile { get; set; }
         }
     }
 }

@@ -23,9 +23,24 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
 
         public IActionResult OnGet(string id)
         {
-            // 获取用户所属项目组的仪器编号
-            //var userGroup = _userManager.GetUserAsync(User).Result.Group.Trim();
-            ViewData["InstrumentID"] = new SelectList(_context.Set<Instrument>().OrderBy(m => m.ID), "ID", "ID", id);
+            
+            var isAuthorized = User.IsInRole(Constants.ManagerRole) ||
+                                User.IsInRole(Constants.DirectorRole);
+            if (isAuthorized)
+            {
+                // 获取所有仪器编号
+                ViewData["InstrumentID"] = 
+                    new SelectList(_context.Set<Instrument>().OrderBy(m => m.ID), "ID", "ID", id);
+            }
+            else 
+            {
+                // 获取技术员或设备负责人所属项目组的仪器编号
+                var userGroup = _userManager.GetUserAsync(User).Result.Group.Trim();
+                ViewData["InstrumentID"] = 
+                    new SelectList(_context.Set<Instrument>().Where(m => m.Group == userGroup)
+                                                            .OrderBy(m => m.ID), "ID", "ID", id);
+            }
+            
             return Page();
         }
 
