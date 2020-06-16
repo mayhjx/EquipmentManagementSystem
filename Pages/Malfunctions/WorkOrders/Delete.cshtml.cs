@@ -1,62 +1,73 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
+﻿using EquipmentManagementSystem.Authorization;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
+using EquipmentManagementSystem.Pages.Instruments;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
 {
-    public class DeleteModel : PageModel
+    public class DeleteModel : BasePageModel
     {
-        private readonly EquipmentManagementSystem.Data.MalfunctionContext _context;
-
-        public DeleteModel(EquipmentManagementSystem.Data.MalfunctionContext context)
+        public DeleteModel(MalfunctionContext context,
+            IAuthorizationService authorizationService,
+            UserManager<User> userManager)
+            : base(context, authorizationService, userManager)
         {
-            _context = context;
         }
 
         [BindProperty]
         public MalfunctionWorkOrder MalfunctionWorkOrder { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
             MalfunctionWorkOrder = await _context.MalfunctionWorkOrder
-                .Include(m => m.Instrument).FirstOrDefaultAsync(m => m.ID == id);
+                .Include(m => m.Instrument)
+                .FirstOrDefaultAsync(m => m.ID == id);
 
             if (MalfunctionWorkOrder == null)
             {
                 return NotFound();
             }
+
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, MalfunctionWorkOrder, Operations.Delete);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync(int id)
         {
-            if (id == null)
+            MalfunctionWorkOrder = await _context.MalfunctionWorkOrder
+                .Include(m => m.Instrument)
+                .FirstOrDefaultAsync(m => m.ID == id);
+
+            if (MalfunctionWorkOrder == null)
             {
                 return NotFound();
             }
 
-            MalfunctionWorkOrder = await _context.MalfunctionWorkOrder.FindAsync(id);
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, MalfunctionWorkOrder, Operations.Delete);
 
-            if (MalfunctionWorkOrder != null)
+            if (!isAuthorized.Succeeded)
             {
-                // 改变故障设备的状态
-                MalfunctionWorkOrder.Instrument = await _context.Set<Instrument>().FindAsync(MalfunctionWorkOrder.InstrumentID);
-                MalfunctionWorkOrder.Instrument.Status = InstrumentStatus.Using;
-
-                _context.MalfunctionWorkOrder.Remove(MalfunctionWorkOrder);
-                await _context.SaveChangesAsync();
+                return Forbid();
             }
+
+            // 改变故障设备的状态
+            MalfunctionWorkOrder.Instrument = await _context.Set<Instrument>().FindAsync(MalfunctionWorkOrder.InstrumentID);
+            MalfunctionWorkOrder.Instrument.Status = InstrumentStatus.Using;
+
+            _context.MalfunctionWorkOrder.Remove(MalfunctionWorkOrder);
+            await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
         }

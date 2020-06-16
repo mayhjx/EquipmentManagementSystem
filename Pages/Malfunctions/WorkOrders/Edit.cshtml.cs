@@ -1,31 +1,31 @@
-﻿using EquipmentManagementSystem.Models;
+﻿using EquipmentManagementSystem.Authorization;
+using EquipmentManagementSystem.Data;
+using EquipmentManagementSystem.Models;
+using EquipmentManagementSystem.Pages.Instruments;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
 {
-    public class EditModel : PageModel
+    public class EditModel : BasePageModel
     {
-        private readonly EquipmentManagementSystem.Data.MalfunctionContext _context;
-
-        public EditModel(EquipmentManagementSystem.Data.MalfunctionContext context)
+        public EditModel(MalfunctionContext context,
+            IAuthorizationService authorization,
+            UserManager<User> userManager)
+            : base(context, authorization, userManager)
         {
-            _context = context;
         }
 
         [BindProperty]
         public MalfunctionWorkOrder MalfunctionWorkOrder { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             MalfunctionWorkOrder = await _context.MalfunctionWorkOrder
+                                    .Include(m => m.Instrument)
                                     .FirstOrDefaultAsync(m => m.ID == id);
 
             if (MalfunctionWorkOrder == null)
@@ -33,24 +33,32 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
                 return NotFound();
             }
 
-            //return RedirectToPage("Edit");
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, MalfunctionWorkOrder, Operations.Update);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             MalfunctionWorkOrder = await _context.MalfunctionWorkOrder
                                 .Include(m => m.Instrument)
-                                .FirstAsync(m => m.ID == id);
+                                .FirstOrDefaultAsync(m => m.ID == id);
 
             if (MalfunctionWorkOrder == null)
             {
                 return NotFound();
+            }
+
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, MalfunctionWorkOrder, Operations.Update);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
             }
 
             if (await TryUpdateModelAsync<MalfunctionWorkOrder>(
@@ -73,20 +81,22 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
         }
 
         // 更新工单进度为已完成
-        public async Task<IActionResult> OnPutCompleteWorkOrderAsync(int? id)
+        public async Task<IActionResult> OnPutCompleteWorkOrderAsync(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             MalfunctionWorkOrder = await _context.MalfunctionWorkOrder
                                 .Include(m => m.Instrument)
-                                .FirstAsync(m => m.ID == id);
+                                .FirstOrDefaultAsync(m => m.ID == id);
 
             if (MalfunctionWorkOrder == null)
             {
                 return NotFound();
+            }
+
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, MalfunctionWorkOrder, Operations.Update);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
             }
 
             if (await TryUpdateModelAsync<MalfunctionWorkOrder>(

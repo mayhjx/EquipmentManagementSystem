@@ -1,56 +1,74 @@
-﻿using EquipmentManagementSystem.Models;
+﻿using EquipmentManagementSystem.Authorization;
+using EquipmentManagementSystem.Data;
+using EquipmentManagementSystem.Models;
+using EquipmentManagementSystem.Pages.Instruments;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions.Investigate
 {
-    public class EditModel : PageModel
+    public class EditModel : BasePageModel
     {
-        private readonly EquipmentManagementSystem.Data.MalfunctionContext _context;
-
-        public EditModel(EquipmentManagementSystem.Data.MalfunctionContext context)
+        public EditModel(MalfunctionContext context,
+            IAuthorizationService authorizationService,
+            UserManager<User> userManager)
+            : base(context, authorizationService, userManager)
         {
-            _context = context;
         }
 
         [BindProperty]
         public Investigation Investigation { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             Investigation = await _context.Investigation
-                            .FirstOrDefaultAsync(m => m.ID == id);
+                                .Include(m => m.MalfunctionWorkOrder)
+                                .ThenInclude(m => m.Instrument)
+                                .FirstOrDefaultAsync(m => m.ID == id);
 
             if (Investigation == null)
             {
                 return NotFound();
             }
+
+            // 如果工单已完成则跳转到工单详情页
+            if (Investigation.MalfunctionWorkOrder.Progress == WorkOrderProgress.Completed)
+            {
+                return RedirectToPage("../WorkOrders/Details", new { id = Investigation.MalfunctionWorkOrderID });
+            }
+
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, Investigation.MalfunctionWorkOrder, Operations.Update);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+
             return Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             Investigation = await _context.Investigation
                                 .Include(m => m.MalfunctionWorkOrder)
-                                .FirstAsync(m => m.ID == id);
+                                .ThenInclude(m => m.Instrument)
+                                .FirstOrDefaultAsync(m => m.ID == id);
 
             if (Investigation == null)
             {
                 return NotFound();
+            }
+
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, Investigation.MalfunctionWorkOrder, Operations.Update);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
             }
 
             if (await TryUpdateModelAsync<Investigation>(
@@ -63,6 +81,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Investigate
                 {
                     Investigation.MalfunctionWorkOrder.Progress = WorkOrderProgress.Investigated;
                 }
+
                 await _context.SaveChangesAsync();
                 return RedirectToPage("../WorkOrders/Details", new { id = Investigation.MalfunctionWorkOrderID });
             }

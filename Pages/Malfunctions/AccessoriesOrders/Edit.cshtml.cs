@@ -1,53 +1,72 @@
-﻿using EquipmentManagementSystem.Models;
+﻿using EquipmentManagementSystem.Authorization;
+using EquipmentManagementSystem.Data;
+using EquipmentManagementSystem.Models;
+using EquipmentManagementSystem.Pages.Instruments;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions.AccessoriesOrders
 {
-    public class EditModel : PageModel
+    public class EditModel : BasePageModel
     {
-        private readonly EquipmentManagementSystem.Data.MalfunctionContext _context;
-
-        public EditModel(EquipmentManagementSystem.Data.MalfunctionContext context)
+        public EditModel(MalfunctionContext context,
+            IAuthorizationService authorizationService,
+            UserManager<User> userManager)
+            : base(context, authorizationService, userManager)
         {
-            _context = context;
         }
 
         [BindProperty]
         public AccessoriesOrder AccessoriesOrder { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            AccessoriesOrder = await _context.AccessoriesOrder.FirstOrDefaultAsync(m => m.ID == id);
+            AccessoriesOrder = await _context.AccessoriesOrder
+                                .Include(m => m.MalfunctionWorkOrder)
+                                .ThenInclude(m => m.Instrument)
+                                .FirstOrDefaultAsync(m => m.ID == id);
 
             if (AccessoriesOrder == null)
             {
                 return NotFound();
             }
+
+            // 如果工单已完成则跳转到工单详情页
+            if (AccessoriesOrder.MalfunctionWorkOrder.Progress == WorkOrderProgress.Completed)
+            {
+                return RedirectToPage("../WorkOrders/Details", new { id = AccessoriesOrder.MalfunctionWorkOrderID });
+            }
+
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, AccessoriesOrder.MalfunctionWorkOrder, Operations.Update);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             AccessoriesOrder = await _context.AccessoriesOrder
                                 .Include(m => m.MalfunctionWorkOrder)
-                                .FirstAsync(m => m.ID == id);
+                                .ThenInclude(m => m.Instrument)
+                                .FirstOrDefaultAsync(m => m.ID == id);
 
             if (AccessoriesOrder == null)
             {
                 return NotFound();
+            }
+
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, AccessoriesOrder.MalfunctionWorkOrder, Operations.Update);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
             }
 
             if (await TryUpdateModelAsync<AccessoriesOrder>(

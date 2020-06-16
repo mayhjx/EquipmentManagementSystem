@@ -18,13 +18,8 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
 
         public MalfunctionWorkOrder MalfunctionWorkOrder { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             MalfunctionWorkOrder = await _context.MalfunctionWorkOrder
                                     .Include(m => m.MalfunctionInfo)
                                     .Include(m => m.Investigation)
@@ -39,6 +34,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
             {
                 return NotFound();
             }
+
             return Page();
         }
     }

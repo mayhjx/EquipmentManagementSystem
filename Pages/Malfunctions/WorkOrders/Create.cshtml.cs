@@ -1,8 +1,10 @@
-﻿using EquipmentManagementSystem.Data;
+﻿using EquipmentManagementSystem.Authorization;
+using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
+using EquipmentManagementSystem.Pages.Instruments;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Linq;
@@ -10,23 +12,19 @@ using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
 {
-    public class CreateModel : PageModel
+    public class CreateModel : BasePageModel
     {
-        private readonly MalfunctionContext _context;
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
-
         public CreateModel(MalfunctionContext context,
-            SignInManager<User> signInManager,
+            IAuthorizationService authorizationService,
             UserManager<User> userManager)
+            : base(context, authorizationService, userManager)
         {
-            _context = context; 
-            _userManager = userManager;
-            _signInManager = signInManager;
         }
 
         public IActionResult OnGet(string id)
         {
+            // 获取用户所属项目组的仪器编号
+            //var userGroup = _userManager.GetUserAsync(User).Result.Group.Trim();
             ViewData["InstrumentID"] = new SelectList(_context.Set<Instrument>().OrderBy(m => m.ID), "ID", "ID", id);
             return Page();
         }
@@ -55,12 +53,16 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
             MalfunctionWorkOrder.Validation = new Validation { };
 
             MalfunctionWorkOrder.CreatedTime = DateTime.Now;
-            if (_signInManager.IsSignedIn(User))
+
+            MalfunctionWorkOrder.Creator = _userManager.GetUserAsync(User).Result.Name;
+
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, MalfunctionWorkOrder, Operations.Create);
+
+            if (!isAuthorized.Succeeded)
             {
-                var user = await _userManager.GetUserAsync(User);
-                MalfunctionWorkOrder.Creator = user.Name;
+                return Forbid();
             }
-            
+
             _context.MalfunctionWorkOrder.Add(MalfunctionWorkOrder);
 
             await _context.SaveChangesAsync();

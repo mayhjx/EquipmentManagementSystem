@@ -1,9 +1,12 @@
-﻿using EquipmentManagementSystem.Data;
+﻿using EquipmentManagementSystem.Authorization;
+using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
+using EquipmentManagementSystem.Pages.Instruments;
 using EquipmentManagementSystem.Utilities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.ComponentModel.DataAnnotations;
@@ -13,15 +16,17 @@ using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions.Validate
 {
-    public class EditModel : PageModel
+    public class EditModel : BasePageModel
     {
-        private readonly MalfunctionContext _context;
         private readonly long _fileSizeLimit;
 
-        public EditModel(MalfunctionContext context, IConfiguration config)
+        public EditModel(MalfunctionContext context,
+            IAuthorizationService authorization,
+            UserManager<User> userManager,
+            IConfiguration config)
+            : base(context, authorization, userManager)
         {
             _fileSizeLimit = config.GetValue<long>("FileSizeLimit");
-            _context = context;
         }
 
         [BindProperty]
@@ -39,30 +44,37 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Validate
         [BindProperty]
         public Upload FileUpload { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            Validation = await _context.Validation.FirstOrDefaultAsync(m => m.ID == id);
+            Validation = await _context.Validation
+                            .Include(m => m.MalfunctionWorkOrder)
+                            .ThenInclude(m => m.Instrument)
+                            .FirstOrDefaultAsync(m => m.ID == id);
 
             if (Validation == null)
             {
                 return NotFound();
             }
+
+            // 如果信息已确认或工单已完成则跳转到工单详情页
+            if (Validation.IsConfirm || Validation.MalfunctionWorkOrder.Progress == WorkOrderProgress.Completed)
+            {
+                return RedirectToPage("../WorkOrders/Details", new { id = Validation.MalfunctionWorkOrderID });
+            }
+
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, Validation.MalfunctionWorkOrder, Operations.Update);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+
             return Page();
         }
 
-        public async Task<IActionResult> OnGetDownloadAttachmentAsync(int? id)
+        public async Task<IActionResult> OnGetDownloadAttachmentAsync(int id)
         {
-            if (id == null)
-            {
-                return Page();
-            }
-
-            var requestFile = await _context.Validation.SingleOrDefaultAsync(m => m.ID == id);
+            var requestFile = await _context.Validation.FindAsync(id);
 
             if (requestFile == null)
             {
@@ -73,14 +85,9 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Validate
             return File(requestFile.Attachment, MediaTypeNames.Application.Octet, WebUtility.HtmlEncode(requestFile.AttachmentName));
         }
 
-        public async Task<IActionResult> OnGetDownloadPerformanceReportFileAsync(int? id)
+        public async Task<IActionResult> OnGetDownloadPerformanceReportFileAsync(int id)
         {
-            if (id == null)
-            {
-                return Page();
-            }
-
-            var requestFile = await _context.Validation.SingleOrDefaultAsync(m => m.ID == id);
+            var requestFile = await _context.Validation.FindAsync(id);
 
             if (requestFile == null)
             {
@@ -91,20 +98,23 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Validate
             return File(requestFile.PerformanceReportFile, MediaTypeNames.Application.Octet, WebUtility.HtmlEncode(requestFile.PerformanceReportFileName));
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             Validation = await _context.Validation
-                                .Include(m => m.MalfunctionWorkOrder)
-                                .FirstAsync(m => m.ID == id);
+                            .Include(m => m.MalfunctionWorkOrder)
+                            .ThenInclude(m => m.Instrument)
+                            .FirstOrDefaultAsync(m => m.ID == id);
 
             if (Validation == null)
             {
                 return NotFound();
+            }
+
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, Validation.MalfunctionWorkOrder, Operations.Update);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
             }
 
             if (await TryUpdateModelAsync<Validation>(
