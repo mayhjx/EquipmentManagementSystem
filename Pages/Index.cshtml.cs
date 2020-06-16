@@ -1,14 +1,15 @@
 ﻿using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
 
 namespace EquipmentManagementSystem.Pages
 {
+    [AllowAnonymous]
     public class IndexModel : PageModel
     {
         private readonly EquipmentContext _context;
@@ -19,7 +20,7 @@ namespace EquipmentManagementSystem.Pages
             _context = context;
             _malfunctionContext = malfunctionContext;
         }
-        
+
         public int InstrumentNumber { get; set; }
 
         // 快到期设备
@@ -35,17 +36,17 @@ namespace EquipmentManagementSystem.Pages
                                 .AsNoTracking()
                                 .Include(m => m.Calibrations)
                                 .AsEnumerable()
-                                where (m.Calibrations.Count > 0 && m.Calibrations.Last().Date != DateTime.MinValue)
-                                let remainDay = m.Calibrations.Last().Date.AddYears(m.CalibrationCycle) - DateTime.Today
-                                where remainDay.Days < 30 // 到期前30天内
-                                select m).ToList();
+                                  where (m.Calibrations.Count > 0 && m.Calibrations.Last().Date != DateTime.MinValue)
+                                  let remainDay = m.Calibrations.Last().Date.AddYears(m.CalibrationCycle) - DateTime.Today
+                                  where remainDay.Days < 30 // 到期前30天内
+                                  select m).ToList();
 
             MalfunctionWorkOrderOfFollow = (from m in _malfunctionContext.MalfunctionWorkOrder
                                     .AsNoTracking()
                                     .Include(m => m.MalfunctionInfo)
                                     .AsEnumerable()
-                                    where m.Progress != WorkOrderProgress.Completed
-                                    select m).ToList();
+                                            where m.Progress != WorkOrderProgress.Completed
+                                            select m).ToList();
         }
     }
 }

@@ -1,16 +1,15 @@
-using System;
+﻿using EquipmentManagementSystem.Data;
+using EquipmentManagementSystem.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using EquipmentManagementSystem.Data;
-using EquipmentManagementSystem.Models;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EquipmentManagementSystem.Pages.Instruments
 {
+    [AllowAnonymous]
     public class IndexModel : PageModel
     {
         private readonly EquipmentContext _context;
@@ -20,7 +19,7 @@ namespace EquipmentManagementSystem.Pages.Instruments
             _context = context;
         }
 
-        public IList<Instrument> Instrument { get;set; }
+        public IList<Instrument> Instrument { get; set; }
 
         public async Task OnGetAsync()
         {
