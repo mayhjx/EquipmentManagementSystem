@@ -1,4 +1,5 @@
-﻿using EquipmentManagementSystem.Models;
+﻿using EquipmentManagementSystem.Data;
+using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -13,9 +14,10 @@ namespace EquipmentManagementSystem.Areas.Identity.Pages.Account.UserManagement
     {
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-
-        public CreateModel(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+        private readonly EquipmentContext _context;
+        public CreateModel(EquipmentContext context, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
+            _context = context;
             _userManager = userManager;
             _roleManager = roleManager;
         }
@@ -60,8 +62,8 @@ namespace EquipmentManagementSystem.Areas.Identity.Pages.Account.UserManagement
 
         public IActionResult OnGet()
         {
-            //ViewData["Roles"] = new SelectList(_roleManager.Roles.ToList(), "Name", "Name");
             ViewData["Roles"] = new SelectList(_roleManager.Roles.Where(u => u.Name != "Administrator").ToList(), "Name", "Name");
+            ViewData["Groups"] = new SelectList(_context.Groups, "Name", "Name");
             return Page();
         }
 

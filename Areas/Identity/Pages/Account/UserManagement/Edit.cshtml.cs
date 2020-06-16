@@ -1,4 +1,5 @@
-﻿using EquipmentManagementSystem.Models;
+﻿using EquipmentManagementSystem.Data;
+using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -13,9 +14,11 @@ namespace EquipmentManagementSystem.Areas.Identity.Pages.Account.UserManagement
     {
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly EquipmentContext _context;
 
-        public EditModel(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+        public EditModel(EquipmentContext context, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
+            _context = context;
             _userManager = userManager;
             _roleManager = roleManager;
         }
@@ -45,7 +48,9 @@ namespace EquipmentManagementSystem.Areas.Identity.Pages.Account.UserManagement
                 return NotFound();
             }
 
-            ViewData["Roles"] = new SelectList(_roleManager.Roles.Where(u => u.Name != "Administrator").ToList(), "Name", "Name");
+            ViewData["Roles"] = new SelectList(_roleManager.Roles.Where(u => u.Name != "Administrator").ToList(), "Name", "Name", _userManager.GetRolesAsync(userToUpdate).Result[0]);
+            ViewData["Groups"] = new SelectList(_context.Groups, "Name", "Name", userToUpdate.Group);
+
             return Page();
         }
 
