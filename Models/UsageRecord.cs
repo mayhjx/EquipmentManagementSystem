@@ -13,7 +13,7 @@ namespace EquipmentManagementSystem.Models
 
         [Display(Name = "结束时间")]
         [DataType(DataType.DateTime)]
-        public DateTime EndTime { get; set; }
+        public DateTime? EndTime { get; set; }
 
         [Display(Name = "样品数量")]
         public int SampleNumber { get; set; }
@@ -31,5 +31,9 @@ namespace EquipmentManagementSystem.Models
         public string ProjectName { get; set; }
 
         public Project Project { get; set; }
+
+        [Display(Name = "使用者")]
+        [StringLength(10)]
+        public string Creator { get; set; }
     }
 }
