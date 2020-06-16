@@ -8,9 +8,9 @@
 
 <div class="card">
     <h4 class="card-header">
-        历史记录
+        使用记录
         <a asp-page="Create">
-            <input type="button" class="btn btn-outline-primary btn-sm" value="新建" style="margin-left: 10px;">
+            <input type="button" class="btn btn-outline-primary btn-sm" value="新建记录" style="margin-left: 10px;">
         </a>
     </h4>
 
@@ -34,7 +34,7 @@
                         @Html.DisplayNameFor(model => model.UsageRecord[0].SampleNumber)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.UsageRecord[0].TestTime)
+                        @Html.DisplayNameFor(model => model.UsageRecord[0].Creator)
                     </th>
                     <th></th>
                 </tr>
@@ -59,10 +59,11 @@
                             @Html.DisplayFor(modelItem => item.SampleNumber)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.TestTime)
+                            @Html.DisplayFor(modelItem => item.Creator)
                         </td>
 
                         <td>
+                            <a asp-page="./Edit" asp-route-id="@item.Id">编辑</a> |
                             <a asp-page="./Delete" asp-route-id="@item.Id">删除</a>
                         </td>
                     </tr>
