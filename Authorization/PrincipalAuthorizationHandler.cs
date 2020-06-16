@@ -33,7 +33,7 @@ namespace EquipmentManagementSystem.Authorization
             }
 
             // 返回的内容含有换行符\r\n !!!
-            var group = _userManager.GetUserAsync(context.User).Result.Group.Trim();
+            var group = _userManager.GetUserAsync(context.User).Result.Group;
 
             if (resource.Instrument.Group == group && context.User.IsInRole(Constants.PrincipalRole))
             {

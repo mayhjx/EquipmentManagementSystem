@@ -7,7 +7,7 @@ namespace EquipmentManagementSystem.Models
         public int Id { get; set; }
 
         [StringLength(50)]
-        [Display(Name = "项目名")]
+        [Display(Name = "项目名称")]
         public string Name { get; set; }
     }
 }

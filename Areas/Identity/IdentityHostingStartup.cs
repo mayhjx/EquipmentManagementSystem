@@ -70,7 +70,7 @@ namespace EquipmentManagementSystem.Areas.Identity
 
                 services.AddScoped<IAuthorizationHandler, TechnicianAuthorizationHandler>();
                 services.AddScoped<IAuthorizationHandler, PrincipalAuthorizationHandler>();
-                services.AddScoped<IAuthorizationHandler, ManagerAuthorizationHandler>();
+                services.AddSingleton<IAuthorizationHandler, ManagerAuthorizationHandler>();
                 services.AddSingleton<IAuthorizationHandler, DirectorAuthorizationHandler>();
                 services.AddSingleton<IAuthorizationHandler, AdministratorAuthorizationHandler>();
 
