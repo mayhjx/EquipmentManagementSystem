@@ -1,18 +1,17 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using EquipmentManagementSystem.Models
 @using EquipmentManagementSystem.Data
+@using EquipmentManagementSystem.Authorization
 
 @inject SignInManager<User> signInManager
 @inject UserManager<User> userManager
 
 @if (signInManager.IsSignedIn(User))
 {
-    var currentUser = await userManager.GetUserAsync(User);
 
-    var isAdmin = currentUser != null
-        && await userManager.IsInRoleAsync(
-            currentUser,
-            "Administrator");
+    var isAdmin = User.IsInRole(Constants.AdministratorRole);
+    var isDirector = User.IsInRole(Constants.DirectorRole);
+    var isManager = User.IsInRole(Constants.ManagerRole);
 
     if (isAdmin)
     {
@@ -33,23 +32,73 @@
                 </p>
             </a>
         </li>
-    }
 
-    <li class="nav-header">后台管理</li>
-    <li class="nav-item">
-        <a asp-page="/Management/Groups/Index" class="nav-link">
-            <i class="nav-icon far fa-circle"></i>
-            <p>
-                项目组管理
-            </p>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a asp-page="/Management/Projects/Index" class="nav-link">
-            <i class="nav-icon far fa-circle"></i>
-            <p>
-                项目管理
-            </p>
-        </a>
-    </li>
+        <li class="nav-header">后台管理</li>
+        <li class="nav-item">
+            <a asp-page="/Management/Groups/Index" class="nav-link">
+                <i class="nav-icon far fa-circle"></i>
+                <p>
+                    项目组管理
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/Management/Projects/Index" class="nav-link">
+                <i class="nav-icon far fa-circle"></i>
+                <p>
+                    项目管理
+                </p>
+            </a>
+        </li>
+    }
+    else if (isDirector)
+    {
+        <li class="nav-header">权限管理</li>
+        <li class="nav-item">
+            <a asp-page="/Account/UserManagement/Index" asp-area="Identity" class="nav-link">
+                <i class="nav-icon fas fa-user"></i>
+                <p>
+                    用户管理
+                </p>
+            </a>
+        </li>
+
+        <li class="nav-header">后台管理</li>
+        <li class="nav-item">
+            <a asp-page="/Management/Groups/Index" class="nav-link">
+                <i class="nav-icon far fa-circle"></i>
+                <p>
+                    项目组管理
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/Management/Projects/Index" class="nav-link">
+                <i class="nav-icon far fa-circle"></i>
+                <p>
+                    项目管理
+                </p>
+            </a>
+        </li>
+    }
+    else if (isManager)
+    {
+        <li class="nav-header">后台管理</li>
+        <li class="nav-item">
+            <a asp-page="/Management/Groups/Index" class="nav-link">
+                <i class="nav-icon far fa-circle"></i>
+                <p>
+                    项目组管理
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/Management/Projects/Index" class="nav-link">
+                <i class="nav-icon far fa-circle"></i>
+                <p>
+                    项目管理
+                </p>
+            </a>
+        </li>
+    }
 }

@@ -5,50 +5,53 @@
     ViewData["Title"] = "编辑";
 }
 
-<div class="card">
-    <div class="card-body">
-        <div class="row">
-            <div class="col-md-4">
-                <form method="post">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" asp-for="Component.ID" />
-                    <div class="form-group">
-                        <label asp-for="Component.InstrumentID" class="control-label"></label>
-                        <input asp-for="Component.InstrumentID" class="form-control" readonly />
-                        <span asp-validation-for="Component.InstrumentID" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Component.SerialNumber" class="control-label"></label>
-                        <input asp-for="Component.SerialNumber" class="form-control" />
-                        <span asp-validation-for="Component.SerialNumber" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Component.Name" class="control-label"></label>
-                        <input asp-for="Component.Name" class="form-control" />
-                        <span asp-validation-for="Component.Name" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Component.Model" class="control-label"></label>
-                        <input asp-for="Component.Model" class="form-control" />
-                        <span asp-validation-for="Component.Model" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Component.Brand" class="control-label"></label>
-                        <input asp-for="Component.Brand" class="form-control" />
-                        <span asp-validation-for="Component.Brand" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" value="保存" class="btn btn-primary" />
-                    </div>
-                </form>
+    <div class="card">
+        <div class="card-header">
+            <h4>部件信息</h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="Component.ID" />
+                        <div class="form-group">
+                            <label asp-for="Component.InstrumentID" class="control-label"></label>
+                            <input asp-for="Component.InstrumentID" class="form-control" readonly />
+                            <span asp-validation-for="Component.InstrumentID" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Component.SerialNumber" class="control-label"></label>
+                            <input asp-for="Component.SerialNumber" class="form-control" />
+                            <span asp-validation-for="Component.SerialNumber" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Component.Name" class="control-label"></label>
+                            <input asp-for="Component.Name" class="form-control" />
+                            <span asp-validation-for="Component.Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Component.Model" class="control-label"></label>
+                            <input asp-for="Component.Model" class="form-control" />
+                            <span asp-validation-for="Component.Model" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Component.Brand" class="control-label"></label>
+                            <input asp-for="Component.Brand" class="form-control" />
+                            <span asp-validation-for="Component.Brand" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="保存" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div>
+                <a asp-page="../Instruments/Details" asp-route-id="@Model.Component.InstrumentID">返回</a>
             </div>
         </div>
-
-        <div>
-            <a asp-page="../Instruments/Details" asp-route-id="@Model.Component.InstrumentID">返回</a>
-        </div>
     </div>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -1,6 +1,7 @@
 ﻿@page
 @model EquipmentManagementSystem.Areas.Identity.Pages.Account.RoleManagement.CreateModel
 @{
+    ViewData["Title"] = "新建角色";
 }
 
 <div class="card">
@@ -10,7 +11,7 @@
                 <form method="post" role="form">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group col">
-                        <label asp-for="Role.Name" class="control-label"></label>
+                        <label class="control-label">角色</label>
                         <input asp-for="Role.Name" class="form-control" />
                         <span asp-validation-for="Role.Name" class="text-danger"></span>
                     </div>
