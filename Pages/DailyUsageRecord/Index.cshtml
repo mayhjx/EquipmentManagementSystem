@@ -15,70 +15,61 @@
     </h4>
 
     <div class="card-body">
-        <div id="index_wrapper" class="dataTables_wrapper dt-bootstrap4">
-            <div class="row">
-                <div class="col-sm-12 col-md-6"></div>
-                <div class="col-sm-12 col-md-6"></div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <table id="index" class="table table-hover dataTable dtr-inline">
-                        <thead>
-                            <tr>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecord[0].InstrumentId)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecord[0].ProjectName)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecord[0].BeginTime)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecord[0].EndTime)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecord[0].SampleNumber)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecord[0].TestTime)
-                                </th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model.UsageRecord)
-                            {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.InstrumentId)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.ProjectName)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.BeginTime)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.EndTime)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.SampleNumber)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.TestTime)
-                                    </td>
+        <table id="index" class="table table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.UsageRecord[0].InstrumentId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.UsageRecord[0].ProjectName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.UsageRecord[0].BeginTime)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.UsageRecord[0].EndTime)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.UsageRecord[0].SampleNumber)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.UsageRecord[0].TestTime)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.UsageRecord)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.InstrumentId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProjectName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BeginTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EndTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SampleNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TestTime)
+                        </td>
 
-                                    <td>
-                                        <a asp-page="./Delete" asp-route-id="@item.Id">删除</a>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+                        <td>
+                            <a asp-page="./Delete" asp-route-id="@item.Id">删除</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
     </div>
 </div>
 
@@ -86,7 +77,7 @@
     <script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
     <script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
     <script>
-        $(function () {
+        $(document).ready(function () {
             $('#index').DataTable({
                 paging: true,
                 lengthChange: true,
