@@ -1,9 +1,7 @@
 ﻿using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Areas.Identity.Data
@@ -21,9 +19,7 @@ namespace EquipmentManagementSystem.Areas.Identity.Data
 
         private static async Task EnsureAdminAsync(UserManager<User> userManager)
         {
-            var Admin = await userManager.Users
-                .Where(x => x.UserName == "Admin")
-                .SingleOrDefaultAsync();
+            var Admin = await userManager.FindByNameAsync("Admin");
 
             if (Admin != null) return;
 
