@@ -1,7 +1,10 @@
-﻿using EquipmentManagementSystem.Data;
+﻿using EquipmentManagementSystem.Authorization;
+using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -55,6 +58,21 @@ namespace EquipmentManagementSystem.Areas.Identity
                     options.AccessDeniedPath = "/Identity/Account/AccessDenied";
                     options.SlidingExpiration = true;
                 });
+
+                // Set the default authentication policy to require users to be authenticated
+                services.AddControllers(config =>
+                {
+                    var policy = new AuthorizationPolicyBuilder()
+                                    .RequireAuthenticatedUser()
+                                    .Build();
+                    config.Filters.Add(new AuthorizeFilter(policy));
+                });
+
+                services.AddScoped<IAuthorizationHandler, TechnicianAuthorizationHandler>();
+                services.AddScoped<IAuthorizationHandler, PrincipalAuthorizationHandler>();
+                services.AddScoped<IAuthorizationHandler, ManagerAuthorizationHandler>();
+                services.AddSingleton<IAuthorizationHandler, DirectorAuthorizationHandler>();
+                services.AddSingleton<IAuthorizationHandler, AdministratorAuthorizationHandler>();
 
             });
         }
