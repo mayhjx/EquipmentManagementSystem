@@ -1,5 +1,6 @@
 ﻿using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Instruments
 {
+    [Authorize(Roles = "设备管理员, 设备主任")]
     public class CreateModel : PageModel
     {
         private readonly EquipmentContext _context;
