@@ -203,8 +203,8 @@
                                 <tr>
                                     <th>@Html.DisplayNameFor(model => model.Instrument.MalfunctionWorkOrder.First().MalfunctionInfo.BeginTime)</th>
                                     <th>@Html.DisplayNameFor(model => model.Instrument.MalfunctionWorkOrder.First().Validation.FinishedTime)</th>
-                                    <th>@Html.DisplayNameFor(model => model.Instrument.MalfunctionWorkOrder.First().MalfunctionInfo.Part)</th>
-                                    <th>@Html.DisplayNameFor(model => model.Instrument.MalfunctionWorkOrder.First().MalfunctionInfo.Phenomenon)</th>
+                                    <th>故障描述</th>
+                                    <th>@Html.DisplayNameFor(model => model.Instrument.MalfunctionWorkOrder.First().MalfunctionInfo.MalfunctionWorkOrder.Progress)</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -214,11 +214,10 @@
                                     <tr>
                                         <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.BeginTime)</td>
                                         <td>@Html.DisplayFor(modelItem => item.Validation.FinishedTime)</td>
-                                        <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.Part)</td>
-                                        <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.Phenomenon)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.Part)@Html.DisplayFor(modelItem => item.MalfunctionInfo.Phenomenon)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.MalfunctionWorkOrder.Progress)</td>
                                         <td>
-                                            <a asp-page="../Malfunctions/WorkOrders/Details" asp-route-id="@item.ID">编辑</a> |
-                                            <a asp-page="../Malfunctions/WorkOrders/Delete" asp-route-id="@item.ID">删除</a>
+                                            <a asp-page="../Malfunctions/WorkOrders/Details" asp-route-id="@item.ID">查看</a>
                                         </td>
                                     </tr>
                                 }

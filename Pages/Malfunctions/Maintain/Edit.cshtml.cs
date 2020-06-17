@@ -106,7 +106,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Maintain
             if (await TryUpdateModelAsync<Maintenance>(
                     Maintenance,
                     "Maintenance",
-                    i => i.Repairer, i => i.Solution, i => i.EndTime, i => i.IsCritical, i => i.Remark))
+                    i => i.Repairer, i => i.Solution, i => i.BeginTime, i => i.EndTime, i => i.IsCritical, i => i.Remark))
             {
                 // 更新进度
                 if (Maintenance.MalfunctionWorkOrder.Progress < WorkOrderProgress.Repaired)

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Net.Mime;
@@ -161,6 +162,45 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Validate
                 return RedirectToPage("../WorkOrders/Details", new { id = Validation.MalfunctionWorkOrderID });
             }
             return Page();
+        }
+
+        // 批准性能验证
+        public async Task<IActionResult> OnPutComfirmAsync(int id)
+        {
+            Validation = await _context.Validation
+                                .Include(m => m.MalfunctionWorkOrder)
+                                .ThenInclude(m => m.Instrument)
+                                .FirstOrDefaultAsync(m => m.ID == id);
+
+            if (Validation == null)
+            {
+                return new JsonResult("未找到该记录");
+            }
+
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, Validation.MalfunctionWorkOrder, Operations.Update);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return new JsonResult("权限不足");
+            }
+
+            if (Validation.PerformanceReportFileName == null ||
+                Validation.FinishedTime == null)
+            {
+                return new JsonResult("请补充完成时间或验证报告");
+            }
+
+            Validation.IsConfirm = true;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+                return new JsonResult("性能验证报告已批准！");
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult($"性能验证报告未批准，错误信息：{ex}");
+            }
         }
 
         public class Upload

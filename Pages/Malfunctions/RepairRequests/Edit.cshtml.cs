@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions.RepairRequests
@@ -79,7 +80,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.RepairRequests
             if (await TryUpdateModelAsync<RepairRequest>(
                     RepairRequest,
                     "RepairRequest",
-                    i => i.RequestTime, i => i.BookingsTime, i => i.Fixer, i => i.Engineer, i => i.IsConfirm))
+                    i => i.RequestTime, i => i.BookingsTime, i => i.Fixer, i => i.Engineer))
             {
                 // 更新进度
                 if (RepairRequest.MalfunctionWorkOrder.Progress < WorkOrderProgress.RepairRequested)
@@ -92,6 +93,44 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.RepairRequests
             }
 
             return Page();
+        }
+
+        // 批准维修申请
+        public async Task<IActionResult> OnPutComfirmAsync(int id)
+        {
+            RepairRequest = await _context.RepairRequest
+                                .Include(m => m.MalfunctionWorkOrder)
+                                .ThenInclude(m => m.Instrument)
+                                .FirstOrDefaultAsync(m => m.ID == id);
+
+            if (RepairRequest == null)
+            {
+                return new JsonResult("未找到该记录");
+            }
+
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, RepairRequest.MalfunctionWorkOrder, Operations.Update);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return new JsonResult("权限不足");
+            }
+
+            if (RepairRequest.Engineer == null)
+            {
+                return new JsonResult("请补充对接工程师信息");
+            }
+
+            RepairRequest.IsConfirm = true;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+                return new JsonResult("维修申请已批准！");
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult($"维修申请未批准，错误信息：{ex}");
+            }
         }
     }
 }

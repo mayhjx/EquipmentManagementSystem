@@ -108,7 +108,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Information
                     MalfunctionInfo,
                     "MalfunctionInfo",
                     i => i.BeginTime, i => i.FoundedTime, i => i.Type, i => i.Part,
-                    i => i.Phenomenon, i => i.Reason, i => i.Remark, i => i.IsConfirm))
+                    i => i.Phenomenon, i => i.Reason, i => i.Remark))
             {
                 // 上传附件
                 if (FileUpload.FormFile != null && FileUpload.FormFile.Length > 0)
@@ -132,6 +132,45 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Information
                 return RedirectToPage("../WorkOrders/Details", new { id = MalfunctionInfo.MalfunctionWorkOrderID });
             }
             return Page();
+        }
+
+        // 确认故障基础信息
+        public async Task<IActionResult> OnPutComfirmAsync(int id)
+        {
+            MalfunctionInfo = await _context.MalfunctionInfo
+                                .Include(m => m.MalfunctionWorkOrder)
+                                .ThenInclude(m => m.Instrument)
+                                .FirstOrDefaultAsync(m => m.ID == id);
+
+            if (MalfunctionInfo == null)
+            {
+                return new JsonResult("未找到该记录");
+            }
+
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, MalfunctionInfo.MalfunctionWorkOrder, Operations.Update);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return new JsonResult("权限不足");
+            }
+
+            if (MalfunctionInfo.Part == null ||
+                MalfunctionInfo.Reason == null)
+            {
+                return new JsonResult("请补充故障部位或可能原因");
+            }
+
+            MalfunctionInfo.IsConfirm = true;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+                return new JsonResult("故障信息已确认！");
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult($"故障信息未确认，错误信息：{ex}");
+            }
         }
 
         public class Upload

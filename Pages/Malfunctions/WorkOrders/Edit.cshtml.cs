@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
@@ -89,20 +90,17 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
 
             if (MalfunctionWorkOrder == null)
             {
-                return NotFound();
+                return new JsonResult("未找到该记录");
             }
 
             var isAuthorized = await _authorizationService.AuthorizeAsync(User, MalfunctionWorkOrder, Operations.Update);
 
             if (!isAuthorized.Succeeded)
             {
-                return Forbid();
+                return new JsonResult("权限不足");
             }
 
-            if (await TryUpdateModelAsync<MalfunctionWorkOrder>(
-                    MalfunctionWorkOrder,
-                    "MalfunctionWorkOrder",
-                    i => i.InstrumentID, i => i.Progress, i => i.CreatedTime, i => i.Creator))
+            try
             {
                 if (MalfunctionWorkOrder.Progress < WorkOrderProgress.Completed)
                     MalfunctionWorkOrder.Progress = WorkOrderProgress.Completed;
@@ -113,8 +111,10 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
                 await _context.SaveChangesAsync();
                 return new JsonResult("工单已完成！");
             }
-
-            return new JsonResult("出现错误！工单未完成");
+            catch (Exception ex)
+            {
+                return new JsonResult($"工单未完成，错误信息：{ex}");
+            }
         }
     }
 }

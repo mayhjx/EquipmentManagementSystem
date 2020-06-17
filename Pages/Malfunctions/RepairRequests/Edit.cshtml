@@ -1,4 +1,5 @@
 ﻿@page
+@inject UserManager<User> UserManager
 @model EquipmentManagementSystem.Pages.Malfunctions.RepairRequests.EditModel
 
 @{
@@ -26,26 +27,26 @@
                         <span asp-validation-for="RepairRequest.BookingsTime" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="RepairRequest.Fixer" class="control-label"></label>
-                        <input asp-for="RepairRequest.Fixer" class="form-control" required />
-                        <span asp-validation-for="RepairRequest.Fixer" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
                         <label asp-for="RepairRequest.Engineer" class="control-label"></label>
                         <input asp-for="RepairRequest.Engineer" class="form-control" required />
                         <span asp-validation-for="RepairRequest.Engineer" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        @*<label class="form-check-label">
-                            <input class="form-check-input" asp-for="RepairRequest.IsConfirm" /> @Html.DisplayNameFor(model => model.RepairRequest.IsConfirm)
-                        </label>*@
-                        <div class="icheck-primary">
-                            <input type="checkbox" asp-for="RepairRequest.IsConfirm" id="check" />
-                            <label for="check">
-                                @Html.DisplayNameFor(model => model.RepairRequest.IsConfirm)
-                            </label>
-                        </div>
+                        <label asp-for="RepairRequest.Fixer" class="control-label"></label>
+                        @{
+                            var user = await UserManager.GetUserAsync(User);
+                        }
+                        <input asp-for="RepairRequest.Fixer" value="@user.Name" class="form-control" required readonly />
+                        <span asp-validation-for="RepairRequest.Fixer" class="text-danger"></span>
                     </div>
+                    @*<div class="form-group">
+                            <div class="icheck-primary">
+                                <input type="checkbox" asp-for="RepairRequest.IsConfirm" id="check" />
+                                <label for="check">
+                                    @Html.DisplayNameFor(model => model.RepairRequest.IsConfirm)
+                                </label>
+                            </div>
+                        </div>*@
                     <div class="form-group">
                         <input type="submit" value="保存" class="btn btn-primary" />
                     </div>

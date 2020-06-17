@@ -1,7 +1,6 @@
 ﻿@page
 @model EquipmentManagementSystem.Pages.Malfunctions.WorkOrders.CreateModel
 
-@inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 
 @{
@@ -9,6 +8,9 @@
 }
 
 <div class="card">
+    <div class="card-header">
+        <h3>故障工单</h3>
+    </div>
     <div class="card-body">
         <div class="row">
             <div class="col-md-4">
@@ -39,15 +41,10 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="MalfunctionWorkOrder.Creator" class="control-label"></label>
-                        @if (SignInManager.IsSignedIn(User))
-                        {
+                        @{
                             var user = await UserManager.GetUserAsync(User);
-                            <input asp-for="MalfunctionWorkOrder.Creator" value="@user.Name" class="form-control" required readonly />
                         }
-                        else
-                        {
-                            <input asp-for="MalfunctionWorkOrder.Creator" class="form-control" required />
-                        }
+                        <input asp-for="MalfunctionWorkOrder.Creator" value="@user.Name" class="form-control" required readonly />
                         <span asp-validation-for="MalfunctionWorkOrder.Creator" class="text-danger"></span>
                     </div>
                     <div class="form-group">
