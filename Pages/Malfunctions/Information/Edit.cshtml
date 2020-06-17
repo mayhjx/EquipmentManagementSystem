@@ -17,47 +17,40 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="MalfunctionInfo.ID" />
                     <div class="form-row">
-                        <div class="form-group col">
+                        <div class="form-group col-md-6">
                             <label asp-for="MalfunctionInfo.BeginTime" class="control-label"></label>
                             <input asp-for="MalfunctionInfo.BeginTime" class="form-control" />
                             <span asp-validation-for="MalfunctionInfo.BeginTime" class="text-danger"></span>
                         </div>
-                        <div class="form-group col">
+                        <div class="form-group col-md-6">
                             <label asp-for="MalfunctionInfo.FoundedTime" class="control-label"></label>
                             <input asp-for="MalfunctionInfo.FoundedTime" class="form-control" />
                             <span asp-validation-for="MalfunctionInfo.FoundedTime" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col">
+                        <div class="form-group col-md-6">
                             <label asp-for="MalfunctionInfo.Type" class="control-label"></label>
                             <select asp-for="MalfunctionInfo.Type" class="form-control" asp-items="@Html.GetEnumSelectList<EquipmentManagementSystem.Models.MalfunctionType>()"></select>
                             <span asp-validation-for="MalfunctionInfo.Type" class="text-danger"></span>
                         </div>
-                        <div class="form-group col">
+                        <div class="form-group  col-md-6">
                             <label asp-for="MalfunctionInfo.Part" class="control-label"></label>
                             <input asp-for="MalfunctionInfo.Part" class="form-control" />
                             <span asp-validation-for="MalfunctionInfo.Part" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="form-row">
-
-                        <div class="form-group col">
+                        <div class="form-group  col-md-6">
                             <label asp-for="MalfunctionInfo.Phenomenon" class="control-label"></label>
                             <input asp-for="MalfunctionInfo.Phenomenon" class="form-control" />
                             <span asp-validation-for="MalfunctionInfo.Phenomenon" class="text-danger"></span>
                         </div>
-                        <div class="form-group col">
+                        <div class="form-group  col-md-6">
                             <label asp-for="MalfunctionInfo.Reason" class="control-label"></label>
                             <input asp-for="MalfunctionInfo.Reason" class="form-control" required />
                             <span asp-validation-for="MalfunctionInfo.Reason" class="text-danger"></span>
                         </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label asp-for="MalfunctionInfo.Remark" class="control-label"></label>
-                        <textarea asp-for="MalfunctionInfo.Remark" class="form-control" rows="3"></textarea>
-                        <span asp-validation-for="MalfunctionInfo.Remark" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="MalfunctionInfo.FileName" class="control-label"></label>
@@ -65,6 +58,11 @@
                         <input type="file" asp-for="FileUpload.FormFile" class="form-control-file" />
                         <span asp-validation-for="FileUpload.FormFile" class="text-danger"></span>
                         <h6>已上传附件：@Html.DisplayFor(model => model.MalfunctionInfo.FileName)</h6>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MalfunctionInfo.Remark" class="control-label"></label>
+                        <textarea asp-for="MalfunctionInfo.Remark" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="MalfunctionInfo.Remark" class="text-danger"></span>
                     </div>
                     @*<div class="form-group">
                             <div class="icheck-primary">

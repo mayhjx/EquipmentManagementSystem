@@ -23,24 +23,24 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
 
         public IActionResult OnGet(string id)
         {
-            
+
             var isAuthorized = User.IsInRole(Constants.ManagerRole) ||
                                 User.IsInRole(Constants.DirectorRole);
             if (isAuthorized)
             {
                 // 获取所有仪器编号
-                ViewData["InstrumentID"] = 
+                ViewData["InstrumentID"] =
                     new SelectList(_context.Set<Instrument>().OrderBy(m => m.ID), "ID", "ID", id);
             }
-            else 
+            else
             {
                 // 获取技术员或设备负责人所属项目组的仪器编号
-                var userGroup = _userManager.GetUserAsync(User).Result.Group.Trim();
-                ViewData["InstrumentID"] = 
+                var userGroup = _userManager.GetUserAsync(User).Result.Group;
+                ViewData["InstrumentID"] =
                     new SelectList(_context.Set<Instrument>().Where(m => m.Group == userGroup)
                                                             .OrderBy(m => m.ID), "ID", "ID", id);
             }
-            
+
             return Page();
         }
 

@@ -1,6 +1,9 @@
-@using EquipmentManagementSystem
+﻿@using EquipmentManagementSystem
 @using Microsoft.AspNetCore.Identity
 @using EquipmentManagementSystem.Models
+@using EquipmentManagementSystem.Authorization
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
 
 @namespace EquipmentManagementSystem.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
