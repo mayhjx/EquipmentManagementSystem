@@ -147,7 +147,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Information
                 return new JsonResult("未找到该记录");
             }
 
-            var isAuthorized = await _authorizationService.AuthorizeAsync(User, MalfunctionInfo.MalfunctionWorkOrder, Operations.Update);
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, MalfunctionInfo.MalfunctionWorkOrder, Operations.Comfirm);
 
             if (!isAuthorized.Succeeded)
             {

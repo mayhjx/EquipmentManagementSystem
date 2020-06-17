@@ -1,4 +1,8 @@
-﻿using EquipmentManagementSystem.Models;
+﻿using EquipmentManagementSystem.Authorization;
+using EquipmentManagementSystem.Data;
+using EquipmentManagementSystem.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -6,48 +10,63 @@ using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Calibrations
 {
+    [Authorize(Roles = "设备管理员, 设备主任, 设备负责人")]
     public class EditModel : PageModel
     {
-        private readonly EquipmentManagementSystem.Data.EquipmentContext _context;
+        private readonly EquipmentContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public EditModel(EquipmentManagementSystem.Data.EquipmentContext context)
+        public EditModel(EquipmentContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         [BindProperty]
         public Calibration Calibration { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
             Calibration = await _context.Calibrations
-                            .FirstOrDefaultAsync(m => m.ID == id);
+                                .Include(m => m.Instrument)
+                                .FirstOrDefaultAsync(m => m.ID == id);
 
             if (Calibration == null)
             {
                 return NotFound();
             }
-            //ViewData["InstrumentID"] = new SelectList(_context.Instruments, "ID", "ID");
+
+            if (User.IsInRole(Constants.PrincipalRole))
+            {
+                var principalGroup = _userManager.GetUserAsync(User).Result.Group;
+                if (principalGroup != Calibration.Instrument.Group)
+                {
+                    return Forbid();
+                }
+            }
+
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            Calibration = await _context.Calibrations.FirstAsync(m => m.ID == id);
+            Calibration = await _context.Calibrations
+                                .Include(m => m.Instrument)
+                                .FirstOrDefaultAsync(m => m.ID == id);
 
             if (Calibration == null)
             {
                 return NotFound();
+            }
+
+            if (User.IsInRole(Constants.PrincipalRole))
+            {
+                var principalGroup = _userManager.GetUserAsync(User).Result.Group;
+                if (principalGroup != Calibration.Instrument.Group)
+                {
+                    return Forbid();
+                }
             }
 
             if (await TryUpdateModelAsync<Calibration>(
@@ -59,6 +78,7 @@ namespace EquipmentManagementSystem.Pages.Calibrations
 
                 return RedirectToPage("../Instruments/Details", new { id = Calibration.InstrumentID });
             }
+
             return Page();
         }
 

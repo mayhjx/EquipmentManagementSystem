@@ -108,7 +108,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.RepairRequests
                 return new JsonResult("未找到该记录");
             }
 
-            var isAuthorized = await _authorizationService.AuthorizeAsync(User, RepairRequest.MalfunctionWorkOrder, Operations.Update);
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, RepairRequest.MalfunctionWorkOrder, Operations.Approve);
 
             if (!isAuthorized.Succeeded)
             {

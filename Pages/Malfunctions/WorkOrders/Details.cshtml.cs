@@ -27,6 +27,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
                                     .Include(m => m.AccessoriesOrder)
                                     .Include(m => m.Maintenance)
                                     .Include(m => m.Validation)
+                                    .Include(m => m.Instrument)
                                     .AsNoTracking()
                                     .FirstOrDefaultAsync(m => m.ID == id);
 

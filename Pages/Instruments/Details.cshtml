@@ -1,8 +1,28 @@
 @page
+@inject UserManager<User> UserManager
 @model EquipmentManagementSystem.Pages.Instruments.DetailsModel
 
 @{
     ViewData["Title"] = "详细信息";
+
+    // 当前用户
+    var CurrentUser = UserManager.GetUserAsync(User).Result.Name;
+
+    // 当前用户所属项目组
+    var CurrentUserGroup = UserManager.GetUserAsync(User).Result.Group;
+
+    // 授权编辑设备信息
+    var CanEditInformation = User.IsInRole(Constants.DirectorRole) || User.IsInRole(Constants.ManagerRole);
+
+    // 授权新建校准信息和部件信息
+    var CanCreate = User.IsInRole(Constants.DirectorRole) || User.IsInRole(Constants.ManagerRole);
+
+    // 授权编辑校准信息和部件信息
+    var CanEdit = User.IsInRole(Constants.DirectorRole) || User.IsInRole(Constants.ManagerRole) ||
+                    UserManager.GetUserAsync(User).Result.Group == Model.Instrument.Group;
+
+    // 授权删除
+    var CanDelete = User.IsInRole(Constants.DirectorRole);
 }
 
 <div class="card">
@@ -44,9 +64,12 @@
                             <i class="fa fa-tag" aria-hidden="true"></i> 基础信息
                         </p>
                         <div class="card-tools">
-                            <a asp-page="./Edit" asp-route-id="@Model.Instrument.ID">
-                                <i class="fas fa-edit fa-lg" aria-hidden="true"></i>
-                            </a>
+                            @if (CanEditInformation)
+                            {
+                                <a asp-page="./Edit" asp-route-id="@Model.Instrument.ID">
+                                    <i class="fas fa-edit fa-lg" aria-hidden="true"></i>@*编辑*@
+                                </a>
+                            }
                         </div>
                     </div>
                     <div class="card-body table-responsive">
@@ -106,9 +129,12 @@
                             <i class="fa fa-balance-scale" aria-hidden="true"></i> 校准信息
                         </p>
                         <div class="card-tools">
-                            <a asp-page="../Calibrations/Create" asp-route-id="@Model.Instrument.ID">
-                                <i class="fas fa-plus fa-lg" aria-hidden="true"></i>
-                            </a>
+                            @if (CanCreate)
+                            {
+                                <a asp-page="../Calibrations/Create" asp-route-id="@Model.Instrument.ID">
+                                    <i class="fas fa-plus fa-lg" aria-hidden="true"></i>@*新建*@
+                                </a>
+                            }
                         </div>
                     </div>
                     <div class="card-body table-responsive">
@@ -131,8 +157,15 @@
                                         <td>@Html.DisplayFor(modelItem => item.Result)</td>
                                         <td>@Html.DisplayFor(modelItem => item.Calibrator)</td>
                                         <td>
-                                            <a asp-page="../Calibrations/Edit" asp-route-id="@item.ID">编辑</a> |
-                                            <a asp-page="../Calibrations/Delete" asp-route-id="@item.ID">删除</a>
+                                            @if (CanEdit)
+                                            {
+                                                <a asp-page="../Calibrations/Edit" asp-route-id="@item.ID">编辑</a>
+                                            }
+                                            @if (CanDelete)
+                                            {
+                                                <text>|</text>
+                                                <a asp-page="../Calibrations/Delete" asp-route-id="@item.ID">删除</a>
+                                            }
                                         </td>
                                     </tr>
                                 }
@@ -150,9 +183,12 @@
                             <i class="fa fa-cube" aria-hidden="true"></i> 部件信息
                         </p>
                         <div class="card-tools">
-                            <a asp-page="../Components/Create" asp-route-id="@Model.Instrument.ID">
-                                <i class="fas fa-plus fa-lg" aria-hidden="true"></i>
-                            </a>
+                            @if (CanCreate)
+                            {
+                                <a asp-page="../Components/Create" asp-route-id="@Model.Instrument.ID">
+                                    <i class="fas fa-plus fa-lg" aria-hidden="true"></i>@*新建*@
+                                </a>
+                            }
                         </div>
                     </div>
                     <div class="card-body table-responsive">
@@ -175,8 +211,15 @@
                                         <td>@Html.DisplayFor(modelItem => item.Model)</td>
                                         <td>@Html.DisplayFor(modelItem => item.SerialNumber)</td>
                                         <td>
-                                            <a asp-page="../Components/Edit" asp-route-id="@item.ID">编辑</a> |
-                                            <a asp-page="../Components/Delete" asp-route-id="@item.ID">删除</a>
+                                            @if (CanEdit)
+                                            {
+                                                <a asp-page="../Components/Edit" asp-route-id="@item.ID">编辑</a>
+                                            }
+                                            @if (CanDelete)
+                                            {
+                                                <text>|</text>
+                                                <a asp-page="../Components/Delete" asp-route-id="@item.ID">删除</a>
+                                            }
                                         </td>
                                     </tr>
                                 }
@@ -192,9 +235,12 @@
                             <i class="fa fa-tools" aria-hidden="true"></i> 故障信息
                         </p>
                         <div class="card-tools">
-                            <a asp-page="../Malfunctions/WorkOrders/Create" asp-route-id="@Model.Instrument.ID">
-                                <i class="fas fa-plus fa-lg" aria-hidden="true"></i>
-                            </a>
+                            @if (CanEdit)
+                            {
+                                <a asp-page="../Malfunctions/WorkOrders/Create" asp-route-id="@Model.Instrument.ID">
+                                    <i class="fas fa-plus fa-lg" aria-hidden="true"></i>@*新建*@
+                                </a>
+                            }
                         </div>
                     </div>
                     <div class="card-body table-responsive">

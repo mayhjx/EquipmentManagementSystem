@@ -1,4 +1,5 @@
 ﻿@page
+@inject UserManager<User> UserManager
 @model EquipmentManagementSystem.Pages.Malfunctions.WorkOrders.DetailsModel
 
 @{
@@ -11,15 +12,38 @@
     // 性能验证是否确认
     var ValidationIsComfirm = Model.MalfunctionWorkOrder.Validation?.IsConfirm ?? false;
     // 维修信息是否填写
-    var MaintainIsComplete = Model.MalfunctionWorkOrder.Maintenance?.Repairer != null ? true : false;
+    var MaintainIsComplete = Model.MalfunctionWorkOrder.Maintenance?.EndTime != null ? true : false;
     // 是否为关键部位故障
     var MaintainIsCritical = Model.MalfunctionWorkOrder.Maintenance?.IsCritical ?? false;
 
+    // 所有确认环节已确认
     var IsComfirmAll = (InfomationIsComfirm && RepairRequestIsComfirm && MaintainIsComplete && !MaintainIsCritical) ||
                         (InfomationIsComfirm && RepairRequestIsComfirm && MaintainIsCritical && ValidationIsComfirm);
 
     // 工单是否完成
     var IsCompleted = Model.MalfunctionWorkOrder.Progress == Models.WorkOrderProgress.Completed;
+
+    // 当前用户
+    var CurrentUser = UserManager.GetUserAsync(User).Result.Name;
+
+    // 当前用户所属项目组
+    var CurrentUserGroup = UserManager.GetUserAsync(User).Result.Group;
+
+    // 授权编辑
+    var CanEdit = User.IsInRole(Constants.DirectorRole) || User.IsInRole(Constants.ManagerRole) ||
+                            (User.IsInRole(Constants.PrincipalRole) && CurrentUserGroup == Model.MalfunctionWorkOrder.Instrument.Group) ||
+                            (User.IsInRole(Constants.TechnicianRole) && CurrentUser == Model.MalfunctionWorkOrder.Creator);
+
+    // 授权确认故障信息
+    var CanComfirmInformation = User.IsInRole(Constants.ManagerRole) ||
+                               (User.IsInRole(Constants.PrincipalRole) &&
+                               UserManager.GetUserAsync(User).Result.Group == Model.MalfunctionWorkOrder.Instrument.Group);
+
+    // 授权批准维修申请
+    var CanComfirmRequireRequest = User.IsInRole(Constants.DirectorRole);
+
+    // 授权批准性能验证
+    var CanComfirmValidation = User.IsInRole(Constants.DirectorRole);
 }
 
 <div class="card">
@@ -65,7 +89,7 @@
                                 <span class="badge badge-success" style="margin-left: 5px;">已确认</span>
                             }
                         </p>
-                        @if (!InfomationIsComfirm)
+                        @if (!InfomationIsComfirm && CanEdit)
                         {
                             <div class="card-tools">
                                 <a asp-page="../Information/Edit" asp-route-id="@Model.MalfunctionWorkOrder.MalfunctionInfo.ID">
@@ -136,7 +160,8 @@
                             </div>
                         </div>
                     </div>
-                    @if (!InfomationIsComfirm)
+
+                    @if (!InfomationIsComfirm && CanComfirmInformation)
                     {
                         // 确认故障信息
                         <div class="card-footer">
@@ -168,7 +193,7 @@
             </div>
             @if (InfomationIsComfirm)
             {
-                // 若故障信息未确认则不显示故障排查模块
+                // 故障信息确认后显示故障排查模块
                 <div class="col mb-3">
                     <div class="card h-100">
                         <div class="card-header">
@@ -183,7 +208,7 @@
                                     <span class="badge badge-success" style="margin-left: 5px;">维修申请已批准</span>
                                 }
                             </p>
-                            @if (!IsCompleted)
+                            @if (!IsCompleted && CanEdit)
                             {
                                 <div class="card-tools">
                                     <a id="investigate-a" asp-page="../Investigate/Edit" asp-route-id="@Model.MalfunctionWorkOrder.Investigation.ID">
@@ -318,7 +343,7 @@
                                 </div>
                             </div>
                         </div>
-                        @if (!RepairRequestIsComfirm)
+                        @if (!RepairRequestIsComfirm && CanComfirmRequireRequest)
                         {
                             // 确认故障信息
                             <div class="card-footer">
@@ -360,10 +385,10 @@
                                 <i class="fa fa-wrench" aria-hidden="true"></i> 故障维修
                                 @if (MaintainIsCritical)
                                 {
-                                    <span class="badge badge-warning" style="margin-left: 5px;">关键部位</span>
+                                    <span class="badge badge-warning" style="margin-left: 5px;">关键部位维修</span>
                                 }
                             </p>
-                            @if (!IsCompleted)
+                            @if (!IsCompleted && CanEdit)
                             {
                                 <div class="card-tools">
                                     <a asp-page="../Maintain/Edit" asp-route-id="@Model.MalfunctionWorkOrder.Maintenance.ID">
@@ -442,7 +467,7 @@
                                     <span class="badge badge-success" style="margin-left: 5px;">验证报告已批准</span>
                                 }
                             </p>
-                            @if (!ValidationIsComfirm)
+                            @if (!ValidationIsComfirm && CanEdit)
                             {
                                 <div class="card-tools">
                                     <a asp-page="../Validate/Edit" asp-route-id="@Model.MalfunctionWorkOrder.Validation.ID">
@@ -491,7 +516,7 @@
                                 </div>
                             </div>
                         </div>
-                        @if (!ValidationIsComfirm)
+                        @if (!ValidationIsComfirm && CanComfirmValidation)
                         {
                             // 确认性能验证
                             <div class="card-footer">
@@ -534,7 +559,7 @@
                             <i class="fas fa-download"></i> 生成 PDF
                         </button>*@
 
-                    @if (IsComfirmAll && !IsCompleted)
+                    @if (IsComfirmAll && !IsCompleted && CanEdit)
                     {
                         @Html.AntiForgeryToken();
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-completeWorkOrder">
@@ -563,28 +588,31 @@
                     @*<a asp-page="./Delete" asp-route-id="@Model.MalfunctionWorkOrder.ID">
                             <input type="button" class="btn btn-danger float-right" value="删除" style="margin-right: 5px;">
                         </a>*@
-                    <button type="button" class="btn btn-danger  float-right" data-toggle="modal" data-target="#modal-deleteWorkOrder">
-                        删除
-                    </button>
-                    <div class="modal fade" id="modal-deleteWorkOrder">
-                        <div class="modal-dialog modal-sm">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">警告</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">×</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>确认删除工单？</p>
-                                </div>
-                                <div class="modal-footer justify-content-between">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                    <button id="delete-workOrder" type="button" class="btn btn-danger">确认</button>
+                    @if (CanEdit)
+                    {
+                        <button type="button" class="btn btn-danger  float-right" data-toggle="modal" data-target="#modal-deleteWorkOrder">
+                            删除
+                        </button>
+                        <div class="modal fade" id="modal-deleteWorkOrder">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">警告</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>确认删除工单？</p>
+                                    </div>
+                                    <div class="modal-footer justify-content-between">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                        <button id="delete-workOrder" type="button" class="btn btn-danger">确认</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    }
                 </div>
             </div>
 

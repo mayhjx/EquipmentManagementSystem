@@ -74,6 +74,10 @@ namespace EquipmentManagementSystem.Areas.Identity
                 services.AddSingleton<IAuthorizationHandler, DirectorAuthorizationHandler>();
                 services.AddSingleton<IAuthorizationHandler, AdministratorAuthorizationHandler>();
 
+                //services.AddScoped<IAuthorizationHandler, PrincipalAuthorizationHandler>();
+                //services.AddSingleton<IAuthorizationHandler, ManagerAuthorizationHandler>();
+                //services.AddSingleton<IAuthorizationHandler, DirectorAuthorizationHandler>();
+
             });
         }
     }

@@ -1,6 +1,8 @@
-﻿using EquipmentManagementSystem.Data;
+﻿using EquipmentManagementSystem.Authorization;
+using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -9,18 +11,17 @@ using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Instruments
 {
-    [Authorize(Roles = "设备管理员, 设备主任")]
+    [Authorize(Roles = "设备管理员, 设备主任, 设备负责人")]
     public class EditModel : PageModel
     {
         private readonly EquipmentContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public EditModel(EquipmentContext context)
+        public EditModel(EquipmentContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
-
-        [BindProperty]
-        public Instrument Instrument { get; set; }
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
@@ -31,10 +32,22 @@ namespace EquipmentManagementSystem.Pages.Instruments
                 return NotFound();
             }
 
+            if (User.IsInRole(Constants.PrincipalRole))
+            {
+                var principalGroup = _userManager.GetUserAsync(User).Result.Group;
+                if (principalGroup != Instrument.Group)
+                {
+                    return Forbid();
+                }
+            }
+
             ViewData["Group"] = new SelectList(_context.Groups, "Name", "Name", Instrument.Group);
 
             return Page();
         }
+
+        [BindProperty]
+        public Instrument Instrument { get; set; }
 
         public async Task<IActionResult> OnPostAsync(string id)
         {
@@ -45,11 +58,20 @@ namespace EquipmentManagementSystem.Pages.Instruments
                 return NotFound();
             }
 
+            if (User.IsInRole(Constants.PrincipalRole))
+            {
+                var principalGroup = _userManager.GetUserAsync(User).Result.Group;
+                if (principalGroup != Instrument.Group)
+                {
+                    return Forbid();
+                }
+            }
+
             if (await TryUpdateModelAsync<Instrument>(
                     Instrument,
                     "Instrument",
-                    i => i.Status, i => i.Platform, i => i.Name, i => i.StartUsingDate, 
-                    i => i.CalibrationCycle, i => i.MetrologicalCharacteristics,  i => i.Location,
+                    i => i.Status, i => i.Platform, i => i.Name, i => i.StartUsingDate,
+                    i => i.CalibrationCycle, i => i.MetrologicalCharacteristics, i => i.Location,
                     i => i.Principal, i => i.Group, i => i.Projects, i => i.NewSystemCode, i => i.Remark))
             {
                 await _context.SaveChangesAsync();

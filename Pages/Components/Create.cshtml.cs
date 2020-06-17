@@ -1,4 +1,6 @@
-﻿using EquipmentManagementSystem.Models;
+﻿using EquipmentManagementSystem.Data;
+using EquipmentManagementSystem.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -6,18 +8,18 @@ using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Components
 {
+    [Authorize(Roles = "设备管理员, 设备主任")]
     public class CreateModel : PageModel
     {
-        private readonly EquipmentManagementSystem.Data.EquipmentContext _context;
+        private readonly EquipmentContext _context;
 
-        public CreateModel(EquipmentManagementSystem.Data.EquipmentContext context)
+        public CreateModel(EquipmentContext context)
         {
             _context = context;
         }
 
         public IActionResult OnGet(string id)
         {
-
             ViewData["InstrumentID"] = new SelectList(_context.Instruments, "ID", "ID", id);
             return Page();
         }
