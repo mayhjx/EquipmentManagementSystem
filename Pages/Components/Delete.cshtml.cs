@@ -1,4 +1,5 @@
 ﻿using EquipmentManagementSystem.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Components
 {
+    [Authorize(Roles = "设备主任")]
     public class DeleteModel : PageModel
     {
         private readonly EquipmentManagementSystem.Data.EquipmentContext _context;
