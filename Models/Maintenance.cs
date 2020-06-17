@@ -13,6 +13,10 @@ namespace EquipmentManagementSystem.Models
         public int MalfunctionWorkOrderID { get; set; }
         public MalfunctionWorkOrder MalfunctionWorkOrder { get; set; }
 
+        [Display(Name = "上门时间")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
+        public DateTime? BeginTime { get; set; }
+
         [Display(Name = "维修人")]
         [StringLength(50)]
         public string Repairer { get; set; }
@@ -21,7 +25,7 @@ namespace EquipmentManagementSystem.Models
         [StringLength(999)]
         public string Solution { get; set; }
 
-        [Display(Name = "维修结束时间")]
+        [Display(Name = "完成时间")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
         public DateTime? EndTime { get; set; }
 
