@@ -48,7 +48,7 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="UsageRecord.Creator" class="control-label"></label>
-                        <input asp-for="UsageRecord.Creator" class="form-control" value="@UserManager.GetUserAsync(User).Result.Name" readonly />
+                        <input asp-for="UsageRecord.Creator" class="form-control" value="@UserManager.GetUserAsync(User).Result?.Name" />
                         <span asp-validation-for="UsageRecord.Creator" class="text-danger"></span>
                     </div>
                     <div class="form-group">

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.DailyUsageRecord
 {
-    [Authorize]
+    [AllowAnonymous]
     public class CreateModel : PageModel
     {
         private readonly EquipmentContext _context;
