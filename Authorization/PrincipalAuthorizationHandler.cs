@@ -27,12 +27,12 @@ namespace EquipmentManagementSystem.Authorization
             if (requirement.Name != Constants.CreateOperationName &&
                 requirement.Name != Constants.ReadOperationName &&
                 requirement.Name != Constants.UpdateOperationName &&
-                requirement.Name != Constants.DeleteOperationName)
+                requirement.Name != Constants.DeleteOperationName &&
+                requirement.Name != Constants.ComfirmOperationName)
             {
                 return Task.CompletedTask;
             }
 
-            // 返回的内容含有换行符\r\n !!!
             var group = _userManager.GetUserAsync(context.User).Result.Group;
 
             if (resource.Instrument.Group == group && context.User.IsInRole(Constants.PrincipalRole))

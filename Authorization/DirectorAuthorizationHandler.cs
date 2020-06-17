@@ -17,6 +17,15 @@ namespace EquipmentManagementSystem.Authorization
                 return Task.CompletedTask;
             }
 
+            if (requirement.Name != Constants.CreateOperationName &&
+                requirement.Name != Constants.ReadOperationName &&
+                requirement.Name != Constants.UpdateOperationName &&
+                requirement.Name != Constants.DeleteOperationName &&
+                requirement.Name != Constants.ApproveOperationName)
+            {
+                return Task.CompletedTask;
+            }
+
             if (context.User.IsInRole(Constants.DirectorRole))
             {
                 context.Succeed(requirement);

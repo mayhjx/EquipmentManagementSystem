@@ -12,6 +12,8 @@ namespace EquipmentManagementSystem.Authorization
             new OperationAuthorizationRequirement { Name = Constants.UpdateOperationName };
         public static OperationAuthorizationRequirement Delete =
             new OperationAuthorizationRequirement { Name = Constants.DeleteOperationName };
+        public static OperationAuthorizationRequirement Comfirm =
+            new OperationAuthorizationRequirement { Name = Constants.ComfirmOperationName };
         public static OperationAuthorizationRequirement Approve =
             new OperationAuthorizationRequirement { Name = Constants.ApproveOperationName };
     }
@@ -22,6 +24,7 @@ namespace EquipmentManagementSystem.Authorization
         public static readonly string ReadOperationName = "Read";
         public static readonly string UpdateOperationName = "Update";
         public static readonly string DeleteOperationName = "Delete";
+        public static readonly string ComfirmOperationName = "Comfirm";
         public static readonly string ApproveOperationName = "Approve";
 
         public static readonly string AdministratorRole = "Administrator";
