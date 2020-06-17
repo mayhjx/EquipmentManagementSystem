@@ -21,6 +21,8 @@
 		<Compile Remove="Data\Migrations\Equipment\20200612084308_addgroup_project_usagerecord.Designer.cs" />
 		<Compile Remove="Data\Migrations\Equipment\20200612125231_idrequired.cs" />
 		<Compile Remove="Data\Migrations\Equipment\20200612125231_idrequired.Designer.cs" />
+		<Compile Remove="Data\Migrations\Equipment\20200617113351_ChangeProjectName.cs" />
+		<Compile Remove="Data\Migrations\Equipment\20200617113351_ChangeProjectName.Designer.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
