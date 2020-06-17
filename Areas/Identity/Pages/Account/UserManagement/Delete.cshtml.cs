@@ -1,4 +1,5 @@
 ﻿using EquipmentManagementSystem.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Areas.Identity.Pages.Account.UserManagement
 {
+    [Authorize(Roles = "Administrator, 设备主任")]
     public class DeleteModel : PageModel
     {
         private readonly UserManager<User> _userManager;
