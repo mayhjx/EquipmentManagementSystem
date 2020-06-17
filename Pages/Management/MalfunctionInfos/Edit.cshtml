@@ -1,0 +1,90 @@
+﻿@page
+@model EquipmentManagementSystem.Pages.Management.MalfunctionInfos.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>MalfunctionInfo</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MalfunctionInfo.ID" />
+            <div class="form-group">
+                <label asp-for="MalfunctionInfo.MalfunctionWorkOrderID" class="control-label"></label>
+                <select asp-for="MalfunctionInfo.MalfunctionWorkOrderID" class="form-control" asp-items="ViewBag.MalfunctionWorkOrderID"></select>
+                <span asp-validation-for="MalfunctionInfo.MalfunctionWorkOrderID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MalfunctionInfo.BeginTime" class="control-label"></label>
+                <input asp-for="MalfunctionInfo.BeginTime" class="form-control" />
+                <span asp-validation-for="MalfunctionInfo.BeginTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MalfunctionInfo.FoundedTime" class="control-label"></label>
+                <input asp-for="MalfunctionInfo.FoundedTime" class="form-control" />
+                <span asp-validation-for="MalfunctionInfo.FoundedTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MalfunctionInfo.Type" class="control-label"></label>
+                <select asp-for="MalfunctionInfo.Type" class="form-control"></select>
+                <span asp-validation-for="MalfunctionInfo.Type" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MalfunctionInfo.Part" class="control-label"></label>
+                <input asp-for="MalfunctionInfo.Part" class="form-control" />
+                <span asp-validation-for="MalfunctionInfo.Part" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MalfunctionInfo.Phenomenon" class="control-label"></label>
+                <input asp-for="MalfunctionInfo.Phenomenon" class="form-control" />
+                <span asp-validation-for="MalfunctionInfo.Phenomenon" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MalfunctionInfo.Reason" class="control-label"></label>
+                <input asp-for="MalfunctionInfo.Reason" class="form-control" />
+                <span asp-validation-for="MalfunctionInfo.Reason" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MalfunctionInfo.Remark" class="control-label"></label>
+                <input asp-for="MalfunctionInfo.Remark" class="form-control" />
+                <span asp-validation-for="MalfunctionInfo.Remark" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MalfunctionInfo.Attachment" class="control-label"></label>
+                <input asp-for="MalfunctionInfo.Attachment" class="form-control" />
+                <span asp-validation-for="MalfunctionInfo.Attachment" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MalfunctionInfo.FileName" class="control-label"></label>
+                <input asp-for="MalfunctionInfo.FileName" class="form-control" />
+                <span asp-validation-for="MalfunctionInfo.FileName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MalfunctionInfo.UploadTime" class="control-label"></label>
+                <input asp-for="MalfunctionInfo.UploadTime" class="form-control" />
+                <span asp-validation-for="MalfunctionInfo.UploadTime" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="MalfunctionInfo.IsConfirm" /> @Html.DisplayNameFor(model => model.MalfunctionInfo.IsConfirm)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
