@@ -1,24 +1,45 @@
 ﻿@inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
+@inject RoleManager<IdentityRole> RoleManager
 
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
-        <li class="nav-item">
-            @*<a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">你好， @UserManager.GetUserName(User)！</a>*@
-            <a id="manage" class="nav-link text-dark" title="Manage">你好， @UserManager.GetUserAsync(User).Result.Name！</a>
-        </li>
-        <li class="nav-item">
-            <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
-                <button id="logout" type="submit" class="nav-link btn btn-link text-dark">注销</button>
-            </form>
+        @*<li class="nav-item">
+                    <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">你好， @UserManager.GetUserName(User)！</a>
+                    <a id="manage" class="nav-link text-dark" title="@User">你好， @UserManager.GetUserAsync(User).Result.Name！</a>
+            </li>*@
+        @*<li class="nav-item">
+                <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
+                    <button id="logout" type="submit" class="nav-link btn btn-link text-dark">注销</button>
+                </form>
+            </li>*@
+
+        <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
+                @UserManager.GetUserAsync(User).Result.Name <i class="fas fa-angle-down"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
+                <a href="#" class="dropdown-item">
+                    <div class="media">
+                        <div class="media-body">
+                            <h6 class="dropdown-item-text">
+                                级别：@(UserManager.GetRolesAsync(UserManager.GetUserAsync(User).Result).Result[0])
+                            </h6>
+                            <h6 class="dropdown-item-text">
+                                项目组：@UserManager.GetUserAsync(User).Result.Group
+                            </h6>
+                            <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
+                                <input id="logout" type="submit" value="注销" class="btn btn-outline-primary btn-block" />
+                            </form>
+                        </div>
+                    </div>
+                </a>
+            </div>
         </li>
     }
     else
     {
-        @*<li class="nav-item">
-                <a class="nav-link text-dark" id="register" asp-area="Identity" asp-page="/Account/Register">注册</a>
-            </li>*@
         <li class="nav-item">
             <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">登录</a>
         </li>
