@@ -760,7 +760,7 @@
 
         $("#delete-workOrder").click(function () {
              var options = {};
-             options.url = "/Malfunctions/WorkOrders/Delete?id=@Model.MalfunctionWorkOrder.Validation.ID&handler=Delete";
+             options.url = "/Malfunctions/WorkOrders/Delete?id=@Model.MalfunctionWorkOrder.ID&handler=Delete";
              options.type = "PUT";
 
              options.beforeSend = function (xhr) {
