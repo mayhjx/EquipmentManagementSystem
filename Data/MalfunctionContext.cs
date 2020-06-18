@@ -23,7 +23,9 @@ namespace EquipmentManagementSystem.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<MalfunctionWorkOrder>().ToTable("MalfunctionWorkOrder");
+            modelBuilder.Entity<MalfunctionWorkOrder>().ToTable("MalfunctionWorkOrder")
+                                                            .Property(p => p.CreatedTime)
+                                                            .HasDefaultValueSql("getdate()");
             modelBuilder.Entity<MalfunctionInfo>().ToTable("MalfunctionInfo");
             modelBuilder.Entity<Investigation>().ToTable("Investigation");
             modelBuilder.Entity<RepairRequest>().ToTable("RepairRequest");

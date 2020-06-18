@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -65,8 +64,6 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
             MalfunctionWorkOrder.AccessoriesOrder = new AccessoriesOrder { };
             MalfunctionWorkOrder.Maintenance = new Maintenance { };
             MalfunctionWorkOrder.Validation = new Validation { };
-
-            MalfunctionWorkOrder.CreatedTime = DateTime.Now;
 
             MalfunctionWorkOrder.Creator = _userManager.GetUserAsync(User).Result.Name;
 
