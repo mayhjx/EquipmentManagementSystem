@@ -1,7 +1,6 @@
 ﻿using EquipmentManagementSystem.Authorization;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
-using EquipmentManagementSystem.Pages.Instruments;
 using EquipmentManagementSystem.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

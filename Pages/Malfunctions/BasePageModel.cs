@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace EquipmentManagementSystem.Pages.Instruments
+namespace EquipmentManagementSystem.Pages.Malfunctions
 {
     public class BasePageModel : PageModel
     {
