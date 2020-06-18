@@ -1,0 +1,80 @@
+﻿@page
+@model EquipmentManagementSystem.Pages.UsageRecords.DetailsModel
+
+@{
+    ViewData["Title"] = "详细细腻些";
+}
+
+<div class="card">
+    <div class="card-header text-danger">
+        <h3>确认删除使用记录？</h3>
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.UsageRecord.CreatedTime)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.UsageRecord.CreatedTime)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.UsageRecord.InstrumentId)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.UsageRecord.InstrumentId)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.UsageRecord.ProjectName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.UsageRecord.ProjectName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.UsageRecord.BeginTimeOfMaintain)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.UsageRecord.BeginTimeOfMaintain)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.UsageRecord.ColumnPressure)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.UsageRecord.ColumnPressure)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.UsageRecord.BeginTimeOfTest)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.UsageRecord.BeginTimeOfTest)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.UsageRecord.SampleNumber)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.UsageRecord.SampleNumber)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.UsageRecord.TestNumber)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.UsageRecord.TestNumber)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.UsageRecord.EndTime)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.UsageRecord.EndTime)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.UsageRecord.Creator)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.UsageRecord.Creator)
+            </dd>
+        </dl>
+        <div>
+            <a asp-page="./Edit" asp-route-id="@Model.UsageRecord.Id">编辑</a> |
+            <a asp-page="./Index">返回</a>
+        </div>
+    </div>
+</div>
