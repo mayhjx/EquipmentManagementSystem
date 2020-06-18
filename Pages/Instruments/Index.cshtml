@@ -8,9 +8,12 @@
 <div class="card">
     <h4 class="card-header">
         设备一览
-        <a asp-page="Create">
-            <input type="button" class="btn btn-outline-primary btn-sm" value="新增设备" style="margin-left: 10px;">
-        </a>
+        @if ((await AuthorizationService.AuthorizeAsync(User, Model.Instrument, Operations.Create)).Succeeded)
+        {
+            <a asp-page="Create">
+                <input type="button" class="btn btn-outline-primary btn-sm" value="新增设备" style="margin-left: 10px;">
+            </a>
+        }
     </h4>
 
     <div class="card-body">

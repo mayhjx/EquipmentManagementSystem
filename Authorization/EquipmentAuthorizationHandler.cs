@@ -25,6 +25,8 @@ namespace EquipmentManagementSystem.Authorization
                 return Task.CompletedTask;
             }
 
+            //context.Succeed(requirement);
+
             if (requirement.Name == Constants.CreateOperationName)
             {
                 if (context.User.IsInRole(Constants.DirectorRole) ||
@@ -41,6 +43,7 @@ namespace EquipmentManagementSystem.Authorization
 
             if (requirement.Name == Constants.UpdateOperationName)
             {
+                // 可能没有Group
                 var currentUserGroup = _userManager.GetUserAsync(context.User).Result.Group ?? null;
 
                 if (context.User.IsInRole(Constants.DirectorRole) ||

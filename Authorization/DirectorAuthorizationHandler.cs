@@ -12,7 +12,7 @@ namespace EquipmentManagementSystem.Authorization
                                                         OperationAuthorizationRequirement requirement,
                                                         MalfunctionWorkOrder resource)
         {
-            if (context.User == null)
+            if (context.User == null || resource == null)
             {
                 return Task.CompletedTask;
             }

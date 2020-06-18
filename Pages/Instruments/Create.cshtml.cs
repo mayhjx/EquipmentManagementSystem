@@ -1,5 +1,4 @@
-﻿using EquipmentManagementSystem.Authorization;
-using EquipmentManagementSystem.Data;
+﻿using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -9,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Instruments
 {
+    [Authorize(Roles = "设备主任， 设备管理员")]
     public class CreateModel : BasePageModel
     {
         public CreateModel(EquipmentContext context,
@@ -18,15 +18,8 @@ namespace EquipmentManagementSystem.Pages.Instruments
         {
         }
 
-        public async Task<IActionResult> OnGet()
+        public IActionResult OnGet()
         {
-            var isAuthorized = await _authorizationService.AuthorizeAsync(User, Instrument, Operations.Create);
-
-            if (!isAuthorized.Succeeded)
-            {
-                return Forbid();
-            }
-
             ViewData["Group"] = new SelectList(_context.Groups, "Name", "Name");
 
             return Page();
@@ -42,13 +35,6 @@ namespace EquipmentManagementSystem.Pages.Instruments
             if (!ModelState.IsValid)
             {
                 return Page();
-            }
-
-            var isAuthorized = await _authorizationService.AuthorizeAsync(User, Instrument, Operations.Create);
-
-            if (!isAuthorized.Succeeded)
-            {
-                return Forbid();
             }
 
             _context.Instruments.Add(Instrument);

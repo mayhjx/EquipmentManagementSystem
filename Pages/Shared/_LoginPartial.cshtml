@@ -20,19 +20,21 @@
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
                 <a href="#" class="dropdown-item">
-                    <div class="media">
-                        <div class="media-body">
-                            <h6 class="dropdown-item-text">
-                                级别：@(UserManager.GetRolesAsync(UserManager.GetUserAsync(User).Result).Result[0])
-                            </h6>
-                            <h6 class="dropdown-item-text">
-                                项目组：@UserManager.GetUserAsync(User).Result.Group
-                            </h6>
-                            <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
-                                <input id="logout" type="submit" value="注销" class="btn btn-outline-primary btn-block" />
-                            </form>
-                        </div>
-                    </div>
+                    <h6 class="dropdown-item-text">
+                        级别：@(UserManager.GetRolesAsync(UserManager.GetUserAsync(User).Result).Result[0])
+                    </h6>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item">
+                    <h6 class="dropdown-item-text">
+                        项目组：@UserManager.GetUserAsync(User).Result.Group
+                    </h6>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item dropdown-footer">
+                    <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
+                        <input id="logout" type="submit" value="注销" class="btn btn-outline-primary btn-block" />
+                    </form>
                 </a>
             </div>
         </li>
