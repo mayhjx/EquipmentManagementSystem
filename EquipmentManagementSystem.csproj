@@ -23,6 +23,12 @@
 		<Compile Remove="Data\Migrations\Equipment\20200612125231_idrequired.Designer.cs" />
 		<Compile Remove="Data\Migrations\Equipment\20200617113351_ChangeProjectName.cs" />
 		<Compile Remove="Data\Migrations\Equipment\20200617113351_ChangeProjectName.Designer.cs" />
+		<Compile Remove="Data\Migrations\Equipment\20200618074431_AddCreatedTime.cs" />
+		<Compile Remove="Data\Migrations\Equipment\20200618074431_AddCreatedTime.Designer.cs" />
+		<Compile Remove="Data\Migrations\Equipment\20200618082323_ChangeUsageRecord.cs" />
+		<Compile Remove="Data\Migrations\Equipment\20200618082323_ChangeUsageRecord.Designer.cs" />
+		<Compile Remove="Data\Migrations\Equipment\20200618083212_ChangeUsageRecord.cs" />
+		<Compile Remove="Data\Migrations\Equipment\20200618083212_ChangeUsageRecord.Designer.cs" />
 	</ItemGroup>
 
 	<ItemGroup>

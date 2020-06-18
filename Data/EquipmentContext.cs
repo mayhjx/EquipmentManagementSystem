@@ -28,7 +28,10 @@ namespace EquipmentManagementSystem.Data
             modelBuilder.Entity<Assert>().ToTable("Assert");
             modelBuilder.Entity<Group>().ToTable("Group");
             modelBuilder.Entity<Project>().ToTable("Project");
-            modelBuilder.Entity<UsageRecord>().ToTable("UsageRecord");
+            modelBuilder.Entity<UsageRecord>().ToTable("UsageRecord")
+                                                .Property(p => p.CreatedTime)
+                                                .HasDefaultValueSql("getdate()");
+
             //modelBuilder.Entity<Computer>().ToTable("Computer");
         }
     }

@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EquipmentManagementSystem.Models
 {
@@ -23,6 +24,7 @@ namespace EquipmentManagementSystem.Models
 
         [Display(Name = "建单时间")]
         [DataType(DataType.DateTime)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime CreatedTime { get; set; }
 
         [Display(Name = "故障信息")]

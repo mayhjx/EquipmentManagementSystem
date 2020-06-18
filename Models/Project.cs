@@ -9,5 +9,7 @@ namespace EquipmentManagementSystem.Models
         [StringLength(50)]
         [Display(Name = "项目名称")]
         public string Name { get; set; }
+
+        public Group Group { get; set; }
     }
 }

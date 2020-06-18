@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace EquipmentManagementSystem.Models
 {
@@ -9,5 +10,7 @@ namespace EquipmentManagementSystem.Models
         [StringLength(20)]
         [Display(Name = "组名")]
         public string Name { get; set; }
+
+        public ICollection<Project> Projects { get; set; }
     }
 }
