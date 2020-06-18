@@ -40,11 +40,11 @@ namespace EquipmentManagementSystem.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = "请输入工号")]
             [Display(Name = "工号")]
             public string Number { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "请输入密码")]
             [DataType(DataType.Password)]
             [Display(Name = "密码")]
             public string Password { get; set; }
