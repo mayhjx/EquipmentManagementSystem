@@ -9,7 +9,8 @@ namespace EquipmentManagementSystem.Authorization
     public class PrincipalAuthorizationHandler
                 : AuthorizationHandler<OperationAuthorizationRequirement, MalfunctionWorkOrder>
     {
-        UserManager<User> _userManager;
+        private readonly UserManager<User> _userManager;
+
         public PrincipalAuthorizationHandler(UserManager<User> userManager)
         {
             _userManager = userManager;

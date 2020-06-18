@@ -1,7 +1,6 @@
 ﻿using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -13,12 +12,10 @@ namespace EquipmentManagementSystem.Pages.Calibrations
     public class CreateModel : PageModel
     {
         private readonly EquipmentContext _context;
-        private readonly UserManager<User> _userManager;
 
-        public CreateModel(EquipmentContext context, UserManager<User> userManager)
+        public CreateModel(EquipmentContext context)
         {
             _context = context;
-            _userManager = userManager;
         }
 
         public IActionResult OnGet(string id)

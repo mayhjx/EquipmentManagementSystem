@@ -1,25 +1,22 @@
 ﻿using EquipmentManagementSystem.Authorization;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
+using EquipmentManagementSystem.Pages.Instruments;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Components
 {
-    [Authorize(Roles = "设备管理员, 设备主任, 设备负责人")]
-    public class EditModel : PageModel
+    public class EditModel : BasePageModel
     {
-        private readonly EquipmentContext _context;
-        private readonly UserManager<User> _userManager;
-
-        public EditModel(EquipmentContext context, UserManager<User> userManager)
+        public EditModel(EquipmentContext context,
+            UserManager<User> userManager,
+            IAuthorizationService authorizationService)
+            : base(context, userManager, authorizationService)
         {
-            _context = context;
-            _userManager = userManager;
         }
 
         [BindProperty]
@@ -36,13 +33,11 @@ namespace EquipmentManagementSystem.Pages.Components
                 return NotFound();
             }
 
-            if (User.IsInRole(Constants.PrincipalRole))
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, Component.Instrument, Operations.Update);
+
+            if (!isAuthorized.Succeeded)
             {
-                var principalGroup = _userManager.GetUserAsync(User).Result.Group;
-                if (principalGroup != Component.Instrument.Group)
-                {
-                    return Forbid();
-                }
+                return Forbid();
             }
 
             return Page();
@@ -59,13 +54,11 @@ namespace EquipmentManagementSystem.Pages.Components
                 return NotFound();
             }
 
-            if (User.IsInRole("设备负责人"))
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, Component.Instrument, Operations.Update);
+
+            if (!isAuthorized.Succeeded)
             {
-                var principalGroup = _userManager.GetUserAsync(User).Result.Group;
-                if (principalGroup != Component.Instrument.Group)
-                {
-                    return Forbid();
-                }
+                return Forbid();
             }
 
             if (await TryUpdateModelAsync<Component>(
