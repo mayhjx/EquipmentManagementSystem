@@ -12,6 +12,10 @@ namespace EquipmentManagementSystem.Areas.Identity.Pages.Account
             return Page();
         }
     }
+
+    // Disable Register *****************
+
+
     //[AllowAnonymous]
     //public class RegisterConfirmationModel : PageModel
     //{
