@@ -134,7 +134,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Information
         }
 
         // 确认故障基础信息
-        public async Task<IActionResult> OnPutComfirmAsync(int id)
+        public async Task<IActionResult> OnPostComfirmAsync(int id)
         {
             MalfunctionInfo = await _context.MalfunctionInfo
                                 .Include(m => m.MalfunctionWorkOrder)

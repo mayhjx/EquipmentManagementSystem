@@ -72,7 +72,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
             return RedirectToPage("../WorkOrders/Details", new { id = MalfunctionWorkOrder.ID });
         }
 
-        public async Task<IActionResult> OnPutDeleteAsync(int id)
+        public async Task<IActionResult> OnPostDeleteAsync(int id)
         {
             MalfunctionWorkOrder = await _context.MalfunctionWorkOrder
                                         .Include(m => m.Instrument)

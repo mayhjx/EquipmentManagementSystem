@@ -24,6 +24,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
 
             var isAuthorized = User.IsInRole(Constants.ManagerRole) ||
                                 User.IsInRole(Constants.DirectorRole);
+
             if (isAuthorized)
             {
                 // 获取所有仪器编号

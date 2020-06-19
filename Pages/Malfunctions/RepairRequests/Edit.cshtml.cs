@@ -95,7 +95,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.RepairRequests
         }
 
         // 批准维修申请
-        public async Task<IActionResult> OnPutComfirmAsync(int id)
+        public async Task<IActionResult> OnPostComfirmAsync(int id)
         {
             RepairRequest = await _context.RepairRequest
                                 .Include(m => m.MalfunctionWorkOrder)

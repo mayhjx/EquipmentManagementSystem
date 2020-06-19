@@ -164,7 +164,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Validate
         }
 
         // 批准性能验证
-        public async Task<IActionResult> OnPutComfirmAsync(int id)
+        public async Task<IActionResult> OnPostComfirmAsync(int id)
         {
             Validation = await _context.Validation
                                 .Include(m => m.MalfunctionWorkOrder)
