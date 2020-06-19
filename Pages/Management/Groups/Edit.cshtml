@@ -1,8 +1,8 @@
 ﻿@page
-@model EquipmentManagementSystem.Pages.Management.Groups.CreateModel
+@model EquipmentManagementSystem.Pages.Management.Groups.EditModel
 
 @{
-    ViewData["Title"] = "新建";
+    ViewData["Title"] = "编辑";
 }
 
 <div class="card">
@@ -14,24 +14,24 @@
             <div class="col-md-3">
                 <form method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Group.Id" />
                     <div class="form-group">
                         <label asp-for="Group.Name" class="control-label"></label>
                         <input asp-for="Group.Name" class="form-control" />
                         <span asp-validation-for="Group.Name" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <input type="submit" value="新建" class="btn btn-primary" />
+                        <input type="submit" value="保存" class="btn btn-primary" />
                     </div>
                 </form>
             </div>
         </div>
 
         <div>
-            <a asp-page="Index">返回</a>
+            <a asp-page="./Index">返回</a>
         </div>
     </div>
 </div>
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

@@ -5,7 +5,7 @@
     ViewData["Title"] = "项目管理";
 }
 
-<div class="card col-md-3">
+<div class="card col-md-6 height-control">
     <h4 class="card-header">
         项目
         <a asp-page="Create">
@@ -13,7 +13,7 @@
         </a>
     </h4>
     <div class="card-body">
-        <table class="table">
+        <table class="table table-sm text-nowrap">
             <thead>
                 <tr>
                     <th>
@@ -30,6 +30,7 @@
                             @Html.DisplayFor(modelItem => item.Name)
                         </td>
                         <td>
+                            <a asp-page="./Edit" asp-route-id="@item.Id">编辑</a> |
                             <a asp-page="./Delete" asp-route-id="@item.Id">删除</a>
                         </td>
                     </tr>

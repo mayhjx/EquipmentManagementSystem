@@ -4,8 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.UsageRecords
@@ -26,8 +24,7 @@ namespace EquipmentManagementSystem.Pages.UsageRecords
         public async Task<IActionResult> OnGetAsync(int id)
         {
             UsageRecord = await _context.UsageRecords
-                                    //.Include(u => u.Instrument)
-                                    .FirstOrDefaultAsync(m => m.Id == id);
+                                    .FindAsync(id);
 
             if (UsageRecord == null)
             {
@@ -42,37 +39,32 @@ namespace EquipmentManagementSystem.Pages.UsageRecords
 
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int id)
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _context.Attach(UsageRecord).State = EntityState.Modified;
+            var UsageRecordToUpdate = await _context.UsageRecords
+                                    .FindAsync(id);
 
-            try
+            if (UsageRecordToUpdate == null)
+            {
+                return NotFound();
+            }
+
+            if (await TryUpdateModelAsync<UsageRecord>(
+                UsageRecordToUpdate,
+                "UsageRecord",
+                i => i.InstrumentId, i => i.ProjectName, i => i.BeginTimeOfMaintain,
+                i => i.ColumnPressure, i => i.BeginTimeOfTest, i => i.SampleNumber,
+                i => i.TestNumber, i => i.EndTime, i => i.Creator))
             {
                 await _context.SaveChangesAsync();
+                return RedirectToPage("./Index");
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UsageRecordExists(UsageRecord.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return RedirectToPage("./Index");
-        }
-
-        private bool UsageRecordExists(int id)
-        {
-            return _context.UsageRecords.Any(e => e.Id == id);
+            return Page();
         }
     }
 }

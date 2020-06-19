@@ -28,7 +28,8 @@ namespace EquipmentManagementSystem.Pages.UsageRecords
             }
 
             UsageRecord = await _context.UsageRecords
-                .Include(u => u.Instrument).FirstOrDefaultAsync(m => m.Id == id);
+                                        .AsNoTracking()
+                                        .FirstOrDefaultAsync(m => m.Id == id);
 
             if (UsageRecord == null)
             {

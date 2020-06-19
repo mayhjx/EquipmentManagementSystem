@@ -1,27 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using EquipmentManagementSystem.Data;
+using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using EquipmentManagementSystem.Data;
-using EquipmentManagementSystem.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace EquipmentManagementSystem.Pages.Management.MalfunctionParts
+namespace EquipmentManagementSystem.Pages.Management.Groups
 {
     public class EditModel : PageModel
     {
-        private readonly EquipmentManagementSystem.Data.MalfunctionContext _context;
+        private readonly EquipmentContext _context;
 
-        public EditModel(EquipmentManagementSystem.Data.MalfunctionContext context)
+        public EditModel(EquipmentContext context)
         {
             _context = context;
         }
 
         [BindProperty]
-        public MalfunctionPart MalfunctionPart { get; set; }
+        public Group Group { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,9 +27,9 @@ namespace EquipmentManagementSystem.Pages.Management.MalfunctionParts
                 return NotFound();
             }
 
-            MalfunctionPart = await _context.MalfunctionParts.FirstOrDefaultAsync(m => m.ID == id);
+            Group = await _context.Groups.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (MalfunctionPart == null)
+            if (Group == null)
             {
                 return NotFound();
             }
@@ -48,7 +45,7 @@ namespace EquipmentManagementSystem.Pages.Management.MalfunctionParts
                 return Page();
             }
 
-            _context.Attach(MalfunctionPart).State = EntityState.Modified;
+            _context.Attach(Group).State = EntityState.Modified;
 
             try
             {
@@ -56,7 +53,7 @@ namespace EquipmentManagementSystem.Pages.Management.MalfunctionParts
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MalfunctionPartExists(MalfunctionPart.ID))
+                if (!GroupExists(Group.Id))
                 {
                     return NotFound();
                 }
@@ -69,9 +66,9 @@ namespace EquipmentManagementSystem.Pages.Management.MalfunctionParts
             return RedirectToPage("./Index");
         }
 
-        private bool MalfunctionPartExists(int id)
+        private bool GroupExists(int id)
         {
-            return _context.MalfunctionParts.Any(e => e.ID == id);
+            return _context.Groups.Any(e => e.Id == id);
         }
     }
 }

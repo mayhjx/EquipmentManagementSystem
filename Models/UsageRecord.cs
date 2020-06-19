@@ -37,7 +37,7 @@ namespace EquipmentManagementSystem.Models
         [Display(Name = "临床样数量")]
         public int SampleNumber { get; set; }
 
-        [Display(Name = "序列Test数量")]
+        [Display(Name = "序列样品总数")]
         public int TestNumber { get; set; }
 
         [Display(Name = "进样结束时间")]
