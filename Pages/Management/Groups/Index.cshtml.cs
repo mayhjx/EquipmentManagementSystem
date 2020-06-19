@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using EquipmentManagementSystem.Data;
-using EquipmentManagementSystem.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Management.Groups
 {
@@ -19,11 +15,11 @@ namespace EquipmentManagementSystem.Pages.Management.Groups
             _context = context;
         }
 
-        public IList<Group> Group { get;set; }
+        public IList<Group> Group { get; set; }
 
         public async Task OnGetAsync()
         {
-            Group = await _context.Groups.ToListAsync();
+            Group = await _context.Groups.AsNoTracking().ToListAsync();
         }
     }
 }

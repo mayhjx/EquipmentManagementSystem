@@ -28,7 +28,7 @@ namespace EquipmentManagementSystem.Pages.Instruments
                               .Include(i => i.Calibrations)
                               select i;
 
-            Instrument = await instruments.OrderBy(m => m.ID).ToListAsync();
+            Instrument = await instruments.OrderBy(m => m.ID).AsNoTracking().ToListAsync();
         }
     }
 }
