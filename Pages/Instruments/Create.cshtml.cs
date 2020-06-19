@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Instruments
 {
-    [Authorize(Roles = "设备主任， 设备管理员")]
+    [Authorize(Roles = "设备主任, 设备管理员")]
     public class CreateModel : BasePageModel
     {
         public CreateModel(EquipmentContext context,
