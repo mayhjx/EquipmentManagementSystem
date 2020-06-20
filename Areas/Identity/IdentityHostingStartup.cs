@@ -1,6 +1,7 @@
 ﻿using EquipmentManagementSystem.Authorization;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -23,9 +24,9 @@ namespace EquipmentManagementSystem.Areas.Identity
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("IdentityContextConnection")));
 
-                services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
-                    .AddRoles<IdentityRole>()
-                    .AddEntityFrameworkStores<IdentityContext>();
+                services.AddDefaultIdentity<User>()
+                        .AddRoles<IdentityRole>()
+                        .AddEntityFrameworkStores<IdentityContext>();
 
                 services.Configure<IdentityOptions>(options =>
                 {
@@ -38,9 +39,9 @@ namespace EquipmentManagementSystem.Areas.Identity
                     options.Password.RequiredUniqueChars = 1;
 
                     // Lockout settings.
-                    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-                    options.Lockout.MaxFailedAccessAttempts = 5;
-                    options.Lockout.AllowedForNewUsers = true;
+                    //options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                    //options.Lockout.MaxFailedAccessAttempts = 5;
+                    //options.Lockout.AllowedForNewUsers = true;
 
                     // User settings.
                     options.User.AllowedUserNameCharacters =
@@ -52,10 +53,10 @@ namespace EquipmentManagementSystem.Areas.Identity
                 {
                     // Cookie settings
                     options.Cookie.HttpOnly = true;
-                    options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+                    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
 
-                    options.LoginPath = "/Identity/Account/Login";
-                    options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+                    options.LoginPath = "/Identity/Page/Account/Login";
+                    options.AccessDeniedPath = "/Identity/Page/Account/AccessDenied";
                     options.SlidingExpiration = true;
                 });
 
