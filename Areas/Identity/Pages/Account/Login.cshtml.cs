@@ -88,11 +88,11 @@ namespace EquipmentManagementSystem.Areas.Identity.Pages.Account
                 //{
                 //    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
                 //}
-                if (result.IsLockedOut)
-                {
-                    _logger.LogWarning("User account locked out.");
-                    return RedirectToPage("./Lockout");
-                }
+                //if (result.IsLockedOut)
+                //{
+                //    _logger.LogWarning("User account locked out.");
+                //    return RedirectToPage("./Lockout");
+                //}
                 else
                 {
                     ModelState.AddModelError(string.Empty, "无效的账号或密码");
