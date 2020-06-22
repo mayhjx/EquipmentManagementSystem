@@ -18,3 +18,7 @@ EquipmentContext中仪器和故障部分分开
 在故障详情界面进行确认
 权限分级
 修改密码
+
+Tips:
+Git bash: $git reset --soft HEAD~1
+Usage: Undo the most recent commit while keeping the changes made in that commit to staging.
