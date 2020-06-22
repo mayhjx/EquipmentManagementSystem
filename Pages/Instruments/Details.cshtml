@@ -124,12 +124,15 @@
                                         @Html.DisplayNameFor(model => model.Instrument.Projects)
                                     </dt>
                                     <dd class="col-sm-7">
-                                        <ul class="list-unstyled">
-                                            @foreach (var project in Model.Instrument.Projects.Split(", "))
-                                            {
-                                                <li>@project</li>
-                                            }
-                                        </ul>
+                                        @if (!string.IsNullOrEmpty(Model.Instrument.Projects))
+                                        {
+                                            <ul class="list-unstyled">
+                                                @foreach (var project in Model.Instrument.Projects.Split(", "))
+                                                {
+                                                    <li>@project</li>
+                                                }
+                                            </ul>
+                                        }
                                     </dd>
                                 </dl>
                             </div>
