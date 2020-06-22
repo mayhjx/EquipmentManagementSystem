@@ -22,29 +22,35 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
         public IActionResult OnGet(string id)
         {
 
-            var isAuthorized = User.IsInRole(Constants.ManagerRole) ||
+            var isAdmin = User.IsInRole(Constants.ManagerRole) ||
                                 User.IsInRole(Constants.DirectorRole);
 
-            if (isAuthorized)
+            if (isAdmin)
             {
                 // 获取所有仪器编号
-                ViewData["InstrumentID"] =
-                    new SelectList(_context.Set<Instrument>().OrderBy(m => m.ID), "ID", "ID", id);
+                InstrumentSelectList = new SelectList(_context.Set<Instrument>().OrderBy(m => m.ID), "ID", "ID", id);
             }
             else
             {
                 // 获取技术员或设备负责人所属项目组的仪器编号
                 var userGroup = _userManager.GetUserAsync(User).Result.Group;
-                ViewData["InstrumentID"] =
-                    new SelectList(_context.Set<Instrument>().Where(m => m.Group == userGroup)
-                                                            .OrderBy(m => m.ID), "ID", "ID", id);
+                InstrumentSelectList = new SelectList(_context.Set<Instrument>()
+                                                                .Where(m => m.Group == userGroup)
+                                                                .OrderBy(m => m.ID), "ID", "ID", id);
             }
+
+            MalfunctionPhenomenonSelectList = new SelectList(_context.MalfunctionPhenomenon, "Phenomenon", "Phenomenon");
 
             return Page();
         }
 
         [BindProperty]
         public MalfunctionWorkOrder MalfunctionWorkOrder { get; set; }
+
+        public SelectList InstrumentSelectList { get; set; }
+
+        public SelectList MalfunctionPhenomenonSelectList { get; set; }
+
 
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.
