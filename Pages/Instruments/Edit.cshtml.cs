@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Instruments
@@ -35,13 +36,21 @@ namespace EquipmentManagementSystem.Pages.Instruments
                 return Forbid();
             }
 
-            ViewData["Group"] = new SelectList(_context.Groups, "Name", "Name", Instrument.Group);
+            GroupProject = new SelectList(_context.Groups, "Name", "Name", Instrument.Group);
+            ProjectsSelectList = new MultiSelectList(_context.Projects, "Name", "Name", Instrument.Projects.Split(", ").AsEnumerable());
 
             return Page();
         }
 
         [BindProperty]
         public Instrument Instrument { get; set; }
+
+        [BindProperty]
+        public string[] SelectedProject { get; set; }
+
+        public SelectList GroupProject { get; set; }
+
+        public MultiSelectList ProjectsSelectList { get; set; }
 
         public async Task<IActionResult> OnPostAsync(string id)
         {
@@ -66,6 +75,7 @@ namespace EquipmentManagementSystem.Pages.Instruments
                     i => i.CalibrationCycle, i => i.MetrologicalCharacteristics, i => i.Location,
                     i => i.Principal, i => i.Group, i => i.Projects, i => i.NewSystemCode, i => i.Remark))
             {
+                Instrument.Projects = string.Join(", ", SelectedProject);
                 await _context.SaveChangesAsync();
                 return RedirectToPage("../Instruments/Details", new { id = Instrument.ID });
             }

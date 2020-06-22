@@ -20,13 +20,20 @@ namespace EquipmentManagementSystem.Pages.Instruments
 
         public IActionResult OnGet()
         {
-            ViewData["Group"] = new SelectList(_context.Groups, "Name", "Name");
+            GroupsSelectList = new SelectList(_context.Groups, "Name", "Name");
+            ProjectsSelectList = new SelectList(_context.Projects, "Name", "Name");
 
             return Page();
         }
 
         [BindProperty]
         public Instrument Instrument { get; set; }
+
+        [BindProperty]
+        public string[] SelectedProject { get; set; }
+
+        public SelectList ProjectsSelectList { get; set; }
+        public MultiSelectList GroupsSelectList { get; set; }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.
@@ -36,6 +43,8 @@ namespace EquipmentManagementSystem.Pages.Instruments
             {
                 return Page();
             }
+
+            Instrument.Projects = string.Join(", ", SelectedProject);
 
             _context.Instruments.Add(Instrument);
             await _context.SaveChangesAsync();
