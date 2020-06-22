@@ -20,22 +20,16 @@ namespace EquipmentManagementSystem.Pages.Instruments
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            // Instrument = await _context.Instruments.FirstOrDefaultAsync(m => m.ID == id);
             Instrument = await _context.Instruments
-                        .Include(a => a.Assert)
-                        .Include(b => b.Calibrations)
-                        .Include(c => c.Components)
-                        .Include(d => d.MalfunctionWorkOrder)
-                            .ThenInclude(e => e.MalfunctionInfo)
-                        .Include(d => d.MalfunctionWorkOrder)
-                            .ThenInclude(e => e.Validation)
-                        .AsNoTracking()
-                        .FirstOrDefaultAsync(m => m.ID == id);
+                                .Include(a => a.Assert)
+                                .Include(b => b.Calibrations)
+                                .Include(c => c.Components)
+                                .Include(d => d.MalfunctionWorkOrder)
+                                    .ThenInclude(e => e.MalfunctionInfo)
+                                .Include(d => d.MalfunctionWorkOrder)
+                                    .ThenInclude(e => e.Validation)
+                                .AsNoTracking()
+                                .FirstOrDefaultAsync(m => m.ID == id);
 
             if (Instrument == null)
             {
