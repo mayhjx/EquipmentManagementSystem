@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -28,12 +29,6 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Information
         {
             _fileSizeLimit = config.GetValue<long>("FileSizeLimit");
         }
-
-        [BindProperty]
-        public MalfunctionInfo MalfunctionInfo { get; set; }
-
-        [BindProperty]
-        public Upload FileUpload { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
@@ -61,6 +56,10 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Information
                 return Forbid();
             }
 
+            MalfunctionPartSelectList = new SelectList(_context.MalfunctionParts, "Name", "Name");
+            MalfunctionPhenomenonSelectList = new SelectList(_context.MalfunctionPhenomenon, "Phenomenon", "Phenomenon", MalfunctionInfo.Phenomenon);
+            MalfunctionReasonSelectList = new SelectList(_context.MalfunctionReason, "Reason", "Reason");
+
             return Page();
         }
 
@@ -78,8 +77,23 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Information
             return File(requestFile.Attachment, MediaTypeNames.Application.Octet, WebUtility.HtmlEncode(requestFile.FileName));
         }
 
+        [BindProperty]
+        public MalfunctionInfo MalfunctionInfo { get; set; }
+
+        [BindProperty]
+        public Upload FileUpload { get; set; }
+
+        public SelectList MalfunctionPhenomenonSelectList { get; set; }
+        public SelectList MalfunctionPartSelectList { get; set; }
+        public SelectList MalfunctionReasonSelectList { get; set; }
+
         public async Task<IActionResult> OnPostAsync(int id)
         {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
             MalfunctionInfo = await _context.MalfunctionInfo
                                         .Include(m => m.MalfunctionWorkOrder)
                                         .ThenInclude(m => m.Instrument)
