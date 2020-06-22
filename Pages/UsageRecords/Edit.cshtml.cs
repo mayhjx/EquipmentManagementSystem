@@ -1,14 +1,11 @@
 ﻿using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.UsageRecords
 {
-    [AllowAnonymous]
     public class EditModel : PageModel
     {
         private readonly EquipmentContext _context;
@@ -23,16 +20,12 @@ namespace EquipmentManagementSystem.Pages.UsageRecords
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            UsageRecord = await _context.UsageRecords
-                                    .FindAsync(id);
+            UsageRecord = await _context.UsageRecords.FindAsync(id);
 
             if (UsageRecord == null)
             {
                 return NotFound();
             }
-
-            ViewData["InstrumentId"] = new SelectList(_context.Instruments, "ID", "ID", UsageRecord.InstrumentId);
-            ViewData["Project"] = new SelectList(_context.Projects, "Name", "Name", UsageRecord.ProjectName);
 
             return Page();
         }
@@ -46,8 +39,7 @@ namespace EquipmentManagementSystem.Pages.UsageRecords
                 return Page();
             }
 
-            var UsageRecordToUpdate = await _context.UsageRecords
-                                    .FindAsync(id);
+            var UsageRecordToUpdate = await _context.UsageRecords.FindAsync(id);
 
             if (UsageRecordToUpdate == null)
             {
@@ -57,9 +49,8 @@ namespace EquipmentManagementSystem.Pages.UsageRecords
             if (await TryUpdateModelAsync<UsageRecord>(
                 UsageRecordToUpdate,
                 "UsageRecord",
-                i => i.InstrumentId, i => i.ProjectName, i => i.BeginTimeOfMaintain,
-                i => i.ColumnPressure, i => i.BeginTimeOfTest, i => i.SampleNumber,
-                i => i.TestNumber, i => i.EndTime, i => i.Creator))
+                i => i.BeginTimeOfMaintain, i => i.ColumnPressure, i => i.PressureUnit, i => i.BeginTimeOfTest,
+                i => i.SampleNumber, i => i.TestNumber, i => i.EndTime, i => i.Remark))
             {
                 await _context.SaveChangesAsync();
                 return RedirectToPage("./Index");

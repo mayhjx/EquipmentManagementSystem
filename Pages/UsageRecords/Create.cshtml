@@ -7,6 +7,9 @@
 }
 
 <div class="card">
+    <div class="card-header">
+        <h3>使用登记</h3>
+    </div>
     <div class="card-body">
         <div class="row">
             <div class="col-md-4">
@@ -14,15 +17,14 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
                         <label asp-for="UsageRecord.InstrumentId" class="control-label"></label>
-                        <select asp-for="UsageRecord.InstrumentId" class="form-control" asp-items="ViewBag.InstrumentId">
-                            <option></option>
+                        <select id="instrumentId" asp-for="UsageRecord.InstrumentId" class="form-control select2" asp-items="@Model.InstrumentSelectList" required>
+                            <option value="">---请选择---</option>
                         </select>
                         <span asp-validation-for="UsageRecord.InstrumentId" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="UsageRecord.ProjectName" class="control-label"></label>
-                        <select asp-for="UsageRecord.ProjectName" class="form-control" asp-items="ViewBag.Project">
-                            <option></option>
+                        <select id="project" asp-for="UsageRecord.ProjectName" class="form-control select2" required disabled>
                         </select>
                         <span asp-validation-for="UsageRecord.ProjectName" class="text-danger"></span>
                     </div>
@@ -33,8 +35,16 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="UsageRecord.ColumnPressure" class="control-label"></label>
-                        <input asp-for="UsageRecord.ColumnPressure" class="form-control" />
-                        <span asp-validation-for="UsageRecord.ColumnPressure" class="text-danger"></span>
+                        <div class="input-group">
+                            <input asp-for="UsageRecord.ColumnPressure" class="form-control" />
+                            <div class="input-group-append">
+                                <select asp-for="UsageRecord.PressureUnit" class="custom-select">
+                                    <option value="MPa">MPa</option>
+                                    <option value="Psi">Psi</option>
+                                    <option value="Bar">Bar</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label asp-for="UsageRecord.BeginTimeOfTest" class="control-label"></label>
@@ -61,8 +71,13 @@
                         @{
                             var user = await UserManager.GetUserAsync(User);
                         }
-                        <input asp-for="UsageRecord.Creator" value="@user?.Name" class="form-control" />
+                        <input asp-for="UsageRecord.Creator" value="@user?.Name" class="form-control" readonly />
                         <span asp-validation-for="UsageRecord.Creator" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="UsageRecord.Remark" class="control-label"></label>
+                        <textarea asp-for="UsageRecord.Remark" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="UsageRecord.Remark" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <input type="submit" value="新建" class="btn btn-primary" />
@@ -78,4 +93,24 @@
 </div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(function () {
+            $(".select2").select2({
+                theme: 'bootstrap4'
+            })
+
+            // 根据选择的仪器编号动态生成检测项目
+            $("#instrumentId").on("change", function () {
+                var instrumentId = $(this).val();
+                $("#project").removeAttr("disabled");
+                $("#project").empty();
+                $("#project").append("<option value=''>---请选择---</option>");
+                $.getJSON(`?handler=Filter&instrumentId=${instrumentId}`, (data) => {
+                    $.each(data, function (i, item) {
+                        $("#project").append(`<option value='${item}'>${item}</option>`)
+                    });
+                });
+            });
+        });
+    </script>
 }

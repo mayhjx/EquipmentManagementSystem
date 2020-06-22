@@ -40,7 +40,7 @@
                 @Html.DisplayNameFor(model => model.UsageRecord.ColumnPressure)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.UsageRecord.ColumnPressure)
+                @Html.DisplayFor(model => model.UsageRecord.ColumnPressure)@Html.DisplayFor(model => model.UsageRecord.PressureUnit)
             </dd>
             <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.UsageRecord.BeginTimeOfTest)
@@ -71,6 +71,12 @@
             </dt>
             <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.UsageRecord.Creator)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.UsageRecord.Remark)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.UsageRecord.Remark)
             </dd>
         </dl>
 

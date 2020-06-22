@@ -17,12 +17,12 @@
                     <input type="hidden" asp-for="UsageRecord.Id" />
                     <div class="form-group">
                         <label asp-for="UsageRecord.InstrumentId" class="control-label"></label>
-                        <select asp-for="UsageRecord.InstrumentId" class="form-control" asp-items="ViewBag.InstrumentId"></select>
+                        <input asp-for="UsageRecord.InstrumentId" class="form-control" readonly>
                         <span asp-validation-for="UsageRecord.InstrumentId" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="UsageRecord.ProjectName" class="control-label"></label>
-                        <select asp-for="UsageRecord.ProjectName" class="form-control" asp-items="ViewBag.Project"></select>
+                        <input asp-for="UsageRecord.ProjectName" class="form-control" readonly>
                         <span asp-validation-for="UsageRecord.ProjectName" class="text-danger"></span>
                     </div>
                     <div class="form-group">
@@ -30,10 +30,23 @@
                         <input asp-for="UsageRecord.BeginTimeOfMaintain" class="form-control" />
                         <span asp-validation-for="UsageRecord.BeginTimeOfMaintain" class="text-danger"></span>
                     </div>
+                    @*<div class="form-group">
+                            <label asp-for="UsageRecord.ColumnPressure" class="control-label"></label>
+                            <input asp-for="UsageRecord.ColumnPressure" class="form-control" />
+                            <span asp-validation-for="UsageRecord.ColumnPressure" class="text-danger"></span>
+                        </div>*@
                     <div class="form-group">
                         <label asp-for="UsageRecord.ColumnPressure" class="control-label"></label>
-                        <input asp-for="UsageRecord.ColumnPressure" class="form-control" />
-                        <span asp-validation-for="UsageRecord.ColumnPressure" class="text-danger"></span>
+                        <div class="input-group">
+                            <input asp-for="UsageRecord.ColumnPressure" class="form-control" />
+                            <div class="input-group-append">
+                                <select asp-for="UsageRecord.PressureUnit" class="custom-select">
+                                    <option value="MPa">MPa</option>
+                                    <option value="Psi">Psi</option>
+                                    <option value="Bar">Bar</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label asp-for="UsageRecord.BeginTimeOfTest" class="control-label"></label>
@@ -57,8 +70,13 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="UsageRecord.Creator" class="control-label"></label>
-                        <input asp-for="UsageRecord.Creator" class="form-control" />
+                        <input asp-for="UsageRecord.Creator" class="form-control" readonly />
                         <span asp-validation-for="UsageRecord.Creator" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="UsageRecord.Remark" class="control-label"></label>
+                        <textarea asp-for="UsageRecord.Remark" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="UsageRecord.Remark" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <input type="submit" value="保存" class="btn btn-primary" />
