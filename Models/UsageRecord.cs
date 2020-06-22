@@ -26,8 +26,12 @@ namespace EquipmentManagementSystem.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
         public DateTime? BeginTimeOfMaintain { get; set; }
 
-        [Display(Name = "色谱柱压力(MPa)")]
-        public float ColumnPressure { get; set; }
+        [Display(Name = "色谱柱压力")]
+        public float? ColumnPressure { get; set; }
+
+        [Display(Name = "压力单位")]
+        [StringLength(10)]
+        public string PressureUnit { get; set; }
 
         [Display(Name = "进样开始时间")]
         [DataType(DataType.DateTime)]
@@ -48,5 +52,10 @@ namespace EquipmentManagementSystem.Models
         [Display(Name = "使用者")]
         [StringLength(10)]
         public string Creator { get; set; }
+
+        [Display(Name = "备注")]
+        [StringLength(999)]
+        public string Remark { get; set; }
+
     }
 }
