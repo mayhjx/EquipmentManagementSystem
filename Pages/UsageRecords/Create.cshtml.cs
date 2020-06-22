@@ -1,6 +1,7 @@
 ﻿using EquipmentManagementSystem.Authorization;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.UsageRecords
 {
+    [AllowAnonymous]
     public class CreateModel : PageModel
     {
         private readonly EquipmentContext _context;
@@ -22,7 +24,6 @@ namespace EquipmentManagementSystem.Pages.UsageRecords
 
         public IActionResult OnGet()
         {
-
             var isAdmin = User.IsInRole(Constants.ManagerRole) || User.IsInRole(Constants.DirectorRole);
             var userGroup = _userManager.GetUserAsync(User).Result.Group;
 
