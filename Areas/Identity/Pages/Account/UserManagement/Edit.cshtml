@@ -11,7 +11,9 @@
                     <input type="hidden" asp-for="userToUpdate.Id" />
                     <div class="form-group">
                         <label asp-for="userToUpdate.Group" class="control-label"></label>
-                        <select asp-for="userToUpdate.Group" asp-items="@ViewBag.Groups" class="form-control"></select>
+                        <select asp-for="userToUpdate.Group" asp-items="@ViewBag.Groups" class="custom-select">
+                            <option value="">---请选择---</option>
+                        </select>
                         <span asp-validation-for="userToUpdate.Group" class="text-danger"></span>
                     </div>
                     <div class="form-group">
@@ -31,7 +33,9 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="role.Name" class="control-label"></label>
-                        <select asp-for="role.Name" asp-items="@ViewBag.Roles" class="form-control"></select>
+                        <select asp-for="role.Name" asp-items="@ViewBag.Roles" class="custom-select">
+                            <option value="">---请选择---</option>
+                        </select>
                         <span asp-validation-for="role.Name" class="text-danger"></span>
                     </div>
                     @*<div class="form-group">
@@ -39,11 +43,11 @@
                             <input asp-for="userToUpdate.Password" class="form-control" />
                             <span asp-validation-for="userToUpdate.Password" class="text-danger"></span>
                         </div>*@
-                <div class="form-group">
-                    <a asp-page="Index"><input type="button" value="返回" class="btn btn-default" /></a>
-                    <input type="submit" value="保存" class="btn btn-primary" style="margin-left: 5px;" />
-                    <input type="button" value="删除" class="btn btn-outline-danger float-right" data-toggle="modal" data-target="#modal-delete" />
-                </div>
+                    <div class="form-group">
+                        <a asp-page="Index"><input type="button" value="返回" class="btn btn-default" /></a>
+                        <input type="submit" value="保存" class="btn btn-primary" style="margin-left: 5px;" />
+                        <input type="button" value="删除" class="btn btn-outline-danger float-right" data-toggle="modal" data-target="#modal-delete" />
+                    </div>
                 </form>
             </div>
         </div>

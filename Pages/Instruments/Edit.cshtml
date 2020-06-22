@@ -6,6 +6,9 @@
 }
 
 <div class="card">
+    <div class="card-header">
+        <h4>基础信息</h4>
+    </div>
     <div class="card-body">
         <div class="row">
             <div class="col-md-12">
@@ -65,24 +68,25 @@
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label asp-for="Instrument.Group" class="control-label"></label>
-                            <select asp-for="Instrument.Group" class="form-control" asp-items="ViewBag.Group"></select>
+                            <select asp-for="Instrument.Group" class="custom-select" asp-items="@Model.GroupProject">
+                                <option></option>
+                            </select>
                             <span asp-validation-for="Instrument.Group" class="text-danger"></span>
                         </div>
                         <div class="form-group col-md-4">
                             <label asp-for="Instrument.Projects" class="control-label"></label>
-                            <input asp-for="Instrument.Projects" class="form-control" />
+                            <select asp-for="SelectedProject" class="form-control select2" asp-items="@Model.ProjectsSelectList"></select>
                             <span asp-validation-for="Instrument.Projects" class="text-danger"></span>
                         </div>
                         <div class="form-group col-md-4">
                             <label asp-for="Instrument.Status" class="control-label"></label>
-                            <select asp-for="Instrument.Status" class="form-control" asp-items="@Html.GetEnumSelectList<EquipmentManagementSystem.Models.InstrumentStatus>()">
-                            </select>
+                            <select asp-for="Instrument.Status" class="custom-select" asp-items="@Html.GetEnumSelectList<EquipmentManagementSystem.Models.InstrumentStatus>()"></select>
                             <span asp-validation-for="Instrument.Status" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label asp-for="Instrument.Remark" class="control-label"></label>
-                        <textarea asp-for="Instrument.Remark" class="form-control"></textarea>
+                        <textarea asp-for="Instrument.Remark" class="form-control" rows="3"></textarea>
                         <span asp-validation-for="Instrument.Remark" class="text-danger"></span>
                     </div>
                     <div class="form-group">
@@ -99,4 +103,11 @@
 </div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(function () {
+            $('.select2').select2({
+                theme: 'bootstrap4'
+            })
+        })
+    </script>
 }

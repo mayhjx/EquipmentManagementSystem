@@ -2,10 +2,13 @@
 @model EquipmentManagementSystem.Pages.Instruments.CreateModel
 
 @{
-    ViewData["Title"] = "新增设备";
+    ViewData["Title"] = "新增";
 }
 
 <div class="card">
+    <div class="card-header">
+        <h4>设备档案</h4>
+    </div>
     <div class="card-body">
         <div class="row">
             <div class="col-md-12">
@@ -14,7 +17,7 @@
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label asp-for="Instrument.ID" class="control-label"></label>
-                            <input asp-for="Instrument.ID" class="form-control" />
+                            <input asp-for="Instrument.ID" class="form-control" autofocus />
                             <span asp-validation-for="Instrument.ID" class="text-danger"></span>
                         </div>
                         <div class="form-group col-md-4">
@@ -65,26 +68,28 @@
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label asp-for="Instrument.Group" class="control-label"></label>
-                            <select asp-for="Instrument.Group" class="form-control" asp-items="ViewBag.Group">
-                                <option></option>
+                            <select asp-for="Instrument.Group" class="custom-select" asp-items="@Model.GroupsSelectList">
+                                <option value="">---请选择---</option>
                             </select>
                             <span asp-validation-for="Instrument.Group" class="text-danger"></span>
                         </div>
                         <div class="form-group col-md-4">
                             <label asp-for="Instrument.Projects" class="control-label"></label>
-                            <input asp-for="Instrument.Projects" class="form-control" />
+                            <select asp-for="SelectedProject" class="form-control select2" asp-items="@Model.ProjectsSelectList">
+                            </select>
                             <span asp-validation-for="Instrument.Projects" class="text-danger"></span>
                         </div>
                         <div class="form-group col-md-4">
                             <label asp-for="Instrument.Status" class="control-label"></label>
-                            <select asp-for="Instrument.Status" class="form-control" asp-items="@Html.GetEnumSelectList<EquipmentManagementSystem.Models.InstrumentStatus>()">
+                            <select asp-for="Instrument.Status" class="custom-select" asp-items="@Html.GetEnumSelectList<EquipmentManagementSystem.Models.InstrumentStatus>()">
+                                <option value="">---请选择---</option>
                             </select>
                             <span asp-validation-for="Instrument.Status" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label asp-for="Instrument.Remark" class="control-label"></label>
-                        <textarea asp-for="Instrument.Remark" class="form-control"></textarea>
+                        <textarea asp-for="Instrument.Remark" class="form-control" rows="3"></textarea>
                         <span asp-validation-for="Instrument.Remark" class="text-danger"></span>
                     </div>
                     <div class="form-group">
@@ -101,4 +106,9 @@
 </div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $('.select2').select2({
+            theme: 'bootstrap4'
+        })
+    </script>
 }

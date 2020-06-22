@@ -18,21 +18,23 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
                         <label asp-for="MalfunctionWorkOrder.InstrumentID" class="control-label"></label>
-                        <select asp-for="MalfunctionWorkOrder.InstrumentID" class="form-control" asp-items="ViewBag.InstrumentID" required>
-                            <option></option>
+                        <select asp-for="MalfunctionWorkOrder.InstrumentID" class="form-control select2" asp-items="@Model.InstrumentSelectList" required>
+                            <option value="">---请选择---</option>
                         </select>
                         <span asp-validation-for="MalfunctionWorkOrder.InstrumentID" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="MalfunctionWorkOrder.MalfunctionInfo.Type" class="control-label"></label>
-                        <select asp-for="MalfunctionWorkOrder.MalfunctionInfo.Type" class="form-control" asp-items="@Html.GetEnumSelectList<EquipmentManagementSystem.Models.MalfunctionType>()" required>
-                            <option></option>
+                        <select asp-for="MalfunctionWorkOrder.MalfunctionInfo.Type" class="custom-select select2" asp-items="@Html.GetEnumSelectList<EquipmentManagementSystem.Models.MalfunctionType>()" required>
+                            <option value="">---请选择---</option>
                         </select>
                         <span asp-validation-for="MalfunctionWorkOrder.MalfunctionInfo.Type" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="MalfunctionWorkOrder.MalfunctionInfo.Phenomenon" class="control-label"></label>
-                        <input asp-for="MalfunctionWorkOrder.MalfunctionInfo.Phenomenon" class="form-control" required />
+                        <select asp-for="MalfunctionWorkOrder.MalfunctionInfo.Phenomenon" class="form-control select2" asp-items="@Model.MalfunctionPhenomenonSelectList" required>
+                            <option value="">---请选择---</option>
+                        </select>
                         <span asp-validation-for="MalfunctionWorkOrder.MalfunctionInfo.Phenomenon" class="text-danger"></span>
                     </div>
                     <div class="form-group">
@@ -50,7 +52,7 @@
                         @{
                             var user = await UserManager.GetUserAsync(User);
                         }
-                        <input asp-for="MalfunctionWorkOrder.Creator" value="@user.Name" class="form-control" required readonly />
+                        <input asp-for="MalfunctionWorkOrder.Creator" value="@user?.Name" class="form-control" required readonly />
                         <span asp-validation-for="MalfunctionWorkOrder.Creator" class="text-danger"></span>
                     </div>
                     <div class="form-group">
@@ -76,4 +78,11 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(function () {
+            $('.select2').select2({
+                theme: 'bootstrap4'
+            })
+        })
+    </script>
 }
