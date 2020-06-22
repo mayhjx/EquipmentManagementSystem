@@ -95,7 +95,7 @@ namespace EquipmentManagementSystem.Areas.Identity.Pages.Account
                 //}
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "无效的账号或密码");
+                    ModelState.AddModelError(string.Empty, "账号或密码输入错误，请重新输入。");
                     return Page();
                 }
             }
