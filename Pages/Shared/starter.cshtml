@@ -59,14 +59,13 @@
 
             <!-- Sidebar -->
             <div class="sidebar">
-
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    <ul class="nav nav-pills nav-sidebar nav-child-indent flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
                         with font-awesome or any other icon font library -->
-                        <li class="nav-item has-treeview menu-open">
-                            <a href="#" class="nav-link">
+                        <li class="nav-item has-treeview">
+                            <a href="#Instruments" data-target="#" data-toggle="pill" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     设备一览
@@ -75,13 +74,13 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a asp-page="/Instruments/Index" class="nav-link">
+                                    <a asp-page="/Instruments/Index" class="nav-link" >
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>主检设备</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="#"  class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>辅助设备</p>
                                     </a>
@@ -99,7 +98,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a asp-page="/UsageRecords/Index" class="nav-link">
+                            <a asp-page="/UsageRecords/Index"  class="nav-link">
                                 <i class="nav-icon fas fa-edit"></i>
                                 <p>
                                     使用登记
@@ -181,5 +180,13 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @RenderSection("Scripts", required: false)
+<script>
+    $(document).ready(function () {
+        var url = window.location.pathname;
+        // Will only work if string in href matches with location
+        $('li.nav-item a[href="' + url + '"]').addClass('active');
+        $('li.nav-item a[href="' + url + '"]').parent().parent().parent().addClass('menu-open');
+    });
+</script>
 </body>
 </html>
