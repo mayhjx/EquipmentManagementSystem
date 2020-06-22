@@ -1,0 +1,38 @@
+﻿@page
+@model EquipmentManagementSystem.Pages.Management.MalfunctionParts.EditModel
+
+@{
+    ViewData["Title"] = "编辑";
+}
+
+<div class="card">
+    <div class="card-header">
+        故障部位
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-3">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="MalfunctionPart.ID" />
+                    <div class="form-group">
+                        <label asp-for="MalfunctionPart.Name" class="control-label"></label>
+                        <input asp-for="MalfunctionPart.Name" class="form-control" />
+                        <span asp-validation-for="MalfunctionPart.Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="保存" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div>
+            <a asp-page="./Index">返回</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
