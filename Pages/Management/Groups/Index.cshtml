@@ -2,22 +2,25 @@
 @model EquipmentManagementSystem.Pages.Management.Groups.IndexModel
 
 @{
-    ViewData["Title"] = "项目组管理";
+    ViewData["Title"] = "后台管理";
 }
 
-<div class="card col-md-4">
+<div class="card">
     <h4 class="card-header">
         项目组
         <a asp-page="Create">
             <input type="button" class="btn btn-outline-primary btn-sm" value="新建" style="margin-left: 10px;" />
         </a>
     </h4>
-    <div class="card-body">
+    <div class="card-body table-responsive">
         <table class="table table-sm">
             <thead>
                 <tr>
                     <th>
                         @Html.DisplayNameFor(model => model.Group[0].Name)
+                    </th>
+                    <th>
+                        检测项目
                     </th>
                     <th></th>
                 </tr>
@@ -28,6 +31,14 @@
                     <tr>
                         <td>
                             @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            <ol>
+                                @foreach (var project in item.Projects)
+                                {
+                                    <li>@project.Name</li>
+                                }
+                            </ol>
                         </td>
                         <td>
                             <a asp-page="./Edit" asp-route-id="@item.Id">编辑</a> |

@@ -20,19 +20,17 @@ namespace EquipmentManagementSystem.Pages.Management.Groups
         [BindProperty]
         public Group Group { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            Group = await _context.Groups.FirstOrDefaultAsync(m => m.Id == id);
+            Group = await _context.Groups.Include(m => m.Projects)
+                                        .AsNoTracking()
+                                        .FirstOrDefaultAsync(m => m.Id == id);
 
             if (Group == null)
             {
                 return NotFound();
             }
+
             return Page();
         }
 

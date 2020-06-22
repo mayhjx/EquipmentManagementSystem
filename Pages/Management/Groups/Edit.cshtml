@@ -7,9 +7,9 @@
 
 <div class="card">
     <div class="card-header">
-        项目组
-    </div>
-    <div class="card-body">
+        @*项目组*@
+        @*</div>
+            <div class="card-body">*@
         <div class="row">
             <div class="col-md-3">
                 <form method="post">
@@ -27,11 +27,52 @@
             </div>
         </div>
 
+        @*<div>
+                <a asp-page="./Index">返回</a>
+            </div>*@
+    </div>
+    @*</div>*@
+
+    @*<div class="card">
+        <div class="card-header">
+            检测项目
+        </div>*@
+    <div class="card-body">
+        <div class="card-title">
+            检测项目
+        </div>
+
+        <table class="table text-nowrap">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Group.Projects.First().Name)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Group.Projects)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            <a asp-page="../Projects/Edit" asp-route-id="@item.Id">编辑</a> |
+                            <a asp-page="../Projects/Delete" asp-route-id="@item.Id">删除</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
         <div>
             <a asp-page="./Index">返回</a>
         </div>
     </div>
 </div>
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

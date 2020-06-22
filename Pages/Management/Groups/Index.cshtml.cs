@@ -1,4 +1,5 @@
-﻿using EquipmentManagementSystem.Models;
+﻿using EquipmentManagementSystem.Data;
+using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -8,9 +9,9 @@ namespace EquipmentManagementSystem.Pages.Management.Groups
 {
     public class IndexModel : PageModel
     {
-        private readonly EquipmentManagementSystem.Data.EquipmentContext _context;
+        private readonly EquipmentContext _context;
 
-        public IndexModel(EquipmentManagementSystem.Data.EquipmentContext context)
+        public IndexModel(EquipmentContext context)
         {
             _context = context;
         }
@@ -19,7 +20,9 @@ namespace EquipmentManagementSystem.Pages.Management.Groups
 
         public async Task OnGetAsync()
         {
-            Group = await _context.Groups.AsNoTracking().ToListAsync();
+            Group = await _context.Groups.Include(m => m.Projects)
+                                        .AsNoTracking()
+                                        .ToListAsync();
         }
     }
 }
