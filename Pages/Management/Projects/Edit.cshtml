@@ -16,9 +16,25 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="Project.Id" />
                     <div class="form-group">
+                        <label asp-for="Project.GroupId" class="control-label"></label>
+                        <select asp-for="Project.GroupId" class="form-control" asp-items="@Model.GroupSelectList">
+                        </select>
+                        <span asp-validation-for="Project.GroupId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
                         <label asp-for="Project.Name" class="control-label"></label>
                         <input asp-for="Project.Name" class="form-control" />
                         <span asp-validation-for="Project.Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Project.SimpleTestTime" class="control-label"></label>
+                        <input asp-for="Project.SimpleTestTime" class="form-control" />
+                        <span asp-validation-for="Project.SimpleTestTime" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Project.ColumnType" class="control-label"></label>
+                        <input asp-for="Project.ColumnType" class="form-control" />
+                        <span asp-validation-for="Project.ColumnType" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <input type="submit" value="保存" class="btn btn-primary" />

@@ -7,9 +7,9 @@
 
 <div class="card">
     <div class="card-header">
-        @*项目组*@
-        @*</div>
-            <div class="card-body">*@
+        项目组
+    </div>
+    <div class="card-body">
         <div class="row">
             <div class="col-md-3">
                 <form method="post">
@@ -27,19 +27,22 @@
             </div>
         </div>
 
-        @*<div>
-                <a asp-page="./Index">返回</a>
-            </div>*@
+        <div>
+            <a asp-page="./Index">返回</a>
+        </div>
     </div>
-    @*</div>*@
+</div>
 
-    @*<div class="card">
+@*<div class="card">
         <div class="card-header">
             检测项目
-        </div>*@
+        </div>
     <div class="card-body">
         <div class="card-title">
             检测项目
+            <a asp-page="../Projects/Create" asp-route-groupId="@Model.Group.Id">
+                <input type="button" class="btn btn-outline-primary btn-sm" value="新建项目" style="margin-left: 10px;" />
+            </a>
         </div>
 
         <table class="table text-nowrap">
@@ -71,8 +74,8 @@
             <a asp-page="./Index">返回</a>
         </div>
     </div>
-</div>
-
+    </div>
+*@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

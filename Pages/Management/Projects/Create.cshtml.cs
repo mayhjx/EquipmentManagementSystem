@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using EquipmentManagementSystem.Data;
-using EquipmentManagementSystem.Models;
+using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Management.Projects
 {
@@ -21,11 +17,14 @@ namespace EquipmentManagementSystem.Pages.Management.Projects
 
         public IActionResult OnGet()
         {
+            GroupSelectList = new SelectList(_context.Groups, "Id", "Name");
             return Page();
         }
 
         [BindProperty]
         public Project Project { get; set; }
+
+        public SelectList GroupSelectList { get; set; }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.

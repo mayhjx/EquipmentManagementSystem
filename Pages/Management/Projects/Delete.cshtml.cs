@@ -1,4 +1,5 @@
-﻿using EquipmentManagementSystem.Models;
+﻿using EquipmentManagementSystem.Data;
+using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -8,9 +9,9 @@ namespace EquipmentManagementSystem.Pages.Management.Projects
 {
     public class DeleteModel : PageModel
     {
-        private readonly EquipmentManagementSystem.Data.EquipmentContext _context;
+        private readonly EquipmentContext _context;
 
-        public DeleteModel(EquipmentManagementSystem.Data.EquipmentContext context)
+        public DeleteModel(EquipmentContext context)
         {
             _context = context;
         }
@@ -18,29 +19,22 @@ namespace EquipmentManagementSystem.Pages.Management.Projects
         [BindProperty]
         public Project Project { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            Project = await _context.Projects.FirstOrDefaultAsync(m => m.Id == id);
+            Project = await _context.Projects.Include(m => m.Group)
+                                            .AsNoTracking()
+                                            .FirstOrDefaultAsync(m => m.Id == id);
 
             if (Project == null)
             {
                 return NotFound();
             }
+
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             Project = await _context.Projects.FindAsync(id);
 
             if (Project != null)

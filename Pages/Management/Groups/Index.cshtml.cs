@@ -20,9 +20,7 @@ namespace EquipmentManagementSystem.Pages.Management.Groups
 
         public async Task OnGetAsync()
         {
-            Group = await _context.Groups.Include(m => m.Projects)
-                                        .AsNoTracking()
-                                        .ToListAsync();
+            Group = await _context.Groups.AsNoTracking().ToListAsync();
         }
     }
 }

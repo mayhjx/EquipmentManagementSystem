@@ -2,6 +2,7 @@
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,6 +20,7 @@ namespace EquipmentManagementSystem.Pages.Management.Projects
 
         [BindProperty]
         public Project Project { get; set; }
+        public SelectList GroupSelectList { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -33,6 +35,9 @@ namespace EquipmentManagementSystem.Pages.Management.Projects
             {
                 return NotFound();
             }
+
+            GroupSelectList = new SelectList(_context.Groups, "Id", "Name");
+
             return Page();
         }
 

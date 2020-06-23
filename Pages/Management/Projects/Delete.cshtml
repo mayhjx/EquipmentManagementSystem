@@ -13,11 +13,29 @@
         <div class="row">
             <div class="col-md-3">
                 <dl class="row">
-                    <dt class="col-sm-3">
+                    <dt class="col-sm-6">
+                        @Html.DisplayNameFor(model => model.Project.GroupId)
+                    </dt>
+                    <dd class="col-sm-6">
+                        @Html.DisplayFor(model => model.Project.Group.Name)
+                    </dd>
+                    <dt class="col-sm-6">
                         @Html.DisplayNameFor(model => model.Project.Name)
                     </dt>
-                    <dd class="col-sm-9">
+                    <dd class="col-sm-6">
                         @Html.DisplayFor(model => model.Project.Name)
+                    </dd>
+                    <dt class="col-sm-6">
+                        @Html.DisplayNameFor(model => model.Project.SimpleTestTime)
+                    </dt>
+                    <dd class="col-sm-6">
+                        @Html.DisplayFor(model => model.Project.SimpleTestTime)
+                    </dd>
+                    <dt class="col-sm-6">
+                        @Html.DisplayNameFor(model => model.Project.ColumnType)
+                    </dt>
+                    <dd class="col-sm-6">
+                        @Html.DisplayFor(model => model.Project.ColumnType)
                     </dd>
                 </dl>
             </div>
