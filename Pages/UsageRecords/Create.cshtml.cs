@@ -25,7 +25,7 @@ namespace EquipmentManagementSystem.Pages.UsageRecords
         public IActionResult OnGet()
         {
             var isAdmin = User.IsInRole(Constants.ManagerRole) || User.IsInRole(Constants.DirectorRole);
-            var userGroup = _userManager.GetUserAsync(User).Result.Group;
+            var userGroup = _userManager.GetUserAsync(User).Result?.Group;
 
             if (isAdmin || userGroup == null)
             {
@@ -39,6 +39,11 @@ namespace EquipmentManagementSystem.Pages.UsageRecords
             return Page();
         }
 
+        /// <summary>
+        /// 根据设备编号返回该设备的检测项目    
+        /// </summary>
+        /// <param name="instrumentId">设备编号</param>
+        /// <returns>JSON</returns>
         public JsonResult OnGetFilter(string instrumentId)
         {
             return new JsonResult(_context.Instruments.Find(instrumentId).Projects.Split(", "));
