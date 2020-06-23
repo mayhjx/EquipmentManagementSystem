@@ -29,6 +29,10 @@
 		<Compile Remove="Data\Migrations\Equipment\20200618082323_ChangeUsageRecord.Designer.cs" />
 		<Compile Remove="Data\Migrations\Equipment\20200618083212_ChangeUsageRecord.cs" />
 		<Compile Remove="Data\Migrations\Equipment\20200618083212_ChangeUsageRecord.Designer.cs" />
+		<Compile Remove="Data\Migrations\Equipment\20200623015606_addGroupId.cs" />
+		<Compile Remove="Data\Migrations\Equipment\20200623015606_addGroupId.Designer.cs" />
+		<Compile Remove="Data\Migrations\Equipment\20200623022717_SimpleTestTime_DatetimeType.cs" />
+		<Compile Remove="Data\Migrations\Equipment\20200623022717_SimpleTestTime_DatetimeType.Designer.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
