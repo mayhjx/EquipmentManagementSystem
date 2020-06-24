@@ -464,44 +464,36 @@
                             }
                         </div>
                         <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6 col-sm-6">
-                                    <dl class="row">
-                                        <dt class="col-sm-6">
-                                            @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.FinishedTime)
-                                        </dt>
-                                        <dd class="col-sm-6">
-                                            @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.FinishedTime)
-                                        </dd>
-                                        <dt class="col-sm-6">
-                                            @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.PerformanceReportFileName)
-                                        </dt>
-                                        <dd class="col-sm-6">
-                                            <a asp-page="../Validate/Edit" asp-page-handler="DownloadPerformanceReportFile" asp-route-id="@Model.MalfunctionWorkOrder.Validation.ID">
-                                                @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.PerformanceReportFileName)
-                                            </a>
-                                        </dd>
-                                    </dl>
-                                </div>
-                                <div class="col-md-6 col-sm-6">
-                                    <dl class="row">
-                                        <dt class="col-sm-4">
-                                            @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.Summary)
-                                        </dt>
-                                        <dd class="col-sm-8">
-                                            @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.Summary)
-                                        </dd>
-                                        <dt class="col-sm-4">
-                                            @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.AttachmentName)
-                                        </dt>
-                                        <dd class="col-sm-8">
-                                            <a asp-page="../Validate/Edit" asp-page-handler="DownloadAttachment" asp-route-id="@Model.MalfunctionWorkOrder.Validation.ID">
-                                                @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.AttachmentName)
-                                            </a>
-                                        </dd>
-                                    </dl>
-                                </div>
-                            </div>
+                            <dl class="row">
+                                <dt class="col-sm-3">
+                                    @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.FinishedTime)
+                                </dt>
+                                <dd class="col-sm-9">
+                                    @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.FinishedTime)
+                                </dd>
+                                <dt class="col-sm-3">
+                                    @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.PerformanceReportFileName)
+                                </dt>
+                                <dd class="col-sm-9">
+                                    <a asp-page="../Validate/Edit" asp-page-handler="DownloadPerformanceReportFile" asp-route-id="@Model.MalfunctionWorkOrder.Validation.ID">
+                                        @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.PerformanceReportFileName)
+                                    </a>
+                                </dd>
+                                <dt class="col-sm-3">
+                                    @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.Summary)
+                                </dt>
+                                <dd class="col-sm-9">
+                                    @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.Summary)
+                                </dd>
+                                <dt class="col-sm-3">
+                                    @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.AttachmentName)
+                                </dt>
+                                <dd class="col-sm-9">
+                                    <a asp-page="../Validate/Edit" asp-page-handler="DownloadAttachment" asp-route-id="@Model.MalfunctionWorkOrder.Validation.ID">
+                                        @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.AttachmentName)
+                                    </a>
+                                </dd>
+                            </dl>
                         </div>
                         @if (!ValidationIsComfirm && CanApprove.Succeeded)
                         {

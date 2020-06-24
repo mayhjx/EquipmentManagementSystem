@@ -15,15 +15,19 @@
 
     if (isAdmin || isDirector || isManager)
     {
-        <li class="nav-header">权限管理</li>
-        <li class="nav-item">
-            <a asp-page="/Account/UserManagement/Index" asp-area="Identity" class="nav-link">
-                <i class="nav-icon fas fa-user"></i>
-                <p>
-                    用户管理
-                </p>
-            </a>
-        </li>
+        if (isAdmin || isDirector)
+        {
+            <li class="nav-header">权限管理</li>
+            <li class="nav-item">
+                <a asp-page="/Account/UserManagement/Index" asp-area="Identity" class="nav-link">
+                    <i class="nav-icon fas fa-user"></i>
+                    <p>
+                        用户管理
+                    </p>
+                </a>
+            </li>
+        }
+
         if (isAdmin)
         {
             <li class="nav-item">
