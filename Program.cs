@@ -15,6 +15,7 @@ namespace EquipmentManagementSystem
             var host = CreateHostBuilder(args).Build();
             CreateDbIfNotExists(host);
             CreateAdminIfNotExists(host);
+            CreateUserIfNotExists(host);
             host.Run();
         }
 
@@ -48,6 +49,24 @@ namespace EquipmentManagementSystem
                 try
                 {
                     AdminInitialize.InitializeAsync(services).Wait();
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "An error occurred creating the Admin.");
+                }
+            }
+        }
+
+        public static void CreateUserIfNotExists(IHost host)
+        {
+            using (var scope = host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+
+                try
+                {
+                    UserInitialize.InitializeAsync(services).Wait();
                 }
                 catch (Exception ex)
                 {

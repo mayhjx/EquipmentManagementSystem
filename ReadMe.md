@@ -3,7 +3,6 @@ TODO:
 增加并发冲突检测
 日志
 后台管理
-使用登记模块
 忘记密码
 
 Done:
@@ -18,6 +17,8 @@ EquipmentContext中仪器和故障部分分开
 在故障详情界面进行确认
 权限分级
 修改密码
+导入用户信息
+使用登记模块
 
 Tips:
 Git bash: $git reset --soft HEAD~1
