@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -28,12 +29,6 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Maintain
         {
             _fileSizeLimit = config.GetValue<long>("FileSizeLimit");
         }
-
-        [BindProperty]
-        public Maintenance Maintenance { get; set; }
-
-        [BindProperty]
-        public Upload FileUpload { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
@@ -60,6 +55,8 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Maintain
                 return Forbid();
             }
 
+            SolutionSelectList = new SelectList(_context.MalfunctionSolution, "Solution", "Solution");
+
             return Page();
         }
 
@@ -76,6 +73,14 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Maintain
             // Don't display the untrusted file name in the UI. HTML-encode the value.
             return File(requestFile.Attachment, MediaTypeNames.Application.Octet, WebUtility.HtmlEncode(requestFile.FileName));
         }
+
+        [BindProperty]
+        public Maintenance Maintenance { get; set; }
+
+        [BindProperty]
+        public Upload FileUpload { get; set; }
+
+        public SelectList SolutionSelectList { get; set; }
 
         public async Task<IActionResult> OnPostAsync(int id)
         {

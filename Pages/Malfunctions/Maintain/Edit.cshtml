@@ -30,9 +30,16 @@
                         <input asp-for="Maintenance.Repairer" class="form-control" required />
                         <span asp-validation-for="Maintenance.Repairer" class="text-danger"></span>
                     </div>
+                    @*<div class="form-group">
+                            <label asp-for="Maintenance.Solution" class="control-label"></label>
+                            <input asp-for="Maintenance.Solution" class="form-control" required />
+                            <span asp-validation-for="Maintenance.Solution" class="text-danger"></span>
+                        </div>*@
                     <div class="form-group">
                         <label asp-for="Maintenance.Solution" class="control-label"></label>
-                        <input asp-for="Maintenance.Solution" class="form-control" required />
+                        <select asp-for="Maintenance.Solution" class="custom-select select2" asp-items="@Model.SolutionSelectList" required>
+                            <option value="">---请选择---</option>
+                        </select>
                         <span asp-validation-for="Maintenance.Solution" class="text-danger"></span>
                     </div>
                     <div class="form-group">
