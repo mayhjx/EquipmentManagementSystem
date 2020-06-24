@@ -20,12 +20,14 @@ namespace EquipmentManagementSystem.Data
         public DbSet<MalfunctionPart> MalfunctionParts { get; set; }
         public DbSet<MalfunctionPhenomenon> MalfunctionPhenomenon { get; set; }
         public DbSet<MalfunctionReason> MalfunctionReason { get; set; }
+        public DbSet<MalfunctionSolution> MalfunctionSolution { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<MalfunctionWorkOrder>().ToTable("MalfunctionWorkOrder")
                                                             .Property(p => p.CreatedTime)
                                                             .HasDefaultValueSql("getdate()");
+
             modelBuilder.Entity<MalfunctionInfo>().ToTable("MalfunctionInfo");
             modelBuilder.Entity<Investigation>().ToTable("Investigation");
             modelBuilder.Entity<RepairRequest>().ToTable("RepairRequest");
@@ -35,6 +37,7 @@ namespace EquipmentManagementSystem.Data
             modelBuilder.Entity<MalfunctionPart>().ToTable("MalfunctionPart");
             modelBuilder.Entity<MalfunctionPhenomenon>().ToTable("MalfunctionPhenomenon");
             modelBuilder.Entity<MalfunctionReason>().ToTable("MalfunctionReason");
+            modelBuilder.Entity<MalfunctionSolution>().ToTable("MalfunctionSolution");
         }
     }
 }
