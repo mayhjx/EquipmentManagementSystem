@@ -33,6 +33,8 @@
 		<Compile Remove="Data\Migrations\Equipment\20200623015606_addGroupId.Designer.cs" />
 		<Compile Remove="Data\Migrations\Equipment\20200623022717_SimpleTestTime_DatetimeType.cs" />
 		<Compile Remove="Data\Migrations\Equipment\20200623022717_SimpleTestTime_DatetimeType.Designer.cs" />
+		<Compile Remove="Data\Migrations\Equipment\20200624030238_ChangeSimpleTestTimeType.cs" />
+		<Compile Remove="Data\Migrations\Equipment\20200624030238_ChangeSimpleTestTimeType.Designer.cs" />
 	</ItemGroup>
 
 	<ItemGroup>

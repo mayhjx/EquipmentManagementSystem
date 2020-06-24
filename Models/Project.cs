@@ -15,8 +15,9 @@ namespace EquipmentManagementSystem.Models
         public int GroupId { get; set; }
         public Group Group { get; set; }
 
-        [Display(Name = "单个样品检测时间(min)")]
+        [Display(Name = "单个样品检测时间")]
         [DataType(DataType.Time)]
+        [DisplayFormat(DataFormatString = "{0: HH:mm:ss}")]
         public DateTime? SimpleTestTime { get; set; }
 
         [Display(Name = "色谱柱类型")]

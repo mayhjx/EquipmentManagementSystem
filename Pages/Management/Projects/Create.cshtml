@@ -24,7 +24,8 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="Project.SimpleTestTime" class="control-label"></label>
-                        <input asp-for="Project.SimpleTestTime" class="form-control" />
+                        @*<input asp-for="Project.SimpleTestTime" class="form-control" />*@
+                        <input type="text" asp-for="Project.SimpleTestTime" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="HH:MM:ss" id="datemask">
                         <span asp-validation-for="Project.SimpleTestTime" class="text-danger"></span>
                     </div>
                     <div class="form-group">
@@ -46,4 +47,13 @@
 </div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <!-- InputMask -->
+    <script src="../../plugins/moment/moment.min.js"></script>
+    <script src="../../plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+    <script>
+        $(function () {
+            $('#datemask').inputmask('HH:MM:ss', { 'placeholder': 'HH:MM:ss' })
+        })
+    </script>
 }
