@@ -13,7 +13,7 @@
     var isDirector = User.IsInRole(Constants.DirectorRole);
     var isManager = User.IsInRole(Constants.ManagerRole);
 
-    if (isAdmin)
+    if (isAdmin || isDirector || isManager)
     {
         <li class="nav-header">权限管理</li>
         <li class="nav-item">
@@ -24,14 +24,17 @@
                 </p>
             </a>
         </li>
-        <li class="nav-item">
-            <a asp-page="/Account/RoleManagement/Index" asp-area="Identity" class="nav-link">
-                <i class="nav-icon fas fa-user-circle"></i>
-                <p>
-                    角色管理
-                </p>
-            </a>
-        </li>
+        if (isAdmin)
+        {
+            <li class="nav-item">
+                <a asp-page="/Account/RoleManagement/Index" asp-area="Identity" class="nav-link">
+                    <i class="nav-icon fas fa-user-circle"></i>
+                    <p>
+                        角色管理
+                    </p>
+                </a>
+            </li>
+        }
 
         <li class="nav-header">后台管理</li>
         <li class="nav-item">
@@ -74,101 +77,11 @@
                 </p>
             </a>
         </li>
-    }
-    else if (isDirector)
-    {
-        <li class="nav-header">权限管理</li>
         <li class="nav-item">
-            <a asp-page="/Account/UserManagement/Index" asp-area="Identity" class="nav-link">
-                <i class="nav-icon fas fa-user"></i>
-                <p>
-                    用户管理
-                </p>
-            </a>
-        </li>
-
-        <li class="nav-header">后台管理</li>
-        <li class="nav-item">
-            <a asp-page="/Management/Groups/Index" class="nav-link">
+            <a asp-page="/Management/MalfunctionSolutions/Index" class="nav-link">
                 <i class="nav-icon far fa-circle"></i>
                 <p>
-                    项目组管理
-                </p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a asp-page="/Management/Projects/Index" class="nav-link">
-                <i class="nav-icon far fa-circle"></i>
-                <p>
-                    项目管理
-                </p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a asp-page="/Management/MalfunctionParts/Index" class="nav-link">
-                <i class="nav-icon far fa-circle"></i>
-                <p>
-                    故障部位管理
-                </p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a asp-page="/Management/MalfunctionPhenomenons/Index" class="nav-link">
-                <i class="nav-icon far fa-circle"></i>
-                <p>
-                    故障现象管理
-                </p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a asp-page="/Management/MalfunctionReasons/Index" class="nav-link">
-                <i class="nav-icon far fa-circle"></i>
-                <p>
-                    故障原因管理
-                </p>
-            </a>
-        </li>
-    }
-    else if (isManager)
-    {
-        <li class="nav-header">后台管理</li>
-        <li class="nav-item">
-            <a asp-page="/Management/Groups/Index" class="nav-link">
-                <i class="nav-icon far fa-circle"></i>
-                <p>
-                    项目组管理
-                </p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a asp-page="/Management/Projects/Index" class="nav-link">
-                <i class="nav-icon far fa-circle"></i>
-                <p>
-                    项目管理
-                </p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a asp-page="/Management/MalfunctionParts/Index" class="nav-link">
-                <i class="nav-icon far fa-circle"></i>
-                <p>
-                    故障部位管理
-                </p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a asp-page="/Management/MalfunctionPhenomenons/Index" class="nav-link">
-                <i class="nav-icon far fa-circle"></i>
-                <p>
-                    故障现象管理
-                </p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a asp-page="/Management/MalfunctionReasons/Index" class="nav-link">
-                <i class="nav-icon far fa-circle"></i>
-                <p>
-                    故障原因管理
+                    解决措施管理
                 </p>
             </a>
         </li>
