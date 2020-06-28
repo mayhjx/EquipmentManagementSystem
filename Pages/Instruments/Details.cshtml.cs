@@ -21,6 +21,7 @@ namespace EquipmentManagementSystem.Pages.Instruments
         public async Task<IActionResult> OnGetAsync(string id)
         {
             Instrument = await _context.Instruments
+                                .AsNoTracking()
                                 .Include(a => a.Assert)
                                 .Include(b => b.Calibrations)
                                 .Include(c => c.Components)
@@ -28,7 +29,6 @@ namespace EquipmentManagementSystem.Pages.Instruments
                                     .ThenInclude(e => e.MalfunctionInfo)
                                 .Include(d => d.MalfunctionWorkOrder)
                                     .ThenInclude(e => e.Validation)
-                                .AsNoTracking()
                                 .FirstOrDefaultAsync(m => m.ID == id);
 
             if (Instrument == null)
