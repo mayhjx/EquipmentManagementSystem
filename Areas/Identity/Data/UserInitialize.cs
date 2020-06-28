@@ -27,7 +27,7 @@ namespace EquipmentManagementSystem.Areas.Identity.Data
                 if (line.Trim() == "") continue;
 
                 var data = line.Split(",");
-                var user = await userManager.FindByNameAsync(data[1]);
+                var user = await userManager.FindByNameAsync(data[0]);
                 if (user != null) continue;
 
                 user = new User
