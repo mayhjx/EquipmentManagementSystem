@@ -8,11 +8,6 @@
                     <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">你好， @UserManager.GetUserName(User)！</a>
                     <a id="manage" class="nav-link text-dark" title="@User">你好， @UserManager.GetUserAsync(User).Result.Name！</a>
             </li>*@
-        @*<li class="nav-item">
-                <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
-                    <button id="logout" type="submit" class="nav-link btn btn-link text-dark">注销</button>
-                </form>
-            </li>*@
 
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
@@ -20,27 +15,26 @@
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
                 <a href="#" class="dropdown-item">
-                    <h6 class="dropdown-item-text">
+                    <span class="">
                         级别：@(UserManager.GetRolesAsync(UserManager.GetUserAsync(User).Result).Result[0])
-                    </h6>
+                    </span>
                 </a>
-                <div class="dropdown-divider"></div>
                 <a href="#" class="dropdown-item">
-                    <h6 class="dropdown-item-text">
+                    <span class="">
                         项目组：@UserManager.GetUserAsync(User).Result.Group
-                    </h6>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item dropdown-footer">
-                    <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
-                        <input id="logout" type="submit" value="注销" class="btn btn-outline-primary btn-block" />
-                    </form>
+                    </span>
                 </a>
                 <div class="dropdown-divider"></div>
                 <a asp-area="Identity" asp-page="/Account/UserManagement/ChangePassword" class="dropdown-item">
-                    <input type="button" class="btn btn-outline-primary btn-block" value="修改密码">
+                    修改密码
                 </a>
             </div>
+        </li>
+
+        <li class="nav-item">
+            <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
+                <button id="logout" type="submit" class="nav-link btn btn-link text-dark">退出</button>
+            </form>
         </li>
     }
     else
