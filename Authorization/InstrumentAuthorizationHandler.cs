@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Authorization
 {
-    public class EquipmentAuthorizationHandler :
+    public class InstrumentAuthorizationHandler :
         AuthorizationHandler<OperationAuthorizationRequirement, Instrument>
     {
         private readonly UserManager<User> _userManager;
 
-        public EquipmentAuthorizationHandler(UserManager<User> userManager)
+        public InstrumentAuthorizationHandler(UserManager<User> userManager)
         {
             _userManager = userManager;
         }
@@ -25,7 +25,6 @@ namespace EquipmentManagementSystem.Authorization
                 return Task.CompletedTask;
             }
 
-            //context.Succeed(requirement);
 
             if (requirement.Name == Constants.CreateOperationName)
             {
@@ -43,7 +42,6 @@ namespace EquipmentManagementSystem.Authorization
 
             if (requirement.Name == Constants.UpdateOperationName)
             {
-                // 可能没有Group
                 var currentUserGroup = _userManager.GetUserAsync(context.User).Result.Group ?? null;
 
                 if (context.User.IsInRole(Constants.DirectorRole) ||
