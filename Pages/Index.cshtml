@@ -41,12 +41,12 @@
             <div class="inner">
                 <h3>@Model.InstrumentOfExpire.Count</h3>
 
-                <p>需校准设备</p>
+                <p>待校准设备</p>
             </div>
             <div class="icon">
                 <i class="fas fa-balance-scale-left"></i>
             </div>
-            <a href="#" class="small-box-footer">查看 <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="#" class="small-box-footer" data-toggle="modal" data-target="#InstrumentOfExpire">查看 <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
     <!-- ./col -->
@@ -54,9 +54,9 @@
         <!-- small box -->
         <div class="small-box bg-danger">
             <div class="inner">
-                <h3>@Model.MalfunctionWorkOrderOfFollow.Count</h3>
+                <h3>@Model.MalfunctionWorkOrderOfFollowNumber</h3>
 
-                <p>需跟进工单</p>
+                <p>待跟进工单</p>
             </div>
             <div class="icon">
                 <i class="fas fa-star"></i>
@@ -68,58 +68,117 @@
 </div>
 
 
-
-<div class="row">
-    <div class="col-md-4">
-        <div class="card height-control">
-            <div class="card-header">
-                <h3 class="card-title">
-                    需校准设备
-                </h3>
+<!-- Modal -->
+<div class="modal fade" id="InstrumentOfExpire" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">待校准设备</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <!-- /.card-header -->
-            <div class="card-body table-responsive">
-                <table class="table table-sm">
-                    <thead>
-                        <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.InstrumentOfExpire[0].ID)
-                            </th>
-                            <th>
-                                到期日期
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.InstrumentOfExpire[0].Group)
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.InstrumentOfExpire)
-                        {
+            <div class="modal-body p-0">
+                <div class="card-body">
+                    <table class="table table-sm">
+                        <thead>
                             <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ID)
-                                </td>
-
-                                <td>
-                                    @if (item.Calibrations != null)
-                                    {
-                                        var lastCalibrationDateTime = item.Calibrations.Last().Date;
-                                        if (lastCalibrationDateTime != null)
-                                        {
-                                            @(lastCalibrationDateTime.AddYears(item.CalibrationCycle).AddDays(-1).ToShortDateString())
-                                        }
-                                    }
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Group)
-                                </td>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.InstrumentOfExpire[0].ID)
+                                </th>
+                                <th>
+                                    到期日期
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.InstrumentOfExpire[0].Group)
+                                </th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.InstrumentOfExpire)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ID)
+                                    </td>
+
+                                    <td>
+                                        @if (item.Calibrations != null)
+                                        {
+                                            var lastCalibrationDateTime = item.Calibrations.Last().Date;
+                                            if (lastCalibrationDateTime != null)
+                                            {
+                                                @(lastCalibrationDateTime.AddYears(item.CalibrationCycle).AddDays(-1).ToShortDateString())
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Group)
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <!-- /.card-body -->
+            <div class="modal-footer">
+                @*<button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>*@
+                @*<button type="button" class="btn btn-primary">Save changes</button>*@
+            </div>
         </div>
     </div>
 </div>
+
+
+@*<div class="row">
+        <div class="col-md-4">
+            <div class="card height-control">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        待校准设备
+                    </h3>
+                </div>
+                <div class="card-body table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.InstrumentOfExpire[0].ID)
+                                </th>
+                                <th>
+                                    到期日期
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.InstrumentOfExpire[0].Group)
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.InstrumentOfExpire)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ID)
+                                    </td>
+
+                                    <td>
+                                        @if (item.Calibrations != null)
+                                        {
+                                            var lastCalibrationDateTime = item.Calibrations.Last().Date;
+                                            if (lastCalibrationDateTime != null)
+                                            {
+                                                @(lastCalibrationDateTime.AddYears(item.CalibrationCycle).AddDays(-1).ToShortDateString())
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Group)
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>*@
