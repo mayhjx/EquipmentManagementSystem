@@ -22,7 +22,7 @@ namespace EquipmentManagementSystem.Pages.Instruments
         {
             Instrument = await _context.Instruments
                                 .AsNoTracking()
-                                .Include(a => a.Assert)
+                                //.Include(a => a.Assert)
                                 .Include(b => b.Calibrations)
                                 .Include(c => c.Components)
                                 .Include(d => d.MalfunctionWorkOrder)
