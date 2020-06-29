@@ -55,7 +55,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Investigate
         {
             Investigation = await _context.Investigation
                                 .Include(m => m.MalfunctionWorkOrder)
-                                .ThenInclude(m => m.Instrument)
+                                    .ThenInclude(m => m.Instrument)
                                 .FirstOrDefaultAsync(m => m.ID == id);
 
             if (Investigation == null)
@@ -81,7 +81,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Investigate
                     "Investigation",
                     i => i.BeginTime, i => i.EndTime, i => i.Operator, i => i.Measures))
             {
-                // 如果进度在排查中之前则更新已排查
+                // 如果进度在排查中则更新已排查
                 if (Investigation.MalfunctionWorkOrder.Progress < WorkOrderProgress.Investigated)
                 {
                     Investigation.MalfunctionWorkOrder.Progress = WorkOrderProgress.Investigated;
