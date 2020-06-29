@@ -34,7 +34,7 @@ namespace EquipmentManagementSystem.Pages.Calibrations
                 return NotFound();
             }
 
-            var isAuthorized = await _authorizationService.AuthorizeAsync(User, Calibration.Instrument, Operations.Update);
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, Calibration, Operations.Update);
 
             if (!isAuthorized.Succeeded)
             {
@@ -55,7 +55,7 @@ namespace EquipmentManagementSystem.Pages.Calibrations
                 return NotFound();
             }
 
-            var isAuthorized = await _authorizationService.AuthorizeAsync(User, Calibration.Instrument, Operations.Update);
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, Calibration, Operations.Update);
 
             if (!isAuthorized.Succeeded)
             {
