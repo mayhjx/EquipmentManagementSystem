@@ -88,14 +88,38 @@
                             </ul>
                         </li>
 
-                        <li class="nav-item">
-                            <a asp-page="/Malfunctions/WorkOrders/Index" class="nav-link">
+                        <li class="nav-item has-treeview">
+                            <a href="#Instruments" data-target="#" data-toggle="pill" class="nav-link">
                                 <i class="nav-icon fas fa-wrench"></i>
                                 <p>
                                     故障跟进
+                                    <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a asp-page="/Malfunctions/WorkOrders/Doing" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>待跟进工单</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/Malfunctions/WorkOrders/Done" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>已完成工单</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
+
+                        @*<li class="nav-item">
+                                <a asp-page="/Malfunctions/WorkOrders/Index" class="nav-link">
+                                    <i class="nav-icon fas fa-wrench"></i>
+                                    <p>
+                                        故障跟进
+                                    </p>
+                                </a>
+                            </li>*@
 
                         <li class="nav-item">
                             <a asp-page="/UsageRecords/Index" class="nav-link">
