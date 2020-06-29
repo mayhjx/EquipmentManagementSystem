@@ -10,6 +10,7 @@ $(document).ready(function () {
     var url = window.location.pathname;
     $('li.nav-item a[href="' + url + '"]').addClass('active');
     $('li.nav-item a[href="' + url + '"]').parent().parent().parent().addClass('menu-open');
+    $('li.nav-item a[href="' + url + '"]').parent().parent().parent().children("a.nav-link").addClass('active');
 
     // 格式Index页面的table
     $('table#index').DataTable({
