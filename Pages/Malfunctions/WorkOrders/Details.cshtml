@@ -564,7 +564,7 @@
                             </div>
                         </div>
                     }
-                    @if (CanEdit.Succeeded)
+                    @if (!IsCompleted && CanEdit.Succeeded)
                     {
                         <button type="button" class="btn btn-danger  float-right" data-toggle="modal" data-target="#modal-deleteWorkOrder">
                             删除
@@ -646,11 +646,12 @@
                      $('input:hidden[name="__RequestVerificationToken"]').val());
              };
 
-             options.success = function () {
+             options.success = function (msg) {
+                 alert(msg);
              };
 
              options.error = function (msg) {
-                 alert(msg.responseText);
+                 alert(msg);
              };
 
              options.complete = function () {
