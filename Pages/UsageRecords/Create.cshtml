@@ -33,19 +33,72 @@
                         <input asp-for="UsageRecord.BeginTimeOfMaintain" class="form-control" />
                         <span asp-validation-for="UsageRecord.BeginTimeOfMaintain" class="text-danger"></span>
                     </div>
+
                     <div class="form-group">
-                        <label asp-for="UsageRecord.ColumnPressure" class="control-label"></label>
+                        <button class="btn btn-link" id="showSystemOne">
+                            <i class="fas fa-plus text-green" aria-hidden="true"></i>
+                            输入色谱柱压力
+                        </button>
+                    </div>
+                    <div class="form-group" id="systemOne" hidden>
+                        <label asp-for="UsageRecord.ColumnPressure" class="control-label">系统一色谱柱编号/压力/单位</label>
                         <div class="input-group">
-                            <input asp-for="UsageRecord.ColumnPressure" class="form-control" />
+                            <div class="input-group-prepend">
+                                <input asp-for="UsageRecord.ColumnNumber" class="form-control" placeholder="编号" />
+                            </div>
+                            <input asp-for="UsageRecord.ColumnPressure" class="form-control" placeholder="压力" />
                             <div class="input-group-append">
-                                <select asp-for="UsageRecord.PressureUnit" class="custom-select">
+                                <select asp-for="UsageRecord.PressureUnit" class="custom-select" id="SystemOnePressureUnit">
                                     <option value="MPa">MPa</option>
                                     <option value="Psi">Psi</option>
                                     <option value="Bar">Bar</option>
                                 </select>
                             </div>
                         </div>
+                        <span asp-validation-for="UsageRecord.ColumnPressure" class="text-danger"></span>
                     </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-link" id="showSystemTwo" hidden>
+                            <i class="fas fa-plus text-green" aria-hidden="true"></i>
+                            增加系统二
+                        </button>
+                    </div>
+                    <div class="form-group" id="systemTwo" hidden>
+                        <label asp-for="UsageRecord.ColumnTwoPressure" class="control-label">系统二色谱柱编号/压力/单位</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <input asp-for="UsageRecord.ColumnTwoNumber" class="form-control" placeholder="编号" />
+                            </div>
+                            <input asp-for="UsageRecord.ColumnTwoPressure" class="form-control" placeholder="压力" />
+                            <div class="input-group-append">
+                                <select class="custom-select" id="SystemTwoPressureUnit">
+                                </select>
+                            </div>
+                        </div>
+                        <span asp-validation-for="UsageRecord.ColumnTwoPressure" class="text-danger"></span>
+                    </div>
+
+                    @*<div class="form-group">
+                            <label asp-for="UsageRecord.ColumnTwoNumber" class="control-label"></label>
+                            <input asp-for="UsageRecord.ColumnTwoNumber" class="form-control" />
+                            <span asp-validation-for="UsageRecord.ColumnTwoNumber" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="UsageRecord.ColumnTwoPressure" class="control-label"></label>
+                            <div class="input-group">
+                                <input asp-for="UsageRecord.ColumnTwoPressure" class="form-control" />
+                                <div class="input-group-append">
+                                    <select asp-for="UsageRecord.PressureUnit" class="custom-select">
+                                        <option value="MPa">MPa</option>
+                                        <option value="Psi">Psi</option>
+                                        <option value="Bar">Bar</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <span asp-validation-for="UsageRecord.ColumnTwoPressure" class="text-danger"></span>
+                        </div>*@
+
                     <div class="form-group">
                         <label asp-for="UsageRecord.BeginTimeOfTest" class="control-label"></label>
                         <input asp-for="UsageRecord.BeginTimeOfTest" class="form-control" />
@@ -114,5 +167,31 @@
                 });
             });
         });
+
+        $("button#showSystemOne").click(function (e) {
+            // 显示系统一色谱柱压力输入框
+            e.preventDefault();
+            $("button#showSystemOne").attr("hidden", "");
+            $("div#systemOne").removeAttr("hidden");
+            $("button#showSystemTwo").removeAttr("hidden");
+        })
+
+        $("button#showSystemTwo").click(function (e) {
+            // 显示系统二色谱柱压力输入框
+            e.preventDefault();
+            $("div#systemTwo").removeAttr("hidden");
+            $("button#showSystemTwo").attr("hidden", "");
+            // 系统二色谱柱压力单位与系统一同步
+            var unit = $("select#SystemOnePressureUnit").val();
+            $("select#SystemTwoPressureUnit").empty();
+            $("select#SystemTwoPressureUnit").append(`<option>${unit}</option>`);
+        })
+
+        $("select#SystemOnePressureUnit").change(function () {
+            // 更新系统二色谱柱压力单位
+            var unit = $(this).val();
+            $("select#SystemTwoPressureUnit").empty();
+            $("select#SystemTwoPressureUnit").append(`<option>${unit}</option>`);
+        })
     </script>
 }
