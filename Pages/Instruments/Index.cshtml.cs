@@ -23,12 +23,10 @@ namespace EquipmentManagementSystem.Pages.Instruments
 
         public async Task OnGetAsync()
         {
-            //Instrument = await _context.Instruments.OrderBy(n => n.ID).ToListAsync();
-            var instruments = from i in _context.Instruments
-                              .Include(i => i.Calibrations)
-                              select i;
-
-            Instrument = await instruments.OrderBy(m => m.ID).AsNoTracking().ToListAsync();
+            Instrument = await _context.Instruments.OrderBy(m => m.ID)
+                                                    .AsNoTracking()
+                                                    .Include(m => m.Calibrations)
+                                                    .ToListAsync();
         }
     }
 }
