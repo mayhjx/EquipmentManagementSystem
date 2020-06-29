@@ -26,7 +26,7 @@ namespace EquipmentManagementSystem.Pages
         // 快到期设备
         public IList<Instrument> InstrumentOfExpire { get; set; }
 
-        public IList<MalfunctionWorkOrder> MalfunctionWorkOrderOfFollow { get; set; }
+        public int MalfunctionWorkOrderOfFollowNumber { get; set; }
 
         public void OnGet()
         {
@@ -43,13 +43,10 @@ namespace EquipmentManagementSystem.Pages
                                   select m)
                                 .ToList();
 
-            MalfunctionWorkOrderOfFollow = (from m in _malfunctionContext.MalfunctionWorkOrder
-                                            .AsNoTracking()
-                                            .Include(m => m.MalfunctionInfo)
-                                            .AsEnumerable()
-                                            where m.Progress != WorkOrderProgress.Completed
-                                            select m)
-                                            .ToList();
+            MalfunctionWorkOrderOfFollowNumber = (from m in _malfunctionContext.MalfunctionWorkOrder
+                                                  where m.Progress != WorkOrderProgress.Completed
+                                                  select m)
+                                                  .Count();
         }
     }
 }
