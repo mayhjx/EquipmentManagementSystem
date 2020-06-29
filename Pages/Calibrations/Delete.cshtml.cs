@@ -1,4 +1,5 @@
-﻿using EquipmentManagementSystem.Models;
+﻿using EquipmentManagementSystem.Data;
+using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -10,9 +11,9 @@ namespace EquipmentManagementSystem.Pages.Calibrations
     [Authorize(Roles = "设备主任")]
     public class DeleteModel : PageModel
     {
-        private readonly EquipmentManagementSystem.Data.EquipmentContext _context;
+        private readonly EquipmentContext _context;
 
-        public DeleteModel(EquipmentManagementSystem.Data.EquipmentContext context)
+        public DeleteModel(EquipmentContext context)
         {
             _context = context;
         }
@@ -55,7 +56,6 @@ namespace EquipmentManagementSystem.Pages.Calibrations
             }
 
             return RedirectToPage("../Instruments/Details", new { id = instrumentID });
-            //return RedirectToPage("../Instruments/Index");
         }
     }
 }
