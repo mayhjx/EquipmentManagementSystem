@@ -1,0 +1,70 @@
+﻿@page
+@model EquipmentManagementSystem.Pages.Malfunctions.WorkOrders.DoneModel
+
+@{
+    ViewData["Title"] = "已完成工单";
+}
+
+<div class="card">
+    <h4 class="card-header">
+        工单一览
+    </h4>
+
+    <div class="card-body">
+        <table id="index" class="table table-hover text-nowrap">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrder[0].InstrumentID)
+                    </th>
+                    <th>
+                        故障描述
+                    </th>
+                    <th>
+                        开始时间
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrder[0].CreatedTime)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrder[0].Creator)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrder[0].Progress)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.MalfunctionWorkOrder)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.InstrumentID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MalfunctionInfo.Part)@Html.DisplayFor(modelItem => item.MalfunctionInfo.Phenomenon)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MalfunctionInfo.BeginTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreatedTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Creator)
+                        </td>
+                        <td>
+                            <span class="badge badge-primary text-md">@Html.DisplayFor(modelItem => item.Progress)</span>
+                        </td>
+                        <td>
+                            <a asp-page="./Details" asp-route-id="@item.ID"><i class="fas fa-eye fa-lg" aria-hidden="true"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {}

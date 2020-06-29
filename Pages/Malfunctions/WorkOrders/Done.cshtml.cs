@@ -4,16 +4,17 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
 {
     [AllowAnonymous]
-    public class IndexModel : PageModel
+    public class DoneModel : PageModel
     {
         private readonly MalfunctionContext _context;
 
-        public IndexModel(MalfunctionContext context)
+        public DoneModel(MalfunctionContext context)
         {
             _context = context;
         }
@@ -25,6 +26,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
             MalfunctionWorkOrder = await _context.MalfunctionWorkOrder
                                     .AsNoTracking()
                                     .Include(m => m.MalfunctionInfo)
+                                    .Where(m => m.Progress == WorkOrderProgress.Completed)
                                     .ToListAsync();
         }
     }
