@@ -27,8 +27,6 @@ namespace EquipmentManagementSystem.Pages.Instruments
                                 .Include(c => c.Components)
                                 .Include(d => d.MalfunctionWorkOrder)
                                     .ThenInclude(e => e.MalfunctionInfo)
-                                .Include(d => d.MalfunctionWorkOrder)
-                                    .ThenInclude(e => e.Validation)
                                 .FirstOrDefaultAsync(m => m.ID == id);
 
             if (Instrument == null)

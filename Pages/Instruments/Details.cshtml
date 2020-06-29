@@ -148,7 +148,7 @@
                             <i class="fa fa-balance-scale" aria-hidden="true"></i> 校准信息
                         </p>
                         <div class="card-tools">
-                            @if ((await AuthorizationService.AuthorizeAsync(User, Model.Instrument, Operations.Create)).Succeeded)
+                            @if ((await AuthorizationService.AuthorizeAsync(User, Model.Instrument.Calibrations.First(), Operations.Create)).Succeeded)
                             {
                                 <a asp-page="../Calibrations/Create" asp-route-id="@Model.Instrument.ID">
                                     <i class="fas fa-plus fa-lg" aria-hidden="true"></i>@*新建*@
@@ -176,11 +176,11 @@
                                         <td> @Html.DisplayFor(modelItem => item.Result) </td>
                                         <td> @Html.DisplayFor(modelItem => item.Calibrator) </td>
                                         <td>
-                                            @if ((await AuthorizationService.AuthorizeAsync(User, Model.Instrument, Operations.Update)).Succeeded)
+                                            @if ((await AuthorizationService.AuthorizeAsync(User, Model.Instrument.Calibrations, Operations.Update)).Succeeded)
                                             {
                                                 <a asp-page="../Calibrations/Edit" asp-route-id="@item.ID">编辑</a>
                                             }
-                                            @if ((await AuthorizationService.AuthorizeAsync(User, Model.Instrument, Operations.Delete)).Succeeded)
+                                            @if ((await AuthorizationService.AuthorizeAsync(User, Model.Instrument.Calibrations, Operations.Delete)).Succeeded)
                                             {
                                                 <text>|</text>
                                                 <a asp-page="../Calibrations/Delete" asp-route-id="@item.ID">删除</a>
@@ -267,8 +267,8 @@
                             <thead>
                                 <tr>
                                     <th>@Html.DisplayNameFor(model => model.Instrument.MalfunctionWorkOrder.First().MalfunctionInfo.BeginTime)</th>
-                                    <th>@Html.DisplayNameFor(model => model.Instrument.MalfunctionWorkOrder.First().Validation.FinishedTime)</th>
-                                    <th>故障描述</th>
+                                    <th>@Html.DisplayNameFor(model => model.Instrument.MalfunctionWorkOrder.First().MalfunctionInfo.Part)</th>
+                                    <th>@Html.DisplayNameFor(model => model.Instrument.MalfunctionWorkOrder.First().MalfunctionInfo.Phenomenon)</th>
                                     <th>@Html.DisplayNameFor(model => model.Instrument.MalfunctionWorkOrder.First().MalfunctionInfo.MalfunctionWorkOrder.Progress)</th>
                                     <th></th>
                                 </tr>
@@ -278,8 +278,8 @@
                                 {
                                     <tr>
                                         <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.BeginTime)</td>
-                                        <td>@Html.DisplayFor(modelItem => item.Validation.FinishedTime)</td>
-                                        <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.Part)@Html.DisplayFor(modelItem => item.MalfunctionInfo.Phenomenon)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.Part)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.Phenomenon)</td>
                                         <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.MalfunctionWorkOrder.Progress)</td>
                                         <td>
                                             <a asp-page="../Malfunctions/WorkOrders/Details" asp-route-id="@item.ID"><i class="fas fa-eye fa-lg" aria-hidden="true"></i></a>@*查看*@
