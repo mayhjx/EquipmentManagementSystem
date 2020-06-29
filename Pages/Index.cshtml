@@ -4,60 +4,70 @@
     ViewData["Title"] = "看板";
 }
 
-    <div class="row">
-        <div class="col-md-3 col-sm-6 col-12">
-            <div class="info-box">
-                <span class="info-box-icon bg-info"><i class="fas fa-server"></i></span>
+<div class="row">
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-info">
+            <div class="inner">
+                <h3>@Model.InstrumentNumber</h3>
 
-                <div class="info-box-content">
-                    <span class="info-box-text">主检设备</span>
-                    <span class="info-box-number">@Model.InstrumentNumber</span>
-                </div>
-                <!-- /.info-box-content -->
+                <p>主检设备</p>
             </div>
-            <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-        <div class="col-md-3 col-sm-6 col-12">
-            <div class="info-box">
-                <span class="info-box-icon bg-success"><i class="fas fa-cube"></i></span>
-
-                <div class="info-box-content">
-                    <span class="info-box-text">辅助设备</span>
-                    <span class="info-box-number">0</span>
-                </div>
-                <!-- /.info-box-content -->
+            <div class="icon">
+                <i class="fas fa-server"></i>
             </div>
-            <!-- /.info-box -->
+            <a asp-page="Instruments/Index" class="small-box-footer">查看 <i class="fas fa-arrow-circle-right"></i></a>
         </div>
-        <!-- /.col -->
-        <div class="col-md-3 col-sm-6 col-12">
-            <div class="info-box">
-                <span class="info-box-icon bg-warning"><i class="fas fa-balance-scale-left"></i></span>
-
-                <div class="info-box-content">
-                    <span class="info-box-text">需校准设备</span>
-                    <span class="info-box-number">@Model.InstrumentOfExpire.Count</span>
-                </div>
-                <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-        <div class="col-md-3 col-sm-6 col-12">
-            <div class="info-box">
-                <span class="info-box-icon bg-danger"><i class="far fa-star"></i></span>
-
-                <div class="info-box-content">
-                    <span class="info-box-text">需跟进工单</span>
-                    <span class="info-box-number">@Model.MalfunctionWorkOrderOfFollow.Count</span>
-                </div>
-                <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
     </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-success">
+            <div class="inner">
+                <h3>0</h3>
+
+                <p>辅助设备</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-cube"></i>
+            </div>
+            <a href="#" class="small-box-footer">查看 <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-warning">
+            <div class="inner">
+                <h3>@Model.InstrumentOfExpire.Count</h3>
+
+                <p>需校准设备</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-balance-scale-left"></i>
+            </div>
+            <a href="#" class="small-box-footer">查看 <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-danger">
+            <div class="inner">
+                <h3>@Model.MalfunctionWorkOrderOfFollow.Count</h3>
+
+                <p>需跟进工单</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-star"></i>
+            </div>
+            <a href="Malfunctions/WorkOrders/Doing" class="small-box-footer">查看 <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <!-- ./col -->
+</div>
+
+
 
 <div class="row">
     <div class="col-md-4">
@@ -103,51 +113,6 @@
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Group)
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-            <!-- /.card-body -->
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card height-control">
-            <div class="card-header">
-                <h3 class="card-title">
-                    需跟进工单
-                </h3>
-            </div>
-            <!-- /.card-header -->
-            <div class="card-body">
-                <table class="table table-sm">
-                    <thead>
-                        <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.MalfunctionWorkOrderOfFollow[0].InstrumentID)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.MalfunctionWorkOrderOfFollow[0].Progress)
-                            </th>
-                            <th>
-                                故障描述
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.MalfunctionWorkOrderOfFollow)
-                        {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.InstrumentID)
-                                </td>
-
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Progress)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.MalfunctionInfo.Part)@Html.DisplayFor(modelItem => item.MalfunctionInfo.Phenomenon)
                                 </td>
                             </tr>
                         }
