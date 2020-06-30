@@ -29,5 +29,16 @@ namespace EquipmentManagementSystem.Models
         [Display(Name = "措施")]
         [StringLength(999)]
         public string Measures { get; set; }
+
+        [Display(Name = "排查结论")]
+        public InvestigationResult Result { get; set; }
+    }
+
+    public enum InvestigationResult
+    {
+        [Display(Name = "需外部维修")]
+        External,
+        [Display(Name = "可内部维修")]
+        Internal
     }
 }

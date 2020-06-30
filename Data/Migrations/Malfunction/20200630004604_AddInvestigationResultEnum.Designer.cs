@@ -4,14 +4,16 @@ using EquipmentManagementSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EquipmentManagementSystem.Migrations
 {
     [DbContext(typeof(MalfunctionContext))]
-    partial class MalfunctionContextModelSnapshot : ModelSnapshot
+    [Migration("20200630004604_AddInvestigationResultEnum")]
+    partial class AddInvestigationResultEnum
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -321,8 +323,8 @@ namespace EquipmentManagementSystem.Migrations
                         .HasMaxLength(50);
 
                     b.Property<string>("Solution")
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
+                        .HasColumnType("nvarchar(999)")
+                        .HasMaxLength(999);
 
                     b.Property<DateTime?>("UploadTime")
                         .HasColumnType("datetime2");

@@ -79,7 +79,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Investigate
             if (await TryUpdateModelAsync<Investigation>(
                     Investigation,
                     "Investigation",
-                    i => i.BeginTime, i => i.EndTime, i => i.Operator, i => i.Measures))
+                    i => i.BeginTime, i => i.EndTime, i => i.Operator, i => i.Measures, i => i.Result))
             {
                 // 如果进度在排查中则更新已排查
                 if (Investigation.MalfunctionWorkOrder.Progress < WorkOrderProgress.Investigated)
