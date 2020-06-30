@@ -21,15 +21,15 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
         public async Task<IActionResult> OnGetAsync(int id)
         {
             MalfunctionWorkOrder = await _context.MalfunctionWorkOrder
-                                    .Include(m => m.MalfunctionInfo)
-                                    .Include(m => m.Investigation)
-                                    .Include(m => m.RepairRequest)
-                                    .Include(m => m.AccessoriesOrder)
-                                    .Include(m => m.Maintenance)
-                                    .Include(m => m.Validation)
-                                    .Include(m => m.Instrument)
-                                    .AsNoTracking()
-                                    .FirstOrDefaultAsync(m => m.ID == id);
+                                        .AsNoTracking()
+                                        .Include(m => m.MalfunctionInfo)
+                                        .Include(m => m.Investigation)
+                                        .Include(m => m.RepairRequest)
+                                        .Include(m => m.AccessoriesOrder)
+                                        .Include(m => m.Maintenance)
+                                        .Include(m => m.Validation)
+                                        .Include(m => m.Instrument)
+                                        .FirstOrDefaultAsync(m => m.ID == id);
 
             if (MalfunctionWorkOrder == null)
             {
