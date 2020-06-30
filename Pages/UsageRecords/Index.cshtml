@@ -28,9 +28,6 @@
                         @Html.DisplayNameFor(model => model.UsageRecord[0].BeginTimeOfMaintain)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.UsageRecord[0].ColumnPressure)
-                    </th>
-                    <th>
                         @Html.DisplayNameFor(model => model.UsageRecord[0].BeginTimeOfTest)
                     </th>
                     <th>
@@ -51,40 +48,37 @@
             <tbody>
                 @foreach (var item in Model.UsageRecord)
                 {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.InstrumentId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ProjectName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.BeginTimeOfMaintain)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ColumnPressure)@Html.DisplayFor(modelItem => item.PressureUnit)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.BeginTimeOfTest)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SampleNumber)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TestNumber)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EndTime)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Creator)
-                    </td>
-                    <td>
-                        @*<a asp-page="./Edit" asp-route-id="@item.Id">编辑</a> |*@
-                        <a asp-page="./Details" asp-route-id="@item.Id">查看</a> |
-                        <a asp-page="./Delete" asp-route-id="@item.Id">删除</a>
-                    </td>
-                </tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.InstrumentId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProjectName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BeginTimeOfMaintain)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BeginTimeOfTest)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SampleNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TestNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EndTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Creator)
+                        </td>
+                        <td>
+                            @*<a asp-page="./Edit" asp-route-id="@item.Id">编辑</a> |*@
+                            <a asp-page="./Details" asp-route-id="@item.Id">查看</a> |
+                            <a asp-page="./Delete" asp-route-id="@item.Id">删除</a>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>

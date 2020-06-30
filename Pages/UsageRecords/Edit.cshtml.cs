@@ -51,7 +51,9 @@ namespace EquipmentManagementSystem.Pages.UsageRecords
             if (await TryUpdateModelAsync<UsageRecord>(
                 UsageRecordToUpdate,
                 "UsageRecord",
-                i => i.BeginTimeOfMaintain, i => i.ColumnPressure, i => i.PressureUnit, i => i.BeginTimeOfTest,
+                i => i.BeginTimeOfMaintain, i => i.BeginTimeOfTest,
+                i => i.ColumnNumber, i => i.ColumnPressure, i => i.PressureUnit,
+                i => i.ColumnTwoNumber, i => i.ColumnTwoPressure,
                 i => i.SampleNumber, i => i.TestNumber, i => i.EndTime, i => i.Remark))
             {
                 await _context.SaveChangesAsync();
