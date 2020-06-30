@@ -20,6 +20,7 @@ namespace EquipmentManagementSystem.Pages.Instruments
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
+            // TODO: 如果故障信息包含的附件大于1MB，下面的语句会耗费800ms左右
             Instrument = await _context.Instruments
                                 .AsNoTracking()
                                 //.Include(a => a.Assert)
