@@ -26,11 +26,11 @@ namespace EquipmentManagementSystem.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
         public DateTime? BeginTimeOfMaintain { get; set; }
 
-        [Display(Name = "色谱柱编号")]
+        [Display(Name = "色谱柱一编号")]
         [StringLength(20)]
         public string ColumnNumber { get; set; }
 
-        [Display(Name = "色谱柱压力")]
+        [Display(Name = "色谱柱一压力")]
         public float? ColumnPressure { get; set; }
 
         [Display(Name = "色谱柱二编号")]
