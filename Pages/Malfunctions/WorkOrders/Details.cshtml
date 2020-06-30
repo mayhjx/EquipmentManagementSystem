@@ -49,24 +49,11 @@
                 <span class="badge badge-primary">@Html.DisplayFor(mdoel => Model.MalfunctionWorkOrder.Progress)</span>
             </h3>
         </div>
-        <ul class="list-unstyled list-inline float-right">
-            <li class="list-inline-item">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-user"></i></span>@*创建者*@
-                    </div>
-                    <input class="form-control form-control-sm" value="@Model.MalfunctionWorkOrder.Creator" readonly>
-                </div>
-            </li>
-            <li class="list-inline-item">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-clock"></i></span>@*创建时间*@
-                    </div>
-                    <input class="form-control form-control-sm" value="@Model.MalfunctionWorkOrder.CreatedTime" readonly>
-                </div>
-            </li>
-        </ul>
+        <div class="card-tools">
+            建单人：@Model.MalfunctionWorkOrder.Creator
+            <br>
+            建单时间：@Model.MalfunctionWorkOrder.CreatedTime
+        </div>
     </div>
     <div class="card-body">
         <div class="row row-cols-1 row-cols-md-2">
