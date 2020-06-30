@@ -18,13 +18,13 @@
                         @Html.DisplayNameFor(model => model.MalfunctionWorkOrder[0].InstrumentID)
                     </th>
                     <th>
-                        故障描述
+                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrder[0].MalfunctionInfo.Part)
                     </th>
                     <th>
-                        开始时间
+                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrder[0].MalfunctionInfo.Phenomenon)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrder[0].CreatedTime)
+                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrder[0].MalfunctionInfo.BeginTime)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.MalfunctionWorkOrder[0].Creator)
@@ -43,13 +43,13 @@
                             @Html.DisplayFor(modelItem => item.InstrumentID)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.MalfunctionInfo.Part)@Html.DisplayFor(modelItem => item.MalfunctionInfo.Phenomenon)
+                            @Html.DisplayFor(modelItem => item.MalfunctionInfo.Part)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MalfunctionInfo.Phenomenon)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.MalfunctionInfo.BeginTime)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CreatedTime)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Creator)
