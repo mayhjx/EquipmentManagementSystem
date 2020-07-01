@@ -1,4 +1,5 @@
-﻿using EquipmentManagementSystem.Authorization;
+﻿using System.Threading.Tasks;
+using EquipmentManagementSystem.Authorization;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using EquipmentManagementSystem.Pages.Instruments;
@@ -6,7 +7,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Calibrations
 {
@@ -26,7 +26,6 @@ namespace EquipmentManagementSystem.Pages.Calibrations
         {
 
             Calibration = await _context.Calibrations
-                                .Include(m => m.Instrument)
                                 .FirstOrDefaultAsync(m => m.ID == id);
 
             if (Calibration == null)
@@ -47,7 +46,6 @@ namespace EquipmentManagementSystem.Pages.Calibrations
         public async Task<IActionResult> OnPostAsync(int id)
         {
             Calibration = await _context.Calibrations
-                                .Include(m => m.Instrument)
                                 .FirstOrDefaultAsync(m => m.ID == id);
 
             if (Calibration == null)

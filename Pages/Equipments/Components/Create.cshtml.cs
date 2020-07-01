@@ -1,10 +1,9 @@
-﻿using EquipmentManagementSystem.Data;
+﻿using System.Threading.Tasks;
+using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Components
 {
@@ -20,12 +19,14 @@ namespace EquipmentManagementSystem.Pages.Components
 
         public IActionResult OnGet(string id)
         {
-            ViewData["InstrumentID"] = new SelectList(_context.Instruments, "ID", "ID", id);
+            instrumentId = id;
             return Page();
         }
 
         [BindProperty]
         public Component Component { get; set; }
+
+        public string instrumentId { get; set; }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.

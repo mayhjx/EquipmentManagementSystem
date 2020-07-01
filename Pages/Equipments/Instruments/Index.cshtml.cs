@@ -1,13 +1,13 @@
-﻿using EquipmentManagementSystem.Data;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace EquipmentManagementSystem.Pages.Instruments
+namespace EquipmentManagementSystem.Pages.Equipments.Instruments
 {
     [AllowAnonymous]
     public class IndexModel : PageModel

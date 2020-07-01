@@ -176,11 +176,11 @@
                                         <td> @Html.DisplayFor(modelItem => item.Result) </td>
                                         <td> @Html.DisplayFor(modelItem => item.Calibrator) </td>
                                         <td>
-                                            @if ((await AuthorizationService.AuthorizeAsync(User, Model.Instrument.Calibrations, Operations.Update)).Succeeded)
+                                            @if ((await AuthorizationService.AuthorizeAsync(User, item, Operations.Update)).Succeeded)
                                             {
                                                 <a asp-page="../Calibrations/Edit" asp-route-id="@item.ID">编辑</a>
                                             }
-                                            @if ((await AuthorizationService.AuthorizeAsync(User, Model.Instrument.Calibrations, Operations.Delete)).Succeeded)
+                                            @if ((await AuthorizationService.AuthorizeAsync(User, item, Operations.Delete)).Succeeded)
                                             {
                                                 <text>|</text>
                                                 <a asp-page="../Calibrations/Delete" asp-route-id="@item.ID">删除</a>

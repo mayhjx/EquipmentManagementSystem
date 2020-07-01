@@ -16,7 +16,7 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
                         <label asp-for="Component.InstrumentID" class="control-label"></label>
-                        <select asp-for="Component.InstrumentID" asp-items="@ViewBag.InstrumentID" class="custom-select"></select>
+                        <input asp-for="Component.InstrumentID" class="form-control" value="@Model.instrumentId" readonly />
                     </div>
                     <div class="form-group">
                         <label asp-for="Component.SerialNumber" class="control-label"></label>
@@ -46,7 +46,7 @@
         </div>
 
         <div>
-            <a asp-page="../Instruments/Details" asp-route-id="@ViewBag.InstrumentID.SelectedValue">返回</a>
+            <a asp-page="../Instruments/Details" asp-route-id="@Model.instrumentId">返回</a>
         </div>
     </div>
 </div>

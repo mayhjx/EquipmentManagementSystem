@@ -1,21 +1,22 @@
-﻿using EquipmentManagementSystem.Data;
+﻿using System.Threading.Tasks;
+using EquipmentManagementSystem.Authorization;
+using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
+using EquipmentManagementSystem.Pages.Instruments;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Calibrations
 {
-    [Authorize(Roles = "设备主任")]
-    public class DeleteModel : PageModel
+    public class DeleteModel : BasePageModel
     {
-        private readonly EquipmentContext _context;
-
-        public DeleteModel(EquipmentContext context)
+        public DeleteModel(EquipmentContext context,
+            UserManager<User> userManager,
+            IAuthorizationService authorizationService)
+            : base(context, userManager, authorizationService)
         {
-            _context = context;
         }
 
         [BindProperty]
@@ -36,6 +37,13 @@ namespace EquipmentManagementSystem.Pages.Calibrations
                 return NotFound();
             }
 
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, Calibration, Operations.Delete);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+
             return Page();
         }
 
@@ -47,7 +55,14 @@ namespace EquipmentManagementSystem.Pages.Calibrations
             }
 
             Calibration = await _context.Calibrations.FindAsync(id);
-            var instrumentID = Calibration.InstrumentID;
+            var instrumentID = Calibration.InstrumentID; //用于返回设备详情页面
+
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, Calibration, Operations.Delete);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
 
             if (Calibration != null)
             {

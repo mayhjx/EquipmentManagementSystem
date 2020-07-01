@@ -17,8 +17,7 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
                         <label asp-for="Calibration.InstrumentID" class="control-label"></label>
-                        <input asp-for="@Model.instrumentId" class="form-control" readonly />
-                        @*<select asp-for="Calibration.InstrumentID" asp-items="@ViewBag.InstrumentID" class="custom-select"></select>*@
+                        <input asp-for="Calibration.InstrumentID" class="form-control" value="@Model.instrumentId" readonly />
                     </div>
                     <div class="form-group">
                         <label asp-for="Calibration.Date" class="control-label"></label>
