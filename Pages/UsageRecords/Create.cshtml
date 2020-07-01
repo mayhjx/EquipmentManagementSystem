@@ -154,7 +154,7 @@
                 $("#project").removeAttr("disabled");
                 $("#project").empty();
                 $("#project").append("<option value=''>---请选择---</option>");
-                $.getJSON(`?handler=Filter&instrumentId=${instrumentId}`, (data) => {
+                $.getJSON(`?handler=ProjectFilter&instrumentId=${instrumentId}`, (data) => {
                     $.each(data, function (i, item) {
                         if (item.length > 0) {
                             $("#project").append(`<option value='${item}'>${item}</option>`);

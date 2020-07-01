@@ -1,4 +1,6 @@
-﻿using EquipmentManagementSystem.Authorization;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using EquipmentManagementSystem.Authorization;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -6,8 +8,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.UsageRecords
 {
@@ -44,7 +44,7 @@ namespace EquipmentManagementSystem.Pages.UsageRecords
         /// </summary>
         /// <param name="instrumentId">设备编号</param>
         /// <returns>JSON</returns>
-        public JsonResult OnGetFilter(string instrumentId)
+        public JsonResult OnGetProjectFilter(string instrumentId)
         {
             return new JsonResult(_context.Instruments.Find(instrumentId).Projects.Split(", "));
         }
