@@ -38,7 +38,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Include="Pages\Shared\starter.cshtml" />
+		<None Include="Pages\Shared\_Layout.cshtml" />
 	</ItemGroup>
 
 	<ItemGroup>
