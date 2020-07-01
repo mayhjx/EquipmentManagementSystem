@@ -5,6 +5,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Pages\NewFolder\**" />
+	  <Content Remove="Pages\NewFolder\**" />
+	  <EmbeddedResource Remove="Pages\NewFolder\**" />
+	  <None Remove="Pages\NewFolder\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<Compile Remove="Data\Migrations\20200420071131_addMalfunctionsFields.cs" />
 		<Compile Remove="Data\Migrations\20200420071131_addMalfunctionsFields.Designer.cs" />
 		<Compile Remove="Data\Migrations\20200420071421_addMalfunctionsFiels.cs" />

@@ -1,0 +1,82 @@
+﻿@page
+@model EquipmentManagementSystem.Pages.ReportSystem.ReportingModel
+@{
+    ViewData["Title"] = "报表系统";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3>报表导出</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-row align-items-center">
+                        <div class="col-auto my-1">
+                            <label asp-for="Search.BeginTime" class="control-label"></label>
+                            <span asp-validation-for="Search.BeginTime" class="text-danger"></span>
+                            <input asp-for="Search.BeginTime" class="form-control" />
+                        </div>
+                        <div class="col-auto my-1">
+                            <label asp-for="Search.EndTime" class="control-label"></label>
+                            <span asp-validation-for="Search.EndTime" class="text-danger"></span>
+                            <input asp-for="Search.EndTime" class="form-control" />
+                        </div>
+                        <div class="col-auto my-1">
+                            <label asp-for="Search.Group" class="control-label"></label>
+                            <span asp-validation-for="Search.Group" class="text-danger"></span>
+                            <select asp-for="Search.Group" asp-items="@Model.GroupSelectList" class="custom-select select2">
+                                <option value="">---请选择---</option>
+                            </select>
+                        </div>
+                        <div class="col-auto my-1">
+                            <label asp-for="Search.Instrument" class="control-label"></label>
+                            <span asp-validation-for="Search.Instrument" class="text-danger"></span>
+                            <select id="instrumentId" asp-for="Search.Instrument" asp-items="@Model.InstrumentSelectList" class="custom-select select2">
+                                <option value="">---请选择---</option>
+                            </select>
+                        </div>
+                        <div class="col-auto my-1">
+                            <label asp-for="Search.Project" class="control-label"></label>
+                            <span asp-validation-for="Search.Project" class="text-danger"></span>
+                            <select id="project" asp-for="Search.Project" asp-items="@Model.ProjectSelectList" class="custom-select select2">
+                                <option value="">---请选择---</option>
+                            </select>
+                        </div>
+                        <div class="col-auto my-1">
+                            <input type="submit" class="btn btn-primary mt-4" value="查询" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(function () {
+            // 根据选择的仪器编号动态生成检测项目
+            $("select#instrumentId").on("change", function () {
+                var instrumentId = $(this).val();
+                $("select#project").removeAttr("disabled");
+                $("select#project").empty();
+                $("select#project").append("<option value=''>---请选择---</option>");
+                $.getJSON(`?handler=ProjectFilter&instrumentId=${instrumentId}`, (data) => {
+                    $.each(data, function (i, item) {
+                        if (item.length > 0) {
+                            $("select#project").append(`<option value='${item}'>${item}</option>`);
+                        }
+                        else {
+                            $("select#project").empty();
+                            $("select#project").append("<option value=''>该设备未设置检测项目</option>");
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+}
