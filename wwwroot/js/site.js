@@ -8,9 +8,16 @@
 $(document).ready(function () {
     // 激活当前选择的主侧边栏选项
     var url = window.location.pathname;
+    if ($('li.nav-item a[href="' + url + '"]').length == 0) {
+        url = url.split("/")
+        url.pop()
+        url = url.join("/")
+    }
+    
     $('li.nav-item a[href="' + url + '"]').addClass('active');
     $('li.nav-item a[href="' + url + '"]').parent().parent().parent().addClass('menu-open');
     $('li.nav-item a[href="' + url + '"]').parent().parent().parent().children("a.nav-link").addClass('active');
+
 
     // 格式Index页面的table
     $('table#index').DataTable({
