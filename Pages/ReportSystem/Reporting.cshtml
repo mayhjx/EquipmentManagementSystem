@@ -10,10 +10,10 @@
     </div>
     <div class="card-body">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-4">
                 <form method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-row align-items-center">
+                    <div class="align-items-center">
                         <div class="col-auto my-1">
                             <label asp-for="Search.BeginTime" class="control-label"></label>
                             <span asp-validation-for="Search.BeginTime" class="text-danger"></span>
@@ -46,7 +46,7 @@
                             </select>
                         </div>
                         <div class="col-auto my-1">
-                            <input type="submit" class="btn btn-primary mt-4" value="查询" />
+                            <input type="submit" class="btn btn-primary mt-4" value="导出" />
                         </div>
                     </div>
                 </form>
