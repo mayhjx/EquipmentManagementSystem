@@ -26,7 +26,7 @@ namespace EquipmentManagementSystem.Models
         [StringLength(50)]
         public string Operator { get; set; }
 
-        [Display(Name = "措施")]
+        [Display(Name = "排查过程")]
         [StringLength(999)]
         public string Measures { get; set; }
 

@@ -1,11 +1,12 @@
-﻿using EquipmentManagementSystem.Authorization;
+﻿using System.Threading.Tasks;
+using EquipmentManagementSystem.Authorization;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions.Investigate
 {
@@ -25,7 +26,9 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Investigate
         {
             Investigation = await _context.Investigation
                                 .Include(m => m.MalfunctionWorkOrder)
-                                .ThenInclude(m => m.Instrument)
+                                    .ThenInclude(m => m.Instrument)
+                                .Include(m => m.MalfunctionWorkOrder)
+                                    .ThenInclude(m => m.MalfunctionInfo)
                                 .FirstOrDefaultAsync(m => m.ID == id);
 
             if (Investigation == null)
@@ -46,8 +49,14 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Investigate
                 return Forbid();
             }
 
+            MalfunctionPartSelectList = new SelectList(_context.MalfunctionParts.AsNoTracking(), "Name", "Name");
+            MalfunctionReasonSelectList = new SelectList(_context.MalfunctionReason.AsNoTracking(), "Reason", "Reason");
+
             return Page();
         }
+
+        public SelectList MalfunctionPartSelectList { get; set; }
+        public SelectList MalfunctionReasonSelectList { get; set; }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.
@@ -56,6 +65,8 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Investigate
             Investigation = await _context.Investigation
                                 .Include(m => m.MalfunctionWorkOrder)
                                     .ThenInclude(m => m.Instrument)
+                                .Include(m => m.MalfunctionWorkOrder)
+                                    .ThenInclude(m => m.MalfunctionInfo)
                                 .FirstOrDefaultAsync(m => m.ID == id);
 
             if (Investigation == null)
@@ -77,9 +88,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Investigate
             }
 
             if (await TryUpdateModelAsync<Investigation>(
-                    Investigation,
-                    "Investigation",
-                    i => i.BeginTime, i => i.EndTime, i => i.Operator, i => i.Measures, i => i.Result))
+                    Investigation, "Investigation"))
             {
                 // 如果进度在排查中则更新已排查
                 if (Investigation.MalfunctionWorkOrder.Progress < WorkOrderProgress.Investigated)

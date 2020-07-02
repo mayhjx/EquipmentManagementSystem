@@ -29,7 +29,7 @@ namespace EquipmentManagementSystem.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
         public DateTime? EndTime { get; set; }
 
-        [Display(Name = "是否为关键部位？")]
+        [Display(Name = "是否关键部位")]
         public bool IsCritical { get; set; }
 
         [Display(Name = "备注")]
