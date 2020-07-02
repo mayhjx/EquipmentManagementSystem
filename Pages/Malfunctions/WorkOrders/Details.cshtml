@@ -456,9 +456,12 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <a asp-page="../Maintain/Edit" asp-route-id="@Model.MalfunctionWorkOrder.Maintenance.ID" class="btn btn-outline-primary">
-                                <i class="fas fa-edit"></i> 编辑
-                            </a>
+                            @if (CanEdit.Succeeded)
+                            {
+                                <a asp-page="../Maintain/Edit" asp-route-id="@Model.MalfunctionWorkOrder.Maintenance.ID" class="btn btn-outline-primary">
+                                    <i class="fas fa-edit"></i> 编辑
+                                </a>
+                            }
                         </div>
                     </div>
                 </div>
