@@ -42,6 +42,8 @@
 		<Compile Remove="Data\Migrations\Equipment\20200623022717_SimpleTestTime_DatetimeType.Designer.cs" />
 		<Compile Remove="Data\Migrations\Equipment\20200624030238_ChangeSimpleTestTimeType.cs" />
 		<Compile Remove="Data\Migrations\Equipment\20200624030238_ChangeSimpleTestTimeType.Designer.cs" />
+		<Compile Remove="Data\Migrations\Malfunction\20200703010458_ResultNullable.cs" />
+		<Compile Remove="Data\Migrations\Malfunction\20200703010458_ResultNullable.Designer.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
