@@ -56,14 +56,14 @@
         </div>
     </div>
     <div class="card-body">
-        <div class="col-md-8 offset-md-1">
+        <div class="col-xl-8 col-lg-9 col-md-12 col-sm-12 col-12 offset-xl-2 offset-lg-1">
             <div class="timeline">
                 <div class="time-label">
                     <span class="bg-danger">@Html.DisplayFor(model => model.MalfunctionWorkOrder.MalfunctionInfo.BeginTime)</span>
                 </div>
                 <div>
                     <i class="fas fa-exclamation bg-danger"></i>
-                    <div class="card timeline-item">
+                    <div class="card card-outline card-danger timeline-item">
                         <div class="card-header">
                             发生故障
                         </div>
@@ -74,12 +74,12 @@
                 </div>
                 <div>
                     <i class="fas fa-bell bg-maroon"></i>
-                    <div class="card collapsable timeline-item">
+                    <div class="card card-outline card-maroon collapsable timeline-item">
                         <div class="card-header">
                             发现故障
                             @if (!InfomationIsComfirm)
                             {
-                                <span class="badge badge-warning" style="margin-left: 5px;">待设备负责人确认</span>
+                                <span class="badge badge-secondary" style="margin-left: 5px;">待设备负责人确认</span>
                             }
                             else
                             {
@@ -93,34 +93,34 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-xl-6 col-12">
                                     <dl class="row">
-                                        <dt class="col-sm-5">
+                                        <dt class="col-xl-4 col-sm-4 col-12">
                                             @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.MalfunctionInfo.Type)
                                         </dt>
-                                        <dd class="col-sm-7">
+                                        <dd class="col-xl-8 col-sm-8 col-12">
                                             @Html.DisplayFor(model => model.MalfunctionWorkOrder.MalfunctionInfo.Type)
                                         </dd>
-                                        <dt class="col-sm-5">
+                                        <dt class="col-xl-4 col-sm-4 col-12">
                                             @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.MalfunctionInfo.Phenomenon)
                                         </dt>
-                                        <dd class="col-sm-7">
+                                        <dd class="col-xl-8 col-sm-8 col-12">
                                             @Html.DisplayFor(model => model.MalfunctionWorkOrder.MalfunctionInfo.Phenomenon)
                                         </dd>
                                     </dl>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-xl-6 col-12">
                                     <dl class="row">
-                                        <dt class="col-sm-5">
+                                        <dt class="col-xl-4 col-sm-4 col-12">
                                             @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.MalfunctionInfo.FileName)
                                         </dt>
-                                        <dd class="col-sm-7">
+                                        <dd class="col-xl-8 col-sm-8 col-12">
                                             @Html.DisplayFor(model => model.MalfunctionWorkOrder.MalfunctionInfo.FileName)
                                         </dd>
-                                        <dt class="col-sm-5">
+                                        <dt class="col-xl-4 col-sm-4 col-12">
                                             @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.MalfunctionInfo.Remark)
                                         </dt>
-                                        <dd class="col-sm-7">
+                                        <dd class="col-xl-8 col-sm-8 col-12">
                                             @Html.DisplayFor(model => model.MalfunctionWorkOrder.MalfunctionInfo.Remark)
                                         </dd>
                                     </dl>
@@ -133,7 +133,7 @@
                                 @if (CanEdit.Succeeded)
                                 {
                                     <a asp-page="../Information/Edit" asp-route-id="@Model.MalfunctionWorkOrder.MalfunctionInfo.ID" class="btn btn-outline-primary">
-                                        <i class="fas fa-edit"></i> 编辑
+                                        编辑
                                     </a>
                                 }
                                 @if (CanComfirmInformation.Succeeded)
@@ -167,14 +167,17 @@
                     </div>
                 </div>
 
+                @{
+                    string investigatedClass = Model.MalfunctionWorkOrder.Investigation.BeginTime != null ? "warning" : "";
+                }
                 <div class="time-label">
-                    <span class="bg-warning">@Html.DisplayFor(model => model.MalfunctionWorkOrder.Investigation.BeginTime)</span>
+                    <span class="bg-@investigatedClass">@Html.DisplayFor(model => model.MalfunctionWorkOrder.Investigation.BeginTime)</span>
                 </div>
                 <div>
-                    <i class="fas fa-search bg-warning"></i>
-                    <div class="card timeline-item card-tabs collapsable">
-                        <div class="card-header p-0 pt-1">
-                            <ul class="nav nav-justified nav-tabs" id="custom-tabs-one-tab" role="tablist">
+                    <i class="fas fa-search bg-@investigatedClass"></i>
+                    <div class="card card-outline card-outline-tabs card-@investigatedClass timeline-item collapsable">
+                        <div class="card-header p-0 border-bottom-0">
+                            <ul class="nav nav-fill nav-tabs" id="custom-tabs-one-tab" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link active" id="custom-tabs-one-home-tab" data-toggle="pill" href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home" aria-selected="true">
                                         故障排查
@@ -185,7 +188,7 @@
                                         维修申请
                                         @if (!InternalServiceable && !RepairRequestIsComfirm)
                                         {
-                                            <span class="badge badge-warning" style="margin-left: 5px;">待批准</span>
+                                            <span class="badge badge-secondary" style="margin-left: 5px;">待批准</span>
                                         }
                                         else if (!InternalServiceable && RepairRequestIsComfirm)
                                         {
@@ -198,7 +201,7 @@
                                         配件下单
                                     </a>
                                 </li>
-                                <li class="pt-1 px-2">
+                                <li class="pt-2 px-2">
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                         <i class="fas fa-minus fa-lg"></i>
                                     </button>
@@ -209,47 +212,48 @@
                             <div class="tab-content" id="custom-tabs-one-tabContent">
                                 <div class="tab-pane fade active show" id="custom-tabs-one-home" role="tabpanel" aria-labelledby="custom-tabs-one-home-tab">
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-xl-6 col-12">
                                             <dl class="row">
-                                                <dt class="col-sm-4">
+                                                <dt class="col-xl-4 col-sm-4 col-12">
                                                     排查时长
                                                 </dt>
-                                                <dd class="col-sm-8">
-                                                    @(Model.MalfunctionWorkOrder.Investigation.EndTime - Model.MalfunctionWorkOrder.Investigation.BeginTime)
+                                                <dd class="col-xl-8 col-sm-8 col-12">
+                                                    @((Model.MalfunctionWorkOrder.Investigation.EndTime - Model.MalfunctionWorkOrder.Investigation.BeginTime)
+                                                        .GetValueOrDefault().TotalMinutes) 分钟
                                                 </dd>
-                                                <dt class="col-sm-4">
+                                                <dt class="col-xl-4 col-sm-4 col-12">
                                                     @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Investigation.Operator)
                                                 </dt>
-                                                <dd class="col-sm-8">
+                                                <dd class="col-xl-8 col-sm-8 col-12">
                                                     @Html.DisplayFor(model => model.MalfunctionWorkOrder.Investigation.Operator)
                                                 </dd>
-                                                <dt class="col-sm-4">
+                                                <dt class="col-xl-4 col-sm-4 col-12">
                                                     @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Investigation.Measures)
                                                 </dt>
-                                                <dd class="col-sm-8">
+                                                <dd class="col-xl-8 col-sm-8 col-12">
                                                     @Html.DisplayFor(model => model.MalfunctionWorkOrder.Investigation.Measures)
                                                 </dd>
                                             </dl>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-xl-6 col-12">
                                             <h6 class="text-bold">排查结论</h6>
                                             <dl class="row">
-                                                <dt class="col-sm-5">
+                                                <dt class="col-xl-4 col-sm-4 col-12">
                                                     @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.MalfunctionInfo.Part)
                                                 </dt>
-                                                <dd class="col-sm-7">
+                                                <dd class="col-xl-8 col-sm-8 col-12">
                                                     @Html.DisplayFor(model => model.MalfunctionWorkOrder.MalfunctionInfo.Part)
                                                 </dd>
-                                                <dt class="col-sm-5">
+                                                <dt class="col-xl-4 col-sm-4 col-12">
                                                     @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.MalfunctionInfo.Reason)
                                                 </dt>
-                                                <dd class="col-sm-7">
+                                                <dd class="col-xl-8 col-sm-8 col-12">
                                                     @Html.DisplayFor(model => model.MalfunctionWorkOrder.MalfunctionInfo.Reason)
                                                 </dd>
-                                                <dt class="col-sm-5">
+                                                <dt class="col-xl-4 col-sm-4 col-12">
                                                     是否需外部维修
                                                 </dt>
-                                                <dd class="col-sm-7">
+                                                <dd class="col-xl-8 col-sm-8 col-12">
                                                     @{
                                                         if (!InternalServiceable)
                                                         {
@@ -269,35 +273,35 @@
                                     {
                                         <div class="card-footer">
                                             <a asp-page="../Investigate/Edit" asp-route-id="@Model.MalfunctionWorkOrder.Investigation.ID" class="btn btn-outline-primary">
-                                                <i class="fas fa-edit"></i> 编辑
+                                                编辑
                                             </a>
                                         </div>
                                     }
                                 </div>
                                 <div class="tab-pane fade" id="custom-tabs-one-profile" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab">
                                     <dl class="row">
-                                        <dt class="col-sm-2">
+                                        <dt class="col-xl-2 col-sm-3">
                                             @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.RepairRequest.RequestTime)
                                         </dt>
-                                        <dd class="col-sm-10">
+                                        <dd class="col-xl-10 col-sm-9">
                                             @Html.DisplayFor(model => model.MalfunctionWorkOrder.RepairRequest.RequestTime)
                                         </dd>
-                                        <dt class="col-sm-2">
+                                        <dt class="col-xl-2 col-sm-3">
                                             @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.RepairRequest.BookingsTime)
                                         </dt>
-                                        <dd class="col-sm-10">
+                                        <dd class="col-xl-10 col-sm-9">
                                             @Html.DisplayFor(model => model.MalfunctionWorkOrder.RepairRequest.BookingsTime)
                                         </dd>
-                                        <dt class="col-sm-2">
+                                        <dt class="col-xl-2 col-sm-3">
                                             @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.RepairRequest.Fixer)
                                         </dt>
-                                        <dd class="col-sm-10">
+                                        <dd class="col-xl-10 col-sm-9">
                                             @Html.DisplayFor(model => model.MalfunctionWorkOrder.RepairRequest.Fixer)
                                         </dd>
-                                        <dt class="col-sm-2">
+                                        <dt class="col-xl-2 col-sm-3">
                                             @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.RepairRequest.Engineer)
                                         </dt>
-                                        <dd class="col-sm-10">
+                                        <dd class="col-xl-10 col-sm-9">
                                             @Html.DisplayFor(model => model.MalfunctionWorkOrder.RepairRequest.Engineer)
                                         </dd>
                                     </dl>
@@ -307,7 +311,7 @@
                                             @if (CanEdit.Succeeded)
                                             {
                                                 <a asp-page="../RepairRequests/Edit" asp-route-id="@Model.MalfunctionWorkOrder.RepairRequest.ID" class="btn btn-outline-primary">
-                                                    <i class="fas fa-edit"></i> 编辑
+                                                    编辑
                                                 </a>
                                             }
                                             @if (CanApprove.Succeeded)
@@ -341,28 +345,28 @@
                                 </div>
                                 <div class="tab-pane fade" id="custom-tabs-one-messages" role="tabpanel" aria-labelledby="custom-tabs-one-messages-tab">
                                     <dl class="row">
-                                        <dt class="col-sm-2">
+                                        <dt class="col-xl-2 col-sm-3">
                                             @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.AccessoriesOrder.Name)
                                         </dt>
-                                        <dd class="col-sm-10">
+                                        <dd class="col-xl-10 col-sm-9">
                                             @Html.DisplayFor(model => model.MalfunctionWorkOrder.AccessoriesOrder.Name)
                                         </dd>
-                                        <dt class="col-sm-2">
+                                        <dt class="col-xl-2 col-sm-3">
                                             @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.AccessoriesOrder.PlaceTime)
                                         </dt>
-                                        <dd class="col-sm-10">
+                                        <dd class="col-xl-10 col-sm-9">
                                             @Html.DisplayFor(model => model.MalfunctionWorkOrder.AccessoriesOrder.PlaceTime)
                                         </dd>
-                                        <dt class="col-sm-2">
+                                        <dt class="col-xl-2 col-sm-3">
                                             @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.AccessoriesOrder.ArrivalTime)
                                         </dt>
-                                        <dd class="col-sm-10">
+                                        <dd class="col-xl-10 col-sm-9">
                                             @Html.DisplayFor(model => model.MalfunctionWorkOrder.AccessoriesOrder.ArrivalTime)
                                         </dd>
-                                        <dt class="col-sm-2">
+                                        <dt class="col-xl-2 col-sm-3">
                                             @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.AccessoriesOrder.Remark)
                                         </dt>
-                                        <dd class="col-sm-10">
+                                        <dd class="col-xl-10 col-sm-9">
                                             @Html.DisplayFor(model => model.MalfunctionWorkOrder.AccessoriesOrder.Remark)
                                         </dd>
                                     </dl>
@@ -370,7 +374,7 @@
                                     {
                                         <div class="card-footer">
                                             <a asp-page="../AccessoriesOrders/Edit" asp-route-id="@Model.MalfunctionWorkOrder.AccessoriesOrder.ID" class="btn btn-outline-primary">
-                                                <i class="fas fa-edit"></i> 编辑
+                                                编辑
                                             </a>
                                         </div>
                                     }
@@ -380,12 +384,15 @@
                     </div>
                 </div>
 
+                @{
+                    string maintianedClass = Model.MalfunctionWorkOrder.Maintenance.BeginTime != null ? "primary" : "";
+                }
                 <div class="time-label">
-                    <span class="bg-primary">@Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.BeginTime)</span>
+                    <span class="bg-@maintianedClass">@Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.BeginTime)</span>
                 </div>
                 <div>
-                    <i class="fas fa-wrench bg-primary"></i>
-                    <div class="card collapsable timeline-item">
+                    <i class="fas fa-wrench bg-@maintianedClass"></i>
+                    <div class="card card-outline card-@maintianedClass collapsable timeline-item">
                         <div class="card-header">
                             维修过程
                             <div class="card-tools">
@@ -396,30 +403,31 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-xl-6 col-12">
                                     <dl class="row">
-                                        <dt class="col-sm-4">
+                                        <dt class="col-xl-4 col-sm-4">
                                             维修时长
                                         </dt>
-                                        <dd class="col-sm-8">
-                                            @(Model.MalfunctionWorkOrder.Maintenance.EndTime - Model.MalfunctionWorkOrder.Maintenance.BeginTime)
+                                        <dd class="col-xl-8 col-sm-8">
+                                            @((Model.MalfunctionWorkOrder.Maintenance.EndTime - Model.MalfunctionWorkOrder.Maintenance.BeginTime)
+                                                .GetValueOrDefault().TotalMinutes) 分钟
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-xl-4 col-sm-4">
                                             @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.Repairer)
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-xl-8 col-sm-8">
                                             @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.Repairer)
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-xl-4 col-sm-4">
                                             @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.Solution)
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-xl-8 col-sm-8">
                                             @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.Solution)
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-xl-4 col-sm-4">
                                             @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.IsCritical)
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-xl-8 col-sm-8">
                                             @{
                                                 if (MaintainIsCritical)
                                                 {
@@ -434,23 +442,23 @@
                                         </dd>
                                     </dl>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-xl-6 col-12">
                                     <dl class="row">
                                         @if (!InternalServiceable)
                                         {
-                                            <dt class="col-sm-6">
+                                            <dt class="col-xl-4 col-sm-4">
                                                 @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.FileName)
                                             </dt>
-                                            <dd class="col-sm-6">
+                                            <dd class="col-xl-8 col-sm-8">
                                                 <a asp-page="../Maintain/Edit" asp-page-handler="Download" asp-route-id="@Model.MalfunctionWorkOrder.Maintenance.ID">
                                                     @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.FileName)
                                                 </a>
                                             </dd>
                                         }
-                                        <dt class="col-sm-6">
+                                        <dt class="col-xl-4 col-sm-4">
                                             @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.Remark)
                                         </dt>
-                                        <dd class="col-sm-6">
+                                        <dd class="col-xl-8 col-sm-8">
                                             @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.Remark)
                                         </dd>
                                     </dl>
@@ -461,7 +469,7 @@
                         {
                             <div class="card-footer">
                                 <a asp-page="../Maintain/Edit" asp-route-id="@Model.MalfunctionWorkOrder.Maintenance.ID" class="btn btn-outline-primary">
-                                    <i class="fas fa-edit"></i> 编辑
+                                    编辑
                                 </a>
                             </div>
                         }
@@ -469,14 +477,23 @@
                 </div>
                 @if (MaintainIsCritical)
                 {
+                    string validatedClass = Model.MalfunctionWorkOrder.Validation.FinishedTime != null ? "info" : "";
                     <div class="time-label">
-                        <span class="bg-info">@Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.FinishedTime)</span>
+                        <span class="bg-@validatedClass">@Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.FinishedTime)</span>
                     </div>
                     <div>
-                        <i class="fas fa-file-alt bg-info"></i>
-                        <div class="card collapsable timeline-item">
+                        <i class="fas fa-chart-bar bg-@validatedClass"></i>
+                        <div class="card card-outline card-@validatedClass collapsable timeline-item">
                             <div class="card-header">
                                 性能验证
+                                @if (!ValidationIsComfirm)
+                                {
+                                    <span class="badge badge-secondary" style="margin-left: 5px;">未批准</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-success" style="margin-left: 5px;">已批准</span>
+                                }
                                 <div class="card-tools">
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                         <i class="fas fa-minus fa-lg"></i>
@@ -485,24 +502,24 @@
                             </div>
                             <div class="card-body">
                                 <dl class="row">
-                                    <dt class="col-sm-2">
+                                    <dt class="col-xl-2 col-sm-4">
                                         @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.PerformanceReportFileName)
                                     </dt>
-                                    <dd class="col-sm-10">
+                                    <dd class="col-xl-10 col-sm-8">
                                         <a asp-page="../Validate/Edit" asp-page-handler="DownloadPerformanceReportFile" asp-route-id="@Model.MalfunctionWorkOrder.Validation.ID">
                                             @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.PerformanceReportFileName)
                                         </a>
                                     </dd>
-                                    <dt class="col-sm-2">
+                                    <dt class="col-xl-2 col-sm-4">
                                         @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.Summary)
                                     </dt>
-                                    <dd class="col-sm-10">
+                                    <dd class="col-xl-10 col-sm-8">
                                         @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.Summary)
                                     </dd>
-                                    <dt class="col-sm-2">
+                                    <dt class="col-xl-2 col-sm-4">
                                         @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.AttachmentName)
                                     </dt>
-                                    <dd class="col-sm-10">
+                                    <dd class="col-xl-10 col-sm-8">
                                         <a asp-page="../Validate/Edit" asp-page-handler="DownloadAttachment" asp-route-id="@Model.MalfunctionWorkOrder.Validation.ID">
                                             @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.AttachmentName)
                                         </a>
@@ -513,7 +530,7 @@
                                 @if (!ValidationIsComfirm && CanEdit.Succeeded)
                                 {
                                     <a asp-page="../Validate/Edit" asp-route-id="@Model.MalfunctionWorkOrder.Validation.ID" class="btn btn-outline-primary">
-                                        <i class="fas fa-edit"></i> 编辑
+                                        编辑
                                     </a>
                                 }
                                 @if (!ValidationIsComfirm && CanApprove.Succeeded)
@@ -548,13 +565,20 @@
                 }
                 <!-- The last icon means the story is complete -->
                 <div>
-                    <i class="fas fa-check bg-success"></i>
+                    @if (IsComfirmAll)
+                    {
+                        <i class="fas fa-check bg-success" data-toggle="modal" data-target="#modal-completeWorkOrder" title="完成工单"></i>
+                    }
+                    else
+                    {
+                        <i class="fas fa-check bg-secondary"></i>
+                    }
                 </div>
             </div>
         </div>
 
         <div class="row no-print">
-            <div class="col-md-12">
+            <div class="col-12">
                 <div>
                     @if (IsCompleted)
                     {
@@ -576,7 +600,7 @@
                     {
                         @Html.AntiForgeryToken();
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-completeWorkOrder">
-                            完成
+                            完成工单
                         </button>
                         <div class="modal fade" id="modal-completeWorkOrder">
                             <div class="modal-dialog modal-sm">
