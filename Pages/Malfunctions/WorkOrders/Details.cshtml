@@ -46,35 +46,34 @@
         <div class="card-title">
             <h3>
                 @Html.DisplayFor(mdoel => Model.MalfunctionWorkOrder.InstrumentID)
-                @*<span class="badge badge-primary">@Html.DisplayFor(mdoel => Model.MalfunctionWorkOrder.Progress)</span>*@
+                <span class="badge badge-primary">@Html.DisplayFor(mdoel => Model.MalfunctionWorkOrder.Progress)</span>
             </h3>
-
         </div>
-        <div class="card-tools">
+        <div class="card-tools h6">
             建单人：@Model.MalfunctionWorkOrder.Creator
             <br>
             建单时间：@Model.MalfunctionWorkOrder.CreatedTime
         </div>
     </div>
     <div class="card-body">
-        <div class="col-md-7 offset-md-1">
+        <div class="col-md-8 offset-md-1">
             <div class="timeline">
                 <div class="time-label">
                     <span class="bg-danger">@Html.DisplayFor(model => model.MalfunctionWorkOrder.MalfunctionInfo.BeginTime)</span>
                 </div>
                 <div>
-                    <i class="fas fa-star bg-danger"></i>
+                    <i class="fas fa-exclamation bg-danger"></i>
                     <div class="card timeline-item">
-                        <div class="card-body">
+                        <div class="card-header">
                             发生故障
                         </div>
                     </div>
                 </div>
                 <div class="time-label">
-                    <span class="bg-danger">@Html.DisplayFor(model => model.MalfunctionWorkOrder.MalfunctionInfo.FoundedTime)</span>
+                    <span class="bg-maroon">@Html.DisplayFor(model => model.MalfunctionWorkOrder.MalfunctionInfo.FoundedTime)</span>
                 </div>
                 <div>
-                    <i class="fas fa-bell bg-danger"></i>
+                    <i class="fas fa-bell bg-maroon"></i>
                     <div class="card collapsable timeline-item">
                         <div class="card-header">
                             发现故障
@@ -128,41 +127,43 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-footer">
-                            @if (!InfomationIsComfirm && CanEdit.Succeeded)
-                            {
-                                <a asp-page="../Information/Edit" asp-route-id="@Model.MalfunctionWorkOrder.MalfunctionInfo.ID" class="btn btn-outline-primary">
-                                    <i class="fas fa-edit"></i> 编辑
-                                </a>
-                            }
-
-                            @if (!InfomationIsComfirm && CanComfirmInformation.Succeeded)
-                            {
-                                // 确认故障信息
-                                <div class="float-right">
-                                    <input type="button" value="确认" class="btn btn-outline-primary btn-block" data-toggle="modal" data-target="#modal-ComfirmInformation" />
-                                </div>
-                                <div class="modal fade" id="modal-ComfirmInformation">
-                                    <div class="modal-dialog modal-sm">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title">提示</h4>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">×</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p>是否确认故障信息？</p>
-                                            </div>
-                                            <div class="modal-footer justify-content-between">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                                <button id="comfirm-information" type="button" class="btn btn-primary">确认</button>
+                        @if (!InfomationIsComfirm)
+                        {
+                            <div class="card-footer">
+                                @if (CanEdit.Succeeded)
+                                {
+                                    <a asp-page="../Information/Edit" asp-route-id="@Model.MalfunctionWorkOrder.MalfunctionInfo.ID" class="btn btn-outline-primary">
+                                        <i class="fas fa-edit"></i> 编辑
+                                    </a>
+                                }
+                                @if (CanComfirmInformation.Succeeded)
+                                {
+                                    // 确认故障信息
+                                    <div class="float-right">
+                                        <input type="button" value="确认" class="btn btn-outline-primary btn-block" data-toggle="modal" data-target="#modal-ComfirmInformation" />
+                                    </div>
+                                    <div class="modal fade" id="modal-ComfirmInformation">
+                                        <div class="modal-dialog modal-sm">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">提示</h4>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">×</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>是否确认故障信息？</p>
+                                                </div>
+                                                <div class="modal-footer justify-content-between">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                                    <button id="comfirm-information" type="button" class="btn btn-primary">确认</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            }
-                        </div>
+                                }
+                            </div>
+                        }
                     </div>
                 </div>
 
@@ -184,7 +185,7 @@
                                         维修申请
                                         @if (!InternalServiceable && !RepairRequestIsComfirm)
                                         {
-                                            <span class="badge badge-warning" style="margin-left: 5px;">未批准</span>
+                                            <span class="badge badge-warning" style="margin-left: 5px;">待批准</span>
                                         }
                                         else if (!InternalServiceable && RepairRequestIsComfirm)
                                         {
@@ -197,7 +198,7 @@
                                         配件下单
                                     </a>
                                 </li>
-                                <li class="pt-2 px-3">
+                                <li class="pt-1 px-2">
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                         <i class="fas fa-minus fa-lg"></i>
                                     </button>
@@ -250,16 +251,14 @@
                                                 </dt>
                                                 <dd class="col-sm-7">
                                                     @{
-                                                        // 需外部维修
-                                                        var Y = Model.MalfunctionWorkOrder.Investigation.Result == 0;
-                                                        if (Y)
+                                                        if (!InternalServiceable)
                                                         {
-                                                            <span class="badge badge-primary text-sm">是</span>
+                                                            // 需外部维修
+                                                            <span class="badge badge-warning text-sm badge-btn">是</span>
                                                         }
                                                         else
                                                         {
-                                                            <span class="badge badge-secondary text-sm">否</span>
-
+                                                            <span class="badge badge-secondary text-sm badge-btn">否</span>
                                                         }
                                                     }
                                                 </dd>
@@ -302,40 +301,43 @@
                                             @Html.DisplayFor(model => model.MalfunctionWorkOrder.RepairRequest.Engineer)
                                         </dd>
                                     </dl>
-                                    <div class="card-footer">
-                                        @if (!RepairRequestIsComfirm && CanEdit.Succeeded)
-                                        {
-                                            <a asp-page="../RepairRequests/Edit" asp-route-id="@Model.MalfunctionWorkOrder.RepairRequest.ID" class="btn btn-outline-primary">
-                                                <i class="fas fa-edit"></i> 编辑
-                                            </a>
-                                        }
-                                        @if (!RepairRequestIsComfirm && CanApprove.Succeeded)
-                                        {
-                                            // 批准维修申请
-                                            <div class="float-right">
-                                                <input type="button" value="批准" class="btn btn-outline-primary btn-block" data-toggle="modal" data-target="#modal-ComfirmRepairRequest" />
-                                            </div>
-                                            <div class="modal fade" id="modal-ComfirmRepairRequest">
-                                                <div class="modal-dialog modal-sm">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h4 class="modal-title">提示</h4>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">×</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <p>是否批准维修申请？</p>
-                                                        </div>
-                                                        <div class="modal-footer justify-content-between">
-                                                            <button type="button" class="btn btn-default" data-dismiss="modal">否</button>
-                                                            <button id="comfirm-repairRequest" type="button" class="btn btn-primary">是</button>
+                                    @if (!RepairRequestIsComfirm)
+                                    {
+                                        <div class="card-footer">
+                                            @if (CanEdit.Succeeded)
+                                            {
+                                                <a asp-page="../RepairRequests/Edit" asp-route-id="@Model.MalfunctionWorkOrder.RepairRequest.ID" class="btn btn-outline-primary">
+                                                    <i class="fas fa-edit"></i> 编辑
+                                                </a>
+                                            }
+                                            @if (CanApprove.Succeeded)
+                                            {
+                                                // 批准维修申请
+                                                <div class="float-right">
+                                                    <input type="button" value="批准" class="btn btn-outline-primary btn-block" data-toggle="modal" data-target="#modal-ComfirmRepairRequest" />
+                                                </div>
+                                                <div class="modal fade" id="modal-ComfirmRepairRequest">
+                                                    <div class="modal-dialog modal-sm">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">提示</h4>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">×</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p>是否批准维修申请？</p>
+                                                            </div>
+                                                            <div class="modal-footer justify-content-between">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">否</button>
+                                                                <button id="comfirm-repairRequest" type="button" class="btn btn-primary">是</button>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        }
-                                    </div>
+                                            }
+                                        </div>
+                                    }
                                 </div>
                                 <div class="tab-pane fade" id="custom-tabs-one-messages" role="tabpanel" aria-labelledby="custom-tabs-one-messages-tab">
                                     <dl class="row">
@@ -421,11 +423,11 @@
                                             @{
                                                 if (MaintainIsCritical)
                                                 {
-                                                    <span class="badge badge-primary text-sm">是</span>
+                                                    <span class="badge badge-primary text-sm badge-btn">是</span>
                                                 }
                                                 else
                                                 {
-                                                    <span class="badge badge-secondary text-sm">否</span>
+                                                    <span class="badge badge-secondary text-sm badge-btn">否</span>
 
                                                 }
                                             }
@@ -455,14 +457,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-footer">
-                            @if (CanEdit.Succeeded)
-                            {
+                        @if (CanEdit.Succeeded)
+                        {
+                            <div class="card-footer">
                                 <a asp-page="../Maintain/Edit" asp-route-id="@Model.MalfunctionWorkOrder.Maintenance.ID" class="btn btn-outline-primary">
                                     <i class="fas fa-edit"></i> 编辑
                                 </a>
-                            }
-                        </div>
+                            </div>
+                        }
                     </div>
                 </div>
                 @if (MaintainIsCritical)
@@ -477,7 +479,7 @@
                                 性能验证
                                 <div class="card-tools">
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                        <i class="fas fa-minus"></i>
+                                        <i class="fas fa-minus fa-lg"></i>
                                     </button>
                                 </div>
                             </div>
@@ -546,7 +548,7 @@
                 }
                 <!-- The last icon means the story is complete -->
                 <div>
-                    <i class="fas fa-clock bg-success"></i>
+                    <i class="fas fa-check bg-success"></i>
                 </div>
             </div>
         </div>

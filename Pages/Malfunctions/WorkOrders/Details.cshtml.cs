@@ -1,9 +1,9 @@
-﻿using EquipmentManagementSystem.Data;
+﻿using System.Threading.Tasks;
+using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
 {
