@@ -1,12 +1,12 @@
-﻿using EquipmentManagementSystem.Authorization;
+﻿using System;
+using System.Threading.Tasks;
+using EquipmentManagementSystem.Authorization;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions.RepairRequests
 {
@@ -114,9 +114,9 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.RepairRequests
                 return new JsonResult("权限不足");
             }
 
-            if (RepairRequest.Engineer == null)
+            if (RepairRequest.Engineer == null || RepairRequest.BookingsTime == null)
             {
-                return new JsonResult("请补充对接工程师信息");
+                return new JsonResult("请补充对接工程师信息或预约时间");
             }
 
             RepairRequest.IsConfirm = true;

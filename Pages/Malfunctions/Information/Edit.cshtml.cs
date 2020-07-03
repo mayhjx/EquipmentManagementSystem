@@ -1,4 +1,9 @@
-﻿using EquipmentManagementSystem.Authorization;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.Net;
+using System.Net.Mime;
+using System.Threading.Tasks;
+using EquipmentManagementSystem.Authorization;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using EquipmentManagementSystem.Utilities;
@@ -9,11 +14,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.Net;
-using System.Net.Mime;
-using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions.Information
 {
@@ -151,9 +151,9 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Information
         public async Task<IActionResult> OnPostComfirmAsync(int id)
         {
             MalfunctionInfo = await _context.MalfunctionInfo
-                                .Include(m => m.MalfunctionWorkOrder)
-                                .ThenInclude(m => m.Instrument)
-                                .FirstOrDefaultAsync(m => m.ID == id);
+                                            .Include(m => m.MalfunctionWorkOrder)
+                                                .ThenInclude(m => m.Instrument)
+                                            .FirstOrDefaultAsync(m => m.ID == id);
 
             if (MalfunctionInfo == null)
             {
