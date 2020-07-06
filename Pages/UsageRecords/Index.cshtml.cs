@@ -33,12 +33,15 @@ namespace EquipmentManagementSystem.Pages.UsageRecords
             var isAuthorized = User.IsInRole(Constants.DirectorRole) ||
                                  User.IsInRole(Constants.ManagerRole);
 
-            var currentUserGroup = (await _userManager.GetUserAsync(User)).Group;
 
-            if (!isAuthorized)
+            if (User.Identity.IsAuthenticated)
             {
-                // 显示当前用户所属项目组的使用登记
-                usageRecord = usageRecord.Where(record => record.Instrument.Group == currentUserGroup);
+                var currentUserGroup = (await _userManager.GetUserAsync(User)).Group;
+                if (!isAuthorized)
+                {
+                    // 显示当前用户所属项目组的使用登记
+                    usageRecord = usageRecord.Where(record => record.Instrument.Group == currentUserGroup);
+                }
             }
 
             UsageRecord = await usageRecord.OrderByDescending(m => m.BeginTimeOfTest).ToListAsync();

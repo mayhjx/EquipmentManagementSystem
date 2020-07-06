@@ -1,6 +1,6 @@
 ﻿@page
 @model EquipmentManagementSystem.Pages.UsageRecords.IndexModel
-
+@inject SignInManager<User> signInManager
 @{
     ViewData["Title"] = "使用登记";
 }
@@ -75,7 +75,7 @@
                         </td>
                         <td>
                             <a asp-page="./Details" asp-route-id="@item.Id">查看</a>
-                            @if ((await AuthorizationService.AuthorizeAsync(User, item, Operations.Delete)).Succeeded)
+                            @if (signInManager.IsSignedIn(User) && (await AuthorizationService.AuthorizeAsync(User, item, Operations.Delete)).Succeeded)
                             {
                                 <text> | </text>
                                 <a asp-page="./Delete" asp-route-id="@item.Id">删除</a>
