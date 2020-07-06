@@ -218,8 +218,13 @@
                                                     排查时长
                                                 </dt>
                                                 <dd class="col-xl-8 col-sm-8 col-12">
-                                                    @((Model.MalfunctionWorkOrder.Investigation.EndTime - Model.MalfunctionWorkOrder.Investigation.BeginTime)
-                                                        .GetValueOrDefault().TotalMinutes) 分钟
+                                                    @{
+                                                        var InvestigationInterval = (Model.MalfunctionWorkOrder.Investigation.EndTime - Model.MalfunctionWorkOrder.Investigation.BeginTime).GetValueOrDefault();
+                                                        var InvestigationDays = InvestigationInterval.Days > 0 ? $"{InvestigationInterval.Days} 天" : "";
+                                                        var InvestigationMinutes = InvestigationInterval.Minutes > 0 ? $"{InvestigationInterval.Minutes} 分钟" : "";
+                                                        var InvestigationHours = InvestigationInterval.Hours > 0 || (InvestigationDays != "" && InvestigationMinutes != "") ? $"{InvestigationInterval.Hours} 小时" : "";
+                                                        @:  @InvestigationDays @InvestigationHours @InvestigationMinutes
+                                                    }
                                                 </dd>
                                                 <dt class="col-xl-4 col-sm-4 col-12">
                                                     @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Investigation.Operator)
@@ -409,8 +414,13 @@
                                             维修时长
                                         </dt>
                                         <dd class="col-xl-8 col-sm-8">
-                                            @((Model.MalfunctionWorkOrder.Maintenance.EndTime - Model.MalfunctionWorkOrder.Maintenance.BeginTime)
-                                                .GetValueOrDefault().TotalMinutes) 分钟
+                                            @{
+                                                var MaintenanceInterval = (Model.MalfunctionWorkOrder.Maintenance.EndTime - Model.MalfunctionWorkOrder.Maintenance.BeginTime).GetValueOrDefault();
+                                                var MaintenanceDays = MaintenanceInterval.Days > 0 ? $"{MaintenanceInterval.Days} 天" : "";
+                                                var MaintenanceMinutes = MaintenanceInterval.Minutes > 0 ? $"{MaintenanceInterval.Minutes} 分钟" : "";
+                                                var MaintenanceHours = MaintenanceInterval.Hours > 0 || (MaintenanceDays != "" && MaintenanceMinutes != "") ? $"{MaintenanceInterval.Hours} 小时" : "";
+                                                @:  @MaintenanceDays @MaintenanceHours @MaintenanceMinutes
+                                            }
                                         </dd>
                                         <dt class="col-xl-4 col-sm-4">
                                             @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.Repairer)
