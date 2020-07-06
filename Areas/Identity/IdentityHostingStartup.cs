@@ -1,4 +1,5 @@
-﻿using EquipmentManagementSystem.Authorization;
+﻿using System;
+using EquipmentManagementSystem.Authorization;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -8,7 +9,6 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 
 [assembly: HostingStartup(typeof(EquipmentManagementSystem.Areas.Identity.IdentityHostingStartup))]
 namespace EquipmentManagementSystem.Areas.Identity
@@ -75,6 +75,7 @@ namespace EquipmentManagementSystem.Areas.Identity
                 services.AddSingleton<IAuthorizationHandler, AdministratorAuthorizationHandler>();
                 services.AddScoped<IAuthorizationHandler, InstrumentAuthorizationHandler>();
                 services.AddScoped<IAuthorizationHandler, CalibrationAuthorizationHandler>();
+                services.AddScoped<IAuthorizationHandler, UsageRecordAuthorizationHandler>();
 
             });
         }

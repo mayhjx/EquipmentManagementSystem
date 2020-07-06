@@ -1,30 +1,47 @@
-﻿using EquipmentManagementSystem.Data;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using EquipmentManagementSystem.Authorization;
+using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.UsageRecords
 {
     [AllowAnonymous]
-    public class IndexModel : PageModel
+    public class IndexModel : BasePageModel
     {
-        private readonly EquipmentContext _context;
 
-        public IndexModel(EquipmentContext context)
+        public IndexModel(EquipmentContext context,
+            UserManager<User> userManager,
+            IAuthorizationService authorizationService)
+            : base(context, userManager, authorizationService)
         {
-            _context = context;
         }
 
         public IList<UsageRecord> UsageRecord { get; set; }
 
         public async Task OnGetAsync()
         {
-            UsageRecord = await _context.UsageRecords
-                                .AsNoTracking()
-                                .ToListAsync();
+            var usageRecord = from record in _context.UsageRecords
+                              .AsNoTracking()
+                              .Include(i => i.Instrument)
+                              select record;
+
+            var isAuthorized = User.IsInRole(Constants.DirectorRole) ||
+                                 User.IsInRole(Constants.ManagerRole);
+
+            var currentUserGroup = (await _userManager.GetUserAsync(User)).Group;
+
+            if (!isAuthorized)
+            {
+                // 显示当前用户所属项目组的使用登记
+                usageRecord = usageRecord.Where(record => record.Instrument.Group == currentUserGroup);
+            }
+
+            UsageRecord = await usageRecord.OrderByDescending(m => m.BeginTimeOfTest).ToListAsync();
         }
     }
 }

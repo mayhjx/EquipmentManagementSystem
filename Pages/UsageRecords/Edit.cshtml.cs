@@ -1,20 +1,21 @@
-﻿using EquipmentManagementSystem.Data;
+﻿using System.Threading.Tasks;
+using EquipmentManagementSystem.Authorization;
+using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace EquipmentManagementSystem.Pages.UsageRecords
 {
-    [AllowAnonymous]
-    public class EditModel : PageModel
+    public class EditModel : BasePageModel
     {
-        private readonly EquipmentContext _context;
-
-        public EditModel(EquipmentContext context)
+        public EditModel(EquipmentContext context,
+            UserManager<User> userManager,
+            IAuthorizationService authorizationService)
+            : base(context, userManager, authorizationService)
         {
-            _context = context;
         }
 
         [BindProperty]
@@ -22,18 +23,25 @@ namespace EquipmentManagementSystem.Pages.UsageRecords
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            UsageRecord = await _context.UsageRecords.FindAsync(id);
+            UsageRecord = await _context.UsageRecords
+                                .Include(m => m.Instrument)
+                                .FirstOrDefaultAsync(m => m.Id == id);
 
             if (UsageRecord == null)
             {
                 return NotFound();
             }
 
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, UsageRecord, Operations.Update);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync(int id)
         {
             if (!ModelState.IsValid)
@@ -41,11 +49,20 @@ namespace EquipmentManagementSystem.Pages.UsageRecords
                 return Page();
             }
 
-            var UsageRecordToUpdate = await _context.UsageRecords.FindAsync(id);
+            var UsageRecordToUpdate = await _context.UsageRecords
+                                            .Include(m => m.Instrument)
+                                            .FirstOrDefaultAsync(m => m.Id == id);
 
             if (UsageRecordToUpdate == null)
             {
                 return NotFound();
+            }
+
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, UsageRecordToUpdate, Operations.Update);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
             }
 
             if (await TryUpdateModelAsync<UsageRecord>(
@@ -59,6 +76,7 @@ namespace EquipmentManagementSystem.Pages.UsageRecords
                 await _context.SaveChangesAsync();
                 return RedirectToPage("./Index");
             }
+
             return Page();
         }
     }

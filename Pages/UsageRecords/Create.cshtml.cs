@@ -6,20 +6,17 @@ using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EquipmentManagementSystem.Pages.UsageRecords
 {
-    [AllowAnonymous]
-    public class CreateModel : PageModel
+    public class CreateModel : BasePageModel
     {
-        private readonly EquipmentContext _context;
-        private readonly UserManager<User> _userManager;
-        public CreateModel(EquipmentContext context, UserManager<User> userManager)
+        public CreateModel(EquipmentContext context,
+            UserManager<User> userManager,
+            IAuthorizationService authorizationService)
+            : base(context, userManager, authorizationService)
         {
-            _context = context;
-            _userManager = userManager;
         }
 
         public IActionResult OnGet()
@@ -61,6 +58,15 @@ namespace EquipmentManagementSystem.Pages.UsageRecords
             if (!ModelState.IsValid)
             {
                 return Page();
+            }
+
+            UsageRecord.Creator = _userManager.GetUserAsync(User).Result.Name;
+
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, UsageRecord, Operations.Create);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
             }
 
             _context.UsageRecords.Add(UsageRecord);

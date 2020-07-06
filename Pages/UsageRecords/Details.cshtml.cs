@@ -1,14 +1,12 @@
-﻿using EquipmentManagementSystem.Data;
+﻿using System.Threading.Tasks;
+using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.UsageRecords
 {
-    [AllowAnonymous]
     public class DetailsModel : PageModel
     {
         private readonly EquipmentContext _context;
@@ -29,12 +27,14 @@ namespace EquipmentManagementSystem.Pages.UsageRecords
 
             UsageRecord = await _context.UsageRecords
                                         .AsNoTracking()
+                                        .Include(m => m.Instrument)
                                         .FirstOrDefaultAsync(m => m.Id == id);
 
             if (UsageRecord == null)
             {
                 return NotFound();
             }
+
             return Page();
         }
     }

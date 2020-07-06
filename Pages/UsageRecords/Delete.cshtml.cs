@@ -1,21 +1,21 @@
-﻿using EquipmentManagementSystem.Data;
+﻿using System.Threading.Tasks;
+using EquipmentManagementSystem.Authorization;
+using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.UsageRecords
 {
-    [AllowAnonymous]
-    public class DeleteModel : PageModel
+    public class DeleteModel : BasePageModel
     {
-        private readonly EquipmentContext _context;
-
-        public DeleteModel(EquipmentContext context)
+        public DeleteModel(EquipmentContext context,
+            UserManager<User> userManager,
+            IAuthorizationService authorizationService)
+            : base(context, userManager, authorizationService)
         {
-            _context = context;
         }
 
         [BindProperty]
@@ -26,11 +26,19 @@ namespace EquipmentManagementSystem.Pages.UsageRecords
         {
             UsageRecord = await _context.UsageRecords
                                 .AsNoTracking()
+                                .Include(m => m.Instrument)
                                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (UsageRecord == null)
             {
                 return NotFound();
+            }
+
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, UsageRecord, Operations.Delete);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
             }
 
             if (saveChangesError.GetValueOrDefault())
@@ -45,11 +53,19 @@ namespace EquipmentManagementSystem.Pages.UsageRecords
         {
             UsageRecord = await _context.UsageRecords
                                 .AsNoTracking()
+                                .Include(m => m.Instrument)
                                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (UsageRecord == null)
             {
                 return NotFound();
+            }
+
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, UsageRecord, Operations.Delete);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
             }
 
             try
