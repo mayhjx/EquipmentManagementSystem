@@ -1,8 +1,8 @@
-﻿using EquipmentManagementSystem.Models;
+﻿using System.Threading.Tasks;
+using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Identity;
-using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Authorization
 {
@@ -45,7 +45,7 @@ namespace EquipmentManagementSystem.Authorization
 
             if (requirement.Name == Constants.UpdateOperationName)
             {
-                var currentUserGroup = _userManager.GetUserAsync(context.User).Result.Group ?? null;
+                //var currentUserGroup = _userManager.GetUserAsync(context.User).Result.Group ?? null;
 
                 if (context.User.IsInRole(Constants.DirectorRole) ||
                     context.User.IsInRole(Constants.ManagerRole))
