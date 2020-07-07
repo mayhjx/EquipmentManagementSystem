@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using EquipmentManagementSystem.Authorization;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace EquipmentManagementSystem.Pages.ReportSystem
 {
@@ -27,30 +29,49 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
             var isAdmin = User.IsInRole(Constants.ManagerRole) || User.IsInRole(Constants.DirectorRole);
             var userGroup = _userManager.GetUserAsync(User).Result?.Group;
 
-            if (isAdmin || userGroup == null)
+            if (isAdmin)
             {
                 GroupSelectList = new SelectList(_context.Groups.OrderBy(m => m.Name), "Name", "Name");
-                InstrumentSelectList = new SelectList(_context.Instruments.OrderBy(m => m.ID), "ID", "ID");
             }
             else
             {
                 GroupSelectList = new SelectList(_context.Groups.Where(m => m.Name == userGroup), "Name", "Name", userGroup);
-                InstrumentSelectList = new SelectList(_context.Instruments.Where(m => m.Group == userGroup).OrderBy(m => m.ID), "ID", "ID");
             }
         }
 
         /// <summary>
-        /// 根据设备编号返回该设备的检测项目    
+        /// 根据项目组返回设备编号
         /// </summary>
-        /// <param name="instrumentId">设备编号</param>
-        /// <returns>JSON</returns>
-        public JsonResult OnGetProjectFilter(string instrumentId)
+        /// <param name="groupName">项目组名</param>
+        /// <returns></returns>
+        public JsonResult OnGetInstrumentFilter(string groupName)
         {
-            return new JsonResult(_context.Instruments.Find(instrumentId).Projects.Split(", "));
+            var Result = new JsonResult(from m in _context.Instruments
+                                        where (m.Group == groupName)
+                                        select m.ID);
+            return Result;
+        }
+
+        /// <summary>
+        /// 根据项目组返回检测项目    
+        /// </summary>
+        /// <param name="groupName">项目组名</param>
+        /// <returns>JSON</returns>
+        public JsonResult OnGetProjectFilter(string groupName)
+        {
+            var Result = new JsonResult(from project in _context.Projects
+                                        .AsNoTracking()
+                                        .Include(project => project.Group)
+                                        where (project.Group.Name == groupName)
+                                        select project.Name);
+            return Result;
         }
 
         [BindProperty]
         public SearchForm Search { get; set; }
+
+        [BindProperty]
+        public IList<UsageRecord> UsageRecords { get; set; }
 
         public SelectList InstrumentSelectList { get; set; }
 
@@ -64,6 +85,32 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
             {
                 return Page();
             }
+
+            UsageRecords = (from record in _context.UsageRecords
+                            .Include(record => record.Instrument)
+                            .Include(record => record.Project)
+                            where record.Instrument.Group == Search.Group
+                            where record.InstrumentId == Search.Instrument
+                            where record.ProjectName == Search.Project
+                            where record.BeginTimeOfTest > Search.BeginTime
+                            where record.BeginTimeOfTest < Search.EndTime
+                            select record)
+                            .ToList();
+
+            var isAdmin = User.IsInRole(Constants.ManagerRole) || User.IsInRole(Constants.DirectorRole);
+            var userGroup = _userManager.GetUserAsync(User).Result?.Group;
+
+            if (isAdmin)
+            {
+                GroupSelectList = new SelectList(_context.Groups.OrderBy(m => m.Name), "Name", "Name");
+            }
+            else
+            {
+                GroupSelectList = new SelectList(_context.Groups.Where(m => m.Name == userGroup), "Name", "Name", userGroup);
+            }
+
+            InstrumentSelectList = new SelectList(_context.Instruments.Where(m => m.Group == Search.Group), "ID", "ID");
+            ProjectSelectList = new SelectList(_context.Instruments.Find(Search.Instrument).Projects.Split(", ").ToList());
 
             return Page();
         }
@@ -84,12 +131,12 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
             [Display(Name = "项目组")]
             public string Group { get; set; }
 
-            [Required(ErrorMessage = "请选择一个设备编号")]
-            [Display(Name = "设备编号")]
+            [Required(ErrorMessage = "请选择一个仪器编号")]
+            [Display(Name = "仪器编号")]
             public string Instrument { get; set; }
 
-            [Required(ErrorMessage = "请选择一个检测项目")]
-            [Display(Name = "检测项目")]
+            [Required(ErrorMessage = "请选择一个项目名称")]
+            [Display(Name = "项目名称")]
             public string Project { get; set; }
         }
     }

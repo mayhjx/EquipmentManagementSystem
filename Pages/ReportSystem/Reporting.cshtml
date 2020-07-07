@@ -10,46 +10,112 @@
     </div>
     <div class="card-body">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-12">
                 <form method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="align-items-center">
-                        <div class="col-auto my-1">
+                    <div class="form-row">
+                        <div class="col-auto my-0">
                             <label asp-for="Search.BeginTime" class="control-label"></label>
                             <span asp-validation-for="Search.BeginTime" class="text-danger"></span>
-                            <input asp-for="Search.BeginTime" class="form-control" />
+                            <input asp-for="Search.BeginTime" class="form-control" value="@DateTime.Now.AddDays(-7).ToShortDateString()" />
                         </div>
-                        <div class="col-auto my-1">
+                        <div class="col-auto my-0">
                             <label asp-for="Search.EndTime" class="control-label"></label>
                             <span asp-validation-for="Search.EndTime" class="text-danger"></span>
-                            <input asp-for="Search.EndTime" class="form-control" />
+                            <input asp-for="Search.EndTime" class="form-control" value="@DateTime.Now.ToShortDateString()" />
                         </div>
-                        <div class="col-auto my-1">
+                        <div class="col-auto my-0">
                             <label asp-for="Search.Group" class="control-label"></label>
                             <span asp-validation-for="Search.Group" class="text-danger"></span>
-                            <select asp-for="Search.Group" asp-items="@Model.GroupSelectList" class="custom-select select2">
+                            <select id="group" asp-for="Search.Group" asp-items="@Model.GroupSelectList" class="custom-select">
                                 <option value="">---请选择---</option>
                             </select>
                         </div>
-                        <div class="col-auto my-1">
+                        <div class="col-auto my-0">
                             <label asp-for="Search.Instrument" class="control-label"></label>
                             <span asp-validation-for="Search.Instrument" class="text-danger"></span>
-                            <select id="instrumentId" asp-for="Search.Instrument" asp-items="@Model.InstrumentSelectList" class="custom-select select2">
-                                <option value="">---请选择---</option>
+                            <select id="instrument" asp-for="Search.Instrument" asp-items="@Model.InstrumentSelectList" class="custom-select">
                             </select>
                         </div>
-                        <div class="col-auto my-1">
+                        <div class="col-auto my-0">
                             <label asp-for="Search.Project" class="control-label"></label>
                             <span asp-validation-for="Search.Project" class="text-danger"></span>
-                            <select id="project" asp-for="Search.Project" asp-items="@Model.ProjectSelectList" class="custom-select select2">
-                                <option value="">---请选择---</option>
+                            <select id="project" asp-for="Search.Project" asp-items="@Model.ProjectSelectList" class="custom-select">
                             </select>
                         </div>
-                        <div class="col-auto my-1">
-                            <input type="submit" class="btn btn-primary mt-4" value="导出" />
+                        <div class="col-auto pt-2">
+                            <input type="submit" class="btn btn-primary mt-4" value="查询" />
                         </div>
+
                     </div>
                 </form>
+
+                <hr />
+
+                @if (Model.UsageRecords != null)
+                {
+                    <table id="export" class="table table-hover text-nowrap">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.UsageRecords[0].InstrumentId)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.UsageRecords[0].ProjectName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.UsageRecords[0].BeginTimeOfMaintain)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.UsageRecords[0].BeginTimeOfTest)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.UsageRecords[0].EndTime)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.UsageRecords[0].SampleNumber)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.UsageRecords[0].TestNumber)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.UsageRecords[0].Creator)
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.UsageRecords)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.InstrumentId)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ProjectName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.BeginTimeOfMaintain)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.BeginTimeOfTest)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.EndTime)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SampleNumber)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TestNumber)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Creator)
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
             </div>
         </div>
     </div>
@@ -57,26 +123,86 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <link href="~/plugins/datatables-buttons/css/buttons.bootstrap4.min.css" rel="stylesheet" />
+    <script src="~/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/plugins/jszip/jszip.min.js"></script>
+    <script src="~/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="~/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+
     <script>
-        $(function () {
-            // 根据选择的仪器编号动态生成检测项目
-            $("select#instrumentId").on("change", function () {
-                var instrumentId = $(this).val();
+        $(document).ready(function () {
+            $("select#group").on("change", function () {
+                var group = $(this).val();
+                $("select#instrument").removeAttr("disabled");
+                $("select#instrument").empty();
+                //$("select#instrument").append("<option value=''>---请选择---</option>");
+                $.getJSON(`?handler=InstrumentFilter&groupName=${group}`, (data) => {
+                    $.each(data, function (i, item) {
+                        if (item.length > 0) {
+                            $("select#instrument").append(`<option value='${item}'>${item}</option>`);
+                        }
+                        else {
+                            $("select#instrument").empty();
+                            $("select#instrument").append("<option value=''>无可选设备</option>");
+                        }
+                    });
+                });
+            });
+
+             // 根据选择的仪器编号动态生成检测项目
+            $("select#group").on("change", function () {
+                var group = $(this).val();
                 $("select#project").removeAttr("disabled");
                 $("select#project").empty();
-                $("select#project").append("<option value=''>---请选择---</option>");
-                $.getJSON(`?handler=ProjectFilter&instrumentId=${instrumentId}`, (data) => {
+                //$("select#project").append("<option value=''>---请选择---</option>");
+                $.getJSON(`?handler=ProjectFilter&groupName=${group}`, (data) => {
                     $.each(data, function (i, item) {
                         if (item.length > 0) {
                             $("select#project").append(`<option value='${item}'>${item}</option>`);
                         }
                         else {
                             $("select#project").empty();
-                            $("select#project").append("<option value=''>该设备未设置检测项目</option>");
+                            $("select#project").append("<option value=''>无可选设备项目</option>");
                         }
                     });
                 });
             });
+
+            var Export = $('#export').DataTable({
+                //dom: 'Bfrtip',
+                lengthChange: false,
+                language: {
+                    "emptyTable": "没有数据", //没有数据时要显示的字符串
+                    "info": "当前 _START_ 条到 _END_ 条 共 _TOTAL_ 条",//左下角的信息，变量可以自定义，到官网详细查看
+                    "infoEmpty": "无记录",//当没有数据时，左下角的信息
+                    "infoFiltered": "(从 _MAX_ 条记录过滤)",//当表格过滤的时候，将此字符串附加到主要信息
+                    "infoPostFix": "",//在摘要信息后继续追加的字符串
+                    "thousands": ",",//千分位分隔符
+                    "lengthMenu": "每页 _MENU_ 条记录",//用来描述分页长度选项的字符串
+                    "loadingRecords": "加载中...",//用来描述数据在加载中等待的提示字符串 - 当异步读取数据的时候显示
+                    "processing": "处理中...",//用来描述加载进度的字符串
+                    "search": "搜索：",//用来描述搜索输入框的字符串
+                    "zeroRecords": "没有找到",//当没有搜索到结果时，显示
+                    "paginate": {
+                        "first": "首页",
+                        "previous": "上一页",
+                        "next": "下一页",
+                        "last": "尾页"
+                    }
+                },
+
+                buttons: [{
+                    extend: 'excel',
+                    text: '导出',
+                    filename: "使用登记_@(Model.Search?.BeginTime.ToShortDateString())-@(Model.Search?.EndTime.ToShortDateString()).xlsx"
+                }]
+            });
+
+            Export.buttons().container()
+                .appendTo('#export_wrapper .col-md-6:eq(0)');
         });
     </script>
 }
