@@ -4,6 +4,7 @@ TODO:
 日志
 后台管理
 忘记密码
+使用登记导出功能
 
 Done:
 EquipmentContext中仪器和故障部分分开
@@ -18,7 +19,7 @@ EquipmentContext中仪器和故障部分分开
 权限分级
 修改密码
 导入用户信息
-使用登记模块
+
 
 Tips:
 Git bash: $git reset --soft HEAD~1
