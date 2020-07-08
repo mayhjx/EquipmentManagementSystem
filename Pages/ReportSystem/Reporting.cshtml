@@ -135,33 +135,34 @@
     <script>
         $(document).ready(function () {
             // 初始化
-            var group = $("select#group").val();
-            $("select#instrument").removeAttr("disabled");
-            $("select#project").removeAttr("disabled");
-            $("select#instrument").empty();
-            $("select#project").empty();
-            $.getJSON(`?handler=InstrumentFilter&groupName=${group}`, (data) => {
-                $.each(data, function (i, item) {
-                    if (item.length > 0) {
-                        $("select#instrument").append(`<option value='${item}'>${item}</option>`);
-                    }
-                    else {
-                        $("select#instrument").empty();
-                        $("select#instrument").append("<option value=''>无可选设备</option>");
-                    }
-                });
-            });
-            $.getJSON(`?handler=ProjectFilter&groupName=${group}`, (data) => {
-                $.each(data, function (i, item) {
-                    if (item.length > 0) {
-                        $("select#project").append(`<option value='${item}'>${item}</option>`);
-                    }
-                    else {
-                        $("select#project").empty();
-                        $("select#project").append("<option value=''>无可选设备项目</option>");
-                    }
-                });
-            });
+            //var group = $("select#group").val();
+
+            //$("select#instrument").removeAttr("disabled");
+            //$("select#project").removeAttr("disabled");
+            //$("select#instrument").empty();
+            //$("select#project").empty();
+            //$.getJSON(`?handler=InstrumentFilter&groupName=${group}`, (data) => {
+            //    $.each(data, function (i, item) {
+            //        if (item.length > 0) {
+            //            $("select#instrument").append(`<option value='${item}'>${item}</option>`);
+            //        }
+            //        else {
+            //            $("select#instrument").empty();
+            //            $("select#instrument").append("<option value=''>无可选设备</option>");
+            //        }
+            //    });
+            //});
+            //$.getJSON(`?handler=ProjectFilter&groupName=${group}`, (data) => {
+            //    $.each(data, function (i, item) {
+            //        if (item.length > 0) {
+            //            $("select#project").append(`<option value='${item}'>${item}</option>`);
+            //        }
+            //        else {
+            //            $("select#project").empty();
+            //            $("select#project").append("<option value=''>无可选设备项目</option>");
+            //        }
+            //    });
+            //});
 
              // 动态生成设备编号
             $("select#group").on("change", function () {

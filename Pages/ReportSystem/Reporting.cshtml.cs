@@ -35,7 +35,7 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
             }
             else
             {
-                GroupSelectList = new SelectList(_context.Groups.Where(m => m.Name == userGroup), "Name", "Name", userGroup);
+                GroupSelectList = new SelectList(_context.Groups.Where(m => m.Name == userGroup), "Name", "Name");
             }
         }
 
@@ -102,15 +102,15 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
 
             if (isAdmin)
             {
-                GroupSelectList = new SelectList(_context.Groups.OrderBy(m => m.Name), "Name", "Name");
+                GroupSelectList = new SelectList(_context.Groups.OrderBy(m => m.Name), "Name", "Name", Search.Group);
             }
             else
             {
-                GroupSelectList = new SelectList(_context.Groups.Where(m => m.Name == userGroup), "Name", "Name");
+                GroupSelectList = new SelectList(_context.Groups.Where(m => m.Name == userGroup), "Name", "Name", Search.Group);
             }
 
-            InstrumentSelectList = new SelectList(_context.Instruments.Where(m => m.Group == Search.Group), "ID", "ID");
-            ProjectSelectList = new SelectList(_context.Instruments.Find(Search.Instrument).Projects.Split(", ").ToList());
+            InstrumentSelectList = new SelectList(_context.Instruments.Where(m => m.Group == Search.Group), "ID", "ID", Search.Instrument);
+            ProjectSelectList = new SelectList(_context.Projects.AsNoTracking().Include(m => m.Group).Where(m => m.Group.Name == Search.Group), "Name", "Name", Search.Project);
 
             return Page();
         }
