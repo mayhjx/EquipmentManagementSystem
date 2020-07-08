@@ -106,7 +106,7 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
             }
             else
             {
-                GroupSelectList = new SelectList(_context.Groups.Where(m => m.Name == userGroup), "Name", "Name", userGroup);
+                GroupSelectList = new SelectList(_context.Groups.Where(m => m.Name == userGroup), "Name", "Name");
             }
 
             InstrumentSelectList = new SelectList(_context.Instruments.Where(m => m.Group == Search.Group), "ID", "ID");

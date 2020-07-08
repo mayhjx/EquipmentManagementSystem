@@ -134,6 +134,36 @@
 
     <script>
         $(document).ready(function () {
+            // 初始化
+            var group = $("select#group").val();
+            $("select#instrument").removeAttr("disabled");
+            $("select#project").removeAttr("disabled");
+            $("select#instrument").empty();
+            $("select#project").empty();
+            $.getJSON(`?handler=InstrumentFilter&groupName=${group}`, (data) => {
+                $.each(data, function (i, item) {
+                    if (item.length > 0) {
+                        $("select#instrument").append(`<option value='${item}'>${item}</option>`);
+                    }
+                    else {
+                        $("select#instrument").empty();
+                        $("select#instrument").append("<option value=''>无可选设备</option>");
+                    }
+                });
+            });
+            $.getJSON(`?handler=ProjectFilter&groupName=${group}`, (data) => {
+                $.each(data, function (i, item) {
+                    if (item.length > 0) {
+                        $("select#project").append(`<option value='${item}'>${item}</option>`);
+                    }
+                    else {
+                        $("select#project").empty();
+                        $("select#project").append("<option value=''>无可选设备项目</option>");
+                    }
+                });
+            });
+
+             // 动态生成设备编号
             $("select#group").on("change", function () {
                 var group = $(this).val();
                 $("select#instrument").removeAttr("disabled");
@@ -152,7 +182,7 @@
                 });
             });
 
-             // 根据选择的仪器编号动态生成检测项目
+             // 动态生成检测项目
             $("select#group").on("change", function () {
                 var group = $(this).val();
                 $("select#project").removeAttr("disabled");
@@ -172,8 +202,7 @@
             });
 
             var Export = $('#export').DataTable({
-                //dom: 'Bfrtip',
-                lengthChange: false,
+                dom: 'frtipB',
                 language: {
                     "emptyTable": "没有数据", //没有数据时要显示的字符串
                     "info": "当前 _START_ 条到 _END_ 条 共 _TOTAL_ 条",//左下角的信息，变量可以自定义，到官网详细查看
@@ -197,12 +226,12 @@
                 buttons: [{
                     extend: 'excel',
                     text: '导出',
-                    filename: "使用登记_@(Model.Search?.BeginTime.ToShortDateString())-@(Model.Search?.EndTime.ToShortDateString()).xlsx"
+                    filename: "使用登记_@(Model.Search?.BeginTime.ToShortDateString())_@(Model.Search?.EndTime.ToShortDateString())"
                 }]
             });
 
-            Export.buttons().container()
-                .appendTo('#export_wrapper .col-md-6:eq(0)');
+            //Export.buttons().container()
+            //    .appendTo('#export_wrapper');
         });
     </script>
 }
