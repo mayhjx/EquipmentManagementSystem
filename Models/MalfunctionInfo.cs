@@ -13,12 +13,12 @@ namespace EquipmentManagementSystem.Models
         public int MalfunctionWorkOrderID { get; set; }
         public MalfunctionWorkOrder MalfunctionWorkOrder { get; set; }
 
-        [Display(Name = "开始时间")]
+        [Display(Name = "故障开始时间")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
         [DataType(DataType.DateTime)]
         public DateTime BeginTime { get; set; }
 
-        [Display(Name = "发现时间")]
+        [Display(Name = "故障发现时间")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
         [DataType(DataType.DateTime)]
         public DateTime FoundedTime { get; set; }
