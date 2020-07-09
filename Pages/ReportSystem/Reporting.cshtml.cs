@@ -47,10 +47,10 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
         /// </summary>
         /// <param name="groupName">项目组名</param>
         /// <returns></returns>
-        public JsonResult OnGetInstrumentFilter(string groupName)
+        public JsonResult OnGetInstrumentFilter(string projectName)
         {
             var Result = new JsonResult(from m in _context.Instruments
-                                        where (m.Group == groupName)
+                                        where m.Projects.IndexOf(projectName) >= 0
                                         select m.ID);
             return Result;
         }
