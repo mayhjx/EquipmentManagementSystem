@@ -36,9 +36,10 @@ namespace EquipmentManagementSystem.Models
 
     public enum InvestigationResult
     {
-        [Display(Name = "可内部维修")]
-        Internal,
         [Display(Name = "需外部维修")]
-        External
+        External,
+        [Display(Name = "可内部维修")]
+        Internal
+
     }
 }
