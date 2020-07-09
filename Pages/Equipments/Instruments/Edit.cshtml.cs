@@ -1,4 +1,6 @@
-﻿using EquipmentManagementSystem.Authorization;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using EquipmentManagementSystem.Authorization;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -6,8 +8,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Instruments
 {
@@ -37,7 +37,7 @@ namespace EquipmentManagementSystem.Pages.Instruments
             }
 
             GroupProject = new SelectList(_context.Groups, "Name", "Name", Instrument.Group);
-            ProjectsSelectList = new MultiSelectList(_context.Projects, "Name", "Name", Instrument.Projects.Split(", ").AsEnumerable());
+            ProjectsSelectList = new MultiSelectList(_context.Projects, "Name", "Name", Instrument.Projects?.Split(", ").AsEnumerable());
 
             return Page();
         }
