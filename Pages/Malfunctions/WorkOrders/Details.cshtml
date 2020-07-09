@@ -127,7 +127,7 @@
                                 </div>
                             </div>
                         </div>
-                        @if (!InfomationIsComfirm)
+                        @if (!IsCompleted && !InfomationIsComfirm)
                         {
                             <div class="card-footer">
                                 @if (CanEdit.Succeeded)
@@ -310,7 +310,7 @@
                                             @Html.DisplayFor(model => model.MalfunctionWorkOrder.RepairRequest.Engineer)
                                         </dd>
                                     </dl>
-                                    @if (!RepairRequestIsComfirm)
+                                    @if (!IsCompleted && !RepairRequestIsComfirm)
                                     {
                                         <div class="card-footer">
                                             @if (CanEdit.Succeeded)
@@ -389,102 +389,105 @@
                     </div>
                 </div>
 
-                @{
+                @if (InternalServiceable || RepairRequestIsComfirm)
+                {
                     string maintianedClass = Model.MalfunctionWorkOrder.Maintenance.BeginTime != null ? "primary" : "";
-                }
-                <div class="time-label">
-                    <span class="bg-@maintianedClass">@Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.BeginTime)</span>
-                </div>
-                <div>
-                    <i class="fas fa-wrench bg-@maintianedClass"></i>
-                    <div class="card card-outline card-@maintianedClass collapsable timeline-item">
-                        <div class="card-header">
-                            维修过程
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                    <i class="fas fa-minus fa-lg"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-xl-6 col-12">
-                                    <dl class="row">
-                                        <dt class="col-xl-4 col-sm-4">
-                                            维修时长
-                                        </dt>
-                                        <dd class="col-xl-8 col-sm-8">
-                                            @{
-                                                var MaintenanceInterval = (Model.MalfunctionWorkOrder.Maintenance.EndTime - Model.MalfunctionWorkOrder.Maintenance.BeginTime).GetValueOrDefault();
-                                                var MaintenanceDays = MaintenanceInterval.Days > 0 ? $"{MaintenanceInterval.Days} 天" : "";
-                                                var MaintenanceMinutes = MaintenanceInterval.Minutes > 0 ? $"{MaintenanceInterval.Minutes} 分钟" : "";
-                                                var MaintenanceHours = MaintenanceInterval.Hours > 0 || (MaintenanceDays != "" && MaintenanceMinutes != "") ? $"{MaintenanceInterval.Hours} 小时" : "";
-                                                @:  @MaintenanceDays @MaintenanceHours @MaintenanceMinutes
-                                            }
-                                        </dd>
-                                        <dt class="col-xl-4 col-sm-4">
-                                            @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.Repairer)
-                                        </dt>
-                                        <dd class="col-xl-8 col-sm-8">
-                                            @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.Repairer)
-                                        </dd>
-                                        <dt class="col-xl-4 col-sm-4">
-                                            @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.Solution)
-                                        </dt>
-                                        <dd class="col-xl-8 col-sm-8">
-                                            @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.Solution)
-                                        </dd>
-                                        <dt class="col-xl-4 col-sm-4">
-                                            @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.IsCritical)
-                                        </dt>
-                                        <dd class="col-xl-8 col-sm-8">
-                                            @{
-                                                if (MaintainIsCritical)
-                                                {
-                                                    <span class="badge badge-primary text-sm badge-btn">是</span>
-                                                }
-                                                else
-                                                {
-                                                    <span class="badge badge-secondary text-sm badge-btn">否</span>
 
-                                                }
-                                            }
-                                        </dd>
-                                    </dl>
+                    <div class="time-label">
+                        <span class="bg-@maintianedClass">@Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.BeginTime)</span>
+                    </div>
+                    <div>
+                        <i class="fas fa-wrench bg-@maintianedClass"></i>
+                        <div class="card card-outline card-@maintianedClass collapsable timeline-item">
+                            <div class="card-header">
+                                维修过程
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus fa-lg"></i>
+                                    </button>
                                 </div>
-                                <div class="col-xl-6 col-12">
-                                    <dl class="row">
-                                        @if (!InternalServiceable)
-                                        {
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-xl-6 col-12">
+                                        <dl class="row">
                                             <dt class="col-xl-4 col-sm-4">
-                                                @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.FileName)
+                                                维修时长
                                             </dt>
                                             <dd class="col-xl-8 col-sm-8">
-                                                <a asp-page="../Maintain/Edit" asp-page-handler="Download" asp-route-id="@Model.MalfunctionWorkOrder.Maintenance.ID">
-                                                    @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.FileName)
-                                                </a>
+                                                @{
+                                                    var MaintenanceInterval = (Model.MalfunctionWorkOrder.Maintenance.EndTime - Model.MalfunctionWorkOrder.Maintenance.BeginTime).GetValueOrDefault();
+                                                    var MaintenanceDays = MaintenanceInterval.Days > 0 ? $"{MaintenanceInterval.Days} 天" : "";
+                                                    var MaintenanceMinutes = MaintenanceInterval.Minutes > 0 ? $"{MaintenanceInterval.Minutes} 分钟" : "";
+                                                    var MaintenanceHours = MaintenanceInterval.Hours > 0 || (MaintenanceDays != "" && MaintenanceMinutes != "") ? $"{MaintenanceInterval.Hours} 小时" : "";
+                                                    @:  @MaintenanceDays @MaintenanceHours @MaintenanceMinutes
+                                                }
                                             </dd>
-                                        }
-                                        <dt class="col-xl-4 col-sm-4">
-                                            @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.Remark)
-                                        </dt>
-                                        <dd class="col-xl-8 col-sm-8">
-                                            @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.Remark)
-                                        </dd>
-                                    </dl>
+                                            <dt class="col-xl-4 col-sm-4">
+                                                @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.Repairer)
+                                            </dt>
+                                            <dd class="col-xl-8 col-sm-8">
+                                                @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.Repairer)
+                                            </dd>
+                                            <dt class="col-xl-4 col-sm-4">
+                                                @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.Solution)
+                                            </dt>
+                                            <dd class="col-xl-8 col-sm-8">
+                                                @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.Solution)
+                                            </dd>
+                                            <dt class="col-xl-4 col-sm-4">
+                                                @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.IsCritical)
+                                            </dt>
+                                            <dd class="col-xl-8 col-sm-8">
+                                                @{
+                                                    if (MaintainIsCritical)
+                                                    {
+                                                        <span class="badge badge-primary text-sm badge-btn">是</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="badge badge-secondary text-sm badge-btn">否</span>
+
+                                                    }
+                                                }
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                    <div class="col-xl-6 col-12">
+                                        <dl class="row">
+                                            @if (!InternalServiceable)
+                                            {
+                                                <dt class="col-xl-4 col-sm-4">
+                                                    @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.FileName)
+                                                </dt>
+                                                <dd class="col-xl-8 col-sm-8">
+                                                    <a asp-page="../Maintain/Edit" asp-page-handler="Download" asp-route-id="@Model.MalfunctionWorkOrder.Maintenance.ID">
+                                                        @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.FileName)
+                                                    </a>
+                                                </dd>
+                                            }
+                                            <dt class="col-xl-4 col-sm-4">
+                                                @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.Remark)
+                                            </dt>
+                                            <dd class="col-xl-8 col-sm-8">
+                                                @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.Remark)
+                                            </dd>
+                                        </dl>
+                                    </div>
                                 </div>
                             </div>
+                            @if (!IsCompleted && CanEdit.Succeeded)
+                            {
+                                <div class="card-footer">
+                                    <a asp-page="../Maintain/Edit" asp-route-id="@Model.MalfunctionWorkOrder.Maintenance.ID" class="btn btn-outline-primary">
+                                        编辑
+                                    </a>
+                                </div>
+                            }
                         </div>
-                        @if (CanEdit.Succeeded)
-                        {
-                            <div class="card-footer">
-                                <a asp-page="../Maintain/Edit" asp-route-id="@Model.MalfunctionWorkOrder.Maintenance.ID" class="btn btn-outline-primary">
-                                    编辑
-                                </a>
-                            </div>
-                        }
                     </div>
-                </div>
+                }
+
                 @if (MaintainIsCritical)
                 {
                     string validatedClass = Model.MalfunctionWorkOrder.Validation.FinishedTime != null ? "info" : "";
