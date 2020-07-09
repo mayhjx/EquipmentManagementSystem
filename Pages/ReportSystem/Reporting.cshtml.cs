@@ -27,15 +27,17 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
         public void OnGet()
         {
             var isAdmin = User.IsInRole(Constants.ManagerRole) || User.IsInRole(Constants.DirectorRole);
-            var userGroup = _userManager.GetUserAsync(User).Result?.Group;
 
             if (isAdmin)
             {
-                GroupSelectList = new SelectList(_context.Groups.OrderBy(m => m.Name), "Name", "Name");
+                ProjectSelectList = new SelectList(_context.Projects.AsNoTracking(), "Name", "Name");
+                InstrumentSelectList = new SelectList(_context.Instruments.AsNoTracking(), "ID", "ID");
             }
             else
             {
-                GroupSelectList = new SelectList(_context.Groups.Where(m => m.Name == userGroup), "Name", "Name");
+                var userGroup = _userManager.GetUserAsync(User).Result?.Group;
+                ProjectSelectList = new SelectList(_context.Projects.AsNoTracking().Include(m => m.Group).Where(m => m.Group.Name == userGroup), "Name", "Name");
+                InstrumentSelectList = new SelectList(_context.Instruments.AsNoTracking().Where(m => m.Group == userGroup), "ID", "ID");
             }
 
             // 初始化时间范围
@@ -78,7 +80,7 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
 
         public SelectList InstrumentSelectList { get; set; }
 
-        public SelectList GroupSelectList { get; set; }
+        //public SelectList GroupSelectList { get; set; }
 
         public SelectList ProjectSelectList { get; set; }
 
@@ -95,7 +97,6 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
                                 .AsNoTracking()
                                 .Include(record => record.Instrument)
                                 .Include(record => record.Project)
-                                where record.Instrument.Group == Search.Group
                                 where record.InstrumentId == Search.Instrument
                                 where record.ProjectName == Search.Project
                                 where record.BeginTimeOfTest >= Search.BeginTime
@@ -115,7 +116,6 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
                                         .Include(m => m.Maintenance)
                                         .Include(m => m.Validation)
                                         .Include(m => m.Instrument)
-                                         where record.Instrument.Group == Search.Group
                                          where record.InstrumentID == Search.Instrument
                                          where record.CreatedTime >= Search.BeginTime
                                          where record.CreatedTime < Search.EndTime.AddDays(1)
@@ -127,22 +127,22 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
 
             if (isAdmin)
             {
-                GroupSelectList = new SelectList(_context.Groups.OrderBy(m => m.Name), "Name", "Name", Search.Group);
+                ProjectSelectList = new SelectList(_context.Projects.AsNoTracking(), "Name", "Name", Search.Project);
+                InstrumentSelectList = new SelectList(_context.Instruments.AsNoTracking(), "ID", "ID", Search.Instrument);
             }
             else
             {
-                GroupSelectList = new SelectList(_context.Groups.Where(m => m.Name == Search.Group), "Name", "Name", Search.Group);
+                var userGroup = _userManager.GetUserAsync(User).Result?.Group;
+                ProjectSelectList = new SelectList(_context.Projects.AsNoTracking().Include(m => m.Group).Where(m => m.Group.Name == userGroup), "Name", "Name", Search.Project);
+                InstrumentSelectList = new SelectList(_context.Instruments.AsNoTracking().Where(m => m.Group == userGroup), "ID", "ID", Search.Instrument);
             }
-
-            InstrumentSelectList = new SelectList(_context.Instruments.Where(m => m.Group == Search.Group), "ID", "ID", Search.Instrument);
-            ProjectSelectList = new SelectList(_context.Projects.AsNoTracking().Include(m => m.Group).Where(m => m.Group.Name == Search.Group), "Name", "Name", Search.Project);
 
             return Page();
         }
 
         public class SearchForm
         {
-            [Required(ErrorMessage = "请输入类别")]
+            [Required(ErrorMessage = "请选择类别")]
             [Display(Name = "类别")]
             public Category Category { get; set; }
 
@@ -156,11 +156,11 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
             [DataType(DataType.Date)]
             public DateTime EndTime { get; set; } = DateTime.Now;
 
-            [Required(ErrorMessage = "请选择一个项目组")]
-            [Display(Name = "项目组")]
-            public string Group { get; set; }
+            //[Required(ErrorMessage = "请选择一个项目组")]
+            //[Display(Name = "项目组")]
+            //public string Group { get; set; }
 
-            [Required(ErrorMessage = "请选择一个仪器编号")]
+            [Required(ErrorMessage = "请选择仪器编号")]
             [Display(Name = "仪器编号")]
             public string Instrument { get; set; }
 

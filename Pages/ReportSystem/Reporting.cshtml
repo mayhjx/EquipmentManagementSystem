@@ -15,6 +15,12 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-row">
                         <div class="col-xl-auto col-sm-6 my-0">
+                            <label asp-for="Search.Category" class="control-label"></label>
+                            <span asp-validation-for="Search.Category" class="text-danger"></span>
+                            <select asp-for="Search.Category" class="custom-select" asp-items="@Html.GetEnumSelectList<EquipmentManagementSystem.Pages.ReportSystem.ReportingModel.Category>()">
+                            </select>
+                        </div>
+                        <div class="col-xl-auto col-sm-6 my-0">
                             <label asp-for="Search.BeginTime" class="control-label"></label>
                             <span asp-validation-for="Search.BeginTime" class="text-danger"></span>
                             <input asp-for="Search.BeginTime" class="form-control" />
@@ -24,44 +30,35 @@
                             <span asp-validation-for="Search.EndTime" class="text-danger"></span>
                             <input asp-for="Search.EndTime" class="form-control" />
                         </div>
+                        @*<div class="col-xl-auto col-sm-6 my-0">
+                                <label asp-for="Search.Group" class="control-label"></label>
+                                <span asp-validation-for="Search.Group" class="text-danger"></span>
+                                <select id="group" asp-for="Search.Group" asp-items="@Model.GroupSelectList" class="custom-select">
+                                    <option value="">---请选择---</option>
+                                </select>
+                            </div>*@
                         <div class="col-xl-auto col-sm-6 my-0">
-                            <label asp-for="Search.Group" class="control-label"></label>
-                            <span asp-validation-for="Search.Group" class="text-danger"></span>
-                            <select id="group" asp-for="Search.Group" asp-items="@Model.GroupSelectList" class="custom-select">
+                            <label asp-for="Search.Instrument" class="control-label"></label>
+                            <span asp-validation-for="Search.Instrument" class="text-danger"></span>
+                            <select id="instrument" asp-for="Search.Instrument" asp-items="@Model.InstrumentSelectList" class="custom-select select2">
                                 <option value="">---请选择---</option>
                             </select>
                         </div>
                         <div class="col-xl-auto col-sm-6 my-0">
                             <label asp-for="Search.Project" class="control-label"></label>
                             <span asp-validation-for="Search.Project" class="text-danger"></span>
-                            <select id="project" asp-for="Search.Project" asp-items="@Model.ProjectSelectList" class="custom-select">
+                            <select id="project" asp-for="Search.Project" asp-items="@Model.ProjectSelectList" class="custom-select select2">
                                 <option value="">---请选择---</option>
-                            </select>
-                        </div>
-                        <div class="col-xl-auto col-sm-6 my-0">
-                            <label asp-for="Search.Instrument" class="control-label"></label>
-                            <span asp-validation-for="Search.Instrument" class="text-danger"></span>
-                            <select id="instrument" asp-for="Search.Instrument" asp-items="@Model.InstrumentSelectList" class="custom-select">
-                                <option value="">---请选择---</option>
-                            </select>
-                        </div>
-                        <div class="col-xl-auto col-sm-6 my-0">
-                            <label asp-for="Search.Category" class="control-label"></label>
-                            <span asp-validation-for="Search.Category" class="text-danger"></span>
-                            <select asp-for="Search.Category" class="custom-select" asp-items="@Html.GetEnumSelectList<EquipmentManagementSystem.Pages.ReportSystem.ReportingModel.Category>()">
                             </select>
                         </div>
                         <div class="col-xl-auto col-sm-6 pt-2">
                             <input type="submit" class="btn btn-primary mt-4 btn-block" value="查询" />
                         </div>
-
                     </div>
                 </form>
 
                 <br />
                 <div class="table-responsive">
-
-
                     @if (Model.UsageRecords != null)
                     {
                     <table id="export" class="table table-hover text-nowrap">
@@ -230,42 +227,42 @@
     <script>
         $(document).ready(function () {
             // 动态生成检测项目
-            $("select#group").on("change", function () {
-                var group = $(this).val();
-                $("select#project").removeAttr("disabled");
-                $("select#project").empty();
-                $("select#project").append("<option value=''>---请选择---</option>");
-                $.getJSON(`?handler=ProjectFilter&groupName=${group}`, (data) => {
-                    $.each(data, function (i, item) {
-                        if (item.length > 0) {
-                            $("select#project").append(`<option value='${item}'>${item}</option>`);
-                        }
-                        else {
-                            $("select#project").empty();
-                            $("select#project").append("<option value=''>无可选设备项目</option>");
-                        }
-                    });
-                });
-            });
+            //$("select#group").on("change", function () {
+            //    var group = $(this).val();
+            //    $("select#project").removeAttr("disabled");
+            //    $("select#project").empty();
+            //    $("select#project").append("<option value=''>---请选择---</option>");
+            //    $.getJSON(`?handler=ProjectFilter&groupName=${group}`, (data) => {
+            //        $.each(data, function (i, item) {
+            //            if (item.length > 0) {
+            //                $("select#project").append(`<option value='${item}'>${item}</option>`);
+            //            }
+            //            else {
+            //                $("select#project").empty();
+            //                $("select#project").append("<option value=''>无可选设备项目</option>");
+            //            }
+            //        });
+            //    });
+            //});
 
-            // 动态生成设备编号
-            $("select#project").on("change", function () {
-                var project = $(this).val();
-                $("select#instrument").removeAttr("disabled");
-                $("select#instrument").empty();
-                $("select#instrument").append("<option value=''>---请选择---</option>");
-                $.getJSON(`?handler=InstrumentFilter&projectName=${project}`, (data) => {
-                    $.each(data, function (i, item) {
-                        if (item.length > 0) {
-                            $("select#instrument").append(`<option value='${item}'>${item}</option>`);
-                        }
-                        else {
-                            $("select#instrument").empty();
-                            $("select#instrument").append("<option value=''>无可选设备</option>");
-                        }
-                    });
-                });
-            });
+            //// 动态生成设备编号
+            //$("select#project").on("change", function () {
+            //    var project = $(this).val();
+            //    $("select#instrument").removeAttr("disabled");
+            //    $("select#instrument").empty();
+            //    $("select#instrument").append("<option value=''>---请选择---</option>");
+            //    $.getJSON(`?handler=InstrumentFilter&projectName=${project}`, (data) => {
+            //        $.each(data, function (i, item) {
+            //            if (item.length > 0) {
+            //                $("select#instrument").append(`<option value='${item}'>${item}</option>`);
+            //            }
+            //            else {
+            //                $("select#instrument").empty();
+            //                $("select#instrument").append("<option value=''>无可选设备</option>");
+            //            }
+            //        });
+            //    });
+            //});
 
             var Export = $('#export').DataTable({
                 dom: 'rtB',
@@ -301,7 +298,7 @@
             $("td.time").each(function (data) {
                 total += parseFloat($(this).text());
             });
-            $("td#total").text(total);
+            $("td#total").text(total.toFixed(1));
         });
     </script>
 }
