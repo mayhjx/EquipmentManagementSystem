@@ -167,11 +167,11 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Information
                 return new JsonResult("权限不足");
             }
 
-            if (MalfunctionInfo.Part == null ||
-                MalfunctionInfo.Reason == null)
-            {
-                return new JsonResult("请补充故障部位或可能原因");
-            }
+            //if (MalfunctionInfo.Part == null ||
+            //    MalfunctionInfo.Reason == null)
+            //{
+            //    return new JsonResult("请补充故障部位或可能原因");
+            //}
 
             MalfunctionInfo.IsConfirm = true;
 
