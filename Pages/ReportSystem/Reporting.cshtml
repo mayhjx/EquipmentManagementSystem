@@ -14,113 +14,206 @@
                 <form method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-row">
-                        <div class="col-auto my-0">
+                        <div class="col-xl-auto col-sm-6 my-0">
+                            <label asp-for="Search.Category" class="control-label"></label>
+                            <span asp-validation-for="Search.Category" class="text-danger"></span>
+                            <select asp-for="Search.Category" class="custom-select" asp-items="@Html.GetEnumSelectList<EquipmentManagementSystem.Pages.ReportSystem.ReportingModel.Category>()">
+                            </select>
+                        </div>
+                        <div class="col-xl-auto col-sm-6 my-0">
                             <label asp-for="Search.BeginTime" class="control-label"></label>
                             <span asp-validation-for="Search.BeginTime" class="text-danger"></span>
-                            <input asp-for="Search.BeginTime" class="form-control" value="@DateTime.Now.AddDays(-7).ToShortDateString()" />
+                            <input asp-for="Search.BeginTime" class="form-control" />
                         </div>
-                        <div class="col-auto my-0">
+                        <div class="col-xl-auto col-sm-6 my-0">
                             <label asp-for="Search.EndTime" class="control-label"></label>
                             <span asp-validation-for="Search.EndTime" class="text-danger"></span>
-                            <input asp-for="Search.EndTime" class="form-control" value="@DateTime.Now.ToShortDateString()" />
+                            <input asp-for="Search.EndTime" class="form-control" />
                         </div>
-                        <div class="col-auto my-0">
+                        <div class="col-xl-auto col-sm-6 my-0">
                             <label asp-for="Search.Group" class="control-label"></label>
                             <span asp-validation-for="Search.Group" class="text-danger"></span>
                             <select id="group" asp-for="Search.Group" asp-items="@Model.GroupSelectList" class="custom-select">
                                 <option value="">---请选择---</option>
                             </select>
                         </div>
-                        <div class="col-auto my-0">
+                        <div class="col-xl-auto col-sm-6 my-0">
                             <label asp-for="Search.Instrument" class="control-label"></label>
                             <span asp-validation-for="Search.Instrument" class="text-danger"></span>
                             <select id="instrument" asp-for="Search.Instrument" asp-items="@Model.InstrumentSelectList" class="custom-select">
                             </select>
                         </div>
-                        <div class="col-auto my-0">
+                        <div class="col-xl-auto col-sm-6 my-0">
                             <label asp-for="Search.Project" class="control-label"></label>
                             <span asp-validation-for="Search.Project" class="text-danger"></span>
                             <select id="project" asp-for="Search.Project" asp-items="@Model.ProjectSelectList" class="custom-select">
                             </select>
                         </div>
-                        <div class="col-auto pt-2">
-                            <input type="submit" class="btn btn-primary mt-4" value="查询" />
+                        <div class="col-xl-auto col-sm-6 pt-2">
+                            <input type="submit" class="btn btn-primary mt-4 btn-block" value="查询" />
                         </div>
 
                     </div>
                 </form>
 
-                <hr />
+                <br />
+                <div class="table-responsive">
 
-                @if (Model.UsageRecords != null)
-                {
-                    <table id="export" class="table table-hover text-nowrap">
-                        <thead>
-                            <tr>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].InstrumentId)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].ProjectName)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].BeginTimeOfMaintain)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].BeginTimeOfTest)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].EndTime)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].SampleNumber)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].TestNumber)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].Creator)
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model.UsageRecords)
-                            {
+
+                    @if (Model.UsageRecords != null)
+                    {
+                        <table id="export" class="table table-hover text-nowrap">
+                            <thead>
                                 <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.InstrumentId)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.ProjectName)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.BeginTimeOfMaintain)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.BeginTimeOfTest)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.EndTime)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.SampleNumber)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.TestNumber)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Creator)
-                                    </td>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageRecords[0].InstrumentId)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageRecords[0].ProjectName)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageRecords[0].BeginTimeOfMaintain)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageRecords[0].BeginTimeOfTest)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageRecords[0].EndTime)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageRecords[0].SampleNumber)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageRecords[0].TestNumber)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageRecords[0].Creator)
+                                    </th>
+                                    <th>维护时长(h)</th>
+                                    <th>检测时长(h)</th>
                                 </tr>
-                            }
-                        </tbody>
-                    </table>
-                }
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.UsageRecords)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.InstrumentId)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ProjectName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.BeginTimeOfMaintain)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.BeginTimeOfTest)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.EndTime)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.SampleNumber)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TestNumber)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Creator)
+                                        </td>
+                                        <td>@((item.BeginTimeOfTest - item.BeginTimeOfMaintain).GetValueOrDefault().TotalHours.ToString("f1"))</td>
+                                        <td class="time">@((item.EndTime - item.BeginTimeOfTest).GetValueOrDefault().TotalHours.ToString("f1"))</td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td class="text-bold">总时长(h)</td>
+                                    <td id="total" class="text-bold"></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    }
+
+                    @if (Model.MalfunctionWorkOrders != null)
+                    {
+                        <table id="export" class="table table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrders[0].InstrumentID)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrders[0].MalfunctionInfo.Part)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrders[0].MalfunctionInfo.Phenomenon)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrders[0].MalfunctionInfo.BeginTime)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrders[0].MalfunctionInfo.FoundedTime)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrders[0].RepairRequest.RequestTime)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrders[0].Maintenance.BeginTime)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrders[0].Validation.FinishedTime)
+                                    </th>
+                                    <th>维修耗时(h)</th>
+                                    <th>故障时长(h)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.MalfunctionWorkOrders)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.InstrumentID)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MalfunctionInfo.Part)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MalfunctionInfo.Phenomenon)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MalfunctionInfo.BeginTime)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MalfunctionInfo.FoundedTime)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.RepairRequest.RequestTime)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Maintenance.BeginTime)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Validation.FinishedTime)
+                                        </td>
+                                        <td>@((item.Maintenance.EndTime - item.Maintenance.BeginTime).GetValueOrDefault().TotalHours.ToString("f1"))</td>
+                                        <td class="time">@((item.Validation.FinishedTime - item.MalfunctionInfo.BeginTime).GetValueOrDefault().TotalHours.ToString("f1"))</td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td class="text-bold">总时长(h)</td>
+                                    <td id="total" class="text-bold"></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    }
+                </div>
             </div>
         </div>
     </div>
 </div>
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <link href="~/plugins/datatables-buttons/css/buttons.bootstrap4.min.css" rel="stylesheet" />
@@ -134,36 +227,6 @@
 
     <script>
         $(document).ready(function () {
-            // 初始化
-            //var group = $("select#group").val();
-
-            //$("select#instrument").removeAttr("disabled");
-            //$("select#project").removeAttr("disabled");
-            //$("select#instrument").empty();
-            //$("select#project").empty();
-            //$.getJSON(`?handler=InstrumentFilter&groupName=${group}`, (data) => {
-            //    $.each(data, function (i, item) {
-            //        if (item.length > 0) {
-            //            $("select#instrument").append(`<option value='${item}'>${item}</option>`);
-            //        }
-            //        else {
-            //            $("select#instrument").empty();
-            //            $("select#instrument").append("<option value=''>无可选设备</option>");
-            //        }
-            //    });
-            //});
-            //$.getJSON(`?handler=ProjectFilter&groupName=${group}`, (data) => {
-            //    $.each(data, function (i, item) {
-            //        if (item.length > 0) {
-            //            $("select#project").append(`<option value='${item}'>${item}</option>`);
-            //        }
-            //        else {
-            //            $("select#project").empty();
-            //            $("select#project").append("<option value=''>无可选设备项目</option>");
-            //        }
-            //    });
-            //});
-
              // 动态生成设备编号
             $("select#group").on("change", function () {
                 var group = $(this).val();
@@ -203,7 +266,7 @@
             });
 
             var Export = $('#export').DataTable({
-                dom: 'frtipB',
+                dom: 'rtB',
                 language: {
                     "emptyTable": "没有数据", //没有数据时要显示的字符串
                     "info": "当前 _START_ 条到 _END_ 条 共 _TOTAL_ 条",//左下角的信息，变量可以自定义，到官网详细查看
@@ -223,16 +286,20 @@
                         "last": "尾页"
                     }
                 },
-
                 buttons: [{
                     extend: 'excel',
                     text: '导出',
+                    footer: true,
                     filename: "使用登记_@(Model.Search?.BeginTime.ToShortDateString())_@(Model.Search?.EndTime.ToShortDateString())"
                 }]
             });
 
-            //Export.buttons().container()
-            //    .appendTo('#export_wrapper');
+            // 计算总时长
+            var total = 0;
+            $("td.time").each(function (data) {
+                total += parseFloat($(this).text());
+            });
+            $("td#total").text(total);
         });
     </script>
 }
