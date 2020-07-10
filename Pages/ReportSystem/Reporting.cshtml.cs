@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using EquipmentManagementSystem.Authorization;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Identity;
@@ -26,19 +25,22 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
 
         public void OnGet()
         {
-            var isAdmin = User.IsInRole(Constants.ManagerRole) || User.IsInRole(Constants.DirectorRole);
+            //ProjectSelectList = new SelectList(_context.Projects.AsNoTracking(), "Name", "Name");
+            InstrumentSelectList = new SelectList(_context.Instruments.AsNoTracking(), "ID", "ID");
 
-            if (isAdmin)
-            {
-                ProjectSelectList = new SelectList(_context.Projects.AsNoTracking(), "Name", "Name");
-                InstrumentSelectList = new SelectList(_context.Instruments.AsNoTracking(), "ID", "ID");
-            }
-            else
-            {
-                var userGroup = _userManager.GetUserAsync(User).Result?.Group;
-                ProjectSelectList = new SelectList(_context.Projects.AsNoTracking().Include(m => m.Group).Where(m => m.Group.Name == userGroup), "Name", "Name");
-                InstrumentSelectList = new SelectList(_context.Instruments.AsNoTracking().Where(m => m.Group == userGroup), "ID", "ID");
-            }
+            //var isAdmin = User.IsInRole(Constants.ManagerRole) || User.IsInRole(Constants.DirectorRole);
+
+            //if (isAdmin)
+            //{
+            //    ProjectSelectList = new SelectList(_context.Projects.AsNoTracking(), "Name", "Name");
+            //    InstrumentSelectList = new SelectList(_context.Instruments.AsNoTracking(), "ID", "ID");
+            //}
+            //else
+            //{
+            //    var userGroup = _userManager.GetUserAsync(User).Result?.Group;
+            //    ProjectSelectList = new SelectList(_context.Projects.AsNoTracking().Include(m => m.Group).Where(m => m.Group.Name == userGroup), "Name", "Name");
+            //    InstrumentSelectList = new SelectList(_context.Instruments.AsNoTracking().Where(m => m.Group == userGroup), "ID", "ID");
+            //}
 
             // 初始化时间范围
             Search = new SearchForm();
@@ -58,17 +60,13 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
         }
 
         /// <summary>
-        /// 根据项目组返回检测项目    
+        /// 根据设备编号返回检测项目    
         /// </summary>
-        /// <param name="groupName">项目组名</param>
-        /// <returns>JSON</returns>
-        public JsonResult OnGetProjectFilter(string groupName)
+        /// <param name="instrumentId">设备编号</param>
+        /// <returns></returns>
+        public JsonResult OnGetProjectFilter(string instrumentId)
         {
-            var Result = new JsonResult(from project in _context.Projects
-                                        .AsNoTracking()
-                                        .Include(project => project.Group)
-                                        where (project.Group.Name == groupName)
-                                        select project.Name);
+            var Result = new JsonResult(_context.Instruments.FindAsync(instrumentId).Result.Projects.Split(", ").ToList());
             return Result;
         }
 
@@ -123,19 +121,22 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
                                         .ToList();
             }
 
-            var isAdmin = User.IsInRole(Constants.ManagerRole) || User.IsInRole(Constants.DirectorRole);
+            InstrumentSelectList = new SelectList(_context.Instruments.AsNoTracking(), "ID", "ID", Search.Instrument);
+            ProjectSelectList = new SelectList(_context.Instruments.FindAsync(Search.Instrument).Result.Projects.Split(", "), Search.Project);
 
-            if (isAdmin)
-            {
-                ProjectSelectList = new SelectList(_context.Projects.AsNoTracking(), "Name", "Name", Search.Project);
-                InstrumentSelectList = new SelectList(_context.Instruments.AsNoTracking(), "ID", "ID", Search.Instrument);
-            }
-            else
-            {
-                var userGroup = _userManager.GetUserAsync(User).Result?.Group;
-                ProjectSelectList = new SelectList(_context.Projects.AsNoTracking().Include(m => m.Group).Where(m => m.Group.Name == userGroup), "Name", "Name", Search.Project);
-                InstrumentSelectList = new SelectList(_context.Instruments.AsNoTracking().Where(m => m.Group == userGroup), "ID", "ID", Search.Instrument);
-            }
+            //var isAdmin = User.IsInRole(Constants.ManagerRole) || User.IsInRole(Constants.DirectorRole);
+
+            //if (isAdmin)
+            //{
+            //    ProjectSelectList = new SelectList(_context.Projects.AsNoTracking(), "Name", "Name", Search.Project);
+            //    InstrumentSelectList = new SelectList(_context.Instruments.AsNoTracking(), "ID", "ID", Search.Instrument);
+            //}
+            //else
+            //{
+            //    var userGroup = _userManager.GetUserAsync(User).Result?.Group;
+            //    ProjectSelectList = new SelectList(_context.Projects.AsNoTracking().Include(m => m.Group).Where(m => m.Group.Name == userGroup), "Name", "Name", Search.Project);
+            //    InstrumentSelectList = new SelectList(_context.Instruments.AsNoTracking().Where(m => m.Group == userGroup), "ID", "ID", Search.Instrument);
+            //}
 
             return Page();
         }
@@ -160,8 +161,8 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
             //[Display(Name = "项目组")]
             //public string Group { get; set; }
 
-            [Required(ErrorMessage = "请选择仪器编号")]
-            [Display(Name = "仪器编号")]
+            [Required(ErrorMessage = "请选择设备编号")]
+            [Display(Name = "设备编号")]
             public string Instrument { get; set; }
 
             [Display(Name = "项目名称")]
