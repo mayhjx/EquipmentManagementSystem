@@ -148,7 +148,7 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>
         $(function () {
-            // 根据选择的仪器编号动态生成检测项目
+            // 根据选择的设备编号动态生成检测项目
             $("#instrumentId").on("change", function () {
                 var instrumentId = $(this).val();
                 $("#project").removeAttr("disabled");

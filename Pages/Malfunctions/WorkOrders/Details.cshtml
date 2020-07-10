@@ -43,16 +43,16 @@
 
 <div class="card">
     <div class="card-header">
-        <div class="card-title float-right">
+        <div class="card-title">
             <ul class="list-group list-group-horizontal-sm">
+                <li class="list-group-item border-0">
+                    当前进度：@Html.DisplayFor(mdoel => Model.MalfunctionWorkOrder.Progress)
+                </li>
                 <li class="list-group-item  border-0">
                     建单人：@Model.MalfunctionWorkOrder.Creator
                 </li>
                 <li class="list-group-item border-0">
                     建单时间：@Model.MalfunctionWorkOrder.CreatedTime
-                </li>
-                <li class="list-group-item border-0">
-                    当前进度：@Html.DisplayFor(mdoel => Model.MalfunctionWorkOrder.Progress)
                 </li>
             </ul>
         </div>
@@ -96,11 +96,11 @@
                             发现故障
                             @if (!InfomationIsComfirm)
                             {
-                            <span class="badge badge-secondary" style="margin-left: 5px;">待设备负责人确认</span>
+                                <span class="badge badge-secondary" style="margin-left: 5px;">待设备负责人确认</span>
                             }
                             else
                             {
-                            <span class="badge badge-success" style="margin-left: 5px;">设备负责人已确认</span>
+                                <span class="badge badge-success" style="margin-left: 5px;">设备负责人已确认</span>
                             }
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -146,40 +146,40 @@
                         </div>
                         @if (!IsCompleted && !InfomationIsComfirm)
                         {
-                        <div class="card-footer">
-                            @if (CanEdit.Succeeded)
+                            <div class="card-footer">
+                                @if (CanEdit.Succeeded)
                                 {
-                            <a asp-page="../Information/Edit" asp-route-id="@Model.MalfunctionWorkOrder.MalfunctionInfo.ID" class="btn btn-outline-primary">
-                                编辑
-                            </a>
+                                    <a asp-page="../Information/Edit" asp-route-id="@Model.MalfunctionWorkOrder.MalfunctionInfo.ID" class="btn btn-outline-primary">
+                                        编辑
+                                    </a>
                                 }
-                            @if (CanComfirmInformation.Succeeded)
+                                @if (CanComfirmInformation.Succeeded)
                                 {
                                     // 确认故障信息
-                            <div class="float-right">
-                                <input type="button" value="确认" class="btn btn-outline-primary btn-block" data-toggle="modal" data-target="#modal-ComfirmInformation" />
-                            </div>
-                            <div class="modal fade" id="modal-ComfirmInformation">
-                                <div class="modal-dialog modal-sm">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title">提示</h4>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">×</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p>是否确认故障信息？</p>
-                                        </div>
-                                        <div class="modal-footer justify-content-between">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                            <button id="comfirm-information" type="button" class="btn btn-primary">确认</button>
+                                    <div class="float-right">
+                                        <input type="button" value="确认" class="btn btn-outline-primary btn-block" data-toggle="modal" data-target="#modal-ComfirmInformation" />
+                                    </div>
+                                    <div class="modal fade" id="modal-ComfirmInformation">
+                                        <div class="modal-dialog modal-sm">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">提示</h4>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">×</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>是否确认故障信息？</p>
+                                                </div>
+                                                <div class="modal-footer justify-content-between">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                                    <button id="comfirm-information" type="button" class="btn btn-primary">确认</button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
                                 }
-                        </div>
+                            </div>
                         }
                     </div>
                 </div>
@@ -205,11 +205,11 @@
                                         维修申请
                                         @if (!InternalServiceable && !RepairRequestIsComfirm)
                                         {
-                                        <span class="badge badge-secondary" style="margin-left: 5px;">待批准</span>
+                                            <span class="badge badge-secondary" style="margin-left: 5px;">待批准</span>
                                         }
                                         else if (!InternalServiceable && RepairRequestIsComfirm)
                                         {
-                                        <span class="badge badge-success" style="margin-left: 5px;">已批准</span>
+                                            <span class="badge badge-success" style="margin-left: 5px;">已批准</span>
                                         }
                                     </a>
                                 </li>
@@ -286,11 +286,11 @@
                                                                 if (!InternalServiceable)
                                                                 {
                                                                     // 需外部维修
-                                                                <span class="badge badge-warning text-sm badge-btn">是</span>
+                                                                    <span class="badge badge-warning text-sm badge-btn">是</span>
                                                                 }
                                                                 else
                                                                 {
-                                                                <span class="badge badge-secondary text-sm badge-btn">否</span>
+                                                                    <span class="badge badge-secondary text-sm badge-btn">否</span>
                                                                 }
                                                             }
                                                         </dd>
@@ -302,11 +302,11 @@
                                     </div>
                                     @if (!IsCompleted && CanEdit.Succeeded)
                                     {
-                                    <div class="card-footer">
-                                        <a asp-page="../Investigate/Edit" asp-route-id="@Model.MalfunctionWorkOrder.Investigation.ID" class="btn btn-outline-primary">
-                                            编辑
-                                        </a>
-                                    </div>
+                                        <div class="card-footer">
+                                            <a asp-page="../Investigate/Edit" asp-route-id="@Model.MalfunctionWorkOrder.Investigation.ID" class="btn btn-outline-primary">
+                                                编辑
+                                            </a>
+                                        </div>
                                     }
                                 </div>
                                 <div class="tab-pane fade" id="custom-tabs-one-profile" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab">
@@ -338,37 +338,37 @@
                                     </dl>
                                     @if (!IsCompleted && !RepairRequestIsComfirm && CanEdit.Succeeded)
                                     {
-                                    <div class="card-footer">
-                                        <a asp-page="../RepairRequests/Edit" asp-route-id="@Model.MalfunctionWorkOrder.RepairRequest.ID" class="btn btn-outline-primary">
-                                            编辑
-                                        </a>
-                                        @if (CanApprove.Succeeded)
+                                        <div class="card-footer">
+                                            <a asp-page="../RepairRequests/Edit" asp-route-id="@Model.MalfunctionWorkOrder.RepairRequest.ID" class="btn btn-outline-primary">
+                                                编辑
+                                            </a>
+                                            @if (CanApprove.Succeeded)
                                             {
                                                 // 批准维修申请
-                                        <div class="float-right">
-                                            <input type="button" value="批准" class="btn btn-outline-primary btn-block" data-toggle="modal" data-target="#modal-ComfirmRepairRequest" />
-                                        </div>
-                                        <div class="modal fade" id="modal-ComfirmRepairRequest">
-                                            <div class="modal-dialog modal-sm">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h4 class="modal-title">提示</h4>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">×</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p>是否批准维修申请？</p>
-                                                    </div>
-                                                    <div class="modal-footer justify-content-between">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">否</button>
-                                                        <button id="comfirm-repairRequest" type="button" class="btn btn-primary">是</button>
+                                                <div class="float-right">
+                                                    <input type="button" value="批准" class="btn btn-outline-primary btn-block" data-toggle="modal" data-target="#modal-ComfirmRepairRequest" />
+                                                </div>
+                                                <div class="modal fade" id="modal-ComfirmRepairRequest">
+                                                    <div class="modal-dialog modal-sm">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">提示</h4>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">×</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p>是否批准维修申请？</p>
+                                                            </div>
+                                                            <div class="modal-footer justify-content-between">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">否</button>
+                                                                <button id="comfirm-repairRequest" type="button" class="btn btn-primary">是</button>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
                                             }
-                                    </div>
+                                        </div>
                                     }
                                 </div>
                                 <div class="tab-pane fade" id="custom-tabs-one-messages" role="tabpanel" aria-labelledby="custom-tabs-one-messages-tab">
@@ -400,11 +400,11 @@
                                     </dl>
                                     @if (!IsCompleted && CanEdit.Succeeded)
                                     {
-                                    <div class="card-footer">
-                                        <a asp-page="../AccessoriesOrders/Edit" asp-route-id="@Model.MalfunctionWorkOrder.AccessoriesOrder.ID" class="btn btn-outline-primary">
-                                            编辑
-                                        </a>
-                                    </div>
+                                        <div class="card-footer">
+                                            <a asp-page="../AccessoriesOrders/Edit" asp-route-id="@Model.MalfunctionWorkOrder.AccessoriesOrder.ID" class="btn btn-outline-primary">
+                                                编辑
+                                            </a>
+                                        </div>
                                     }
                                 </div>
                             </div>
@@ -416,198 +416,198 @@
                 {
                     string maintianedClass = Model.MalfunctionWorkOrder.Maintenance.BeginTime != null ? "primary" : "";
 
-                <div class="time-label">
-                    <span class="bg-@maintianedClass">@Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.BeginTime)</span>
-                </div>
-                <div>
-                    <i class="fas fa-wrench bg-@maintianedClass"></i>
-                    <div class="card card-outline card-@maintianedClass collapsable timeline-item">
-                        <div class="card-header">
-                            维修过程
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                    <i class="fas fa-minus fa-lg"></i>
-                                </button>
+                    <div class="time-label">
+                        <span class="bg-@maintianedClass">@Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.BeginTime)</span>
+                    </div>
+                    <div>
+                        <i class="fas fa-wrench bg-@maintianedClass"></i>
+                        <div class="card card-outline card-@maintianedClass collapsable timeline-item">
+                            <div class="card-header">
+                                维修过程
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus fa-lg"></i>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-xl-6 col-12">
-                                    <dl class="row">
-                                        <dt class="col-xl-4 col-sm-4">
-                                            维修时长
-                                        </dt>
-                                        <dd class="col-xl-8 col-sm-8">
-                                            @{
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-xl-6 col-12">
+                                        <dl class="row">
+                                            <dt class="col-xl-4 col-sm-4">
+                                                维修时长
+                                            </dt>
+                                            <dd class="col-xl-8 col-sm-8">
+                                                @{
                                                     var MaintenanceInterval = (Model.MalfunctionWorkOrder.Maintenance.EndTime - Model.MalfunctionWorkOrder.Maintenance.BeginTime).GetValueOrDefault();
                                                     var MaintenanceDays = MaintenanceInterval.Days > 0 ? $"{MaintenanceInterval.Days} 天" : "";
                                                     var MaintenanceMinutes = MaintenanceInterval.Minutes > 0 ? $"{MaintenanceInterval.Minutes} 分钟" : "";
                                                     var MaintenanceHours = MaintenanceInterval.Hours > 0 || (MaintenanceDays != "" && MaintenanceMinutes != "") ? $"{MaintenanceInterval.Hours} 小时" : "";
-                                                @:  @MaintenanceDays @MaintenanceHours @MaintenanceMinutes
-                                            }
-                                        </dd>
-                                        <dt class="col-xl-4 col-sm-4">
-                                            @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.Repairer)
-                                        </dt>
-                                        <dd class="col-xl-8 col-sm-8">
-                                            @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.Repairer)
-                                        </dd>
-                                        <dt class="col-xl-4 col-sm-4">
-                                            @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.Solution)
-                                        </dt>
-                                        <dd class="col-xl-8 col-sm-8">
-                                            @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.Solution)
-                                        </dd>
-                                        <dt class="col-xl-4 col-sm-4">
-                                            @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.IsCritical)
-                                        </dt>
-                                        <dd class="col-xl-8 col-sm-8">
-                                            @{
+                                                    @:  @MaintenanceDays @MaintenanceHours @MaintenanceMinutes
+                                                }
+                                            </dd>
+                                            <dt class="col-xl-4 col-sm-4">
+                                                @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.Repairer)
+                                            </dt>
+                                            <dd class="col-xl-8 col-sm-8">
+                                                @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.Repairer)
+                                            </dd>
+                                            <dt class="col-xl-4 col-sm-4">
+                                                @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.Solution)
+                                            </dt>
+                                            <dd class="col-xl-8 col-sm-8">
+                                                @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.Solution)
+                                            </dd>
+                                            <dt class="col-xl-4 col-sm-4">
+                                                @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.IsCritical)
+                                            </dt>
+                                            <dd class="col-xl-8 col-sm-8">
+                                                @{
                                                     if (MaintainIsCritical)
                                                     {
-                                                <span class="badge badge-primary text-sm badge-btn">是</span>
+                                                        <span class="badge badge-primary text-sm badge-btn">是</span>
                                                     }
                                                     else
                                                     {
-                                                <span class="badge badge-secondary text-sm badge-btn">否</span>
+                                                        <span class="badge badge-secondary text-sm badge-btn">否</span>
 
                                                     }
-                                            }
-                                        </dd>
-                                    </dl>
-                                </div>
-                                <div class="col-xl-6 col-12">
-                                    <dl class="row">
-                                        @if (!InternalServiceable)
+                                                }
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                    <div class="col-xl-6 col-12">
+                                        <dl class="row">
+                                            @if (!InternalServiceable)
                                             {
-                                        <dt class="col-xl-4 col-sm-4">
-                                            @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.FileName)
-                                        </dt>
-                                        <dd class="col-xl-8 col-sm-8">
-                                            <a asp-page="../Maintain/Edit" asp-page-handler="Download" asp-route-id="@Model.MalfunctionWorkOrder.Maintenance.ID">
-                                                @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.FileName)
-                                            </a>
-                                        </dd>
+                                                <dt class="col-xl-4 col-sm-4">
+                                                    @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.FileName)
+                                                </dt>
+                                                <dd class="col-xl-8 col-sm-8">
+                                                    <a asp-page="../Maintain/Edit" asp-page-handler="Download" asp-route-id="@Model.MalfunctionWorkOrder.Maintenance.ID">
+                                                        @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.FileName)
+                                                    </a>
+                                                </dd>
                                             }
-                                        <dt class="col-xl-4 col-sm-4">
-                                            @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.Remark)
-                                        </dt>
-                                        <dd class="col-xl-8 col-sm-8">
-                                            @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.Remark)
-                                        </dd>
-                                    </dl>
+                                            <dt class="col-xl-4 col-sm-4">
+                                                @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.Remark)
+                                            </dt>
+                                            <dd class="col-xl-8 col-sm-8">
+                                                @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.Remark)
+                                            </dd>
+                                        </dl>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        @if (!IsCompleted && CanEdit.Succeeded)
+                            @if (!IsCompleted && CanEdit.Succeeded)
                             {
-                        <div class="card-footer">
-                            <a asp-page="../Maintain/Edit" asp-route-id="@Model.MalfunctionWorkOrder.Maintenance.ID" class="btn btn-outline-primary">
-                                编辑
-                            </a>
-                        </div>
+                                <div class="card-footer">
+                                    <a asp-page="../Maintain/Edit" asp-route-id="@Model.MalfunctionWorkOrder.Maintenance.ID" class="btn btn-outline-primary">
+                                        编辑
+                                    </a>
+                                </div>
                             }
+                        </div>
                     </div>
-                </div>
                 }
 
                 @if (MaintainIsCritical)
                 {
                     string validatedClass = Model.MalfunctionWorkOrder.Validation.FinishedTime != null ? "info" : "";
-                <div class="time-label">
-                    <span class="bg-@validatedClass">@Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.FinishedTime)</span>
-                </div>
-                <div>
-                    <i class="fas fa-chart-bar bg-@validatedClass"></i>
-                    <div class="card card-outline card-@validatedClass collapsable timeline-item">
-                        <div class="card-header">
-                            性能验证
-                            @if (!ValidationIsComfirm)
+                    <div class="time-label">
+                        <span class="bg-@validatedClass">@Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.FinishedTime)</span>
+                    </div>
+                    <div>
+                        <i class="fas fa-chart-bar bg-@validatedClass"></i>
+                        <div class="card card-outline card-@validatedClass collapsable timeline-item">
+                            <div class="card-header">
+                                性能验证
+                                @if (!ValidationIsComfirm)
                                 {
-                            <span class="badge badge-secondary" style="margin-left: 5px;">未批准</span>
+                                    <span class="badge badge-secondary" style="margin-left: 5px;">未批准</span>
                                 }
                                 else
                                 {
-                            <span class="badge badge-success" style="margin-left: 5px;">已批准</span>
+                                    <span class="badge badge-success" style="margin-left: 5px;">已批准</span>
                                 }
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                    <i class="fas fa-minus fa-lg"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <dl class="row">
-                                <dt class="col-xl-2 col-sm-4">
-                                    @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.PerformanceReportFileName)
-                                </dt>
-                                <dd class="col-xl-10 col-sm-8">
-                                    <a asp-page="../Validate/Edit" asp-page-handler="DownloadPerformanceReportFile" asp-route-id="@Model.MalfunctionWorkOrder.Validation.ID">
-                                        @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.PerformanceReportFileName)
-                                    </a>
-                                </dd>
-                                <dt class="col-xl-2 col-sm-4">
-                                    @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.Summary)
-                                </dt>
-                                <dd class="col-xl-10 col-sm-8">
-                                    @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.Summary)
-                                </dd>
-                                <dt class="col-xl-2 col-sm-4">
-                                    @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.AttachmentName)
-                                </dt>
-                                <dd class="col-xl-10 col-sm-8">
-                                    <a asp-page="../Validate/Edit" asp-page-handler="DownloadAttachment" asp-route-id="@Model.MalfunctionWorkOrder.Validation.ID">
-                                        @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.AttachmentName)
-                                    </a>
-                                </dd>
-                            </dl>
-                        </div>
-                        <div class="card-footer">
-                            @if (!ValidationIsComfirm && CanEdit.Succeeded)
-                                {
-                            <a asp-page="../Validate/Edit" asp-route-id="@Model.MalfunctionWorkOrder.Validation.ID" class="btn btn-outline-primary">
-                                编辑
-                            </a>
-                                }
-                            @if (!ValidationIsComfirm && CanApprove.Succeeded)
-                                {
-                                    // 确认性能验证
-                            <div class="float-right">
-                                <input type="button" value="批准" class="btn btn-outline-primary btn-block" data-toggle="modal" data-target="#modal-ComfirmValidation" />
-                            </div>
-                            <div class="modal fade" id="modal-ComfirmValidation">
-                                <div class="modal-dialog modal-sm">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title">提示</h4>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">×</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p>是否批准性能验证报告？</p>
-                                        </div>
-                                        <div class="modal-footer justify-content-between">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">否</button>
-                                            <button id="comfirm-validation" type="button" class="btn btn-primary">是</button>
-                                        </div>
-                                    </div>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus fa-lg"></i>
+                                    </button>
                                 </div>
                             </div>
+                            <div class="card-body">
+                                <dl class="row">
+                                    <dt class="col-xl-2 col-sm-4">
+                                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.PerformanceReportFileName)
+                                    </dt>
+                                    <dd class="col-xl-10 col-sm-8">
+                                        <a asp-page="../Validate/Edit" asp-page-handler="DownloadPerformanceReportFile" asp-route-id="@Model.MalfunctionWorkOrder.Validation.ID">
+                                            @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.PerformanceReportFileName)
+                                        </a>
+                                    </dd>
+                                    <dt class="col-xl-2 col-sm-4">
+                                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.Summary)
+                                    </dt>
+                                    <dd class="col-xl-10 col-sm-8">
+                                        @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.Summary)
+                                    </dd>
+                                    <dt class="col-xl-2 col-sm-4">
+                                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Validation.AttachmentName)
+                                    </dt>
+                                    <dd class="col-xl-10 col-sm-8">
+                                        <a asp-page="../Validate/Edit" asp-page-handler="DownloadAttachment" asp-route-id="@Model.MalfunctionWorkOrder.Validation.ID">
+                                            @Html.DisplayFor(model => model.MalfunctionWorkOrder.Validation.AttachmentName)
+                                        </a>
+                                    </dd>
+                                </dl>
+                            </div>
+                            <div class="card-footer">
+                                @if (!ValidationIsComfirm && CanEdit.Succeeded)
+                                {
+                                    <a asp-page="../Validate/Edit" asp-route-id="@Model.MalfunctionWorkOrder.Validation.ID" class="btn btn-outline-primary">
+                                        编辑
+                                    </a>
                                 }
+                                @if (!ValidationIsComfirm && CanApprove.Succeeded)
+                                {
+                                    // 确认性能验证
+                                    <div class="float-right">
+                                        <input type="button" value="批准" class="btn btn-outline-primary btn-block" data-toggle="modal" data-target="#modal-ComfirmValidation" />
+                                    </div>
+                                    <div class="modal fade" id="modal-ComfirmValidation">
+                                        <div class="modal-dialog modal-sm">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">提示</h4>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">×</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>是否批准性能验证报告？</p>
+                                                </div>
+                                                <div class="modal-footer justify-content-between">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">否</button>
+                                                    <button id="comfirm-validation" type="button" class="btn btn-primary">是</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
                         </div>
                     </div>
-                </div>
                 }
                 <!-- The last icon means the story is complete -->
                 <div>
                     @if (IsComfirmAll)
                     {
-                    <i class="fas fa-check bg-success" data-toggle="modal" data-target="#modal-completeWorkOrder" title="完成工单"></i>
+                        <i class="fas fa-check bg-success" data-toggle="modal" data-target="#modal-completeWorkOrder" title="完成工单"></i>
                     }
                     else
                     {
-                    <i class="fas fa-check bg-secondary"></i>
+                        <i class="fas fa-check bg-secondary"></i>
                     }
                 </div>
             </div>
@@ -618,71 +618,71 @@
                 <div>
                     @if (IsCompleted)
                     {
-                    <a asp-page="./Done">
-                        <input type="button" class="btn btn-default" value="返回" style="margin-right: 5px;">
-                    </a>
-                    <button onclick="javascript:window.print()" type="button" class="btn btn-outline-primary float-right" style="margin-right: 5px;">
-                        <i class="fas fa-download"></i> 生成 PDF
-                    </button>
+                        <a asp-page="./Done">
+                            <input type="button" class="btn btn-default" value="返回" style="margin-right: 5px;">
+                        </a>
+                        <button onclick="javascript:window.print()" type="button" class="btn btn-outline-primary float-right" style="margin-right: 5px;">
+                            <i class="fas fa-download"></i> 生成 PDF
+                        </button>
                     }
                     else
                     {
-                    <a asp-page="./Doing">
-                        <input type="button" class="btn btn-default" value="返回" style="margin-right: 5px;">
-                    </a>
+                        <a asp-page="./Doing">
+                            <input type="button" class="btn btn-default" value="返回" style="margin-right: 5px;">
+                        </a>
                     }
 
                     @if (IsComfirmAll && !IsCompleted && CanEdit.Succeeded)
                     {
-                    @Html.AntiForgeryToken();
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-completeWorkOrder">
-                        完成工单
-                    </button>
-                    <div class="modal fade" id="modal-completeWorkOrder">
-                        <div class="modal-dialog modal-sm">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">提示</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">×</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>确认完成工单？</p>
-                                </div>
-                                <div class="modal-footer justify-content-between">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                    <button id="complete" type="button" class="btn btn-primary">确认</button>
+                        @Html.AntiForgeryToken();
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-completeWorkOrder">
+                            完成工单
+                        </button>
+                        <div class="modal fade" id="modal-completeWorkOrder">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">提示</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>确认完成工单？</p>
+                                    </div>
+                                    <div class="modal-footer justify-content-between">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                        <button id="complete" type="button" class="btn btn-primary">确认</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     }
                     @if (!IsCompleted && CanEdit.Succeeded)
                     {
-                    <button type="button" class="btn btn-outline-danger  float-right" data-toggle="modal" data-target="#modal-deleteWorkOrder">
-                        删除
-                    </button>
-                    <form method="post"></form>
-                    <div class="modal fade" id="modal-deleteWorkOrder">
-                        <div class="modal-dialog modal-sm">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">警告</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">×</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>确认删除工单？</p>
-                                </div>
-                                <div class="modal-footer justify-content-between">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                    <button id="delete-workOrder" type="button" class="btn btn-danger">确认</button>
+                        <button type="button" class="btn btn-outline-danger  float-right" data-toggle="modal" data-target="#modal-deleteWorkOrder">
+                            删除
+                        </button>
+                        <form method="post"></form>
+                        <div class="modal fade" id="modal-deleteWorkOrder">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">警告</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>确认删除工单？</p>
+                                    </div>
+                                    <div class="modal-footer justify-content-between">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                        <button id="delete-workOrder" type="button" class="btn btn-danger">确认</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     }
                 </div>
             </div>

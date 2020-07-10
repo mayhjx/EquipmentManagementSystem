@@ -6,7 +6,7 @@ namespace EquipmentManagementSystem.Models
     {
         public int ID { get; set; }
 
-        [Display(Name = "仪器编号")]
+        [Display(Name = "设备编号")]
         public string InstrumentID { get; set; }
         public Instrument Instrument { get; set; }
 

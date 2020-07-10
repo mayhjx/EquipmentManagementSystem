@@ -10,7 +10,7 @@ namespace EquipmentManagementSystem.Models
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Display(Name = "编号")]
         [Required]
-        [RegularExpression(@"^[A-Z]+-[A-Z]+[0-9]+$", ErrorMessage = "请按“字母-字母数字”（例：FXS-YZ01）的格式输入仪器编号")]
+        [RegularExpression(@"^[A-Z]+-[A-Z]+[0-9]+$", ErrorMessage = "请按“字母-字母数字”（例：FXS-YZ01）的格式输入设备编号")]
         public string ID { get; set; }
 
         [Required]

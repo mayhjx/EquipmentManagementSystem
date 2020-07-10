@@ -12,7 +12,7 @@ namespace EquipmentManagementSystem.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime CreatedTime { get; set; }
 
-        [Display(Name = "仪器编号")]
+        [Display(Name = "设备编号")]
         public string InstrumentId { get; set; }
         public Instrument Instrument { get; set; }
 

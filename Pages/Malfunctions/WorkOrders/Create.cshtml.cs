@@ -1,12 +1,12 @@
-﻿using EquipmentManagementSystem.Authorization;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using EquipmentManagementSystem.Authorization;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
 {
@@ -27,12 +27,12 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
 
             if (isAdmin)
             {
-                // 获取所有仪器编号
+                // 获取所有设备编号
                 InstrumentSelectList = new SelectList(_context.Set<Instrument>().OrderBy(m => m.ID), "ID", "ID", id);
             }
             else
             {
-                // 获取技术员或设备负责人所属项目组的仪器编号
+                // 获取技术员或设备负责人所属项目组的设备编号
                 var userGroup = _userManager.GetUserAsync(User).Result.Group;
                 InstrumentSelectList = new SelectList(_context.Set<Instrument>()
                                                                 .Where(m => m.Group == userGroup)
