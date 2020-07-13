@@ -94,9 +94,9 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
                 UsageRecords = (from record in _context.UsageRecords
                                 .AsNoTracking()
                                 .Include(record => record.Instrument)
-                                .Include(record => record.Project)
+                                .Include(record => record.ProjectName)
                                 where record.InstrumentId == Search.Instrument
-                                where record.ProjectName == Search.Project
+                                //where record.ProjectName == Search.Project
                                 where record.BeginTimeOfTest >= Search.BeginTime
                                 where record.BeginTimeOfTest < Search.EndTime.AddDays(1)
                                 select record)
