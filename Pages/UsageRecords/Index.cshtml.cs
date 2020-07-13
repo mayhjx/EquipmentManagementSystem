@@ -27,7 +27,7 @@ namespace EquipmentManagementSystem.Pages.UsageRecords
         {
             var usageRecord = from record in _context.UsageRecords
                               .AsNoTracking()
-                              .Include(i => i.Instrument)
+                              .Include(record => record.Instrument)
                               select record;
 
             var isAuthorized = User.IsInRole(Constants.DirectorRole) ||
@@ -37,10 +37,19 @@ namespace EquipmentManagementSystem.Pages.UsageRecords
             if (User.Identity.IsAuthenticated)
             {
                 var currentUserGroup = (await _userManager.GetUserAsync(User)).Group;
+                var projectsOfcurrentUserGroup = await _context.Projects
+                                                                .AsNoTracking()
+                                                                .Include(p => p.Group)
+                                                                .Where(p => p.Group.Name == currentUserGroup)
+                                                                .Select(p => p.Name)
+                                                                .ToListAsync();
+
                 if (!isAuthorized)
                 {
-                    // 显示当前用户所属项目组的使用登记
-                    usageRecord = usageRecord.Where(record => record.Instrument.Group == currentUserGroup);
+                    // 显示当前用户所属项目组的使用登记s
+                    usageRecord = from record in usageRecord
+                                  where projectsOfcurrentUserGroup.Contains(record.ProjectName)
+                                  select record;
                 }
             }
 

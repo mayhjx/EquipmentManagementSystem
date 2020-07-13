@@ -19,34 +19,20 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="UsageRecord.Id" />
                     <div class="form-group">
-                        <label asp-for="UsageRecord.InstrumentId" class="control-label"></label>
-                        <input asp-for="UsageRecord.InstrumentId" class="form-control" readonly>
-                        <span asp-validation-for="UsageRecord.InstrumentId" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
                         <label asp-for="UsageRecord.ProjectName" class="control-label"></label>
                         <input asp-for="UsageRecord.ProjectName" class="form-control" readonly>
                         <span asp-validation-for="UsageRecord.ProjectName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="UsageRecord.InstrumentId" class="control-label"></label>
+                        <input asp-for="UsageRecord.InstrumentId" class="form-control" readonly>
+                        <span asp-validation-for="UsageRecord.InstrumentId" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="UsageRecord.BeginTimeOfMaintain" class="control-label"></label>
                         <input asp-for="UsageRecord.BeginTimeOfMaintain" class="form-control" />
                         <span asp-validation-for="UsageRecord.BeginTimeOfMaintain" class="text-danger"></span>
                     </div>
-
-                    @*<div class="form-group">
-                            <label asp-for="UsageRecord.ColumnPressure" class="control-label"></label>
-                            <div class="input-group">
-                                <input asp-for="UsageRecord.ColumnPressure" class="form-control" />
-                                <div class="input-group-append">
-                                    <select asp-for="UsageRecord.PressureUnit" class="custom-select">
-                                        <option value="MPa">MPa</option>
-                                        <option value="Psi">Psi</option>
-                                        <option value="Bar">Bar</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>*@
                     @if (HasSystemOne)
                     {
                         <div class="form-group">

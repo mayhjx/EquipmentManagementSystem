@@ -24,6 +24,7 @@ namespace EquipmentManagementSystem.Pages.UsageRecords
         public async Task<IActionResult> OnGetAsync(int id)
         {
             UsageRecord = await _context.UsageRecords
+                                .AsNoTracking()
                                 .Include(m => m.Instrument)
                                 .FirstOrDefaultAsync(m => m.Id == id);
 
