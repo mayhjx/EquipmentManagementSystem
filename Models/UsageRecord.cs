@@ -17,9 +17,7 @@ namespace EquipmentManagementSystem.Models
         public Instrument Instrument { get; set; }
 
         [Display(Name = "项目名称")]
-        [StringLength(50)]
         public string ProjectName { get; set; }
-        public Project Project { get; set; }
 
         [Display(Name = "维护开始时间")]
         [DataType(DataType.DateTime)]
