@@ -5,6 +5,10 @@ TODO:
 后台管理
 忘记密码
 使用登记导出功能
+使用MySQL数据库
+修改UsageRecord授权模块
+附件保存到物理磁盘，数据库仅保存路径！
+
 
 Done:
 EquipmentContext中仪器和故障部分分开
