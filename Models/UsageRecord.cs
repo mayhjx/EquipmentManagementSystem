@@ -64,7 +64,7 @@ namespace EquipmentManagementSystem.Models
         [Display(Name = "BLANK信号")]
         public string BlankSignal { get; set; }
 
-        [Display(Name = "Test单位")]
+        [Display(Name = "Test信号")]
         public string TestSignal { get; set; }
 
         [Display(Name = "进样结束时间")]
