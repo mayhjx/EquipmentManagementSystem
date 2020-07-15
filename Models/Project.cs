@@ -23,5 +23,13 @@ namespace EquipmentManagementSystem.Models
         [Display(Name = "色谱柱类型")]
         [StringLength(100)]
         public string ColumnType { get; set; }
+
+        [Display(Name = "流动相/载气")]
+        [StringLength(50)]
+        public string Carrier { get; set; }
+
+        [Display(Name = "检测器")]
+        [StringLength(20)]
+        public string Detector { get; set; }
     }
 }
