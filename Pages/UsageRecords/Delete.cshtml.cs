@@ -26,7 +26,8 @@ namespace EquipmentManagementSystem.Pages.UsageRecords
         {
             UsageRecord = await _context.UsageRecords
                                 .AsNoTracking()
-                                .Include(m => m.Instrument)
+                                .Include(m => m.Project)
+                                    .ThenInclude(p => p.Group)
                                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (UsageRecord == null)
@@ -53,7 +54,8 @@ namespace EquipmentManagementSystem.Pages.UsageRecords
         {
             UsageRecord = await _context.UsageRecords
                                 .AsNoTracking()
-                                .Include(m => m.Instrument)
+                                .Include(m => m.Project)
+                                    .ThenInclude(p => p.Group)
                                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (UsageRecord == null)

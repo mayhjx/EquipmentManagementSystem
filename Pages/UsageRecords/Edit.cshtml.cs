@@ -25,7 +25,8 @@ namespace EquipmentManagementSystem.Pages.UsageRecords
         {
             UsageRecord = await _context.UsageRecords
                                 .AsNoTracking()
-                                .Include(m => m.Instrument)
+                                .Include(m => m.Project)
+                                    .ThenInclude(p => p.Group)
                                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (UsageRecord == null)
@@ -51,7 +52,8 @@ namespace EquipmentManagementSystem.Pages.UsageRecords
             }
 
             var UsageRecordToUpdate = await _context.UsageRecords
-                                            .Include(m => m.Instrument)
+                                            .Include(m => m.Project)
+                                                .ThenInclude(p => p.Group)
                                             .FirstOrDefaultAsync(m => m.Id == id);
 
             if (UsageRecordToUpdate == null)
@@ -72,7 +74,9 @@ namespace EquipmentManagementSystem.Pages.UsageRecords
                 i => i.BeginTimeOfMaintain, i => i.BeginTimeOfTest,
                 i => i.ColumnNumber, i => i.ColumnPressure, i => i.PressureUnit,
                 i => i.ColumnTwoNumber, i => i.ColumnTwoPressure,
-                i => i.SampleNumber, i => i.TestNumber, i => i.EndTime, i => i.Remark))
+                i => i.SampleNumber, i => i.TestNumber, i => i.VacuumDegree,
+                i => i.VacuumDegreeUnit, i => i.BlankSignal, i => i.TestSignal,
+                i => i.EndTime, i => i.Remark))
             {
                 await _context.SaveChangesAsync();
                 return RedirectToPage("./Index");

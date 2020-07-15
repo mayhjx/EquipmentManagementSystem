@@ -27,7 +27,8 @@ namespace EquipmentManagementSystem.Pages.UsageRecords
         {
             var usageRecord = from record in _context.UsageRecords
                               .AsNoTracking()
-                              .Include(record => record.Instrument)
+                              .Include(record => record.Project)
+                                .ThenInclude(p => p.Group)
                               select record;
 
             var isAuthorized = User.IsInRole(Constants.DirectorRole) ||
@@ -46,7 +47,7 @@ namespace EquipmentManagementSystem.Pages.UsageRecords
 
                 if (!isAuthorized)
                 {
-                    // 显示当前用户所属项目组的使用登记s
+                    // 显示当前用户所属项目组的使用登记
                     usageRecord = from record in usageRecord
                                   where projectsOfcurrentUserGroup.Contains(record.ProjectName)
                                   select record;

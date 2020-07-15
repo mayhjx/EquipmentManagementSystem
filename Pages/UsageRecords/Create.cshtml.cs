@@ -60,6 +60,7 @@ namespace EquipmentManagementSystem.Pages.UsageRecords
             }
 
             UsageRecord.Creator = _userManager.GetUserAsync(User).Result.Name;
+            UsageRecord.ProjectId = _context.Projects.FirstOrDefaultAsync(p => p.Name == UsageRecord.ProjectName).Result.Id;
 
             var isAuthorized = await _authorizationService.AuthorizeAsync(User, UsageRecord, Operations.Create);
 
