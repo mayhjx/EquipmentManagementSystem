@@ -28,6 +28,10 @@ namespace EquipmentManagementSystem.Models
         [StringLength(50)]
         public string Carrier { get; set; }
 
+        [Display(Name = "离子源类型")]
+        [StringLength(50)]
+        public string IonSource { get; set; }
+
         [Display(Name = "检测器")]
         [StringLength(20)]
         public string Detector { get; set; }
