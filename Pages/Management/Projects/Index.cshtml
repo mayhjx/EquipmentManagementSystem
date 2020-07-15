@@ -28,6 +28,15 @@
                     <th>
                         @Html.DisplayNameFor(model => model.Project[0].ColumnType)
                     </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Project[0].Carrier)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Project[0].IonSource)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Project[0].Detector)
+                    </th>
                     <th></th>
                 </tr>
             </thead>
@@ -48,6 +57,15 @@
                             @Html.DisplayFor(modelItem => item.ColumnType)
                         </td>
                         <td>
+                            @Html.DisplayFor(modelItem => item.Carrier)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IonSource)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Detector)
+                        </td>
+                        <td>
                             <a asp-page="./Edit" asp-route-id="@item.Id">编辑</a> |
                             <a asp-page="./Delete" asp-route-id="@item.Id">删除</a>
                         </td>
@@ -57,5 +75,3 @@
         </table>
     </div>
 </div>
-
-

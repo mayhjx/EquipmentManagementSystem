@@ -37,6 +37,21 @@
                         <span asp-validation-for="Project.ColumnType" class="text-danger"></span>
                     </div>
                     <div class="form-group">
+                        <label asp-for="Project.Carrier" class="control-label"></label>
+                        <input asp-for="Project.Carrier" class="form-control" />
+                        <span asp-validation-for="Project.Carrier" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Project.IonSource" class="control-label"></label>
+                        <input asp-for="Project.IonSource" class="form-control" />
+                        <span asp-validation-for="Project.IonSource" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Project.Detector" class="control-label"></label>
+                        <input asp-for="Project.Detector" class="form-control" />
+                        <span asp-validation-for="Project.Detector" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
                         <input type="submit" value="保存" class="btn btn-primary" />
                     </div>
                 </form>

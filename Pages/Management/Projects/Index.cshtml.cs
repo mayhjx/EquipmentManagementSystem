@@ -1,10 +1,10 @@
-﻿using EquipmentManagementSystem.Data;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Management.Projects
 {
@@ -21,10 +21,11 @@ namespace EquipmentManagementSystem.Pages.Management.Projects
 
         public async Task OnGetAsync()
         {
-            Project = await _context.Projects.Include(m => m.Group)
-                                            .OrderBy(m => m.Group.Name)
-                                            .AsNoTracking()
-                                            .ToListAsync();
+            Project = await _context.Projects
+                .AsNoTracking()
+                .Include(m => m.Group)
+                .OrderBy(m => m.Group.Name)
+                .ToListAsync();
         }
     }
 }
