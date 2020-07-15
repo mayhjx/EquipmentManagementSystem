@@ -4,14 +4,16 @@ using EquipmentManagementSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EquipmentManagementSystem.Migrations.Equipment
 {
     [DbContext(typeof(EquipmentContext))]
-    partial class EquipmentContextModelSnapshot : ModelSnapshot
+    [Migration("20200715060024_DecimalToString")]
+    partial class DecimalToString
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -442,17 +444,9 @@ namespace EquipmentManagementSystem.Migrations.Equipment
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Carrier")
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
-
                     b.Property<string>("ColumnType")
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
-
-                    b.Property<string>("Detector")
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
 
                     b.Property<int>("GroupId")
                         .HasColumnType("int");
@@ -554,9 +548,6 @@ namespace EquipmentManagementSystem.Migrations.Equipment
                     b.Property<int>("PressureUnit")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ProjectId")
-                        .HasColumnType("int");
-
                     b.Property<string>("ProjectName")
                         .HasColumnType("nvarchar(max)");
 
@@ -582,8 +573,6 @@ namespace EquipmentManagementSystem.Migrations.Equipment
                     b.HasKey("Id");
 
                     b.HasIndex("InstrumentId");
-
-                    b.HasIndex("ProjectId");
 
                     b.ToTable("UsageRecord");
                 });
@@ -724,10 +713,6 @@ namespace EquipmentManagementSystem.Migrations.Equipment
                     b.HasOne("EquipmentManagementSystem.Models.Instrument", "Instrument")
                         .WithMany()
                         .HasForeignKey("InstrumentId");
-
-                    b.HasOne("EquipmentManagementSystem.Models.Project", "Project")
-                        .WithMany()
-                        .HasForeignKey("ProjectId");
                 });
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.Validation", b =>

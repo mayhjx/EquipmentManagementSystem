@@ -44,6 +44,8 @@
 		<Compile Remove="Data\Migrations\Equipment\20200624030238_ChangeSimpleTestTimeType.Designer.cs" />
 		<Compile Remove="Data\Migrations\Equipment\20200713082223_ProjectNameToId.cs" />
 		<Compile Remove="Data\Migrations\Equipment\20200713082223_ProjectNameToId.Designer.cs" />
+		<Compile Remove="Data\Migrations\Equipment\20200715032736_AddVacuumDegreeAndBlankTestSignal.cs" />
+		<Compile Remove="Data\Migrations\Equipment\20200715032736_AddVacuumDegreeAndBlankTestSignal.Designer.cs" />
 		<Compile Remove="Data\Migrations\Malfunction\20200703010458_ResultNullable.cs" />
 		<Compile Remove="Data\Migrations\Malfunction\20200703010458_ResultNullable.Designer.cs" />
 	</ItemGroup>
