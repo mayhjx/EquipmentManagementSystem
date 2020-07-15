@@ -47,10 +47,7 @@
                             </div>
                             <input asp-for="UsageRecord.ColumnPressure" class="form-control" placeholder="压力" />
                             <div class="input-group-append">
-                                <select asp-for="UsageRecord.PressureUnit" class="custom-select" id="SystemOnePressureUnit">
-                                    <option value="MPa">MPa</option>
-                                    <option value="Psi">Psi</option>
-                                    <option value="Bar">Bar</option>
+                                <select asp-for="UsageRecord.PressureUnit" class="custom-select" id="SystemOnePressureUnit" asp-items="@Html.GetEnumSelectList<PressureUnit>()">
                                 </select>
                             </div>
                         </div>
@@ -91,6 +88,28 @@
                         <label asp-for="UsageRecord.TestNumber" class="control-label"></label>
                         <input asp-for="UsageRecord.TestNumber" class="form-control" />
                         <span asp-validation-for="UsageRecord.TestNumber" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="UsageRecord.VacuumDegree" class="control-label">真空度大小/单位</label>
+                        <div class="input-group">
+
+                            <input asp-for="UsageRecord.VacuumDegree" class="form-control" />
+                            <div class="input-group-append">
+                                <select asp-for="UsageRecord.VacuumDegreeUnit" class="custom-select" asp-items="@Html.GetEnumSelectList<VacuumDegreeUnit>()">
+                                </select>
+                            </div>
+                        </div>
+                        <span asp-validation-for="UsageRecord.VacuumDegree" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="UsageRecord.BlankSignal" class="control-label"></label>
+                        <input asp-for="UsageRecord.BlankSignal" class="form-control" />
+                        <span asp-validation-for="UsageRecord.BlankSignal" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="UsageRecord.TestSignal" class="control-label"></label>
+                        <input asp-for="UsageRecord.TestSignal" class="form-control" />
+                        <span asp-validation-for="UsageRecord.TestSignal" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="UsageRecord.EndTime" class="control-label"></label>

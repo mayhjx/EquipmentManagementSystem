@@ -11,12 +11,6 @@
     </div>
     <div class="card-body">
         <dl class="row">
-            @*<dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.UsageRecord.CreatedTime)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.UsageRecord.CreatedTime)
-                </dd>*@
             <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.UsageRecord.ProjectName)
             </dt>
@@ -49,7 +43,7 @@
                     @Html.DisplayNameFor(model => model.UsageRecord.ColumnPressure)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.UsageRecord.ColumnPressure)@Html.DisplayFor(model => model.UsageRecord.PressureUnit)
+                    @Html.DisplayFor(model => model.UsageRecord.ColumnPressure) @Html.DisplayFor(model => model.UsageRecord.PressureUnit)
                 </dd>
             }
             @if (Model.UsageRecord.ColumnTwoNumber != null)
@@ -64,7 +58,7 @@
                     @Html.DisplayNameFor(model => model.UsageRecord.ColumnTwoPressure)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.UsageRecord.ColumnTwoPressure)@Html.DisplayFor(model => model.UsageRecord.PressureUnit)
+                    @Html.DisplayFor(model => model.UsageRecord.ColumnTwoPressure) @Html.DisplayFor(model => model.UsageRecord.PressureUnit)
                 </dd>
             }
             <dt class="col-sm-2">
@@ -84,6 +78,24 @@
             </dt>
             <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.UsageRecord.TestNumber)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.UsageRecord.VacuumDegree)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.UsageRecord.VacuumDegree) @Html.DisplayFor(model => model.UsageRecord.VacuumDegreeUnit)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.UsageRecord.BlankSignal)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.UsageRecord.BlankSignal)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.UsageRecord.TestSignal)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.UsageRecord.TestSignal)
             </dd>
             <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.UsageRecord.EndTime)
