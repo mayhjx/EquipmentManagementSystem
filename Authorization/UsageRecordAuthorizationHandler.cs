@@ -38,13 +38,11 @@ namespace EquipmentManagementSystem.Authorization
 
             if (requirement.Name == Constants.UpdateOperationName)
             {
-                context.Succeed(requirement);
-
                 if (context.User.IsInRole(Constants.DirectorRole) || context.User.IsInRole(Constants.ManagerRole))
                 {
                     context.Succeed(requirement);
                 }
-                else if (_userManager.GetUserAsync(context.User).Result.Group == resource.Instrument.Group)
+                else if (_userManager.GetUserAsync(context.User).Result.Group == resource.Project.Group.Name)
                 {
                     context.Succeed(requirement);
                 }
@@ -52,13 +50,11 @@ namespace EquipmentManagementSystem.Authorization
 
             if (requirement.Name == Constants.DeleteOperationName)
             {
-                context.Succeed(requirement);
-
                 if (context.User.IsInRole(Constants.DirectorRole) || context.User.IsInRole(Constants.ManagerRole))
                 {
                     context.Succeed(requirement);
                 }
-                else if (_userManager.GetUserAsync(context.User).Result.Group == resource.Instrument.Group)
+                else if (_userManager.GetUserAsync(context.User).Result.Group == resource.Project.Group.Name)
                 {
                     context.Succeed(requirement);
                 }
