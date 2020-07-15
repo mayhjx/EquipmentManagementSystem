@@ -25,29 +25,22 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
 
         public void OnGet()
         {
-            //ProjectSelectList = new SelectList(_context.Projects.AsNoTracking(), "Name", "Name");
-            InstrumentSelectList = new SelectList(_context.Instruments.AsNoTracking(), "ID", "ID");
+            PlatformSelectList = new SelectList((from i in _context.Instruments
+                                                 select i.Platform)
+                                                 .Distinct());
 
-            //var isAdmin = User.IsInRole(Constants.ManagerRole) || User.IsInRole(Constants.DirectorRole);
+            GroupSelectList = new SelectList(_context.Groups.AsNoTracking().OrderBy(p => p.Name), "Name", "Name");
 
-            //if (isAdmin)
-            //{
-            //    ProjectSelectList = new SelectList(_context.Projects.AsNoTracking(), "Name", "Name");
-            //    InstrumentSelectList = new SelectList(_context.Instruments.AsNoTracking(), "ID", "ID");
-            //}
-            //else
-            //{
-            //    var userGroup = _userManager.GetUserAsync(User).Result?.Group;
-            //    ProjectSelectList = new SelectList(_context.Projects.AsNoTracking().Include(m => m.Group).Where(m => m.Group.Name == userGroup), "Name", "Name");
-            //    InstrumentSelectList = new SelectList(_context.Instruments.AsNoTracking().Where(m => m.Group == userGroup), "ID", "ID");
-            //}
+            ProjectSelectList = new SelectList(_context.Projects.AsNoTracking().OrderBy(p => p.Name), "Name", "Name");
+
+            InstrumentSelectList = new SelectList(_context.Instruments.AsNoTracking().OrderBy(p => p.ID), "ID", "ID");
 
             // 初始化时间范围
             Search = new SearchForm();
         }
 
         /// <summary>
-        /// 根据项目组返回设备编号
+        /// 根据项目返回设备编号
         /// </summary>
         /// <param name="groupName">项目组名</param>
         /// <returns></returns>
@@ -60,13 +53,20 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
         }
 
         /// <summary>
-        /// 根据设备编号返回检测项目    
+        /// 根据项目组返回检测项目    
         /// </summary>
-        /// <param name="instrumentId">设备编号</param>
+        /// <param name="Group">项目组</param>
         /// <returns></returns>
-        public JsonResult OnGetProjectFilter(string instrumentId)
+        public JsonResult OnGetProjectFilter(string Group)
         {
-            var Result = new JsonResult(_context.Instruments.FindAsync(instrumentId).Result.Projects.Split(", ").ToList());
+            Group = Uri.UnescapeDataString(Group);
+
+            var Result = new JsonResult(_context.Projects
+                .AsNoTracking()
+                .Include(p => p.Group)
+                .Where(g => g.Group.Name == Group)
+                .Select(p => p.Name));
+
             return Result;
         }
 
@@ -76,11 +76,13 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
         public IList<UsageRecord> UsageRecords { get; set; }
         public IList<MalfunctionWorkOrder> MalfunctionWorkOrders { get; set; }
 
-        public SelectList InstrumentSelectList { get; set; }
+        public SelectList PlatformSelectList { get; set; }
 
-        //public SelectList GroupSelectList { get; set; }
+        public SelectList GroupSelectList { get; set; }
 
         public SelectList ProjectSelectList { get; set; }
+
+        public SelectList InstrumentSelectList { get; set; }
 
         public IActionResult OnPost()
         {
@@ -89,54 +91,74 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
                 return Page();
             }
 
+
             if (Search.Category == Category.Usage)
             {
-                UsageRecords = (from record in _context.UsageRecords
-                                .AsNoTracking()
-                                .Include(record => record.Instrument)
-                                .Include(record => record.ProjectName)
-                                where record.InstrumentId == Search.Instrument
-                                //where record.ProjectName == Search.Project
-                                where record.BeginTimeOfTest >= Search.BeginTime
-                                where record.BeginTimeOfTest < Search.EndTime.AddDays(1)
-                                select record)
-                                .ToList();
+                var records = from record in _context.UsageRecords
+                            .AsNoTracking()
+                            .Include(record => record.Instrument)
+                            .Include(record => record.Project)
+                                .ThenInclude(record => record.Group)
+                              where record.BeginTimeOfTest >= Search.BeginTime
+                              where record.BeginTimeOfTest < Search.EndTime.AddDays(1)
+                              select record;
+
+                if (Search.Platform != null)
+                {
+                    records = from r in records
+                              where r.Instrument.Platform == Search.Platform
+                              select r;
+                }
+
+                if (Search.Group != null)
+                {
+                    records = from r in records
+                              where r.Project.Group.Name == Search.Group
+                              select r;
+                }
+
+                if (Search.Project != null)
+                {
+                    records = from r in records
+                              where r.ProjectName == Search.Project
+                              select r;
+                }
+
+                if (Search.Instrument != null)
+                {
+                    records = from r in records
+                              where r.InstrumentId == Search.Instrument
+                              select r;
+                }
+
+                UsageRecords = records.ToList();
             }
 
-            if (Search.Category == Category.Malfunction)
-            {
-                MalfunctionWorkOrders = (from record in _context.Set<MalfunctionWorkOrder>()
-                                        .AsNoTracking()
-                                        .Include(m => m.MalfunctionInfo)
-                                        .Include(m => m.Investigation)
-                                        .Include(m => m.RepairRequest)
-                                        .Include(m => m.AccessoriesOrder)
-                                        .Include(m => m.Maintenance)
-                                        .Include(m => m.Validation)
-                                        .Include(m => m.Instrument)
-                                         where record.InstrumentID == Search.Instrument
-                                         where record.CreatedTime >= Search.BeginTime
-                                         where record.CreatedTime < Search.EndTime.AddDays(1)
-                                         select record)
-                                        .ToList();
-            }
+            //if (Search.Category == Category.Malfunction)
+            //{
+            //    MalfunctionWorkOrders = (from record in _context.Set<MalfunctionWorkOrder>()
+            //                            .AsNoTracking()
+            //                            .Include(m => m.MalfunctionInfo)
+            //                            .Include(m => m.Investigation)
+            //                            .Include(m => m.RepairRequest)
+            //                            .Include(m => m.AccessoriesOrder)
+            //                            .Include(m => m.Maintenance)
+            //                            .Include(m => m.Validation)
+            //                            .Include(m => m.Instrument)
+            //                             where record.InstrumentID == Search.Instrument
+            //                             where record.CreatedTime >= Search.BeginTime
+            //                             where record.CreatedTime < Search.EndTime.AddDays(1)
+            //                             select record)
+            //                            .ToList();
+            //}
 
+            PlatformSelectList = new SelectList((from i in _context.Instruments
+                                                 select i.Platform)
+                                                 .Distinct(), Search.Platform);
+
+            GroupSelectList = new SelectList(_context.Groups.AsNoTracking(), "Name", "Name", Search.Group);
             InstrumentSelectList = new SelectList(_context.Instruments.AsNoTracking(), "ID", "ID", Search.Instrument);
-            ProjectSelectList = new SelectList(_context.Instruments.FindAsync(Search.Instrument).Result.Projects.Split(", "), Search.Project);
-
-            //var isAdmin = User.IsInRole(Constants.ManagerRole) || User.IsInRole(Constants.DirectorRole);
-
-            //if (isAdmin)
-            //{
-            //    ProjectSelectList = new SelectList(_context.Projects.AsNoTracking(), "Name", "Name", Search.Project);
-            //    InstrumentSelectList = new SelectList(_context.Instruments.AsNoTracking(), "ID", "ID", Search.Instrument);
-            //}
-            //else
-            //{
-            //    var userGroup = _userManager.GetUserAsync(User).Result?.Group;
-            //    ProjectSelectList = new SelectList(_context.Projects.AsNoTracking().Include(m => m.Group).Where(m => m.Group.Name == userGroup), "Name", "Name", Search.Project);
-            //    InstrumentSelectList = new SelectList(_context.Instruments.AsNoTracking().Where(m => m.Group == userGroup), "ID", "ID", Search.Instrument);
-            //}
+            ProjectSelectList = new SelectList(_context.Projects.AsNoTracking(), "Name", "Name", Search.Project);
 
             return Page();
         }
@@ -157,15 +179,19 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
             [DataType(DataType.Date)]
             public DateTime EndTime { get; set; } = DateTime.Now;
 
-            //[Required(ErrorMessage = "请选择一个项目组")]
-            //[Display(Name = "项目组")]
-            //public string Group { get; set; }
+            //[Required(ErrorMessage = "请先选择平台")]
+            [Display(Name = "设备平台")]
+            public string Platform { get; set; }
 
-            [Required(ErrorMessage = "请选择设备编号")]
+            //[Required(ErrorMessage = "请选择一个项目组")]
+            [Display(Name = "项目组")]
+            public string Group { get; set; }
+
+            //[Required(ErrorMessage = "请选择设备编号")]
             [Display(Name = "设备编号")]
             public string Instrument { get; set; }
 
-            [Display(Name = "项目名称")]
+            [Display(Name = "检测项目")]
             public string Project { get; set; }
         }
 
@@ -173,8 +199,8 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
         {
             [Display(Name = "使用登记")]
             Usage,
-            [Display(Name = "故障工单")]
-            Malfunction,
+            //[Display(Name = "故障工单")]
+            //Malfunction,
         }
     }
 }
