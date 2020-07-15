@@ -38,6 +38,8 @@ namespace EquipmentManagementSystem.Authorization
 
             if (requirement.Name == Constants.UpdateOperationName)
             {
+                context.Succeed(requirement);
+
                 if (context.User.IsInRole(Constants.DirectorRole) || context.User.IsInRole(Constants.ManagerRole))
                 {
                     context.Succeed(requirement);
@@ -50,6 +52,8 @@ namespace EquipmentManagementSystem.Authorization
 
             if (requirement.Name == Constants.DeleteOperationName)
             {
+                context.Succeed(requirement);
+
                 if (context.User.IsInRole(Constants.DirectorRole) || context.User.IsInRole(Constants.ManagerRole))
                 {
                     context.Succeed(requirement);
