@@ -19,6 +19,9 @@ namespace EquipmentManagementSystem.Models
         [Display(Name = "项目名称")]
         public string ProjectName { get; set; }
 
+        public int? ProjectId { get; set; }
+        public Project Project { get; set; }
+
         [Display(Name = "维护开始时间")]
         [DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
@@ -39,8 +42,7 @@ namespace EquipmentManagementSystem.Models
         public float? ColumnTwoPressure { get; set; }
 
         [Display(Name = "压力单位")]
-        [StringLength(10)]
-        public string PressureUnit { get; set; }
+        public PressureUnit PressureUnit { get; set; }
 
         [Display(Name = "进样开始时间")]
         [DataType(DataType.DateTime)]
@@ -52,6 +54,18 @@ namespace EquipmentManagementSystem.Models
 
         [Display(Name = "序列样品总数")]
         public int TestNumber { get; set; }
+
+        [Display(Name = "真空度")]
+        public string VacuumDegree { get; set; }
+
+        [Display(Name = "真空度单位")]
+        public VacuumDegreeUnit VacuumDegreeUnit { get; set; }
+
+        [Display(Name = "BLANK信号")]
+        public string BlankSignal { get; set; }
+
+        [Display(Name = "Test单位")]
+        public string TestSignal { get; set; }
 
         [Display(Name = "进样结束时间")]
         [DataType(DataType.DateTime)]
@@ -67,4 +81,15 @@ namespace EquipmentManagementSystem.Models
         public string Remark { get; set; }
 
     }
+
+    public enum PressureUnit
+    {
+        Mpa, Psi, Bar
+    }
+
+    public enum VacuumDegreeUnit
+    {
+        torr, Mpa
+    }
+
 }
