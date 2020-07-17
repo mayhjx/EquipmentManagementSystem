@@ -63,11 +63,34 @@
                         </div>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
 
-                <br />
-                <div class="table-responsive">
-                    @if (Model.UsageRecords != null)
-                    {
+@if (Model.UsageRecords != null)
+{
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-chart-bar mr-1"></i>
+                查询结果
+            </h3>
+            <div class="card-tools">
+                <ul class="nav nav-pills ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#data-chart" data-toggle="tab">图表</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#data-grid" data-toggle="tab">数据</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="tab-content p-0">
+                <div class="chart tab-pane " id="data-grid" style="position: relative; height: 500px;">
+                    <div class="table-responsive">
                         <table id="export" class="table table-hover text-nowrap">
                             <thead>
                                 <tr>
@@ -139,87 +162,22 @@
                                 </tr>
                             </tfoot>
                         </table>
-                    }
+                    </div>
+                </div>
 
-                    @if (Model.MalfunctionWorkOrders != null)
-                    {
-                        <table id="export" class="table table-hover text-nowrap">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrders[0].InstrumentID)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrders[0].MalfunctionInfo.Part)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrders[0].MalfunctionInfo.Phenomenon)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrders[0].MalfunctionInfo.BeginTime)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrders[0].MalfunctionInfo.FoundedTime)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrders[0].RepairRequest.RequestTime)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrders[0].Maintenance.BeginTime)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrders[0].Validation.FinishedTime)
-                                    </th>
-                                    <th>维修耗时(h)</th>
-                                    <th>故障时长(h)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model.MalfunctionWorkOrders)
-                                {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.InstrumentID)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.MalfunctionInfo.Part)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.MalfunctionInfo.Phenomenon)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.MalfunctionInfo.BeginTime)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.MalfunctionInfo.FoundedTime)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.RepairRequest.RequestTime)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Maintenance.BeginTime)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Validation.FinishedTime)
-                                        </td>
-                                        <td>@((item.Maintenance.EndTime - item.Maintenance.BeginTime).GetValueOrDefault().TotalHours.ToString("f1"))</td>
-                                        <td class="time">@((item.Validation.FinishedTime - item.MalfunctionInfo.BeginTime).GetValueOrDefault().TotalHours.ToString("f1"))</td>
-                                    </tr>
-                                }
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td class="text-bold">总时长(h)</td>
-                                    <td id="total" class="text-bold"></td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    }
+                <div class="chart tab-pane active" id="data-chart" style="position: relative; height: 500px;">
+                    <div class="chartjs-size-monitor">
+                        <div class="chartjs-size-monitor-expand"><div class=""></div></div>
+                        <div class="chartjs-size-monitor-shrink"><div class=""></div></div>
+                    </div>
+                    <canvas id="data-chart-canvas" height="275" style="height: 300px; display: block; width: 900px;" class="chartjs-render-monitor" width="900"></canvas>
                 </div>
             </div>
         </div>
     </div>
-</div>
+}
+
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <link href="~/plugins/datatables-buttons/css/buttons.bootstrap4.min.css" rel="stylesheet" />
@@ -230,8 +188,42 @@
     <script src="~/plugins/pdfmake/vfs_fonts.js"></script>
     <script src="~/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/plugins/chart.js/Chart.bundle.min.js"></script>
 
     <script>
+        var ctx = document.getElementById('data-chart-canvas').getContext('2d');
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'bar',
+
+            // The data for our dataset
+            data: {
+                @{
+                    var beginDate = new List<string>();
+                    var time = new List<double>();
+                    if (Model.UsageRecords != null)
+                    {
+                        foreach (var item in Model.UsageRecords)
+                        {
+
+                            beginDate.Add(item.BeginTimeOfTest.GetValueOrDefault().ToShortDateString());
+                            time.Add((double)(item.EndTime - item.BeginTimeOfTest).GetValueOrDefault().TotalHours);
+                        }
+                    }
+                }
+                labels: @Json.Serialize(beginDate),
+                datasets: [{
+                    label: '使用时长',
+                    backgroundColor: 'rgb(65,105,225)',
+                    borderColor: 'rgb(65,105,225)',
+                    data: @Json.Serialize(time),
+                }]
+            },
+
+            // Configuration options go here
+            options: {}
+        });
+
         $(document).ready(function () {
             // 动态生成检测项目
             $("select#group").on("change", function () {
@@ -310,3 +302,161 @@
         });
     </script>
 }
+
+@*<div class="card">
+        <div class="card-header">
+            <h4>查询结果</h4>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="export" class="table table-hover text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.UsageRecords[0].InstrumentId)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.UsageRecords[0].ProjectName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.UsageRecords[0].BeginTimeOfMaintain)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.UsageRecords[0].BeginTimeOfTest)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.UsageRecords[0].EndTime)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.UsageRecords[0].SampleNumber)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.UsageRecords[0].TestNumber)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.UsageRecords[0].Creator)
+                            </th>
+                            <th>维护时长(h)</th>
+                            <th>检测时长(h)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.UsageRecords)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.InstrumentId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ProjectName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.BeginTimeOfMaintain)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.BeginTimeOfTest)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EndTime)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SampleNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TestNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Creator)
+                                </td>
+                                <td>@((item.BeginTimeOfTest - item.BeginTimeOfMaintain).GetValueOrDefault().TotalHours.ToString("f1"))</td>
+                                <td class="time">@((item.EndTime - item.BeginTimeOfTest).GetValueOrDefault().TotalHours.ToString("f1"))</td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td class="text-bold">总时长(h)</td>
+                            <td id="total" class="text-bold"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+                @if (Model.MalfunctionWorkOrders != null)
+                {
+                    <table id="export" class="table table-hover text-nowrap">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.MalfunctionWorkOrders[0].InstrumentID)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.MalfunctionWorkOrders[0].MalfunctionInfo.Part)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.MalfunctionWorkOrders[0].MalfunctionInfo.Phenomenon)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.MalfunctionWorkOrders[0].MalfunctionInfo.BeginTime)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.MalfunctionWorkOrders[0].MalfunctionInfo.FoundedTime)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.MalfunctionWorkOrders[0].RepairRequest.RequestTime)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.MalfunctionWorkOrders[0].Maintenance.BeginTime)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.MalfunctionWorkOrders[0].Validation.FinishedTime)
+                                </th>
+                                <th>维修耗时(h)</th>
+                                <th>故障时长(h)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.MalfunctionWorkOrders)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.InstrumentID)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.MalfunctionInfo.Part)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.MalfunctionInfo.Phenomenon)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.MalfunctionInfo.BeginTime)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.MalfunctionInfo.FoundedTime)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.RepairRequest.RequestTime)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Maintenance.BeginTime)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Validation.FinishedTime)
+                                    </td>
+                                    <td>@((item.Maintenance.EndTime - item.Maintenance.BeginTime).GetValueOrDefault().TotalHours.ToString("f1"))</td>
+                                    <td class="time">@((item.Validation.FinishedTime - item.MalfunctionInfo.BeginTime).GetValueOrDefault().TotalHours.ToString("f1"))</td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td class="text-bold">总时长(h)</td>
+                                <td id="total" class="text-bold"></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                }
+            </div>
+            <div>
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+    </div>*@
