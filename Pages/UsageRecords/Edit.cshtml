@@ -204,37 +204,4 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script>
-        $("button#showSystemOne").click(function (e) {
-            // 显示系统一色谱柱压力输入框
-            e.preventDefault();
-            $("button#showSystemOne").attr("hidden", "");
-            $("div#systemOne").removeAttr("hidden");
-            $("button#showSystemTwo").removeAttr("hidden");
-        })
-
-        $("button#showSystemTwo").click(function (e) {
-            // 显示系统二色谱柱压力输入框
-            e.preventDefault();
-            $("div#systemTwo").removeAttr("hidden");
-            $("button#showSystemTwo").attr("hidden", "");
-            // 系统二色谱柱压力单位与系统一同步
-            var unit = $("select#SystemOnePressureUnit").val();
-            $("select#SystemTwoPressureUnit").empty();
-            $("select#SystemTwoPressureUnit").append(`<option>${unit}</option>`);
-        })
-
-        $(document).ready(function () {
-            var unit = $("select#SystemOnePressureUnit").val();
-            $("select#SystemTwoPressureUnit").empty();
-            $("select#SystemTwoPressureUnit").append(`<option>${unit}</option>`);
-        })
-
-        $("select#SystemOnePressureUnit").change(function () {
-            // 更新系统二色谱柱压力单位
-            var unit = $(this).val();
-            $("select#SystemTwoPressureUnit").empty();
-            $("select#SystemTwoPressureUnit").append(`<option>${unit}</option>`);
-        })
-    </script>
 }
