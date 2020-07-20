@@ -13,7 +13,7 @@ $(document).ready(function () {
         url.pop()
         url = url.join("/")
     }
-    
+
     $('li.nav-item a[href="' + url + '"]').addClass('active');
     $('li.nav-item a[href="' + url + '"]').parent().parent().parent().addClass('menu-open');
     $('li.nav-item a[href="' + url + '"]').parent().parent().parent().children("a.nav-link").addClass('active');
@@ -53,8 +53,48 @@ $(document).ready(function () {
         },
     });
 
-    // 下拉列表
+    // 下拉列表格式
     $("select.select2").select2({
         theme: 'bootstrap4'
+    });
+
+    // 使用说明页面色谱柱压力输入
+    $("button#showSystemOne").click(function (e) {
+        // 显示系统一色谱柱压力输入框
+        e.preventDefault();
+        $("button#showSystemOne").attr("hidden", "");
+        $("div#systemOne").removeAttr("hidden");
+        $("button#showSystemTwo").removeAttr("hidden");
+    })
+
+    var unit = $("select#SystemOnePressureUnit").html();
+    var checkvalue = $("select#SystemOnePressureUnit").val();
+    $("select#SystemTwoPressureUnit").empty();
+    $("select#SystemTwoPressureUnit").append(unit);
+    $("select#SystemTwoPressureUnit").val(checkvalue);
+
+    $("button#showSystemTwo").click(function (e) {
+        // 显示系统二色谱柱压力输入框
+        e.preventDefault();
+        $("div#systemTwo").removeAttr("hidden");
+        $("button#showSystemTwo").attr("hidden", "");
+        // 系统二色谱柱压力单位与系统一同步
+        var checkvalue = $("select#SystemOnePressureUnit").val();
+        var unit = $("select#SystemOnePressureUnit").html();
+        $("select#SystemTwoPressureUnit").empty();
+        $("select#SystemTwoPressureUnit").append(unit);
+        $("select#SystemTwoPressureUnit").val(checkvalue);
+    })
+
+    $("select#SystemOnePressureUnit").change(function () {
+        // 更新系统二色谱柱压力单位
+        var checkvalue = $(this).val();
+        $("select#SystemTwoPressureUnit").val(checkvalue);
+    })
+
+    $("select#SystemTwoPressureUnit").change(function () {
+        // 更新系统一色谱柱压力单位
+        var checkvalue = $(this).val();
+        $("select#SystemOnePressureUnit").val(checkvalue);
     })
 });
