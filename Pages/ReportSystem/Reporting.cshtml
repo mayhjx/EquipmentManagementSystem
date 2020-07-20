@@ -170,7 +170,9 @@
                         <div class="chartjs-size-monitor-expand"><div class=""></div></div>
                         <div class="chartjs-size-monitor-shrink"><div class=""></div></div>
                     </div>
-                    <canvas id="data-chart-canvas" height="275" style="height: 300px; display: block; width: 900px;" class="chartjs-render-monitor" width="900"></canvas>
+                    <canvas id="data-chart-canvas" height="275" width="900" aria-label="chart" role="img">
+                        <p>当前浏览器不支持查看该元素！</p>
+                    </canvas>
                 </div>
             </div>
         </div>
@@ -191,48 +193,67 @@
     <script src="~/plugins/chart.js/Chart.bundle.min.js"></script>
 
     <script>
-        var ctx = document.getElementById('data-chart-canvas').getContext('2d');
-        var chart = new Chart(ctx, {
+        $(document).ready(function () {
+
+            // 各仪器使用记录
+            var ctx = document.getElementById('data-chart-canvas').getContext('2d');
+            var chart = new Chart(ctx, {
             // The type of chart we want to create
             type: 'bar',
 
             // The data for our dataset
             data: {
                 @{
-                    var beginDate = new List<string>();
-                    var time = new List<double>();
+                    var date = new List<string>();
+                    var time = new Dictionary<string, double>();
                     if (Model.UsageRecords != null)
                     {
                         foreach (var item in Model.UsageRecords)
                         {
 
-                            beginDate.Add(item.BeginTimeOfTest.GetValueOrDefault().ToShortDateString());
-                            time.Add((double)(item.EndTime - item.BeginTimeOfTest).GetValueOrDefault().TotalHours);
+                            date.Add(item.BeginTimeOfTest.GetValueOrDefault().ToShortDateString());
+                            time.Add(item.InstrumentId, Math.Round((item.EndTime - item.BeginTimeOfTest).GetValueOrDefault().TotalHours,1));
                         }
                     }
                 }
-                labels: @Json.Serialize(beginDate),
-                datasets: [{
-                    label: '使用时长',
-                    backgroundColor: 'rgb(65,105,225)',
-                    borderColor: 'rgb(65,105,225)',
-                    data: @Json.Serialize(time),
-                }]
-            },
 
-            // Configuration options go here
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: false
-                        }
+                    labels: @Json.Serialize(date),
+                    datasets: [{
+                        label: '使用时长',
+                        backgroundColor: 'rgb(65, 105, 225)',
+                        borderColor: 'rgb(65, 105, 225)',
+                        data: @Json.Serialize(time),
                     }]
-                }
-            }
-        });
+                },
 
-        $(document).ready(function () {
+                // Configuration options go here
+                options: {
+                    scales: {
+                        xAxes: [{
+                            type: 'time',
+                            time: {
+                                unit: "day",
+                                displayFormats: {
+                                    day: "YYYY-MM-DD"
+                                }
+                            },
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                max: 24,
+                                beginAtZero: false
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: "小时",
+                            }
+                        }]
+                    }
+                }
+            });
+
+            console.log(@Json.Serialize(time));
+
             // 动态生成检测项目
             $("select#group").on("change", function () {
                 var group = $(this).val();
@@ -302,11 +323,7 @@
             });
 
             // 计算总时长
-            var total = 0;
-            $("td.time").each(function (data) {
-                total += parseFloat($(this).text());
-            });
-            $("td#total").text(total.toFixed(1));
+            $("td#total").text();
         });
     </script>
 }

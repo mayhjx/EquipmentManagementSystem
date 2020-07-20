@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -15,12 +14,10 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
     public class ReportingModel : PageModel
     {
         private readonly EquipmentContext _context;
-        private readonly UserManager<User> _userManager;
 
-        public ReportingModel(EquipmentContext context, UserManager<User> userManager)
+        public ReportingModel(EquipmentContext context)
         {
             _context = context;
-            _userManager = userManager;
         }
 
         public void OnGet()
@@ -29,7 +26,7 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
                                                  select i.Platform)
                                                  .Distinct());
 
-            GroupSelectList = new SelectList(_context.Groups.AsNoTracking().OrderBy(p => p.Name), "Name", "Name");
+            GroupSelectList = new SelectList(_context.Groups.AsNoTracking().Where(g => g.Name != "质谱中心").OrderBy(p => p.Name), "Name", "Name");
 
             ProjectSelectList = new SelectList(_context.Projects.AsNoTracking().OrderBy(p => p.Name), "Name", "Name");
 
@@ -103,31 +100,28 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
                               where record.BeginTimeOfTest < Search.EndTime.AddDays(1)
                               select record;
 
-                if (Search.Platform != null)
+                if (Search.Instrument != null)
                 {
                     records = from r in records
-                              where r.Instrument.Platform == Search.Platform
+                              where r.InstrumentId == Search.Instrument
                               select r;
                 }
-
-                if (Search.Group != null)
-                {
-                    records = from r in records
-                              where r.Project.Group.Name == Search.Group
-                              select r;
-                }
-
                 if (Search.Project != null)
                 {
                     records = from r in records
                               where r.ProjectName == Search.Project
                               select r;
                 }
-
-                if (Search.Instrument != null)
+                if (Search.Group != null)
                 {
                     records = from r in records
-                              where r.InstrumentId == Search.Instrument
+                              where r.Project.Group.Name == Search.Group
+                              select r;
+                }
+                if (Search.Platform != null)
+                {
+                    records = from r in records
+                              where r.Instrument.Platform == Search.Platform
                               select r;
                 }
 
