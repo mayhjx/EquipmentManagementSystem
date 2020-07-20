@@ -89,7 +89,7 @@
         </div>
         <div class="card-body">
             <div class="tab-content p-0">
-                <div class="chart tab-pane " id="data-grid" style="position: relative; height: 500px;">
+                <div class="chart tab-pane " id="data-grid" style="position: relative; ">
                     <div class="table-responsive">
                         <table id="export" class="table table-hover text-nowrap">
                             <thead>
@@ -221,7 +221,15 @@
             },
 
             // Configuration options go here
-            options: {}
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: false
+                        }
+                    }]
+                }
+            }
         });
 
         $(document).ready(function () {
@@ -264,8 +272,8 @@
                 });
             });
 
-            var Export = $('#export').DataTable({
-                dom: 'rtB',
+            $('table#export').DataTable({
+                dom: "irtpB",
                 language: {
                     "emptyTable": "没有数据", //没有数据时要显示的字符串
                     "info": "当前 _START_ 条到 _END_ 条 共 _TOTAL_ 条",//左下角的信息，变量可以自定义，到官网详细查看
