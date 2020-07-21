@@ -1,5 +1,6 @@
 ﻿@page
 @model EquipmentManagementSystem.Pages.UsageRecords.DetailsModel
+@inject SignInManager<User> signInManager
 
 @{
     ViewData["Title"] = "详细信息";
@@ -117,7 +118,7 @@
             </dd>
         </dl>
         <div>
-            @if ((await AuthorizationService.AuthorizeAsync(User, Model.UsageRecord, Operations.Update)).Succeeded)
+            @if (signInManager.IsSignedIn(User) && (await AuthorizationService.AuthorizeAsync(User, Model.UsageRecord, Operations.Update)).Succeeded)
             {
                 <a asp-page="./Edit" asp-route-id="@Model.UsageRecord.Id">编辑</a>
                 <text> | </text>

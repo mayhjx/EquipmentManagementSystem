@@ -1,12 +1,14 @@
 ﻿using System.Threading.Tasks;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace EquipmentManagementSystem.Pages.UsageRecords
 {
+    [AllowAnonymous]
     public class DetailsModel : PageModel
     {
         private readonly EquipmentContext _context;
