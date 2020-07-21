@@ -70,113 +70,113 @@
 
 @if (Model.UsageRecords != null)
 {
-    <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">
-                <i class="fas fa-chart-bar mr-1"></i>
-                查询结果
-            </h3>
-            <div class="card-tools">
-                <ul class="nav nav-pills ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#data-chart" data-toggle="tab">图表</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#data-grid" data-toggle="tab">数据</a>
-                    </li>
-                </ul>
-            </div>
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i class="fas fa-chart-bar mr-1"></i>
+            查询结果
+        </h3>
+        <div class="card-tools">
+            <ul class="nav nav-pills ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#data-chart" data-toggle="tab">图表</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#data-grid" data-toggle="tab">数据</a>
+                </li>
+            </ul>
         </div>
-        <div class="card-body">
-            <div class="tab-content p-0">
-                <div class="chart tab-pane " id="data-grid" style="position: relative; ">
-                    <div class="table-responsive">
-                        <table id="export" class="table table-hover text-nowrap">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.UsageRecords[0].InstrumentId)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.UsageRecords[0].ProjectName)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.UsageRecords[0].BeginTimeOfMaintain)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.UsageRecords[0].BeginTimeOfTest)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.UsageRecords[0].EndTime)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.UsageRecords[0].SampleNumber)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.UsageRecords[0].TestNumber)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.UsageRecords[0].Creator)
-                                    </th>
-                                    <th>维护时长(h)</th>
-                                    <th>检测时长(h)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model.UsageRecords)
+    </div>
+    <div class="card-body">
+        <div class="tab-content p-0">
+            <div class="chart tab-pane " id="data-grid" style="position: relative; ">
+                <div class="table-responsive">
+                    <table id="export" class="table table-hover text-nowrap">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.UsageRecords[0].InstrumentId)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.UsageRecords[0].ProjectName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.UsageRecords[0].BeginTimeOfMaintain)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.UsageRecords[0].BeginTimeOfTest)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.UsageRecords[0].EndTime)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.UsageRecords[0].SampleNumber)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.UsageRecords[0].TestNumber)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.UsageRecords[0].Creator)
+                                </th>
+                                <th>维护时长(h)</th>
+                                <th>检测时长(h)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.UsageRecords)
                                 {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.InstrumentId)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.ProjectName)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.BeginTimeOfMaintain)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.BeginTimeOfTest)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.EndTime)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.SampleNumber)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.TestNumber)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Creator)
-                                        </td>
-                                        <td>@((item.BeginTimeOfTest - item.BeginTimeOfMaintain).GetValueOrDefault().TotalHours.ToString("f1"))</td>
-                                        <td class="time">@((item.EndTime - item.BeginTimeOfTest).GetValueOrDefault().TotalHours.ToString("f1"))</td>
-                                    </tr>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.InstrumentId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ProjectName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.BeginTimeOfMaintain)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.BeginTimeOfTest)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EndTime)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SampleNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TestNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Creator)
+                                </td>
+                                <td>@((item.BeginTimeOfTest - item.BeginTimeOfMaintain).GetValueOrDefault().TotalHours.ToString("f1"))</td>
+                                <td class="time">@((item.EndTime - item.BeginTimeOfTest).GetValueOrDefault().TotalHours.ToString("f1"))</td>
+                            </tr>
                                 }
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td class="text-bold">总时长(h)</td>
-                                    <td id="total" class="text-bold"></td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td class="text-bold">总时长(h)</td>
+                                <td id="total" class="text-bold"></td>
+                            </tr>
+                        </tfoot>
+                    </table>
                 </div>
+            </div>
 
-                <div class="chart tab-pane active" id="data-chart" style="position: relative;">
-                    <div class="chartjs-size-monitor">
-                        <div class="chartjs-size-monitor-expand"><div class=""></div></div>
-                        <div class="chartjs-size-monitor-shrink"><div class=""></div></div>
-                    </div>
-                    @*<canvas id="data-chart-canvas" height="275" width="900" aria-label="chart" role="img">
-                            <p>当前浏览器不支持查看该元素！</p>
-                        </canvas>*@
+            <div class="chart tab-pane active" id="data-chart" style="position: relative;">
+                <div class="chartjs-size-monitor">
+                    <div class="chartjs-size-monitor-expand"><div class=""></div></div>
+                    <div class="chartjs-size-monitor-shrink"><div class=""></div></div>
                 </div>
+                @*<canvas id="data-chart-canvas" height="275" width="900" aria-label="chart" role="img">
+                        <p>当前浏览器不支持查看该元素！</p>
+                    </canvas>*@
             </div>
         </div>
     </div>
+</div>
 }
 
 
@@ -217,13 +217,20 @@
                 }
             }
             let dic = @(Json.Serialize(instrument));
+            var div = document.getElementById('data-chart');
+
+            if (Object.keys(dic).length == 0) {
+                div.innerHTML = "<p>未查询到数据！</p>";
+                return;
+            }
 
             for (let key in dic) {
-                var div = document.getElementById('data-chart');
                 var canvas = document.createElement("canvas");
                 var br = document.createElement("br");
+
                 canvas.height = "275";
                 canvas.width = "900";
+
                 div.appendChild(canvas);
                 div.appendChild(br);
 
