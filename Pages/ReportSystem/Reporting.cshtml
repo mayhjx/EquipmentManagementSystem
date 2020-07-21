@@ -165,14 +165,14 @@
                     </div>
                 </div>
 
-                <div class="chart tab-pane active" id="data-chart" style="position: relative; height: 500px;">
+                <div class="chart tab-pane active" id="data-chart" style="position: relative;">
                     <div class="chartjs-size-monitor">
                         <div class="chartjs-size-monitor-expand"><div class=""></div></div>
                         <div class="chartjs-size-monitor-shrink"><div class=""></div></div>
                     </div>
-                    <canvas id="data-chart-canvas" height="275" width="900" aria-label="chart" role="img">
-                        <p>当前浏览器不支持查看该元素！</p>
-                    </canvas>
+                    @*<canvas id="data-chart-canvas" height="275" width="900" aria-label="chart" role="img">
+                            <p>当前浏览器不支持查看该元素！</p>
+                        </canvas>*@
                 </div>
             </div>
         </div>
@@ -194,66 +194,84 @@
 
     <script>
         $(document).ready(function () {
-
-            // 各仪器使用记录
-            var ctx = document.getElementById('data-chart-canvas').getContext('2d');
-            var chart = new Chart(ctx, {
-            // The type of chart we want to create
-            type: 'bar',
-
-            // The data for our dataset
-            data: {
-                @{
-                    var date = new List<string>();
-                    var time = new Dictionary<string, double>();
-                    if (Model.UsageRecords != null)
+            @{
+                var date = new List<string>();
+                var time = new List<double>();
+                var instrument = new Dictionary<string, List<double>>();
+                if (Model.UsageRecords != null)
+                {
+                    foreach (var item in Model.UsageRecords)
                     {
-                        foreach (var item in Model.UsageRecords)
-                        {
 
-                            date.Add(item.BeginTimeOfTest.GetValueOrDefault().ToShortDateString());
-                            time.Add(item.InstrumentId, Math.Round((item.EndTime - item.BeginTimeOfTest).GetValueOrDefault().TotalHours,1));
+                        date.Add(item.BeginTimeOfTest.GetValueOrDefault().ToShortDateString());
+                        time.Add(Math.Round((item.EndTime - item.BeginTimeOfTest).GetValueOrDefault().TotalHours,1));
+                        try
+                        {
+                            instrument[item.InstrumentId] = time;
+                        }
+                        catch(KeyNotFoundException)
+                        {
+                            instrument.Add(item.InstrumentId, time);
                         }
                     }
                 }
+            }
+            let dic = @(Json.Serialize(instrument));
+
+            for (let key in dic) {
+                var div = document.getElementById('data-chart');
+                var canvas = document.createElement("canvas");
+                var br = document.createElement("br");
+                canvas.height = "275";
+                canvas.width = "900";
+                div.appendChild(canvas);
+                div.appendChild(br);
+
+                var ctx = canvas.getContext('2d');
+                var chart = new Chart(ctx, {
+                // The type of chart we want to create
+                type: 'bar',
+
+                // The data for our dataset
+                data: {
 
                     labels: @Json.Serialize(date),
                     datasets: [{
-                        label: '使用时长',
+                        label: key + ' 使用时长',
                         backgroundColor: 'rgb(65, 105, 225)',
                         borderColor: 'rgb(65, 105, 225)',
-                        data: @Json.Serialize(time),
+                        data: dic[key],
                     }]
-                },
-
-                // Configuration options go here
-                options: {
-                    scales: {
-                        xAxes: [{
-                            type: 'time',
-                            time: {
-                                unit: "day",
-                                displayFormats: {
-                                    day: "YYYY-MM-DD"
+                    },
+                    // Configuration options go here
+                    options: {
+                        scales: {
+                            xAxes: [{
+                                type: 'time',
+                                time: {
+                                    unit: "day",
+                                    displayFormats: {
+                                        day: "YYYY-MM-DD"
+                                    }
+                                },
+                            }],
+                            yAxes: [{
+                                ticks: {
+                                    max: 24,
+                                    beginAtZero: false
+                                },
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: "小时",
                                 }
-                            },
-                        }],
-                        yAxes: [{
-                            ticks: {
-                                max: 24,
-                                beginAtZero: false
-                            },
-                            scaleLabel: {
-                                display: true,
-                                labelString: "小时",
-                            }
-                        }]
+                            }]
+                        }
                     }
-                }
-            });
+                });
+            };
+        });
 
-            console.log(@Json.Serialize(time));
-
+        $(document).ready(function () {
             // 动态生成检测项目
             $("select#group").on("change", function () {
                 var group = $(this).val();
@@ -262,7 +280,6 @@
                 $("select#project").append("<option value=''>---请选择---</option>");
                 $.getJSON(`?handler=ProjectFilter&group=${group}`, (data) => {
                     $.each(data, function (i, item) {
-                        console.log(item);
                         if (item.length > 0) {
                             $("select#project").append(`<option value='${item}'>${item}</option>`);
                         }
@@ -323,7 +340,7 @@
             });
 
             // 计算总时长
-            $("td#total").text();
+            $("td#total").text(@(time.Sum().ToString("f1")));
         });
     </script>
 }
