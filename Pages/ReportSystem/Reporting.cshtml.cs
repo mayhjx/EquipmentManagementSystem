@@ -146,10 +146,11 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
             //                            .ToList();
             //}
 
-            PlatformSelectList = new SelectList((from i in _context.Instruments
-                                                 select i.Platform)
-                                                 .Distinct(), Search.Platform);
 
+
+
+            PlatformSelectList = new SelectList((from i in _context.Instruments
+                                                 select i.Platform).Distinct(), Search.Platform);
             GroupSelectList = new SelectList(_context.Groups.AsNoTracking(), "Name", "Name", Search.Group);
             InstrumentSelectList = new SelectList(_context.Instruments.AsNoTracking(), "ID", "ID", Search.Instrument);
             ProjectSelectList = new SelectList(_context.Projects.AsNoTracking(), "Name", "Name", Search.Project);
