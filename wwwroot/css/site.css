@@ -77,4 +77,7 @@ body {
     @page {
         size: A4 landscape;
     }
+    html {
+        zoom:40%;
+    }
 }
