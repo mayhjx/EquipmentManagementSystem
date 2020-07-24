@@ -79,13 +79,13 @@
             <div class="card-tools">
                 <ul class="nav nav-pills ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#data-chart" data-toggle="tab">图表</a>
+                        <a class="nav-link " href="#data-chart" data-toggle="tab">图表</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#data" data-toggle="tab">数据</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#data-grid" data-toggle="tab">使用记录表</a>
+                        <a class="nav-link active" href="#data-grid" data-toggle="tab">使用记录表</a>
                     </li>
                 </ul>
             </div>
@@ -365,8 +365,12 @@
                 {
                     foreach (var item in Model.UsageRecords)
                     {
+                        var beginTime = item.BeginTimeOfTest.GetValueOrDefault().ToShortDateString();
+                        if (!date.Contains(beginTime))
+                        {
+                            date.Add(beginTime);
 
-                        date.Add(item.BeginTimeOfTest.GetValueOrDefault().ToShortDateString());
+                        }
                         time = Math.Round((item.EndTime - item.BeginTimeOfTest).GetValueOrDefault().TotalHours,1);
                         totalTime += time;
 

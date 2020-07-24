@@ -93,6 +93,7 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
             {
                 var records = from record in _context.UsageRecords
                             .AsNoTracking()
+                            .OrderBy(record => record.BeginTimeOfTest)
                             .Include(record => record.Instrument)
                             .Include(record => record.Project)
                                 .ThenInclude(record => record.Group)
