@@ -99,7 +99,7 @@
                     </div>
                 </div>
 
-                <div class="chart tab-pane " id="data" style="position: relative; ">
+                <div class="tab-pane " id="data" style="position: relative; ">
                     <div class="table-responsive">
                         <table id="export" class="table table-hover text-nowrap">
                             <thead>
@@ -174,28 +174,21 @@
                         </table>
                     </div>
                 </div>
-                <div class="chart tab-pane active" id="data-grid" style="position: relative; ">
-                    @*<h4 class="text-center">色谱质谱联用设备使用通用记录表</h4>
-                        <h4 class="text-center">UHPLC,LC-MS/MS,GC-MS Use Form</h4>
-                        <div class="row">
-                            <div class="col-6">
-                                <p class="text-left">仪器编号：_____________ 仪器型号：_____________</p>
-                            </div>
-                            <div class="col-6">
-                                <p class="text-right">KM-SOP0314.___.01</p>
-                            </div>
-                        </div>*@
+                <div class="tab-pane active" id="data-grid" style="position: relative; ">
+                    <button class="btn btn-outline-primary float-right no-print" style="margin-right:10px;" onclick="javascript:window.print()">
+                        <i class="fa fa-print"></i> 打印
+                    </button>
                     <table class="table table-sm table-borderless">
                         <thead>
                             <tr>
-                                <th colspan="13" class="text-center border-white h4">色谱质谱联用设备使用通用记录表</th>
+                                <th colspan="13" class=""><h4 class="text-center">色谱质谱联用设备使用通用记录表</h4></th>
                             </tr>
                             <tr>
-                                <th colspan="13" class="text-center border-white h5">UHPLC,LC-MS/MS,GC-MS Use Form</th>
+                                <th colspan="13" class=""><h5 class="text-center">UHPLC, LC-MS/MS, GC-MS Use Form</h5></th>
                             </tr>
                             <tr>
-                                <th colspan="7" class=" border-white border-bottom-0">仪器编号：_____________ 仪器型号：_____________</th>
-                                <th colspan="6" class="text-right  border-white border-bottom-0">KM-SOP0314. ___ .01</th>
+                                <th colspan="7" class="">仪器编号：_____________ 仪器型号：_____________</th>
+                                <th colspan="6" class="text-right">KM-SOP0314. ___ .01</th>
                             </tr>
                             <tr>
                                 <th class="border border-dark">
@@ -286,26 +279,6 @@
                                 return key;
                             }
                         }
-                        <tbody>
-                            @foreach (var item in Model.UsageRecords)
-                            {
-                                <tr>
-                                    <td class="border border-dark">@item.BeginTimeOfTest</td>
-                                    <td class="border border-dark">@item.EndTime</td>
-                                    <td class="border border-dark">@item.ProjectName</td>
-                                    <td class="border border-dark">@item.ColumnNumber @item.ColumnTwoNumber / @GetKeyFromValue(columnType, item.Project.ColumnType)</td>
-                                    <td class="border border-dark">@GetKeyFromValue(carrier, item.Project.Carrier)</td>
-                                    <td class="border border-dark">@GetKeyFromValue(detector, item.Project.Detector)</td>
-                                    <td class="border border-dark">@item.ColumnPressure @item.ColumnTwoPressure </td>
-                                    <td class="border border-dark">@GetKeyFromValue(ionSource, item.Project.IonSource)</td>
-                                    <td class="border border-dark">@item.VacuumDegree</td>
-                                    <td class="border border-dark">@item.BlankSignal</td>
-                                    <td class="border border-dark">@item.TestSignal</td>
-                                    <td class="border border-dark">@item.Creator</td>
-                                    <td class="border border-dark">@item.Remark</td>
-                                </tr>
-                            }
-                        </tbody>
                         <tfoot>
                             <tr>
                                 <td colspan="13" class="border border-dark">
@@ -340,6 +313,27 @@
                                 <td colspan="3" class="border border-dark"></td>
                             </tr>
                         </tfoot>
+                        <tbody>
+                            @foreach (var item in Model.UsageRecords)
+                            {
+                                <tr>
+                                    <td class="border border-dark">@item.BeginTimeOfTest</td>
+                                    <td class="border border-dark">@item.EndTime</td>
+                                    <td class="border border-dark">@item.ProjectName</td>
+                                    <td class="border border-dark">@item.ColumnNumber @item.ColumnTwoNumber / @GetKeyFromValue(columnType, item.Project.ColumnType)</td>
+                                    <td class="border border-dark">@GetKeyFromValue(carrier, item.Project.Carrier)</td>
+                                    <td class="border border-dark">@GetKeyFromValue(detector, item.Project.Detector)</td>
+                                    <td class="border border-dark">@item.ColumnPressure @item.ColumnTwoPressure </td>
+                                    <td class="border border-dark">@GetKeyFromValue(ionSource, item.Project.IonSource)</td>
+                                    <td class="border border-dark">@item.VacuumDegree</td>
+                                    <td class="border border-dark">@item.BlankSignal</td>
+                                    <td class="border border-dark">@item.TestSignal</td>
+                                    <td class="border border-dark">@item.Creator</td>
+                                    <td class="border border-dark">@item.Remark</td>
+                                </tr>
+                            }
+                        </tbody>
+
                     </table>
                 </div>
             </div>
