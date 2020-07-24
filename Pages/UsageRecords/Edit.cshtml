@@ -1,5 +1,6 @@
 ﻿@page
 @model EquipmentManagementSystem.Pages.UsageRecords.EditModel
+@inject SignInManager<User> signInManager
 
 @{
     ViewData["Title"] = "编辑";
@@ -14,7 +15,7 @@
     </div>
     <div class="card-body">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-4">
                 <form method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="UsageRecord.Id" />
@@ -196,8 +197,15 @@
             </div>
         </div>
 
-        <div>
-            <a asp-page="./Index">返回</a>
+        <div class="row">
+            <div class="col-4">
+                <a asp-page="./Index">返回</a>
+                @if (signInManager.IsSignedIn(User) && (await AuthorizationService.AuthorizeAsync(User, Model.UsageRecord, Operations.Delete)).Succeeded)
+                {
+                    <text> | </text>
+                    <a class="float-right" asp-page="./Delete" asp-route-id="@Model.UsageRecord.Id">删除</a>
+                }
+            </div>
         </div>
     </div>
 </div>
