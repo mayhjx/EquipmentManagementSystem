@@ -8,305 +8,305 @@
                                             (User.IsInRole(Constants.PrincipalRole) && UserManager.GetUserAsync(User).Result.Group == Model.Instrument.Group);
 }
 
-    <div class="card">
-        <div class="card-header">
-            <h4>
-                @Html.DisplayFor(mdoel => Model.Instrument.ID)
-                @{
-                    var status = Model.Instrument.Status.ToString();
-                    if (status == "Using")
-                    {
-                        <span class="badge badge-success">正常</span>
-                    }
-                    else if (status == "Malfunction")
-                    {
-                        <span class="badge badge-warning">故障</span>
-                    }
-                    else if (status == "StopUsing")
-                    {
-                        <span class="badge badge-warning">停用</span>
-                    }
-                    else if (status == "Allocate")
-                    {
-                        <span class="badge badge-warning">调拨</span>
-                    }
-                    else if (status == "Scrapped")
-                    {
-                        <span class="badge badge-danger">报废</span>
-                    }
+<div class="card">
+    <div class="card-header">
+        <h4>
+            @Html.DisplayFor(mdoel => Model.Instrument.ID)
+            @{
+                var status = Model.Instrument.Status.ToString();
+                if (status == "Using")
+                {
+                    <span class="badge badge-success">正常</span>
                 }
-            </h4>
+                else if (status == "Malfunction")
+                {
+                    <span class="badge badge-warning">故障</span>
+                }
+                else if (status == "StopUsing")
+                {
+                    <span class="badge badge-warning">停用</span>
+                }
+                else if (status == "Allocate")
+                {
+                    <span class="badge badge-warning">调拨</span>
+                }
+                else if (status == "Scrapped")
+                {
+                    <span class="badge badge-danger">报废</span>
+                }
+            }
+        </h4>
+    </div>
+
+    <div class="card-body">
+        <div class="row row-cols-1 row-cols-md-2">
+            <div class="col mb-3">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <p class="card-title">
+                            <i class="fa fa-tag" aria-hidden="true"></i> 基础信息
+                        </p>
+                        <div class="card-tools">
+                            @if ((await AuthorizationService.AuthorizeAsync(User, Model.Instrument, Operations.Update)).Succeeded)
+                            {
+                                <a asp-page="./Edit" asp-route-id="@Model.Instrument.ID">
+                                    <i class="fa fa-edit fa-lg" aria-hidden="true"></i>@*编辑*@
+                                </a>
+                            }
+                        </div>
+                    </div>
+                    <div class="card-body table-responsive">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <dl class="row">
+                                    <dt class="col-sm-5">
+                                        @Html.DisplayNameFor(model => model.Instrument.Platform)
+                                    </dt>
+                                    <dd class="col-sm-7">
+                                        @Html.DisplayFor(model => model.Instrument.Platform)
+                                    </dd>
+                                    <dt class="col-sm-5">
+                                        @Html.DisplayNameFor(model => model.Instrument.Name)
+                                    </dt>
+                                    <dd class="col-sm-7">
+                                        @Html.DisplayFor(model => model.Instrument.Name)
+                                    </dd>
+                                    <dt class="col-sm-5">
+                                        @Html.DisplayNameFor(model => model.Instrument.StartUsingDate)
+                                    </dt>
+                                    <dd class="col-sm-7">
+                                        @Html.DisplayFor(model => model.Instrument.StartUsingDate)
+                                    </dd>
+                                    <dt class="col-sm-5">
+                                        @Html.DisplayNameFor(model => model.Instrument.CalibrationCycle)
+                                    </dt>
+                                    <dd class="col-sm-7">
+                                        @Html.DisplayFor(model => model.Instrument.CalibrationCycle)
+                                    </dd>
+                                    <dt class="col-sm-5">
+                                        @Html.DisplayNameFor(model => model.Instrument.MetrologicalCharacteristics)
+                                    </dt>
+                                    <dd class="col-sm-7">
+                                        @Html.DisplayFor(model => model.Instrument.MetrologicalCharacteristics)
+                                    </dd>
+                                    <dt class="col-sm-5">
+                                        @Html.DisplayNameFor(model => model.Instrument.Remark)
+                                    </dt>
+                                    <dd class="col-sm-7">
+                                        @Html.DisplayFor(model => model.Instrument.Remark)
+                                    </dd>
+                                </dl>
+                            </div>
+                            <div class="col-md-6">
+                                <dl class="row">
+                                    <dt class="col-sm-5">
+                                        @Html.DisplayNameFor(model => model.Instrument.Location)
+                                    </dt>
+                                    <dd class="col-sm-7">
+                                        @Html.DisplayFor(model => model.Instrument.Location)
+                                    </dd>
+                                    <dt class="col-sm-5">
+                                        @Html.DisplayNameFor(model => model.Instrument.Principal)
+                                    </dt>
+                                    <dd class="col-sm-7">
+                                        @Html.DisplayFor(model => model.Instrument.Principal)
+                                    </dd>
+                                    <dt class="col-sm-5">
+                                        @Html.DisplayNameFor(model => model.Instrument.NewSystemCode)
+                                    </dt>
+                                    <dd class="col-sm-7">
+                                        @Html.DisplayFor(model => model.Instrument.NewSystemCode)
+                                    </dd>
+                                    <dt class="col-sm-5">
+                                        @Html.DisplayNameFor(model => model.Instrument.Group)
+                                    </dt>
+                                    <dd class="col-sm-7">
+                                        @Html.DisplayFor(model => model.Instrument.Group)
+                                    </dd>
+                                    <dt class="col-sm-5">
+                                        @Html.DisplayNameFor(model => model.Instrument.Projects)
+                                    </dt>
+                                    <dd class="col-sm-7">
+                                        @if (!string.IsNullOrEmpty(Model.Instrument.Projects))
+                                        {
+                                            <ul class="list-unstyled">
+                                                @foreach (var project in Model.Instrument.Projects.Split(", "))
+                                                {
+                                                    <li>@project</li>
+                                                }
+                                            </ul>
+                                        }
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col mb-3">
+                <div class="card height-control h-100">
+                    <div class="card-header">
+                        <p class="card-title">
+                            <i class="fa fa-balance-scale" aria-hidden="true"></i> 校准信息
+                        </p>
+                        <div class="card-tools">
+                            @if (CanCreateCalibrationAndMalfunction)
+                            {
+                                <a asp-page="../Calibrations/Create" asp-route-id="@Model.Instrument.ID">
+                                    <i class="fa fa-plus fa-lg" aria-hidden="true"></i>@*新建*@
+                                </a>
+                            }
+                        </div>
+                    </div>
+                    <div class="card-body table-responsive">
+                        <table class="table table-sm text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(model => model.Instrument.Calibrations.First().Date)</th>
+                                    <th>@Html.DisplayNameFor(model => model.Instrument.Calibrations.First().Unit)</th>
+                                    <th>@Html.DisplayNameFor(model => model.Instrument.Calibrations.First().Result)</th>
+                                    <th>@Html.DisplayNameFor(model => model.Instrument.Calibrations.First().Calibrator)</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Instrument.Calibrations)
+                                {
+                                    <tr>
+                                        <td> @Html.DisplayFor(modelItem => item.Date) </td>
+                                        <td> @Html.DisplayFor(modelItem => item.Unit) </td>
+                                        <td> @Html.DisplayFor(modelItem => item.Result) </td>
+                                        <td> @Html.DisplayFor(modelItem => item.Calibrator) </td>
+                                        <td>
+                                            @if ((await AuthorizationService.AuthorizeAsync(User, item, Operations.Update)).Succeeded)
+                                            {
+                                                <a asp-page="../Calibrations/Edit" asp-route-id="@item.ID">编辑</a>
+                                            }
+                                            @if ((await AuthorizationService.AuthorizeAsync(User, item, Operations.Delete)).Succeeded)
+                                            {
+                                                <text>|</text>
+                                                <a asp-page="../Calibrations/Delete" asp-route-id="@item.ID">删除</a>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row row-cols-1 row-cols-md-2">
+            <div class="col mb-3">
+                <div class="card height-control h-100">
+                    <div class="card-header">
+                        <p class="card-title">
+                            <i class="fa fa-cube" aria-hidden="true"></i> 部件信息
+                        </p>
+                        <div class="card-tools">
+                            @if ((await AuthorizationService.AuthorizeAsync(User, Model.Instrument, Operations.Create)).Succeeded)
+                            {
+                                <a asp-page="../Components/Create" asp-route-id="@Model.Instrument.ID">
+                                    <i class="fa fa-plus fa-lg" aria-hidden="true"></i>@*新建*@
+                                </a>
+                            }
+                        </div>
+                    </div>
+                    <div class="card-body table-responsive">
+                        <table class="table table-sm text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(model => model.Instrument.Components.First().Name)</th>
+                                    <th>@Html.DisplayNameFor(model => model.Instrument.Components.First().Brand)</th>
+                                    <th>@Html.DisplayNameFor(model => model.Instrument.Components.First().Model)</th>
+                                    <th>@Html.DisplayNameFor(model => model.Instrument.Components.First().SerialNumber)</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Instrument.Components)
+                                {
+                                    <tr>
+                                        <td> @Html.DisplayFor(modelItem => item.Name) </td>
+                                        <td> @Html.DisplayFor(modelItem => item.Brand) </td>
+                                        <td> @Html.DisplayFor(modelItem => item.Model) </td>
+                                        <td> @Html.DisplayFor(modelItem => item.SerialNumber) </td>
+                                        <td>
+                                            @if ((await AuthorizationService.AuthorizeAsync(User, Model.Instrument, Operations.Update)).Succeeded)
+                                            {
+                                                <a asp-page="../Components/Edit" asp-route-id="@item.ID">编辑</a>
+                                            }
+                                            @if ((await AuthorizationService.AuthorizeAsync(User, Model.Instrument, Operations.Delete)).Succeeded)
+                                            {
+                                                <text >|</text>
+                                                <a asp-page="../Components/Delete" asp-route-id="@item.ID">删除</a>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col mb-3">
+                <div class="card height-control h-100">
+                    <div class="card-header">
+                        <p class="card-title">
+                            <i class="fa fa-wrench" aria-hidden="true"></i> 故障信息
+                        </p>
+                        <div class="card-tools">
+                            @if (CanCreateCalibrationAndMalfunction)
+                            {
+                                <a asp-page="/Malfunctions/WorkOrders/Create" asp-route-id="@Model.Instrument.ID">
+                                    <i class="fa fa-plus fa-lg" aria-hidden="true"></i>@*新建*@
+                                </a>
+                            }
+                        </div>
+                    </div>
+                    <div class="card-body table-responsive">
+                        <table class="table table-sm text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(model => model.Instrument.MalfunctionWorkOrder.First().MalfunctionInfo.BeginTime)</th>
+                                    <th>@Html.DisplayNameFor(model => model.Instrument.MalfunctionWorkOrder.First().MalfunctionInfo.Part)</th>
+                                    <th>@Html.DisplayNameFor(model => model.Instrument.MalfunctionWorkOrder.First().MalfunctionInfo.Phenomenon)</th>
+                                    <th>@Html.DisplayNameFor(model => model.Instrument.MalfunctionWorkOrder.First().MalfunctionInfo.MalfunctionWorkOrder.Progress)</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Instrument.MalfunctionWorkOrder)
+                                {
+                                    <tr>
+                                        <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.BeginTime)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.Part)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.Phenomenon)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.MalfunctionWorkOrder.Progress)</td>
+                                        <td>
+                                            <a asp-page="/Malfunctions/WorkOrders/Details" asp-route-id="@item.ID"><i class="fa fa-eye fa-lg" aria-hidden="true"></i></a>@*查看*@
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="card-body">
-            <div class="row row-cols-1 row-cols-md-2">
-                <div class="col mb-3">
-                    <div class="card h-100">
-                        <div class="card-header">
-                            <p class="card-title">
-                                <i class="fa fa-tag" aria-hidden="true"></i> 基础信息
-                            </p>
-                            <div class="card-tools">
-                                @if ((await AuthorizationService.AuthorizeAsync(User, Model.Instrument, Operations.Update)).Succeeded)
-                                {
-                                    <a asp-page="./Edit" asp-route-id="@Model.Instrument.ID">
-                                        <i class="fas fa-edit fa-lg" aria-hidden="true"></i>@*编辑*@
-                                    </a>
-                                }
-                            </div>
-                        </div>
-                        <div class="card-body table-responsive">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <dl class="row">
-                                        <dt class="col-sm-5">
-                                            @Html.DisplayNameFor(model => model.Instrument.Platform)
-                                        </dt>
-                                        <dd class="col-sm-7">
-                                            @Html.DisplayFor(model => model.Instrument.Platform)
-                                        </dd>
-                                        <dt class="col-sm-5">
-                                            @Html.DisplayNameFor(model => model.Instrument.Name)
-                                        </dt>
-                                        <dd class="col-sm-7">
-                                            @Html.DisplayFor(model => model.Instrument.Name)
-                                        </dd>
-                                        <dt class="col-sm-5">
-                                            @Html.DisplayNameFor(model => model.Instrument.StartUsingDate)
-                                        </dt>
-                                        <dd class="col-sm-7">
-                                            @Html.DisplayFor(model => model.Instrument.StartUsingDate)
-                                        </dd>
-                                        <dt class="col-sm-5">
-                                            @Html.DisplayNameFor(model => model.Instrument.CalibrationCycle)
-                                        </dt>
-                                        <dd class="col-sm-7">
-                                            @Html.DisplayFor(model => model.Instrument.CalibrationCycle)
-                                        </dd>
-                                        <dt class="col-sm-5">
-                                            @Html.DisplayNameFor(model => model.Instrument.MetrologicalCharacteristics)
-                                        </dt>
-                                        <dd class="col-sm-7">
-                                            @Html.DisplayFor(model => model.Instrument.MetrologicalCharacteristics)
-                                        </dd>
-                                        <dt class="col-sm-5">
-                                            @Html.DisplayNameFor(model => model.Instrument.Remark)
-                                        </dt>
-                                        <dd class="col-sm-7">
-                                            @Html.DisplayFor(model => model.Instrument.Remark)
-                                        </dd>
-                                    </dl>
-                                </div>
-                                <div class="col-md-6">
-                                    <dl class="row">
-                                        <dt class="col-sm-5">
-                                            @Html.DisplayNameFor(model => model.Instrument.Location)
-                                        </dt>
-                                        <dd class="col-sm-7">
-                                            @Html.DisplayFor(model => model.Instrument.Location)
-                                        </dd>
-                                        <dt class="col-sm-5">
-                                            @Html.DisplayNameFor(model => model.Instrument.Principal)
-                                        </dt>
-                                        <dd class="col-sm-7">
-                                            @Html.DisplayFor(model => model.Instrument.Principal)
-                                        </dd>
-                                        <dt class="col-sm-5">
-                                            @Html.DisplayNameFor(model => model.Instrument.NewSystemCode)
-                                        </dt>
-                                        <dd class="col-sm-7">
-                                            @Html.DisplayFor(model => model.Instrument.NewSystemCode)
-                                        </dd>
-                                        <dt class="col-sm-5">
-                                            @Html.DisplayNameFor(model => model.Instrument.Group)
-                                        </dt>
-                                        <dd class="col-sm-7">
-                                            @Html.DisplayFor(model => model.Instrument.Group)
-                                        </dd>
-                                        <dt class="col-sm-5">
-                                            @Html.DisplayNameFor(model => model.Instrument.Projects)
-                                        </dt>
-                                        <dd class="col-sm-7">
-                                            @if (!string.IsNullOrEmpty(Model.Instrument.Projects))
-                                            {
-                                                <ul class="list-unstyled">
-                                                    @foreach (var project in Model.Instrument.Projects.Split(", "))
-                                                    {
-                                                        <li>@project</li>
-                                                    }
-                                                </ul>
-                                            }
-                                        </dd>
-                                    </dl>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col mb-3">
-                    <div class="card height-control h-100">
-                        <div class="card-header">
-                            <p class="card-title">
-                                <i class="fa fa-balance-scale" aria-hidden="true"></i> 校准信息
-                            </p>
-                            <div class="card-tools">
-                                @if (CanCreateCalibrationAndMalfunction)
-                                {
-                                    <a asp-page="../Calibrations/Create" asp-route-id="@Model.Instrument.ID">
-                                        <i class="fas fa-plus fa-lg" aria-hidden="true"></i>@*新建*@
-                                    </a>
-                                }
-                            </div>
-                        </div>
-                        <div class="card-body table-responsive">
-                            <table class="table table-sm text-nowrap">
-                                <thead>
-                                    <tr>
-                                        <th>@Html.DisplayNameFor(model => model.Instrument.Calibrations.First().Date)</th>
-                                        <th>@Html.DisplayNameFor(model => model.Instrument.Calibrations.First().Unit)</th>
-                                        <th>@Html.DisplayNameFor(model => model.Instrument.Calibrations.First().Result)</th>
-                                        <th>@Html.DisplayNameFor(model => model.Instrument.Calibrations.First().Calibrator)</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model.Instrument.Calibrations)
-                                    {
-                                        <tr>
-                                            <td> @Html.DisplayFor(modelItem => item.Date) </td>
-                                            <td> @Html.DisplayFor(modelItem => item.Unit) </td>
-                                            <td> @Html.DisplayFor(modelItem => item.Result) </td>
-                                            <td> @Html.DisplayFor(modelItem => item.Calibrator) </td>
-                                            <td>
-                                                @if ((await AuthorizationService.AuthorizeAsync(User, item, Operations.Update)).Succeeded)
-                                                {
-                                                    <a asp-page="../Calibrations/Edit" asp-route-id="@item.ID">编辑</a>
-                                                }
-                                                @if ((await AuthorizationService.AuthorizeAsync(User, item, Operations.Delete)).Succeeded)
-                                                {
-                                                    <text>|</text>
-                                                    <a asp-page="../Calibrations/Delete" asp-route-id="@item.ID">删除</a>
-                                                }
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row row-cols-1 row-cols-md-2">
-                <div class="col mb-3">
-                    <div class="card height-control h-100">
-                        <div class="card-header">
-                            <p class="card-title">
-                                <i class="fa fa-cube" aria-hidden="true"></i> 部件信息
-                            </p>
-                            <div class="card-tools">
-                                @if ((await AuthorizationService.AuthorizeAsync(User, Model.Instrument, Operations.Create)).Succeeded)
-                                {
-                                    <a asp-page="../Components/Create" asp-route-id="@Model.Instrument.ID">
-                                        <i class="fas fa-plus fa-lg" aria-hidden="true"></i>@*新建*@
-                                    </a>
-                                }
-                            </div>
-                        </div>
-                        <div class="card-body table-responsive">
-                            <table class="table table-sm text-nowrap">
-                                <thead>
-                                    <tr>
-                                        <th>@Html.DisplayNameFor(model => model.Instrument.Components.First().Name)</th>
-                                        <th>@Html.DisplayNameFor(model => model.Instrument.Components.First().Brand)</th>
-                                        <th>@Html.DisplayNameFor(model => model.Instrument.Components.First().Model)</th>
-                                        <th>@Html.DisplayNameFor(model => model.Instrument.Components.First().SerialNumber)</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model.Instrument.Components)
-                                    {
-                                        <tr>
-                                            <td> @Html.DisplayFor(modelItem => item.Name) </td>
-                                            <td> @Html.DisplayFor(modelItem => item.Brand) </td>
-                                            <td> @Html.DisplayFor(modelItem => item.Model) </td>
-                                            <td> @Html.DisplayFor(modelItem => item.SerialNumber) </td>
-                                            <td>
-                                                @if ((await AuthorizationService.AuthorizeAsync(User, Model.Instrument, Operations.Update)).Succeeded)
-                                                {
-                                                    <a asp-page="../Components/Edit" asp-route-id="@item.ID">编辑</a>
-                                                }
-                                                @if ((await AuthorizationService.AuthorizeAsync(User, Model.Instrument, Operations.Delete)).Succeeded)
-                                                {
-                                                    <text >|</text>
-                                                    <a asp-page="../Components/Delete" asp-route-id="@item.ID">删除</a>
-                                                }
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="col mb-3">
-                    <div class="card height-control h-100">
-                        <div class="card-header">
-                            <p class="card-title">
-                                <i class="fa fa-tools" aria-hidden="true"></i> 故障信息
-                            </p>
-                            <div class="card-tools">
-                                @if (CanCreateCalibrationAndMalfunction)
-                                {
-                                    <a asp-page="/Malfunctions/WorkOrders/Create" asp-route-id="@Model.Instrument.ID">
-                                        <i class="fas fa-plus fa-lg" aria-hidden="true"></i>@*新建*@
-                                    </a>
-                                }
-                            </div>
-                        </div>
-                        <div class="card-body table-responsive">
-                            <table class="table table-sm text-nowrap">
-                                <thead>
-                                    <tr>
-                                        <th>@Html.DisplayNameFor(model => model.Instrument.MalfunctionWorkOrder.First().MalfunctionInfo.BeginTime)</th>
-                                        <th>@Html.DisplayNameFor(model => model.Instrument.MalfunctionWorkOrder.First().MalfunctionInfo.Part)</th>
-                                        <th>@Html.DisplayNameFor(model => model.Instrument.MalfunctionWorkOrder.First().MalfunctionInfo.Phenomenon)</th>
-                                        <th>@Html.DisplayNameFor(model => model.Instrument.MalfunctionWorkOrder.First().MalfunctionInfo.MalfunctionWorkOrder.Progress)</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model.Instrument.MalfunctionWorkOrder)
-                                    {
-                                        <tr>
-                                            <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.BeginTime)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.Part)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.Phenomenon)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.MalfunctionWorkOrder.Progress)</td>
-                                            <td>
-                                                <a asp-page="/Malfunctions/WorkOrders/Details" asp-route-id="@item.ID"><i class="fas fa-eye fa-lg" aria-hidden="true"></i></a>@*查看*@
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row no-print">
-                <div class="col-md-12">
-                    <div>
-                        <a asp-page="./Index">
-                            <input type="button" class="btn btn-default" value="返回" style="margin-left: 5px;">
-                        </a>
-                        <button onclick="javascript:window.print()" type="button" class="btn btn-outline-primary float-right" style="margin-right: 5px;">
-                            <i class="fas fa-download"></i> 生成 PDF
-                        </button>
-                    </div>
+        <div class="row no-print">
+            <div class="col-md-12">
+                <div>
+                    <a asp-page="./Index">
+                        <input type="button" class="btn btn-default" value="返回" style="margin-left: 5px;">
+                    </a>
+                    <button onclick="javascript:window.print()" type="button" class="btn btn-outline-primary float-right" style="margin-right: 5px;">
+                        <i class="fa fa-download"></i> 生成 PDF
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+</div>
