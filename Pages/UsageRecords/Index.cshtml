@@ -16,16 +16,19 @@
         </a>
         <div class="card-tools">
             <form class="form-inline float-left" method="post">
-                <label class="my-1 mr-2" for="month" asp-for="@Model.Search.Month"></label>
-                <select class="custom-select my-1 mr-sm-2" id="month" asp-for="@Model.Search.Month">
-                    <option selected>202007</option>
+                <label class="my-1 mr-2" for="status" asp-for="@Model.Search.Status"></label>
+                <select class="custom-select my-1 mr-sm-2" id="status" asp-for="@Model.Search.Status" asp-items="@Html.GetEnumSelectList<EquipmentManagementSystem.Pages.UsageRecords.IndexModel.Status>()">
                 </select>
 
                 <label class="my-1 mr-2" for="project" asp-for="@Model.Search.Project"></label>
-                <select class="custom-select my-1 mr-sm-2" id="project" asp-for="@Model.Search.Project" asp-items="@Model.ProjectSelectList"></select>
+                <select class="custom-select my-1 mr-sm-2" id="project" asp-for="@Model.Search.Project" asp-items="@Model.ProjectSelectList">
+                    <option value="">---请选择---</option>
+                </select>
 
                 <label class="my-1 mr-2" for="instrument" asp-for="@Model.Search.Instrument"></label>
-                <select class="custom-select my-1 mr-sm-2" id="instrument" asp-for="@Model.Search.Instrument"></select>
+                <select class="custom-select my-1 mr-sm-2" id="instrument" asp-for="@Model.Search.Instrument">
+                    <option value="">---请选择---</option>
+                </select>
                 <button type="submit" class="btn btn-primary my-1">查询</button>
             </form>
         </div>
@@ -104,15 +107,13 @@
                             @Html.DisplayFor(modelItem => item.EndTime)
                         </td>
                         <td>
-                            <a asp-page="./Edit" asp-route-id="@item.Id">编辑</a>
+                            <a asp-page="./Edit" asp-route-id="@item.Id"><i class="fa fa-edit fa-lg"></i></a>
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
         <span>
-
-
             @*<button class="btn btn-outline-primary float-right no-print" style="margin-right:10px;" onclick="javascript:window.print()">
                     <i class="fa fa-print"></i> 打印
                 </button>
@@ -287,23 +288,27 @@
 
         function initial() {
             var project = $("select#project").val();
+            if (project == "") {
+                return;
+            }
             $("select#instrument").empty();
+            $("select#instrument").append("<option value=''>---请选择---</option>");
             $.getJSON(`?handler=InstrumentFilter&projectName=${project}`, (data) => {
                 $.each(data, function (i, item) {
                     if (item.length > 0) {
                         $("select#instrument").append(`<option value='${item}'>${item}</option>`);
-                        @if(Model.Search != null)
-                        {
+                        var currentSelectd = @Json.Serialize(Model.Search?.Instrument);
+                        if (currentSelectd == item) {
                             // 激活查询的设备编号
-                            @:$("select#instrument").val(@Json.Serialize(Model.Search?.Instrument))
+                            $("select#instrument").val(currentSelectd)
                         }
                     }
-                    else {
-                        $("select#instrument").empty();
-                        $("select#instrument").append("<option value=''>无可选设备</option>");
-                    }
                 });
+                if (data.length == 0) {
+                    $("select#instrument").empty();
+                    $("select#instrument").append("<option value=''>无可选设备</option>");
+                };
             });
-        }
+        };
     </script>
 }

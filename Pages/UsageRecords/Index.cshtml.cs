@@ -37,6 +37,8 @@ namespace EquipmentManagementSystem.Pages.UsageRecords
                             .Include(record => record.Instrument)
                             .Include(record => record.Project)
                                 .ThenInclude(p => p.Group)
+                            // 默认显示使用中的记录
+                            .Where(record => record.EndTime == null)
                               select record;
 
             var isAuthorized = User.IsInRole(Constants.DirectorRole) || User.IsInRole(Constants.ManagerRole);
@@ -47,9 +49,9 @@ namespace EquipmentManagementSystem.Pages.UsageRecords
             {
                 var currentUserGroup = (await _userManager.GetUserAsync(User)).Group;
 
-                var projectsOfcurrentUserGroup = await projects.Where(p => p.Group.Name == currentUserGroup).Select(p => p.Name).ToListAsync();
+                var projectsOfcurrentUserGroup = await projects.AsNoTracking().Where(p => p.Group.Name == currentUserGroup).Select(p => p.Name).ToListAsync();
 
-                ProjectSelectList = new SelectList(projects.Where(p => p.Group.Name == currentUserGroup).OrderBy(p => p.Name), "Name", "Name");
+                ProjectSelectList = new SelectList(projects.AsNoTracking().Where(p => p.Group.Name == currentUserGroup).OrderBy(p => p.Name), "Name", "Name");
 
                 // 显示当前用户所属项目组的使用登记
                 usageRecord = from record in usageRecord
@@ -58,10 +60,10 @@ namespace EquipmentManagementSystem.Pages.UsageRecords
             }
             else
             {
-                ProjectSelectList = new SelectList(projects.OrderBy(p => p.Name), "Name", "Name");
+                ProjectSelectList = new SelectList(projects.AsNoTracking().OrderBy(p => p.Name), "Name", "Name");
             }
 
-            UsageRecords = await usageRecord.OrderBy(m => m.BeginTimeOfTest).ToListAsync();
+            UsageRecords = await usageRecord.OrderByDescending(m => m.BeginTimeOfTest).ToListAsync();
         }
 
         /// <summary>
@@ -84,46 +86,74 @@ namespace EquipmentManagementSystem.Pages.UsageRecords
                 return Page();
             }
 
-            var usageRecord = _context.UsageRecords
-                                        .AsNoTracking()
-                                        .Include(record => record.Instrument)
-                                        .Include(record => record.Project)
-                                            .ThenInclude(p => p.Group)
-                                        .Where(u => u.InstrumentId == Search.Instrument)
-                                        .Where(u => u.ProjectName == Search.Project);
+            var usageRecord = from record in _context.UsageRecords
+                            .AsNoTracking()
+                            .Include(record => record.Instrument)
+                            .Include(record => record.Project)
+                                .ThenInclude(p => p.Group)
+                              select record;
+
+            // 显示使用中的记录
+            if (Search.Status == Status.Using)
+            {
+                usageRecord = usageRecord.Where(record => record.EndTime == null);
+            }
+
+            if (Search.Instrument != null)
+            {
+                usageRecord = usageRecord.Where(u => u.InstrumentId == Search.Instrument);
+            }
+
+            if (Search.Project != null)
+            {
+                usageRecord = usageRecord.Where(u => u.ProjectName == Search.Project);
+            }
+
+            var projects = _context.Projects.AsNoTracking().Include(p => p.Group);
 
             var isAuthorized = User.IsInRole(Constants.DirectorRole) || User.IsInRole(Constants.ManagerRole);
 
-            // 生成项目选项
-            if (User.Identity.IsAuthenticated)
+            if (User.Identity.IsAuthenticated && !isAuthorized)
             {
                 var currentUserGroup = (await _userManager.GetUserAsync(User)).Group;
 
-                ProjectSelectList = new SelectList(_context.Projects.AsNoTracking()
-                                                                    .Include(p => p.Group)
-                                                                    .Where(p => p.Group.Name == currentUserGroup)
-                                                                    .OrderBy(p => p.Name), "Name", "Name");
+                var projectsOfcurrentUserGroup = await projects.AsNoTracking().Where(p => p.Group.Name == currentUserGroup).Select(p => p.Name).ToListAsync();
+
+                ProjectSelectList = new SelectList(projects.AsNoTracking().Where(p => p.Group.Name == currentUserGroup).OrderBy(p => p.Name), "Name", "Name");
+
+                // 显示当前用户所属项目组的使用登记
+                usageRecord = from record in usageRecord
+                              where projectsOfcurrentUserGroup.Contains(record.ProjectName)
+                              select record;
             }
             else
             {
-                ProjectSelectList = new SelectList(_context.Projects.AsNoTracking().OrderBy(p => p.Name), "Name", "Name");
+                ProjectSelectList = new SelectList(projects.AsNoTracking().OrderBy(p => p.Name), "Name", "Name");
             }
 
-            UsageRecords = await usageRecord.OrderBy(m => m.BeginTimeOfTest).ToListAsync();
+            UsageRecords = await usageRecord.OrderByDescending(m => m.BeginTimeOfTest).ToListAsync();
 
             return Page();
         }
 
         public class SearchForm
         {
-            [Display(Name = "年月")]
-            public string Month { get; set; }
+            [Display(Name = "")]
+            public Status Status { get; set; }
 
             [Display(Name = "检测项目")]
             public string Project { get; set; }
 
             [Display(Name = "设备编号")]
             public string Instrument { get; set; }
+        }
+
+        public enum Status
+        {
+            [Display(Name = "使用中")]
+            Using,
+            [Display(Name = "所有")]
+            All,
         }
     }
 }
