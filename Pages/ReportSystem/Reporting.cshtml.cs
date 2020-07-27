@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Threading.Tasks;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -81,7 +82,9 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
 
         public SelectList InstrumentSelectList { get; set; }
 
-        public IActionResult OnPost()
+        public string InstrumentModel { get; set; }
+
+        public async Task<IActionResult> OnPost()
         {
             if (!ModelState.IsValid)
             {
@@ -106,6 +109,12 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
                     records = from r in records
                               where r.InstrumentId == Search.Instrument
                               select r;
+
+                    InstrumentModel = (await _context.Instruments
+                            .AsNoTracking()
+                            .Include(m => m.Components)
+                            .FirstOrDefaultAsync(m => m.ID == Search.Instrument))
+                            .Components.FirstOrDefault(c => c.Name == "质谱主机").Model;
                 }
                 if (Search.Project != null)
                 {
@@ -129,6 +138,8 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
                 UsageRecords = records.ToList();
             }
 
+
+
             //if (Search.Category == Category.Malfunction)
             //{
             //    MalfunctionWorkOrders = (from record in _context.Set<MalfunctionWorkOrder>()
@@ -151,10 +162,12 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
 
 
             PlatformSelectList = new SelectList((from i in _context.Instruments
-                                                 select i.Platform).Distinct(), Search.Platform);
-            GroupSelectList = new SelectList(_context.Groups.AsNoTracking(), "Name", "Name", Search.Group);
-            InstrumentSelectList = new SelectList(_context.Instruments.AsNoTracking(), "ID", "ID", Search.Instrument);
-            ProjectSelectList = new SelectList(_context.Projects.AsNoTracking(), "Name", "Name", Search.Project);
+                                                 select i.Platform)
+                                                 .Distinct(), Search.Platform);
+
+            GroupSelectList = new SelectList(_context.Groups.AsNoTracking().Where(g => g.Name != "质谱中心").OrderBy(p => p.Name), "Name", "Name", Search.Group);
+            InstrumentSelectList = new SelectList(_context.Instruments.AsNoTracking().OrderBy(p => p.ID), "ID", "ID", Search.Instrument);
+            ProjectSelectList = new SelectList(_context.Projects.AsNoTracking().OrderBy(p => p.Name), "Name", "Name", Search.Project);
 
             return Page();
         }

@@ -73,7 +73,6 @@
     <div class="card">
         <div class="card-header d-print-none">
             <h3 class="card-title">
-                <i class="fas fa-chart-bar mr-1"></i>
                 查询结果
             </h3>
             <div class="card-tools">
@@ -85,7 +84,7 @@
                         <a class="nav-link" href="#data" data-toggle="tab">数据</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="#data-grid" data-toggle="tab">使用记录表</a>
+                        <a class="nav-link active" href="#usage-datagrid" data-toggle="tab">使用记录表</a>
                     </li>
                 </ul>
             </div>
@@ -174,11 +173,48 @@
                         </table>
                     </div>
                 </div>
-                <div class="tab-pane active" id="data-grid" style="position: relative; ">
-                    <button class="btn btn-outline-primary float-right no-print" style="margin-right:10px;" onclick="javascript:window.print()">
-                        <i class="fa fa-print"></i> 打印
+                <div class="tab-pane active" id="usage-datagrid" style="position: relative; ">
+                    <button id="exportToPDF" class="btn btn-outline-primary float-right no-print" style="margin-right:10px;">
+                        <i class="fa fa-print"></i> 打印预览
                     </button>
-                    <table class="table table-sm table-borderless">
+                    @{
+                        var columnType = new Dictionary<char, string>();
+                        var carrier = new Dictionary<char, string>();
+                        var ionSource = new Dictionary<char, string>();
+                        var detector = new Dictionary<char, string>();
+                        char index = 'A';
+
+                        foreach (var item in Model.UsageRecords)
+                        {
+                            if (!columnType.ContainsValue(item.Project.ColumnType))
+                            {
+                                columnType.Add(index, item.Project.ColumnType);
+                                carrier.Add(index, item.Project.Carrier);
+                                ionSource.Add(index, item.Project.IonSource);
+                                detector.Add(index, item.Project.Detector);
+                                index++;
+                            }
+                        }
+
+                        // 色谱柱和真空度压力单位，载体类型
+                        var pressureUnit = Model.UsageRecords.Last().PressureUnit.ToString();
+                        var vacuumUnit = Model.UsageRecords.Last().VacuumDegreeUnit.ToString();
+                        var carrierType = Model.UsageRecords.Last().Instrument.ID.Contains("YZ") ? "Liquid" : "Gas";
+
+                        string GetKeyFromValue(Dictionary<char, string> dic, string value)
+                        {
+                            string key = string.Empty;
+                            foreach (KeyValuePair<char, string> kvp in dic)
+                            {
+                                if (kvp.Value == value)
+                                {
+                                    return kvp.Key.ToString();
+                                }
+                            }
+                            return key;
+                        }
+                    }
+                    <table id="usageDataGrid" class="table table-sm table-borderless">
                         <thead>
                             <tr>
                                 <th colspan="13" class=""><h4 class="text-center">色谱质谱联用设备使用通用记录表</h4></th>
@@ -187,17 +223,17 @@
                                 <th colspan="13" class=""><h5 class="text-center">UHPLC, LC-MS/MS, GC-MS Use Form</h5></th>
                             </tr>
                             <tr>
-                                <th colspan="7" class="">仪器编号：_____________ 仪器型号：_____________</th>
+                                <th colspan="7" class="">仪器编号：@(Model.Search?.Instrument ?? "_____________")&nbsp; 仪器型号：@(Model.InstrumentModel?? "_____________")</th>
                                 <th colspan="6" class="text-right">KM-SOP0314. ___ .01</th>
                             </tr>
                             <tr>
                                 <th class="border border-dark">
                                     开始时间<br />
-                                    Startup time
+                                    Startup Time
                                 </th>
                                 <th class="border border-dark">
                                     结束时间<br />
-                                    Shutdown time
+                                    Shutdown Time
                                 </th>
                                 <th class="border border-dark">
                                     检测项目<br />
@@ -205,80 +241,65 @@
                                 </th>
                                 <th class="border border-dark">
                                     色谱柱编号/类型<br />
-                                    Column Number
-                                </th>
-                                <th class="border border-dark">
-                                    □流动相<br />
-                                    Liquid Phase<br />
-                                    □载气<br />
-                                    Carrier Gas 
-                                </th>
-                                <th class="border border-dark">
-                                    检测器<br />
-                                    Detector
+                                    Column Number/Type
                                 </th>
                                 <th class="border border-dark">
                                     初始压力<br />
-                                    □Psi<br />
-                                    □Bar<br />
-                                    □Mpa
+                                    Pressure<br />
+                                    <i class="fa fa-@(pressureUnit == "Mpa" ? "check-" : "")square-o" aria-hidden="true"></i> Mpa<br />
+                                    <i class="fa fa-@(pressureUnit == "Psi" ? "check-" : "")square-o" aria-hidden="true"></i> Psi<br />
+                                    <i class="fa fa-@(pressureUnit == "Bar" ? "check-" : "")square-o" aria-hidden="true"></i> Bar
                                 </th>
-                                <th class="border border-dark">
-                                    离子源<br />
-                                    Ion Source
-                                </th>
+                                @if (carrier.Count > 0)
+                                {
+                                    <th class="border border-dark">
+                                        <i class="fa fa-@(carrierType == "Liquid" ? "check-" : "")square-o" aria-hidden="true"></i>
+                                        流动相<br />
+                                        Liquid Phase<br />
+                                        <i class="fa fa-@(carrierType == "Gas" ? "check-" : "")square-o" aria-hidden="true"></i>
+                                        载气<br />
+                                        Carrier Gas
+                                    </th>
+                                }
+                                @if (detector.Count > 0)
+                                {
+                                    <th class="border border-dark">
+                                        检测器<br />
+                                        Detector
+                                    </th>
+                                }
+                                @if (ionSource.Count > 0)
+                                {
+                                    <th class="border border-dark">
+                                        离子源<br />
+                                        Ion Source
+                                    </th>
+                                }
                                 <th class="border border-dark">
                                     真空度<br />
-                                    □torr<br />
-                                    □Mpa
+                                    Vacuum<br />
+                                    <i class="fa fa-@(vacuumUnit == "torr" ? "check-" : "")square-o" aria-hidden="true"></i> torr<br />
+                                    <i class="fa fa-@(vacuumUnit == "Mpa" ? "check-" : "")square-o" aria-hidden="true"></i> Mpa
                                 </th>
                                 <th class="border border-dark">
                                     空白<br />
-                                    Blank
+                                    Blank Signal
                                 </th>
                                 <th class="border border-dark">
-                                    test信号<br />
+                                    Test信号<br />
                                     Test Signal
                                 </th>
                                 <th class="border border-dark">
                                     操作者<br />
                                     Operator
                                 </th>
-                                <th class="border border-dark">备注</th>
+                                <th class="border border-dark">
+                                    备注<br />
+                                    Remark
+                                </th>
                             </tr>
                         </thead>
-                        @{
-                            var columnType = new Dictionary<char, string>();
-                            var carrier = new Dictionary<char, string>();
-                            var ionSource = new Dictionary<char, string>();
-                            var detector = new Dictionary<char, string>();
-                            char index = (char)65;
 
-                            foreach (var item in Model.UsageRecords)
-                            {
-                                if (!columnType.ContainsValue(item.Project.ColumnType))
-                                {
-                                    columnType.Add(index, item.Project.ColumnType);
-                                    carrier.Add(index, item.Project.Carrier);
-                                    ionSource.Add(index, item.Project.IonSource);
-                                    detector.Add(index, item.Project.Detector);
-                                    index++;
-                                }
-                            }
-
-                            string GetKeyFromValue(Dictionary<char, string> dic, string value)
-                            {
-                                string key = string.Empty;
-                                foreach (KeyValuePair<char, string> kvp in dic)
-                                {
-                                    if (kvp.Value == value)
-                                    {
-                                        return kvp.Key.ToString();
-                                    }
-                                }
-                                return key;
-                            }
-                        }
                         <tfoot>
                             <tr>
                                 <td colspan="13" class="border border-dark">
@@ -320,11 +341,27 @@
                                     <td class="border border-dark">@item.BeginTimeOfTest</td>
                                     <td class="border border-dark">@item.EndTime</td>
                                     <td class="border border-dark">@item.ProjectName</td>
-                                    <td class="border border-dark">@item.ColumnNumber @item.ColumnTwoNumber / @GetKeyFromValue(columnType, item.Project.ColumnType)</td>
-                                    <td class="border border-dark">@GetKeyFromValue(carrier, item.Project.Carrier)</td>
-                                    <td class="border border-dark">@GetKeyFromValue(detector, item.Project.Detector)</td>
-                                    <td class="border border-dark">@item.ColumnPressure @item.ColumnTwoPressure </td>
-                                    <td class="border border-dark">@GetKeyFromValue(ionSource, item.Project.IonSource)</td>
+                                    <td class="border border-dark">
+                                        @(item.ColumnTwoNumber != null ? "S1: " + item.ColumnNumber : item.ColumnNumber)
+                                        @(item.ColumnTwoNumber != null ? " | S2: " + item.ColumnTwoNumber : "")
+                                        / @GetKeyFromValue(columnType, item.Project.ColumnType)
+                                    </td>
+                                    <td class="border border-dark">
+                                        @(item.ColumnTwoPressure != 0 ? "S1: " + item.ColumnPressure : item.ColumnPressure.ToString())
+                                        @(item.ColumnTwoPressure != 0 ? " | S2: " + item.ColumnTwoPressure : "")
+                                    </td>
+                                    @if (carrier.Count > 0)
+                                    {
+                                        <td class="border border-dark">@GetKeyFromValue(carrier, item.Project.Carrier)</td>
+                                    }
+                                    @if (carrier.Count > 0)
+                                    {
+                                        <td class="border border-dark">@GetKeyFromValue(detector, item.Project.Detector)</td>
+                                    }
+                                    @if (ionSource.Count > 0)
+                                    {
+                                        <td class="border border-dark">@GetKeyFromValue(ionSource, item.Project.IonSource)</td>
+                                    }
                                     <td class="border border-dark">@item.VacuumDegree</td>
                                     <td class="border border-dark">@item.BlankSignal</td>
                                     <td class="border border-dark">@item.TestSignal</td>
@@ -348,13 +385,30 @@
     <script src="~/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
     <script src="~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
     <script src="~/plugins/jszip/jszip.min.js"></script>
-    <script src="~/plugins/pdfmake/pdfmake.min.js"></script>
-    <script src="~/plugins/pdfmake/vfs_fonts.js"></script>
     <script src="~/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="~/plugins/chart.js/Chart.bundle.min.js"></script>
+    <script src="~/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="~/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="~/plugins/tableExport/FileSaver.min.js"></script>
+    <script src="~/plugins/tableExport/tableExport.min.js"></script>
 
     <script>
+
+        $(document).ready(function () {
+            $("button#exportToPDF").click(function () {
+                var docDefinition = { content: '中文' };
+                pdfMake.createPdf(docDefinition).open();
+                //$("table#usageDataGrid").tableExport({
+                //    type: 'pdf',
+                //    pdfmake: {
+                //        enabled: true,
+                //        docDefinition: { pageOrientation: 'landscape' }
+                //    }
+                //});
+            })
+        });
+
         $(document).ready(function () {
             @{
                 var date = new List<string>();
