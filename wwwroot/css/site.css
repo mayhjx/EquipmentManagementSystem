@@ -76,9 +76,13 @@ body {*/
 @media print {
     @page {
         size: A4 landscape;
+        margin: 3mm;
     }
 
     html {
-        /*        zoom: 40%;*/
+        color: #000;
+        background-color: #fff;
+        zoom: 40%;
+        font-size: 8px;
     }
 }
