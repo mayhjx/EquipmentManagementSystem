@@ -94,15 +94,14 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
 
             if (Search.Category == Category.Usage)
             {
-                var records = from record in _context.UsageRecords
+                var records = from r in _context.UsageRecords
                             .AsNoTracking()
-                            .OrderBy(record => record.BeginTimeOfTest)
-                            .Include(record => record.Instrument)
-                            .Include(record => record.Project)
-                                .ThenInclude(record => record.Group)
-                              where record.BeginTimeOfTest >= Search.BeginTime
-                              where record.BeginTimeOfTest < Search.EndTime.AddDays(1)
-                              select record;
+                            .Include(r => r.Instrument)
+                            .Include(r => r.Project)
+                                .ThenInclude(r => r.Group)
+                              where r.BeginTimeOfTest >= Search.BeginTime
+                              where r.BeginTimeOfTest < Search.EndTime.AddDays(1)
+                              select r;
 
                 if (Search.Instrument != null)
                 {
@@ -110,11 +109,15 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
                               where r.InstrumentId == Search.Instrument
                               select r;
 
-                    InstrumentModel = (await _context.Instruments
+                    if (records.Any())
+                    {
+                        InstrumentModel = (await _context.Instruments
                             .AsNoTracking()
                             .Include(m => m.Components)
                             .FirstOrDefaultAsync(m => m.ID == Search.Instrument))
-                            .Components.FirstOrDefault(c => c.Name == "质谱主机").Model;
+                            .Components.FirstOrDefault(c => c.Name.Contains("主机"))?.Model;
+                    }
+
                 }
                 if (Search.Project != null)
                 {
@@ -135,7 +138,7 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
                               select r;
                 }
 
-                UsageRecords = records.ToList();
+                UsageRecords = records.OrderBy(record => record.BeginTimeOfTest).ToList();
             }
 
 

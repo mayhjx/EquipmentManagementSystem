@@ -6,7 +6,7 @@
 
 <div class="card d-print-none">
     <div class="card-header">
-        <h4>报表导出</h4>
+        <h4>查询条件</h4>
     </div>
     <div class="card-body">
         <div class="row">
@@ -174,7 +174,7 @@
                     </div>
                 </div>
                 <div class="tab-pane active" id="usage-datagrid" style="position: relative; ">
-                    <button id="exportToPDF" class="btn btn-outline-primary float-right no-print" style="margin-right:10px;">
+                    <button id="exportToPDF" class="btn btn-outline-primary float-right no-print" style="margin-right:10px;" type="button" title="建议在Google Chrome浏览器中进行打印">
                         <i class="fa fa-print"></i> 打印预览
                     </button>
                     @{
@@ -182,28 +182,39 @@
                         var carrier = new Dictionary<char, string>();
                         var ionSource = new Dictionary<char, string>();
                         var detector = new Dictionary<char, string>();
-                        char index = 'A';
 
                         foreach (var item in Model.UsageRecords)
                         {
-                            if (!columnType.ContainsValue(item.Project.ColumnType))
+                            AddKeyValueToDic(columnType, item.Project.ColumnType);
+                            AddKeyValueToDic(ionSource, item.Project.IonSource);
+                            AddKeyValueToDic(carrier, item.Project.Carrier);
+                            AddKeyValueToDic(detector, item.Project.Detector);
+                        }
+
+                        void AddKeyValueToDic(Dictionary<char, string> dic, string value)
+                        {
+                            if (value != null && !dic.ContainsValue(value))
                             {
-                                columnType.Add(index, item.Project.ColumnType);
-                                carrier.Add(index, item.Project.Carrier);
-                                ionSource.Add(index, item.Project.IonSource);
-                                detector.Add(index, item.Project.Detector);
-                                index++;
+                                // A, B, C, ...
+                                char key = (char)(dic.Keys.Count + 65);
+                                dic.Add(key, value);
                             }
                         }
 
                         // 色谱柱和真空度压力单位，载体类型
-                        var pressureUnit = Model.UsageRecords.Last().PressureUnit.ToString();
-                        var vacuumUnit = Model.UsageRecords.Last().VacuumDegreeUnit.ToString();
-                        var carrierType = Model.UsageRecords.Last().Instrument.ID.Contains("YZ") ? "Liquid" : "Gas";
+                        string pressureUnit = "", vacuumUnit = "", carrierType = "";
+                        if (Model.UsageRecords.Count != 0)
+                        {
+                            pressureUnit = Model.UsageRecords.Last().PressureUnit.ToString();
+                            vacuumUnit = Model.UsageRecords.Last().VacuumDegreeUnit.ToString();
+                            carrierType = Model.UsageRecords.Last().Instrument.ID.Contains("YZ") ? "Liquid" : "Gas";
+                        }
 
                         string GetKeyFromValue(Dictionary<char, string> dic, string value)
                         {
                             string key = string.Empty;
+                            if (value == null) return "N/A";
+
                             foreach (KeyValuePair<char, string> kvp in dic)
                             {
                                 if (kvp.Value == value)
@@ -217,13 +228,13 @@
                     <table id="usageDataGrid" class="table table-sm table-borderless">
                         <thead>
                             <tr>
-                                <th colspan="13" class=""><h4 class="text-center">色谱质谱联用设备使用通用记录表</h4></th>
+                                <th colspan="13" class="h4 text-center">色谱质谱联用设备使用通用记录表</th>
                             </tr>
                             <tr>
-                                <th colspan="13" class=""><h5 class="text-center">UHPLC, LC-MS/MS, GC-MS Use Form</h5></th>
+                                <th colspan="13" class="h5 text-center">UHPLC, LC-MS/MS, GC-MS Use Form</th>
                             </tr>
                             <tr>
-                                <th colspan="7" class="">仪器编号：@(Model.Search?.Instrument ?? "_____________")&nbsp; 仪器型号：@(Model.InstrumentModel?? "_____________")</th>
+                                <th colspan="7" class="text-left">仪器编号：@(Model.Search?.Instrument ?? "_____________")&nbsp; 仪器型号：@(Model.InstrumentModel?? "_____________")</th>
                                 <th colspan="6" class="text-right">KM-SOP0314. ___ .01</th>
                             </tr>
                             <tr>
@@ -250,31 +261,6 @@
                                     <i class="fa fa-@(pressureUnit == "Psi" ? "check-" : "")square-o" aria-hidden="true"></i> Psi<br />
                                     <i class="fa fa-@(pressureUnit == "Bar" ? "check-" : "")square-o" aria-hidden="true"></i> Bar
                                 </th>
-                                @if (carrier.Count > 0)
-                                {
-                                    <th class="border border-dark">
-                                        <i class="fa fa-@(carrierType == "Liquid" ? "check-" : "")square-o" aria-hidden="true"></i>
-                                        流动相<br />
-                                        Liquid Phase<br />
-                                        <i class="fa fa-@(carrierType == "Gas" ? "check-" : "")square-o" aria-hidden="true"></i>
-                                        载气<br />
-                                        Carrier Gas
-                                    </th>
-                                }
-                                @if (detector.Count > 0)
-                                {
-                                    <th class="border border-dark">
-                                        检测器<br />
-                                        Detector
-                                    </th>
-                                }
-                                @if (ionSource.Count > 0)
-                                {
-                                    <th class="border border-dark">
-                                        离子源<br />
-                                        Ion Source
-                                    </th>
-                                }
                                 <th class="border border-dark">
                                     真空度<br />
                                     Vacuum<br />
@@ -290,6 +276,22 @@
                                     Test Signal
                                 </th>
                                 <th class="border border-dark">
+                                    <i class="fa fa-@(carrierType == "Liquid" ? "check-" : "")square-o" aria-hidden="true"></i>
+                                    流动相<br />
+                                    Liquid Phase<br />
+                                    <i class="fa fa-@(carrierType == "Gas" ? "check-" : "")square-o" aria-hidden="true"></i>
+                                    载气<br />
+                                    Carrier Gas
+                                </th>
+                                <th class="border border-dark">
+                                    检测器<br />
+                                    Detector
+                                </th>
+                                <th class="border border-dark">
+                                    离子源<br />
+                                    Ion Source
+                                </th>
+                                <th class="border border-dark">
                                     操作者<br />
                                     Operator
                                 </th>
@@ -299,7 +301,6 @@
                                 </th>
                             </tr>
                         </thead>
-
                         <tfoot>
                             <tr>
                                 <td colspan="13" class="border border-dark">
@@ -334,7 +335,7 @@
                                 <td colspan="3" class="border border-dark"></td>
                             </tr>
                         </tfoot>
-                        <tbody>
+                        <tbody class="text-center">
                             @foreach (var item in Model.UsageRecords)
                             {
                                 <tr>
@@ -350,21 +351,12 @@
                                         @(item.ColumnTwoPressure != 0 ? "S1: " + item.ColumnPressure : item.ColumnPressure.ToString())
                                         @(item.ColumnTwoPressure != 0 ? " | S2: " + item.ColumnTwoPressure : "")
                                     </td>
-                                    @if (carrier.Count > 0)
-                                    {
-                                        <td class="border border-dark">@GetKeyFromValue(carrier, item.Project.Carrier)</td>
-                                    }
-                                    @if (carrier.Count > 0)
-                                    {
-                                        <td class="border border-dark">@GetKeyFromValue(detector, item.Project.Detector)</td>
-                                    }
-                                    @if (ionSource.Count > 0)
-                                    {
-                                        <td class="border border-dark">@GetKeyFromValue(ionSource, item.Project.IonSource)</td>
-                                    }
-                                    <td class="border border-dark">@item.VacuumDegree</td>
+                                    <td class="border border-dark">@(item.VacuumDegree != null ? item.VacuumDegree : "N/A")</td>
                                     <td class="border border-dark">@item.BlankSignal</td>
                                     <td class="border border-dark">@item.TestSignal</td>
+                                    <td class="border border-dark">@GetKeyFromValue(carrier, item.Project.Carrier)</td>
+                                    <td class="border border-dark">@GetKeyFromValue(detector, item.Project.Detector)</td>
+                                    <td class="border border-dark">@GetKeyFromValue(ionSource, item.Project.IonSource)</td>
                                     <td class="border border-dark">@item.Creator</td>
                                     <td class="border border-dark">@item.Remark</td>
                                 </tr>
@@ -402,7 +394,7 @@
                 var date = new List<string>();
                 double time = 0;
                 double totalTime = 0;
-                var instrument = new Dictionary<string, List<double>>();
+                var instrument = new Dictionary<string, Dictionary<string, List<double>>>();
                 if (Model.UsageRecords != null)
                 {
                     foreach (var item in Model.UsageRecords)
@@ -416,77 +408,85 @@
                         time = Math.Round((item.EndTime - item.BeginTimeOfTest).GetValueOrDefault().TotalHours,1);
                         totalTime += time;
 
-                        try
+                        if(!instrument.ContainsKey(item.InstrumentId))
                         {
-                            instrument[item.InstrumentId].Add(time);
+                            instrument.Add(item.InstrumentId, new Dictionary<string, List<double>>() { });
                         }
-                        catch(KeyNotFoundException)
+
+                        var project = instrument[item.InstrumentId];
+
+                        if(!project.ContainsKey(item.ProjectName))
                         {
-                            instrument.Add(item.InstrumentId, new List<double>() { time});
+                            project.Add(item.ProjectName, new List<double>() { });
                         }
+
+                        project[item.ProjectName].Add(time);
                     }
                 }
             }
-            let dic = @(Json.Serialize(instrument));
+            let instruments = @(Json.Serialize(instrument));
             var div = document.getElementById('data-chart');
 
-            if (Object.keys(dic).length == 0) {
+            if (Object.keys(instruments).length == 0) {
                 div.innerHTML = "<p>未查询到数据！</p>";
                 return;
             }
 
-            for (let key in dic) {
-                var canvas = document.createElement("canvas");
-                var br = document.createElement("br");
+            for (let num in instruments) {
+                for (let project in instruments[num]) {
+                    var canvas = document.createElement("canvas");
+                    var br = document.createElement("br");
 
-                canvas.height = "275";
-                canvas.width = "900";
+                    canvas.height = "275";
+                    canvas.width = "900";
 
-                div.appendChild(canvas);
-                canvas.append("<p>当前浏览器不支持查看该元素！</p>");
-                div.appendChild(br);
+                    div.appendChild(canvas);
+                    canvas.append("<p>当前浏览器不支持查看该元素！</p>");
+                    div.appendChild(br);
 
-                var ctx = canvas.getContext('2d');
-                var chart = new Chart(ctx, {
-                // The type of chart we want to create
-                type: 'bar',
+                    var ctx = canvas.getContext('2d');
+                    var chart = new Chart(ctx, {
+                    // The type of chart we want to create
+                    type: 'bar',
 
-                // The data for our dataset
-                data: {
+                    // The data for our dataset
 
-                    labels: @Json.Serialize(date),
-                    datasets: [{
-                        label: key + ' 使用时长',
-                        backgroundColor: 'rgb(65, 105, 225)',
-                        borderColor: 'rgb(65, 105, 225)',
-                        data: dic[key],
-                    }]
-                    },
-                    // Configuration options go here
-                    options: {
-                        scales: {
-                            xAxes: [{
-                                type: 'time',
-                                time: {
-                                    unit: "day",
-                                    displayFormats: {
-                                        day: "YYYY-MM-DD"
+                    data: {
+                        labels: @Json.Serialize(date),
+                        datasets: [{
+                            label: num + "  " + project + '  使用时长',
+                            backgroundColor: 'rgb(65, 105, 225)',
+                            borderColor: 'rgb(65, 105, 225)',
+                            data: instruments[num][project],
+                        }]
+                        },
+                        // Configuration options go here
+                        options: {
+                            scales: {
+                                xAxes: [{
+                                    type: 'time',
+                                    time: {
+                                        unit: "day",
+                                        displayFormats: {
+                                            day: "YYYY-MM-DD"
+                                        }
+                                    },
+                                }],
+                                yAxes: [{
+                                    ticks: {
+                                        max: 24,
+                                        beginAtZero: false
+                                    },
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: "小时",
                                     }
-                                },
-                            }],
-                            yAxes: [{
-                                ticks: {
-                                    max: 24,
-                                    beginAtZero: false
-                                },
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: "小时",
-                                }
-                            }]
+                                }]
+                            }
                         }
-                    }
-                });
+                    });
+                }
+
             };
         });
 
