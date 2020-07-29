@@ -70,114 +70,171 @@
 
 @if (Model.UsageRecords != null)
 {
-<div class="card">
-    <div class="card-header d-print-none">
-        <h3 class="card-title">
-            查询结果
-        </h3>
-        <div class="card-tools">
-            <ul class="nav nav-pills ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link " href="#data-chart" data-toggle="tab">图表</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#data" data-toggle="tab">数据</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="#usage-datagrid" data-toggle="tab">使用记录表</a>
-                </li>
-            </ul>
+    <div class="card">
+        <div class="card-header d-print-none">
+            <h3 class="card-title">
+                查询结果
+            </h3>
+            <div class="card-tools">
+                <ul class="nav nav-pills ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#data-chart" data-toggle="tab">图表</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#data" data-toggle="tab">数据</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#usage-datagrid" data-toggle="tab">使用记录表</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
-    <div class="card-body">
-        <div class="tab-content p-0">
-            <div class="chart tab-pane" id="data-chart" style="position: relative;">
-                <div class="chartjs-size-monitor">
-                    <div class="chartjs-size-monitor-expand"><div class=""></div></div>
-                    <div class="chartjs-size-monitor-shrink"><div class=""></div></div>
+        <div class="card-body">
+            <div class="tab-content p-0">
+                <div class="chart tab-pane active" id="data-chart" style="position: relative;">
+                    <div class="chartjs-size-monitor">
+                        <div class="chartjs-size-monitor-expand"><div class=""></div></div>
+                        <div class="chartjs-size-monitor-shrink"><div class=""></div></div>
+                    </div>
                 </div>
-            </div>
-
-            <div class="tab-pane " id="data" style="position: relative; ">
-                <div class="table-responsive">
-                    <table id="export" class="table table-hover text-nowrap">
-                        <thead>
-                            <tr>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].InstrumentId)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].ProjectName)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].BeginTimeOfMaintain)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].BeginTimeOfTest)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].EndTime)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].SampleNumber)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].TestNumber)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].Creator)
-                                </th>
-                                <th>维护时长(h)</th>
-                                <th>检测时长(h)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model.UsageRecords)
+                <div class="tab-pane " id="data" style="position: relative; ">
+                    <div class="table-responsive">
+                        <table id="export" class="table table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageRecords[0].InstrumentId)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageRecords[0].ProjectName)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageRecords[0].BeginTimeOfMaintain)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageRecords[0].ColumnNumber)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageRecords[0].ColumnPressure)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageRecords[0].ColumnTwoNumber)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageRecords[0].ColumnTwoPressure)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageRecords[0].PressureUnit)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageRecords[0].BeginTimeOfTest)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageRecords[0].SampleNumber)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageRecords[0].TestNumber)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageRecords[0].VacuumDegree)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageRecords[0].VacuumDegreeUnit)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageRecords[0].BlankSignal)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageRecords[0].TestSignal)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageRecords[0].EndTime)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageRecords[0].Creator)
+                                    </th>
+                                    <th>维护时长(h)</th>
+                                    <th>检测时长(h)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.UsageRecords)
                                 {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.InstrumentId)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ProjectName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.BeginTimeOfMaintain)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.BeginTimeOfTest)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.EndTime)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.SampleNumber)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.TestNumber)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Creator)
-                                </td>
-                                <td>@((item.BeginTimeOfTest - item.BeginTimeOfMaintain).GetValueOrDefault().TotalHours.ToString("f1"))</td>
-                                <td class="time">@((item.EndTime - item.BeginTimeOfTest).GetValueOrDefault().TotalHours.ToString("f1"))</td>
-                            </tr>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.InstrumentId)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ProjectName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.BeginTimeOfMaintain)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ColumnNumber)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ColumnPressure)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ColumnTwoNumber)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ColumnTwoPressure)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.PressureUnit)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.BeginTimeOfTest)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.SampleNumber)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TestNumber)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.VacuumDegree)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.VacuumDegreeUnit)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.BlankSignal)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TestSignal)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.EndTime)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Creator)
+                                        </td>
+                                        <td>
+                                            @((item.BeginTimeOfTest - item.BeginTimeOfMaintain).GetValueOrDefault().TotalHours.ToString("f1"))
+                                        </td>
+                                        <td class="time">
+                                            @((item.EndTime - item.BeginTimeOfTest).GetValueOrDefault().TotalHours.ToString("f1"))
+                                        </td>
+                                    </tr>
                                 }
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td class="text-bold">总时长(h)</td>
-                                <td id="total" class="text-bold"></td>
-                            </tr>
-                        </tfoot>
-                    </table>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td class="text-bold">总时长(h)</td>
+                                    <td id="total" class="text-bold"></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
                 </div>
-            </div>
-            <div class="tab-pane active" id="usage-datagrid" style="position: relative; ">
-                <button id="exportToPDF" class="btn btn-outline-primary float-right no-print" style="margin-right:10px;" type="button" title="建议在Google Chrome浏览器中进行打印">
-                    <i class="fa fa-print"></i> 打印预览
-                </button>
-                @{
+                <div class="tab-pane" id="usage-datagrid" style="position: relative; ">
+                    <button id="exportToPDF" class="btn btn-outline-primary float-right no-print" style="margin-right:10px;" type="button" title="建议在Google Chrome浏览器中进行打印">
+                        <i class="fa fa-print"></i> 打印预览
+                    </button>
+                    @{
                         var columnType = new Dictionary<char, string>();
                         var carrier = new Dictionary<char, string>();
                         var ionSource = new Dictionary<char, string>();
@@ -203,7 +260,7 @@
 
                         // 色谱柱和真空度压力单位，载体类型
                         string pressureUnit = "", vacuumUnit = "", carrierType = "";
-                        if (Model.UsageRecords.Count != 0)
+                        if (Model.UsageRecords.Count > 1)
                         {
                             pressureUnit = Model.UsageRecords.Last().PressureUnit.ToString();
                             vacuumUnit = Model.UsageRecords.Last().VacuumDegreeUnit.ToString();
@@ -224,150 +281,150 @@
                             }
                             return key;
                         }
-                }
-                <table id="usageDataGrid" class="table table-sm table-borderless">
-                    <thead>
-                        <tr>
-                            <th colspan="13" class="h4 text-center">色谱质谱联用设备使用通用记录表</th>
-                        </tr>
-                        <tr>
-                            <th colspan="13" class="h5 text-center">UHPLC, LC-MS/MS, GC-MS Use Form</th>
-                        </tr>
-                        <tr>
-                            <th colspan="7" class="text-left">仪器编号：@(Model.Search?.Instrument ?? "_____________")&nbsp; 仪器型号：@(Model.InstrumentModel?? "_____________")</th>
-                            <th colspan="6" class="text-right">KM-SOP0314. ___ .01</th>
-                        </tr>
-                        <tr>
-                            <th class="border border-dark">
-                                开始时间<br />
-                                Startup Time
-                            </th>
-                            <th class="border border-dark">
-                                结束时间<br />
-                                Shutdown Time
-                            </th>
-                            <th class="border border-dark">
-                                检测项目<br />
-                                Test Item
-                            </th>
-                            <th class="border border-dark">
-                                色谱柱编号/类型<br />
-                                Column Number/Type
-                            </th>
-                            <th class="border border-dark">
-                                初始压力<br />
-                                Pressure<br />
-                                <i class="fa fa-@(pressureUnit == "Mpa" ? "check-" : "")square-o" aria-hidden="true"></i> Mpa<br />
-                                <i class="fa fa-@(pressureUnit == "Psi" ? "check-" : "")square-o" aria-hidden="true"></i> Psi<br />
-                                <i class="fa fa-@(pressureUnit == "Bar" ? "check-" : "")square-o" aria-hidden="true"></i> Bar
-                            </th>
-                            <th class="border border-dark">
-                                真空度<br />
-                                Vacuum<br />
-                                <i class="fa fa-@(vacuumUnit == "torr" ? "check-" : "")square-o" aria-hidden="true"></i> torr<br />
-                                <i class="fa fa-@(vacuumUnit == "Mpa" ? "check-" : "")square-o" aria-hidden="true"></i> Mpa
-                            </th>
-                            <th class="border border-dark">
-                                空白<br />
-                                Blank Signal
-                            </th>
-                            <th class="border border-dark">
-                                Test信号<br />
-                                Test Signal
-                            </th>
-                            <th class="border border-dark">
-                                <i class="fa fa-@(carrierType == "Liquid" ? "check-" : "")square-o" aria-hidden="true"></i>
-                                流动相<br />
-                                Liquid Phase<br />
-                                <i class="fa fa-@(carrierType == "Gas" ? "check-" : "")square-o" aria-hidden="true"></i>
-                                载气<br />
-                                Carrier Gas
-                            </th>
-                            <th class="border border-dark">
-                                检测器<br />
-                                Detector
-                            </th>
-                            <th class="border border-dark">
-                                离子源<br />
-                                Ion Source
-                            </th>
-                            <th class="border border-dark">
-                                操作者<br />
-                                Operator
-                            </th>
-                            <th class="border border-dark">
-                                备注<br />
-                                Remark
-                            </th>
-                        </tr>
-                    </thead>
-                    <tfoot>
-                        <tr>
-                            <td colspan="13" class="border border-dark">
-                                备注：
-                                <ol>
-                                    <li>
-                                        色谱柱类型：@string.Join(" ", columnType).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
-                                    </li>
-                                    <li>
-                                        流动相/载气类型：@string.Join(" ", carrier).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
-                                    </li>
-                                    <li>
-                                        离子源类型：@string.Join(" ", ionSource).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
-                                    </li>
-                                    <li>
-                                        检测器类型：@string.Join(" ", detector).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
-                                    </li>
-                                </ol>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="13" class="text-center border border-dark">
-                                使用回顾
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="border border-dark">评估意见</td>
-                            <td colspan="4" class="border border-dark"></td>
-                            <td class="border border-dark">评估人/日期</td>
-                            <td colspan="3" class="border border-dark"></td>
-                            <td class="border border-dark">审批人/日期</td>
-                            <td colspan="3" class="border border-dark"></td>
-                        </tr>
-                    </tfoot>
-                    <tbody class="text-center">
-                        @foreach (var item in Model.UsageRecords)
+                    }
+                    <table id="usageDataGrid" class="table table-sm table-borderless">
+                        <thead>
+                            <tr>
+                                <th colspan="13" class="h4 text-center">色谱质谱联用设备使用通用记录表</th>
+                            </tr>
+                            <tr>
+                                <th colspan="13" class="h5 text-center">UHPLC, LC-MS/MS, GC-MS Use Form</th>
+                            </tr>
+                            <tr>
+                                <th colspan="7" class="text-left">仪器编号：@(Model.Search?.Instrument ?? "_____________")&nbsp; 仪器型号：@(Model.InstrumentModel?? "_____________")</th>
+                                <th colspan="6" class="text-right">KM-SOP0314. ___ .01</th>
+                            </tr>
+                            <tr>
+                                <th class="border border-dark">
+                                    开始时间<br />
+                                    Startup Time
+                                </th>
+                                <th class="border border-dark">
+                                    结束时间<br />
+                                    Shutdown Time
+                                </th>
+                                <th class="border border-dark">
+                                    检测项目<br />
+                                    Test Item
+                                </th>
+                                <th class="border border-dark">
+                                    色谱柱编号/类型<br />
+                                    Column Number/Type
+                                </th>
+                                <th class="border border-dark">
+                                    初始压力<br />
+                                    Pressure<br />
+                                    <i class="fa fa-@(pressureUnit == "Mpa" ? "check-" : "")square-o" aria-hidden="true"></i> Mpa<br />
+                                    <i class="fa fa-@(pressureUnit == "Psi" ? "check-" : "")square-o" aria-hidden="true"></i> Psi<br />
+                                    <i class="fa fa-@(pressureUnit == "Bar" ? "check-" : "")square-o" aria-hidden="true"></i> Bar
+                                </th>
+                                <th class="border border-dark">
+                                    真空度<br />
+                                    Vacuum<br />
+                                    <i class="fa fa-@(vacuumUnit == "torr" ? "check-" : "")square-o" aria-hidden="true"></i> torr<br />
+                                    <i class="fa fa-@(vacuumUnit == "Mpa" ? "check-" : "")square-o" aria-hidden="true"></i> Mpa
+                                </th>
+                                <th class="border border-dark">
+                                    空白<br />
+                                    Blank Signal
+                                </th>
+                                <th class="border border-dark">
+                                    Test信号<br />
+                                    Test Signal
+                                </th>
+                                <th class="border border-dark">
+                                    <i class="fa fa-@(carrierType == "Liquid" ? "check-" : "")square-o" aria-hidden="true"></i>
+                                    流动相<br />
+                                    Liquid Phase<br />
+                                    <i class="fa fa-@(carrierType == "Gas" ? "check-" : "")square-o" aria-hidden="true"></i>
+                                    载气<br />
+                                    Carrier Gas
+                                </th>
+                                <th class="border border-dark">
+                                    检测器<br />
+                                    Detector
+                                </th>
+                                <th class="border border-dark">
+                                    离子源<br />
+                                    Ion Source
+                                </th>
+                                <th class="border border-dark">
+                                    操作者<br />
+                                    Operator
+                                </th>
+                                <th class="border border-dark">
+                                    备注<br />
+                                    Remark
+                                </th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <td colspan="13" class="border border-dark">
+                                    备注：
+                                    <ol>
+                                        <li>
+                                            色谱柱类型：@string.Join(" ", columnType).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
+                                        </li>
+                                        <li>
+                                            流动相/载气类型：@string.Join(" ", carrier).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
+                                        </li>
+                                        <li>
+                                            离子源类型：@string.Join(" ", ionSource).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
+                                        </li>
+                                        <li>
+                                            检测器类型：@string.Join(" ", detector).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
+                                        </li>
+                                    </ol>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="13" class="text-center border border-dark">
+                                    使用回顾
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border border-dark">评估意见</td>
+                                <td colspan="4" class="border border-dark"></td>
+                                <td class="border border-dark">评估人/日期</td>
+                                <td colspan="3" class="border border-dark"></td>
+                                <td class="border border-dark">审批人/日期</td>
+                                <td colspan="3" class="border border-dark"></td>
+                            </tr>
+                        </tfoot>
+                        <tbody class="text-center">
+                            @foreach (var item in Model.UsageRecords)
                             {
-                        <tr>
-                            <td class="border border-dark">@item.BeginTimeOfTest</td>
-                            <td class="border border-dark">@item.EndTime</td>
-                            <td class="border border-dark">@item.ProjectName</td>
-                            <td class="border border-dark">
-                                @(item.ColumnTwoNumber != null ? "S1: " + item.ColumnNumber : item.ColumnNumber)
-                                @(item.ColumnTwoNumber != null ? " | S2: " + item.ColumnTwoNumber : "")
-                                / @GetKeyFromValue(columnType, item.Project.ColumnType)
-                            </td>
-                            <td class="border border-dark">
-                                @(item.ColumnTwoPressure != null ? "S1: " + item.ColumnPressure : item.ColumnPressure.ToString())
-                                @(item.ColumnTwoPressure != null ? " | S2: " + item.ColumnTwoPressure : "")
-                            </td>
-                            <td class="border border-dark">@(item.VacuumDegree != null ? item.VacuumDegree : "N/A")</td>
-                            <td class="border border-dark">@item.BlankSignal</td>
-                            <td class="border border-dark">@item.TestSignal</td>
-                            <td class="border border-dark">@GetKeyFromValue(carrier, item.Project.Carrier)</td>
-                            <td class="border border-dark">@GetKeyFromValue(detector, item.Project.Detector)</td>
-                            <td class="border border-dark">@GetKeyFromValue(ionSource, item.Project.IonSource)</td>
-                            <td class="border border-dark">@item.Creator</td>
-                            <td class="border border-dark">@item.Remark</td>
-                        </tr>
+                                <tr>
+                                    <td class="border border-dark">@item.BeginTimeOfTest</td>
+                                    <td class="border border-dark">@item.EndTime</td>
+                                    <td class="border border-dark">@item.ProjectName</td>
+                                    <td class="border border-dark">
+                                        @(item.ColumnTwoNumber != null ? "S1: " + item.ColumnNumber : item.ColumnNumber)
+                                        @(item.ColumnTwoNumber != null ? " | S2: " + item.ColumnTwoNumber : "")
+                                        / @GetKeyFromValue(columnType, item.Project.ColumnType)
+                                    </td>
+                                    <td class="border border-dark">
+                                        @(item.ColumnTwoPressure != null ? "S1: " + item.ColumnPressure : item.ColumnPressure.ToString())
+                                        @(item.ColumnTwoPressure != null ? " | S2: " + item.ColumnTwoPressure : "")
+                                    </td>
+                                    <td class="border border-dark">@(item.VacuumDegree != null ? item.VacuumDegree : "N/A")</td>
+                                    <td class="border border-dark">@item.BlankSignal</td>
+                                    <td class="border border-dark">@item.TestSignal</td>
+                                    <td class="border border-dark">@GetKeyFromValue(carrier, item.Project.Carrier)</td>
+                                    <td class="border border-dark">@GetKeyFromValue(detector, item.Project.Detector)</td>
+                                    <td class="border border-dark">@GetKeyFromValue(ionSource, item.Project.IonSource)</td>
+                                    <td class="border border-dark">@item.Creator</td>
+                                    <td class="border border-dark">@item.Remark</td>
+                                </tr>
                             }
-                    </tbody>
+                        </tbody>
 
-                </table>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
 }
 
 
@@ -381,52 +438,48 @@
     <script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="~/plugins/chart.js/Chart.bundle.min.js"></script>
     <script>
-
         $(document).ready(function () {
             $("button#exportToPDF").click(function () {
                 window.print();
             })
         });
 
-        // chartjs
         $(document).ready(function () {
             @{
-                var date = new List<string>();
-                double time = 0;
+                double timeSpan = 0;
                 double totalTime = 0;
-                var instrument = new Dictionary<string, Dictionary<string, List<double>>>();
+                var instrument = new Dictionary<string, Dictionary<string, Dictionary<string, double>>>();
                 if (Model.UsageRecords != null)
                 {
                     foreach (var item in Model.UsageRecords)
                     {
-                        var beginTime = item.BeginTimeOfTest.GetValueOrDefault().ToShortDateString();
-                        if (!date.Contains(beginTime))
-                        {
-                            date.Add(beginTime);
-
-                        }
-                        time = Math.Round((item.EndTime - item.BeginTimeOfTest).GetValueOrDefault().TotalHours,1);
-                        totalTime += time;
+                        timeSpan = Math.Round((item.EndTime - item.BeginTimeOfTest).GetValueOrDefault().TotalHours,1);
+                        totalTime += timeSpan;
 
                         if(!instrument.ContainsKey(item.InstrumentId))
                         {
-                            instrument.Add(item.InstrumentId, new Dictionary<string, List<double>>() { });
+                            instrument.Add(item.InstrumentId, new Dictionary<string, Dictionary<string, double>>() { });
                         }
 
                         var project = instrument[item.InstrumentId];
-
                         if(!project.ContainsKey(item.ProjectName))
                         {
-                            project.Add(item.ProjectName, new List<double>() { });
+                            project.Add(item.ProjectName, new Dictionary<string, double>() { });
                         }
 
-                        project[item.ProjectName].Add(time);
+                        var beginTime = item.BeginTimeOfTest.GetValueOrDefault().ToShortDateString();
+                        var day = project[item.ProjectName];
+                        if(!day.ContainsKey(beginTime))
+                        {
+                            day.Add(beginTime, timeSpan);
+                        }
                     }
                 }
             }
-            let instruments = @(Json.Serialize(instrument));
+            // chartjs
             var div = document.getElementById('data-chart');
 
+            let instruments = @(Json.Serialize(instrument));
             if (Object.keys(instruments).length == 0) {
                 div.innerHTML = "<p>未查询到数据！</p>";
                 return;
@@ -450,14 +503,13 @@
                     type: 'bar',
 
                     // The data for our dataset
-
                     data: {
-                        labels: @Json.Serialize(date),
+                        labels: Object.keys(instruments[num][project]),
                         datasets: [{
                             label: num + "  " + project + '  使用时长',
                             backgroundColor: 'rgb(65, 105, 225)',
                             borderColor: 'rgb(65, 105, 225)',
-                            data: instruments[num][project],
+                            data: Object.values(instruments[num][project]),
                         }]
                         },
                         // Configuration options go here
@@ -486,7 +538,6 @@
                         }
                     });
                 }
-
             };
         });
 
