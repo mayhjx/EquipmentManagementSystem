@@ -396,8 +396,8 @@
                             @foreach (var item in Model.UsageRecords)
                             {
                                 <tr>
-                                    <td class="border border-dark">@item.BeginTimeOfTest</td>
-                                    <td class="border border-dark">@item.EndTime</td>
+                                    <td class="border border-dark">@(item.BeginTimeOfTest.GetValueOrDefault() == DateTime.MinValue ? "": item.BeginTimeOfTest.GetValueOrDefault().ToString("yyyyMMdd HH:mm"))</td>
+                                    <td class="border border-dark">@(item.EndTime.GetValueOrDefault() == DateTime.MinValue ? "": item.EndTime.GetValueOrDefault().ToString("yyyyMMdd HH:mm"))</td>
                                     <td class="border border-dark">@item.ProjectName</td>
                                     <td class="border border-dark">
                                         @(item.ColumnTwoNumber != null ? "S1: " + item.ColumnNumber : item.ColumnNumber)
