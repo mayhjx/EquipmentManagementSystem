@@ -398,13 +398,13 @@
                                 <tr>
                                     <td class="border border-dark">@(item.BeginTimeOfTest.GetValueOrDefault() == DateTime.MinValue ? "": item.BeginTimeOfTest.GetValueOrDefault().ToString("yyyyMMdd HH:mm"))</td>
                                     <td class="border border-dark">@(item.EndTime.GetValueOrDefault() == DateTime.MinValue ? "": item.EndTime.GetValueOrDefault().ToString("yyyyMMdd HH:mm"))</td>
-                                    <td class="border border-dark">@item.ProjectName</td>
-                                    <td class="border border-dark">
+                                    <td class="border border-dark text-left">@item.ProjectName</td>
+                                    <td class="border border-dark text-left">
                                         @(item.ColumnTwoNumber != null ? "S1: " + item.ColumnNumber : item.ColumnNumber)
                                         @(item.ColumnTwoNumber != null ? " | S2: " + item.ColumnTwoNumber : "")
                                         / @GetKeyFromValue(columnType, item.Project.ColumnType)
                                     </td>
-                                    <td class="border border-dark">
+                                    <td class="border border-dark text-left">
                                         @(item.ColumnTwoPressure != null ? "S1: " + item.ColumnPressure : item.ColumnPressure.ToString())
                                         @(item.ColumnTwoPressure != null ? " | S2: " + item.ColumnTwoPressure : "")
                                     </td>
