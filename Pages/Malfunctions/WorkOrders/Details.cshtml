@@ -15,10 +15,10 @@
     var InternalServiceable = Model.MalfunctionWorkOrder.Investigation?.Result == InvestigationResult.Internal;
 
     // 维修信息是否填写
-    var MaintainIsComplete = Model.MalfunctionWorkOrder.Maintenance?.EndTime != null ? true : false;
+    var MaintainIsComplete = Model.MalfunctionWorkOrder.Repair?.EndTime != null ? true : false;
 
     // 是否为关键部位故障
-    var MaintainIsCritical = Model.MalfunctionWorkOrder.Maintenance?.IsCritical ?? false;
+    var MaintainIsCritical = Model.MalfunctionWorkOrder.Repair?.IsCritical ?? false;
 
     // 性能验证是否确认
     var ValidationIsComfirm = Model.MalfunctionWorkOrder.Validation?.IsConfirm ?? false;
@@ -414,10 +414,10 @@
 
                 @if (InternalServiceable || RepairRequestIsComfirm)
                 {
-                    string maintianedClass = Model.MalfunctionWorkOrder.Maintenance.BeginTime != null ? "primary" : "";
+                    string maintianedClass = Model.MalfunctionWorkOrder.Repair.BeginTime != null ? "primary" : "";
 
                     <div class="time-label">
-                        <span class="bg-@maintianedClass">@Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.BeginTime)</span>
+                        <span class="bg-@maintianedClass">@Html.DisplayFor(model => model.MalfunctionWorkOrder.Repair.BeginTime)</span>
                     </div>
                     <div>
                         <i class="fa fa-wrench bg-@maintianedClass"></i>
@@ -439,27 +439,27 @@
                                             </dt>
                                             <dd class="col-xl-8 col-sm-8">
                                                 @{
-                                                    var MaintenanceInterval = (Model.MalfunctionWorkOrder.Maintenance.EndTime - Model.MalfunctionWorkOrder.Maintenance.BeginTime).GetValueOrDefault();
-                                                    var MaintenanceDays = MaintenanceInterval.Days > 0 ? $"{MaintenanceInterval.Days} 天" : "";
-                                                    var MaintenanceMinutes = MaintenanceInterval.Minutes > 0 ? $"{MaintenanceInterval.Minutes} 分钟" : "";
-                                                    var MaintenanceHours = MaintenanceInterval.Hours > 0 || (MaintenanceDays != "" && MaintenanceMinutes != "") ? $"{MaintenanceInterval.Hours} 小时" : "";
-                                                    @:  @MaintenanceDays @MaintenanceHours @MaintenanceMinutes
+                                                    var RepairInterval = (Model.MalfunctionWorkOrder.Repair.EndTime - Model.MalfunctionWorkOrder.Repair.BeginTime).GetValueOrDefault();
+                                                    var RepairDays = RepairInterval.Days > 0 ? $"{RepairInterval.Days} 天" : "";
+                                                    var RepairMinutes = RepairInterval.Minutes > 0 ? $"{RepairInterval.Minutes} 分钟" : "";
+                                                    var RepairHours = RepairInterval.Hours > 0 || (RepairDays != "" && RepairMinutes != "") ? $"{RepairInterval.Hours} 小时" : "";
+                                                    @:  @RepairDays @RepairHours @RepairMinutes
                                                 }
                                             </dd>
                                             <dt class="col-xl-4 col-sm-4">
-                                                @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.Repairer)
+                                                @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Repair.Repairer)
                                             </dt>
                                             <dd class="col-xl-8 col-sm-8">
-                                                @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.Repairer)
+                                                @Html.DisplayFor(model => model.MalfunctionWorkOrder.Repair.Repairer)
                                             </dd>
                                             <dt class="col-xl-4 col-sm-4">
-                                                @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.Solution)
+                                                @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Repair.Solution)
                                             </dt>
                                             <dd class="col-xl-8 col-sm-8">
-                                                @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.Solution)
+                                                @Html.DisplayFor(model => model.MalfunctionWorkOrder.Repair.Solution)
                                             </dd>
                                             <dt class="col-xl-4 col-sm-4">
-                                                @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.IsCritical)
+                                                @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Repair.IsCritical)
                                             </dt>
                                             <dd class="col-xl-8 col-sm-8">
                                                 @{
@@ -481,19 +481,19 @@
                                             @if (!InternalServiceable)
                                             {
                                                 <dt class="col-xl-4 col-sm-4">
-                                                    @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.FileName)
+                                                    @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Repair.FileName)
                                                 </dt>
                                                 <dd class="col-xl-8 col-sm-8">
-                                                    <a asp-page="../Maintain/Edit" asp-page-handler="Download" asp-route-id="@Model.MalfunctionWorkOrder.Maintenance.ID">
-                                                        @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.FileName)
+                                                    <a asp-page="../Maintain/Edit" asp-page-handler="Download" asp-route-id="@Model.MalfunctionWorkOrder.Repair.ID">
+                                                        @Html.DisplayFor(model => model.MalfunctionWorkOrder.Repair.FileName)
                                                     </a>
                                                 </dd>
                                             }
                                             <dt class="col-xl-4 col-sm-4">
-                                                @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Maintenance.Remark)
+                                                @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Repair.Remark)
                                             </dt>
                                             <dd class="col-xl-8 col-sm-8">
-                                                @Html.DisplayFor(model => model.MalfunctionWorkOrder.Maintenance.Remark)
+                                                @Html.DisplayFor(model => model.MalfunctionWorkOrder.Repair.Remark)
                                             </dd>
                                         </dl>
                                     </div>
@@ -502,7 +502,7 @@
                             @if (!IsCompleted && CanEdit.Succeeded)
                             {
                                 <div class="card-footer">
-                                    <a asp-page="../Maintain/Edit" asp-route-id="@Model.MalfunctionWorkOrder.Maintenance.ID" class="btn btn-outline-primary">
+                                    <a asp-page="../Maintain/Edit" asp-route-id="@Model.MalfunctionWorkOrder.Repair.ID" class="btn btn-outline-primary">
                                         编辑
                                     </a>
                                 </div>

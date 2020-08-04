@@ -26,7 +26,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
                                         .Include(m => m.Investigation)
                                         .Include(m => m.RepairRequest)
                                         .Include(m => m.AccessoriesOrder)
-                                        .Include(m => m.Maintenance)
+                                        .Include(m => m.Repair)
                                         .Include(m => m.Validation)
                                         .Include(m => m.Instrument)
                                         .FirstOrDefaultAsync(m => m.ID == id);

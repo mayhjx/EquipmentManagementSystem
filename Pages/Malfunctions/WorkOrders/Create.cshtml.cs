@@ -69,7 +69,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
             MalfunctionWorkOrder.Investigation = new Investigation { };
             MalfunctionWorkOrder.RepairRequest = new RepairRequest { };
             MalfunctionWorkOrder.AccessoriesOrder = new AccessoriesOrder { };
-            MalfunctionWorkOrder.Maintenance = new Maintenance { };
+            MalfunctionWorkOrder.Repair = new Repair { };
             MalfunctionWorkOrder.Validation = new Validation { };
 
             MalfunctionWorkOrder.Creator = _userManager.GetUserAsync(User).Result.Name;

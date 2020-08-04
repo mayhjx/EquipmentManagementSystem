@@ -40,7 +40,7 @@ namespace EquipmentManagementSystem.Models
         public AccessoriesOrder AccessoriesOrder { get; set; }
 
         [Display(Name = "故障维修")]
-        public Maintenance Maintenance { get; set; }
+        public Repair Repair { get; set; }
 
         [Display(Name = "性能验证")]
         public Validation Validation { get; set; }

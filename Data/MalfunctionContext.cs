@@ -15,7 +15,7 @@ namespace EquipmentManagementSystem.Data
         public DbSet<Investigation> Investigation { get; set; }
         public DbSet<RepairRequest> RepairRequest { get; set; }
         public DbSet<AccessoriesOrder> AccessoriesOrder { get; set; }
-        public DbSet<Maintenance> Maintenance { get; set; }
+        public DbSet<Repair> Repair { get; set; }
         public DbSet<Validation> Validation { get; set; }
         public DbSet<MalfunctionPart> MalfunctionParts { get; set; }
         public DbSet<MalfunctionPhenomenon> MalfunctionPhenomenon { get; set; }
@@ -32,7 +32,7 @@ namespace EquipmentManagementSystem.Data
             modelBuilder.Entity<Investigation>().ToTable("Investigation");
             modelBuilder.Entity<RepairRequest>().ToTable("RepairRequest");
             modelBuilder.Entity<AccessoriesOrder>().ToTable("AccessoriesOrder");
-            modelBuilder.Entity<Maintenance>().ToTable("Maintenance");
+            modelBuilder.Entity<Repair>().ToTable("Maintenance");
             modelBuilder.Entity<Validation>().ToTable("Validation");
             modelBuilder.Entity<MalfunctionPart>().ToTable("MalfunctionPart");
             modelBuilder.Entity<MalfunctionPhenomenon>().ToTable("MalfunctionPhenomenon");

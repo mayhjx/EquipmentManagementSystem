@@ -6,7 +6,7 @@ namespace EquipmentManagementSystem.Models
     /// <summary>
     /// 故障维修
     /// </summary>
-    public class Maintenance
+    public class Repair
     {
         public int ID { get; set; }
 

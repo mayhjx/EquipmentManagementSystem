@@ -1,4 +1,9 @@
-﻿using EquipmentManagementSystem.Authorization;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.Net;
+using System.Net.Mime;
+using System.Threading.Tasks;
+using EquipmentManagementSystem.Authorization;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using EquipmentManagementSystem.Utilities;
@@ -9,11 +14,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.Net;
-using System.Net.Mime;
-using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions.Maintain
 {
@@ -32,23 +32,23 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Maintain
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            Maintenance = await _context.Maintenance
+            Repair = await _context.Repair
                                 .Include(m => m.MalfunctionWorkOrder)
                                 .ThenInclude(m => m.Instrument)
                                 .FirstOrDefaultAsync(m => m.ID == id);
 
-            if (Maintenance == null)
+            if (Repair == null)
             {
                 return NotFound();
             }
 
             // 如果工单已完成则跳转到工单详情页
-            if (Maintenance.MalfunctionWorkOrder.Progress == WorkOrderProgress.Completed)
+            if (Repair.MalfunctionWorkOrder.Progress == WorkOrderProgress.Completed)
             {
-                return RedirectToPage("../WorkOrders/Details", new { id = Maintenance.MalfunctionWorkOrderID });
+                return RedirectToPage("../WorkOrders/Details", new { id = Repair.MalfunctionWorkOrderID });
             }
 
-            var isAuthorized = await _authorizationService.AuthorizeAsync(User, Maintenance.MalfunctionWorkOrder, Operations.Update);
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, Repair.MalfunctionWorkOrder, Operations.Update);
 
             if (!isAuthorized.Succeeded)
             {
@@ -63,7 +63,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Maintain
         public async Task<IActionResult> OnGetDownloadAsync(int id)
         {
             // 下载附件
-            var requestFile = await _context.Maintenance.FindAsync(id);
+            var requestFile = await _context.Repair.FindAsync(id);
 
             if (requestFile == null)
             {
@@ -75,7 +75,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Maintain
         }
 
         [BindProperty]
-        public Maintenance Maintenance { get; set; }
+        public Repair Repair { get; set; }
 
         [BindProperty]
         public Upload FileUpload { get; set; }
@@ -84,38 +84,38 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Maintain
 
         public async Task<IActionResult> OnPostAsync(int id)
         {
-            Maintenance = await _context.Maintenance
+            Repair = await _context.Repair
                                 .Include(m => m.MalfunctionWorkOrder)
                                 .ThenInclude(m => m.Instrument)
                                 .FirstOrDefaultAsync(m => m.ID == id);
 
-            if (Maintenance == null)
+            if (Repair == null)
             {
                 return NotFound();
             }
 
             // 如果工单已完成则跳转到工单详情页
-            if (Maintenance.MalfunctionWorkOrder.Progress == WorkOrderProgress.Completed)
+            if (Repair.MalfunctionWorkOrder.Progress == WorkOrderProgress.Completed)
             {
-                return RedirectToPage("../WorkOrders/Details", new { id = Maintenance.MalfunctionWorkOrderID });
+                return RedirectToPage("../WorkOrders/Details", new { id = Repair.MalfunctionWorkOrderID });
             }
 
-            var isAuthorized = await _authorizationService.AuthorizeAsync(User, Maintenance.MalfunctionWorkOrder, Operations.Update);
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, Repair.MalfunctionWorkOrder, Operations.Update);
 
             if (!isAuthorized.Succeeded)
             {
                 return Forbid();
             }
 
-            if (await TryUpdateModelAsync<Maintenance>(
-                    Maintenance,
-                    "Maintenance",
+            if (await TryUpdateModelAsync<Repair>(
+                    Repair,
+                    "Repair",
                     i => i.Repairer, i => i.Solution, i => i.BeginTime, i => i.EndTime, i => i.IsCritical, i => i.Remark))
             {
                 // 更新进度
-                if (Maintenance.MalfunctionWorkOrder.Progress < WorkOrderProgress.Repaired)
+                if (Repair.MalfunctionWorkOrder.Progress < WorkOrderProgress.Repaired)
                 {
-                    Maintenance.MalfunctionWorkOrder.Progress = WorkOrderProgress.Repaired;
+                    Repair.MalfunctionWorkOrder.Progress = WorkOrderProgress.Repaired;
                 }
 
                 if (FileUpload.FormFile != null && FileUpload.FormFile.Length > 0)
@@ -129,13 +129,13 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Maintain
                         return Page();
                     }
 
-                    Maintenance.Attachment = formFileContent;
-                    Maintenance.FileName = FileUpload.FormFile.FileName;
-                    Maintenance.UploadTime = DateTime.Now;
+                    Repair.Attachment = formFileContent;
+                    Repair.FileName = FileUpload.FormFile.FileName;
+                    Repair.UploadTime = DateTime.Now;
                 }
 
                 await _context.SaveChangesAsync();
-                return RedirectToPage("../WorkOrders/Details", new { id = Maintenance.MalfunctionWorkOrderID });
+                return RedirectToPage("../WorkOrders/Details", new { id = Repair.MalfunctionWorkOrderID });
             }
             return Page();
         }
