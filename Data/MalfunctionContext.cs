@@ -32,7 +32,7 @@ namespace EquipmentManagementSystem.Data
             modelBuilder.Entity<Investigation>().ToTable("Investigation");
             modelBuilder.Entity<RepairRequest>().ToTable("RepairRequest");
             modelBuilder.Entity<AccessoriesOrder>().ToTable("AccessoriesOrder");
-            modelBuilder.Entity<Repair>().ToTable("Maintenance");
+            modelBuilder.Entity<Repair>().ToTable("Repair");
             modelBuilder.Entity<Validation>().ToTable("Validation");
             modelBuilder.Entity<MalfunctionPart>().ToTable("MalfunctionPart");
             modelBuilder.Entity<MalfunctionPhenomenon>().ToTable("MalfunctionPhenomenon");

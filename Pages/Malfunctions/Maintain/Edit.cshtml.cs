@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace EquipmentManagementSystem.Pages.Malfunctions.Maintain
+namespace EquipmentManagementSystem.Pages.Malfunctions.Servicing
 {
     public class EditModel : BasePageModel
     {
