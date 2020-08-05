@@ -18,20 +18,24 @@ namespace EquipmentManagementSystem.Models
         public DateTime? FinishedTime { get; set; }
 
         [Display(Name = "性能验证报告")]
-        [StringLength(100)]
+        [StringLength(500)]
         public string PerformanceReportFileName { get; set; }
 
-        public byte[] PerformanceReportFile { get; set; }
+        [Display(Name = "性能报告路径")]
+        [StringLength(1000)]
+        public string PerformanceReportFilePath { get; set; }
 
         [Display(Name = "总结分析")]
         [StringLength(999)]
         public string Summary { get; set; }
 
-        public byte[] Attachment { get; set; }
-
         [Display(Name = "附件")]
-        [StringLength(100)]
+        [StringLength(500)]
         public string AttachmentName { get; set; }
+
+        [Display(Name = "附件路径")]
+        [StringLength(1000)]
+        public string AttachmentFilePath { get; set; }
 
         [Display(Name = "是否确认")]
         public bool IsConfirm { get; set; }
