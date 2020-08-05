@@ -7,7 +7,7 @@ TODO:
 使用登记导出功能
 使用MySQL数据库
 修改UsageRecord授权模块
-附件保存到物理磁盘，数据库仅保存路径！
+
 
 
 Done:
@@ -23,7 +23,7 @@ EquipmentContext中仪器和故障部分分开
 权限分级
 修改密码
 导入用户信息
-
+附件保存到物理磁盘，数据库仅保存路径
 
 Tips:
 Git bash: $git reset --soft HEAD~1
