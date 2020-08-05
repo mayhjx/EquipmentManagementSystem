@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace EquipmentManagementSystem.Utilities
 {
@@ -18,7 +19,7 @@ namespace EquipmentManagementSystem.Utilities
             //var fieldDisplayName = string.Empty;
 
             // 允许的文件后缀
-            string[] permittedExtensions = { ".zip", ".rar", ".7z", ".csv", ".xlsx", ".xls", ".docx", ".doc", ".pptx", ".ppt", ".pdf", ".jpg", ".jpeg", ".png" };
+            string[] permittedExtensions = { ".zip", ".rar", ".csv", ".xlsx", ".xls", ".docx", ".doc", ".pptx", ".ppt", ".pdf", ".jpg", ".jpeg", ".png" };
 
 
             // Use reflection to obtain the display name for the model
@@ -112,6 +113,35 @@ namespace EquipmentManagementSystem.Utilities
                 return false;
             }
             return true;
+        }
+
+        public static string GetContentType(string path)
+        {
+            var types = GetMimeTypes();
+            var ext = Path.GetExtension(path).ToLowerInvariant();
+            return types[ext];
+        }
+
+        private static Dictionary<string, string> GetMimeTypes()
+        {
+            //{ ".zip", ".rar",  ".csv", ".xlsx", ".xls", ".docx", ".doc", ".pptx", ".ppt", ".pdf", ".jpg", ".jpeg", ".png" };
+            return new Dictionary<string, string>
+            {
+
+                {".zip", "application/zip" },
+                {".rar", "application/application/vnd.rar" },
+                {".csv", "text/csv"},
+                {".xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"},
+                {".xls", "application/vnd.ms-excel"},
+                {".docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"},
+                {".doc", "application/msword"},
+                {".pptx", "application/vnd.openxmlformats-officedocument.presentationml.presentation"},
+                {".ppt", "application/vnd.ms-powerpoint"},
+                {".pdf", "application/pdf"},
+                {".jpg", "image/jpeg"},
+                {".jpeg", "image/jpeg"},
+                {".png", "image/png"},
+            };
         }
     }
 }
