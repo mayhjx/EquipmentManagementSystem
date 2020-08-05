@@ -73,7 +73,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Validate
         {
             var requestFile = await _context.Validation.FindAsync(id);
 
-            if (requestFile == null && !System.IO.File.Exists(requestFile.AttachmentFilePath))
+            if (requestFile == null || !System.IO.File.Exists(requestFile.AttachmentFilePath))
             {
                 return Page();
             }
@@ -93,7 +93,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Validate
         {
             var requestFile = await _context.Validation.FindAsync(id);
 
-            if (requestFile == null && !System.IO.File.Exists(requestFile.PerformanceReportFilePath))
+            if (requestFile == null || !System.IO.File.Exists(requestFile.PerformanceReportFilePath))
             {
                 return Page();
             }

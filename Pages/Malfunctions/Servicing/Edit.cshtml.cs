@@ -71,7 +71,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Servicing
             // 下载附件
             var requestFile = await _context.Repair.FindAsync(id);
 
-            if (requestFile == null && !System.IO.File.Exists(requestFile.FilePath))
+            if (requestFile == null || !System.IO.File.Exists(requestFile.FilePath))
             {
                 return Page();
             }

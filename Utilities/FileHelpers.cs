@@ -129,7 +129,7 @@ namespace EquipmentManagementSystem.Utilities
             {
 
                 {".zip", "application/zip" },
-                {".rar", "application/application/vnd.rar" },
+                {".rar", "application/vnd.rar" },
                 {".csv", "text/csv"},
                 {".xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"},
                 {".xls", "application/vnd.ms-excel"},
