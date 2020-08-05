@@ -4,14 +4,16 @@ using EquipmentManagementSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EquipmentManagementSystem.Migrations.Equipment
 {
     [DbContext(typeof(EquipmentContext))]
-    partial class EquipmentContextModelSnapshot : ModelSnapshot
+    [Migration("20200804092531_addMaintenanceRecord_Type_Content")]
+    partial class addMaintenanceRecord_Type_Content
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -354,16 +356,15 @@ namespace EquipmentManagementSystem.Migrations.Equipment
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<byte[]>("Attachment")
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<DateTime>("BeginTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FileName")
-                        .HasColumnType("nvarchar(500)")
-                        .HasMaxLength(500);
-
-                    b.Property<string>("FilePath")
-                        .HasColumnType("nvarchar(1000)")
-                        .HasMaxLength(1000);
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<DateTime>("FoundedTime")
                         .HasColumnType("datetime2");

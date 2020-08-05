@@ -1,0 +1,54 @@
+﻿@page
+@model EquipmentManagementSystem.Pages.Management.MaintenanceTypes.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MaintenanceType[0].InstrumentPlatform)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaintenanceType[0].Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaintenanceType[0].Cycle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaintenanceType[0].RemindTime)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.MaintenanceType) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.InstrumentPlatform)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cycle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RemindTime)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

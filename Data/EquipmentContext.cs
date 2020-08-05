@@ -18,6 +18,11 @@ namespace EquipmentManagementSystem.Data
         public DbSet<Group> Groups { get; set; }
         public DbSet<UsageRecord> UsageRecords { get; set; }
 
+        //public DbSet<MaintenanceRecord> MaintenanceRecords { get; set; }
+        public DbSet<MaintenanceType> MaintenanceTypes { get; set; }
+        public DbSet<MaintenanceContent> MaintenanceContents { get; set; }
+
+
         //public DbSet<Computer> Computers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -31,6 +36,9 @@ namespace EquipmentManagementSystem.Data
             modelBuilder.Entity<UsageRecord>().ToTable("UsageRecord")
                                                 .Property(p => p.CreatedTime)
                                                 .HasDefaultValueSql("getdate()");
+
+            modelBuilder.Entity<MaintenanceType>().ToTable("MaintenanceType");
+            modelBuilder.Entity<MaintenanceContent>().ToTable("MaintenanceContent");
 
             //modelBuilder.Entity<Computer>().ToTable("Computer");
         }
