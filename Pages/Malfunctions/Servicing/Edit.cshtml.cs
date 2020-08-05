@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Net;
-using System.Net.Mime;
 using System.Threading.Tasks;
 using EquipmentManagementSystem.Authorization;
 using EquipmentManagementSystem.Data;
@@ -14,20 +14,26 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions.Servicing
 {
     public class EditModel : BasePageModel
     {
         private readonly long _fileSizeLimit;
+        private readonly string _uploadFilePath;
+        private readonly IHostEnvironment _env;
 
         public EditModel(MalfunctionContext context,
             IAuthorizationService authorizationService,
             UserManager<User> userManager,
-            IConfiguration config)
+            IConfiguration config,
+            IHostEnvironment env)
             : base(context, authorizationService, userManager)
         {
             _fileSizeLimit = config.GetValue<long>("FileSizeLimit");
+            _uploadFilePath = config.GetValue<string>("StoredFilesPath");
+            _env = env;
         }
 
         public async Task<IActionResult> OnGetAsync(int id)
@@ -65,13 +71,20 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Servicing
             // 下载附件
             var requestFile = await _context.Repair.FindAsync(id);
 
-            if (requestFile == null)
+            if (requestFile == null && !System.IO.File.Exists(requestFile.FilePath))
             {
                 return Page();
             }
 
+            var memoryStream = new MemoryStream();
+            using (var stream = new FileStream(requestFile.FilePath, FileMode.Open))
+            {
+                await stream.CopyToAsync(memoryStream);
+            }
+            memoryStream.Position = 0;
+
             // Don't display the untrusted file name in the UI. HTML-encode the value.
-            return File(requestFile.Attachment, MediaTypeNames.Application.Octet, WebUtility.HtmlEncode(requestFile.FileName));
+            return File(memoryStream, FileHelpers.GetContentType(requestFile.FilePath), WebUtility.HtmlEncode(requestFile.FileName));
         }
 
         [BindProperty]
@@ -84,6 +97,11 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Servicing
 
         public async Task<IActionResult> OnPostAsync(int id)
         {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
             Repair = await _context.Repair
                                 .Include(m => m.MalfunctionWorkOrder)
                                 .ThenInclude(m => m.Instrument)
@@ -118,6 +136,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Servicing
                     Repair.MalfunctionWorkOrder.Progress = WorkOrderProgress.Repaired;
                 }
 
+                // 上传附件
                 if (FileUpload.FormFile != null && FileUpload.FormFile.Length > 0)
                 {
                     var formFileContent =
@@ -129,12 +148,28 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Servicing
                         return Page();
                     }
 
-                    Repair.Attachment = formFileContent;
-                    Repair.FileName = FileUpload.FormFile.FileName;
+                    var filename = Path.GetFileName(FileUpload.FormFile.FileName);
+                    var filepath = Path.Combine(_env.ContentRootPath, _uploadFilePath, Guid.NewGuid().ToString() + "_" + filename);
+
+                    // 保存文件
+                    using (var fileStream = new FileStream(filepath, FileMode.Create))
+                    {
+                        await FileUpload.FormFile.CopyToAsync(fileStream);
+                    }
+
+                    // 删除已上传的文件
+                    if (System.IO.File.Exists(Repair.FilePath))
+                    {
+                        System.IO.File.Delete(Repair.FilePath);
+                    }
+
+                    Repair.FileName = filename;
+                    Repair.FilePath = filepath;
                     Repair.UploadTime = DateTime.Now;
                 }
 
                 await _context.SaveChangesAsync();
+
                 return RedirectToPage("../WorkOrders/Details", new { id = Repair.MalfunctionWorkOrderID });
             }
             return Page();
