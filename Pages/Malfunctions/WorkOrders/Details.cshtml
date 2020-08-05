@@ -486,7 +486,7 @@
                                                     @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.Repair.FileName)
                                                 </dt>
                                                 <dd class="col-xl-8 col-sm-8">
-                                                    <a asp-page="../Maintain/Edit" asp-page-handler="Download" asp-route-id="@Model.MalfunctionWorkOrder.Repair.ID">
+                                                    <a asp-page="../Servicing/Edit" asp-page-handler="Download" asp-route-id="@Model.MalfunctionWorkOrder.Repair.ID">
                                                         @Html.DisplayFor(model => model.MalfunctionWorkOrder.Repair.FileName)
                                                     </a>
                                                 </dd>
@@ -504,7 +504,7 @@
                             @if (!IsCompleted && CanEdit.Succeeded)
                             {
                                 <div class="card-footer">
-                                    <a asp-page="../Maintain/Edit" asp-route-id="@Model.MalfunctionWorkOrder.Repair.ID" class="btn btn-outline-primary">
+                                    <a asp-page="../Servicing/Edit" asp-route-id="@Model.MalfunctionWorkOrder.Repair.ID" class="btn btn-outline-primary">
                                         编辑
                                     </a>
                                 </div>
