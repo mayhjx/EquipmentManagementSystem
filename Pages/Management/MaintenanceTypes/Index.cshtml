@@ -2,53 +2,74 @@
 @model EquipmentManagementSystem.Pages.Management.MaintenanceTypes.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "后台管理";
 }
 
-<h1>Index</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.MaintenanceType[0].InstrumentPlatform)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MaintenanceType[0].Type)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MaintenanceType[0].Cycle)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MaintenanceType[0].RemindTime)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.MaintenanceType) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.InstrumentPlatform)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Type)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cycle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RemindTime)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="card col-12">
+    <h4 class="card-header">
+        维护类型
+        <a asp-page="Create">
+            <input type="button" class="btn btn-outline-primary btn-sm" value="新建" style="margin-left: 10px;" />
+        </a>
+    </h4>
+    <div class="card-body table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.MaintenanceType[0].InstrumentPlatform)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.MaintenanceType[0].Type)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.MaintenanceType[0].Cycle)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.MaintenanceType[0].RemindTime)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.MaintenanceType[0].Content)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.MaintenanceType)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.InstrumentPlatform)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Type)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Cycle)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RemindTime)
+                        </td>
+                        <td>
+                            <ul>
+                                @if (item.Content?.Count > 0)
+                                {
+                                    @foreach (var content in item.Content)
+                                    {
+                                        <li>@content.Text</li>
+                                    }
+                                }
+                            </ul>
+                        </td>
+                        <td>
+                            <a asp-page="./Edit" asp-route-id="@item.Id">编辑</a> |
+                            <a asp-page="./Details" asp-route-id="@item.Id">查看</a> |
+                            <a asp-page="./Delete" asp-route-id="@item.Id">删除</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

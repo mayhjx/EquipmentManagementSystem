@@ -1,29 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace EquipmentManagementSystem.Pages.Management.MaintenanceTypes
 {
     public class IndexModel : PageModel
     {
-        private readonly EquipmentManagementSystem.Data.EquipmentContext _context;
+        private readonly EquipmentContext _context;
 
-        public IndexModel(EquipmentManagementSystem.Data.EquipmentContext context)
+        public IndexModel(EquipmentContext context)
         {
             _context = context;
         }
 
-        public IList<MaintenanceType> MaintenanceType { get;set; }
+        public IList<MaintenanceType> MaintenanceType { get; set; }
 
         public async Task OnGetAsync()
         {
-            MaintenanceType = await _context.MaintenanceTypes.ToListAsync();
+            MaintenanceType = await _context.MaintenanceTypes
+                .Include(m => m.Content)
+                .ToListAsync();
         }
     }
 }

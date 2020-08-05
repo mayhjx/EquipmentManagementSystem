@@ -1,21 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace EquipmentManagementSystem.Pages.Management.MaintenanceTypes
 {
     public class EditModel : PageModel
     {
-        private readonly EquipmentManagementSystem.Data.EquipmentContext _context;
+        private readonly EquipmentContext _context;
 
-        public EditModel(EquipmentManagementSystem.Data.EquipmentContext context)
+        public EditModel(EquipmentContext context)
         {
             _context = context;
         }
@@ -30,7 +28,9 @@ namespace EquipmentManagementSystem.Pages.Management.MaintenanceTypes
                 return NotFound();
             }
 
-            MaintenanceType = await _context.MaintenanceTypes.FirstOrDefaultAsync(m => m.Id == id);
+            MaintenanceType = await _context.MaintenanceTypes
+                .Include(m => m.Content)
+                .FirstOrDefaultAsync(m => m.Id == id);
 
             if (MaintenanceType == null)
             {
@@ -41,17 +41,30 @@ namespace EquipmentManagementSystem.Pages.Management.MaintenanceTypes
 
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int id, List<string> content)
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _context.Attach(MaintenanceType).State = EntityState.Modified;
+            var MaintenanceType = await _context.MaintenanceTypes.Include(m => m.Content).FirstOrDefaultAsync(m => m.Id == id);
 
             try
             {
+                MaintenanceType.Content.Clear();
+                for (int i = 0; i < content.Count; i++)
+                {
+                    if (content[i] == null)
+                        continue;
+                    var maintenanceContent = new MaintenanceContent
+                    {
+                        MaintenanceType = MaintenanceType,
+                        Text = content[i]
+                    };
+                    _context.MaintenanceContents.Add(maintenanceContent);
+                }
+
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)

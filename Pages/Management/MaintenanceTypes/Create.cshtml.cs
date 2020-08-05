@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace EquipmentManagementSystem.Pages.Management.MaintenanceTypes
 {
     public class CreateModel : PageModel
     {
-        private readonly EquipmentManagementSystem.Data.EquipmentContext _context;
+        private readonly EquipmentContext _context;
 
-        public CreateModel(EquipmentManagementSystem.Data.EquipmentContext context)
+        public CreateModel(EquipmentContext context)
         {
             _context = context;
         }
@@ -29,7 +26,7 @@ namespace EquipmentManagementSystem.Pages.Management.MaintenanceTypes
 
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(List<string> content)
         {
             if (!ModelState.IsValid)
             {
@@ -37,6 +34,19 @@ namespace EquipmentManagementSystem.Pages.Management.MaintenanceTypes
             }
 
             _context.MaintenanceTypes.Add(MaintenanceType);
+
+            for (int i = 0; i < content.Count; i++)
+            {
+                if (content[i] == null)
+                    continue;
+                var maintenanceContent = new MaintenanceContent
+                {
+                    MaintenanceType = MaintenanceType,
+                    Text = content[i]
+                };
+                _context.MaintenanceContents.Add(maintenanceContent);
+            }
+
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
