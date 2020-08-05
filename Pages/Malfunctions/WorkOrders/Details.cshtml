@@ -132,7 +132,9 @@
                                             @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.MalfunctionInfo.FileName)
                                         </dt>
                                         <dd class="col-xl-8 col-sm-8 col-12">
-                                            @Html.DisplayFor(model => model.MalfunctionWorkOrder.MalfunctionInfo.FileName)
+                                            <a asp-page="../Information/Edit" asp-page-handler="Download" asp-route-id="@Model.MalfunctionWorkOrder.MalfunctionInfo.ID">
+                                                @Html.DisplayFor(model => model.MalfunctionWorkOrder.MalfunctionInfo.FileName)
+                                            </a>
                                         </dd>
                                         <dt class="col-xl-4 col-sm-4 col-12">
                                             @Html.DisplayNameFor(model => model.MalfunctionWorkOrder.MalfunctionInfo.Remark)

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Net;
-using System.Net.Mime;
 using System.Threading.Tasks;
 using EquipmentManagementSystem.Authorization;
 using EquipmentManagementSystem.Data;
@@ -14,20 +14,25 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions.Information
 {
     public class EditModel : BasePageModel
     {
         private readonly long _fileSizeLimit;
-
+        private readonly string _uploadFilePath;
+        private readonly IHostEnvironment _env;
         public EditModel(MalfunctionContext context,
             IAuthorizationService authorizationService,
             UserManager<User> userManager,
-            IConfiguration config)
+            IConfiguration config,
+            IHostEnvironment env)
             : base(context, authorizationService, userManager)
         {
             _fileSizeLimit = config.GetValue<long>("FileSizeLimit");
+            _uploadFilePath = config.GetValue<string>("StoredFilesPath");
+            _env = env;
         }
 
         public async Task<IActionResult> OnGetAsync(int id)
@@ -68,13 +73,20 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Information
             // 下载附件
             var requestFile = await _context.MalfunctionInfo.FindAsync(id);
 
-            if (requestFile == null)
+            if (requestFile == null && !System.IO.File.Exists(requestFile.FilePath))
             {
                 return Page();
             }
 
+            var memoryStream = new MemoryStream();
+            using (var stream = new FileStream(requestFile.FilePath, FileMode.Open))
+            {
+                await stream.CopyToAsync(memoryStream);
+            }
+            memoryStream.Position = 0;
+
             // Don't display the untrusted file name in the UI. HTML-encode the value.
-            return File(requestFile.Attachment, MediaTypeNames.Application.Octet, WebUtility.HtmlEncode(requestFile.FileName));
+            return File(memoryStream, FileHelpers.GetContentType(requestFile.FilePath), WebUtility.HtmlEncode(requestFile.FileName));
         }
 
         [BindProperty]
@@ -135,8 +147,23 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Information
                         return Page();
                     }
 
-                    MalfunctionInfo.Attachment = formFileContent;
-                    MalfunctionInfo.FileName = FileUpload.FormFile.FileName;
+                    var filename = Path.GetFileName(FileUpload.FormFile.FileName);
+                    var filepath = Path.Combine(_env.ContentRootPath, _uploadFilePath, Guid.NewGuid().ToString() + "_" + filename);
+
+                    // 保存文件
+                    using (var fileStream = new FileStream(filepath, FileMode.Create))
+                    {
+                        await FileUpload.FormFile.CopyToAsync(fileStream);
+                    }
+
+                    // 删除已上传的文件
+                    if (System.IO.File.Exists(MalfunctionInfo.FilePath))
+                    {
+                        System.IO.File.Delete(MalfunctionInfo.FilePath);
+                    }
+
+                    MalfunctionInfo.FileName = filename;
+                    MalfunctionInfo.FilePath = filepath;
                     MalfunctionInfo.UploadTime = DateTime.Now;
                 }
 

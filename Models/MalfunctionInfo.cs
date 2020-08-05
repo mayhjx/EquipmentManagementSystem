@@ -42,11 +42,13 @@ namespace EquipmentManagementSystem.Models
         [StringLength(999)]
         public string Remark { get; set; }
 
-        public byte[] Attachment { get; set; }
-
         [Display(Name = "附件")]
-        [StringLength(100)]
+        [StringLength(500)]
         public string FileName { get; set; }
+
+        [Display(Name = "文件路径")]
+        [StringLength(1000)]
+        public string FilePath { get; set; }
 
         [Display(Name = "上传时间")]
         public DateTime? UploadTime { get; set; }
