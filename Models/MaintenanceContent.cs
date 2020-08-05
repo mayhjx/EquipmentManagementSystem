@@ -10,6 +10,7 @@ namespace EquipmentManagementSystem.Models
         [StringLength(50)]
         public string Text { get; set; }
 
+        [Display(Name = "维护类型")]
         public int MaintenanceTypeId { get; set; }
 
         public MaintenanceType MaintenanceType { get; set; }

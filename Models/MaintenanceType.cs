@@ -13,7 +13,7 @@ namespace EquipmentManagementSystem.Models
         [Display(Name = "维护类型")]
         public string Type { get; set; }
 
-        [Display(Name = "维护内容（使用/分隔）")]
+        [Display(Name = "维护内容")]
         public ICollection<MaintenanceContent> Content { get; set; }
 
         [Display(Name = "提醒周期")]
