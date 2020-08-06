@@ -1,5 +1,5 @@
 ﻿@page
-@model EquipmentManagementSystem.Pages.Management.MaintenanceTypes.IndexModel
+@model EquipmentManagementSystem.Pages.Management.MaintenanceContents.IndexModel
 
 @{
     ViewData["Title"] = "后台管理";
@@ -8,7 +8,7 @@
 
 <div class="card col-12">
     <h4 class="card-header">
-        维护类型
+        维护内容
         <a asp-page="Create">
             <input type="button" class="btn btn-outline-primary btn-sm" value="新建" style="margin-left: 10px;" />
         </a>
@@ -18,25 +18,25 @@
             <thead>
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.MaintenanceType[0].InstrumentPlatform)
+                        @Html.DisplayNameFor(model => model.MaintenanceContents[0].InstrumentPlatform)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.MaintenanceType[0].Type)
+                        @Html.DisplayNameFor(model => model.MaintenanceContents[0].Type)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.MaintenanceType[0].Cycle)
+                        @Html.DisplayNameFor(model => model.MaintenanceContents[0].Text)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.MaintenanceType[0].RemindTime)
+                        @Html.DisplayNameFor(model => model.MaintenanceContents[0].Cycle)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.MaintenanceType[0].Content)
+                        @Html.DisplayNameFor(model => model.MaintenanceContents[0].RemindTime)
                     </th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.MaintenanceType)
+                @foreach (var item in Model.MaintenanceContents)
                 {
                     <tr>
                         <td>
@@ -46,25 +46,16 @@
                             @Html.DisplayFor(modelItem => item.Type)
                         </td>
                         <td>
+                            @Html.DisplayFor(modelItem => item.Text)
+                        </td>
+                        <td>
                             @Html.DisplayFor(modelItem => item.Cycle)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.RemindTime)
                         </td>
                         <td>
-                            <ul>
-                                @if (item.Content?.Count > 0)
-                                {
-                                    @foreach (var content in item.Content)
-                                    {
-                                        <li>@content.Text</li>
-                                    }
-                                }
-                            </ul>
-                        </td>
-                        <td>
                             <a asp-page="./Edit" asp-route-id="@item.Id">编辑</a> |
-                            <a asp-page="./Details" asp-route-id="@item.Id">查看</a> |
                             <a asp-page="./Delete" asp-route-id="@item.Id">删除</a>
                         </td>
                     </tr>

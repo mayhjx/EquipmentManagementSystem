@@ -1,0 +1,74 @@
+﻿@page
+@model EquipmentManagementSystem.Pages.Management.MaintenanceContents.CreateModel
+
+@{
+    ViewData["Title"] = "新建";
+}
+
+<div class="card">
+    <h4 class="card-header">
+        维护内容
+    </h4>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12 col-xl-3">
+                <form method="post" id="form">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="MaintenanceContent.InstrumentPlatform" class="control-label"></label>
+                        <select asp-for="MaintenanceContent.InstrumentPlatform" class="custom-select" asp-items="@Model.Platforms"></select>
+                        <span asp-validation-for="MaintenanceContent.InstrumentPlatform" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MaintenanceContent.Type" class="control-label"></label>
+                        <select asp-for="MaintenanceContent.Type" class="custom-select" asp-items="@Model.Types"></select>
+                        <span asp-validation-for="MaintenanceContent.Type" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="MaintenanceContent.Text" class="control-label"></label>
+                        <input asp-for="MaintenanceContent.Text" class="form-control" />
+                        <span asp-validation-for="MaintenanceContent.Text" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MaintenanceContent.Cycle" class="control-label"></label>
+                        <input asp-for="MaintenanceContent.Cycle" class="form-control" type="number" />
+                        <span asp-validation-for="MaintenanceContent.Cycle" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MaintenanceContent.RemindTime" class="control-label"></label>
+                        <input asp-for="MaintenanceContent.RemindTime" class="form-control" type="number" />
+                        <span asp-validation-for="MaintenanceContent.RemindTime" class="text-danger"></span>
+                    </div>
+
+                    @*<div class="form-row">
+                            <button id="AddInput" class="btn text-blue"><i class="fa fa-plus fa-lg text-green"></i>  添加另一个维护内容</button>
+                        </div>*@
+
+                    <div class="form-group">
+                        <input type="submit" value="新建" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div>
+            <a asp-page="Index">返回</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @*<script>
+            var i = 1;
+            $('button#AddInput').click(function (e) {
+                e.preventDefault();
+                var input = $("div#content").html();
+                var pattern = /\[\d\]/g;
+                input = input.replace(pattern, "[" + i + "]")
+                $(this).parent().before(input);
+                i++;
+            });
+        </script>*@
+}

@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace EquipmentManagementSystem.Pages.Management.MaintenanceTypes
+namespace EquipmentManagementSystem.Pages.Management.MaintenanceContents
 {
     public class IndexModel : PageModel
     {
@@ -16,13 +17,11 @@ namespace EquipmentManagementSystem.Pages.Management.MaintenanceTypes
             _context = context;
         }
 
-        public IList<MaintenanceType> MaintenanceType { get; set; }
+        public IList<MaintenanceContent> MaintenanceContents { get; set; }
 
         public async Task OnGetAsync()
         {
-            MaintenanceType = await _context.MaintenanceTypes
-                .Include(m => m.Content)
-                .ToListAsync();
+            MaintenanceContents = await _context.MaintenanceContents.OrderBy(m => m.InstrumentPlatform).ToListAsync();
         }
     }
 }

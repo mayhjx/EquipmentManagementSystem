@@ -4,14 +4,16 @@ using EquipmentManagementSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EquipmentManagementSystem.Migrations.Equipment
 {
     [DbContext(typeof(EquipmentContext))]
-    partial class EquipmentContextModelSnapshot : ModelSnapshot
+    [Migration("20200806080948_ChangeMaintenanceContext")]
+    partial class ChangeMaintenanceContext
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -315,6 +317,9 @@ namespace EquipmentManagementSystem.Migrations.Equipment
                     b.Property<string>("InstrumentPlatform")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("MaintenanceTypeId")
+                        .HasColumnType("int");
+
                     b.Property<int>("RemindTime")
                         .HasColumnType("int");
 
@@ -327,7 +332,27 @@ namespace EquipmentManagementSystem.Migrations.Equipment
 
                     b.HasKey("Id");
 
+                    b.HasIndex("MaintenanceTypeId");
+
                     b.ToTable("MaintenanceContent");
+                });
+
+            modelBuilder.Entity("EquipmentManagementSystem.Models.MaintenanceType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("InstrumentPlatform")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MaintenanceType");
                 });
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.MalfunctionInfo", b =>
@@ -710,6 +735,13 @@ namespace EquipmentManagementSystem.Migrations.Equipment
                         .HasForeignKey("EquipmentManagementSystem.Models.Investigation", "MalfunctionWorkOrderID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("EquipmentManagementSystem.Models.MaintenanceContent", b =>
+                {
+                    b.HasOne("EquipmentManagementSystem.Models.MaintenanceType", null)
+                        .WithMany("Content")
+                        .HasForeignKey("MaintenanceTypeId");
                 });
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.MalfunctionInfo", b =>

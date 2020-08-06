@@ -19,7 +19,6 @@ namespace EquipmentManagementSystem.Data
         public DbSet<UsageRecord> UsageRecords { get; set; }
 
         //public DbSet<MaintenanceRecord> MaintenanceRecords { get; set; }
-        public DbSet<MaintenanceType> MaintenanceTypes { get; set; }
         public DbSet<MaintenanceContent> MaintenanceContents { get; set; }
 
 
@@ -37,7 +36,6 @@ namespace EquipmentManagementSystem.Data
                                                 .Property(p => p.CreatedTime)
                                                 .HasDefaultValueSql("getdate()");
 
-            modelBuilder.Entity<MaintenanceType>().ToTable("MaintenanceType");
             modelBuilder.Entity<MaintenanceContent>().ToTable("MaintenanceContent");
 
             //modelBuilder.Entity<Computer>().ToTable("Computer");

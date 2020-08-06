@@ -10,54 +10,50 @@
         <h4>确认删除？</h4>
     </div>
     <div class="card-body">
-        <div class="row">
-            <div class="col-md-3">
-                <dl class="row">
-                    <dt class="col-sm-6">
-                        @Html.DisplayNameFor(model => model.Project.GroupId)
-                    </dt>
-                    <dd class="col-sm-6">
-                        @Html.DisplayFor(model => model.Project.Group.Name)
-                    </dd>
-                    <dt class="col-sm-6">
-                        @Html.DisplayNameFor(model => model.Project.Name)
-                    </dt>
-                    <dd class="col-sm-6">
-                        @Html.DisplayFor(model => model.Project.Name)
-                    </dd>
-                    <dt class="col-sm-6">
-                        @Html.DisplayNameFor(model => model.Project.SimpleTestTime)
-                    </dt>
-                    <dd class="col-sm-6">
-                        @Html.DisplayFor(model => model.Project.SimpleTestTime)
-                    </dd>
-                    <dt class="col-sm-6">
-                        @Html.DisplayNameFor(model => model.Project.ColumnType)
-                    </dt>
-                    <dd class="col-sm-6">
-                        @Html.DisplayFor(model => model.Project.ColumnType)
-                    </dd>
-                    <dt class="col-sm-6">
-                        @Html.DisplayNameFor(model => model.Project.Carrier)
-                    </dt>
-                    <dd class="col-sm-6">
-                        @Html.DisplayFor(model => model.Project.Carrier)
-                    </dd>
-                    <dt class="col-sm-6">
-                        @Html.DisplayNameFor(model => model.Project.IonSource)
-                    </dt>
-                    <dd class="col-sm-6">
-                        @Html.DisplayFor(model => model.Project.IonSource)
-                    </dd>
-                    <dt class="col-sm-6">
-                        @Html.DisplayNameFor(model => model.Project.Detector)
-                    </dt>
-                    <dd class="col-sm-6">
-                        @Html.DisplayFor(model => model.Project.Detector)
-                    </dd>
-                </dl>
-            </div>
-        </div>
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Project.GroupId)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Project.Group.Name)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Project.Name)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Project.Name)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Project.SimpleTestTime)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Project.SimpleTestTime)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Project.ColumnType)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Project.ColumnType)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Project.Carrier)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Project.Carrier)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Project.IonSource)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Project.IonSource)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Project.Detector)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Project.Detector)
+            </dd>
+        </dl>
 
         <form method="post">
             <input type="hidden" asp-for="Project.Id" />

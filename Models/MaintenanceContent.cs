@@ -6,13 +6,20 @@ namespace EquipmentManagementSystem.Models
     {
         public int Id { get; set; }
 
-        [Display(Name = "内容")]
+        [Display(Name = "设备平台")]
+        public string InstrumentPlatform { get; set; }
+
+        [Display(Name = "维护类型")]
+        public string Type { get; set; }
+
+        [Display(Name = "维护内容")]
         [StringLength(50)]
         public string Text { get; set; }
 
-        [Display(Name = "维护类型")]
-        public int MaintenanceTypeId { get; set; }
+        [Display(Name = "维护周期(天)")]
+        public int Cycle { get; set; }
 
-        public MaintenanceType MaintenanceType { get; set; }
+        [Display(Name = "剩余天数提醒")]
+        public int RemindTime { get; set; }
     }
 }

@@ -1,26 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using EquipmentManagementSystem.Data;
+using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using EquipmentManagementSystem.Data;
-using EquipmentManagementSystem.Models;
 
-namespace EquipmentManagementSystem.Pages.Management.MaintenanceTypes
+namespace EquipmentManagementSystem.Pages.Management.MaintenanceContents
 {
     public class DeleteModel : PageModel
     {
-        private readonly EquipmentManagementSystem.Data.EquipmentContext _context;
+        private readonly EquipmentContext _context;
 
-        public DeleteModel(EquipmentManagementSystem.Data.EquipmentContext context)
+        public DeleteModel(EquipmentContext context)
         {
             _context = context;
         }
 
         [BindProperty]
-        public MaintenanceType MaintenanceType { get; set; }
+        public MaintenanceContent MaintenanceContent { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,9 +26,9 @@ namespace EquipmentManagementSystem.Pages.Management.MaintenanceTypes
                 return NotFound();
             }
 
-            MaintenanceType = await _context.MaintenanceTypes.FirstOrDefaultAsync(m => m.Id == id);
+            MaintenanceContent = await _context.MaintenanceContents.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (MaintenanceType == null)
+            if (MaintenanceContent == null)
             {
                 return NotFound();
             }
@@ -45,11 +42,11 @@ namespace EquipmentManagementSystem.Pages.Management.MaintenanceTypes
                 return NotFound();
             }
 
-            MaintenanceType = await _context.MaintenanceTypes.FindAsync(id);
+            MaintenanceContent = await _context.MaintenanceContents.FindAsync(id);
 
-            if (MaintenanceType != null)
+            if (MaintenanceContent != null)
             {
-                _context.MaintenanceTypes.Remove(MaintenanceType);
+                _context.MaintenanceContents.Remove(MaintenanceContent);
                 await _context.SaveChangesAsync();
             }
 
