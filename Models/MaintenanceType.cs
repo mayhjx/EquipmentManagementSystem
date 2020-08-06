@@ -16,10 +16,10 @@ namespace EquipmentManagementSystem.Models
         [Display(Name = "维护内容")]
         public ICollection<MaintenanceContent> Content { get; set; }
 
-        [Display(Name = "提醒周期")]
-        public string Cycle { get; set; }
+        [Display(Name = "提醒周期(天)")]
+        public int Cycle { get; set; }
 
         [Display(Name = "提醒时间")]
-        public string RemindTime { get; set; }
+        public int RemindTime { get; set; }
     }
 }
