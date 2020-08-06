@@ -40,5 +40,10 @@ namespace EquipmentManagementSystem.Data
 
             //modelBuilder.Entity<Computer>().ToTable("Computer");
         }
+
+
+        //public DbSet<Computer> Computers { get; set; }
+
+        public DbSet<EquipmentManagementSystem.Models.MaintenanceRecord> MaintenanceRecord { get; set; }
     }
 }

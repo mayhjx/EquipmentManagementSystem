@@ -68,7 +68,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Pages\MaintenanceRecords\" />
 	  <Folder Include="wwwroot\uploadFiles\" />
 	</ItemGroup>
 
