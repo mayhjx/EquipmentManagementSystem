@@ -1,21 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace EquipmentManagementSystem.Pages.MaintenanceRecords
 {
     public class EditModel : PageModel
     {
-        private readonly EquipmentManagementSystem.Data.EquipmentContext _context;
+        private readonly EquipmentContext _context;
 
-        public EditModel(EquipmentManagementSystem.Data.EquipmentContext context)
+        public EditModel(EquipmentContext context)
         {
             _context = context;
         }
@@ -38,8 +35,7 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
             {
                 return NotFound();
             }
-           ViewData["InstrumentId"] = new SelectList(_context.Instruments, "ID", "ID");
-           ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Id");
+
             return Page();
         }
 
@@ -70,7 +66,7 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("../Index");
         }
 
         private bool MaintenanceRecordExists(int id)
