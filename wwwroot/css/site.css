@@ -76,12 +76,17 @@ body {*/
 @media print {
     @page {
         size: A4 landscape;
-        margin: 3mm;
+        margin: 7mm;
     }
 
-    html {
+    table {
+        page-break-after: avoid;
+        page-break-inside: avoid;
+    }
+
+    body {
         color: #000;
-        background-color: #fff;
+        background: white;
         zoom: 40%;
         font-size: 8px;
     }
