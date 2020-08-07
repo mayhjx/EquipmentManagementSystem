@@ -17,8 +17,7 @@ namespace EquipmentManagementSystem.Data
         public DbSet<Project> Projects { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<UsageRecord> UsageRecords { get; set; }
-
-        //public DbSet<MaintenanceRecord> MaintenanceRecords { get; set; }
+        public DbSet<MaintenanceRecord> MaintenanceRecords { get; set; }
         public DbSet<MaintenanceContent> MaintenanceContents { get; set; }
 
 
@@ -37,6 +36,7 @@ namespace EquipmentManagementSystem.Data
                                                 .HasDefaultValueSql("getdate()");
 
             modelBuilder.Entity<MaintenanceContent>().ToTable("MaintenanceContent");
+            modelBuilder.Entity<MaintenanceRecord>().ToTable("MaintenanceRecords");
 
             //modelBuilder.Entity<Computer>().ToTable("Computer");
         }
