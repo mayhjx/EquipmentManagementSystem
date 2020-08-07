@@ -27,7 +27,7 @@
 
                 <label class="my-1 mr-2" for="instrument" asp-for="@Model.Search.Instrument"></label>
                 <select class="custom-select my-1 mr-sm-2" id="instrument" asp-for="@Model.Search.Instrument">
-                    <option value="">---请选择---</option>
+                    <option value=""></option>
                 </select>
                 <button type="submit" class="btn btn-primary my-1">查询</button>
             </form>
@@ -107,174 +107,12 @@
                             @Html.DisplayFor(modelItem => item.EndTime)
                         </td>
                         <td>
-                            <a asp-page="./Edit" asp-route-id="@item.Id"><i class="fa fa-edit fa-lg"></i></a>
+                            <a asp-page="./Edit" asp-route-id="@item.Id"><i class="fa fa-pencil fa-lg"></i></a>
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
-        <span>
-            @*<button class="btn btn-outline-primary float-right no-print" style="margin-right:10px;" onclick="javascript:window.print()">
-                    <i class="fa fa-print"></i> 打印
-                </button>
-                <table class="table table-sm table-borderless">
-                    <thead>
-                        <tr>
-                            <th colspan="13" class=""><h4 class="text-center">色谱质谱联用设备使用通用记录表</h4></th>
-                        </tr>
-                        <tr>
-                            <th colspan="13" class=""><h5 class="text-center">UHPLC, LC-MS/MS, GC-MS Use Form</h5></th>
-                        </tr>
-                        <tr>
-                            <th colspan="7" class="">仪器编号：<u>@Model.Search?.Instrument</u>  仪器型号：<u></u></th>
-                            <th colspan="6" class="text-right">KM-SOP0314. ___ .01</th>
-                        </tr>
-                        <tr>
-                            <th class="border border-dark">
-                                开始时间<br />
-                                Startup time
-                            </th>
-                            <th class="border border-dark">
-                                结束时间<br />
-                                Shutdown time
-                            </th>
-                            <th class="border border-dark">
-                                检测项目<br />
-                                Test Item
-                            </th>
-                            <th class="border border-dark">
-                                色谱柱编号/类型<br />
-                                Column Number
-                            </th>
-                            <th class="border border-dark">
-                                初始压力<br />
-                                □Psi<br />
-                                □Bar<br />
-                                □Mpa
-                            </th>
-                            <th class="border border-dark">
-                                □流动相<br />
-                                Liquid Phase<br />
-                                □载气<br />
-                                Carrier Gas 
-                            </th>
-                            <th class="border border-dark">
-                                检测器<br />
-                                Detector
-                            </th>
-                            <th class="border border-dark">
-                                离子源<br />
-                                Ion Source
-                            </th>
-                            <th class="border border-dark">
-                                真空度<br />
-                                □torr<br />
-                                □Mpa
-                            </th>
-                            <th class="border border-dark">
-                                空白<br />
-                                Blank
-                            </th>
-                            <th class="border border-dark">
-                                test信号<br />
-                                Test Signal
-                            </th>
-                            <th class="border border-dark">
-                                操作者<br />
-                                Operator
-                            </th>
-                            <th class="border border-dark">备注</th>
-                        </tr>
-                    </thead>
-                    @{
-                        var columnType = new Dictionary<char, string>();
-                        var carrier = new Dictionary<char, string>();
-                        var ionSource = new Dictionary<char, string>();
-                        var detector = new Dictionary<char, string>();
-                        char index = (char)65;
-
-                        foreach (var item in Model.UsageRecords)
-                        {
-                            if (!columnType.ContainsValue(item.Project.ColumnType))
-                            {
-                                columnType.Add(index, item.Project.ColumnType);
-                                carrier.Add(index, item.Project.Carrier);
-                                ionSource.Add(index, item.Project.IonSource);
-                                detector.Add(index, item.Project.Detector);
-                                index++;
-                            }
-                        }
-
-                        string GetKeyFromValue(Dictionary<char, string> dic, string value)
-                        {
-                            string key = string.Empty;
-                            foreach (KeyValuePair<char, string> kvp in dic)
-                            {
-                                if (kvp.Value == value)
-                                {
-                                    return kvp.Key.ToString();
-                                }
-                            }
-                            return key;
-                        }
-                    }
-                    <tfoot>
-                        <tr>
-                            <td colspan="13" class="border border-dark">
-                                备注：
-                                <ol>
-                                    <li>
-                                        色谱柱类型：@string.Join(" ", columnType).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
-                                    </li>
-                                    <li>
-                                        流动相/载气类型：@string.Join(" ", carrier).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
-                                    </li>
-                                    <li>
-                                        离子源类型：@string.Join(" ", ionSource).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
-                                    </li>
-                                    <li>
-                                        检测器类型：@string.Join(" ", detector).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
-                                    </li>
-                                </ol>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="13" class="text-center border border-dark">
-                                使用回顾
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="border border-dark">评估意见</td>
-                            <td colspan="4" class="border border-dark"></td>
-                            <td class="border border-dark">评估人/日期</td>
-                            <td colspan="3" class="border border-dark"></td>
-                            <td class="border border-dark">审批人/日期</td>
-                            <td colspan="3" class="border border-dark"></td>
-                        </tr>
-                    </tfoot>
-                    <tbody>
-                        @foreach (var item in Model.UsageRecords)
-                        {
-                            <tr>
-                                <td class="border border-dark">@item.BeginTimeOfTest</td>
-                                <td class="border border-dark">@item.EndTime</td>
-                                <td class="border border-dark">@item.ProjectName</td>
-                                <td class="border border-dark">@item.ColumnNumber<br />@item.ColumnTwoNumber / @GetKeyFromValue(columnType, item.Project.ColumnType)</td>
-                                <td class="border border-dark">@item.ColumnPressure<br />@item.ColumnTwoPressure </td>
-                                <td class="border border-dark">@GetKeyFromValue(carrier, item.Project.Carrier)</td>
-                                <td class="border border-dark">@GetKeyFromValue(detector, item.Project.Detector)</td>
-                                <td class="border border-dark">@GetKeyFromValue(ionSource, item.Project.IonSource)</td>
-                                <td class="border border-dark">@item.VacuumDegree</td>
-                                <td class="border border-dark">@item.BlankSignal</td>
-                                <td class="border border-dark">@item.TestSignal</td>
-                                <td class="border border-dark">@item.Creator</td>
-                                <td class="border border-dark">@item.Remark</td>
-                            </tr>
-                        }
-                    </tbody>
-
-                </table>*@
-        </span>
     </div>
 </div>
 
@@ -292,7 +130,7 @@
                 return;
             }
             $("select#instrument").empty();
-            $("select#instrument").append("<option value=''>---请选择---</option>");
+            //$("select#instrument").append("<option value=''>---请选择---</option>");
             $.getJSON(`?handler=InstrumentFilter&projectName=${project}`, (data) => {
                 $.each(data, function (i, item) {
                     if (item.length > 0) {

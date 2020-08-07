@@ -83,7 +83,7 @@ namespace EquipmentManagementSystem.Pages.Management.MaintenanceContents
 
             Platforms = new SelectList((from i in _context.Instruments
                                         select i.Platform).Distinct());
-            return Page();
+            return RedirectToPage("./Index");
         }
 
         private bool MaintenanceContentExists(int id)
