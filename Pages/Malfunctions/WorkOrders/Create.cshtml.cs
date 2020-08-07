@@ -7,16 +7,20 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
 {
     public class CreateModel : BasePageModel
     {
+        private readonly EquipmentContext _equipmentContext;
         public CreateModel(MalfunctionContext context,
             IAuthorizationService authorizationService,
-            UserManager<User> userManager)
+            UserManager<User> userManager,
+            EquipmentContext equipmentContext)
             : base(context, authorizationService, userManager)
         {
+            _equipmentContext = equipmentContext;
         }
 
         public IActionResult OnGet(string id)
@@ -28,15 +32,22 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
             if (isAdmin)
             {
                 // 获取所有设备编号
-                InstrumentSelectList = new SelectList(_context.Set<Instrument>().OrderBy(m => m.ID), "ID", "ID", id);
+                InstrumentSelectList = new SelectList(_equipmentContext.Instruments.OrderBy(m => m.ID), "ID", "ID", id);
             }
             else
             {
                 // 获取技术员或设备负责人所属项目组的设备编号
                 var userGroup = _userManager.GetUserAsync(User).Result.Group;
-                InstrumentSelectList = new SelectList(_context.Set<Instrument>()
-                                                                .Where(m => m.Group == userGroup)
-                                                                .OrderBy(m => m.ID), "ID", "ID", id);
+                // 获取所属项目组的项目
+                var userProjects = _equipmentContext.Projects.Include(p => p.Group).Where(p => p.Group.Name == userGroup);
+
+                // 获取项目使用的设备编号
+                var instruments = from m in _equipmentContext.Instruments
+                                  from p in userProjects
+                                  where m.Projects.IndexOf(p.Name) >= 0
+                                  select m;
+
+                InstrumentSelectList = new SelectList(instruments, "ID", "ID", id);
             }
 
             MalfunctionPhenomenonSelectList = new SelectList(_context.MalfunctionPhenomenon, "Phenomenon", "Phenomenon");
