@@ -91,12 +91,14 @@
         </div>
         <div class="card-body">
             <div class="tab-content p-0">
+                @*使用时长直方图*@
                 <div class="chart tab-pane active" id="data-chart" style="position: relative;">
                     <div class="chartjs-size-monitor">
                         <div class="chartjs-size-monitor-expand"><div class=""></div></div>
                         <div class="chartjs-size-monitor-shrink"><div class=""></div></div>
                     </div>
                 </div>
+                @*原始数据*@
                 <div class="tab-pane " id="data" style="position: relative; ">
                     <div class="table-responsive">
                         <table id="export" class="table table-hover text-nowrap">
@@ -230,6 +232,7 @@
                         </table>
                     </div>
                 </div>
+                @*使用登记表*@
                 <div class="tab-pane" id="usage-datagrid" style="position: relative; ">
                     <button id="exportToPDF" class="btn btn-outline-primary float-right no-print" style="margin-right:10px;" type="button" title="建议在Google Chrome浏览器中进行打印">
                         <i class="fa fa-print"></i> 打印预览
@@ -296,20 +299,20 @@
                                 <th colspan="7" class="text-left">仪器编号：@(Model.Search?.Instrument ?? "_____________")&nbsp; 仪器型号：@(Model.InstrumentModel?? "_____________")</th>
                                 <th colspan="6" class="text-right">KM-SOP0314. ___ .01</th>
                             </tr>
-                            <tr>
-                                <th class="border border-dark">
+                            <tr class="text-center">
+                                <th class="border border-dark text-center">
                                     开始时间<br />
                                     Startup Time
                                 </th>
-                                <th class="border border-dark">
+                                <th class="border border-dark text-center">
                                     结束时间<br />
                                     Shutdown Time
                                 </th>
-                                <th class="border border-dark">
+                                <th class="border border-dark text-center">
                                     检测项目<br />
                                     Test Item
                                 </th>
-                                <th class="border border-dark">
+                                <th class="border border-dark text-center">
                                     色谱柱编号/类型<br />
                                     Column Number/Type
                                 </th>
@@ -317,8 +320,8 @@
                                     初始压力<br />
                                     Pressure<br />
                                     <i class="fa fa-@(pressureUnit == "Mpa" ? "check-" : "")square-o" aria-hidden="true"></i> Mpa<br />
-                                    <i class="fa fa-@(pressureUnit == "Psi" ? "check-" : "")square-o" aria-hidden="true"></i> Psi<br />
-                                    <i class="fa fa-@(pressureUnit == "Bar" ? "check-" : "")square-o" aria-hidden="true"></i> Bar
+                                    <i class="fa fa-@(pressureUnit == "Bar" ? "check-" : "")square-o" aria-hidden="true"></i> Bar<br />
+                                    <i class="fa fa-@(pressureUnit == "Psi" ? "check-" : "")square-o" aria-hidden="true"></i> Psi
                                 </th>
                                 <th class="border border-dark">
                                     真空度<br />
@@ -400,13 +403,13 @@
                                 <tr>
                                     <td class="border border-dark">@(item.BeginTimeOfTest.GetValueOrDefault() == DateTime.MinValue ? "": item.BeginTimeOfTest.GetValueOrDefault().ToString("yyyyMMdd HH:mm"))</td>
                                     <td class="border border-dark">@(item.EndTime.GetValueOrDefault() == DateTime.MinValue ? "": item.EndTime.GetValueOrDefault().ToString("yyyyMMdd HH:mm"))</td>
-                                    <td class="border border-dark text-left">@item.ProjectName</td>
-                                    <td class="border border-dark text-left">
+                                    <td class="border border-dark">@item.ProjectName</td>
+                                    <td class="border border-dark">
                                         @(item.ColumnTwoNumber != null ? "S1: " + item.ColumnNumber : item.ColumnNumber)
                                         @(item.ColumnTwoNumber != null ? " | S2: " + item.ColumnTwoNumber : "")
                                         / @GetKeyFromValue(columnType, item.Project.ColumnType)
                                     </td>
-                                    <td class="border border-dark text-left">
+                                    <td class="border border-dark">
                                         @(item.ColumnTwoPressure != null ? "S1: " + item.ColumnPressure : item.ColumnPressure.ToString())
                                         @(item.ColumnTwoPressure != null ? " | S2: " + item.ColumnTwoPressure : "")
                                     </td>
