@@ -83,8 +83,6 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
             MalfunctionWorkOrder.Repair = new Repair { };
             MalfunctionWorkOrder.Validation = new Validation { };
 
-            MalfunctionWorkOrder.Creator = _userManager.GetUserAsync(User).Result.Name;
-
             var isAuthorized = await _authorizationService.AuthorizeAsync(User, MalfunctionWorkOrder, Operations.Create);
 
             if (!isAuthorized.Succeeded)
