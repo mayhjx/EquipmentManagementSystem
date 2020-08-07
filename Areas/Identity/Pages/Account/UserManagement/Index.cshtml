@@ -15,7 +15,7 @@
     <h4 class="card-header">
         用户
         <a asp-page="Create">
-            <input type="button" class="btn btn-outline-primary btn-sm" value="新增用户" style="margin-left: 10px;" />
+            <input type="button" class="btn btn-outline-primary btn-sm" value="新增" style="margin-left: 10px;" />
         </a>
     </h4>
     <div class="card-body">
@@ -51,7 +51,7 @@
                             <td>@role.FirstOrDefault()</td>
                         }
                         <td>
-                            <a asp-page="Edit" asp-route-name="@item.UserName"><i class="fa fa-user-plus fa-lg" aria-hidden="true"></i></a>
+                            <a asp-page="Edit" asp-route-name="@item.UserName"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
                         </td>
                     </tr>
                 }
