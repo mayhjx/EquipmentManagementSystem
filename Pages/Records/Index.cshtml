@@ -1,0 +1,237 @@
+﻿@page
+@model EquipmentManagementSystem.Pages.Records.IndexModel
+@inject SignInManager<User> signInManager
+@{
+    ViewData["Title"] = "维护使用";
+}
+
+
+<div class="card card-primary card-outline card-outline-tabs">
+    <div class="card-header p-0">
+        <div class="card-title">
+            <ul class="nav nav-pill">
+                <li class="nav-item">
+                    <a class="nav-link active" id="maintenance-record-tab" data-toggle="pill" href="#maintenance-record" role="tab" aria-controls="maintenance-record" aria-selected="true">
+                        <h4 class="text-dark">维护记录</h4>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="usage-record-tab" data-toggle="pill" href="#usage-record" role="tab" aria-controls="usage-record" aria-selected="false">
+                        <h4 class="text-dark">使用记录</h4>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="card-tools">
+            <form class="form-inline float-left" method="post">
+                <label class="my-1 mr-2" for="status" asp-for="@Model.Search.Status"></label>
+                <select class="custom-select my-1 mr-sm-2" id="status" asp-for="@Model.Search.Status" asp-items="@Html.GetEnumSelectList<EquipmentManagementSystem.Pages.Records.UsageRecords.IndexModel.Status>()">
+                </select>
+
+                <label class="my-1 mr-2" for="project" asp-for="@Model.Search.Project"></label>
+                <select class="custom-select my-1 mr-sm-2" id="project" asp-for="@Model.Search.Project" asp-items="@Model.ProjectSelectList">
+                    <option value="">---请选择---</option>
+                </select>
+
+                <label class="my-1 mr-2" for="instrument" asp-for="@Model.Search.Instrument"></label>
+                <select class="custom-select my-1 mr-sm-2" id="instrument" asp-for="@Model.Search.Instrument">
+                    <option value=""></option>
+                </select>
+                <button type="submit" class="btn btn-outline-primary my-1">查询</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="card-body table-responsive">
+        <div class="tab-content">
+            <div class="tab-pane fade active show" id="maintenance-record" role="tabpanel" aria-labelledby="maintenance-record-tab">
+                <a asp-page="MaintenanceRecords/Create">
+                    <input type="button" class="btn btn-outline-primary" value="新建">
+                </a>
+                <table id="index" class="table table-hover text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.MaintenanceRecords[0].InstrumentId)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.MaintenanceRecords[0].ProjectName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.MaintenanceRecords[0].BeginTime)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.MaintenanceRecords[0].EndTime)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.MaintenanceRecords[0].Type)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.MaintenanceRecords[0].Content)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.MaintenanceRecords[0].Operator)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.MaintenanceRecords)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.InstrumentId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ProjectName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.BeginTime)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EndTime)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Type)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Content)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Operator)
+                                </td>
+                                <td>
+                                    <a asp-page="MaintenanceRecords/Edit" asp-route-id="@item.Id"><i class="fa fa-pencil fa-lg"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane fade" id="usage-record" role="tabpanel" aria-labelledby="usage-record-tab">
+                <a asp-page="UsageRecords/Create">
+                    <input type="button" class="btn btn-outline-primary" value="新建">
+                </a>
+                <table id="index" class="table table-hover text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.UsageRecords[0].InstrumentId)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.UsageRecords[0].ProjectName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.UsageRecords[0].BeginTimeOfMaintain)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.UsageRecords[0].BeginTimeOfTest)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.UsageRecords[0].SampleNumber)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.UsageRecords[0].TestNumber)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.UsageRecords[0].VacuumDegree)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.UsageRecords[0].BlankSignal)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.UsageRecords[0].TestSignal)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.UsageRecords[0].EndTime)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.UsageRecords[0].Creator)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.UsageRecords)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.InstrumentId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ProjectName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.BeginTimeOfMaintain)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.BeginTimeOfTest)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SampleNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TestNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.VacuumDegree) @Html.DisplayFor(modelItem => item.VacuumDegreeUnit)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.BlankSignal)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TestSignal)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EndTime)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Creator)
+                                </td>
+                                <td>
+                                    <a asp-page="UsageRecords/Edit" asp-route-id="@item.Id"><i class="fa fa-pencil fa-lg"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // 动态生成设备编号
+        $(document).ready(function () {
+            initial();
+            $("select#project").on("change", initial);
+        });
+
+        function initial() {
+            var project = $("select#project").val();
+            if (project == "") {
+                return;
+            }
+            $("select#instrument").empty();
+            //$("select#instrument").append("<option value=''>---请选择---</option>");
+            $.getJSON(`?handler=InstrumentFilter&projectName=${project}`, (data) => {
+                $.each(data, function (i, item) {
+                    if (item.length > 0) {
+                        $("select#instrument").append(`<option value='${item}'>${item}</option>`);
+                        var currentSelectd = @Json.Serialize(Model.Search?.Instrument);
+                        if (currentSelectd == item) {
+                            // 激活查询的设备编号
+                            $("select#instrument").val(currentSelectd)
+                        }
+                    }
+                });
+                if (data.length == 0) {
+                    $("select#instrument").empty();
+                    $("select#instrument").append("<option value=''>无可选设备</option>");
+                };
+            });
+        };
+    </script>
+}
