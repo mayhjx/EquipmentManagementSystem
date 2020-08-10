@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -27,7 +26,7 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
                 return NotFound();
             }
 
-            MaintenanceRecord = await _context.MaintenanceRecord
+            MaintenanceRecord = await _context.MaintenanceRecords
                 .Include(m => m.Instrument)
                 .Include(m => m.Project).FirstOrDefaultAsync(m => m.Id == id);
 
@@ -39,39 +38,31 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int id)
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _context.Attach(MaintenanceRecord).State = EntityState.Modified;
+            var maintenanceRecordToUpdate = await _context.MaintenanceRecords
+                                                    .FirstOrDefaultAsync(m => m.Id == id);
 
-            try
+            if (maintenanceRecordToUpdate == null)
+            {
+                return NotFound();
+            }
+
+            if (await TryUpdateModelAsync<MaintenanceRecord>(
+                maintenanceRecordToUpdate,
+                "MaintenanceRecord",
+                i => i.BeginTime, i => i.EndTime, i => i.Operator))
             {
                 await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!MaintenanceRecordExists(MaintenanceRecord.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return RedirectToPage("../Index");
             }
 
-            return RedirectToPage("../Index");
-        }
-
-        private bool MaintenanceRecordExists(int id)
-        {
-            return _context.MaintenanceRecord.Any(e => e.Id == id);
+            return Page();
         }
     }
 }

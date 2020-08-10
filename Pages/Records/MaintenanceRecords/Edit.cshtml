@@ -58,8 +58,11 @@
             </div>
         </div>
 
-        <div>
-            <a asp-page="../Index">返回</a>
+        <div class="row">
+            <div class="col-4">
+                <a asp-page="../Index">返回</a>
+                <a class="float-right" asp-page="./Delete" asp-route-id="@Model.MaintenanceRecord.Id">删除</a>
+            </div>
         </div>
     </div>
 </div>

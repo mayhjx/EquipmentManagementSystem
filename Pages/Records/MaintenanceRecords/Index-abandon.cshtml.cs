@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using EquipmentManagementSystem.Data;
-using EquipmentManagementSystem.Models;
 
 namespace EquipmentManagementSystem.Pages.MaintenanceRecords
 {
@@ -19,11 +15,11 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
             _context = context;
         }
 
-        public IList<MaintenanceRecord> MaintenanceRecord { get;set; }
+        public IList<MaintenanceRecord> MaintenanceRecord { get; set; }
 
         public async Task OnGetAsync()
         {
-            MaintenanceRecord = await _context.MaintenanceRecord
+            MaintenanceRecord = await _context.MaintenanceRecords
                 .Include(m => m.Instrument)
                 .Include(m => m.Project).ToListAsync();
         }

@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using EquipmentManagementSystem.Data;
+using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using EquipmentManagementSystem.Data;
-using EquipmentManagementSystem.Models;
 
 namespace EquipmentManagementSystem.Pages.MaintenanceRecords
 {
     public class DeleteModel : PageModel
     {
-        private readonly EquipmentManagementSystem.Data.EquipmentContext _context;
+        private readonly EquipmentContext _context;
 
-        public DeleteModel(EquipmentManagementSystem.Data.EquipmentContext context)
+        public DeleteModel(EquipmentContext context)
         {
             _context = context;
         }
@@ -29,7 +26,7 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
                 return NotFound();
             }
 
-            MaintenanceRecord = await _context.MaintenanceRecord
+            MaintenanceRecord = await _context.MaintenanceRecords
                 .Include(m => m.Instrument)
                 .Include(m => m.Project).FirstOrDefaultAsync(m => m.Id == id);
 
@@ -47,15 +44,15 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
                 return NotFound();
             }
 
-            MaintenanceRecord = await _context.MaintenanceRecord.FindAsync(id);
+            MaintenanceRecord = await _context.MaintenanceRecords.FindAsync(id);
 
             if (MaintenanceRecord != null)
             {
-                _context.MaintenanceRecord.Remove(MaintenanceRecord);
+                _context.MaintenanceRecords.Remove(MaintenanceRecord);
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("../Index");
         }
     }
 }
