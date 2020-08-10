@@ -44,7 +44,7 @@ namespace EquipmentManagementSystem.Pages.Records
                             .Where(record => record.EndTime == null)
                               select record;
 
-            var maintenanceRecord = from record in _context.MaintenanceRecord
+            var maintenanceRecord = from record in _context.MaintenanceRecords
                             .AsNoTracking()
                             .Include(record => record.Instrument)
                             .Include(record => record.Project)
