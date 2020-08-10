@@ -1,8 +1,12 @@
-﻿using EquipmentManagementSystem.Data;
+﻿using System.Linq;
+using EquipmentManagementSystem.Authorization;
+using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace EquipmentManagementSystem.Pages.Records
 {
@@ -20,6 +24,23 @@ namespace EquipmentManagementSystem.Pages.Records
             _context = context;
             _userManager = userManager;
             _authorizationService = authorizationService;
+        }
+
+        public SelectList ProjectsSelectList { get; set; }
+
+        public void PopulateProjectDropDownList(EquipmentContext _context)
+        {
+            var isAdmin = User.IsInRole(Constants.ManagerRole) || User.IsInRole(Constants.DirectorRole);
+            var userGroup = _userManager.GetUserAsync(User).Result?.Group;
+
+            if (isAdmin || userGroup == null)
+            {
+                ProjectsSelectList = new SelectList(_context.Projects, "Name", "Name");
+            }
+            else
+            {
+                ProjectsSelectList = new SelectList(_context.Projects.Include(p => p.Group).Where(p => p.Group.Name == userGroup), "Name", "Name");
+            }
         }
     }
 }
