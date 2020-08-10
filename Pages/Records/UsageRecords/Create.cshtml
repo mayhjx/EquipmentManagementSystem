@@ -143,26 +143,5 @@
 </div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script>
-        $(function () {
-            $("#project").on("change", function () {
-                var project = $(this).val();
-                $("#instrumentId").removeAttr("disabled");
-                $("#instrumentId").empty();
-                //$("#instrumentId").append("<option value=''>---请选择---</option>");
-                $.getJSON(`?handler=InstrumentFilter&projectName=${project}`, (data) => {
-                    $.each(data, function (i, item) {
-
-                        if (item.length > 0) {
-                            $("#instrumentId").append(`<option value='${item}'>${item}</option>`);
-                        }
-                        else {
-                            $("#instrumentId").empty();
-                            $("#instrumentId").append("<option value=''>无可选设备</option>");
-                        }
-                    });
-                });
-            });
-        });
-    </script>
+    <script src="~/js/Records.js"></script>
 }
