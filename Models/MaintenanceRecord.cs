@@ -33,7 +33,7 @@ namespace EquipmentManagementSystem.Models
         public string Type { get; set; }
 
         [Display(Name = "维护内容")]
-        [StringLength(100)]
+        [StringLength(500)]
         public string Content { get; set; }
 
         [Display(Name = "操作者")]
