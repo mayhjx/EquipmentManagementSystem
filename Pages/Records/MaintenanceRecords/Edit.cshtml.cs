@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -38,7 +39,31 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int id)
+        /// <summary>
+        /// 返回对应设备平台和对应维护类型的维护内容
+        /// </summary>
+        public JsonResult OnGetMaintenanceContents(string instrument, string maintenanceType)
+        {
+            var platform = _context.Instruments.FirstOrDefault(m => m.ID == instrument).Platform;
+            if (platform == null)
+            {
+                return new JsonResult("");
+            }
+
+            var contents = _context.MaintenanceContents.Where(m => m.InstrumentPlatform == platform)
+                                                       .Where(m => m.Type == maintenanceType);
+            if (contents.Any() == false)
+            {
+                return new JsonResult("");
+            }
+
+            var result = new JsonResult(from c in contents
+                                        select c.Text);
+
+            return result;
+        }
+
+        public async Task<IActionResult> OnPostAsync(int id, string maintenanceType, string[] maintenanceContent)
         {
             if (!ModelState.IsValid)
             {
@@ -56,8 +81,13 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
             if (await TryUpdateModelAsync<MaintenanceRecord>(
                 maintenanceRecordToUpdate,
                 "MaintenanceRecord",
-                i => i.BeginTime, i => i.EndTime, i => i.Operator))
+                i => i.BeginTime, i => i.EndTime, i => i.Operator, i => i.Type, i => i.Content))
             {
+                maintenanceRecordToUpdate.Type = maintenanceType;
+                if (maintenanceContent.Length > 0)
+                {
+                    maintenanceRecordToUpdate.Content = string.Join(", ", maintenanceContent);
+                }
                 await _context.SaveChangesAsync();
                 return RedirectToPage("../Index");
             }
