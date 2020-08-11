@@ -6,18 +6,38 @@
 
 
 $(document).ready(function () {
-    // 激活当前选择的主侧边栏选项
-    var url = window.location.pathname;
-    if ($('li.nav-item a[href="' + url + '"]').length == 0) {
-        url = url.split("/")
-        url.pop()
-        url = url.join("/")
+
+    if (localStorage) {
+        // Sidebar状态
+        var open = "";
+        var close = "sidebar-collapse";
+        $('ul.navbar-nav a.nav-link').on('click', function () {
+            var nextPosition = $("body").hasClass(close) ? open : close;
+            localStorage.setItem('sidebarPosition', nextPosition);
+        });
+        var sidebarPosition = localStorage.getItem("sidebarPosition");
+        if (sidebarPosition) {
+            $("body").addClass(sidebarPosition);
+        }
+
+        // 当前选择的主侧边栏选项
+        $('aside a.nav-link').on('click', function () {
+            localStorage.setItem('activeMenu', $(this).attr('href'));
+        });
+        // 当前选择的导航栏选项，当用户单击上边的导航栏时覆盖activeMenu的值
+        $('nav.navbar-nav a.nav-link').on('click', function () {
+            localStorage.setItem('activeMenu', $(this).attr('href'));
+        });
+        var activeMenu = localStorage.getItem('activeMenu');
+        if (activeMenu) {
+            $('li.nav-item a[href="' + activeMenu + '"]').tab('show');
+            $('li.nav-item a[href="' + activeMenu + '"]').parent().parent().parent().addClass('menu-open');
+            $('li.nav-item a[href="' + activeMenu + '"]').parent().parent().parent().children("a.nav-link").addClass('active');
+        }
     }
-
-    $('li.nav-item a[href="' + url + '"]').addClass('active');
-    $('li.nav-item a[href="' + url + '"]').parent().parent().parent().addClass('menu-open');
-    $('li.nav-item a[href="' + url + '"]').parent().parent().parent().children("a.nav-link").addClass('active');
-
+    else {
+        console.log("当前浏览器不支持LocalStorage");
+    }
 
     // 格式Index页面的table
     $('table#index').DataTable({
