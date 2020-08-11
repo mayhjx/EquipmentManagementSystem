@@ -77,7 +77,10 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
 
             MaintenanceRecord.ProjectId = _context.Projects.FirstOrDefaultAsync(p => p.Name == MaintenanceRecord.ProjectName).Result.Id;
             MaintenanceRecord.Type = maintenanceType;
-            MaintenanceRecord.Content = string.Join(", ", maintenanceContent);
+            if (maintenanceContent.Length > 0)
+            {
+                MaintenanceRecord.Content = string.Join(", ", maintenanceContent);
+            }
 
             _context.MaintenanceRecords.Add(MaintenanceRecord);
             await _context.SaveChangesAsync();
