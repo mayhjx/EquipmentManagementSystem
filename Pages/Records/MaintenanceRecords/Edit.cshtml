@@ -102,7 +102,7 @@
     <script>
         $(document).ready(function () {
             var selectedContents = @Json.Serialize(Model.MaintenanceRecord.Content.Split( new[] { ',', ' ' } , StringSplitOptions.RemoveEmptyEntries));
-
+            var targetType = @Json.Serialize(Model.MaintenanceRecord.Type);
             // 等待getJson方法完成后只选中目标维护内容
             $(document).ajaxComplete(function () {
                 $("input:checkbox").each(function (i, item) {
@@ -112,7 +112,7 @@
                 });
             });
 
-            $("input:radio[value='@Html.Raw(Model.MaintenanceRecord.Type)']").click();
+            $(`input:radio[value='${targetType}']`).click();
         });
     </script>
 }

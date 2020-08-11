@@ -1,5 +1,7 @@
 ﻿
 $(document).ready(function () {
+
+    // 根据所选项目获取仪器下拉列表
     $("#project").on("change", function () {
         var project = $(this).val();
         $("#instrumentId").removeAttr("disabled");
@@ -18,20 +20,62 @@ $(document).ready(function () {
         });
     });
 
+    // 使用记录页面色谱柱压力输入
+    $("button#showSystemOne").click(function (e) {
+        // 显示系统一色谱柱压力输入框
+        e.preventDefault();
+        $("button#showSystemOne").attr("hidden", "");
+        $("div#systemOne").removeAttr("hidden");
+        $("button#showSystemTwo").removeAttr("hidden");
+    })
+
+    var unit = $("select#SystemOnePressureUnit").html();
+    var checkvalue = $("select#SystemOnePressureUnit").val();
+    $("select#SystemTwoPressureUnit").empty();
+    $("select#SystemTwoPressureUnit").append(unit);
+    $("select#SystemTwoPressureUnit").val(checkvalue);
+
+    $("button#showSystemTwo").click(function (e) {
+        // 显示系统二色谱柱压力输入框
+        e.preventDefault();
+        $("div#systemTwo").removeAttr("hidden");
+        $("button#showSystemTwo").attr("hidden", "");
+        // 系统二色谱柱压力单位与系统一同步
+        var checkvalue = $("select#SystemOnePressureUnit").val();
+        var unit = $("select#SystemOnePressureUnit").html();
+        $("select#SystemTwoPressureUnit").empty();
+        $("select#SystemTwoPressureUnit").append(unit);
+        $("select#SystemTwoPressureUnit").val(checkvalue);
+    })
+
+    $("select#SystemOnePressureUnit").change(function () {
+        // 更新系统二色谱柱压力单位
+        var checkvalue = $(this).val();
+        $("select#SystemTwoPressureUnit").val(checkvalue);
+    })
+
+    $("select#SystemTwoPressureUnit").change(function () {
+        // 更新系统一色谱柱压力单位
+        var checkvalue = $(this).val();
+        $("select#SystemOnePressureUnit").val(checkvalue);
+    })
+
+
+    // 维护记录页面
     $("#project").on("change", function () {
         // 取消选中
-        $(":radio").prop("checked", false);
+        $("input:radio").prop("checked", false);
         // 删除已生成的维护内容选项
-        $(":checkbox").parent().remove();
+        $("input:checkbox").parent().remove();
         // 隐藏临时维护内容输入框
         $("div#TemporarilyContent").attr("hidden", "hidden");
     });
 
     $("#instrumentId").on("change", function () {
         // 取消选中
-        $(":radio").prop("checked", false);
+        $("input:radio").prop("checked", false);
         // 删除已生成的维护内容选项
-        $(":checkbox").parent().remove();
+        $("input:checkbox").parent().remove();
         // 隐藏临时维护内容输入框
         $("div#TemporarilyContent").attr("hidden", "hidden");
     });
@@ -40,7 +84,7 @@ $(document).ready(function () {
         var type = e.target.value;
         var instrument = $("#instrumentId").val();
         // 删除已生成的维护内容选项
-        $(":checkbox").parent().remove();
+        $("input:checkbox").parent().remove();
         // 隐藏临时维护内容输入框
         $("div#TemporarilyContent").attr("hidden", "hidden");
 

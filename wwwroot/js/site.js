@@ -58,43 +58,5 @@ $(document).ready(function () {
         theme: 'bootstrap4'
     });
 
-    // 使用说明页面色谱柱压力输入
-    $("button#showSystemOne").click(function (e) {
-        // 显示系统一色谱柱压力输入框
-        e.preventDefault();
-        $("button#showSystemOne").attr("hidden", "");
-        $("div#systemOne").removeAttr("hidden");
-        $("button#showSystemTwo").removeAttr("hidden");
-    })
 
-    var unit = $("select#SystemOnePressureUnit").html();
-    var checkvalue = $("select#SystemOnePressureUnit").val();
-    $("select#SystemTwoPressureUnit").empty();
-    $("select#SystemTwoPressureUnit").append(unit);
-    $("select#SystemTwoPressureUnit").val(checkvalue);
-
-    $("button#showSystemTwo").click(function (e) {
-        // 显示系统二色谱柱压力输入框
-        e.preventDefault();
-        $("div#systemTwo").removeAttr("hidden");
-        $("button#showSystemTwo").attr("hidden", "");
-        // 系统二色谱柱压力单位与系统一同步
-        var checkvalue = $("select#SystemOnePressureUnit").val();
-        var unit = $("select#SystemOnePressureUnit").html();
-        $("select#SystemTwoPressureUnit").empty();
-        $("select#SystemTwoPressureUnit").append(unit);
-        $("select#SystemTwoPressureUnit").val(checkvalue);
-    })
-
-    $("select#SystemOnePressureUnit").change(function () {
-        // 更新系统二色谱柱压力单位
-        var checkvalue = $(this).val();
-        $("select#SystemTwoPressureUnit").val(checkvalue);
-    })
-
-    $("select#SystemTwoPressureUnit").change(function () {
-        // 更新系统一色谱柱压力单位
-        var checkvalue = $(this).val();
-        $("select#SystemOnePressureUnit").val(checkvalue);
-    })
 });
