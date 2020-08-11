@@ -11,7 +11,7 @@ $(document).ready(function () {
         // Sidebar状态
         var open = "";
         var close = "sidebar-collapse";
-        $('ul.navbar-nav a.nav-link').on('click', function () {
+        $('ul.navbar-nav a[data-widget="pushmenu"]').on('click', function () {
             var nextPosition = $("body").hasClass(close) ? open : close;
             localStorage.setItem('sidebarPosition', nextPosition);
         });
