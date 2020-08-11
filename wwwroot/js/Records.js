@@ -18,16 +18,27 @@ $(document).ready(function () {
         });
     });
 
-    $("#instrumentId").on("change", function () {
+    $("#project").on("change", function () {
+        // 取消选中
+        $(":radio").prop("checked", false);
         // 删除已生成的维护内容选项
         $(":checkbox").parent().remove();
         // 隐藏临时维护内容输入框
         $("div#TemporarilyContent").attr("hidden", "hidden");
     });
 
-    $("input:radio").on("change", function (e) {
+    $("#instrumentId").on("change", function () {
+        // 取消选中
+        $(":radio").prop("checked", false);
+        // 删除已生成的维护内容选项
+        $(":checkbox").parent().remove();
+        // 隐藏临时维护内容输入框
+        $("div#TemporarilyContent").attr("hidden", "hidden");
+    });
+
+    $("input:radio").on("click", function (e) {
         var type = e.target.value;
-        var instrument = $("select#instrumentId").val();
+        var instrument = $("#instrumentId").val();
         // 删除已生成的维护内容选项
         $(":checkbox").parent().remove();
         // 隐藏临时维护内容输入框
@@ -49,4 +60,12 @@ $(document).ready(function () {
             });
         }
     });
+
+    $(document).ajaxSuccess(function () {
+        console.log("ajax Success");
+    })
+
+    $(document).ajaxError(function () {
+        console.log("ajax Error");
+    })
 });
