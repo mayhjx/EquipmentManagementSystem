@@ -15,7 +15,7 @@
     </div>
     <div class="card-body">
         <div class="row">
-            <div class="col-4">
+            <div class="col-md-4">
                 <form method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="UsageRecord.Id" />
@@ -28,11 +28,6 @@
                         <label asp-for="UsageRecord.InstrumentId" class="control-label"></label>
                         <input asp-for="UsageRecord.InstrumentId" class="form-control" readonly>
                         <span asp-validation-for="UsageRecord.InstrumentId" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="UsageRecord.BeginTimeOfMaintain" class="control-label"></label>
-                        <input asp-for="UsageRecord.BeginTimeOfMaintain" class="form-control" />
-                        <span asp-validation-for="UsageRecord.BeginTimeOfMaintain" class="text-danger"></span>
                     </div>
                     @if (HasSystemOne)
                     {
@@ -197,7 +192,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-4">
+            <div class="col-md-4">
                 <a asp-page="../Index">返回</a>
                 @if (signInManager.IsSignedIn(User) && (await AuthorizationService.AuthorizeAsync(User, Model.UsageRecord, Operations.Delete)).Succeeded)
                 {

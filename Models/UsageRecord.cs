@@ -22,10 +22,10 @@ namespace EquipmentManagementSystem.Models
         public int? ProjectId { get; set; }
         public Project Project { get; set; }
 
-        [Display(Name = "维护开始时间")]
-        [DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
-        public DateTime? BeginTimeOfMaintain { get; set; }
+        //[Display(Name = "维护开始时间")]
+        //[DataType(DataType.DateTime)]
+        //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
+        //public DateTime? BeginTimeOfMaintain { get; set; }
 
         [Display(Name = "色谱柱一编号")]
         [StringLength(20)]

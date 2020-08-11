@@ -111,9 +111,6 @@
                                         @Html.DisplayNameFor(model => model.UsageRecords[0].ProjectName)
                                     </th>
                                     <th>
-                                        @Html.DisplayNameFor(model => model.UsageRecords[0].BeginTimeOfMaintain)
-                                    </th>
-                                    <th>
                                         @Html.DisplayNameFor(model => model.UsageRecords[0].ColumnNumber)
                                     </th>
                                     <th>
@@ -155,7 +152,6 @@
                                     <th>
                                         @Html.DisplayNameFor(model => model.UsageRecords[0].Creator)
                                     </th>
-                                    <th>维护时长(h)</th>
                                     <th>检测时长(h)</th>
                                 </tr>
                             </thead>
@@ -168,9 +164,6 @@
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.ProjectName)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.BeginTimeOfMaintain)
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.ColumnNumber)
@@ -213,9 +206,6 @@
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.Creator)
-                                        </td>
-                                        <td>
-                                            @((item.BeginTimeOfTest - item.BeginTimeOfMaintain).GetValueOrDefault().TotalHours.ToString("f1"))
                                         </td>
                                         <td class="time">
                                             @((item.EndTime - item.BeginTimeOfTest).GetValueOrDefault().TotalHours.ToString("f1"))
@@ -483,6 +473,7 @@
             }
             // chartjs
             var div = document.getElementById('data-chart');
+            if (!div) return;
 
             let instruments = @(Json.Serialize(instrument));
             if (Object.keys(instruments).length == 0) {

@@ -71,7 +71,8 @@ namespace EquipmentManagementSystem.Pages.Records.UsageRecords
             if (await TryUpdateModelAsync<UsageRecord>(
                 UsageRecordToUpdate,
                 "UsageRecord",
-                i => i.BeginTimeOfMaintain, i => i.BeginTimeOfTest,
+                // i => i.BeginTimeOfMaintain, 
+                i => i.BeginTimeOfTest,
                 i => i.ColumnNumber, i => i.ColumnPressure, i => i.PressureUnit,
                 i => i.ColumnTwoNumber, i => i.ColumnTwoPressure,
                 i => i.SampleNumber, i => i.TestNumber, i => i.VacuumDegree,
