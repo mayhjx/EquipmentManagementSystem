@@ -90,7 +90,6 @@ $(document).ready(function () {
 
         if (type == "临时维护") {
             $("div#TemporarilyContent").removeAttr("hidden");
-            $("div#TemporarilyContent textarea").val("");
         }
         else {
             $.getJSON(`?handler=MaintenanceContents&instrument=${instrument}&maintenanceType=${type}`, (data) => {
