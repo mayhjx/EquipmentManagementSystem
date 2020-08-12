@@ -101,7 +101,7 @@
     <script src="~/js/Records.js" asp-append-version="true"></script>
     <script>
         $(document).ready(function () {
-            var selectedContents = @Json.Serialize(Model.MaintenanceRecord.Content.Split( new[] { ',', ' ' } , StringSplitOptions.RemoveEmptyEntries));
+            var selectedContents = @Json.Serialize(Model.MaintenanceRecord.Content?.Split( new[] { ',', ' ' } , StringSplitOptions.RemoveEmptyEntries));
             var targetType = @Json.Serialize(Model.MaintenanceRecord.Type);
             // 等待getJson方法完成后只选中目标维护内容
             $(document).ajaxComplete(function () {
