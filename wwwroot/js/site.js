@@ -25,7 +25,7 @@ $(document).ready(function () {
             localStorage.setItem('activeMenu', $(this).attr('href'));
         });
         // 当前选择的导航栏选项，当用户单击上边的导航栏时覆盖activeMenu的值
-        $('nav.navbar-nav a.nav-link').on('click', function () {
+        $('ul.navbar-nav a.nav-link').on('click', function () {
             localStorage.setItem('activeMenu', $(this).attr('href'));
         });
         var activeMenu = localStorage.getItem('activeMenu');
