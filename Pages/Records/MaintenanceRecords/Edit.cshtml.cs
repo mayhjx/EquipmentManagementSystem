@@ -84,7 +84,7 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
                 i => i.BeginTime, i => i.EndTime, i => i.Operator, i => i.Type, i => i.Content))
             {
                 maintenanceRecordToUpdate.Type = maintenanceType;
-                if (maintenanceContent.Length > 0)
+                if (maintenanceType != "临时维护")
                 {
                     maintenanceRecordToUpdate.Content = string.Join(", ", maintenanceContent);
                 }

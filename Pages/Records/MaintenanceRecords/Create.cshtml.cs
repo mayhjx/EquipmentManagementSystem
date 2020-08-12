@@ -77,7 +77,7 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
 
             MaintenanceRecord.ProjectId = _context.Projects.FirstOrDefaultAsync(p => p.Name == MaintenanceRecord.ProjectName).Result.Id;
             MaintenanceRecord.Type = maintenanceType;
-            if (maintenanceContent.Length > 0)
+            if (maintenanceType != "临时维护")
             {
                 MaintenanceRecord.Content = string.Join(", ", maintenanceContent);
             }
