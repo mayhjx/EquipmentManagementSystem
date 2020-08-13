@@ -8,33 +8,33 @@
 <div class="row">
     <div class="col-lg-3 col-6">
         <!-- small box -->
-        <div class="small-box bg-info">
+        <div class="small-box bg-success ">
             <div class="inner">
                 <h3>@Model.InstrumentNumber</h3>
 
                 <p>主检设备</p>
             </div>
             <div class="icon">
-                <i class="fa fa-server"></i>
+                <i class="fas fa-server"></i>
             </div>
-            <a asp-page="Equipments/Instruments/Index" class="small-box-footer">查看 <i class="fa fa-arrow-circle-right"></i></a>
+            <a asp-page="Equipments/Instruments/Index" class="small-box-footer">查看 <i class="fas fa-arrow-circle-right"></i></a>
             <a asp-page="Equipments/Instruments/Index" class="stretched-link"></a>
         </div>
     </div>
     <!-- ./col -->
     <div class="col-lg-3 col-6">
         <!-- small box -->
-        <div class="small-box bg-success">
+        <div class="small-box bg-info">
             <div class="inner">
-                <h3>0</h3>
+                <h3>@Model.InstrumentToBeMaintained.Count</h3>
 
                 <p>待维护设备</p>
             </div>
             <div class="icon">
-                <i class="fa fa-cube"></i>
+                <i class="fas fa-sync"></i>
             </div>
-            <a href="#" class="small-box-footer">查看 <i class="fa fa-arrow-circle-right"></i></a>
-            <a href="#" class="stretched-link"></a>
+            <a href="#" class="small-box-footer" data-toggle="modal" data-target="#InstrumentToBeMaintained">查看 <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="#" class="stretched-link" data-toggle="modal" data-target="#InstrumentToBeMaintained"></a>
         </div>
     </div>
     <!-- ./col -->
@@ -47,9 +47,9 @@
                 <p>待校准设备</p>
             </div>
             <div class="icon">
-                <i class="fa fa-balance-scale"></i>
+                <i class="fas fa-balance-scale-left"></i>
             </div>
-            <a href="#" class="small-box-footer" data-toggle="modal" data-target="#InstrumentOfExpire">查看 <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="#" class="small-box-footer" data-toggle="modal" data-target="#InstrumentOfExpire">查看 <i class="fas fa-arrow-circle-right"></i></a>
             <a href="#" class="stretched-link" data-toggle="modal" data-target="#InstrumentOfExpire"></a>
         </div>
     </div>
@@ -63,9 +63,9 @@
                 <p>待跟进故障</p>
             </div>
             <div class="icon">
-                <i class="fa fa-wrench"></i>
+                <i class="fas fa-tools"></i>
             </div>
-            <a href="Malfunctions/WorkOrders/Doing" class="small-box-footer">查看 <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="Malfunctions/WorkOrders/Doing" class="small-box-footer">查看 <i class="fas fa-arrow-circle-right"></i></a>
             <a href="Malfunctions/WorkOrders/Doing" class="stretched-link"></a>
         </div>
     </div>
@@ -74,11 +74,11 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="InstrumentOfExpire" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="InstrumentOfExpire" tabindex="-1" role="dialog" aria-labelledby="InstrumentOfExpire" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">待校准设备</h5>
+                <h5 class="modal-title" id="InstrumentOfExpire">待校准设备</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -126,14 +126,78 @@
                     </table>
                 </div>
             </div>
-            @*<div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>*@
         </div>
     </div>
 </div>
 
+<div class="modal fade" id="InstrumentToBeMaintained" tabindex="-1" role="dialog" aria-labelledby="InstrumentToBeMaintained" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="InstrumentToBeMaintained">待维护设备</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body p-0">
+                <div class="card-body">
+                    <table id="index" class="table table-sm">
+                        <thead>
+                            <tr>
+                                <td>@Html.DisplayNameFor(model => model.InstrumentToBeMaintained[0].InstrumentId)</td>
+                                <td>@Html.DisplayNameFor(model => model.InstrumentToBeMaintained[0].MaintenanceType)</td>
+                                <td>@Html.DisplayNameFor(model => model.InstrumentToBeMaintained[0].MaintenanceContent)</td>
+                                <td>@Html.DisplayNameFor(model => model.InstrumentToBeMaintained[0].MaintenanceTime)</td>
+                                <td>@Html.DisplayNameFor(model => model.InstrumentToBeMaintained[0].NextMaintenanceTime)</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.InstrumentToBeMaintained)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.InstrumentId)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.MaintenanceType)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.MaintenanceContent)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.MaintenanceTime)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.NextMaintenanceTime)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="card">
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.InstrumentToBeMaintained[0].InstrumentId)</td>
+                    <td>@Html.DisplayNameFor(model => model.InstrumentToBeMaintained[0].MaintenanceType)</td>
+                    <td>@Html.DisplayNameFor(model => model.InstrumentToBeMaintained[0].MaintenanceContent)</td>
+                    <td>@Html.DisplayNameFor(model => model.InstrumentToBeMaintained[0].MaintenanceTime)</td>
+                    <td>@Html.DisplayNameFor(model => model.InstrumentToBeMaintained[0].NextMaintenanceTime)</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.InstrumentToBeMaintained)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.InstrumentId)</td>
+                        <td>@Html.DisplayFor(modelItem => item.MaintenanceType)</td>
+                        <td>@Html.DisplayFor(modelItem => item.MaintenanceContent)</td>
+                        <td>@Html.DisplayFor(modelItem => item.MaintenanceTime)</td>
+                        <td>@Html.DisplayFor(modelItem => item.NextMaintenanceTime)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
 
 <div class="row invisible">
     <div class="col-xl-6 col-12">
