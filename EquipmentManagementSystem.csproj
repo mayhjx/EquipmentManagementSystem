@@ -41,6 +41,8 @@
 		<Compile Remove="Data\Migrations\Equipment\20200715032736_AddVacuumDegreeAndBlankTestSignal.Designer.cs" />
 		<Compile Remove="Data\Migrations\Equipment\20200804091657_addMaintenanceRecord_Type_Content.cs" />
 		<Compile Remove="Data\Migrations\Equipment\20200804091657_addMaintenanceRecord_Type_Content.Designer.cs" />
+		<Compile Remove="Data\Migrations\Equipment\20200813035110_testToString.cs" />
+		<Compile Remove="Data\Migrations\Equipment\20200813035110_testToString.Designer.cs" />
 		<Compile Remove="Data\Migrations\Malfunction\20200703010458_ResultNullable.cs" />
 		<Compile Remove="Data\Migrations\Malfunction\20200703010458_ResultNullable.Designer.cs" />
 	</ItemGroup>
