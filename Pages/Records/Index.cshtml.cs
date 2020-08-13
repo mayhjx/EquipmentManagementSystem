@@ -81,7 +81,7 @@ namespace EquipmentManagementSystem.Pages.Records
 
             UsageRecords = await usageRecord.OrderByDescending(m => m.BeginTimeOfTest).ToListAsync();
             MaintenanceRecords = await maintenanceRecord.OrderByDescending(m => m.BeginTime).ToListAsync();
-
+            Search = new SearchForm();
         }
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace EquipmentManagementSystem.Pages.Records
 
         public enum Status
         {
-            [Display(Name = "使用中")]
+            [Display(Name = "未完成")]
             Using,
             [Display(Name = "所有")]
             All,
