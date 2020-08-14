@@ -171,33 +171,33 @@
 </div>
 
 
-<div class="card">
-    <div class="card-body">
-        <table class="table">
-            <thead>
-                <tr>
-                    <td>@Html.DisplayNameFor(model => model.InstrumentToBeMaintained[0].InstrumentId)</td>
-                    <td>@Html.DisplayNameFor(model => model.InstrumentToBeMaintained[0].MaintenanceType)</td>
-                    <td>@Html.DisplayNameFor(model => model.InstrumentToBeMaintained[0].MaintenanceContent)</td>
-                    <td>@Html.DisplayNameFor(model => model.InstrumentToBeMaintained[0].MaintenanceTime)</td>
-                    <td>@Html.DisplayNameFor(model => model.InstrumentToBeMaintained[0].NextMaintenanceTime)</td>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.InstrumentToBeMaintained)
-                {
+@*<div class="card">
+        <div class="card-body">
+            <table class="table">
+                <thead>
                     <tr>
-                        <td>@Html.DisplayFor(modelItem => item.InstrumentId)</td>
-                        <td>@Html.DisplayFor(modelItem => item.MaintenanceType)</td>
-                        <td>@Html.DisplayFor(modelItem => item.MaintenanceContent)</td>
-                        <td>@Html.DisplayFor(modelItem => item.MaintenanceTime)</td>
-                        <td>@Html.DisplayFor(modelItem => item.NextMaintenanceTime)</td>
+                        <td>@Html.DisplayNameFor(model => model.InstrumentToBeMaintained[0].InstrumentId)</td>
+                        <td>@Html.DisplayNameFor(model => model.InstrumentToBeMaintained[0].MaintenanceType)</td>
+                        <td>@Html.DisplayNameFor(model => model.InstrumentToBeMaintained[0].MaintenanceContent)</td>
+                        <td>@Html.DisplayNameFor(model => model.InstrumentToBeMaintained[0].MaintenanceTime)</td>
+                        <td>@Html.DisplayNameFor(model => model.InstrumentToBeMaintained[0].NextMaintenanceTime)</td>
                     </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-</div>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.InstrumentToBeMaintained)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.InstrumentId)</td>
+                            <td>@Html.DisplayFor(modelItem => item.MaintenanceType)</td>
+                            <td>@Html.DisplayFor(modelItem => item.MaintenanceContent)</td>
+                            <td>@Html.DisplayFor(modelItem => item.MaintenanceTime)</td>
+                            <td>@Html.DisplayFor(modelItem => item.NextMaintenanceTime)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>*@
 
 <div class="row invisible">
     <div class="col-xl-6 col-12">
