@@ -25,6 +25,7 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
         {
             PlatformSelectList = new SelectList((from i in _context.Instruments
                                                  select i.Platform)
+                                                 .AsNoTracking()
                                                  .Distinct());
 
             GroupSelectList = new SelectList(_context.Groups.AsNoTracking().Where(g => g.Name != "质谱中心").OrderBy(p => p.Name), "Name", "Name");
@@ -72,6 +73,10 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
         public SearchForm Search { get; set; }
 
         public IList<UsageRecord> UsageRecords { get; set; }
+
+        public IList<MaintenanceRecord> MaintenanceRecords { get; set; }
+        public Dictionary<string, Dictionary<string, int>> MaintenanceContentAndCycleOfType;
+
         public IList<MalfunctionWorkOrder> MalfunctionWorkOrders { get; set; }
 
         public SelectList PlatformSelectList { get; set; }
@@ -83,6 +88,7 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
         public SelectList InstrumentSelectList { get; set; }
 
         public string InstrumentModel { get; set; }
+        public string InstrumentPlatform { get; set; }
 
         public async Task<IActionResult> OnPost()
         {
@@ -91,57 +97,112 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
                 return Page();
             }
 
-
-            if (Search.Category == Category.Usage)
+            if (Search.Category == Category.Record)
             {
-                var records = from r in _context.UsageRecords
-                            .AsNoTracking()
-                            .Include(r => r.Instrument)
-                            .Include(r => r.Project)
-                                .ThenInclude(r => r.Group)
-                              where r.BeginTimeOfTest >= Search.BeginTime
-                              where r.BeginTimeOfTest < Search.EndTime.AddDays(1)
-                              select r;
+                var usageRecords = from r in _context.UsageRecords
+                                    .AsNoTracking()
+                                    .Include(r => r.Instrument)
+                                    .Include(r => r.Project)
+                                    .ThenInclude(r => r.Group)
+
+                                   where r.BeginTimeOfTest >= Search.BeginTime
+                                   where r.BeginTimeOfTest < Search.EndTime.AddDays(1)
+                                   //where Search.Instrument != null && r.InstrumentId == Search.Instrument
+                                   //where Search.Project != null && r.ProjectName == Search.Project
+                                   //where Search.Group != null && r.Project.Group.Name == Search.Group
+                                   //where Search.Platform != null && r.Instrument.Platform == Search.Platform
+                                   select r;
+
+                var maintenanceRecords = from r in _context.MaintenanceRecords
+                                        .AsNoTracking()
+                                        .Include(r => r.Instrument)
+                                        .Include(r => r.Project)
+                                        .ThenInclude(r => r.Group)
+                                         where r.BeginTime >= Search.BeginTime
+                                         where r.EndTime < Search.EndTime.AddDays(1)
+                                         //where Search.Instrument != null && r.InstrumentId == Search.Instrument
+                                         //where Search.Project != null && r.ProjectName == Search.Project
+                                         //where Search.Group != null && r.Project.Group.Name == Search.Group
+                                         //where Search.Platform != null && r.Instrument.Platform == Search.Platform
+                                         select r;
+
 
                 if (Search.Instrument != null)
                 {
-                    records = from r in records
-                              where r.InstrumentId == Search.Instrument
-                              select r;
-
-                    if (records.Any())
+                    if (usageRecords.Any())
                     {
                         InstrumentModel = (await _context.Instruments
                             .AsNoTracking()
                             .Include(m => m.Components)
                             .FirstOrDefaultAsync(m => m.ID == Search.Instrument))
                             .Components.FirstOrDefault(c => c.Name.Contains("主机"))?.Model;
-                    }
 
+                        InstrumentPlatform = (await _context.Instruments.AsNoTracking().FirstOrDefaultAsync(m => m.ID == Search.Instrument))?.Platform;
+                    }
+                    usageRecords = from r in usageRecords
+                                   where r.InstrumentId == Search.Instrument
+                                   select r;
+
+                    maintenanceRecords = from r in maintenanceRecords
+                                         where r.InstrumentId == Search.Instrument
+                                         select r;
                 }
+
                 if (Search.Project != null)
                 {
-                    records = from r in records
-                              where r.ProjectName == Search.Project
-                              select r;
+                    usageRecords = from r in usageRecords
+                                   where r.ProjectName == Search.Project
+                                   select r;
+
+                    maintenanceRecords = from r in maintenanceRecords
+                                         where r.ProjectName == Search.Project
+                                         select r;
                 }
+
                 if (Search.Group != null)
                 {
-                    records = from r in records
-                              where r.Project.Group.Name == Search.Group
-                              select r;
+                    usageRecords = from r in usageRecords
+                                   where r.Project.Group.Name == Search.Group
+                                   select r;
+
+                    maintenanceRecords = from r in maintenanceRecords
+                                         where r.Project.Group.Name == Search.Group
+                                         select r;
                 }
+
                 if (Search.Platform != null)
                 {
-                    records = from r in records
-                              where r.Instrument.Platform == Search.Platform
-                              select r;
+                    usageRecords = from r in usageRecords
+                                   where r.Instrument.Platform == Search.Platform
+                                   select r;
+
+                    maintenanceRecords = from r in maintenanceRecords
+                                         where r.Instrument.Platform == Search.Platform
+                                         select r;
                 }
 
-                UsageRecords = records.OrderBy(record => record.BeginTimeOfTest).ToList();
+                UsageRecords = usageRecords.OrderBy(record => record.BeginTimeOfTest).ToList();
+                MaintenanceRecords = maintenanceRecords.OrderBy(record => record.BeginTime).ToList();
+
+                // 不同维护类型的维护内容和维护周期
+                var targetPlatformInfo = _context.MaintenanceContents.Where(m => m.InstrumentPlatform == InstrumentPlatform).ToList();
+                if (targetPlatformInfo != null)
+                {
+                    MaintenanceContentAndCycleOfType = new Dictionary<string, Dictionary<string, int>>();
+                    foreach (var item in targetPlatformInfo)
+                    {
+                        var type = item.Type;
+                        var content = item.Text;
+                        var cycle = item.Cycle;
+
+                        if (!MaintenanceContentAndCycleOfType.ContainsKey(type))
+                        {
+                            MaintenanceContentAndCycleOfType.Add(type, new Dictionary<string, int>());
+                        }
+                        MaintenanceContentAndCycleOfType[type].Add(content, cycle);
+                    }
+                }
             }
-
-
 
             //if (Search.Category == Category.Malfunction)
             //{
@@ -161,11 +222,10 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
             //                            .ToList();
             //}
 
-
-
-
+            // 下拉选项
             PlatformSelectList = new SelectList((from i in _context.Instruments
                                                  select i.Platform)
+                                                 .AsNoTracking()
                                                  .Distinct(), Search.Platform);
 
             GroupSelectList = new SelectList(_context.Groups.AsNoTracking().Where(g => g.Name != "质谱中心").OrderBy(p => p.Name), "Name", "Name", Search.Group);
@@ -209,8 +269,8 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
 
         public enum Category
         {
-            [Display(Name = "使用登记")]
-            Usage,
+            [Display(Name = "维护使用")]
+            Record,
             //[Display(Name = "故障工单")]
             //Malfunction,
         }
