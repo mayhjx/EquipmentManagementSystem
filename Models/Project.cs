@@ -21,11 +21,11 @@ namespace EquipmentManagementSystem.Models
         public DateTime? SimpleTestTime { get; set; }
 
         [Display(Name = "色谱柱类型")]
-        [StringLength(100)]
+        [StringLength(500)]
         public string ColumnType { get; set; }
 
         [Display(Name = "流动相/载气")]
-        [StringLength(50)]
+        [StringLength(500)]
         public string Carrier { get; set; }
 
         [Display(Name = "离子源类型")]
