@@ -75,7 +75,7 @@ body {*/
 
 @media print {
     @page {
-        size: A4 landscape;
+        size: B4 landscape;
         margin: 2mm;
     }
 
