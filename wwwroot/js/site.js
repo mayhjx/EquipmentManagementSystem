@@ -75,8 +75,8 @@ $(document).ready(function () {
 
     // 下拉列表格式
     $("select.select2").select2({
-        theme: 'bootstrap4'
+        theme: 'bootstrap4',
+        minimumResultsForSearch: 10, //最小需要输入多少个选项才进行查询
+        //placeholder: "请选择",
     });
-
-
 });
