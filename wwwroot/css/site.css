@@ -75,13 +75,8 @@ body {*/
 
 @media print {
     @page {
-        size: B4 landscape;
+        size: A3 landscape;
         margin: 2mm;
-    }
-
-    table {
-        page-break-after: avoid;
-        page-break-inside: avoid;
     }
 
     body {
