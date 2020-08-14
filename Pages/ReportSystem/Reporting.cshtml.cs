@@ -107,10 +107,6 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
 
                                    where r.BeginTimeOfTest >= Search.BeginTime
                                    where r.BeginTimeOfTest < Search.EndTime.AddDays(1)
-                                   //where Search.Instrument != null && r.InstrumentId == Search.Instrument
-                                   //where Search.Project != null && r.ProjectName == Search.Project
-                                   //where Search.Group != null && r.Project.Group.Name == Search.Group
-                                   //where Search.Platform != null && r.Instrument.Platform == Search.Platform
                                    select r;
 
                 var maintenanceRecords = from r in _context.MaintenanceRecords
@@ -119,13 +115,8 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
                                         .Include(r => r.Project)
                                         .ThenInclude(r => r.Group)
                                          where r.BeginTime >= Search.BeginTime
-                                         where r.EndTime < Search.EndTime.AddDays(1)
-                                         //where Search.Instrument != null && r.InstrumentId == Search.Instrument
-                                         //where Search.Project != null && r.ProjectName == Search.Project
-                                         //where Search.Group != null && r.Project.Group.Name == Search.Group
-                                         //where Search.Platform != null && r.Instrument.Platform == Search.Platform
+                                         where r.BeginTime < Search.EndTime.AddDays(1)
                                          select r;
-
 
                 if (Search.Instrument != null)
                 {
