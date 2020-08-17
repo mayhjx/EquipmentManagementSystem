@@ -22,6 +22,7 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
         public IActionResult OnGet()
         {
             PopulateProjectDropDownList(_context);
+
             return Page();
         }
 
@@ -39,9 +40,9 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
         }
 
         /// <summary>
-        /// 返回对应设备平台和对应维护类型的维护内容
+        /// 返回对应设备平台的维护内容
         /// </summary>
-        public JsonResult OnGetMaintenanceContents(string instrument, string maintenanceType)
+        public JsonResult OnGetMaintenanceContents(string instrument)
         {
             var platform = _context.Instruments.FirstOrDefault(m => m.ID == instrument).Platform;
             if (platform == null)
@@ -49,15 +50,14 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
                 return new JsonResult("");
             }
 
-            var contents = _context.MaintenanceContents.Where(m => m.InstrumentPlatform == platform)
-                                                       .Where(m => m.Type == maintenanceType);
+            var contents = _context.MaintenanceContents.Where(m => m.InstrumentPlatform == platform);
+
             if (contents.Any() == false)
             {
                 return new JsonResult("");
             }
 
-            var result = new JsonResult(from c in contents
-                                        select c.Text);
+            var result = new JsonResult(contents);
 
             return result;
         }
