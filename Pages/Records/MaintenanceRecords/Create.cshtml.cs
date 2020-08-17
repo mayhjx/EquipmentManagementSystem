@@ -75,6 +75,13 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
                 return Page();
             }
 
+            if (maintenanceType == null)
+            {
+                PopulateProjectDropDownList(_context);
+                ModelState.AddModelError("", "请选择一个维护类型");
+                return Page();
+            }
+
             MaintenanceRecord.ProjectId = _context.Projects.FirstOrDefaultAsync(p => p.Name == MaintenanceRecord.ProjectName).Result.Id;
             MaintenanceRecord.Type = maintenanceType;
             if (maintenanceType != "临时维护")

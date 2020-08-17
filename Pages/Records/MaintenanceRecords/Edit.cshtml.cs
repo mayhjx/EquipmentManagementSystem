@@ -69,6 +69,12 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
                 return Page();
             }
 
+            if (maintenanceType == null)
+            {
+                ModelState.AddModelError("", "请选择一个维护类型");
+                return Page();
+            }
+
             var maintenanceRecordToUpdate = await _context.MaintenanceRecords
                                                     .FirstOrDefaultAsync(m => m.Id == id);
 
