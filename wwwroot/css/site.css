@@ -73,6 +73,11 @@ body {*/
     line-height: 60px;*/ /* Vertically center the text there */
 /*}*/
 
+/*添加斜线*/
+/*table th.crossed {*/
+/*background-image: linear-gradient(to bottom left, transparent calc(50% - 1px), black, transparent calc(50% + 1px));*/
+/*}*/
+
 @media print {
     @page {
         size: A3 landscape;

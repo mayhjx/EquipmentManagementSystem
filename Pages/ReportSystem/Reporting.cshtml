@@ -70,27 +70,25 @@
 
 @if (Model.UsageRecords != null)
 {
-    <div class="card">
-        <div class="card-header d-print-none">
-            <h3 class="card-title">
-                查询结果
-            </h3>
-            <div class="card-tools">
-                <ul class="nav nav-pills ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#data-chart" data-toggle="tab">使用时长柱状图</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#data" data-toggle="tab">使用记录</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#usage-datagrid" data-toggle="tab">使用记录表</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#maintenance-datagrid" data-toggle="tab">维护记录表</a>
-                    </li>
-                </ul>
-            </div>
+    <div class="card card-primary card-outline card-outline-tabs">
+        <div class="card-header d-print-none p-0 border-bottom-0">
+            <ul class="nav nav-tabs nav-justified">
+                <li class="pt-2 px-3">
+                    <h3 class="card-title">查询结果</h3>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#data-chart" data-toggle="pill" role="tab">使用时长柱状图</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#data" data-toggle="pill" role="tab">使用记录</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#usage-datagrid" data-toggle="pill" role="tab">使用记录表</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#maintenance-datagrid" data-toggle="pill" role="tab">维护记录表</a>
+                </li>
+            </ul>
         </div>
         <div class="card-body">
             <div class="tab-content p-0">
@@ -227,9 +225,16 @@
                 </div>
                 @*使用记录表*@
                 <div class="tab-pane" id="usage-datagrid" style="position: relative; ">
-                    <button id="exportToPDF" class="btn btn-outline-primary float-right no-print" style="margin-right:10px;" type="button" title="建议在Google Chrome浏览器中进行打印">
-                        <i class="fa fa-print"></i> 打印预览
-                    </button>
+                    <div class="row no-print">
+                        <div class="col-xl-11 col-12">
+                            <p>打印说明：如果打印预览时发现因表格跨页导致格式有问题的话，请尝试将查询的时间范围缩小后分多次打印。</p>
+                        </div>
+                        <div class="col-xl-1 col-12">
+                            <button id="exportToPDF" class="btn btn-outline-primary btn-block" style="margin-right:10px;" type="button" title="建议在Google Chrome浏览器中进行打印">
+                                <i class="fa fa-print"></i> 打印预览
+                            </button>
+                        </div>
+                    </div>
                     @{
                         // 可以用NameValueCollection优化
                         // https://docs.microsoft.com/en-us/dotnet/api/system.collections.specialized.namevaluecollection?view=netcore-3.1
@@ -237,6 +242,7 @@
                         var carrier = new Dictionary<char, string>();
                         var ionSource = new Dictionary<char, string>();
                         var detector = new Dictionary<char, string>();
+                        var other = new Dictionary<char, string>();
 
                         foreach (var item in Model.UsageRecords)
                         {
@@ -244,6 +250,7 @@
                             AddKeyValueToDic(ionSource, item.Project.IonSource);
                             AddKeyValueToDic(carrier, item.Project.Carrier);
                             AddKeyValueToDic(detector, item.Project.Detector);
+                            AddKeyValueToDic(other, item.Remark);
                         }
 
                         void AddKeyValueToDic(Dictionary<char, string> dic, string value)
@@ -280,161 +287,174 @@
                             return key;
                         }
                     }
-                    <table id="usageDataGrid" class="table table-sm table-borderless">
-                        <thead>
-                            <tr>
-                                <th colspan="13" class="h5 text-center">
-                                    色谱质谱联用设备使用通用记录表<br />
-                                    UHPLC, LC-MS/MS, GC-MS Use Form
-                                </th>
-                            </tr>
-                            <tr>
-                                <th colspan="7" class="text-left">仪器编号No.：@(Model.Search?.Instrument ?? "_____________")&nbsp; 仪器型号Model：@(Model.InstrumentModel?? "_____________")</th>
-                                <th colspan="6" class="text-right">表号Form：KM-SOP0314. ___ .01</th>
-                            </tr>
-                            <tr class="">
-                                <th class="border border-dark text-center align-middle">
-                                    开始时间<br />
-                                    Startup Time
-                                </th>
-                                <th class="border border-dark text-center align-middle">
-                                    结束时间<br />
-                                    Shutdown Time
-                                </th>
-                                <th class="border border-dark text-center align-middle">
-                                    检测项目<br />
-                                    Test Item
-                                </th>
-                                <th class="border border-dark text-center align-middle text-break">
-                                    色谱柱编号/类型<br />
-                                    Column Number/Type
-                                </th>
-                                <th class="border border-dark align-middle">
-                                    初始压力<br />
-                                    Pressure<br />
-                                    <i class="far fa-@(pressureUnit == "Mpa" ? "check-" : "")square" aria-hidden="true"></i> Mpa
-                                    <i class="far fa-@(pressureUnit == "Bar" ? "check-" : "")square" aria-hidden="true"></i> Bar
-                                    <i class="far fa-@(pressureUnit == "Psi" ? "check-" : "")square" aria-hidden="true"></i> Psi
-                                </th>
-                                <th class="border border-dark align-middle">
-                                    真空度<br />
-                                    Vacuum<br />
-                                    <i class="far fa-@(vacuumUnit == "torr" ? "check-" : "")square" aria-hidden="true"></i> torr
-                                    <i class="far fa-@(vacuumUnit == "Mpa" ? "check-" : "")square" aria-hidden="true"></i> Mpa
-                                </th>
-                                <th class="border border-dark text-center align-middle">
-                                    空白<br />
-                                    Blank Signal
-                                </th>
-                                <th class="border border-dark text-center align-middle">
-                                    Test信号<br />
-                                    Test Signal
-                                </th>
-                                <th class="border border-dark align-middle">
-                                    <i class="far fa-@(carrierType == "Liquid" ? "check-" : "")square" aria-hidden="true"></i>
-                                    流动相<br />
-                                    Liquid Phase<br />
-                                    <i class="far fa-@(carrierType == "Gas" ? "check-" : "")square" aria-hidden="true"></i>
-                                    载气<br />
-                                    Carrier Gas
-                                </th>
-                                <th class="border border-dark text-center align-middle">
-                                    检测器<br />
-                                    Detector
-                                </th>
-                                <th class="border border-dark text-center align-middle">
-                                    离子源<br />
-                                    Ion Source
-                                </th>
-                                <th class="border border-dark text-center align-middle">
-                                    操作者<br />
-                                    Operator
-                                </th>
-                                <th class="border border-dark text-center align-middle">
-                                    备注<br />
-                                    Remark
-                                </th>
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr>
-                                <td colspan="13" class="border border-dark">
-                                    备注：
-                                    <ol class="pb-0 m-0">
-                                        <li>
-                                            色谱柱类型：@string.Join(" ", columnType).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
-                                        </li>
-                                        <li>
-                                            流动相/载气类型：@string.Join(" ", carrier).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
-                                        </li>
-                                        <li>
-                                            离子源类型：@string.Join(" ", ionSource).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
-                                        </li>
-                                        <li>
-                                            检测器类型：@string.Join(" ", detector).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
-                                        </li>
-                                    </ol>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="13" class="text-center border border-dark">
-                                    使用回顾
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="border border-dark text-nowrap">
-                                    评估意见<br />
-                                    Comment
-                                </td>
-                                <td colspan="4" class="border border-dark"></td>
-                                <td class="border border-dark text-nowrap">
-                                    评估人/日期<br />
-                                    Evaluator/Date
-                                </td>
-                                <td colspan="3" class="border border-dark"></td>
-                                <td class="border border-dark text-nowrap">
-                                    审批人/日期<br />
-                                    Approver/Date
-                                </td>
-                                <td colspan="3" class="border border-dark"></td>
-                            </tr>
-                        </tfoot>
-                        <tbody class="text-center">
-                            @foreach (var item in Model.UsageRecords)
-                            {
+                    <div class="table-responsive-lg">
+                        <table id="usageDataGrid" class="table table-sm table-borderless">
+                            <thead>
                                 <tr>
-                                    <td class="border border-dark align-middle text-nowrap">@(item.BeginTimeOfTest.GetValueOrDefault() == DateTime.MinValue ? "": item.BeginTimeOfTest.GetValueOrDefault().ToString("yyyyMMdd HH:mm"))</td>
-                                    <td class="border border-dark align-middle text-nowrap">@(item.EndTime.GetValueOrDefault() == DateTime.MinValue ? "": item.EndTime.GetValueOrDefault().ToString("yyyyMMdd HH:mm"))</td>
-                                    <td class="border border-dark align-middle text-break">@item.ProjectName</td>
-                                    <td class="border border-dark align-middle text-nowrap">
-                                        @(item.ColumnTwoNumber != null ? "S1: " + item.ColumnNumber : item.ColumnNumber)
-                                        @(item.ColumnTwoNumber != null ? " | S2: " + item.ColumnTwoNumber : "")
-                                        / @GetKeyFromValue(columnType, item.Project.ColumnType)
-                                    </td>
-                                    <td class="border border-dark align-middle text-nowrap">
-                                        @(item.ColumnTwoPressure != null ? "S1: " + item.ColumnPressure : item.ColumnPressure.ToString())
-                                        @(item.ColumnTwoPressure != null ? " | S2: " + item.ColumnTwoPressure : "")
-                                    </td>
-                                    <td class="border border-dark align-middle">@(item.VacuumDegree != null ? item.VacuumDegree : "N/A")</td>
-                                    <td class="border border-dark align-middle">@item.BlankSignal</td>
-                                    <td class="border border-dark align-middle">@item.TestSignal</td>
-                                    <td class="border border-dark align-middle">@GetKeyFromValue(carrier, item.Project.Carrier)</td>
-                                    <td class="border border-dark align-middle">@GetKeyFromValue(detector, item.Project.Detector)</td>
-                                    <td class="border border-dark align-middle">@GetKeyFromValue(ionSource, item.Project.IonSource)</td>
-                                    <td class="border border-dark align-middle text-nowrap">@item.Creator</td>
-                                    <td class="border border-dark align-middle text-break" style="max-width:100px">@item.Remark</td>
+                                    <th colspan="13" class="h5 text-center">
+                                        色谱质谱联用设备使用通用记录表<br />
+                                        UHPLC, LC-MS/MS, GC-MS Use Form
+                                    </th>
                                 </tr>
-                            }
-                        </tbody>
-                    </table>
+                                <tr>
+                                    <th colspan="7" class="text-left">仪器编号No.：@(Model.Search?.Instrument ?? "_____________")&nbsp; 仪器型号Model：@(Model.InstrumentModel?? "_____________")</th>
+                                    <th colspan="6" class="text-right">表号Form：KM-SOP0314. ___ .01</th>
+                                </tr>
+                                <tr class="">
+                                    <th class="border border-dark text-center align-middle">
+                                        开始时间<br />
+                                        Startup Time
+                                    </th>
+                                    <th class="border border-dark text-center align-middle">
+                                        结束时间<br />
+                                        Shutdown Time
+                                    </th>
+                                    <th class="border border-dark text-center align-middle">
+                                        检测项目<br />
+                                        Test Item
+                                    </th>
+                                    <th class="border border-dark text-center align-middle text-break">
+                                        色谱柱编号/类型<sup> [1]</sup><br />
+                                        Column Number/Type
+                                    </th>
+                                    <th class="border border-dark align-middle">
+                                        初始压力<br />
+                                        Pressure<br />
+                                        <i class="far fa-@(pressureUnit == "Mpa" ? "check-" : "")square" aria-hidden="true"></i> Mpa
+                                        <i class="far fa-@(pressureUnit == "Bar" ? "check-" : "")square" aria-hidden="true"></i> Bar
+                                        <i class="far fa-@(pressureUnit == "Psi" ? "check-" : "")square" aria-hidden="true"></i> Psi
+                                    </th>
+                                    <th class="border border-dark align-middle">
+                                        真空度<br />
+                                        Vacuum<br />
+                                        <i class="far fa-@(vacuumUnit == "torr" ? "check-" : "")square" aria-hidden="true"></i> torr
+                                        <i class="far fa-@(vacuumUnit == "Mpa" ? "check-" : "")square" aria-hidden="true"></i> Mpa
+                                    </th>
+                                    <th class="border border-dark text-center align-middle">
+                                        空白<br />
+                                        Blank Signal
+                                    </th>
+                                    <th class="border border-dark text-center align-middle">
+                                        Test信号<br />
+                                        Test Signal
+                                    </th>
+                                    <th class="border border-dark align-middle">
+                                        <i class="far fa-@(carrierType == "Liquid" ? "check-" : "")square" aria-hidden="true"></i>
+                                        流动相<sup>@(carrierType == "Liquid" ? " [2]" : "")</sup><br />
+                                        Liquid Phase<br />
+                                        <i class="far fa-@(carrierType == "Gas" ? "check-" : "")square" aria-hidden="true"></i>
+                                        载气<sup>@(carrierType == "Gas" ? " [2]" : "")</sup><br />
+                                        Carrier Gas
+                                    </th>
+                                    <th class="border border-dark text-center align-middle">
+                                        检测器<sup> [3]</sup><br />
+                                        Detector
+                                    </th>
+                                    <th class="border border-dark text-center align-middle">
+                                        离子源<sup> [4]</sup><br />
+                                        Ion Source
+                                    </th>
+                                    <th class="border border-dark text-center align-middle">
+                                        操作者<br />
+                                        Operator
+                                    </th>
+                                    <th class="border border-dark text-center align-middle">
+                                        其他<sup> [5]</sup><br />
+                                        Other
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="13" class="border border-dark">
+                                        备注Remark：
+                                        <ul class="list-unstyled pb-0 m-0">
+                                            <li>
+                                                [1] 色谱柱类型：@string.Join(" ", columnType).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
+                                            </li>
+                                            <li>
+                                                [2] 流动相/载气类型：@string.Join(" ", carrier).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
+                                            </li>
+                                            <li>
+                                                [3] 离子源类型：@string.Join(" ", ionSource).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
+                                            </li>
+                                            <li>
+                                                [4] 检测器类型：@string.Join(" ", detector).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
+                                            </li>
+                                            <li>
+                                                [5] 其他：@string.Join(" ", other).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="13" class="text-center border border-dark">
+                                        使用回顾
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="border border-dark text-nowrap">
+                                        评估意见<br />
+                                        Comment
+                                    </td>
+                                    <td colspan="4" class="border border-dark"></td>
+                                    <td class="border border-dark text-nowrap">
+                                        评估人/日期<br />
+                                        Evaluator/Date
+                                    </td>
+                                    <td colspan="3" class="border border-dark"></td>
+                                    <td class="border border-dark text-nowrap">
+                                        审批人/日期<br />
+                                        Approver/Date
+                                    </td>
+                                    <td colspan="3" class="border border-dark"></td>
+                                </tr>
+                            </tfoot>
+                            <tbody class="text-center">
+                                @foreach (var item in Model.UsageRecords)
+                                {
+                                    <tr>
+                                        <td class="border border-dark align-middle text-nowrap">@(item.BeginTimeOfTest.GetValueOrDefault() == DateTime.MinValue ? "": item.BeginTimeOfTest.GetValueOrDefault().ToString("yyyyMMdd HH:mm"))</td>
+                                        <td class="border border-dark align-middle text-nowrap">@(item.EndTime.GetValueOrDefault() == DateTime.MinValue ? "": item.EndTime.GetValueOrDefault().ToString("yyyyMMdd HH:mm"))</td>
+                                        <td class="border border-dark align-middle text-break">@item.ProjectName</td>
+                                        <td class="border border-dark align-middle text-nowrap">
+                                            @(item.ColumnTwoNumber != null ? "S1: " + item.ColumnNumber : item.ColumnNumber)
+                                            @(item.ColumnTwoNumber != null ? " | S2: " + item.ColumnTwoNumber : "")
+                                            / @GetKeyFromValue(columnType, item.Project.ColumnType)
+                                        </td>
+                                        <td class="border border-dark align-middle text-nowrap">
+                                            @(item.ColumnTwoPressure != null ? "S1: " + item.ColumnPressure : item.ColumnPressure.ToString())
+                                            @(item.ColumnTwoPressure != null ? " | S2: " + item.ColumnTwoPressure : "")
+                                        </td>
+                                        <td class="border border-dark align-middle">@(item.VacuumDegree != null ? item.VacuumDegree : "N/A")</td>
+                                        <td class="border border-dark align-middle">@item.BlankSignal</td>
+                                        <td class="border border-dark align-middle">@item.TestSignal</td>
+                                        <td class="border border-dark align-middle">@GetKeyFromValue(carrier, item.Project.Carrier)</td>
+                                        <td class="border border-dark align-middle">@GetKeyFromValue(detector, item.Project.Detector)</td>
+                                        <td class="border border-dark align-middle">@GetKeyFromValue(ionSource, item.Project.IonSource)</td>
+                                        <td class="border border-dark align-middle text-nowrap">@item.Creator</td>
+                                        <td class="border border-dark align-middle">@GetKeyFromValue(other, item.Remark)</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>
                 @*维护记录表*@
                 <div class="tab-pane" id="maintenance-datagrid" style="position: relative; ">
                     @if (Model.MaintenanceRecords != null)
                     {
-                        <button id="exportToPDF" class="btn btn-outline-primary float-right no-print" style="margin-right:10px;" type="button" title="建议在Google Chrome浏览器中进行打印">
-                            <i class="fa fa-print"></i> 打印预览
-                        </button>
+                        <div class="row no-print">
+                            <div class="col-xl-11 col-12">
+                                <p>打印说明：如果打印预览时发现因表格跨页导致格式有问题的话，请尝试将查询的时间范围缩小后分多次打印。</p>
+                            </div>
+                            <div class="col-xl-1 col-12">
+                                <button id="exportToPDF" class="btn btn-outline-primary btn-block" style="margin-right:10px;" type="button" title="建议在Google Chrome浏览器中进行打印">
+                                    <i class="fa fa-print"></i> 打印预览
+                                </button>
+                            </div>
+                        </div>
                         var dailyMaintenance = Model.MaintenanceContentAndCycleOfType.GetValueOrDefault("日常维护");
                         var weeklyMaintenance = Model.MaintenanceContentAndCycleOfType.GetValueOrDefault("周维护");
                         var monthlyMaintenance = Model.MaintenanceContentAndCycleOfType.GetValueOrDefault("月度维护");
@@ -466,190 +486,200 @@
                         {
                             var temporary = "临时维护";
                             var totalColSpan = dailyMaintenance.Count + weeklyMaintenance.Count + monthlyMaintenance.Count + quarterlyMaintenance.Count + annualMaintenance.Count + 3;
-
-                            <table id="maintenanceDataGrid" class="table table-sm table-borderless">
-                                <thead>
-                                    <tr>
-                                        <th colspan="@totalColSpan" class="h5 text-center">
-                                            @(Model.InstrumentPlatform == "LCMS" ? "液相色谱串联质谱联用仪维护记录表":
+                            <div class="table-responsive-lg">
+                                <table id="maintenanceDataGrid" class="table table-sm table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="@totalColSpan" class="h5 text-center">
+                                                @(Model.InstrumentPlatform == "LCMS" ? "液相色谱串联质谱联用仪维护记录表":
                                           Model.InstrumentPlatform == "GCMS" ? "气质联用仪维护记录表" :
                                           Model.InstrumentPlatform == "UPLC" ? "超高效液相色谱仪维护记录表" : "_______________维护记录表")<br />
-                                            @(Model.InstrumentPlatform == "LCMS" ? "LC-MS/MS Maintenance Form" :
+                                                @(Model.InstrumentPlatform == "LCMS" ? "LC-MS/MS Maintenance Form" :
                                           Model.InstrumentPlatform == "GCMS" ? "GC-MS Maintenance Form" :
                                           Model.InstrumentPlatform == "UPLC" ? "UHPLC Maintenance Form" : "_______________Maintenance Form")
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th colspan="@totalColSpan">
-                                            <div class="row">
-                                                <span class="col-6 text-left text-bold">仪器编号No.：@(Model.Search?.Instrument ?? "_____________")</span>
-                                                <span class="col-6 text-right text-bold">表号Form：KM-SOP0314. ___ .02</span>
-                                            </div>
-                                        </th>
-                                    </tr>
-                                    <tr class="text-center">
-
-                                        <th class="border border-dark text-break align-middle" colspan="2">
-                                            维护类型
-                                        </th>
-                                        <th class="border border-dark align-middle align-middle" colspan="@dailyMaintenance.Count">
-                                            日常维护<br />
-                                            Daily
-                                        </th>
-                                        <th class="border border-dark align-middle" colspan="@weeklyMaintenance.Count">
-                                            周维护<br />
-                                            Weekly
-                                        </th>
-                                        <th class="border border-dark align-middle" colspan="@monthlyMaintenance.Count">
-                                            月度维护<br />
-                                            Monthly
-                                        </th>
-                                        <th class="border border-dark align-middle" colspan="@quarterlyMaintenance.Count">
-                                            季度维护<br />
-                                            Quarterly
-                                        </th>
-                                        <th class="border border-dark align-middle" colspan="@annualMaintenance.Count">
-                                            年度PM维护<br />
-                                            Annual
-                                        </th>
-                                        <th class="border border-dark align-middle">
-                                            临时维护<br />
-                                            Temporary
-                                        </th>
-                                    </tr>
-                                    <tr class="text-center">
-                                        <th class="border border-dark text-break align-middle" colspan="2">
-                                            维护内容
-                                        </th>
-                                        @foreach (var item in dailyMaintenance)
-                                        {
-                                            <td class="border border-dark text-break align-middle">@item.Key</td>
-                                        }
-                                        @foreach (var item in weeklyMaintenance)
-                                        {
-                                            <td class="border border-dark text-break align-middle">@item.Key</td>
-                                        }
-                                        @foreach (var item in monthlyMaintenance)
-                                        {
-                                            <td class="border border-dark text-break align-middle">@item.Key</td>
-                                        }
-                                        @foreach (var item in quarterlyMaintenance)
-                                        {
-                                            <td class="border border-dark text-break align-middle">@item.Key</td>
-                                        }
-                                        @foreach (var item in annualMaintenance)
-                                        {
-                                            <td class="border border-dark text-break align-middle">@item.Key</td>
-                                        }
-                                        <th class="border border-dark"></th>
-                                    </tr>
-                                    <tr class="text-center">
-                                        <th class="border border-dark align-middle">
-                                            日<br />
-                                            期<br />
-                                            Date
-                                        </th>
-                                        <th class="border border-dark text-break">
-                                            维护周期(天)
-                                        </th>
-                                        @foreach (var item in dailyMaintenance)
-                                        {
-                                            <td class="border border-dark align-middle">@item.Value</td>
-                                        }
-                                        @foreach (var item in weeklyMaintenance)
-                                        {
-                                            <td class="border border-dark align-middle">@item.Value</td>
-                                        }
-                                        @foreach (var item in monthlyMaintenance)
-                                        {
-                                            <td class="border border-dark align-middle">@item.Value</td>
-                                        }
-                                        @foreach (var item in quarterlyMaintenance)
-                                        {
-                                            <td class="border border-dark align-middle">@item.Value</td>
-                                        }
-                                        @foreach (var item in annualMaintenance)
-                                        {
-                                            <td class="border border-dark align-middle">@item.Value</td>
-                                        }
-                                        <th class="border border-dark"></th>
-                                    </tr>
-                                </thead>
-                                @{
-                                    // 维护人员表
-                                    var operatorDic = new Dictionary<char, string>();
-
-                                    foreach (var item in Model.MaintenanceRecords)
-                                    {
-                                        AddKeyValueToDic(operatorDic, item.Operator);
-                                    }
-                                }
-                                <tfoot>
-                                    <tr>
-                                        <td colspan="@totalColSpan" class="border border-dark">
-                                            维护人员：@string.Join(" ", operatorDic).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
-                                            <br />备注：Y：该工作日已完成该项维护；N：经评估，该工作日无需进行该项维护。
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="@totalColSpan" class="text-center border border-dark">
-                                            使用回顾
-                                        </td>
-                                    </tr>
-                                    <tr class="text-nowrap text-center">
-                                        <td class="border border-dark" colspan="2">
-                                            评估意见<br />
-                                            Comment
-                                        </td>
-                                        <td colspan="@(dailyMaintenance.Count + weeklyMaintenance.Count + monthlyMaintenance.Count-2)" class="border border-dark"></td>
-                                        <td class="border border-dark" colspan="2">
-                                            评估人/日期<br />
-                                            Evaluator/Date
-                                        </td>
-                                        <td colspan="@(quarterlyMaintenance.Count-1)" class="border border-dark"></td>
-                                        <td class="border border-dark" colspan="2">
-                                            审批人/日期<br />
-                                            Approver/Date
-                                        </td>
-                                        <td colspan="@(annualMaintenance.Count)" class="border border-dark"></td>
-                                    </tr>
-                                </tfoot>
-                                <tbody>
-                                    @foreach (var item in Model.MaintenanceRecords)
-                                    {
-                                        var contents = item.Content.Split(", ");
+                                            </th>
+                                        </tr>
                                         <tr>
-                                            <td class="border border-dark text-nowrap text-center align-middle" colspan="2">@item.EndTime.GetValueOrDefault().ToString("yyyyMMdd")</td>
-                                            @foreach (var content in dailyMaintenance)
+                                            <th colspan="@totalColSpan">
+                                                <div class="row">
+                                                    <span class="col-6 text-left text-bold">仪器编号No.：@(Model.Search?.Instrument ?? "_____________")</span>
+                                                    <span class="col-6 text-right text-bold">表号Form：KM-SOP0314. ___ .02</span>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                        <tr class="text-center">
+                                            <th class="border border-dark text-break align-middle" colspan="2">
+                                                维护类型<br />
+                                                Type
+                                            </th>
+                                            <th class="border border-dark align-middle align-middle" colspan="@dailyMaintenance.Count">
+                                                日常维护<br />
+                                                Daily
+                                            </th>
+                                            <th class="border border-dark align-middle" colspan="@weeklyMaintenance.Count">
+                                                周维护<br />
+                                                Weekly
+                                            </th>
+                                            <th class="border border-dark align-middle" colspan="@monthlyMaintenance.Count">
+                                                月度维护<br />
+                                                Monthly
+                                            </th>
+                                            <th class="border border-dark align-middle" colspan="@quarterlyMaintenance.Count">
+                                                季度维护<br />
+                                                Quarterly
+                                            </th>
+                                            <th class="border border-dark align-middle" colspan="@annualMaintenance.Count">
+                                                年度PM维护<br />
+                                                Annual
+                                            </th>
+                                            <th class="border border-dark align-middle">
+                                                临时维护<br />
+                                                Temporary
+                                            </th>
+                                        </tr>
+                                        <tr class="text-center">
+                                            <th class="border border-dark text-break align-middle" colspan="2">
+                                                维护内容<br />
+                                                Content
+                                            </th>
+                                            @foreach (var item in dailyMaintenance)
                                             {
-                                                <td class="border border-dark text-center">@(contents.Contains(content.Key) ? "Y/" + GetKeyFromValue(operatorDic, item.Operator) : "N")</td>
+                                                <td class="border border-dark text-break align-middle">@item.Key</td>
                                             }
-                                            @foreach (var content in weeklyMaintenance)
+                                            @foreach (var item in weeklyMaintenance)
                                             {
-                                                <td class="border border-dark text-center">@(contents.Contains(content.Key) ? "Y/" + GetKeyFromValue(operatorDic, item.Operator) : "N")</td>
+                                                <td class="border border-dark text-break align-middle">@item.Key</td>
                                             }
-                                            @foreach (var content in monthlyMaintenance)
+                                            @foreach (var item in monthlyMaintenance)
                                             {
-                                                <td class="border border-dark text-center">@(contents.Contains(content.Key) ? "Y/" + GetKeyFromValue(operatorDic, item.Operator) : "N")</td>
+                                                <td class="border border-dark text-break align-middle">@item.Key</td>
                                             }
-                                            @foreach (var content in quarterlyMaintenance)
+                                            @foreach (var item in quarterlyMaintenance)
                                             {
-                                                <td class="border border-dark text-center">@(contents.Contains(content.Key) ? "Y/" + GetKeyFromValue(operatorDic, item.Operator) : "N")</td>
+                                                <td class="border border-dark text-break align-middle">@item.Key</td>
                                             }
-                                            @foreach (var content in annualMaintenance)
+                                            @foreach (var item in annualMaintenance)
                                             {
-                                                <td class="border border-dark text-center">@(contents.Contains(content.Key) ? "Y/" + GetKeyFromValue(operatorDic, item.Operator) : "N")</td>
+                                                <td class="border border-dark text-break align-middle">@item.Key</td>
                                             }
-                                            <td class="border border-dark text-break text-center">
-                                                @if (item.Type == temporary)
-                                                {
-                                                    @item.Content
-                                                }
+                                            <th class="border border-dark"></th>
+                                        </tr>
+                                        <tr class="text-center">
+                                            <th class="border border-dark align-middle">
+                                                日期<br />
+                                                Date
+                                            </th>
+                                            <th class="border border-dark align-middle">
+                                                维护周期
+                                                (天)
+                                            </th>
+                                            @foreach (var item in dailyMaintenance)
+                                            {
+                                                <td class="border border-dark align-middle">@item.Value</td>
+                                            }
+                                            @foreach (var item in weeklyMaintenance)
+                                            {
+                                                <td class="border border-dark align-middle">@item.Value</td>
+                                            }
+                                            @foreach (var item in monthlyMaintenance)
+                                            {
+                                                <td class="border border-dark align-middle">@item.Value</td>
+                                            }
+                                            @foreach (var item in quarterlyMaintenance)
+                                            {
+                                                <td class="border border-dark align-middle">@item.Value</td>
+                                            }
+                                            @foreach (var item in annualMaintenance)
+                                            {
+                                                <td class="border border-dark align-middle">@item.Value</td>
+                                            }
+                                            <th class="border border-dark"></th>
+                                        </tr>
+                                    </thead>
+                                    @{
+                                        // 维护人员表
+                                        var operatorDic = new Dictionary<char, string>();
+                                        var temporaryDic = new Dictionary<char, string>();
+
+                                        foreach (var item in Model.MaintenanceRecords)
+                                        {
+                                            AddKeyValueToDic(operatorDic, item.Operator);
+                                            if (item.Type == temporary)
+                                            {
+                                                AddKeyValueToDic(temporaryDic, item.Content);
+                                            }
+                                        }
+                                    }
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="@totalColSpan" class="border border-dark">
+                                                备注Remark：<br />
+                                                Y：该工作日已完成该项维护；N：经评估，该工作日无需进行该项维护。<br />
+                                                操作者Operator：@string.Join(" ", operatorDic).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
+                                                @*<br />[1] 临时维护：@string.Join(" ", temporaryDic).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')*@
                                             </td>
                                         </tr>
-                                    }
-                                </tbody>
-                            </table>
+                                        <tr>
+                                            <td colspan="@totalColSpan" class="text-center border border-dark">
+                                                使用回顾
+                                            </td>
+                                        </tr>
+                                        <tr class="text-nowrap text-center">
+                                            <td class="border border-dark" colspan="2">
+                                                评估意见<br />
+                                                Comment
+                                            </td>
+                                            <td colspan="@(dailyMaintenance.Count + weeklyMaintenance.Count + monthlyMaintenance.Count-2)" class="border border-dark"></td>
+                                            <td class="border border-dark" colspan="2">
+                                                评估人/日期<br />
+                                                Evaluator/Date
+                                            </td>
+                                            <td colspan="@(quarterlyMaintenance.Count-1)" class="border border-dark"></td>
+                                            <td class="border border-dark" colspan="2">
+                                                审批人/日期<br />
+                                                Approver/Date
+                                            </td>
+                                            <td colspan="@(annualMaintenance.Count)" class="border border-dark"></td>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        @foreach (var item in Model.MaintenanceRecords)
+                                        {
+                                            var contents = item.Content.Split(", ");
+                                            <tr>
+                                                <td class="border border-dark text-nowrap text-center align-middle" colspan="2">@item.EndTime.GetValueOrDefault().ToString("yyyyMMdd")</td>
+                                                @foreach (var content in dailyMaintenance)
+                                                {
+                                                    <td class="border border-dark text-center">@(contents.Contains(content.Key) ? "Y/" + GetKeyFromValue(operatorDic, item.Operator) : "N")</td>
+                                                }
+                                                @foreach (var content in weeklyMaintenance)
+                                                {
+                                                    <td class="border border-dark text-center">@(contents.Contains(content.Key) ? "Y/" + GetKeyFromValue(operatorDic, item.Operator) : "N")</td>
+                                                }
+                                                @foreach (var content in monthlyMaintenance)
+                                                {
+                                                    <td class="border border-dark text-center">@(contents.Contains(content.Key) ? "Y/" + GetKeyFromValue(operatorDic, item.Operator) : "N")</td>
+                                                }
+                                                @foreach (var content in quarterlyMaintenance)
+                                                {
+                                                    <td class="border border-dark text-center">@(contents.Contains(content.Key) ? "Y/" + GetKeyFromValue(operatorDic, item.Operator) : "N")</td>
+                                                }
+                                                @foreach (var content in annualMaintenance)
+                                                {
+                                                    <td class="border border-dark text-center">@(contents.Contains(content.Key) ? "Y/" + GetKeyFromValue(operatorDic, item.Operator) : "N")</td>
+                                                }
+                                                <td class="border border-dark text-center text-break">
+                                                    @if (item.Type == temporary)
+                                                    {
+                                                        var name = GetKeyFromValue(operatorDic, item.Operator);
+                                                        @(item.Content + "/" + name);
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
                         }
                     }
                 </div>
