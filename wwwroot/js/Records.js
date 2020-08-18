@@ -67,8 +67,14 @@ $(document).ready(function () {
         $('input:checkbox').prop("checked", false);
         $('input:checkbox').prop("disabled", true);
         var type = e.target.value;
-        $(`input:checkbox.${type}`).prop('disabled', false);
-        $(`input:checkbox.${type}`).prop('checked', true);
+        if (type == "临时维护") {
+            $("textarea#MaintenanceRecord_Content").focus();
+        }
+        else {
+            $(`input:checkbox.${type}`).prop('disabled', false);
+            $(`input:checkbox.${type}`).prop('checked', true);
+        }
+
     });
 
     //    $("input:radio").on("click", function (e) {
