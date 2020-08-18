@@ -87,7 +87,29 @@ body {*/
     body {
         color: #000;
         background: white;
-        zoom: 40%;
-        font-size: 8px;
+        zoom: 50%;
+        font-size: 18pt;
+    }
+
+    h5 {
+        font-size: 22pt;
+    }
+
+    table {
+        page-break-inside: auto;
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto;
+    }
+
+    thead {
+        display: table-header-group;
+        font-size: 20pt;
+    }
+
+    tfoot {
+        display: table-footer-group;
     }
 }
