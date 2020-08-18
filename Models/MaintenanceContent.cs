@@ -13,8 +13,12 @@ namespace EquipmentManagementSystem.Models
         public string Type { get; set; }
 
         [Display(Name = "维护内容")]
-        [StringLength(50)]
+        [StringLength(100)]
         public string Text { get; set; }
+
+        [Display(Name = "英文翻译")]
+        [StringLength(100)]
+        public string Translation { get; set; }
 
         [Display(Name = "维护周期(天)")]
         public int Cycle { get; set; }
