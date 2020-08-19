@@ -75,7 +75,7 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
         public IList<UsageRecord> UsageRecords { get; set; }
 
         public IList<MaintenanceRecord> MaintenanceRecords { get; set; }
-        public Dictionary<string, Dictionary<string, int>> MaintenanceContentAndCycleOfType;
+        public Dictionary<string, Dictionary<string, string>> MaintenanceContentOfType;
 
         public IList<MalfunctionWorkOrder> MalfunctionWorkOrders { get; set; }
 
@@ -179,18 +179,18 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
                 var targetPlatformInfo = _context.MaintenanceContents.Where(m => m.InstrumentPlatform == InstrumentPlatform).ToList();
                 if (targetPlatformInfo != null)
                 {
-                    MaintenanceContentAndCycleOfType = new Dictionary<string, Dictionary<string, int>>();
+                    MaintenanceContentOfType = new Dictionary<string, Dictionary<string, string>>();
                     foreach (var item in targetPlatformInfo)
                     {
                         var type = item.Type;
                         var content = item.Text;
-                        var cycle = item.Cycle;
+                        var translate = item.Translation;
 
-                        if (!MaintenanceContentAndCycleOfType.ContainsKey(type))
+                        if (!MaintenanceContentOfType.ContainsKey(type))
                         {
-                            MaintenanceContentAndCycleOfType.Add(type, new Dictionary<string, int>());
+                            MaintenanceContentOfType.Add(type, new Dictionary<string, string>());
                         }
-                        MaintenanceContentAndCycleOfType[type].Add(content, cycle);
+                        MaintenanceContentOfType[type].Add(content, translate);
                     }
                 }
             }
