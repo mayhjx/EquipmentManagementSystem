@@ -32,3 +32,5 @@ EquipmentContext中仪器和故障部分分开
 Tips:
 Git bash: $git reset --soft HEAD~1
 Usage: Undo the most recent commit while keeping the changes made in that commit to staging.
+
+https://www.smashingmagazine.com/2015/01/designing-for-print-with-css/
