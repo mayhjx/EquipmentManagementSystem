@@ -82,9 +82,10 @@
                                 <div class="form-check mt-2">
                                     <input type="radio" name="MaintenanceType" value="临时维护" id="Temporarily" class="form-check-input" />
                                     <label for="Temporarily" class="form-check-label text-bold">临时维护</label>
-                                    <div class="form-group" id="TemporarilyContent" hidden>
-                                        <textarea asp-for="MaintenanceRecord.Content" class="form-control" rows="3"></textarea>
-                                        <span asp-validation-for="MaintenanceRecord.Content" class="text-danger"></span>
+
+                                    <div class="form-group pl-3" id="otherContent" hidden>
+                                        <label for="other">其他：</label>
+                                        <textarea id="other" name="otherMaintenanceContent" class="form-control" rows="3"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -116,8 +117,15 @@
     <script>
         $(document).ready(function () {
             var instrumentId = $('#instrumentId').val();
-            var selectedContents = @Json.Serialize(Model.MaintenanceRecord.Content?.Split(", " , StringSplitOptions.RemoveEmptyEntries));
             var targetType = @Json.Serialize(Model.MaintenanceRecord.Type);
+            var selectedContents = @Json.Serialize(Model.MaintenanceRecord.Content?.Split(", " , StringSplitOptions.RemoveEmptyEntries));
+
+            // 获取其他维护内容
+            var lastContent = selectedContents[selectedContents.length - 1];
+            var otherContent;
+            if (lastContent.search(/其他/) >= 0) {
+                otherContent = lastContent.split("其他：")[1];
+            }
 
             getMaintenanceContext(instrumentId);
             // 等待getMaintenanceContext的getJson方法完成后只选中目标维护内容
@@ -129,8 +137,8 @@
                     }
                 });
             });
-            if (targetType != "临时维护") {
-                $("textarea#MaintenanceRecord_Content").val("");
+            if (targetType == "临时维护") {
+                $("textarea#other").val(otherContent);
             }
             $(`input:radio[value='${targetType}']`).prop('checked', true);
         });

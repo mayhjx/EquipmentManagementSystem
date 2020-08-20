@@ -68,12 +68,11 @@ $(document).ready(function () {
         $('input:checkbox').prop("disabled", true);
         var type = e.target.value;
         if (type == "临时维护") {
-            $("textarea#MaintenanceRecord_Content").focus();
+            $("textarea#other").focus();
         }
-        else {
-            $(`input:checkbox.${type}`).prop('disabled', false);
-            $(`input:checkbox.${type}`).prop('checked', true);
-        }
+        $(`input:checkbox.${type}`).prop('disabled', false);
+        $(`input:checkbox.${type}`).prop('checked', true);
+
 
     });
 
@@ -83,10 +82,10 @@ $(document).ready(function () {
     //        // 删除已生成的维护内容选项
     //        $("input:checkbox").parent().remove();
     //        // 隐藏临时维护内容输入框
-    //        $("div#TemporarilyContent").attr("hidden", "hidden");
+    //        $("div#otherContent").attr("hidden", "hidden");
 
     //        if (type == "临时维护") {
-    //            $("div#TemporarilyContent").removeAttr("hidden");
+    //            $("div#otherContent").removeAttr("hidden");
     //        }
     //        else {
     //            $.getJSON(`?handler=MaintenanceContents&instrument=${instrument}&maintenanceType=${type}`, (data) => {
@@ -113,14 +112,23 @@ function getMaintenanceContext(instrumentId) {
     $("input:checkbox").parent().remove();
     $.getJSON(`?handler=MaintenanceContents&instrument=${instrumentId}&maintenanceType=""`, (data) => {
         if (data.length > 0) {
+            var content;
             console.log("获取维护内容成功!");
             $.each(data, function (i, item) {
-                var html = `<div class="form-check">
-                                <input id="Content-${i}" class="${item.type}" type="checkbox" name="MaintenanceContent" value="${item.text}" disabled />
+                content = `<div class="form-check">
+                                <input id="Content-${i}" class="${item.type}" type="checkbox" name="maintenanceContent" value="${item.text}" disabled />
                                 <label class="form-check-label" for="Content-${i}">${item.text}</label></div>`;
-                $(`input:radio[value='${item.type}']`).parent().after(html);
+                $(`input:radio[value='${item.type}']`).parent().after(content);
             });
-            $("div#TemporarilyContent").removeAttr("hidden");
+            AddOtherTemporary()
         }
     });
+}
+
+// 将临时维护的其他输入框移动到预设选项的后面
+function AddOtherTemporary() {
+    var temporary = $('input:radio[value="临时维护"]');
+    lastItem = temporary.parent().siblings().last().parent();
+    $("div#otherContent").appendTo(lastItem);
+    $("div#otherContent").removeAttr("hidden");
 }

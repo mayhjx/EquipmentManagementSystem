@@ -67,7 +67,7 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
 
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync(string maintenanceType, string[] maintenanceContent)
+        public async Task<IActionResult> OnPostAsync(string maintenanceType, string[] maintenanceContent, string otherMaintenanceContent)
         {
             if (!ModelState.IsValid)
             {
@@ -84,9 +84,15 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
 
             MaintenanceRecord.ProjectId = _context.Projects.FirstOrDefaultAsync(p => p.Name == MaintenanceRecord.ProjectName).Result.Id;
             MaintenanceRecord.Type = maintenanceType;
-            if (maintenanceType != "临时维护")
+
+            if (maintenanceContent.Length > 0)
             {
                 MaintenanceRecord.Content = string.Join(", ", maintenanceContent);
+            }
+
+            if (maintenanceType == "临时维护" && otherMaintenanceContent != null)
+            {
+                MaintenanceRecord.Content += $", 其他：{otherMaintenanceContent}";
             }
 
             _context.MaintenanceRecords.Add(MaintenanceRecord);

@@ -62,7 +62,7 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
             return result;
         }
 
-        public async Task<IActionResult> OnPostAsync(int id, string maintenanceType, string[] maintenanceContent)
+        public async Task<IActionResult> OnPostAsync(int id, string maintenanceType, string[] maintenanceContent, string otherMaintenanceContent)
         {
             if (!ModelState.IsValid)
             {
@@ -89,10 +89,17 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
                 i => i.BeginTime, i => i.EndTime, i => i.Operator, i => i.Type, i => i.Content))
             {
                 maintenanceRecordToUpdate.Type = maintenanceType;
-                if (maintenanceType != "临时维护")
+
+                if (maintenanceContent.Length > 0)
                 {
                     maintenanceRecordToUpdate.Content = string.Join(", ", maintenanceContent);
                 }
+
+                if (maintenanceType == "临时维护" && otherMaintenanceContent != null)
+                {
+                    maintenanceRecordToUpdate.Content += $", 其他：{otherMaintenanceContent}";
+                }
+
                 await _context.SaveChangesAsync();
                 return RedirectToPage("../Index");
             }
