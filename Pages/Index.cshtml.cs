@@ -66,7 +66,14 @@ namespace EquipmentManagementSystem.Pages
                 {
                     maintenanceCycleOfPlatform.Add(platForm, new Dictionary<string, int>());
                 }
-                maintenanceCycleOfPlatform[platForm].Add(content, cycle);
+                if (!maintenanceCycleOfPlatform[platForm].ContainsKey(content))
+                {
+                    maintenanceCycleOfPlatform[platForm].Add(content, cycle);
+                }
+                else
+                {
+                    maintenanceCycleOfPlatform[platForm].Add(content + "_1", cycle);
+                }
             }
 
             foreach (var item in _equipmentContext.MaintenanceContents)
@@ -79,7 +86,15 @@ namespace EquipmentManagementSystem.Pages
                 {
                     maintenanceRemindTimeOfPlatform.Add(platForm, new Dictionary<string, int>());
                 }
-                maintenanceRemindTimeOfPlatform[platForm].Add(content, remindTime);
+                if (!maintenanceRemindTimeOfPlatform[platForm].ContainsKey(content))
+                {
+                    maintenanceRemindTimeOfPlatform[platForm].Add(content, remindTime);
+                }
+                else
+                {
+                    maintenanceRemindTimeOfPlatform[platForm].Add(content + "_1", remindTime);
+
+                }
             }
 
             // 将合并的维护内容拆分成一条条记录
