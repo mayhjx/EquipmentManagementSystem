@@ -70,27 +70,27 @@
 
 @if (Model.UsageRecords != null)
 {
-<div class="card card-primary card-outline card-outline-tabs">
-    <div class="card-header d-print-none p-0 border-bottom-0">
-        <ul class="nav nav-tabs nav-justified">
-            <li class="pt-2 px-3">
-                <h3 class="card-title">查询结果</h3>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link " href="#data-chart" data-toggle="pill" role="tab">使用时长柱状图</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#data" data-toggle="pill" role="tab">使用记录</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#usage-datagrid" data-toggle="pill" role="tab">使用记录表</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active" href="#maintenance-datagrid" data-toggle="pill" role="tab">维护记录表</a>
-            </li>
-        </ul>
-    </div>
-    @{
+    <div class="card card-primary card-outline card-outline-tabs">
+        <div class="card-header d-print-none p-0 border-bottom-0">
+            <ul class="nav nav-tabs nav-justified">
+                <li class="pt-2 px-3">
+                    <h3 class="card-title">查询结果</h3>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="#data-chart" data-toggle="pill" role="tab">使用时长柱状图</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#data" data-toggle="pill" role="tab">使用记录</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#usage-datagrid" data-toggle="pill" role="tab">使用记录表</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#maintenance-datagrid" data-toggle="pill" role="tab">维护记录表</a>
+                </li>
+            </ul>
+        </div>
+        @{
             void AddKeyValueToDic(Dictionary<char, string> dic, string value)
             {
                 if (value != null && !dic.ContainsValue(value))
@@ -115,144 +115,144 @@
                 }
                 return key;
             }
-    }
-    <div class="card-body">
-        <div class="tab-content p-0">
-            @*使用时长直方图*@
-            <div class="chart tab-pane " id="data-chart" style="position: relative;">
-                <div class="chartjs-size-monitor">
-                    <div class="chartjs-size-monitor-expand"><div class=""></div></div>
-                    <div class="chartjs-size-monitor-shrink"><div class=""></div></div>
+        }
+        <div class="card-body">
+            <div class="tab-content p-0">
+                @*使用时长直方图*@
+                <div class="chart tab-pane " id="data-chart" style="position: relative;">
+                    <div class="chartjs-size-monitor">
+                        <div class="chartjs-size-monitor-expand"><div class=""></div></div>
+                        <div class="chartjs-size-monitor-shrink"><div class=""></div></div>
+                    </div>
                 </div>
-            </div>
-            @*使用记录*@
-            <div class="tab-pane " id="data" style="position: relative; ">
-                <div class="table-responsive">
-                    <table id="export" class="table table-hover text-nowrap">
-                        <thead>
-                            <tr>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].InstrumentId)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].ProjectName)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].ColumnNumber)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].ColumnPressure)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].ColumnTwoNumber)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].ColumnTwoPressure)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].PressureUnit)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].BeginTimeOfTest)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].SampleNumber)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].TestNumber)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].VacuumDegree)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].VacuumDegreeUnit)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].BlankSignal)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].TestSignal)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].EndTime)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].Creator)
-                                </th>
-                                <th>检测时长(h)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model.UsageRecords)
+                @*使用记录*@
+                <div class="tab-pane " id="data" style="position: relative; ">
+                    <div class="table-responsive">
+                        <table id="export" class="table table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageRecords[0].InstrumentId)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageRecords[0].ProjectName)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageRecords[0].ColumnNumber)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageRecords[0].ColumnPressure)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageRecords[0].ColumnTwoNumber)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageRecords[0].ColumnTwoPressure)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageRecords[0].PressureUnit)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageRecords[0].BeginTimeOfTest)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageRecords[0].SampleNumber)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageRecords[0].TestNumber)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageRecords[0].VacuumDegree)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageRecords[0].VacuumDegreeUnit)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageRecords[0].BlankSignal)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageRecords[0].TestSignal)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageRecords[0].EndTime)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UsageRecords[0].Creator)
+                                    </th>
+                                    <th>检测时长(h)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.UsageRecords)
                                 {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.InstrumentId)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ProjectName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ColumnNumber)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ColumnPressure)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ColumnTwoNumber)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ColumnTwoPressure)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.PressureUnit)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.BeginTimeOfTest)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.SampleNumber)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.TestNumber)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.VacuumDegree)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.VacuumDegreeUnit)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.BlankSignal)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.TestSignal)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.EndTime)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Creator)
-                                </td>
-                                <td class="time">
-                                    @((item.EndTime - item.BeginTimeOfTest).GetValueOrDefault().TotalHours.ToString("f1"))
-                                </td>
-                            </tr>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.InstrumentId)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ProjectName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ColumnNumber)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ColumnPressure)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ColumnTwoNumber)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ColumnTwoPressure)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.PressureUnit)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.BeginTimeOfTest)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.SampleNumber)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TestNumber)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.VacuumDegree)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.VacuumDegreeUnit)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.BlankSignal)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TestSignal)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.EndTime)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Creator)
+                                        </td>
+                                        <td class="time">
+                                            @((item.EndTime - item.BeginTimeOfTest).GetValueOrDefault().TotalHours.ToString("f1"))
+                                        </td>
+                                    </tr>
                                 }
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td class="text-bold">总时长(h)</td>
-                                <td id="total" class="text-bold"></td>
-                            </tr>
-                        </tfoot>
-                    </table>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td class="text-bold">总时长(h)</td>
+                                    <td id="total" class="text-bold"></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
                 </div>
-            </div>
-            @*使用记录表*@
-            <div class="tab-pane" id="usage-datagrid" style="position: relative; ">
+                @*使用记录表*@
+                <div class="tab-pane" id="usage-datagrid" style="position: relative; ">
 
-                @if (Model.Search.Instrument != null && Model.UsageRecords != null)
+                    @if (Model.Search.Instrument != null && Model.UsageRecords != null)
                     {
                         var project = new Dictionary<char, string>();
                         var columnType = new Dictionary<char, string>();
@@ -280,179 +280,179 @@
                             carrierType = Model.UsageRecords.Last().Instrument.ID.Contains("YZ") ? "Liquid" : "Gas";
                         }
 
-                <div class="row no-print">
-                    <div class="col-xl-11 col-12">
-                        <p>打印说明：如果打印预览时发现因表格跨页导致格式有问题的话，建议将查询的时间范围缩短后分多次打印。</p>
-                    </div>
-                    <div class="col-xl-1 col-12">
-                        <button id="exportUsageRecord" class="btn btn-outline-primary btn-block" style="margin-right:10px;" type="button" title="建议在Google Chrome浏览器中进行打印">
-                            <i class="fa fa-print"></i> 打印预览
-                        </button>
-                    </div>
-                </div>
-                <div class="table-responsive-lg">
-                    <table id="usageDataGrid" class="table table-sm table-borderless">
-                        <thead>
-                            <tr>
-                                <th colspan="11" class="text-center">
-                                    <h5>色谱质谱联用设备使用通用记录表</h5>
-                                    <h5>UHPLC, LC-MS/MS, GC-MS Use Form</h5>
-                                </th>
-                            </tr>
-                            <tr>
-                                <td colspan="6" class="text-left">仪器编号 No.：@(Model.Search?.Instrument ?? "_____________")&nbsp; 仪器型号 Model：@(Model.InstrumentModel?? "_____________")</td>
-                                <td colspan="5" class="text-right">表号 Form：KM-SOP0314. ___ .01</td>
-                            </tr>
-                            <tr class="">
-                                <th class="border border-dark text-center align-middle">
-                                    开始时间<br />
-                                    Startup Time
-                                </th>
-                                <th class="border border-dark text-center align-middle">
-                                    结束时间<br />
-                                    Shutdown Time
-                                </th>
-                                <th class="border border-dark text-center align-middle">
-                                    检测项目<br />
-                                    Test Item
-                                </th>
-                                <th class="border border-dark text-center align-middle">
-                                    <i class="far fa-@(carrierType == "Liquid" ? "check-" : "")square" aria-hidden="true"></i>
-                                    流动相<br />
-                                    Liquid Phase<br />
-                                    <i class="far fa-@(carrierType == "Gas" ? "check-" : "")square" aria-hidden="true"></i>
-                                    载气<br />
-                                    Carrier Gas
-                                </th>
-                                <th class="border border-dark text-center align-middle text-break">
-                                    色谱柱编号/类型<br />
-                                    Column Number/Type
-                                </th>
-                                <th class="border border-dark text-center align-middle">
-                                    初始压力<br />
-                                    Pressure<br />
-                                    <i class="far fa-@(pressureUnit == "Mpa" ? "check-" : "")square" aria-hidden="true"></i> Mpa
-                                    <i class="far fa-@(pressureUnit == "Bar" ? "check-" : "")square" aria-hidden="true"></i> Bar
-                                    <i class="far fa-@(pressureUnit == "Psi" ? "check-" : "")square" aria-hidden="true"></i> Psi
-                                </th>
-                                <th class="border border-dark text-center align-middle">
-                                    真空度<br />
-                                    Vacuum<br />
-                                    <i class="far fa-@(vacuumUnit == "torr" ? "check-" : "")square" aria-hidden="true"></i> torr
-                                    <i class="far fa-@(vacuumUnit == "Mpa" ? "check-" : "")square" aria-hidden="true"></i> Mpa
-                                </th>
-                                <th class="border border-dark text-center align-middle">
-                                    空白信号<br />
-                                    Blank Signal
-                                </th>
-                                <th class="border border-dark text-center align-middle">
-                                    Test信号<br />
-                                    Test Signal
-                                </th>
-                                <th class="border border-dark text-center align-middle">
-                                    操作者<br />
-                                    Operator
-                                </th>
-                                <th class="border border-dark text-center align-middle">
-                                    备注<br />
-                                    Remark
-                                </th>
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr>
-                                <td colspan="11" class="border border-dark">
-                                    说明 Description：
-                                    <ol class="m-0">
-                                        <li>
-                                            检测项目 Test Item：@string.Join(" ", project).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
-                                        </li>
-                                        <li>
-                                            流动相/载气 Liquid Phase/Carrier Gas：@string.Join(" ", carrier).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
-                                        </li>
-                                        <li>
-                                            色谱柱类型 Column Type：@string.Join(" ", columnType).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
-                                        </li>
-                                        <li>
-                                            备注 Remark：@string.Join(" ", other).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
-                                        </li>
-                                    </ol>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="11" class="text-center border border-dark">
-                                    使用回顾
-                                </td>
-                            </tr>
-                            <tr class="text-center">
-                                <td class="border border-dark text-nowrap">
-                                    评估意见<br />
-                                    Comment
-                                </td>
-                                <td colspan="4" class="border border-dark"></td>
-                                <td class="border border-dark text-nowrap">
-                                    评估人/日期<br />
-                                    Evaluator/Date
-                                </td>
-                                <td colspan="2" class="border border-dark"></td>
-                                <td class="border border-dark text-nowrap">
-                                    审批人/日期<br />
-                                    Approver/Date
-                                </td>
-                                <td colspan="2" class="border border-dark"></td>
-                            </tr>
-                        </tfoot>
-                        <tbody class="text-center">
-                            @foreach (var item in Model.UsageRecords)
+                        <div class="row no-print">
+                            <div class="col-xl-11 col-12">
+                                <p>打印说明：如果打印预览时发现因表格跨页导致格式有问题的话，建议将查询的时间范围缩短后分多次打印。</p>
+                            </div>
+                            <div class="col-xl-1 col-12">
+                                <button id="exportUsageRecord" class="btn btn-outline-primary btn-block" style="margin-right:10px;" type="button" title="建议在Google Chrome浏览器中进行打印">
+                                    <i class="fa fa-print"></i> 打印预览
+                                </button>
+                            </div>
+                        </div>
+                        <div class="table-responsive-lg">
+                            <table id="usageDataGrid" class="table table-sm table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th colspan="11" class="text-center">
+                                            <h5>色谱质谱联用设备使用通用记录表</h5>
+                                            <h5>UHPLC, LC-MS/MS, GC-MS Use Form</h5>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6" class="text-left">仪器编号 No.：@(Model.Search?.Instrument ?? "_____________")&nbsp; 仪器型号 Model：@(Model.InstrumentModel?? "_____________")</td>
+                                        <td colspan="5" class="text-right">表号 Form：KM-SOP0314. ___ .01</td>
+                                    </tr>
+                                    <tr class="">
+                                        <th class="border border-dark text-center align-middle">
+                                            开始时间<br />
+                                            Startup Time
+                                        </th>
+                                        <th class="border border-dark text-center align-middle">
+                                            结束时间<br />
+                                            Shutdown Time
+                                        </th>
+                                        <th class="border border-dark text-center align-middle">
+                                            检测项目<br />
+                                            Test Item
+                                        </th>
+                                        <th class="border border-dark text-center align-middle">
+                                            <i class="far fa-@(carrierType == "Liquid" ? "check-" : "")square" aria-hidden="true"></i>
+                                            流动相<br />
+                                            Liquid Phase<br />
+                                            <i class="far fa-@(carrierType == "Gas" ? "check-" : "")square" aria-hidden="true"></i>
+                                            载气<br />
+                                            Carrier Gas
+                                        </th>
+                                        <th class="border border-dark text-center align-middle text-break">
+                                            色谱柱编号/类型<br />
+                                            Column Number/Type
+                                        </th>
+                                        <th class="border border-dark text-center align-middle">
+                                            初始压力<br />
+                                            Pressure<br />
+                                            <i class="far fa-@(pressureUnit == "Mpa" ? "check-" : "")square" aria-hidden="true"></i> Mpa
+                                            <i class="far fa-@(pressureUnit == "Bar" ? "check-" : "")square" aria-hidden="true"></i> Bar
+                                            <i class="far fa-@(pressureUnit == "Psi" ? "check-" : "")square" aria-hidden="true"></i> Psi
+                                        </th>
+                                        <th class="border border-dark text-center align-middle">
+                                            真空度<br />
+                                            Vacuum<br />
+                                            <i class="far fa-@(vacuumUnit == "torr" ? "check-" : "")square" aria-hidden="true"></i> torr
+                                            <i class="far fa-@(vacuumUnit == "Mpa" ? "check-" : "")square" aria-hidden="true"></i> Mpa
+                                        </th>
+                                        <th class="border border-dark text-center align-middle">
+                                            空白信号<br />
+                                            Blank Signal
+                                        </th>
+                                        <th class="border border-dark text-center align-middle">
+                                            Test信号<br />
+                                            Test Signal
+                                        </th>
+                                        <th class="border border-dark text-center align-middle">
+                                            操作者<br />
+                                            Operator
+                                        </th>
+                                        <th class="border border-dark text-center align-middle">
+                                            备注<br />
+                                            Remark
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="11" class="border border-dark">
+                                            说明 Description：
+                                            <ol class="m-0">
+                                                <li>
+                                                    检测项目 Test Item：@string.Join(" ", project).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
+                                                </li>
+                                                <li>
+                                                    流动相/载气 Liquid Phase/Carrier Gas：@string.Join(" ", carrier).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
+                                                </li>
+                                                <li>
+                                                    色谱柱类型 Column Type：@string.Join(" ", columnType).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
+                                                </li>
+                                                <li>
+                                                    备注 Remark：@string.Join(" ", other).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
+                                                </li>
+                                            </ol>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="11" class="text-center border border-dark">
+                                            使用回顾
+                                        </td>
+                                    </tr>
+                                    <tr class="text-center">
+                                        <td class="border border-dark text-nowrap">
+                                            评估意见<br />
+                                            Comment
+                                        </td>
+                                        <td colspan="4" class="border border-dark"></td>
+                                        <td class="border border-dark text-nowrap">
+                                            评估人/日期<br />
+                                            Evaluator/Date
+                                        </td>
+                                        <td colspan="2" class="border border-dark"></td>
+                                        <td class="border border-dark text-nowrap">
+                                            审批人/日期<br />
+                                            Approver/Date
+                                        </td>
+                                        <td colspan="2" class="border border-dark"></td>
+                                    </tr>
+                                </tfoot>
+                                <tbody class="text-center">
+                                    @foreach (var item in Model.UsageRecords)
                                     {
-                            <tr>
-                                <td class="border border-dark align-middle text-nowrap">
-                                    @(item.BeginTimeOfTest.GetValueOrDefault() == DateTime.MinValue ? "": item.BeginTimeOfTest.GetValueOrDefault().ToString("yyyyMMdd HH:mm"))
-                                </td>
-                                <td class="border border-dark align-middle text-nowrap">
-                                    @(item.EndTime.GetValueOrDefault() == DateTime.MinValue ? "": item.EndTime.GetValueOrDefault().ToString("yyyyMMdd HH:mm"))
-                                </td>
-                                <td class="border border-dark align-middle text-break">@GetKeyFromValue(project, item.ProjectName)</td>
-                                <td class="border border-dark align-middle">@GetKeyFromValue(carrier, item.Project.Carrier)</td>
-                                <td class="border border-dark align-middle text-nowrap">
-                                    @(item.ColumnTwoNumber != null ? "S1: " + item.ColumnNumber : item.ColumnNumber)
-                                    @(item.ColumnTwoNumber != null ? " | S2: " + item.ColumnTwoNumber : "")
-                                    / @GetKeyFromValue(columnType, item.Project.ColumnType)
-                                </td>
-                                <td class="border border-dark align-middle text-nowrap">
-                                    @(item.ColumnTwoPressure != null ? "S1: " + item.ColumnPressure : item.ColumnPressure.ToString())
-                                    @(item.ColumnTwoPressure != null ? " | S2: " + item.ColumnTwoPressure : "")
-                                </td>
-                                <td class="border border-dark align-middle">@(item.VacuumDegree != null ? item.VacuumDegree : "N/A")</td>
-                                <td class="border border-dark align-middle">@item.BlankSignal</td>
-                                <td class="border border-dark align-middle">@item.TestSignal</td>
-                                <td class="border border-dark align-middle text-nowrap">@item.Creator</td>
-                                <td class="border border-dark align-middle">@GetKeyFromValue(other, item.Remark)</td>
-                            </tr>
+                                        <tr>
+                                            <td class="border border-dark align-middle text-nowrap">
+                                                @(item.BeginTimeOfTest.GetValueOrDefault() == DateTime.MinValue ? "": item.BeginTimeOfTest.GetValueOrDefault().ToString("yyyyMMdd HH:mm"))
+                                            </td>
+                                            <td class="border border-dark align-middle text-nowrap">
+                                                @(item.EndTime.GetValueOrDefault() == DateTime.MinValue ? "": item.EndTime.GetValueOrDefault().ToString("yyyyMMdd HH:mm"))
+                                            </td>
+                                            <td class="border border-dark align-middle text-break">@GetKeyFromValue(project, item.ProjectName)</td>
+                                            <td class="border border-dark align-middle">@GetKeyFromValue(carrier, item.Project.Carrier)</td>
+                                            <td class="border border-dark align-middle text-nowrap">
+                                                @(item.ColumnTwoNumber != null ? "S1: " + item.ColumnNumber : item.ColumnNumber)
+                                                @(item.ColumnTwoNumber != null ? " | S2: " + item.ColumnTwoNumber : "")
+                                                / @GetKeyFromValue(columnType, item.Project.ColumnType)
+                                            </td>
+                                            <td class="border border-dark align-middle text-nowrap">
+                                                @(item.ColumnTwoPressure != null ? "S1: " + item.ColumnPressure : item.ColumnPressure.ToString())
+                                                @(item.ColumnTwoPressure != null ? " | S2: " + item.ColumnTwoPressure : "")
+                                            </td>
+                                            <td class="border border-dark align-middle">@(item.VacuumDegree != null ? item.VacuumDegree : "N/A")</td>
+                                            <td class="border border-dark align-middle">@item.BlankSignal</td>
+                                            <td class="border border-dark align-middle">@item.TestSignal</td>
+                                            <td class="border border-dark align-middle text-nowrap">@item.Creator</td>
+                                            <td class="border border-dark align-middle">@GetKeyFromValue(other, item.Remark)</td>
+                                        </tr>
                                     }
-                        </tbody>
-                    </table>
-                </div>
+                                </tbody>
+                            </table>
+                        </div>
                     }
                     else
                     {
-                <span>请选择一个设备编号</span>
+                        <span>请选择一个设备编号</span>
                     }
-            </div>
-            @*维护记录表*@
-            <div class="tab-pane active" id="maintenance-datagrid" style="position: relative; ">
-                @if (Model.Search.Instrument != null && Model.MaintenanceRecords != null)
-                    {
-                <div class="row no-print">
-                    <div class="col-xl-11 col-12">
-                        <p>打印说明：如果打印预览时发现因表格跨页导致格式有问题的话，建议将查询的时间范围缩短后分多次打印。</p>
-                    </div>
-                    <div class="col-xl-1 col-12">
-                        <button id="exportMaintenanceRecord" class="btn btn-outline-primary btn-block" style="margin-right:10px;" type="button" title="建议在Google Chrome浏览器中进行打印">
-                            <i class="fa fa-print"></i> 打印预览
-                        </button>
-                    </div>
                 </div>
+                @*维护记录表*@
+                <div class="tab-pane active" id="maintenance-datagrid" style="position: relative; ">
+                    @if (Model.Search.Instrument != null && Model.MaintenanceRecords != null)
+                    {
+                        <div class="row no-print">
+                            <div class="col-xl-11 col-12">
+                                <p>打印说明：如果打印预览时发现因表格跨页导致格式有问题的话，建议将查询的时间范围缩短后分多次打印。</p>
+                            </div>
+                            <div class="col-xl-1 col-12">
+                                <button id="exportMaintenanceRecord" class="btn btn-outline-primary btn-block" style="margin-right:10px;" type="button" title="建议在Google Chrome浏览器中进行打印">
+                                    <i class="fa fa-print"></i> 打印预览
+                                </button>
+                            </div>
+                        </div>
                         var dailyMaintenanceContent = Model.MaintenanceContentOfType.GetValueOrDefault("日常维护");
                         var weeklyMaintenanceContent = Model.MaintenanceContentOfType.GetValueOrDefault("周维护");
                         var monthlyMaintenanceContent = Model.MaintenanceContentOfType.GetValueOrDefault("月度维护");
@@ -465,190 +465,192 @@
 
                         if (dailyMaintenanceContent == null)
                         {
-                <h6>未设置日常维护内容</h6>
+                            <h6>未设置日常维护内容</h6>
                         }
                         if (weeklyMaintenanceContent == null)
                         {
-                <h6>未设置周维护内容</h6>
+                            <h6>未设置周维护内容</h6>
                         }
                         if (monthlyMaintenanceContent == null)
                         {
-                <h6>未设置月度维护内容</h6>
+                            <h6>未设置月度维护内容</h6>
                         }
                         if (quarterlyMaintenanceContent == null)
                         {
-                <h6>未设置季度维护内容</h6>
+                            <h6>未设置季度维护内容</h6>
                         }
                         if (annualMaintenanceContent == null)
                         {
-                <h6>未设置年度维护内容</h6>
+                            <h6>未设置年度维护内容</h6>
                         }
 
                         if (dailyMaintenanceContent != null && weeklyMaintenanceContent != null && monthlyMaintenanceContent != null && quarterlyMaintenanceContent != null && annualMaintenanceContent != null)
                         {
                             var days = (Model.Search.EndTime - Model.Search.BeginTime).Days + 1;
                             var totalColSpan = days + 2;
-                <div class="table-responsive">
-                    <table id="maintenanceDataGrid" class="table table-sm table-borderless">
-                        <thead>
-                            <tr>
-                                <th colspan="@totalColSpan" class="text-center">
-                                    <h5>
-                                        @(Model.InstrumentPlatform == "LCMS" ? "液相色谱串联质谱联用仪维护记录表" :
+                            <div class="table-responsive">
+                                <table id="maintenanceDataGrid" class="table table-sm table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="@totalColSpan" class="text-center">
+                                                <h5>
+                                                    @(Model.InstrumentPlatform == "LCMS" ? "液相色谱串联质谱联用仪维护记录表" :
                                                       Model.InstrumentPlatform == "GCMS" ? "气质联用仪维护记录表" :
                                                       Model.InstrumentPlatform == "UPLC" ? "超高效液相色谱仪维护记录表" : "_______________维护记录表")
-                                    </h5>
-                                    <h5>
-                                        @(Model.InstrumentPlatform == "LCMS" ? "LC-MS/MS Maintenance Form" :
+                                                </h5>
+                                                <h5>
+                                                    @(Model.InstrumentPlatform == "LCMS" ? "LC-MS/MS Maintenance Form" :
                                                       Model.InstrumentPlatform == "GCMS" ? "GC-MS Maintenance Form" :
                                                       Model.InstrumentPlatform == "UPLC" ? "UHPLC Maintenance Form" : "_______________Maintenance Form")
-                                    </h5>
-                                </th>
-                            </tr>
-                            <tr>
-                                <td colspan="@totalColSpan">
-                                    <div class="row">
-                                        <span class="col-4 text-left">@Model.Search.BeginTime.ToString(@"yyyy 年 \Year MM 月 \M\on\t\h")</span>
-                                        <span class="col-4 text-center">仪器编号 No.：@(Model.Search.Instrument)</span>
-                                        <span class="col-4 text-right">表号 Form：KM-SOP0314. ___ .02</span>
-                                    </div>
-                                </td>
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr>
-                                <td colspan="@totalColSpan" class="border border-dark">
-                                    备注 Remark：Y：该工作日已完成该项维护；N：经评估，该工作日无需进行该项维护。
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="@totalColSpan" class="border border-dark text-center">
-                                    使用回顾
-                                </td>
-                            </tr>
-                            <tr class="text-nowrap text-center">
-                                <td class="border border-dark">
-                                    评估意见<br />
-                                    Comment
-                                </td>
-                                <td class="border border-dark" colspan="@(totalColSpan - 19)"></td>
-                                <td class="border border-dark" colspan="4">
-                                    评估人/日期<br />
-                                    Evaluator/Date
-                                </td>
-                                <td class="border border-dark" colspan="5"></td>
-                                <td class="border border-dark" colspan="4">
-                                    审批人/日期<br />
-                                    Approver/Date
-                                </td>
-                                <td class="border border-dark" colspan="5"></td>
-                            </tr>
-                        </tfoot>
-                        <tbody>
-                            <tr class="text-center">
-                                <td class="border border-dark"></td>
-                                <td class="border border-dark align-middle">日期 Date</td>
-                                @for (DateTime day = Model.Search.BeginTime; day <= Model.Search.EndTime; day = day.AddDays(1))
+                                                </h5>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="@totalColSpan">
+                                                <div class="row">
+                                                    <span class="col-4 text-left">@Model.Search.BeginTime.ToString(@"yyyy 年 \Year MM 月 \M\on\t\h")</span>
+                                                    <span class="col-4 text-center">仪器编号 No.：@(Model.Search.Instrument)</span>
+                                                    <span class="col-4 text-right">表号 Form：KM-SOP0314. ___ .02</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="@totalColSpan" class="border border-dark">
+                                                备注 Remark：Y：该工作日已完成该项维护；N：经评估，该工作日无需进行该项维护。
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="@totalColSpan" class="border border-dark text-center">
+                                                使用回顾
+                                            </td>
+                                        </tr>
+                                        <tr class="text-nowrap text-center">
+                                            <td class="border border-dark">
+                                                评估意见<br />
+                                                Comment
+                                            </td>
+                                            <td class="border border-dark" colspan="@(totalColSpan - 19)"></td>
+                                            <td class="border border-dark" colspan="4">
+                                                评估人/日期<br />
+                                                Evaluator/Date
+                                            </td>
+                                            <td class="border border-dark" colspan="5"></td>
+                                            <td class="border border-dark" colspan="4">
+                                                审批人/日期<br />
+                                                Approver/Date
+                                            </td>
+                                            <td class="border border-dark" colspan="5"></td>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        <tr class="text-center">
+                                            <td class="border border-dark"></td>
+                                            <td class="border border-dark align-middle">日期 Date</td>
+                                            @for (DateTime day = Model.Search.BeginTime; day <= Model.Search.EndTime; day = day.AddDays(1))
                                             {
-                                <td class="border border-dark align-middle">@day.Day</td>
+                                                <td class="border border-dark align-middle">@day.ToString("dd")</td>
                                             }
-                            </tr>
-                            <tr>
-                                <td class="border border-dark align-middle text-center" rowspan="@(dailyMaintenanceContent.Count + 2)">
-                                    <h6>日常<br />维护<br />Daily</h6>
-                                </td>
-                            </tr>
-                            @foreach (var item in dailyMaintenanceContent)
+                                        </tr>
+                                        <tr>
+                                            <td class="border border-dark align-middle text-center" rowspan="@(dailyMaintenanceContent.Count + 2)">
+                                                <h6>日常<br />维护<br />Daily</h6>
+                                            </td>
+                                        </tr>
+                                        @foreach (var item in dailyMaintenanceContent)
                                         {
                                             var content = item.Key;
                                             var translate = item.Value;
-                            <tr class="text-center">
-                                <td class="border border-dark py-0 text-left text-nowrap">@content<br />@translate</td>
-                                @for (DateTime day = Model.Search.BeginTime; day <= Model.Search.EndTime; day = day.AddDays(1))
+                                            <tr class="text-center">
+                                                <td class="border border-dark py-0 text-left text-nowrap">@content<br />@translate</td>
+                                                @for (DateTime day = Model.Search.BeginTime; day <= Model.Search.EndTime; day = day.AddDays(1))
                                                 {
                                                     if (dailyMaintenanceRecords.Any())
                                                     {
                                                         var contentOfDay = dailyMaintenanceRecords.FirstOrDefault(r => r.BeginTime.GetValueOrDefault().ToShortDateString() == day.ToShortDateString());
-                                <td class="border border-dark align-middle">@(contentOfDay != null && contentOfDay.Content.IndexOf(content) >= 0 ? "Y" : "N")</td>
+                                                        <td class="border border-dark align-middle">@(contentOfDay != null && contentOfDay.Content.IndexOf(content) >= 0 ? "Y" : "N")</td>
                                                     }
                                                     else
                                                     {
-                                <td class="border border-dark"></td>
+                                                        <td class="border border-dark"></td>
                                                     }
                                                 }
-                            </tr>
+                                            </tr>
                                         }
-                            <tr class="text-center">
-                                <td class="border border-dark align-middle text-left">操作者<br />Operator</td>
-                                @for (DateTime day = Model.Search.BeginTime; day <= Model.Search.EndTime; day = day.AddDays(1))
+                                        <tr class="text-center">
+                                            <td class="border border-dark align-middle text-left">操作者<br />Operator</td>
+                                            @for (DateTime day = Model.Search.BeginTime; day <= Model.Search.EndTime; day = day.AddDays(1))
                                             {
                                                 if (dailyMaintenanceRecords.Any())
                                                 {
                                                     var operatorOfDay = dailyMaintenanceRecords.FirstOrDefault(r => r.BeginTime.GetValueOrDefault().ToShortDateString() == day.ToShortDateString());
-                                <td class="border border-dark align-middle text-break">@(operatorOfDay != null ? operatorOfDay.Operator : "/")</td>
+                                                    <td class="border border-dark align-middle text-break">@(operatorOfDay != null ? operatorOfDay.Operator : "/")</td>
                                                 }
                                                 else
                                                 {
-                                <td class="border border-dark"></td>
+                                                    <td class="border border-dark"></td>
                                                 }
                                             }
-                            </tr>
+                                        </tr>
 
-                            <tr>
-                                <td class="border border-dark align-middle text-center" rowspan="@(weeklyMaintenanceContent.Count + 2)">
-                                    <h6>周维护<br />Weekly</h6>
-                                </td>
-                            </tr>
-                            @foreach (var item in weeklyMaintenanceContent)
+                                        <tr>
+                                            <td class="border border-dark align-middle text-center" rowspan="@(weeklyMaintenanceContent.Count + 2)">
+                                                <h6>周维护<br />Weekly</h6>
+                                            </td>
+                                        </tr>
+                                        @foreach (var item in weeklyMaintenanceContent)
                                         {
                                             var content = item.Key;
                                             var translate = item.Value;
-                            <tr class="text-center">
-                                <td class="border border-dark py-0 text-left text-nowrap">@content<br />@translate</td>
-                                @if (weeklyMaintenanceRecords.Any())
+                                            <tr class="text-center">
+                                                <td class="border border-dark py-0 text-left text-nowrap">@content<br />@translate</td>
+                                                @if (weeklyMaintenanceRecords.Any())
                                                 {
-                                                    var colSpan = 31 / weeklyMaintenanceRecords.ToList().Count + 1;
-                                @foreach (var record in weeklyMaintenanceRecords)
+                                                    var colSpan = days / weeklyMaintenanceRecords.ToList().Count + 1;
+                                                    @foreach (var record in weeklyMaintenanceRecords)
                                                     {
-                                <td class="border border-dark align-middle" colspan="@colSpan">
-                                    @(record.Content.IndexOf(content) >= 0 ? "Y" : "N")
-                                </td>
+                                                        <td class="border border-dark align-middle" colspan="@colSpan">
+                                                            @(record.Content.IndexOf(content) >= 0 ? "Y" : "N")
+                                                        </td>
                                                     }
                                                 }
                                                 else
                                                 {
-                                <td class="border border-dark" colspan="8"></td>
-                                <td class="border border-dark" colspan="8"></td>
-                                <td class="border border-dark" colspan="8"></td>
-                                <td class="border border-dark" colspan="8"></td>
+                                                    var colSpan = days / 4 + 1;
+                                                    <td class="border border-dark" colspan="@colSpan"></td>
+                                                    <td class="border border-dark" colspan="@colSpan"></td>
+                                                    <td class="border border-dark" colspan="@colSpan"></td>
+                                                    <td class="border border-dark" colspan="@colSpan"></td>
                                                 }
-                            </tr>
+                                            </tr>
                                         }
-                            <tr class="text-center">
-                                <td class="border border-dark text-left">
-                                    操作者/日期<br />
-                                    Operator/Date
-                                </td>
-                                @if (weeklyMaintenanceRecords.Any())
+                                        <tr class="text-center">
+                                            <td class="border border-dark text-left">
+                                                操作者/日期<br />
+                                                Operator/Date
+                                            </td>
+                                            @if (weeklyMaintenanceRecords.Any())
                                             {
-                                                var colSpan = 31 / weeklyMaintenanceRecords.ToList().Count + 1;
-                                @foreach (var record in weeklyMaintenanceRecords)
+                                                var colSpan = days / weeklyMaintenanceRecords.ToList().Count + 1;
+                                                @foreach (var record in weeklyMaintenanceRecords)
                                                 {
-                                <td class="border border-dark align-middle" colspan="@colSpan">
-                                    @record.Operator/@record.BeginTime.GetValueOrDefault().ToShortDateString()
-                                </td>
+                                                    <td class="border border-dark align-middle" colspan="@colSpan">
+                                                        @record.Operator/@record.BeginTime.GetValueOrDefault().ToShortDateString()
+                                                    </td>
                                                 }
                                             }
                                             else
                                             {
-                                <td class="border border-dark" colspan="8"></td>
-                                <td class="border border-dark" colspan="8"></td>
-                                <td class="border border-dark" colspan="8"></td>
-                                <td class="border border-dark" colspan="8"></td>
+                                                var colSpan = days / 4 + 1;
+                                                <td class="border border-dark" colspan="@colSpan"></td>
+                                                <td class="border border-dark" colspan="@colSpan"></td>
+                                                <td class="border border-dark" colspan="@colSpan"></td>
+                                                <td class="border border-dark" colspan="@colSpan"></td>
                                             }
-                            </tr>
+                                        </tr>
 
-                            @{
+                                        @{
                                             var monthlyMaintenanceRecords = Model.MaintenanceRecords.Where(r => r.Type == "月度维护").ToList();
                                             var quarterlyMaintenanceRecords = Model.MaintenanceRecords.Where(r => r.Type == "季度维护").ToList();
                                             var annualMaintenanceRecords = Model.MaintenanceRecords.Where(r => r.Type == "年度PM维护").ToList();
@@ -658,38 +660,38 @@
                                                                 quarterlyMaintenanceRecords.Count +
                                                                 annualMaintenanceRecords.Count +
                                                                 temporaryMaintenanceRecords.Count;
-                            }
-                            @if (otherRowSpan > 0)
+                                        }
+                                        @if (otherRowSpan > 0)
                                         {
-                            <tr>
-                                <td class="border border-dark align-middle text-center" rowspan="@(otherRowSpan + 1)">
-                                    <h6>其他<br />Other</h6>
-                                </td>
-                            </tr>
-                            @foreach (var record in Model.MaintenanceRecords)
+                                            <tr>
+                                                <td class="border border-dark align-middle text-center" rowspan="@(otherRowSpan + 1)">
+                                                    <h6>其他<br />Other</h6>
+                                                </td>
+                                            </tr>
+                                            @foreach (var record in Model.MaintenanceRecords)
                                             {
                                                 if (record.Type == "月度维护" || record.Type == "季度维护" || record.Type == "年度PM维护" || record.Type == "临时维护")
                                                 {
-                            <tr>
-                                <td class="border border-dark">@(record.Type)内容/操作者/日期<br />Content/Operator/Date</td>
-                                <td class="border border-dark align-middle" colspan="@totalColSpan">@record.Content / @record.Operator / @record.BeginTime.GetValueOrDefault().ToShortDateString()</td>
-                            </tr>
+                                                    <tr>
+                                                        <td class="border border-dark">@(record.Type)内容/操作者/日期<br />Content/Operator/Date</td>
+                                                        <td class="border border-dark align-middle" colspan="@totalColSpan">@record.Content / @record.Operator / @record.BeginTime.GetValueOrDefault().ToShortDateString()</td>
+                                                    </tr>
                                                 }
                                             }
                                         }
-                        </tbody>
-                    </table>
-                </div>
+                                    </tbody>
+                                </table>
+                            </div>
                         }
                     }
                     else
                     {
-                <span>请选择一个设备编号</span>
+                        <span>请选择一个设备编号</span>
                     }
+                </div>
             </div>
         </div>
     </div>
-</div>
 }
 
 
