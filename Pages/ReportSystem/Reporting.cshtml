@@ -679,7 +679,7 @@
                                                 if (record.Type == "月度维护" || record.Type == "季度维护" || record.Type == "年度PM维护" || record.Type == "临时维护")
                                                 {
                                                     <tr>
-                                                        <td class="border border-dark">@(record.Type)内容/操作者/日期<br />Content/Operator/Date</td>
+                                                        <td class="border border-dark text-nowrap align-middle">@(record.Type)内容/操作者/日期<br />Content/Operator/Date</td>
                                                         <td class="border border-dark align-middle" colspan="@columnNumber">@record.Content / @record.Operator / @record.BeginTime.GetValueOrDefault().ToShortDateString()</td>
                                                     </tr>
                                                 }
