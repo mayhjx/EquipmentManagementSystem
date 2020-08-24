@@ -445,7 +445,7 @@
                     {
                         <div class="row no-print">
                             <div class="col-xl-11 col-12">
-                                <p>打印说明：如果打印预览时发现因表格跨页导致格式有问题的话，建议将查询的时间范围缩短后分多次打印。</p>
+                                <p>打印说明：1. 以起始时间的月份生成记录；2. 如果打印预览时发现因表格跨页导致格式有问题的话，建议将查询的时间范围缩短后分多次打印。</p>
                             </div>
                             <div class="col-xl-1 col-12">
                                 <button id="exportMaintenanceRecord" class="btn btn-outline-primary btn-block" style="margin-right:10px;" type="button" title="建议在Google Chrome浏览器中进行打印">
@@ -486,8 +486,13 @@
 
                         if (dailyMaintenanceContent != null && weeklyMaintenanceContent != null && monthlyMaintenanceContent != null && quarterlyMaintenanceContent != null && annualMaintenanceContent != null)
                         {
-                            var days = (Model.Search.EndTime - Model.Search.BeginTime).Days + 1;
-                            var totalColSpan = days + 2;
+                            var selectedYear = Model.Search.BeginTime.Year;
+                            var selectedMonth = Model.Search.BeginTime.Month;
+                            var daysNumberOfMonth = System.DateTime.DaysInMonth(selectedYear, selectedMonth);
+
+                            var daysNumberOfSelected = (Model.Search.EndTime - Model.Search.BeginTime).Days + 1;
+                            var columnNumber = 31;
+                            var totalColSpan = columnNumber + 2;
                             <div class="table-responsive">
                                 <table id="maintenanceDataGrid" class="table table-sm table-borderless">
                                     <thead>
@@ -548,9 +553,10 @@
                                         <tr class="text-center">
                                             <td class="border border-dark"></td>
                                             <td class="border border-dark align-middle">日期 Date</td>
-                                            @for (DateTime day = Model.Search.BeginTime; day <= Model.Search.EndTime; day = day.AddDays(1))
+                                            @for (int day = 1; day <= columnNumber; day++)
                                             {
-                                                <td class="border border-dark align-middle">@day.ToString("dd")</td>
+                                                // 表格固定31列
+                                                <td class="border border-dark align-middle" style="min-width:40px;width:42px;max-width:45px;">@day.ToString("00")</td>
                                             }
                                         </tr>
                                         <tr>
@@ -564,32 +570,32 @@
                                             var translate = item.Value;
                                             <tr class="text-center">
                                                 <td class="border border-dark py-0 text-left text-nowrap">@content<br />@translate</td>
-                                                @for (DateTime day = Model.Search.BeginTime; day <= Model.Search.EndTime; day = day.AddDays(1))
+                                                @for (int day = 1; day <= columnNumber; day++)
                                                 {
-                                                    if (dailyMaintenanceRecords.Any())
+                                                    if (day <= daysNumberOfMonth)
                                                     {
-                                                        var contentOfDay = dailyMaintenanceRecords.FirstOrDefault(r => r.BeginTime.GetValueOrDefault().ToShortDateString() == day.ToShortDateString());
+                                                        var contentOfDay = dailyMaintenanceRecords?.FirstOrDefault(r => r.BeginTime.GetValueOrDefault().Day == day);
                                                         <td class="border border-dark align-middle">@(contentOfDay != null && contentOfDay.Content.IndexOf(content) >= 0 ? "Y" : "N")</td>
                                                     }
                                                     else
                                                     {
-                                                        <td class="border border-dark"></td>
+                                                        <td class="border border-dark align-middle">NA</td>
                                                     }
                                                 }
                                             </tr>
                                         }
                                         <tr class="text-center">
                                             <td class="border border-dark align-middle text-left">操作者<br />Operator</td>
-                                            @for (DateTime day = Model.Search.BeginTime; day <= Model.Search.EndTime; day = day.AddDays(1))
+                                            @for (int day = 1; day <= columnNumber; day++)
                                             {
-                                                if (dailyMaintenanceRecords.Any())
+                                                if (day <= daysNumberOfMonth)
                                                 {
-                                                    var operatorOfDay = dailyMaintenanceRecords.FirstOrDefault(r => r.BeginTime.GetValueOrDefault().ToShortDateString() == day.ToShortDateString());
+                                                    var operatorOfDay = dailyMaintenanceRecords?.FirstOrDefault(r => r.BeginTime.GetValueOrDefault().Day == day);
                                                     <td class="border border-dark align-middle text-break">@(operatorOfDay != null ? operatorOfDay.Operator : "/")</td>
                                                 }
                                                 else
                                                 {
-                                                    <td class="border border-dark"></td>
+                                                    <td class="border border-dark align-middle">NA</td>
                                                 }
                                             }
                                         </tr>
@@ -607,7 +613,7 @@
                                                 <td class="border border-dark py-0 text-left text-nowrap">@content<br />@translate</td>
                                                 @if (weeklyMaintenanceRecords.Any())
                                                 {
-                                                    var colSpan = days / weeklyMaintenanceRecords.ToList().Count + 1;
+                                                    var colSpan = columnNumber / weeklyMaintenanceRecords.ToList().Count + 1;
                                                     @foreach (var record in weeklyMaintenanceRecords)
                                                     {
                                                         <td class="border border-dark align-middle" colspan="@colSpan">
@@ -617,7 +623,7 @@
                                                 }
                                                 else
                                                 {
-                                                    var colSpan = days / 4 + 1;
+                                                    var colSpan = columnNumber / 4 + 1;
                                                     <td class="border border-dark" colspan="@colSpan"></td>
                                                     <td class="border border-dark" colspan="@colSpan"></td>
                                                     <td class="border border-dark" colspan="@colSpan"></td>
@@ -632,17 +638,17 @@
                                             </td>
                                             @if (weeklyMaintenanceRecords.Any())
                                             {
-                                                var colSpan = days / weeklyMaintenanceRecords.ToList().Count + 1;
+                                                var colSpan = columnNumber / weeklyMaintenanceRecords.ToList().Count + 1;
                                                 @foreach (var record in weeklyMaintenanceRecords)
                                                 {
-                                                    <td class="border border-dark align-middle" colspan="@colSpan">
+                                                    <td class="border border-dark align-middle text-break" colspan="@colSpan">
                                                         @record.Operator/@record.BeginTime.GetValueOrDefault().ToShortDateString()
                                                     </td>
                                                 }
                                             }
                                             else
                                             {
-                                                var colSpan = days / 4 + 1;
+                                                var colSpan = columnNumber / 4 + 1;
                                                 <td class="border border-dark" colspan="@colSpan"></td>
                                                 <td class="border border-dark" colspan="@colSpan"></td>
                                                 <td class="border border-dark" colspan="@colSpan"></td>
@@ -674,7 +680,7 @@
                                                 {
                                                     <tr>
                                                         <td class="border border-dark">@(record.Type)内容/操作者/日期<br />Content/Operator/Date</td>
-                                                        <td class="border border-dark align-middle" colspan="@totalColSpan">@record.Content / @record.Operator / @record.BeginTime.GetValueOrDefault().ToShortDateString()</td>
+                                                        <td class="border border-dark align-middle" colspan="@columnNumber">@record.Content / @record.Operator / @record.BeginTime.GetValueOrDefault().ToShortDateString()</td>
                                                     </tr>
                                                 }
                                             }
