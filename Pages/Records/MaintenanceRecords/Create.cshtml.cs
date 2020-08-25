@@ -87,12 +87,12 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
 
             if (maintenanceContent.Length > 0)
             {
-                MaintenanceRecord.Content = string.Join(", ", maintenanceContent);
+                MaintenanceRecord.Content = string.Join(", ", maintenanceContent) + ", ";
             }
 
             if (maintenanceType == "临时维护" && otherMaintenanceContent != null)
             {
-                MaintenanceRecord.Content += $", 其他：{otherMaintenanceContent}";
+                MaintenanceRecord.Content += $"其他：{otherMaintenanceContent}";
             }
 
             _context.MaintenanceRecords.Add(MaintenanceRecord);
