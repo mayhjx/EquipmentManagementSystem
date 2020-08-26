@@ -75,7 +75,7 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
         public IList<UsageRecord> UsageRecords { get; set; }
 
         public IList<MaintenanceRecord> MaintenanceRecords { get; set; }
-        public Dictionary<string, Dictionary<string, string>> MaintenanceContentOfType;
+        public Dictionary<string, Dictionary<string, string>> MaintenanceContentOfType { get; set; }
 
         public IList<MalfunctionWorkOrder> MalfunctionWorkOrders { get; set; }
 
@@ -120,16 +120,14 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
 
                 if (Search.Instrument != null)
                 {
-                    if (usageRecords.Any())
-                    {
-                        InstrumentModel = (await _context.Instruments
-                            .AsNoTracking()
-                            .Include(m => m.Components)
-                            .FirstOrDefaultAsync(m => m.ID == Search.Instrument))
-                            .Components.FirstOrDefault(c => c.Name.Contains("主机"))?.Model;
+                    InstrumentModel = (await _context.Instruments
+                        .AsNoTracking()
+                        .Include(m => m.Components)
+                        .FirstOrDefaultAsync(m => m.ID == Search.Instrument))
+                        .Components.FirstOrDefault(c => c.Name.Contains("主机"))?.Model;
 
-                        InstrumentPlatform = (await _context.Instruments.AsNoTracking().FirstOrDefaultAsync(m => m.ID == Search.Instrument))?.Platform;
-                    }
+                    InstrumentPlatform = (await _context.Instruments.AsNoTracking().FirstOrDefaultAsync(m => m.ID == Search.Instrument))?.Platform;
+
                     usageRecords = from r in usageRecords
                                    where r.InstrumentId == Search.Instrument
                                    select r;
