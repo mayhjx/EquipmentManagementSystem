@@ -43,6 +43,8 @@
 		<Compile Remove="Data\Migrations\Equipment\20200804091657_addMaintenanceRecord_Type_Content.Designer.cs" />
 		<Compile Remove="Data\Migrations\Equipment\20200813035110_testToString.cs" />
 		<Compile Remove="Data\Migrations\Equipment\20200813035110_testToString.Designer.cs" />
+		<Compile Remove="Data\Migrations\Equipment\20200903095532_InstrumentAcceptance_RemoveInstrumentForeignKey.cs" />
+		<Compile Remove="Data\Migrations\Equipment\20200903095532_InstrumentAcceptance_RemoveInstrumentForeignKey.Designer.cs" />
 		<Compile Remove="Data\Migrations\Malfunction\20200703010458_ResultNullable.cs" />
 		<Compile Remove="Data\Migrations\Malfunction\20200703010458_ResultNullable.Designer.cs" />
 	</ItemGroup>
@@ -52,20 +54,20 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.2" />
-		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.2" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.4" />
-		<PackageReference Include="Microsoft.EntityFrameWorkCore.design" Version="3.1.3">
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.7" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.7" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.7" />
+		<PackageReference Include="Microsoft.EntityFrameWorkCore.design" Version="3.1.7">
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.EntityFrameWorkCore.Sqlite" Version="3.1.3" />
-		<PackageReference Include="Microsoft.EntityFrameWorkCore.Sqlserver" Version="3.1.3" />
-		<PackageReference Include="Microsoft.EntityFrameWorkCore.tools" Version="3.1.3">
+		<PackageReference Include="Microsoft.EntityFrameWorkCore.Sqlite" Version="3.1.7" />
+		<PackageReference Include="Microsoft.EntityFrameWorkCore.Sqlserver" Version="3.1.7" />
+		<PackageReference Include="Microsoft.EntityFrameWorkCore.tools" Version="3.1.7">
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.3" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.7" />
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.design" Version="3.1.4" />
 	</ItemGroup>
 

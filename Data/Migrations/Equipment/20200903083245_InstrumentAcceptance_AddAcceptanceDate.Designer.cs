@@ -4,14 +4,16 @@ using EquipmentManagementSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EquipmentManagementSystem.Migrations.Equipment
 {
     [DbContext(typeof(EquipmentContext))]
-    partial class EquipmentContextModelSnapshot : ModelSnapshot
+    [Migration("20200903083245_InstrumentAcceptance_AddAcceptanceDate")]
+    partial class InstrumentAcceptance_AddAcceptanceDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -371,7 +373,7 @@ namespace EquipmentManagementSystem.Migrations.Equipment
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("InstrumentID")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("InventoryCertificateFileName")
                         .HasColumnType("nvarchar(max)");
@@ -431,6 +433,10 @@ namespace EquipmentManagementSystem.Migrations.Equipment
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("InstrumentID")
+                        .IsUnique()
+                        .HasFilter("[InstrumentID] IS NOT NULL");
 
                     b.ToTable("InstrumentAcceptance");
                 });
@@ -914,6 +920,13 @@ namespace EquipmentManagementSystem.Migrations.Equipment
                     b.HasOne("EquipmentManagementSystem.Models.Instrument", "Instrument")
                         .WithOne("Computer")
                         .HasForeignKey("EquipmentManagementSystem.Models.Computer", "InstrumentID");
+                });
+
+            modelBuilder.Entity("EquipmentManagementSystem.Models.InstrumentAcceptance", b =>
+                {
+                    b.HasOne("EquipmentManagementSystem.Models.Instrument", "Instrument")
+                        .WithOne("InstrumentAcceptance")
+                        .HasForeignKey("EquipmentManagementSystem.Models.InstrumentAcceptance", "InstrumentID");
                 });
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.Investigation", b =>

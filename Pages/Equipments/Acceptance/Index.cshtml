@@ -1,0 +1,65 @@
+﻿@page
+@model EquipmentManagementSystem.Pages.Equipments.Acceptance.IndexModel
+
+@{
+    ViewData["Title"] = "待验收设备";
+}
+
+
+<div class="card">
+    <h4 class="card-header">
+        设备一览
+        <a asp-page="Create">
+            <input type="button" class="btn btn-outline-primary btn-sm" value="新增" style="margin-left: 10px;">
+        </a>
+    </h4>
+    <div class="card-body">
+        <table id="index" class="table table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.InstrumentAcceptance[0].CreatedTime)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.InstrumentAcceptance[0].Creator)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.InstrumentAcceptance[0].ArrivalDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.InstrumentAcceptance[0].InstallationDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.InstrumentAcceptance[0].AcceptanceDate)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.InstrumentAcceptance)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreatedTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Creator)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ArrivalDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.InstallationDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AcceptanceDate)
+                        </td>
+                        <td>
+                            <a asp-page="./Edit" asp-route-id="@item.Id"><i class="fa fa-pencil-alt fa-lg" aria-hidden="true"></i></a>@*编辑*@
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

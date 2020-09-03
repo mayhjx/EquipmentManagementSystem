@@ -1,0 +1,325 @@
+﻿@page
+@model EquipmentManagementSystem.Pages.Equipments.Acceptance.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>InstrumentAcceptance</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.Creator)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.Creator)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.CreatedTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.CreatedTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.FeasibilityReportFileName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.FeasibilityReportFileName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.FeasibilityReportFilePath)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.FeasibilityReportFilePath)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.ConfigurationListFileName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.ConfigurationListFileName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.ConfigurationListFilePath)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.ConfigurationListFilePath)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.PuchaseRequisitionFileName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.PuchaseRequisitionFileName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.PuchaseRequisitionFilePath)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.PuchaseRequisitionFilePath)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.IsDemo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.IsDemo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.InstrumentID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.InstrumentID)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.InstallationNoteFileName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.InstallationNoteFileName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.InstallationNoteFilePath)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.InstallationNoteFilePath)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.EstimatedArrivalDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.EstimatedArrivalDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.ArrivalDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.ArrivalDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.IsInventoryComplete)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.IsInventoryComplete)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.InventoryCertificateFileName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.InventoryCertificateFileName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.InventoryCertificateFilePath)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.InventoryCertificateFilePath)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.InventoryRemark)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.InventoryRemark)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.InstallationDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.InstallationDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.InstallationRemark)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.InstallationRemark)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.IsFactoryAcceptance)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.IsFactoryAcceptance)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.FactoryAcceptanceDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.FactoryAcceptanceDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.FactoryAcceptanceCertificateFileName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.FactoryAcceptanceCertificateFileName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.FactoryAcceptanceCertificateFilePath)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.FactoryAcceptanceCertificateFilePath)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.ServiceReportFileName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.ServiceReportFileName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.ServiceReportFilePath)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.ServiceReportFilePath)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.IsTrainingUseAndMaintenance)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.IsTrainingUseAndMaintenance)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.TrainingSignInFormFileName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.TrainingSignInFormFileName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.TrainingSignInFormFilePath)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.TrainingSignInFormFilePath)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.IsSelfBuilt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.IsSelfBuilt)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.IsEngineerAssistance)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.IsEngineerAssistance)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.MethodConstructionRemark)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.MethodConstructionRemark)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.IsAcceptance)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.IsAcceptance)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.EvaluationReportFileName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.EvaluationReportFileName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.EvaluationReportFilePath)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.EvaluationReportFilePath)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.EquipmentResumeFileName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.EquipmentResumeFileName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.EquipmentResumeFilePath)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.EquipmentResumeFilePath)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.EquipmentFilesListFileName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.EquipmentFilesListFileName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.EquipmentFilesListFilePath)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.EquipmentFilesListFilePath)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.EquipmentCertificateFileName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.EquipmentCertificateFileName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.EquipmentCertificateFilePath)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.EquipmentCertificateFilePath)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.FactoryProductionLicenseFileName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.FactoryProductionLicenseFileName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.FactoryProductionLicenseFilePath)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.FactoryProductionLicenseFilePath)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.BusinessLicenseFileName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.BusinessLicenseFileName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.BusinessLicenseFilePath)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.BusinessLicenseFilePath)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.MedicalDeviceRegistrationCertificateFileName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.MedicalDeviceRegistrationCertificateFileName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.MedicalDeviceRegistrationCertificateFilePath)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.MedicalDeviceRegistrationCertificateFilePath)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.EquipmentCalibrationReportFileName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.EquipmentCalibrationReportFileName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.EquipmentCalibrationReportFilePath)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.EquipmentCalibrationReportFilePath)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.EquipmentAcceptanceReportFileName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.EquipmentAcceptanceReportFileName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentAcceptance.EquipmentAcceptanceReportFilePath)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentAcceptance.EquipmentAcceptanceReportFilePath)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.InstrumentAcceptance.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

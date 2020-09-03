@@ -1,0 +1,67 @@
+﻿@page
+@model EquipmentManagementSystem.Pages.Equipments.Acceptance.CreateModel
+@inject UserManager<User> UserManager
+
+@{
+    ViewData["Title"] = "新增";
+    var user = await UserManager.GetUserAsync(User);
+}
+
+
+<div class="card">
+    <div class="card-header">
+        <h4>设备验收信息</h4>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-4">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="InstrumentAcceptance.FeasibilityReportFileName" class="control-label"></label>
+                        <input type="file" class="form-control-file" />
+                        <span asp-validation-for="InstrumentAcceptance.FeasibilityReportFileName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="InstrumentAcceptance.ConfigurationListFileName" class="control-label"></label>
+                        <input type="file" class="form-control-file" />
+                        <span asp-validation-for="InstrumentAcceptance.ConfigurationListFileName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="InstrumentAcceptance.PuchaseRequisitionFileName" class="control-label"></label>
+                        <input type="file" class="form-control-file" />
+                        <span asp-validation-for="InstrumentAcceptance.PuchaseRequisitionFileName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="InstrumentAcceptance.IsDemo" /> @Html.DisplayNameFor(model => model.InstrumentAcceptance.IsDemo)
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="InstrumentAcceptance.CreatedTime" class="control-label"></label>
+                        <input asp-for="InstrumentAcceptance.CreatedTime" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
+                        <span asp-validation-for="InstrumentAcceptance.CreatedTime" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="InstrumentAcceptance.Creator" class="control-label"></label>
+                        <input asp-for="InstrumentAcceptance.Creator" class="form-control" value="@user?.Name" />
+                        <span asp-validation-for="InstrumentAcceptance.Creator" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="新建" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div>
+            <a asp-page="Index">返回</a>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

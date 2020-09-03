@@ -4,18 +4,20 @@ using EquipmentManagementSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EquipmentManagementSystem.Migrations.Equipment
 {
     [DbContext(typeof(EquipmentContext))]
-    partial class EquipmentContextModelSnapshot : ModelSnapshot
+    [Migration("20200903081418_AddInstrumentAcceptanceModel")]
+    partial class AddInstrumentAcceptanceModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.7")
+                .HasAnnotation("ProductVersion", "3.1.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -274,9 +276,6 @@ namespace EquipmentManagementSystem.Migrations.Equipment
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime?>("AcceptanceDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<DateTime?>("ArrivalDate")
                         .HasColumnType("datetime2");
 
@@ -371,7 +370,7 @@ namespace EquipmentManagementSystem.Migrations.Equipment
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("InstrumentID")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("InventoryCertificateFileName")
                         .HasColumnType("nvarchar(max)");
@@ -431,6 +430,10 @@ namespace EquipmentManagementSystem.Migrations.Equipment
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("InstrumentID")
+                        .IsUnique()
+                        .HasFilter("[InstrumentID] IS NOT NULL");
 
                     b.ToTable("InstrumentAcceptance");
                 });
@@ -914,6 +917,13 @@ namespace EquipmentManagementSystem.Migrations.Equipment
                     b.HasOne("EquipmentManagementSystem.Models.Instrument", "Instrument")
                         .WithOne("Computer")
                         .HasForeignKey("EquipmentManagementSystem.Models.Computer", "InstrumentID");
+                });
+
+            modelBuilder.Entity("EquipmentManagementSystem.Models.InstrumentAcceptance", b =>
+                {
+                    b.HasOne("EquipmentManagementSystem.Models.Instrument", "Instrument")
+                        .WithOne("InstrumentAcceptance")
+                        .HasForeignKey("EquipmentManagementSystem.Models.InstrumentAcceptance", "InstrumentID");
                 });
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.Investigation", b =>

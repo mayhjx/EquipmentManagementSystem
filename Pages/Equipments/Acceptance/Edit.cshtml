@@ -1,0 +1,205 @@
+﻿@page
+@model EquipmentManagementSystem.Pages.Equipments.Acceptance.EditModel
+
+@{
+    ViewData["Title"] = "编辑";
+}
+
+
+<div class="card">
+    <div class="card-header">
+        <h4>设备验收信息</h4>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-4">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="InstrumentAcceptance.Id" />
+                    <div class="form-group">
+                        <label asp-for="InstrumentAcceptance.Creator" class="control-label"></label>
+                        <input asp-for="InstrumentAcceptance.Creator" class="form-control" />
+                        <span asp-validation-for="InstrumentAcceptance.Creator" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="InstrumentAcceptance.CreatedTime" class="control-label"></label>
+                        <input asp-for="InstrumentAcceptance.CreatedTime" class="form-control" />
+                        <span asp-validation-for="InstrumentAcceptance.CreatedTime" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="InstrumentAcceptance.FeasibilityReportFileName" class="control-label"></label>
+                        <input asp-for="InstrumentAcceptance.FeasibilityReportFileName" class="form-control" />
+                        <span asp-validation-for="InstrumentAcceptance.FeasibilityReportFileName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="InstrumentAcceptance.ConfigurationListFileName" class="control-label"></label>
+                        <input asp-for="InstrumentAcceptance.ConfigurationListFileName" class="form-control" />
+                        <span asp-validation-for="InstrumentAcceptance.ConfigurationListFileName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="InstrumentAcceptance.PuchaseRequisitionFileName" class="control-label"></label>
+                        <input asp-for="InstrumentAcceptance.PuchaseRequisitionFileName" class="form-control" />
+                        <span asp-validation-for="InstrumentAcceptance.PuchaseRequisitionFileName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="InstrumentAcceptance.IsDemo" /> @Html.DisplayNameFor(model => model.InstrumentAcceptance.IsDemo)
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="InstrumentAcceptance.InstrumentID" class="control-label"></label>
+                        <input asp-for="InstrumentAcceptance.InstrumentID" class="form-control" />
+                        <span asp-validation-for="InstrumentAcceptance.InstrumentID" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="InstrumentAcceptance.InstallationNoteFileName" class="control-label"></label>
+                        <input asp-for="InstrumentAcceptance.InstallationNoteFileName" class="form-control" />
+                        <span asp-validation-for="InstrumentAcceptance.InstallationNoteFileName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="InstrumentAcceptance.EstimatedArrivalDate" class="control-label"></label>
+                        <input asp-for="InstrumentAcceptance.EstimatedArrivalDate" class="form-control" />
+                        <span asp-validation-for="InstrumentAcceptance.EstimatedArrivalDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="InstrumentAcceptance.ArrivalDate" class="control-label"></label>
+                        <input asp-for="InstrumentAcceptance.ArrivalDate" class="form-control" />
+                        <span asp-validation-for="InstrumentAcceptance.ArrivalDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="InstrumentAcceptance.IsInventoryComplete" /> @Html.DisplayNameFor(model => model.InstrumentAcceptance.IsInventoryComplete)
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="InstrumentAcceptance.InventoryCertificateFileName" class="control-label"></label>
+                        <input asp-for="InstrumentAcceptance.InventoryCertificateFileName" class="form-control" />
+                        <span asp-validation-for="InstrumentAcceptance.InventoryCertificateFileName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="InstrumentAcceptance.InventoryRemark" class="control-label"></label>
+                        <input asp-for="InstrumentAcceptance.InventoryRemark" class="form-control" />
+                        <span asp-validation-for="InstrumentAcceptance.InventoryRemark" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="InstrumentAcceptance.InstallationDate" class="control-label"></label>
+                        <input asp-for="InstrumentAcceptance.InstallationDate" class="form-control" />
+                        <span asp-validation-for="InstrumentAcceptance.InstallationDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="InstrumentAcceptance.InstallationRemark" class="control-label"></label>
+                        <input asp-for="InstrumentAcceptance.InstallationRemark" class="form-control" />
+                        <span asp-validation-for="InstrumentAcceptance.InstallationRemark" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="InstrumentAcceptance.IsFactoryAcceptance" /> @Html.DisplayNameFor(model => model.InstrumentAcceptance.IsFactoryAcceptance)
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="InstrumentAcceptance.FactoryAcceptanceDate" class="control-label"></label>
+                        <input asp-for="InstrumentAcceptance.FactoryAcceptanceDate" class="form-control" />
+                        <span asp-validation-for="InstrumentAcceptance.FactoryAcceptanceDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="InstrumentAcceptance.FactoryAcceptanceCertificateFileName" class="control-label"></label>
+                        <input asp-for="InstrumentAcceptance.FactoryAcceptanceCertificateFileName" class="form-control" />
+                        <span asp-validation-for="InstrumentAcceptance.FactoryAcceptanceCertificateFileName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="InstrumentAcceptance.ServiceReportFileName" class="control-label"></label>
+                        <input asp-for="InstrumentAcceptance.ServiceReportFileName" class="form-control" />
+                        <span asp-validation-for="InstrumentAcceptance.ServiceReportFileName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="InstrumentAcceptance.IsTrainingUseAndMaintenance" /> @Html.DisplayNameFor(model => model.InstrumentAcceptance.IsTrainingUseAndMaintenance)
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="InstrumentAcceptance.TrainingSignInFormFileName" class="control-label"></label>
+                        <input asp-for="InstrumentAcceptance.TrainingSignInFormFileName" class="form-control" />
+                        <span asp-validation-for="InstrumentAcceptance.TrainingSignInFormFileName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="InstrumentAcceptance.IsSelfBuilt" /> @Html.DisplayNameFor(model => model.InstrumentAcceptance.IsSelfBuilt)
+                        </label>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="InstrumentAcceptance.IsEngineerAssistance" /> @Html.DisplayNameFor(model => model.InstrumentAcceptance.IsEngineerAssistance)
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="InstrumentAcceptance.MethodConstructionRemark" class="control-label"></label>
+                        <input asp-for="InstrumentAcceptance.MethodConstructionRemark" class="form-control" />
+                        <span asp-validation-for="InstrumentAcceptance.MethodConstructionRemark" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="InstrumentAcceptance.IsAcceptance" /> @Html.DisplayNameFor(model => model.InstrumentAcceptance.IsAcceptance)
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="InstrumentAcceptance.EvaluationReportFileName" class="control-label"></label>
+                        <input asp-for="InstrumentAcceptance.EvaluationReportFileName" class="form-control" />
+                        <span asp-validation-for="InstrumentAcceptance.EvaluationReportFileName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="InstrumentAcceptance.EquipmentResumeFileName" class="control-label"></label>
+                        <input asp-for="InstrumentAcceptance.EquipmentResumeFileName" class="form-control" />
+                        <span asp-validation-for="InstrumentAcceptance.EquipmentResumeFileName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="InstrumentAcceptance.EquipmentFilesListFileName" class="control-label"></label>
+                        <input asp-for="InstrumentAcceptance.EquipmentFilesListFileName" class="form-control" />
+                        <span asp-validation-for="InstrumentAcceptance.EquipmentFilesListFileName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="InstrumentAcceptance.EquipmentCertificateFileName" class="control-label"></label>
+                        <input asp-for="InstrumentAcceptance.EquipmentCertificateFileName" class="form-control" />
+                        <span asp-validation-for="InstrumentAcceptance.EquipmentCertificateFileName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="InstrumentAcceptance.FactoryProductionLicenseFileName" class="control-label"></label>
+                        <input asp-for="InstrumentAcceptance.FactoryProductionLicenseFileName" class="form-control" />
+                        <span asp-validation-for="InstrumentAcceptance.FactoryProductionLicenseFileName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="InstrumentAcceptance.BusinessLicenseFileName" class="control-label"></label>
+                        <input asp-for="InstrumentAcceptance.BusinessLicenseFileName" class="form-control" />
+                        <span asp-validation-for="InstrumentAcceptance.BusinessLicenseFileName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="InstrumentAcceptance.MedicalDeviceRegistrationCertificateFileName" class="control-label"></label>
+                        <input asp-for="InstrumentAcceptance.MedicalDeviceRegistrationCertificateFileName" class="form-control" />
+                        <span asp-validation-for="InstrumentAcceptance.MedicalDeviceRegistrationCertificateFileName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="InstrumentAcceptance.EquipmentCalibrationReportFileName" class="control-label"></label>
+                        <input asp-for="InstrumentAcceptance.EquipmentCalibrationReportFileName" class="form-control" />
+                        <span asp-validation-for="InstrumentAcceptance.EquipmentCalibrationReportFileName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="InstrumentAcceptance.EquipmentAcceptanceReportFileName" class="control-label"></label>
+                        <input asp-for="InstrumentAcceptance.EquipmentAcceptanceReportFileName" class="form-control" />
+                        <span asp-validation-for="InstrumentAcceptance.EquipmentAcceptanceReportFileName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="保存" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div>
+            <a asp-page="./Index">返回</a>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
