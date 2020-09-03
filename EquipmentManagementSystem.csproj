@@ -43,18 +43,6 @@
 		<Compile Remove="Data\Migrations\Equipment\20200804091657_addMaintenanceRecord_Type_Content.Designer.cs" />
 		<Compile Remove="Data\Migrations\Equipment\20200813035110_testToString.cs" />
 		<Compile Remove="Data\Migrations\Equipment\20200813035110_testToString.Designer.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200903022259_AddInstrumentAcceptanceModel.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200903022259_AddInstrumentAcceptanceModel.Designer.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200903022537_AddInstrumentAcceptanceModel.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200903022537_AddInstrumentAcceptanceModel.Designer.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200903022840_AddInstrumentAcceptanceModel.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200903022840_AddInstrumentAcceptanceModel.Designer.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200903023145_AddInstrumentAcceptanceModel.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200903023145_AddInstrumentAcceptanceModel.Designer.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200903023753_AddInstrumentAcceptanceModel.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200903023753_AddInstrumentAcceptanceModel.Designer.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200903023842_AddInstrumentAcceptanceModel.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200903023842_AddInstrumentAcceptanceModel.Designer.cs" />
 		<Compile Remove="Data\Migrations\Malfunction\20200703010458_ResultNullable.cs" />
 		<Compile Remove="Data\Migrations\Malfunction\20200703010458_ResultNullable.Designer.cs" />
 	</ItemGroup>

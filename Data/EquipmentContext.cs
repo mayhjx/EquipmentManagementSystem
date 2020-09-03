@@ -19,7 +19,6 @@ namespace EquipmentManagementSystem.Data
         public DbSet<UsageRecord> UsageRecords { get; set; }
         public DbSet<MaintenanceRecord> MaintenanceRecords { get; set; }
         public DbSet<MaintenanceContent> MaintenanceContents { get; set; }
-        public DbSet<InstrumentAcceptance> InstrumentAcceptances { get; set; }
 
 
         //public DbSet<Computer> Computers { get; set; }
@@ -38,7 +37,6 @@ namespace EquipmentManagementSystem.Data
 
             modelBuilder.Entity<MaintenanceContent>().ToTable("MaintenanceContent");
             modelBuilder.Entity<MaintenanceRecord>().ToTable("MaintenanceRecords");
-            modelBuilder.Entity<InstrumentAcceptance>().ToTable("InstrumentAcceptance");
 
             //modelBuilder.Entity<Computer>().ToTable("Computer");
         }
