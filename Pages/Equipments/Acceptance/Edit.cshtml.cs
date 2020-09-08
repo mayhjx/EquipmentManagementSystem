@@ -1,24 +1,39 @@
-﻿using System.Linq;
+﻿using System.ComponentModel.DataAnnotations;
+using System.IO;
+using System.Net.Mime;
 using System.Threading.Tasks;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
+using EquipmentManagementSystem.Utilities;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace EquipmentManagementSystem.Pages.Equipments.Acceptance
 {
     public class EditModel : PageModel
     {
         private readonly EquipmentContext _context;
-
-        public EditModel(EquipmentContext context)
+        private readonly IWebHostEnvironment _env;
+        private readonly long _fileSizeLimit;
+        private readonly string _uploadFilePath;
+        public EditModel(EquipmentContext context, IConfiguration config, IWebHostEnvironment env)
         {
+            _env = env;
             _context = context;
+            _fileSizeLimit = config.GetValue<long>("FileSizeLimit");
+            _uploadFilePath = Path.Combine(config.GetValue<string>("StoredFilesPath"), "InstrumentAcceptance");
+            Directory.CreateDirectory(_uploadFilePath);
         }
 
         [BindProperty]
         public InstrumentAcceptance InstrumentAcceptance { get; set; }
+
+        [BindProperty]
+        public Upload FileUpload { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -37,39 +52,452 @@ namespace EquipmentManagementSystem.Pages.Equipments.Acceptance
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnGetDownload(string filePath)
         {
-            if (!ModelState.IsValid)
+            var fileName = FileHelpers.RemoveGuidStringInFileName(filePath);
+            return PhysicalFile(Path.Combine(_env.ContentRootPath, filePath), MediaTypeNames.Application.Octet, fileName);
+        }
+
+        public async Task<IActionResult> OnPostAsync(int id)
+        {
+            InstrumentAcceptance = await _context.InstrumentAcceptances.FirstOrDefaultAsync(m => m.Id == id);
+
+            if (InstrumentAcceptance == null)
             {
+                return NotFound();
+            }
+
+            if (await TryUpdateModelAsync<InstrumentAcceptance>(
+                InstrumentAcceptance,
+                "InstrumentAcceptance",
+                i => i.IsDemo, i => i.InstrumentID,
+                i => i.EstimatedArrivalDate, i => i.ArrivalDate,
+                i => i.IsInventoryComplete, i => i.InventoryRemark,
+                i => i.InstallationDate, i => i.InstallationRemark,
+                i => i.IsFactoryAcceptance, i => i.FactoryAcceptanceDate,
+                i => i.IsTrainingUseAndMaintenance,
+                i => i.IsSelfBuilt, i => i.IsEngineerAssistance, i => i.MethodConstructionRemark,
+                i => i.IsAcceptance, i => i.AcceptanceDate))
+            {
+                #region 报告上传
+                // 可行性报告
+                if (FileUpload.FeasibilityReportFile != null)
+                {
+                    var formFileContent = await FileHelpers.ProcessFormFile<Upload>(
+                                            FileUpload.FeasibilityReportFile, ModelState, _fileSizeLimit);
+
+                    if (!ModelState.IsValid)
+                    {
+                        return Page();
+                    }
+
+                    string fileName = Path.GetFileName(FileUpload.FeasibilityReportFile.FileName);
+                    string filePath = FileHelpers.CreateFilePath(_uploadFilePath, fileName);
+
+                    FileHelpers.SaveFile(formFileContent, filePath);
+                    FileHelpers.DeleteOlderFile(InstrumentAcceptance.FeasibilityReportFilePath);
+
+                    InstrumentAcceptance.FeasibilityReportFilePath = filePath;
+                    InstrumentAcceptance.FeasibilityReportFileName = fileName;
+                }
+
+
+                // 设备配置清单
+                if (FileUpload.ConfigurationListFile != null)
+                {
+                    var formFileContent = await FileHelpers.ProcessFormFile<Upload>(
+                                            FileUpload.ConfigurationListFile, ModelState, _fileSizeLimit);
+
+                    if (!ModelState.IsValid)
+                    {
+                        return Page();
+                    }
+
+                    string fileName = Path.GetFileName(FileUpload.ConfigurationListFile.FileName);
+                    string filePath = FileHelpers.CreateFilePath(_uploadFilePath, fileName);
+
+                    FileHelpers.SaveFile(formFileContent, filePath);
+                    FileHelpers.DeleteOlderFile(InstrumentAcceptance.ConfigurationListFilePath);
+
+                    InstrumentAcceptance.ConfigurationListFilePath = filePath;
+                    InstrumentAcceptance.ConfigurationListFileName = fileName;
+                }
+
+                // 设备采购清单
+                if (FileUpload.PuchaseRequisitionFile != null)
+                {
+                    var formFileContent = await FileHelpers.ProcessFormFile<Upload>(
+                                            FileUpload.PuchaseRequisitionFile, ModelState, _fileSizeLimit);
+
+                    if (!ModelState.IsValid)
+                    {
+                        return Page();
+                    }
+
+                    string fileName = Path.GetFileName(FileUpload.PuchaseRequisitionFile.FileName);
+                    string filePath = FileHelpers.CreateFilePath(_uploadFilePath, fileName);
+
+                    FileHelpers.SaveFile(formFileContent, filePath);
+                    FileHelpers.DeleteOlderFile(InstrumentAcceptance.PuchaseRequisitionFilePath);
+
+                    InstrumentAcceptance.PuchaseRequisitionFilePath = filePath;
+                    InstrumentAcceptance.PuchaseRequisitionFileName = fileName;
+                }
+
+                // 设备安装说明
+                if (FileUpload.InstallationNoteFile != null)
+                {
+                    var formFileContent = await FileHelpers.ProcessFormFile<Upload>(
+                                            FileUpload.InstallationNoteFile, ModelState, _fileSizeLimit);
+
+                    if (!ModelState.IsValid)
+                    {
+                        return Page();
+                    }
+
+                    string fileName = Path.GetFileName(FileUpload.InstallationNoteFile.FileName);
+                    string filePath = FileHelpers.CreateFilePath(_uploadFilePath, fileName);
+
+                    FileHelpers.SaveFile(formFileContent, filePath);
+                    FileHelpers.DeleteOlderFile(InstrumentAcceptance.InstallationNoteFilePath);
+
+                    InstrumentAcceptance.InstallationNoteFilePath = filePath;
+                    InstrumentAcceptance.InstallationNoteFileName = fileName;
+                }
+
+                // 清点证明
+                if (FileUpload.InventoryCertificateFile != null)
+                {
+                    var formFileContent = await FileHelpers.ProcessFormFile<Upload>(
+                                            FileUpload.InventoryCertificateFile, ModelState, _fileSizeLimit);
+
+                    if (!ModelState.IsValid)
+                    {
+                        return Page();
+                    }
+
+                    string fileName = Path.GetFileName(FileUpload.InventoryCertificateFile.FileName);
+                    string filePath = FileHelpers.CreateFilePath(_uploadFilePath, fileName);
+
+                    FileHelpers.SaveFile(formFileContent, filePath);
+                    FileHelpers.DeleteOlderFile(InstrumentAcceptance.InventoryCertificateFilePath);
+
+                    InstrumentAcceptance.InventoryCertificateFilePath = filePath;
+                    InstrumentAcceptance.InventoryCertificateFileName = fileName;
+                }
+
+                // 设备调试验收证明
+                if (FileUpload.FactoryAcceptanceCertificateFile != null)
+                {
+                    var formFileContent = await FileHelpers.ProcessFormFile<Upload>(
+                                            FileUpload.FactoryAcceptanceCertificateFile, ModelState, _fileSizeLimit);
+
+                    if (!ModelState.IsValid)
+                    {
+                        return Page();
+                    }
+
+                    string fileName = Path.GetFileName(FileUpload.FactoryAcceptanceCertificateFile.FileName);
+                    string filePath = FileHelpers.CreateFilePath(_uploadFilePath, fileName);
+
+                    FileHelpers.SaveFile(formFileContent, filePath);
+                    FileHelpers.DeleteOlderFile(InstrumentAcceptance.FactoryAcceptanceCertificateFilePath);
+
+                    InstrumentAcceptance.FactoryAcceptanceCertificateFilePath = filePath;
+                    InstrumentAcceptance.FactoryAcceptanceCertificateFileName = fileName;
+                }
+
+                // 服务报告
+                if (FileUpload.ServiceReportFile != null)
+                {
+                    var formFileContent = await FileHelpers.ProcessFormFile<Upload>(
+                                            FileUpload.ServiceReportFile, ModelState, _fileSizeLimit);
+
+                    if (!ModelState.IsValid)
+                    {
+                        return Page();
+                    }
+
+                    string fileName = Path.GetFileName(FileUpload.ServiceReportFile.FileName);
+                    string filePath = FileHelpers.CreateFilePath(_uploadFilePath, fileName);
+
+                    FileHelpers.SaveFile(formFileContent, filePath);
+                    FileHelpers.DeleteOlderFile(InstrumentAcceptance.ServiceReportFilePath);
+
+                    InstrumentAcceptance.ServiceReportFilePath = filePath;
+                    InstrumentAcceptance.ServiceReportFileName = fileName;
+                }
+
+                // 培训签到表
+                if (FileUpload.TrainingSignInFormFile != null)
+                {
+                    var formFileContent = await FileHelpers.ProcessFormFile<Upload>(
+                                            FileUpload.TrainingSignInFormFile, ModelState, _fileSizeLimit);
+
+                    if (!ModelState.IsValid)
+                    {
+                        return Page();
+                    }
+
+                    string fileName = Path.GetFileName(FileUpload.TrainingSignInFormFile.FileName);
+                    string filePath = FileHelpers.CreateFilePath(_uploadFilePath, fileName);
+
+                    FileHelpers.SaveFile(formFileContent, filePath);
+                    FileHelpers.DeleteOlderFile(InstrumentAcceptance.TrainingSignInFormFilePath);
+
+                    InstrumentAcceptance.TrainingSignInFormFilePath = filePath;
+                    InstrumentAcceptance.TrainingSignInFormFileName = fileName;
+                }
+
+                // 评估报告
+                if (FileUpload.EvaluationReportFile != null)
+                {
+                    var formFileContent = await FileHelpers.ProcessFormFile<Upload>(
+                                            FileUpload.EvaluationReportFile, ModelState, _fileSizeLimit);
+
+                    if (!ModelState.IsValid)
+                    {
+                        return Page();
+                    }
+
+                    string fileName = Path.GetFileName(FileUpload.EvaluationReportFile.FileName);
+                    string filePath = FileHelpers.CreateFilePath(_uploadFilePath, fileName);
+
+                    FileHelpers.SaveFile(formFileContent, filePath);
+                    FileHelpers.DeleteOlderFile(InstrumentAcceptance.EvaluationReportFilePath);
+
+                    InstrumentAcceptance.EvaluationReportFilePath = filePath;
+                    InstrumentAcceptance.EvaluationReportFileName = fileName;
+                }
+
+                // 仪器设备履历表
+                if (FileUpload.EquipmentResumeFile != null)
+                {
+                    var formFileContent = await FileHelpers.ProcessFormFile<Upload>(
+                                            FileUpload.EquipmentResumeFile, ModelState, _fileSizeLimit);
+
+                    if (!ModelState.IsValid)
+                    {
+                        return Page();
+                    }
+
+                    string fileName = Path.GetFileName(FileUpload.EquipmentResumeFile.FileName);
+                    string filePath = FileHelpers.CreateFilePath(_uploadFilePath, fileName);
+
+                    FileHelpers.SaveFile(formFileContent, filePath);
+                    FileHelpers.DeleteOlderFile(InstrumentAcceptance.EquipmentResumeFilePath);
+
+                    InstrumentAcceptance.EquipmentResumeFilePath = filePath;
+                    InstrumentAcceptance.EquipmentResumeFileName = fileName;
+                }
+
+                // 仪器设备档案目录表
+                if (FileUpload.EquipmentFilesListFile != null)
+                {
+                    var formFileContent = await FileHelpers.ProcessFormFile<Upload>(
+                                            FileUpload.EquipmentFilesListFile, ModelState, _fileSizeLimit);
+
+                    if (!ModelState.IsValid)
+                    {
+                        return Page();
+                    }
+
+                    string fileName = Path.GetFileName(FileUpload.EquipmentFilesListFile.FileName);
+                    string filePath = FileHelpers.CreateFilePath(_uploadFilePath, fileName);
+
+                    FileHelpers.SaveFile(formFileContent, filePath);
+                    FileHelpers.DeleteOlderFile(InstrumentAcceptance.EquipmentFilesListFilePath);
+
+                    InstrumentAcceptance.EquipmentFilesListFilePath = filePath;
+                    InstrumentAcceptance.EquipmentFilesListFileName = fileName;
+                }
+
+                // 设备合格证
+                if (FileUpload.EquipmentCertificateFile != null)
+                {
+                    var formFileContent = await FileHelpers.ProcessFormFile<Upload>(
+                                            FileUpload.EquipmentCertificateFile, ModelState, _fileSizeLimit);
+
+                    if (!ModelState.IsValid)
+                    {
+                        return Page();
+                    }
+
+                    string fileName = Path.GetFileName(FileUpload.EquipmentCertificateFile.FileName);
+                    string filePath = FileHelpers.CreateFilePath(_uploadFilePath, fileName);
+
+                    FileHelpers.SaveFile(formFileContent, filePath);
+                    FileHelpers.DeleteOlderFile(InstrumentAcceptance.EquipmentCertificateFilePath);
+
+                    InstrumentAcceptance.EquipmentCertificateFilePath = filePath;
+                    InstrumentAcceptance.EquipmentCertificateFileName = fileName;
+                }
+
+                // 厂家生产许可证
+                if (FileUpload.FactoryProductionLicenseFile != null)
+                {
+                    var formFileContent = await FileHelpers.ProcessFormFile<Upload>(
+                                            FileUpload.FactoryProductionLicenseFile, ModelState, _fileSizeLimit);
+
+                    if (!ModelState.IsValid)
+                    {
+                        return Page();
+                    }
+
+                    string fileName = Path.GetFileName(FileUpload.FactoryProductionLicenseFile.FileName);
+                    string filePath = FileHelpers.CreateFilePath(_uploadFilePath, fileName);
+
+                    FileHelpers.SaveFile(formFileContent, filePath);
+                    FileHelpers.DeleteOlderFile(InstrumentAcceptance.FactoryProductionLicenseFilePath);
+
+                    InstrumentAcceptance.FactoryProductionLicenseFilePath = filePath;
+                    InstrumentAcceptance.FactoryProductionLicenseFileName = fileName;
+                }
+
+                // 营业执照
+                if (FileUpload.BusinessLicenseFile != null)
+                {
+                    var formFileContent = await FileHelpers.ProcessFormFile<Upload>(
+                                            FileUpload.BusinessLicenseFile, ModelState, _fileSizeLimit);
+
+                    if (!ModelState.IsValid)
+                    {
+                        return Page();
+                    }
+
+                    string fileName = Path.GetFileName(FileUpload.BusinessLicenseFile.FileName);
+                    string filePath = FileHelpers.CreateFilePath(_uploadFilePath, fileName);
+
+                    FileHelpers.SaveFile(formFileContent, filePath);
+                    FileHelpers.DeleteOlderFile(InstrumentAcceptance.BusinessLicenseFilePath);
+
+                    InstrumentAcceptance.BusinessLicenseFilePath = filePath;
+                    InstrumentAcceptance.BusinessLicenseFileName = fileName;
+                }
+
+                // 医疗器械注册证
+                if (FileUpload.MedicalDeviceRegistrationCertificateFile != null)
+                {
+                    var formFileContent = await FileHelpers.ProcessFormFile<Upload>(
+                                            FileUpload.MedicalDeviceRegistrationCertificateFile, ModelState, _fileSizeLimit);
+
+                    if (!ModelState.IsValid)
+                    {
+                        return Page();
+                    }
+
+                    string fileName = Path.GetFileName(FileUpload.MedicalDeviceRegistrationCertificateFile.FileName);
+                    string filePath = FileHelpers.CreateFilePath(_uploadFilePath, fileName);
+
+                    FileHelpers.SaveFile(formFileContent, filePath);
+                    FileHelpers.DeleteOlderFile(InstrumentAcceptance.MedicalDeviceRegistrationCertificateFilePath);
+
+                    InstrumentAcceptance.MedicalDeviceRegistrationCertificateFilePath = filePath;
+                    InstrumentAcceptance.MedicalDeviceRegistrationCertificateFileName = fileName;
+                }
+
+                // 设备校准报告
+                if (FileUpload.EquipmentCalibrationReportFile != null)
+                {
+                    var formFileContent = await FileHelpers.ProcessFormFile<Upload>(
+                                            FileUpload.EquipmentCalibrationReportFile, ModelState, _fileSizeLimit);
+
+                    if (!ModelState.IsValid)
+                    {
+                        return Page();
+                    }
+
+                    string fileName = Path.GetFileName(FileUpload.EquipmentCalibrationReportFile.FileName);
+                    string filePath = FileHelpers.CreateFilePath(_uploadFilePath, fileName);
+
+                    FileHelpers.SaveFile(formFileContent, filePath);
+                    FileHelpers.DeleteOlderFile(InstrumentAcceptance.EquipmentCalibrationReportFilePath);
+
+                    InstrumentAcceptance.EquipmentCalibrationReportFilePath = filePath;
+                    InstrumentAcceptance.EquipmentCalibrationReportFileName = fileName;
+                }
+
+                // 设备验收报告
+                if (FileUpload.EquipmentAcceptanceReportFile != null)
+                {
+                    var formFileContent = await FileHelpers.ProcessFormFile<Upload>(
+                                            FileUpload.EquipmentAcceptanceReportFile, ModelState, _fileSizeLimit);
+
+                    if (!ModelState.IsValid)
+                    {
+                        return Page();
+                    }
+
+                    string fileName = Path.GetFileName(FileUpload.EquipmentAcceptanceReportFile.FileName);
+                    string filePath = FileHelpers.CreateFilePath(_uploadFilePath, fileName);
+
+                    FileHelpers.SaveFile(formFileContent, filePath);
+                    FileHelpers.DeleteOlderFile(InstrumentAcceptance.EquipmentAcceptanceReportFilePath);
+
+                    InstrumentAcceptance.EquipmentAcceptanceReportFilePath = filePath;
+                    InstrumentAcceptance.EquipmentAcceptanceReportFileName = fileName;
+                }
+                #endregion
+
+                await _context.SaveChangesAsync();
                 return Page();
             }
 
-            _context.Attach(InstrumentAcceptance).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!InstrumentAcceptanceExists(InstrumentAcceptance.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return RedirectToPage("./Index");
+            return Page();
         }
 
-        private bool InstrumentAcceptanceExists(int id)
+        public class Upload
         {
-            return _context.InstrumentAcceptances.Any(e => e.Id == id);
+            [Display(Name = "可行性报告")]
+            public IFormFile FeasibilityReportFile { get; set; }
+
+            [Display(Name = "设备配置清单")]
+            public IFormFile ConfigurationListFile { get; set; }
+
+            [Display(Name = "设备采购申请单")]
+            public IFormFile PuchaseRequisitionFile { get; set; }
+
+            [Display(Name = "设备安装说明")]
+            public IFormFile InstallationNoteFile { get; set; }
+
+            [Display(Name = "清点证明")]
+            public IFormFile InventoryCertificateFile { get; set; }
+
+            [Display(Name = "设备调试验收证明")]
+            public IFormFile FactoryAcceptanceCertificateFile { get; set; }
+
+            [Display(Name = "服务报告")]
+            public IFormFile ServiceReportFile { get; set; }
+
+            [Display(Name = "培训签到表")]
+            public IFormFile TrainingSignInFormFile { get; set; }
+
+            [Display(Name = "评估报告")]
+            public IFormFile EvaluationReportFile { get; set; }
+
+            [Display(Name = "仪器设备履历表")]
+            public IFormFile EquipmentResumeFile { get; set; }
+
+            [Display(Name = "仪器设备档案目录表")]
+            public IFormFile EquipmentFilesListFile { get; set; }
+
+            [Display(Name = "设备合格证")]
+            public IFormFile EquipmentCertificateFile { get; set; }
+
+            [Display(Name = "厂家生产许可证")]
+            public IFormFile FactoryProductionLicenseFile { get; set; }
+
+            [Display(Name = "营业执照")]
+            public IFormFile BusinessLicenseFile { get; set; }
+
+            [Display(Name = "医疗器械注册证")]
+            public IFormFile MedicalDeviceRegistrationCertificateFile { get; set; }
+
+            [Display(Name = "设备校准报告")] // 能不能在设备校准模块新建？
+            public IFormFile EquipmentCalibrationReportFile { get; set; }
+
+            [Display(Name = "设备验收报告")]
+            public IFormFile EquipmentAcceptanceReportFile { get; set; }
         }
     }
 }
