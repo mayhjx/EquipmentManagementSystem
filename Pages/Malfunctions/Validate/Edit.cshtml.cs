@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions.Validate
 {
@@ -21,18 +20,16 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Validate
     {
         private readonly long _fileSizeLimit;
         private readonly string _uploadFilePath;
-        private readonly IHostEnvironment _env;
 
         public EditModel(MalfunctionContext context,
             IAuthorizationService authorization,
             UserManager<User> userManager,
-            IConfiguration config,
-            IHostEnvironment env)
+            IConfiguration config)
             : base(context, authorization, userManager)
         {
             _fileSizeLimit = config.GetValue<long>("FileSizeLimit");
-            _uploadFilePath = config.GetValue<string>("StoredFilesPath");
-            _env = env;
+            _uploadFilePath = Path.Combine(config.GetValue<string>("StoredFilesPath"), "Malfunction");
+            Directory.CreateDirectory(_uploadFilePath);
         }
 
         [BindProperty]
@@ -75,7 +72,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Validate
 
             if (requestFile == null || !System.IO.File.Exists(requestFile.AttachmentFilePath))
             {
-                return Page();
+                return NotFound();
             }
 
             var memoryStream = new MemoryStream();
@@ -88,14 +85,14 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Validate
             // Don't display the untrusted file name in the UI. HTML-encode the value.
             return File(memoryStream, FileHelpers.GetContentType(requestFile.AttachmentFilePath), WebUtility.HtmlEncode(requestFile.AttachmentName));
         }
-
+        // TODO 合并上下两个函数
         public async Task<IActionResult> OnGetDownloadPerformanceReportFileAsync(int id)
         {
             var requestFile = await _context.Validation.FindAsync(id);
 
             if (requestFile == null || !System.IO.File.Exists(requestFile.PerformanceReportFilePath))
             {
-                return Page();
+                return NotFound();
             }
 
             var memoryStream = new MemoryStream();
@@ -146,7 +143,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Validate
                 }
 
                 // 上传故障修复后性能验证报告
-                if (FileUpload.PerformanceReportFile != null && FileUpload.PerformanceReportFile.Length > 0)
+                if (FileUpload.PerformanceReportFile != null)
                 {
                     var formFileContent =
                         await FileHelpers.ProcessFormFile<Upload>(
@@ -158,26 +155,16 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Validate
                     }
 
                     var filename = Path.GetFileName(FileUpload.PerformanceReportFile.FileName);
-                    var filepath = Path.Combine(_env.ContentRootPath, _uploadFilePath, Guid.NewGuid().ToString() + "_" + filename);
-
-                    // 保存文件
-                    using (var fileStream = new FileStream(filepath, FileMode.Create))
-                    {
-                        await FileUpload.PerformanceReportFile.CopyToAsync(fileStream);
-                    }
-
-                    // 删除已上传的文件
-                    if (System.IO.File.Exists(Validation.PerformanceReportFilePath))
-                    {
-                        System.IO.File.Delete(Validation.PerformanceReportFilePath);
-                    }
+                    var filepath = FileHelpers.CreateFilePath(_uploadFilePath, filename);
+                    FileHelpers.SaveFile(formFileContent, filepath);
+                    FileHelpers.DeleteOlderFile(Validation.PerformanceReportFilePath);
 
                     Validation.PerformanceReportFilePath = filepath;
                     Validation.PerformanceReportFileName = filename;
                 }
 
                 // 上传附件
-                if (FileUpload.Attachment != null && FileUpload.Attachment.Length > 0)
+                if (FileUpload.Attachment != null)
                 {
                     var formFileContent =
                         await FileHelpers.ProcessFormFile<Upload>(
@@ -189,19 +176,9 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Validate
                     }
 
                     var filename = Path.GetFileName(FileUpload.Attachment.FileName);
-                    var filepath = Path.Combine(_env.ContentRootPath, _uploadFilePath, Guid.NewGuid().ToString() + "_" + filename);
-
-                    // 保存文件
-                    using (var fileStream = new FileStream(filepath, FileMode.Create))
-                    {
-                        await FileUpload.Attachment.CopyToAsync(fileStream);
-                    }
-
-                    // 删除已上传的文件
-                    if (System.IO.File.Exists(Validation.AttachmentFilePath))
-                    {
-                        System.IO.File.Delete(Validation.AttachmentFilePath);
-                    }
+                    var filepath = FileHelpers.CreateFilePath(_uploadFilePath, filename);
+                    FileHelpers.SaveFile(formFileContent, filepath);
+                    FileHelpers.DeleteOlderFile(Validation.AttachmentFilePath);
 
                     Validation.AttachmentFilePath = filepath;
                     Validation.AttachmentName = filename;

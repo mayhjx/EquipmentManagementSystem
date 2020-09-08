@@ -14,7 +14,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions.Servicing
 {
@@ -22,18 +21,16 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Servicing
     {
         private readonly long _fileSizeLimit;
         private readonly string _uploadFilePath;
-        private readonly IHostEnvironment _env;
 
         public EditModel(MalfunctionContext context,
             IAuthorizationService authorizationService,
             UserManager<User> userManager,
-            IConfiguration config,
-            IHostEnvironment env)
+            IConfiguration config)
             : base(context, authorizationService, userManager)
         {
             _fileSizeLimit = config.GetValue<long>("FileSizeLimit");
-            _uploadFilePath = config.GetValue<string>("StoredFilesPath");
-            _env = env;
+            _uploadFilePath = Path.Combine(config.GetValue<string>("StoredFilesPath"), "Malfunction");
+            Directory.CreateDirectory(_uploadFilePath);
         }
 
         public async Task<IActionResult> OnGetAsync(int id)
@@ -73,7 +70,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Servicing
 
             if (requestFile == null || !System.IO.File.Exists(requestFile.FilePath))
             {
-                return Page();
+                return NotFound();
             }
 
             var memoryStream = new MemoryStream();
@@ -137,7 +134,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Servicing
                 }
 
                 // 上传附件
-                if (FileUpload.FormFile != null && FileUpload.FormFile.Length > 0)
+                if (FileUpload.FormFile != null)
                 {
                     var formFileContent =
                         await FileHelpers.ProcessFormFile<Upload>(
@@ -149,19 +146,10 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Servicing
                     }
 
                     var filename = Path.GetFileName(FileUpload.FormFile.FileName);
-                    var filepath = Path.Combine(_env.ContentRootPath, _uploadFilePath, Guid.NewGuid().ToString() + "_" + filename);
+                    var filepath = FileHelpers.CreateFilePath(_uploadFilePath, filename);
 
-                    // 保存文件
-                    using (var fileStream = new FileStream(filepath, FileMode.Create))
-                    {
-                        await FileUpload.FormFile.CopyToAsync(fileStream);
-                    }
-
-                    // 删除已上传的文件
-                    if (System.IO.File.Exists(Repair.FilePath))
-                    {
-                        System.IO.File.Delete(Repair.FilePath);
-                    }
+                    FileHelpers.SaveFile(formFileContent, filepath);
+                    FileHelpers.DeleteOlderFile(Repair.FilePath);
 
                     Repair.FileName = filename;
                     Repair.FilePath = filepath;

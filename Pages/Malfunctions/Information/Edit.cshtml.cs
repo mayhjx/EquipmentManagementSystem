@@ -14,7 +14,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions.Information
 {
@@ -22,17 +21,15 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Information
     {
         private readonly long _fileSizeLimit;
         private readonly string _uploadFilePath;
-        private readonly IHostEnvironment _env;
         public EditModel(MalfunctionContext context,
             IAuthorizationService authorizationService,
             UserManager<User> userManager,
-            IConfiguration config,
-            IHostEnvironment env)
+            IConfiguration config)
             : base(context, authorizationService, userManager)
         {
             _fileSizeLimit = config.GetValue<long>("FileSizeLimit");
-            _uploadFilePath = config.GetValue<string>("StoredFilesPath");
-            _env = env;
+            _uploadFilePath = Path.Combine(config.GetValue<string>("StoredFilesPath"), "Malfunction");
+            Directory.CreateDirectory(_uploadFilePath);
         }
 
         public async Task<IActionResult> OnGetAsync(int id)
@@ -75,7 +72,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Information
 
             if (requestFile == null || !System.IO.File.Exists(requestFile.FilePath))
             {
-                return Page();
+                return NotFound();
             }
 
             var memoryStream = new MemoryStream();
@@ -135,12 +132,12 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Information
                     i => i.BeginTime, i => i.FoundedTime, i => i.Type, i => i.Part,
                     i => i.Phenomenon, i => i.Reason, i => i.Remark))
             {
-                // 上传附件
-                if (FileUpload.FormFile != null && FileUpload.FormFile.Length > 0)
+                if (FileUpload.FormFile != null)
                 {
+                    // 上传附件
                     var formFileContent =
-                        await FileHelpers.ProcessFormFile<Upload>(
-                            FileUpload.FormFile, ModelState, _fileSizeLimit);
+                    await FileHelpers.ProcessFormFile<Upload>(
+                        FileUpload.FormFile, ModelState, _fileSizeLimit);
 
                     if (!ModelState.IsValid)
                     {
@@ -148,19 +145,9 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Information
                     }
 
                     var filename = Path.GetFileName(FileUpload.FormFile.FileName);
-                    var filepath = Path.Combine(_env.ContentRootPath, _uploadFilePath, Guid.NewGuid().ToString() + "_" + filename);
-
-                    // 保存文件
-                    using (var fileStream = new FileStream(filepath, FileMode.Create))
-                    {
-                        await FileUpload.FormFile.CopyToAsync(fileStream);
-                    }
-
-                    // 删除已上传的文件
-                    if (System.IO.File.Exists(MalfunctionInfo.FilePath))
-                    {
-                        System.IO.File.Delete(MalfunctionInfo.FilePath);
-                    }
+                    var filepath = FileHelpers.CreateFilePath(_uploadFilePath, filename);
+                    FileHelpers.SaveFile(formFileContent, filepath);
+                    FileHelpers.DeleteOlderFile(MalfunctionInfo.FilePath);
 
                     MalfunctionInfo.FileName = filename;
                     MalfunctionInfo.FilePath = filepath;
