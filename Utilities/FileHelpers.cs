@@ -11,34 +11,13 @@ namespace EquipmentManagementSystem.Utilities
 {
     public class FileHelpers
     {
-
         public static async Task<byte[]> ProcessFormFile<T>(IFormFile formFile,
             ModelStateDictionary modelState, long sizeLimit)
         {
-
             //var fieldDisplayName = string.Empty;
 
             // 允许的文件后缀
-            string[] permittedExtensions = { ".zip", ".rar", ".csv", ".xlsx", ".xls", ".docx", ".doc", ".pptx", ".ppt", ".pdf", ".jpg", ".jpeg", ".png" };
-
-
-            // Use reflection to obtain the display name for the model
-            // property associated with this IFormFile. If a display
-            // name isn't found, error messages simply won't show
-            // a display name.
-            //MemberInfo property =
-            //        typeof(T).GetProperty(
-            //            formFile.Name.Substring(formFile.Name.IndexOf(".",
-            //            StringComparison.Ordinal) + 1));
-
-            //if (property != null)
-            //{
-            //    if (property.GetCustomAttribute(typeof(DisplayAttribute)) is
-            //        DisplayAttribute displayAttribute)
-            //    {
-            //        fieldDisplayName = $"{displayAttribute.Name}";
-            //    }
-            //}
+            string[] permittedExtensions = { ".txt", ".zip", ".rar", ".csv", ".xlsx", ".xls", ".docx", ".doc", ".pptx", ".ppt", ".pdf", ".jpg", ".jpeg", ".png" };
 
             // Don't trust the file name sent by the client. To display
             // the file name, HTML-encode the value.
@@ -80,8 +59,8 @@ namespace EquipmentManagementSystem.Utilities
                     if (!IsValidFileExtension(formFile.FileName, memoryStream, permittedExtensions))
                     {
                         modelState.AddModelError(formFile.Name,
-                            $"{trustedFileNameForDisplay} 文件类型不符， " +
-                            $"允许的文件类型为：{string.Join("，", permittedExtensions)}");
+                            $"{trustedFileNameForDisplay} 的文件类型不符， " +
+                            $"可接受的文件类型为：{string.Join("，", permittedExtensions)}。");
                     }
                     else
                     {
@@ -93,7 +72,7 @@ namespace EquipmentManagementSystem.Utilities
             {
                 modelState.AddModelError(formFile.Name,
                     $"上传文件({trustedFileNameForDisplay})失败，" +
-                    $"错误信息：{ex.HResult}");
+                    $"错误信息：{ex.HResult}。");
             }
 
             return new byte[0];
@@ -122,12 +101,12 @@ namespace EquipmentManagementSystem.Utilities
             return types[ext];
         }
 
-        private static Dictionary<string, string> GetMimeTypes()
+        public static Dictionary<string, string> GetMimeTypes()
         {
-            //{ ".zip", ".rar",  ".csv", ".xlsx", ".xls", ".docx", ".doc", ".pptx", ".ppt", ".pdf", ".jpg", ".jpeg", ".png" };
+            //{ ".txt", ".zip", ".rar",  ".csv", ".xlsx", ".xls", ".docx", ".doc", ".pptx", ".ppt", ".pdf", ".jpg", ".jpeg", ".png" };
             return new Dictionary<string, string>
             {
-
+                {".txt", "text/plain"},
                 {".zip", "application/zip" },
                 {".rar", "application/vnd.rar" },
                 {".csv", "text/csv"},
@@ -142,6 +121,34 @@ namespace EquipmentManagementSystem.Utilities
                 {".jpeg", "image/jpeg"},
                 {".png", "image/png"},
             };
+        }
+
+        public static string RemoveGuidStringInFileName(string filePath)
+        {
+            return Path.GetFileName(filePath).Split("_").LastOrDefault();
+        }
+
+        public static string CreateFilePath(string folderPath, string fileName)
+        {
+            // 生成文件路径，文件名加上Guid
+            return Path.Combine(folderPath, Guid.NewGuid().ToString() + "_" + fileName);
+        }
+
+        public static async void SaveFile(byte[] formFileContent, string filePath)
+        {
+            // 将文件写入硬盘
+            using (var fileStream = System.IO.File.Create(filePath))
+            {
+                await fileStream.WriteAsync(formFileContent);
+            }
+        }
+
+        public static void DeleteOlderFile(string filePath)
+        {
+            if (System.IO.File.Exists(filePath))
+            {
+                System.IO.File.Delete(filePath);
+            }
         }
     }
 }
