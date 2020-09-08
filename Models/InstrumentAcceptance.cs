@@ -19,14 +19,17 @@ namespace EquipmentManagementSystem.Models
 
         [Display(Name = "可行性报告")]
         public string FeasibilityReportFileName { get; set; }
+        [Display(Name = "可行性报告")]
         public string FeasibilityReportFilePath { get; set; }
 
         [Display(Name = "设备配置清单")]
         public string ConfigurationListFileName { get; set; }
+        [Display(Name = "设备配置清单")]
         public string ConfigurationListFilePath { get; set; }
 
         [Display(Name = "设备采购申请单")]
         public string PuchaseRequisitionFileName { get; set; }
+        [Display(Name = "设备采购申请单")]
         public string PuchaseRequisitionFilePath { get; set; }
 
         [Display(Name = "Demo设备")]
@@ -38,13 +41,14 @@ namespace EquipmentManagementSystem.Models
 
         [Display(Name = "设备安装说明")]
         public string InstallationNoteFileName { get; set; }
+        [Display(Name = "设备安装说明")]
         public string InstallationNoteFilePath { get; set; }
 
         [Display(Name = "预计到货日期")]
         [DataType(DataType.Date)]
         public DateTime? EstimatedArrivalDate { get; set; }
 
-        [Display(Name = "到货日期")]
+        [Display(Name = "实际到货日期")]
         [DataType(DataType.Date)]
         public DateTime? ArrivalDate { get; set; }
 
@@ -53,6 +57,7 @@ namespace EquipmentManagementSystem.Models
 
         [Display(Name = "清点证明")]
         public string InventoryCertificateFileName { get; set; }
+        [Display(Name = "清点证明")]
         public string InventoryCertificateFilePath { get; set; }
 
         [Display(Name = "备注")]
@@ -74,17 +79,20 @@ namespace EquipmentManagementSystem.Models
 
         [Display(Name = "设备调试验收证明")]
         public string FactoryAcceptanceCertificateFileName { get; set; }
+        [Display(Name = "设备调试验收证明")]
         public string FactoryAcceptanceCertificateFilePath { get; set; }
 
         [Display(Name = "服务报告")]
         public string ServiceReportFileName { get; set; }
+        [Display(Name = "服务报告")]
         public string ServiceReportFilePath { get; set; }
 
-        [Display(Name = "使用及维护培训？")]
+        [Display(Name = "使用及维护培训")]
         public bool IsTrainingUseAndMaintenance { get; set; }
 
         [Display(Name = "培训签到表")]
         public string TrainingSignInFormFileName { get; set; }
+        [Display(Name = "培训签到表")]
         public string TrainingSignInFormFilePath { get; set; }
 
         [Display(Name = "自行搭建")]
@@ -96,7 +104,7 @@ namespace EquipmentManagementSystem.Models
         [Display(Name = "备注")]
         public string MethodConstructionRemark { get; set; }
 
-        [Display(Name = "项目是否验收合格？")]
+        [Display(Name = "项目验收合格")]
         public bool IsAcceptance { get; set; }
 
         [Display(Name = "验收日期")]
@@ -105,38 +113,47 @@ namespace EquipmentManagementSystem.Models
 
         [Display(Name = "评估报告")]
         public string EvaluationReportFileName { get; set; }
+        [Display(Name = "评估报告")]
         public string EvaluationReportFilePath { get; set; }
 
         [Display(Name = "仪器设备履历表")]
         public string EquipmentResumeFileName { get; set; }
+        [Display(Name = "仪器设备履历表")]
         public string EquipmentResumeFilePath { get; set; }
 
         [Display(Name = "仪器设备档案目录表")]
         public string EquipmentFilesListFileName { get; set; }
+        [Display(Name = "仪器设备档案目录表")]
         public string EquipmentFilesListFilePath { get; set; }
 
         [Display(Name = "设备合格证")]
         public string EquipmentCertificateFileName { get; set; }
+        [Display(Name = "设备合格证")]
         public string EquipmentCertificateFilePath { get; set; }
 
         [Display(Name = "厂家生产许可证")]
         public string FactoryProductionLicenseFileName { get; set; }
+        [Display(Name = "厂家生产许可证")]
         public string FactoryProductionLicenseFilePath { get; set; }
 
         [Display(Name = "营业执照")]
         public string BusinessLicenseFileName { get; set; }
+        [Display(Name = "营业执照")]
         public string BusinessLicenseFilePath { get; set; }
 
         [Display(Name = "医疗器械注册证")]
         public string MedicalDeviceRegistrationCertificateFileName { get; set; }
+        [Display(Name = "医疗器械注册证")]
         public string MedicalDeviceRegistrationCertificateFilePath { get; set; }
 
         [Display(Name = "设备校准报告")] // 能不能在设备校准模块新建？
         public string EquipmentCalibrationReportFileName { get; set; }
+        [Display(Name = "设备校准报告")]
         public string EquipmentCalibrationReportFilePath { get; set; }
 
         [Display(Name = "设备验收报告")]
         public string EquipmentAcceptanceReportFileName { get; set; }
+        [Display(Name = "设备验收报告")]
         public string EquipmentAcceptanceReportFilePath { get; set; }
     }
 }
