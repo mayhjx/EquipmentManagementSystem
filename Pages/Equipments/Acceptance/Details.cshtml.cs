@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -8,9 +9,9 @@ namespace EquipmentManagementSystem.Pages.Equipments.Acceptance
 {
     public class DetailsModel : PageModel
     {
-        private readonly EquipmentManagementSystem.Data.EquipmentContext _context;
+        private readonly EquipmentContext _context;
 
-        public DetailsModel(EquipmentManagementSystem.Data.EquipmentContext context)
+        public DetailsModel(EquipmentContext context)
         {
             _context = context;
         }
