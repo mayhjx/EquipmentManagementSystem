@@ -1,12 +1,12 @@
-﻿using EquipmentManagementSystem.Authorization;
+﻿using System;
+using System.Threading.Tasks;
+using EquipmentManagementSystem.Authorization;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
 {
@@ -102,7 +102,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
             }
             catch (Exception ex)
             {
-                return new JsonResult($"删除失败，错误信息：{ex}");
+                return new JsonResult($"删除失败，请重试。错误信息：{ex}");
             }
 
         }
