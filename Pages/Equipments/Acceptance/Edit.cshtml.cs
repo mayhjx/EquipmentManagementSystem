@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Net.Mime;
 using System.Threading.Tasks;
@@ -55,6 +56,12 @@ namespace EquipmentManagementSystem.Pages.Equipments.Acceptance
             {
                 return NotFound();
             }
+
+            if (InstrumentAcceptance.IsArchived == true)
+            {
+                return RedirectToPage("./Details", new { id = InstrumentAcceptance.Id });
+            }
+
             return Page();
         }
 
@@ -447,10 +454,31 @@ namespace EquipmentManagementSystem.Pages.Equipments.Acceptance
                 #endregion
 
                 await _context.SaveChangesAsync();
-                return Page();
+                return RedirectToPage("Edit", new { id = InstrumentAcceptance.Id });
             }
 
             return Page();
+        }
+
+        public async Task<IActionResult> OnPostArchiveAsync(int id)
+        {
+            var instanceToArchived = await _context.InstrumentAcceptances.FirstOrDefaultAsync(m => m.Id == id);
+
+            if (instanceToArchived == null)
+            {
+                return new JsonResult("未找到该记录");
+            }
+
+            try
+            {
+                instanceToArchived.IsArchived = true;
+                await _context.SaveChangesAsync();
+                return new JsonResult("归档成功！");
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult($"归档失败，请重试。错误信息：{ex}");
+            }
         }
 
         public class Upload

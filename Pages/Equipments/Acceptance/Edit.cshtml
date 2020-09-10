@@ -21,6 +21,10 @@
                         <label asp-for="InstrumentAcceptance.CreatedTime"></label>：
                         @Html.DisplayFor(model => Model.InstrumentAcceptance.CreatedTime)
                     </li>
+                    <li class="list-group-item border-0">
+                        <label asp-for="InstrumentAcceptance.IsArchived"></label>：
+                        @(Model.InstrumentAcceptance.IsArchived ? "是" : "否")
+                    </li>
                 </ul>
             </div>
         </div>
@@ -76,6 +80,7 @@
                 }
             }
         }
+
         <div class="row">
             <div class="col-12">
                 <form method="post" enctype="multipart/form-data">
@@ -116,7 +121,8 @@
                                 </div>
                                 <div class="form-group form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" asp-for="InstrumentAcceptance.IsDemo" /> @Html.DisplayNameFor(model => model.InstrumentAcceptance.IsDemo)
+                                        <input class="form-check-input" asp-for="InstrumentAcceptance.IsDemo" />
+                                        @Html.DisplayNameFor(model => model.InstrumentAcceptance.IsDemo)
                                     </label>
                                 </div>
                             </div>
@@ -381,7 +387,29 @@
                                     </div>
                                 </div>
                             </div>
-                            <input type="button" value="归档" class="btn btn-outline-primary float-right" style="margin-right:10px;" />
+
+                            <button type="button" class="btn btn-outline-primary float-right" data-toggle="modal" data-target="#modal-archive" style="margin-right:10px;">
+                                归档
+                            </button>
+                            <div class="modal fade" id="modal-archive">
+                                <div class="modal-dialog modal-sm">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">提示</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>确认归档？</p>
+                                        </div>
+                                        <div class="modal-footer justify-content-between">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                            <button id="archiveBtn" type="button" class="btn btn-primary">确认</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -406,6 +434,31 @@
         $("#deleteBtn").click(function () {
              var options = {};
              options.url = "./Delete?id=@Model.InstrumentAcceptance.Id&handler=Delete";
+             options.type = "POST";
+
+             options.beforeSend = function (xhr) {
+                 xhr.setRequestHeader("MY-XSRF-TOKEN",
+                     $('input:hidden[name="__RequestVerificationToken"]').val());
+             };
+
+            options.success = function (msg) {
+                alert(msg);
+             };
+
+             options.error = function (msg) {
+                 alert(msg);
+             };
+
+             options.complete = function () {
+                 location = "Index";
+             };
+
+             $.ajax(options);
+        });
+
+        $("#archiveBtn").click(function () {
+             var options = {};
+             options.url = "./Edit?id=@Model.InstrumentAcceptance.Id&handler=Archive";
              options.type = "POST";
 
              options.beforeSend = function (xhr) {
