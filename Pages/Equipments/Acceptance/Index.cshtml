@@ -7,12 +7,12 @@
 
 
 <div class="card">
-    <h4 class="card-header">
-        设备一览
-        <a asp-page="Create">
-            <input type="button" class="btn btn-outline-primary btn-sm" value="新增" style="margin-left: 10px;">
-        </a>
-    </h4>
+    <div class="card-header">
+        <h4>设备一览</h4>
+        <form method="post">
+            <input type="submit" class="btn btn-outline-primary btn-sm" asp-page="Create" value="新增" style="margin-left: 10px;">
+        </form>
+    </div>
     <div class="card-body">
         <table id="index" class="table table-hover">
             <thead>
@@ -22,6 +22,9 @@
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.InstrumentAcceptance[0].Creator)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.InstrumentAcceptance[0].InstrumentID)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.InstrumentAcceptance[0].ArrivalDate)
@@ -44,6 +47,9 @@
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Creator)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.InstrumentID)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.ArrivalDate)
