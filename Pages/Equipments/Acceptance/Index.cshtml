@@ -7,11 +7,15 @@
 
 
 <div class="card">
-    <div class="card-header">
-        <h4>设备一览</h4>
-        <form method="post">
-            <input type="submit" class="btn btn-outline-primary btn-sm" asp-page="Create" value="新增" style="margin-left: 10px;">
-        </form>
+    <div class="card-header p-1">
+        <div class="row">
+            <form method="post" class="form-row mt-2 ml-4">
+                <h4>设备一览</h4>
+                <input type="submit" class="btn btn-outline-primary btn-sm" asp-page="Create" value="新增" style="margin-left: 10px;">
+            </form>
+
+        </div>
+
     </div>
     <div class="card-body">
         <table id="index" class="table table-hover">

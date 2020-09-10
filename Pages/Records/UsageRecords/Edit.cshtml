@@ -15,7 +15,7 @@
     </div>
     <div class="card-body">
         <div class="row">
-            <div class="col-12 col-xl-3">
+            <div class="col-12 col-xl-4">
                 <form method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="UsageRecord.Id" />
@@ -192,7 +192,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-xl-4">
                 <a asp-page="../Index">返回</a>
                 @if (signInManager.IsSignedIn(User) && (await AuthorizationService.AuthorizeAsync(User, Model.UsageRecord, Operations.Delete)).Succeeded)
                 {
