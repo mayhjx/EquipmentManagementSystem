@@ -1,23 +1,26 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
+using EquipmentManagementSystem.Pages.Instruments;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace EquipmentManagementSystem.Pages.Equipments.Acceptance
 {
-    public class CreateModel : PageModel
+    public class CreateModel : BasePageModel
     {
-        private readonly EquipmentContext _context;
-
-        public CreateModel(EquipmentContext context)
+        public CreateModel(EquipmentContext context,
+            UserManager<User> userManager,
+            IAuthorizationService authorizationService)
+            : base(context, userManager, authorizationService)
         {
-            _context = context;
         }
 
         public IActionResult OnGet()
         {
-            return Page();
+            return RedirectToPage("./Index");
         }
 
         [BindProperty]
@@ -32,10 +35,14 @@ namespace EquipmentManagementSystem.Pages.Equipments.Acceptance
                 return Page();
             }
 
+            InstrumentAcceptance.CreatedTime = DateTime.Now;
+            InstrumentAcceptance.Creator = _userManager.GetUserAsync(User).Result.Name;
+
             _context.InstrumentAcceptances.Add(InstrumentAcceptance);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Edit", new { id = InstrumentAcceptance.Id });
+            //return RedirectToPage("./Index");
         }
     }
 }
