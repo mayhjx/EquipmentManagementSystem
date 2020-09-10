@@ -12,13 +12,13 @@
     <div class="card-body">
         <div class="row">
             <div class="col-12">
-                <ul class="list-group list-group-horizontal">
+                <ul class="list-group list-group-horizontal-lg">
                     <li class="list-group-item border-0">
-                        <label asp-for="InstrumentAcceptance.Creator" class="control-label"></label>：
+                        <label asp-for="InstrumentAcceptance.Creator"></label>：
                         @Html.DisplayFor(model => Model.InstrumentAcceptance.Creator)
                     </li>
                     <li class="list-group-item border-0">
-                        <label asp-for="InstrumentAcceptance.CreatedTime" class="control-label"></label>：
+                        <label asp-for="InstrumentAcceptance.CreatedTime"></label>：
                         @Html.DisplayFor(model => Model.InstrumentAcceptance.CreatedTime)
                     </li>
                 </ul>
@@ -121,8 +121,7 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="card card-outline card-blue disabledDIV">
+                        <div class="card card-outline card-blue">
                             <div class="card-header">
                                 安装准备
                             </div>
@@ -176,8 +175,7 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="card card-outline card-blue disabledDIV">
+                        <div class="card card-outline card-blue">
                             <div class="card-header">
                                 安装验收
                             </div>
@@ -193,11 +191,9 @@
                                     <span asp-validation-for="InstrumentAcceptance.InstallationRemark" class="text-danger"></span>
                                 </div>
                                 <hr />
-                                <div class="form-group mb-0">
-                                    <label class="control-label">设备验收和调试</label>
-                                </div>
                                 <div class="form-group my-0">
-                                    <label class="form-check-label">
+                                    <label class="control-label">设备验收和调试</label>
+                                    <label class="form-check-label ml-4">
                                         <input class="form-group" asp-for="InstrumentAcceptance.IsFactoryAcceptance" />
                                         @Html.DisplayNameFor(model => model.InstrumentAcceptance.IsFactoryAcceptance)
                                     </label>
@@ -263,6 +259,11 @@
                                     </label>
                                 </div>
                                 <div class="form-group">
+                                    <label asp-for="InstrumentAcceptance.AcceptanceDate" class="control-label"></label>
+                                    <input asp-for="InstrumentAcceptance.AcceptanceDate" class="form-control" />
+                                    <span asp-validation-for="InstrumentAcceptance.AcceptanceDate" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
                                     <label asp-for="InstrumentAcceptance.EvaluationReportFilePath" class="control-label"></label>
                                     <p>
                                         @{
@@ -273,8 +274,7 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="card card-outline card-blue disabledDIV">
+                        <div class="card card-outline card-blue">
                             <div class="card-header">
                                 档案整理
                             </div>
@@ -354,11 +354,35 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <input type="submit" value="保存" class="btn btn-primary mt-3" />
-                    </div>
-                    <div>
-                        <a asp-page="./Index">返回</a>
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <a asp-page="./Index"><input type="button" class="btn btn-default" value="返回" style="margin-right:10px;" /></a>
+                            <input type="submit" value="保存" class="btn btn-primary" />
+                            @Html.AntiForgeryToken()
+                            <button type="button" class="btn btn-outline-danger  float-right" data-toggle="modal" data-target="#modal-delete">
+                                删除
+                            </button>
+                            <div class="modal fade" id="modal-delete">
+                                <div class="modal-dialog modal-sm">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">警告</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>确认删除该记录？</p>
+                                        </div>
+                                        <div class="modal-footer justify-content-between">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                            <button id="deleteBtn" type="button" class="btn btn-danger">确认</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="button" value="归档" class="btn btn-outline-primary float-right" style="margin-right:10px;" />
+                        </div>
                     </div>
                 </form>
             </div>
@@ -377,6 +401,31 @@
             $('input.form-control-file').change(function () {
                 $('form').submit();
             });
+        });
+
+        $("#deleteBtn").click(function () {
+             var options = {};
+             options.url = "./Delete?id=@Model.InstrumentAcceptance.Id&handler=Delete";
+             options.type = "POST";
+
+             options.beforeSend = function (xhr) {
+                 xhr.setRequestHeader("MY-XSRF-TOKEN",
+                     $('input:hidden[name="__RequestVerificationToken"]').val());
+             };
+
+            options.success = function (msg) {
+                alert(msg);
+             };
+
+             options.error = function (msg) {
+                 alert(msg);
+             };
+
+             options.complete = function () {
+                 location = "Index";
+             };
+
+             $.ajax(options);
         });
     </script>
 }

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -18,39 +19,73 @@ namespace EquipmentManagementSystem.Pages.Equipments.Acceptance
         [BindProperty]
         public InstrumentAcceptance InstrumentAcceptance { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public IActionResult OnGet(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            return RedirectToPage("Index");
+            //if (id == null)
+            //{
+            //    return NotFound();
+            //}
 
-            InstrumentAcceptance = await _context.InstrumentAcceptances
-                .FirstOrDefaultAsync(m => m.Id == id);
+            //InstrumentAcceptance = await _context.InstrumentAcceptances
+            //    .FirstOrDefaultAsync(m => m.Id == id);
 
-            if (InstrumentAcceptance == null)
-            {
-                return NotFound();
-            }
-            return Page();
+            //if (InstrumentAcceptance == null)
+            //{
+            //    return NotFound();
+            //}
+            //return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public IActionResult OnPost(int? id)
         {
-            if (id == null)
+            return RedirectToPage("Index");
+
+            //if (id == null)
+            //{
+            //    return NotFound();
+            //}
+
+            //InstrumentAcceptance = await _context.InstrumentAcceptances.FindAsync(id);
+
+            //if (InstrumentAcceptance != null)
+            //{
+            //    _context.InstrumentAcceptances.Remove(InstrumentAcceptance);
+            //    await _context.SaveChangesAsync();
+            //}
+
+            //return RedirectToPage("./Index");
+        }
+
+        public async Task<IActionResult> OnPostDeleteAsync(int id)
+        {
+            var instrumentAcceptanceToDelete = await _context.InstrumentAcceptances
+                                        .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (instrumentAcceptanceToDelete == null)
             {
-                return NotFound();
+                return new JsonResult("未找到该记录");
             }
 
-            InstrumentAcceptance = await _context.InstrumentAcceptances.FindAsync(id);
+            //var isAuthorized = await _authorizationService.AuthorizeAsync(User, InstrumentAcceptance, Operations.Delete);
 
-            if (InstrumentAcceptance != null)
+            //if (!isAuthorized.Succeeded)
+            //{
+            //    return new JsonResult("权限不足");
+            //}
+
+            try
             {
-                _context.InstrumentAcceptances.Remove(InstrumentAcceptance);
+                _context.InstrumentAcceptances.Remove(instrumentAcceptanceToDelete);
                 await _context.SaveChangesAsync();
+                return new JsonResult("删除成功！");
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult($"删除失败，请重试。错误信息：{ex}");
             }
 
-            return RedirectToPage("./Index");
         }
+
     }
 }
