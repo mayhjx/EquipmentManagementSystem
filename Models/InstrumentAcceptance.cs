@@ -70,7 +70,7 @@ namespace EquipmentManagementSystem.Models
         [Display(Name = "备注")]
         public string InstallationRemark { get; set; }
 
-        [Display(Name = "厂家是否验收合格？")]
+        [Display(Name = "厂家验收合格")]
         public bool IsFactoryAcceptance { get; set; }
 
         [Display(Name = "厂家验收日期")]
@@ -155,5 +155,8 @@ namespace EquipmentManagementSystem.Models
         public string EquipmentAcceptanceReportFileName { get; set; }
         [Display(Name = "设备验收报告")]
         public string EquipmentAcceptanceReportFilePath { get; set; }
+
+        [Display(Name = "是否已归档")]
+        public bool IsArchived { get; set; }
     }
 }
