@@ -4,26 +4,32 @@ using System.Net.Mime;
 using System.Threading.Tasks;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
+using EquipmentManagementSystem.Pages.Instruments;
 using EquipmentManagementSystem.Utilities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace EquipmentManagementSystem.Pages.Equipments.Acceptance
 {
-    public class EditModel : PageModel
+    public class EditModel : BasePageModel
     {
-        private readonly EquipmentContext _context;
         private readonly IWebHostEnvironment _env;
         private readonly long _fileSizeLimit;
         private readonly string _uploadFilePath;
-        public EditModel(EquipmentContext context, IConfiguration config, IWebHostEnvironment env)
+
+        public EditModel(EquipmentContext context,
+            IWebHostEnvironment env,
+            UserManager<User> userManager,
+            IAuthorizationService authorizationService,
+            IConfiguration config)
+            : base(context, userManager, authorizationService)
         {
             _env = env;
-            _context = context;
             _fileSizeLimit = config.GetValue<long>("FileSizeLimit");
             _uploadFilePath = Path.Combine(config.GetValue<string>("StoredFilesPath"), "InstrumentAcceptance");
             Directory.CreateDirectory(_uploadFilePath);
@@ -91,6 +97,7 @@ namespace EquipmentManagementSystem.Pages.Equipments.Acceptance
                         return Page();
                     }
 
+                    // 如果文件名包含+的话，前端查看文件时会出现404.11 双重转义错误
                     string fileName = Path.GetFileName(FileUpload.FeasibilityReportFile.FileName);
                     string filePath = FileHelpers.CreateFilePath(_uploadFilePath, fileName);
 
