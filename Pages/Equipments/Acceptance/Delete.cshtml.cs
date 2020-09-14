@@ -55,7 +55,7 @@ namespace EquipmentManagementSystem.Pages.Equipments.Acceptance
                 FileHelpers.DeleteOlderFile(instrumentAcceptanceToDelete.PuchaseRequisitionFilePath);
                 FileHelpers.DeleteOlderFile(instrumentAcceptanceToDelete.InstallationNoteFilePath);
                 FileHelpers.DeleteOlderFile(instrumentAcceptanceToDelete.InventoryCertificateFilePath);
-                FileHelpers.DeleteOlderFile(instrumentAcceptanceToDelete.FactoryAcceptanceCertificateFilePath);
+                FileHelpers.DeleteOlderFile(instrumentAcceptanceToDelete.FactoryAcceptanceReportFilePath);
                 FileHelpers.DeleteOlderFile(instrumentAcceptanceToDelete.ServiceReportFilePath);
                 FileHelpers.DeleteOlderFile(instrumentAcceptanceToDelete.TrainingSignInFormFilePath);
                 FileHelpers.DeleteOlderFile(instrumentAcceptanceToDelete.EvaluationReportFilePath);

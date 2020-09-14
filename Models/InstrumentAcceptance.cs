@@ -17,9 +17,9 @@ namespace EquipmentManagementSystem.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
         public DateTime? CreatedTime { get; set; }
 
-        [Display(Name = "可行性报告")]
+        [Display(Name = "设备请购可行性报告")]
         public string FeasibilityReportFileName { get; set; }
-        [Display(Name = "可行性报告")]
+        [Display(Name = "设备请购可行性报告")]
         public string FeasibilityReportFilePath { get; set; }
 
         [Display(Name = "设备配置清单")]
@@ -55,9 +55,9 @@ namespace EquipmentManagementSystem.Models
         [Display(Name = "是否齐全？")]
         public bool IsInventoryComplete { get; set; }
 
-        [Display(Name = "清点证明")]
+        [Display(Name = "设备清点证明")]
         public string InventoryCertificateFileName { get; set; }
-        [Display(Name = "清点证明")]
+        [Display(Name = "设备清点证明")]
         public string InventoryCertificateFilePath { get; set; }
 
         [Display(Name = "备注")]
@@ -77,15 +77,18 @@ namespace EquipmentManagementSystem.Models
         [DataType(DataType.Date)]
         public DateTime? FactoryAcceptanceDate { get; set; }
 
-        [Display(Name = "设备调试验收证明")]
-        public string FactoryAcceptanceCertificateFileName { get; set; }
-        [Display(Name = "设备调试验收证明")]
-        public string FactoryAcceptanceCertificateFilePath { get; set; }
+        [Display(Name = "设备调试验收报告")]
+        public string FactoryAcceptanceReportFileName { get; set; }
+        [Display(Name = "设备调试验收报告")]
+        public string FactoryAcceptanceReportFilePath { get; set; }
 
-        [Display(Name = "服务报告")]
+        [Display(Name = "设备安装服务报告")]
         public string ServiceReportFileName { get; set; }
-        [Display(Name = "服务报告")]
+        [Display(Name = "设备安装服务报告")]
         public string ServiceReportFilePath { get; set; }
+
+        [Display(Name = "备注")]
+        public string FactoryAcceptanceRemark { get; set; }
 
         [Display(Name = "使用及维护培训")]
         public bool IsTrainingUseAndMaintenance { get; set; }
@@ -107,9 +110,9 @@ namespace EquipmentManagementSystem.Models
         [Display(Name = "项目验收合格")]
         public bool IsAcceptance { get; set; }
 
-        [Display(Name = "验收日期")]
+        [Display(Name = "项目验收日期")]
         [DataType(DataType.Date)]
-        public DateTime? AcceptanceDate { get; set; }
+        public DateTime? ItemAcceptanceDate { get; set; }
 
         [Display(Name = "评估报告")]
         public string EvaluationReportFileName { get; set; }
@@ -126,9 +129,9 @@ namespace EquipmentManagementSystem.Models
         [Display(Name = "仪器设备档案目录表")]
         public string EquipmentFilesListFilePath { get; set; }
 
-        [Display(Name = "设备合格证")]
+        [Display(Name = "产品合格证")]
         public string EquipmentCertificateFileName { get; set; }
-        [Display(Name = "设备合格证")]
+        [Display(Name = "产品合格证")]
         public string EquipmentCertificateFilePath { get; set; }
 
         [Display(Name = "厂家生产许可证")]
@@ -146,9 +149,9 @@ namespace EquipmentManagementSystem.Models
         [Display(Name = "医疗器械注册证")]
         public string MedicalDeviceRegistrationCertificateFilePath { get; set; }
 
-        [Display(Name = "设备校准报告")] // 能不能在设备校准模块新建？
+        [Display(Name = "校准/检定证书")] // 能不能在设备校准模块新建？
         public string EquipmentCalibrationReportFileName { get; set; }
-        [Display(Name = "设备校准报告")]
+        [Display(Name = "校准/检定证书")]
         public string EquipmentCalibrationReportFilePath { get; set; }
 
         [Display(Name = "设备验收报告")]
@@ -158,5 +161,9 @@ namespace EquipmentManagementSystem.Models
 
         [Display(Name = "是否已归档")]
         public bool IsArchived { get; set; }
+
+        [Display(Name = "设备验收日期")]
+        [DataType(DataType.Date)]
+        public DateTime? EquipmentAcceptanceDate { get; set; }
     }
 }

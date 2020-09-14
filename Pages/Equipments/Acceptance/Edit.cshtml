@@ -87,8 +87,8 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="InstrumentAcceptance.Id" />
                     <div class="card-deck">
-                        <div class="card card-outline card-blue">
-                            <div class="card-header">
+                        <div class="card card-outline card-red">
+                            <div class="card-header h4 text-center">
                                 设备请购
                             </div>
                             <div class="card-body">
@@ -127,8 +127,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card card-outline card-blue">
-                            <div class="card-header">
+                        <div class="card card-outline card-yellow">
+                            <div class="card-header h4 text-center">
                                 安装准备
                             </div>
                             <div class="card-body">
@@ -182,7 +182,7 @@
                             </div>
                         </div>
                         <div class="card card-outline card-blue">
-                            <div class="card-header">
+                            <div class="card-header h4 text-center">
                                 安装验收
                             </div>
                             <div class="card-body">
@@ -210,13 +210,13 @@
                                     <span asp-validation-for="InstrumentAcceptance.FactoryAcceptanceDate" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label asp-for="InstrumentAcceptance.FactoryAcceptanceCertificateFilePath" class="control-label"></label>
+                                    <label asp-for="InstrumentAcceptance.FactoryAcceptanceReportFilePath" class="control-label"></label>
                                     <p>
                                         @{
-                                            FileManager(Model.InstrumentAcceptance.FactoryAcceptanceCertificateFilePath, "FileUpload.FactoryAcceptanceCertificateFile");
+                                            FileManager(Model.InstrumentAcceptance.FactoryAcceptanceReportFilePath, "FileUpload.FactoryAcceptanceReportFile");
                                         }
                                     </p>
-                                    <span asp-validation-for="FileUpload.FactoryAcceptanceCertificateFile" class="text-danger"></span>
+                                    <span asp-validation-for="FileUpload.FactoryAcceptanceReportFile" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="InstrumentAcceptance.ServiceReportFilePath" class="control-label"></label>
@@ -265,9 +265,9 @@
                                     </label>
                                 </div>
                                 <div class="form-group">
-                                    <label asp-for="InstrumentAcceptance.AcceptanceDate" class="control-label"></label>
-                                    <input asp-for="InstrumentAcceptance.AcceptanceDate" class="form-control" />
-                                    <span asp-validation-for="InstrumentAcceptance.AcceptanceDate" class="text-danger"></span>
+                                    <label asp-for="InstrumentAcceptance.ItemAcceptanceDate" class="control-label"></label>
+                                    <input asp-for="InstrumentAcceptance.ItemAcceptanceDate" class="form-control" />
+                                    <span asp-validation-for="InstrumentAcceptance.ItemAcceptanceDate" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="InstrumentAcceptance.EvaluationReportFilePath" class="control-label"></label>
@@ -280,8 +280,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card card-outline card-blue">
-                            <div class="card-header">
+                        <div class="card card-outline card-green">
+                            <div class="card-header h4 text-center">
                                 档案整理
                             </div>
                             <div class="card-body">

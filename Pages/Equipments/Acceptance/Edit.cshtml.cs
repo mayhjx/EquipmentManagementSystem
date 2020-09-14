@@ -90,7 +90,7 @@ namespace EquipmentManagementSystem.Pages.Equipments.Acceptance
                 i => i.IsFactoryAcceptance, i => i.FactoryAcceptanceDate,
                 i => i.IsTrainingUseAndMaintenance,
                 i => i.IsSelfBuilt, i => i.IsEngineerAssistance, i => i.MethodConstructionRemark,
-                i => i.IsAcceptance, i => i.AcceptanceDate))
+                i => i.IsAcceptance, i => i.ItemAcceptanceDate, i => i.EquipmentAcceptanceDate))
             {
                 #region 报告上传
                 // 可行性报告
@@ -201,24 +201,24 @@ namespace EquipmentManagementSystem.Pages.Equipments.Acceptance
                 }
 
                 // 设备调试验收证明
-                if (FileUpload.FactoryAcceptanceCertificateFile != null)
+                if (FileUpload.FactoryAcceptanceReportFile != null)
                 {
                     var formFileContent = await FileHelpers.ProcessFormFile<Upload>(
-                                            FileUpload.FactoryAcceptanceCertificateFile, ModelState, _fileSizeLimit);
+                                            FileUpload.FactoryAcceptanceReportFile, ModelState, _fileSizeLimit);
 
                     if (!ModelState.IsValid)
                     {
                         return Page();
                     }
 
-                    string fileName = Path.GetFileName(FileUpload.FactoryAcceptanceCertificateFile.FileName);
+                    string fileName = Path.GetFileName(FileUpload.FactoryAcceptanceReportFile.FileName);
                     string filePath = FileHelpers.CreateFilePath(_uploadFilePath, fileName);
 
                     FileHelpers.SaveFile(formFileContent, filePath);
-                    FileHelpers.DeleteOlderFile(InstrumentAcceptance.FactoryAcceptanceCertificateFilePath);
+                    FileHelpers.DeleteOlderFile(InstrumentAcceptance.FactoryAcceptanceReportFilePath);
 
-                    InstrumentAcceptance.FactoryAcceptanceCertificateFilePath = filePath;
-                    InstrumentAcceptance.FactoryAcceptanceCertificateFileName = fileName;
+                    InstrumentAcceptance.FactoryAcceptanceReportFilePath = filePath;
+                    InstrumentAcceptance.FactoryAcceptanceReportFileName = fileName;
                 }
 
                 // 服务报告
@@ -483,7 +483,7 @@ namespace EquipmentManagementSystem.Pages.Equipments.Acceptance
 
         public class Upload
         {
-            [Display(Name = "可行性报告")]
+            [Display(Name = "设备请购可行性报告")]
             public IFormFile FeasibilityReportFile { get; set; }
 
             [Display(Name = "设备配置清单")]
@@ -495,13 +495,13 @@ namespace EquipmentManagementSystem.Pages.Equipments.Acceptance
             [Display(Name = "设备安装说明")]
             public IFormFile InstallationNoteFile { get; set; }
 
-            [Display(Name = "清点证明")]
+            [Display(Name = "设备清点证明")]
             public IFormFile InventoryCertificateFile { get; set; }
 
-            [Display(Name = "设备调试验收证明")]
-            public IFormFile FactoryAcceptanceCertificateFile { get; set; }
+            [Display(Name = "设备调试验收报告")]
+            public IFormFile FactoryAcceptanceReportFile { get; set; }
 
-            [Display(Name = "服务报告")]
+            [Display(Name = "设备安装服务报告")]
             public IFormFile ServiceReportFile { get; set; }
 
             [Display(Name = "培训签到表")]
@@ -516,7 +516,7 @@ namespace EquipmentManagementSystem.Pages.Equipments.Acceptance
             [Display(Name = "仪器设备档案目录表")]
             public IFormFile EquipmentFilesListFile { get; set; }
 
-            [Display(Name = "设备合格证")]
+            [Display(Name = "产品合格证")]
             public IFormFile EquipmentCertificateFile { get; set; }
 
             [Display(Name = "厂家生产许可证")]
@@ -528,7 +528,7 @@ namespace EquipmentManagementSystem.Pages.Equipments.Acceptance
             [Display(Name = "医疗器械注册证")]
             public IFormFile MedicalDeviceRegistrationCertificateFile { get; set; }
 
-            [Display(Name = "设备校准报告")] // 能不能在设备校准模块新建？
+            [Display(Name = "校准/检定证书")]
             public IFormFile EquipmentCalibrationReportFile { get; set; }
 
             [Display(Name = "设备验收报告")]

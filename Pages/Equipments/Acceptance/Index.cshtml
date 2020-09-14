@@ -37,7 +37,10 @@
                         @Html.DisplayNameFor(model => model.InstrumentAcceptance[0].InstallationDate)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.InstrumentAcceptance[0].AcceptanceDate)
+                        @Html.DisplayNameFor(model => model.InstrumentAcceptance[0].ItemAcceptanceDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.InstrumentAcceptance[0].EquipmentAcceptanceDate)
                     </th>
                     <th></th>
                 </tr>
@@ -62,7 +65,10 @@
                             @Html.DisplayFor(modelItem => item.InstallationDate)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.AcceptanceDate)
+                            @Html.DisplayFor(modelItem => item.ItemAcceptanceDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EquipmentAcceptanceDate)
                         </td>
                         <td>
                             <a asp-page="./Edit" asp-route-id="@item.Id"><i class="fa fa-pencil-alt fa-lg" aria-hidden="true"></i></a>@*编辑*@
