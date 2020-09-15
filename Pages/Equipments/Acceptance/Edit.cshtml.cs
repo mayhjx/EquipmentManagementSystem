@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
-using System.Net.Mime;
 using System.Threading.Tasks;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
@@ -57,19 +56,14 @@ namespace EquipmentManagementSystem.Pages.Equipments.Acceptance
                 return NotFound();
             }
 
-            if (InstrumentAcceptance.IsArchived == true)
-            {
-                return RedirectToPage("./Details", new { id = InstrumentAcceptance.Id });
-            }
-
             return Page();
         }
 
-        public IActionResult OnGetDownload(string filePath)
-        {
-            var fileName = FileHelpers.RemoveGuidStringInFileName(filePath);
-            return PhysicalFile(Path.Combine(_env.ContentRootPath, filePath), MediaTypeNames.Application.Octet, fileName);
-        }
+        //public IActionResult OnGetDownload(string filePath)
+        //{
+        //    var fileName = FileHelpers.RemoveGuidStringInFileName(filePath);
+        //    return PhysicalFile(Path.Combine(_env.ContentRootPath, filePath), MediaTypeNames.Application.Octet, fileName);
+        //}
 
         public async Task<IActionResult> OnPostAsync(int id)
         {
@@ -87,7 +81,7 @@ namespace EquipmentManagementSystem.Pages.Equipments.Acceptance
                 i => i.EstimatedArrivalDate, i => i.ArrivalDate,
                 i => i.IsInventoryComplete, i => i.InventoryRemark,
                 i => i.InstallationDate, i => i.InstallationRemark,
-                i => i.IsFactoryAcceptance, i => i.FactoryAcceptanceDate,
+                i => i.IsFactoryAcceptance, i => i.FactoryAcceptanceDate, i => i.FactoryAcceptanceRemark,
                 i => i.IsTrainingUseAndMaintenance,
                 i => i.IsSelfBuilt, i => i.IsEngineerAssistance, i => i.MethodConstructionRemark,
                 i => i.IsAcceptance, i => i.ItemAcceptanceDate, i => i.EquipmentAcceptanceDate))
