@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Threading.Tasks;
+using EquipmentManagementSystem.Authorization;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using EquipmentManagementSystem.Pages.Instruments;
@@ -56,6 +57,14 @@ namespace EquipmentManagementSystem.Pages.Equipments.Acceptance
                 return NotFound();
             }
 
+            var isAuthorized = await _authorizationService.AuthorizeAsync(
+                                                        User, InstrumentAcceptance,
+                                                        Operations.Update);
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+
             return Page();
         }
 
@@ -72,6 +81,14 @@ namespace EquipmentManagementSystem.Pages.Equipments.Acceptance
             if (InstrumentAcceptance == null)
             {
                 return NotFound();
+            }
+
+            var isAuthorized = await _authorizationService.AuthorizeAsync(
+                                                       User, InstrumentAcceptance,
+                                                       Operations.Update);
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
             }
 
             if (await TryUpdateModelAsync<InstrumentAcceptance>(
@@ -461,6 +478,13 @@ namespace EquipmentManagementSystem.Pages.Equipments.Acceptance
             if (instanceToArchived == null)
             {
                 return new JsonResult("未找到该记录");
+            }
+
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, InstrumentAcceptance, Operations.Update);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return new JsonResult("权限不足");
             }
 
             try

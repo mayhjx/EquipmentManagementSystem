@@ -1,20 +1,24 @@
 ﻿using System;
 using System.Threading.Tasks;
+using EquipmentManagementSystem.Authorization;
+using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
+using EquipmentManagementSystem.Pages.Instruments;
 using EquipmentManagementSystem.Utilities;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace EquipmentManagementSystem.Pages.Equipments.Acceptance
 {
-    public class DeleteModel : PageModel
+    public class DeleteModel : BasePageModel
     {
-        private readonly EquipmentManagementSystem.Data.EquipmentContext _context;
-
-        public DeleteModel(EquipmentManagementSystem.Data.EquipmentContext context)
+        public DeleteModel(EquipmentContext context,
+            UserManager<User> userManager,
+            IAuthorizationService authorizationService)
+            : base(context, userManager, authorizationService)
         {
-            _context = context;
         }
 
         [BindProperty]
@@ -40,12 +44,12 @@ namespace EquipmentManagementSystem.Pages.Equipments.Acceptance
                 return new JsonResult("未找到该记录");
             }
 
-            //var isAuthorized = await _authorizationService.AuthorizeAsync(User, InstrumentAcceptance, Operations.Delete);
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, InstrumentAcceptance, Operations.Delete);
 
-            //if (!isAuthorized.Succeeded)
-            //{
-            //    return new JsonResult("权限不足");
-            //}
+            if (!isAuthorized.Succeeded)
+            {
+                return new JsonResult("权限不足");
+            }
 
             try
             {
@@ -76,8 +80,6 @@ namespace EquipmentManagementSystem.Pages.Equipments.Acceptance
             {
                 return new JsonResult($"删除失败，请重试。错误信息：{ex}");
             }
-
         }
-
     }
 }

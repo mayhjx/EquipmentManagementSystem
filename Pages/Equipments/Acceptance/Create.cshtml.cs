@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using EquipmentManagementSystem.Authorization;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using EquipmentManagementSystem.Pages.Instruments;
@@ -33,6 +34,14 @@ namespace EquipmentManagementSystem.Pages.Equipments.Acceptance
             if (!ModelState.IsValid)
             {
                 return Page();
+            }
+
+            var isAuthorized = await _authorizationService.AuthorizeAsync(
+                                                        User, InstrumentAcceptance,
+                                                        Operations.Create);
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
             }
 
             InstrumentAcceptance.CreatedTime = DateTime.Now;

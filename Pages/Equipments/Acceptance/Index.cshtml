@@ -1,5 +1,6 @@
 ﻿@page
 @model EquipmentManagementSystem.Pages.Equipments.Acceptance.IndexModel
+@inject SignInManager<User> SignInManager
 
 @{
     ViewData["Title"] = "待验收设备";
@@ -11,11 +12,12 @@
         <div class="row">
             <form method="post" class="form-row mt-2 ml-4">
                 <h4>设备一览</h4>
-                <input type="submit" class="btn btn-outline-primary btn-sm" asp-page="Create" value="新增" style="margin-left: 10px;">
+                @if (SignInManager.IsSignedIn(User) && (User.IsInRole(Constants.DirectorRole) || User.IsInRole(Constants.ManagerRole)))
+                {
+                    <input type="submit" class="btn btn-outline-primary btn-sm" asp-page="Create" value="新增" style="margin-left: 10px;">
+                }
             </form>
-
         </div>
-
     </div>
     <div class="card-body">
         <table id="index" class="table table-hover">
@@ -71,7 +73,10 @@
                             @Html.DisplayFor(modelItem => item.EquipmentAcceptanceDate)
                         </td>
                         <td>
-                            <a asp-page="./Edit" asp-route-id="@item.Id"><i class="fa fa-pencil-alt fa-lg" aria-hidden="true"></i></a>@*编辑*@
+                            @if ((await AuthorizationService.AuthorizeAsync(User, item, Operations.Update)).Succeeded)
+                            {
+                                <a asp-page="./Edit" asp-route-id="@item.Id"><i class="fa fa-pencil-alt fa-lg" aria-hidden="true"></i></a>@*编辑*@
+                            }
                         </td>
                     </tr>
                 }
