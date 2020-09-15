@@ -41,7 +41,7 @@
     <div class="card-body">
         <div class="row row-cols-1 row-cols-md-2">
             <div class="col mb-3">
-                <div class="card h-100">
+                <div class="card h-100 card-primary card-outline">
                     <div class="card-header">
                         <p class="card-title">
                             <i class="fa fa-tag" aria-hidden="true"></i> 基础信息
@@ -144,8 +144,178 @@
                 </div>
             </div>
 
+            @if (Model.InstrumentAcceptance != null)
+            {
+                void FormatFileName(string fileName, string filePath)
+                {
+                    <a href="@RemoveWWWRoot(filePath)" target="_blank">《@fileName》</a>
+                }
+
+                @functions
+                {
+                    private string RemoveWWWRoot(string filePath)
+                    {
+                        // 为了实现在线预览需要把路径中的wwwroot去掉
+                        return filePath?.Replace("wwwroot", "");
+                    }
+                }
+                <div class="col mb-3">
+                    <div class="card height-control h-100 card-warning card-outline">
+                        <div class="card-header">
+                            <p class="card-title">
+                                <i class="fa fa-file-alt" aria-hidden="true"></i> 档案信息
+                            </p>
+                            <div class="card-tools">
+                                <a asp-page="../Acceptance/Edit" asp-route-id="@Model.InstrumentAcceptance.Id">
+                                    <i class="fas fa-eye fa-lg" aria-hidden="true"></i>@*查看*@
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card-body table-responsive">
+                            <table class="table table-borderless table-sm text-nowrap">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            @{
+                                                @*仪器设备档案目录表*@
+                                                FormatFileName(@Html.DisplayNameFor(model => model.InstrumentAcceptance.EquipmentFilesListFileName),
+                                                    Model.InstrumentAcceptance.EquipmentFilesListFilePath);
+                                            }
+                                        </td>
+                                        <td>
+                                            @{
+                                                @*产品合格证*@
+                                                FormatFileName(@Html.DisplayNameFor(model => model.InstrumentAcceptance.EquipmentCertificateFileName),
+                                                    Model.InstrumentAcceptance.EquipmentCertificateFilePath);
+                                            }
+                                        </td>
+                                        <td>
+                                            @{
+                                                @*设备安装说明*@
+                                                FormatFileName(@Html.DisplayNameFor(model => model.InstrumentAcceptance.InstallationNoteFileName),
+                                                    Model.InstrumentAcceptance.InstallationNoteFilePath);
+                                            }
+                                        </td>
+                                        <td>
+                                            @{
+                                                @*可行性报告*@
+                                                FormatFileName(@Html.DisplayNameFor(model => model.InstrumentAcceptance.FeasibilityReportFileName),
+                                                      Model.InstrumentAcceptance.FeasibilityReportFilePath);
+                                            }
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            @{
+                                                @*仪器设备履历表*@
+                                                FormatFileName(@Html.DisplayNameFor(model => model.InstrumentAcceptance.EquipmentResumeFileName),
+                                                    Model.InstrumentAcceptance.EquipmentResumeFilePath);
+                                            }
+                                        </td>
+                                        <td>
+                                            @{
+                                                @*医疗器械注册证*@
+                                                FormatFileName(@Html.DisplayNameFor(model => model.InstrumentAcceptance.MedicalDeviceRegistrationCertificateFileName),
+                                                    Model.InstrumentAcceptance.MedicalDeviceRegistrationCertificateFilePath);
+                                            }
+                                        </td>
+                                        <td>
+                                            @{
+                                                @*设备清点证明*@
+                                                FormatFileName(@Html.DisplayNameFor(model => model.InstrumentAcceptance.InventoryCertificateFileName),
+                                                    Model.InstrumentAcceptance.InventoryCertificateFilePath);
+                                            }
+                                        </td>
+                                        <td>
+                                            @{
+                                                @*设备配置清单*@
+                                                FormatFileName(@Html.DisplayNameFor(model => model.InstrumentAcceptance.ConfigurationListFileName),
+                                                    Model.InstrumentAcceptance.ConfigurationListFilePath);
+                                            }
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            @{
+                                                @*校准/检定证书*@
+                                                FormatFileName(@Html.DisplayNameFor(model => model.InstrumentAcceptance.EquipmentCalibrationReportFileName),
+                                                    Model.InstrumentAcceptance.EquipmentCalibrationReportFilePath);
+                                            }
+                                        </td>
+                                        <td>
+                                            @{
+                                                @*厂家生产许可证*@
+                                                FormatFileName(@Html.DisplayNameFor(model => model.InstrumentAcceptance.FactoryProductionLicenseFileName),
+                                                    Model.InstrumentAcceptance.FactoryProductionLicenseFilePath);
+                                            }
+                                        </td>
+                                        <td>
+                                            @{
+                                                @*设备调试验收报告*@
+                                                FormatFileName(@Html.DisplayNameFor(model => model.InstrumentAcceptance.FactoryAcceptanceReportFileName),
+                                                     Model.InstrumentAcceptance.FactoryAcceptanceReportFilePath);
+                                            }
+                                        </td>
+                                        <td>
+                                            @{
+                                                @*设备请购申请单*@
+                                                FormatFileName(@Html.DisplayNameFor(model => model.InstrumentAcceptance.PuchaseRequisitionFileName),
+                                                    Model.InstrumentAcceptance.PuchaseRequisitionFilePath);
+                                            }
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            @{
+                                                @*设备验收报告*@
+                                                FormatFileName(@Html.DisplayNameFor(model => model.InstrumentAcceptance.EquipmentAcceptanceReportFileName),
+                                                    Model.InstrumentAcceptance.EquipmentAcceptanceReportFilePath);
+                                            }
+                                        </td>
+                                        <td>
+                                            @{
+                                                @*营业执照*@
+                                                FormatFileName(@Html.DisplayNameFor(model => model.InstrumentAcceptance.BusinessLicenseFileName),
+                                                    Model.InstrumentAcceptance.BusinessLicenseFilePath);
+                                            }
+                                        </td>
+                                        <td>
+                                            @{
+                                                @*设备安装服务报告*@
+                                                FormatFileName(@Html.DisplayNameFor(model => model.InstrumentAcceptance.ServiceReportFileName),
+                                                    Model.InstrumentAcceptance.ServiceReportFilePath);
+                                            }
+                                        </td>
+                                        <td>
+                                            @{
+                                                @*培训签到表*@
+                                                FormatFileName(@Html.DisplayNameFor(model => model.InstrumentAcceptance.TrainingSignInFormFileName),
+                                                    Model.InstrumentAcceptance.TrainingSignInFormFilePath);
+                                            }
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            @{
+                                                @*评估报告*@
+                                                FormatFileName(@Html.DisplayNameFor(model => model.InstrumentAcceptance.EvaluationReportFileName),
+                                                    Model.InstrumentAcceptance.EvaluationReportFilePath);
+                                            }
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            }
+
             <div class="col mb-3">
-                <div class="card height-control h-100">
+                <div class="card height-control h-100 card-success card-outline">
                     <div class="card-header">
                         <p class="card-title">
                             <i class="fa fa-balance-scale" aria-hidden="true"></i> 校准信息
@@ -196,10 +366,55 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row row-cols-1 row-cols-md-2">
+
+
             <div class="col mb-3">
-                <div class="card height-control h-100">
+                <div class="card height-control h-100 card-danger card-outline">
+                    <div class="card-header">
+                        <p class="card-title">
+                            <i class="fa fa-wrench" aria-hidden="true"></i> 故障信息
+                        </p>
+                        <div class="card-tools">
+                            @if (CanCreateCalibrationAndMalfunction)
+                            {
+                                <a asp-page="/Malfunctions/WorkOrders/Create" asp-route-id="@Model.Instrument.ID">
+                                    <i class="fa fa-plus fa-lg" aria-hidden="true"></i>@*新建*@
+                                </a>
+                            }
+                        </div>
+                    </div>
+                    <div class="card-body table-responsive">
+                        <table class="table table-sm text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(model => model.Instrument.MalfunctionWorkOrder.First().MalfunctionInfo.BeginTime)</th>
+                                    <th>@Html.DisplayNameFor(model => model.Instrument.MalfunctionWorkOrder.First().MalfunctionInfo.Part)</th>
+                                    <th>@Html.DisplayNameFor(model => model.Instrument.MalfunctionWorkOrder.First().MalfunctionInfo.Phenomenon)</th>
+                                    <th>@Html.DisplayNameFor(model => model.Instrument.MalfunctionWorkOrder.First().MalfunctionInfo.MalfunctionWorkOrder.Progress)</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Instrument.MalfunctionWorkOrder)
+                                {
+                                    <tr>
+                                        <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.BeginTime)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.Part)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.Phenomenon)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.MalfunctionWorkOrder.Progress)</td>
+                                        <td>
+                                            <a asp-page="/Malfunctions/WorkOrders/Details" asp-route-id="@item.ID"><i class="fa fa-eye fa-lg" aria-hidden="true"></i></a>@*查看*@
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col mb-3">
+                <div class="card height-control h-100 card-info card-outline">
                     <div class="card-header">
                         <p class="card-title">
                             <i class="fa fa-cube" aria-hidden="true"></i> 部件信息
@@ -242,50 +457,6 @@
                                                 <text >|</text>
                                                 <a asp-page="../Components/Delete" asp-route-id="@item.ID">删除</a>
                                             }
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="col mb-3">
-                <div class="card height-control h-100">
-                    <div class="card-header">
-                        <p class="card-title">
-                            <i class="fa fa-wrench" aria-hidden="true"></i> 故障信息
-                        </p>
-                        <div class="card-tools">
-                            @if (CanCreateCalibrationAndMalfunction)
-                            {
-                                <a asp-page="/Malfunctions/WorkOrders/Create" asp-route-id="@Model.Instrument.ID">
-                                    <i class="fa fa-plus fa-lg" aria-hidden="true"></i>@*新建*@
-                                </a>
-                            }
-                        </div>
-                    </div>
-                    <div class="card-body table-responsive">
-                        <table class="table table-sm text-nowrap">
-                            <thead>
-                                <tr>
-                                    <th>@Html.DisplayNameFor(model => model.Instrument.MalfunctionWorkOrder.First().MalfunctionInfo.BeginTime)</th>
-                                    <th>@Html.DisplayNameFor(model => model.Instrument.MalfunctionWorkOrder.First().MalfunctionInfo.Part)</th>
-                                    <th>@Html.DisplayNameFor(model => model.Instrument.MalfunctionWorkOrder.First().MalfunctionInfo.Phenomenon)</th>
-                                    <th>@Html.DisplayNameFor(model => model.Instrument.MalfunctionWorkOrder.First().MalfunctionInfo.MalfunctionWorkOrder.Progress)</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model.Instrument.MalfunctionWorkOrder)
-                                {
-                                    <tr>
-                                        <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.BeginTime)</td>
-                                        <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.Part)</td>
-                                        <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.Phenomenon)</td>
-                                        <td>@Html.DisplayFor(modelItem => item.MalfunctionInfo.MalfunctionWorkOrder.Progress)</td>
-                                        <td>
-                                            <a asp-page="/Malfunctions/WorkOrders/Details" asp-route-id="@item.ID"><i class="fa fa-eye fa-lg" aria-hidden="true"></i></a>@*查看*@
                                         </td>
                                     </tr>
                                 }
