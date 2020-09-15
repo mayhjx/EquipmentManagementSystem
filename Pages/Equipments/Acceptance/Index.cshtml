@@ -24,19 +24,19 @@
             <thead>
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.InstrumentAcceptance[0].CreatedTime)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.InstrumentAcceptance[0].Creator)
-                    </th>
-                    <th>
                         @Html.DisplayNameFor(model => model.InstrumentAcceptance[0].InstrumentID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.InstrumentAcceptance[0].IsDemo)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.InstrumentAcceptance[0].ArrivalDate)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.InstrumentAcceptance[0].InstallationDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.InstrumentAcceptance[0].FactoryAcceptanceDate)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.InstrumentAcceptance[0].ItemAcceptanceDate)
@@ -52,19 +52,26 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.CreatedTime)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Creator)
-                        </td>
-                        <td>
                             @Html.DisplayFor(modelItem => item.InstrumentID)
+                        </td>
+                        <td>
+                            @if (item.IsDemo)
+                            {
+                                <i class="fas fa-check-circle text-green"></i>
+                            }
+                            else
+                            {
+                                <i class="fas fa-times-circle text-danger"></i>
+                            }
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.ArrivalDate)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.InstallationDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FactoryAcceptanceDate)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.ItemAcceptanceDate)
@@ -75,7 +82,7 @@
                         <td>
                             @if ((await AuthorizationService.AuthorizeAsync(User, item, Operations.Update)).Succeeded)
                             {
-                                <a asp-page="./Edit" asp-route-id="@item.Id"><i class="fa fa-pencil-alt fa-lg" aria-hidden="true"></i></a>@*编辑*@
+                                <a asp-page="./Edit" asp-route-id="@item.Id"><i class="fa fa-eye fa-lg" aria-hidden="true"></i></a>@*编辑*@
                             }
                         </td>
                     </tr>

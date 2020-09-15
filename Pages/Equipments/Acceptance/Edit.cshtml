@@ -124,6 +124,18 @@
                         <div class="card card-outline card-red">
                             <div class="card-header h4 text-center">
                                 设备请购
+                                @if (Model.InstrumentAcceptance.PuchaseRequisitionFilePath != null)
+                                {
+                                    <i class="fas fa-check text-green"></i>
+                                }
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus fa-lg"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                        <i class="fas fa-times fa-lg"></i>
+                                    </button>
+                                </div>
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
@@ -161,6 +173,18 @@
                         <div class="card card-outline card-yellow">
                             <div class="card-header h4 text-center">
                                 安装准备
+                                @if (Model.InstrumentAcceptance.InventoryCertificateFilePath != null)
+                                {
+                                    <i class="fas fa-check text-green"></i>
+                                }
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus fa-lg"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                        <i class="fas fa-times fa-lg"></i>
+                                    </button>
+                                </div>
                             </div>
                             <div class="card-body">
                                 <div class="form-group row">
@@ -217,6 +241,18 @@
                         <div class="card card-outline card-blue">
                             <div class="card-header h4 text-center">
                                 安装验收
+                                @if (Model.InstrumentAcceptance.ItemAcceptanceDate != null)
+                                {
+                                    <i class="fas fa-check text-green"></i>
+                                }
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus fa-lg"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                        <i class="fas fa-times fa-lg"></i>
+                                    </button>
+                                </div>
                             </div>
                             <div class="card-body">
                                 <div class="form-group row">
@@ -226,9 +262,11 @@
                                     </div>
                                     <span asp-validation-for="InstrumentAcceptance.InstallationDate" class="text-danger"></span>
                                 </div>
-                                <div class="form-group">
-                                    <label asp-for="InstrumentAcceptance.InstallationRemark" class="control-label"></label>
-                                    <textarea asp-for="InstrumentAcceptance.InstallationRemark" class="form-control"></textarea>
+                                <div class="form-group row">
+                                    <label asp-for="InstrumentAcceptance.InstallationRemark" class="col-12 col-xl-2 col-form-label"></label>
+                                    <div class="col-12 col-xl-10">
+                                        <textarea asp-for="InstrumentAcceptance.InstallationRemark" class="form-control"></textarea>
+                                    </div>
                                     <span asp-validation-for="InstrumentAcceptance.InstallationRemark" class="text-danger"></span>
                                 </div>
                                 <hr />
@@ -257,9 +295,11 @@
                                     }
                                     <span asp-validation-for="FileUpload.ServiceReportFile" class="text-danger"></span>
                                 </div>
-                                <div class="form-group">
-                                    <label asp-for="InstrumentAcceptance.FactoryAcceptanceRemark" class="control-label"></label>
-                                    <textarea asp-for="InstrumentAcceptance.FactoryAcceptanceRemark" class="form-control"></textarea>
+                                <div class="form-group row">
+                                    <label asp-for="InstrumentAcceptance.FactoryAcceptanceRemark" class="col-12 col-xl-2 col-form-label"></label>
+                                    <div class="col-12 col-xl-10">
+                                        <textarea asp-for="InstrumentAcceptance.FactoryAcceptanceRemark" class="form-control"></textarea>
+                                    </div>
                                     <span asp-validation-for="InstrumentAcceptance.FactoryAcceptanceRemark" class="text-danger"></span>
                                 </div>
                                 <hr />
@@ -284,9 +324,11 @@
                                         <input class="form-group ml-2" asp-for="InstrumentAcceptance.IsEngineerAssistance" /> @Html.DisplayNameFor(model => model.InstrumentAcceptance.IsEngineerAssistance)
                                     </label>
                                 </div>
-                                <div class="form-group">
-                                    <label asp-for="InstrumentAcceptance.MethodConstructionRemark" class="control-label"></label>
-                                    <textarea asp-for="InstrumentAcceptance.MethodConstructionRemark" class="form-control"></textarea>
+                                <div class="form-group row">
+                                    <label asp-for="InstrumentAcceptance.MethodConstructionRemark" class="col-12 col-xl-2 col-form-label"></label>
+                                    <div class="col-12 col-xl-10">
+                                        <textarea asp-for="InstrumentAcceptance.MethodConstructionRemark" class="form-control"></textarea>
+                                    </div>
                                     <span asp-validation-for="InstrumentAcceptance.MethodConstructionRemark" class="text-danger"></span>
                                 </div>
                                 <div class="form-group mb-0">
@@ -313,6 +355,18 @@
                         <div class="card card-outline card-green">
                             <div class="card-header h4 text-center">
                                 档案整理
+                                @if (Model.InstrumentAcceptance.EquipmentAcceptanceDate != null)
+                                {
+                                    <i class="fas fa-check text-green"></i>
+                                }
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus fa-lg"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                        <i class="fas fa-times fa-lg"></i>
+                                    </button>
+                                </div>
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
