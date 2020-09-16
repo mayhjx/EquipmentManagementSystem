@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -128,10 +129,16 @@ namespace EquipmentManagementSystem.Utilities
             return Path.GetFileName(filePath).Split("_").LastOrDefault();
         }
 
+        private static string FormatFileName(string fileName)
+        {
+            // 转义文件名中的特殊字符（#，&，+，%，=等），避免上传后无法查看和下载
+            return Regex.Replace(fileName.Trim(), "[#&+%=*,/$:;=?@]+", "-");
+        }
+
         public static string CreateFilePath(string folderPath, string fileName)
         {
             // 生成文件路径，文件名加上Guid
-            return Path.Combine(folderPath, Guid.NewGuid().ToString() + "_" + fileName);
+            return Path.Combine(folderPath, Guid.NewGuid().ToString() + "_" + FormatFileName(fileName));
         }
 
         public static async void SaveFile(byte[] formFileContent, string filePath)
