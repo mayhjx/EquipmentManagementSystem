@@ -2,7 +2,15 @@
 
 	<PropertyGroup>
 		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<UserSecretsId>2ba2a881-61d6-497d-bda5-d1b2b8de2c1b</UserSecretsId>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="wwwroot\uploadFiles\**" />
+	  <Content Remove="wwwroot\uploadFiles\**" />
+	  <EmbeddedResource Remove="wwwroot\uploadFiles\**" />
+	  <None Remove="wwwroot\uploadFiles\**" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<Compile Remove="Data\Migrations\20200420071131_addMalfunctionsFields.cs" />
@@ -69,10 +77,6 @@
 		</PackageReference>
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.7" />
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.design" Version="3.1.4" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="wwwroot\uploadFiles\" />
 	</ItemGroup>
 
 </Project>
