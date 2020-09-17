@@ -126,6 +126,7 @@ namespace EquipmentManagementSystem.Utilities
 
         public static string RemoveGuidStringInFileName(string filePath)
         {
+            // 文件名中有可能不止一个"_"
             return Path.GetFileName(filePath).Split("_").LastOrDefault();
         }
 
