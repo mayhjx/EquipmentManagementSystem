@@ -148,7 +148,16 @@
             {
                 void FormatFileName(string fileName, string filePath)
                 {
-                    <a href="@RemoveWWWRoot(filePath)" target="_blank">《@fileName》</a>
+                    var extension = System.IO.Path.GetExtension(fileName).ToLower();
+                    var canViewOnlineExtList = new List<string>() { ".txt", ".pdf", ".jpg", ".jpeg", ".png" };
+                    if (canViewOnlineExtList.Contains(extension))
+                    {
+                        <a href="@RemoveWWWRoot(filePath)" target="_blank">《@fileName》</a>
+                    }
+                    else
+                    {
+                        <a href="@RemoveWWWRoot(filePath)" target="_blank" download="@EquipmentManagementSystem.Utilities.FileHelpers.RemoveGuidStringInFileName(fileName)">《@fileName》</a>
+                    }
                 }
 
                 @functions
