@@ -132,7 +132,7 @@ namespace EquipmentManagementSystem.Utilities
         private static string FormatFileName(string fileName)
         {
             // 转义文件名中的特殊字符（#，&，+，%，=等），避免上传后无法查看和下载
-            return Regex.Replace(fileName.Trim(), "[#&+%=*,/$:;=?@]+", "-");
+            return Regex.Replace(fileName.Trim(), "[<>#&+%=\",/$:;?@{}|\\^[]`]+", "-");
         }
 
         public static string CreateFilePath(string folderPath, string fileName)
