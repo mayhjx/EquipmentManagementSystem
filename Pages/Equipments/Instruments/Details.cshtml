@@ -146,17 +146,25 @@
 
             @if (Model.InstrumentAcceptance != null)
             {
-                void FormatFileName(string fileName, string filePath)
+                void FormatFileName(string showName, string filePath)
                 {
-                    var extension = System.IO.Path.GetExtension(fileName).ToLower();
-                    var canViewOnlineExtList = new List<string>() { ".txt", ".pdf", ".jpg", ".jpeg", ".png" };
-                    if (canViewOnlineExtList.Contains(extension))
+                    if (filePath != null)
                     {
-                        <a href="@RemoveWWWRoot(filePath)" target="_blank">《@fileName》</a>
+                        var fileName = System.IO.Path.GetFileName(filePath);
+                        var extension = System.IO.Path.GetExtension(filePath).ToLower();
+                        var canViewOnlineExtList = new List<string>() { ".txt", ".pdf", ".jpg", ".jpeg", ".png" };
+                        if (canViewOnlineExtList.Contains(extension))
+                        {
+                            <a href="@RemoveWWWRoot(filePath)" target="_blank">《@showName》</a>
+                        }
+                        else
+                        {
+                            <a href="@RemoveWWWRoot(filePath)" target="_blank" download="@EquipmentManagementSystem.Utilities.FileHelpers.RemoveGuidStringInFileName(fileName)">《@showName》</a>
+                        }
                     }
                     else
                     {
-                        <a href="@RemoveWWWRoot(filePath)" target="_blank" download="@EquipmentManagementSystem.Utilities.FileHelpers.RemoveGuidStringInFileName(fileName)">《@fileName》</a>
+                        <a>《@showName》</a>
                     }
                 }
 
@@ -307,7 +315,6 @@
                                     <tr>
                                         <td></td>
                                         <td></td>
-                                        <td></td>
                                         <td>
                                             @{
                                                 @*评估报告*@
@@ -315,6 +322,7 @@
                                                     Model.InstrumentAcceptance.EvaluationReportFilePath);
                                             }
                                         </td>
+                                        <td></td>
                                     </tr>
                                 </tbody>
                             </table>
