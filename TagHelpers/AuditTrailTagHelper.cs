@@ -12,32 +12,21 @@ namespace EquipmentManagementSystem.TagHelpers
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             output.TagName = "table";
-            output.Attributes.SetAttribute("class", "table table-bordered");
+            output.Attributes.SetAttribute("class", "table table-bordered table-sm");
 
-            output.Content.SetHtmlContent($@"
-                                            <thead class='text-center'>
-                                            <tr>
-                                            <th>时间</th>
-                                            <th>动作</th>
-                                            <th>操作者ID</th>
-                                            <th>操作者</th>
-                                            <th>记录ID</th>
-                                            <th>旧值</th>
-                                            <th>新值</th>
-                                            </tr>
-                                            </thead><tbody>");
+            output.Content.SetHtmlContent($@"<tbody>");
 
             foreach (var log in logs)
             {
                 output.Content.AppendHtml($@"
-                                            <tr>
-                                            <td>{log.DateChanged}</td>
-                                            <td>{log.Action}</td>
-                                            <td>{log.UserId}</td>
-                                            <td>{log.UserName}</td>
-                                            <td>{log.PrimaryKeyValue}</td>");
+                                            <tr class='bg-secondary text-center'>
+                                            <td>时间：{log.DateChanged}</td>
+                                            <td>动作：{log.Action}</td>
+                                            <td>用户ID：{log.UserId}，用户名：{log.UserName}</td>
+                                            <td>记录ID：{log.PrimaryKeyValue}</td></tr>
+                                            <tr class='text-center bg-secondary'><td colspan='2'>旧值</td><td colspan='2'>新值</td>");
 
-                output.Content.AppendHtml("<td>");
+                output.Content.AppendHtml("<tr><td colspan='2'>");
 
                 if (log.OriginalValue?.Length > 0)
                 {
@@ -51,7 +40,7 @@ namespace EquipmentManagementSystem.TagHelpers
                 }
 
                 output.Content.AppendHtml("</td>");
-                output.Content.AppendHtml("<td>");
+                output.Content.AppendHtml("<td colspan='2'>");
 
                 if (log.CurrentValue?.Length > 0)
                 {
@@ -59,7 +48,7 @@ namespace EquipmentManagementSystem.TagHelpers
                     output.Content.AppendHtml("<ul>");
                     foreach (var kvp in oldValueDic)
                     {
-                        output.Content.AppendHtml($@"<li>{kvp.Key}: {kvp.Value}</li>");
+                        output.Content.AppendHtml($@"<li>{kvp.Key}：{kvp.Value}</li>");
                     }
                     output.Content.AppendHtml("</ul>");
                 }
