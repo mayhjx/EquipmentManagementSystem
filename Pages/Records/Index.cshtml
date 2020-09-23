@@ -24,18 +24,18 @@
         </div>
         <div class="card-tools">
             <form class="form-inline float-left" method="post">
-                <label class="my-1 mr-2" for="status" asp-for="@Model.Search.Status"></label>
+                <label class="my-1 mr-2" for="status" asp-for="@Model.Search.Status">显示</label>
                 <select class="custom-select select2 my-1 mr-sm-2" id="status" asp-for="@Model.Search.Status" asp-items="@Html.GetEnumSelectList<EquipmentManagementSystem.Pages.Records.IndexModel.Status>()">
                 </select>
 
-                <label class="my-1 mr-2 ml-2" for="project" asp-for="@Model.Search.Project"></label>
-                <select class="custom-select select2 my-1 mr-sm-2" id="project" asp-for="@Model.Search.Project" asp-items="@Model.ProjectSelectList">
-                    <option value="">---请选择---</option>
-                </select>
+                @*<label class="my-1 mr-2 ml-2" for="project" asp-for="@Model.Search.Project"></label>
+                    <select class="custom-select select2 my-1 mr-sm-2" id="project" asp-for="@Model.Search.Project" asp-items="@Model.ProjectSelectList">
+                        <option value="">---请选择---</option>
+                    </select>
 
-                <label class="my-1 mr-2 ml-2" for="instrument" asp-for="@Model.Search.Instrument"></label>
-                <select class="custom-select select2 my-1 mr-sm-2" style="min-width:110px" id="instrumentId" asp-for="@Model.Search.Instrument">
-                </select>
+                    <label class="my-1 mr-2 ml-2" for="instrument" asp-for="@Model.Search.Instrument"></label>
+                    <select class="custom-select select2 my-1 mr-sm-2" style="min-width:110px" id="instrumentId" asp-for="@Model.Search.Instrument">
+                    </select>*@
                 @*<button type="submit" class="btn btn-outline-primary my-1">查询</button>*@
             </form>
         </div>
@@ -43,10 +43,14 @@
 
     <div class="card-body pt-0">
         <div class="tab-content">
+            @*维护记录*@
             <div class="tab-pane fade table-responsive active show" id="maintenance-record" role="tabpanel" aria-labelledby="maintenance-record-tab">
                 <a asp-page="MaintenanceRecords/Create">
-                    <input type="button" class="btn btn-outline-primary my-2" value="新建">
+                    <input type="button" class="btn btn-outline-primary my-2" value="新建" style="margin-right:10px;">
                 </a>
+                <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modal-maintenanceAuditTrailLog">
+                    历史
+                </button>
                 <table id="index" class="table table-hover text-nowrap">
                     <thead>
                         <tr>
@@ -109,10 +113,35 @@
                     </tbody>
                 </table>
             </div>
+            <div class="modal fade" id="modal-maintenanceAuditTrailLog" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">操作日志</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <audit-trail logs="Model.MaintenanceAuditTrailLogs"></audit-trail>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary float-right" data-dismiss="modal">关闭</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+
+            @*使用记录*@
             <div class="tab-pane fade table-responsive" id="usage-record" role="tabpanel" aria-labelledby="usage-record-tab">
                 <a asp-page="UsageRecords/Create">
-                    <input type="button" class="btn btn-outline-primary my-2" value="新建">
+                    <input type="button" class="btn btn-outline-primary my-2" value="新建" style="margin-right:10px;">
                 </a>
+                <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modal-usageAuditTrailLog">
+                    历史
+                </button>
                 <table id="index" class="table table-hover text-nowrap">
                     <thead>
                         <tr>
@@ -191,6 +220,26 @@
                     </tbody>
                 </table>
             </div>
+            <div class="modal fade" id="modal-usageAuditTrailLog" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">操作日志</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <audit-trail logs="Model.UsageAuditTrailLogs"></audit-trail>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary float-right" data-dismiss="modal">关闭</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
         </div>
     </div>
 </div>
@@ -201,12 +250,12 @@
         $(document).ready(function () {
             $("select#project").change();
             // 激活查询的设备编号选项
-            $(document).ajaxComplete(function () {
+            @*$(document).ajaxComplete(function () {
                 var selectdInstrument = @Json.Serialize(Model.Search?.Instrument);
                 if (selectdInstrument) {
                     $("select#instrumentId").val(selectdInstrument);
                 }
-            })
+            })*@
 
             // 重新激活tab
             if (localStorage) {

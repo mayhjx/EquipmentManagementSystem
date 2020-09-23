@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
@@ -19,6 +20,7 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
 
         [BindProperty]
         public MaintenanceRecord MaintenanceRecord { get; set; }
+        public IList<AuditTrailLog> AuditTrailLogs { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -35,6 +37,12 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
             {
                 return NotFound();
             }
+
+            AuditTrailLogs = await _context.AuditTrailLogs
+                .AsNoTracking()
+                .Where(l => l.EntityName == MaintenanceRecord.GetType().Name && l.PrimaryKeyValue == id.ToString())
+                .OrderByDescending(l => l.DateChanged)
+                .ToListAsync();
 
             return Page();
         }
