@@ -46,11 +46,10 @@
             @*维护记录*@
             <div class="tab-pane fade table-responsive active show" id="maintenance-record" role="tabpanel" aria-labelledby="maintenance-record-tab">
                 <a asp-page="MaintenanceRecords/Create">
-                    <input type="button" class="btn btn-outline-primary my-2" value="新建" style="margin-right:10px;">
+                    <input type="button" class="btn btn-outline-primary my-2" value="新建">
                 </a>
-                <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modal-maintenanceAuditTrailLog">
-                    历史
-                </button>
+                <audit-trail logs="Model.MaintenanceAuditTrailLogs" modal-id="maintenanceAuditTrailLog"></audit-trail>
+
                 <table id="index" class="table table-hover text-nowrap">
                     <thead>
                         <tr>
@@ -113,35 +112,14 @@
                     </tbody>
                 </table>
             </div>
-            <div class="modal fade" id="modal-maintenanceAuditTrailLog" style="display: none;" aria-hidden="true">
-                <div class="modal-dialog modal-xl modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">操作日志</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <audit-trail logs="Model.MaintenanceAuditTrailLogs"></audit-trail>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary float-right" data-dismiss="modal">关闭</button>
-                        </div>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-            </div>
 
             @*使用记录*@
             <div class="tab-pane fade table-responsive" id="usage-record" role="tabpanel" aria-labelledby="usage-record-tab">
                 <a asp-page="UsageRecords/Create">
-                    <input type="button" class="btn btn-outline-primary my-2" value="新建" style="margin-right:10px;">
+                    <input type="button" class="btn btn-outline-primary my-2" value="新建">
                 </a>
-                <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modal-usageAuditTrailLog">
-                    历史
-                </button>
+                <audit-trail logs="Model.UsageAuditTrailLogs" modal-id="usageAuditTrailLog"></audit-trail>
+
                 <table id="index" class="table table-hover text-nowrap">
                     <thead>
                         <tr>
@@ -219,26 +197,6 @@
                         }
                     </tbody>
                 </table>
-            </div>
-            <div class="modal fade" id="modal-usageAuditTrailLog" style="display: none;" aria-hidden="true">
-                <div class="modal-dialog modal-xl modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">操作日志</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <audit-trail logs="Model.UsageAuditTrailLogs"></audit-trail>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary float-right" data-dismiss="modal">关闭</button>
-                        </div>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
             </div>
         </div>
     </div>

@@ -11,7 +11,12 @@
 
 <div class="card">
     <div class="card-header">
-        <h4>使用记录</h4>
+        <div class="card-title">
+            <h4>使用记录</h4>
+        </div>
+        <div class="card-tools">
+            <audit-trail logs="Model.AuditTrailLogs" modal-id="usageAuditTrailLog"></audit-trail>
+        </div>
     </div>
     <div class="card-body">
         <div class="row">

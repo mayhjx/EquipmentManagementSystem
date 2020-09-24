@@ -48,7 +48,7 @@ namespace EquipmentManagementSystem.TagHelpers
                 if (log.OriginalValue?.Length > 0)
                 {
                     var oldValueDic = JsonConvert.DeserializeObject<Dictionary<string, string>>(log.OriginalValue);
-                    output.Content.AppendHtml("<ul>");
+                    output.Content.AppendHtml("<ul>旧值：");
                     foreach (var kvp in oldValueDic)
                     {
                         output.Content.AppendHtml($@"<li>{kvp.Key}：{kvp.Value}</li>");
@@ -62,7 +62,7 @@ namespace EquipmentManagementSystem.TagHelpers
                 if (log.CurrentValue?.Length > 0)
                 {
                     var oldValueDic = JsonConvert.DeserializeObject<Dictionary<string, string>>(log.CurrentValue);
-                    output.Content.AppendHtml("<ul>");
+                    output.Content.AppendHtml("<ul>新值：");
                     foreach (var kvp in oldValueDic)
                     {
                         output.Content.AppendHtml($@"<li>{kvp.Key}：{kvp.Value}</li>");

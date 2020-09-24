@@ -21,7 +21,10 @@ namespace EquipmentManagementSystem.Services
 
         public string GetUserName()
         {
-
+            if (_context.HttpContext?.User == null)
+            {
+                return "";
+            }
             return _userManager.GetUserAsync(_context.HttpContext?.User).Result?.Name;
         }
     }

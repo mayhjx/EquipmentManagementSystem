@@ -10,9 +10,7 @@
     <div class="card-header">
         <div class="card-title"><h4>维护记录</h4></div>
         <div class="card-tools">
-            <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modal-maintenanceAuditTrailLog">
-                历史
-            </button>
+            <audit-trail logs="Model.AuditTrailLogs" modal-id="maintenanceAuditTrailLog"></audit-trail>
         </div>
     </div>
     <div class="card-body">
@@ -99,43 +97,21 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-12 col-xl-1 offset-xl-4">
-                    <div class="form-group">
-                        <input type="submit" value="保存" class="btn btn-primary btn-block" />
-                    </div>
+                <div class="col-4">
+                    <a asp-page="../Index" class="btn btn-default">返回</a>
+                </div>
+                <div class="col-4 text-center">
+                    <input type="submit" value="保存" class="btn btn-primary" />
+                </div>
+                <div class="col-4">
+                    <a class="btn btn-danger float-right" asp-page="./Delete" asp-route-id="@Model.MaintenanceRecord.Id">删除</a>
                 </div>
             </div>
         </form>
-
-        <div class="row">
-            <div class="col-12">
-                <a asp-page="../Index">返回</a>
-                <a class="float-right" asp-page="./Delete" asp-route-id="@Model.MaintenanceRecord.Id">删除</a>
-            </div>
-        </div>
     </div>
 </div>
 
-<div class="modal fade" id="modal-maintenanceAuditTrailLog" style="display: none;" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">操作日志</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <audit-trail logs="Model.AuditTrailLogs"></audit-trail>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary float-right" data-dismiss="modal">关闭</button>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

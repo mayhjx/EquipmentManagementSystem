@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using EquipmentManagementSystem.Authorization;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
@@ -20,6 +22,7 @@ namespace EquipmentManagementSystem.Pages.Records.UsageRecords
 
         [BindProperty]
         public UsageRecord UsageRecord { get; set; }
+        public IList<AuditTrailLog> AuditTrailLogs { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
@@ -40,6 +43,12 @@ namespace EquipmentManagementSystem.Pages.Records.UsageRecords
             {
                 return Forbid();
             }
+
+            AuditTrailLogs = await _context.AuditTrailLogs
+                .AsNoTracking()
+                .Where(l => l.EntityName == UsageRecord.GetType().Name && l.PrimaryKeyValue == id.ToString())
+                .OrderByDescending(l => l.DateChanged)
+                .ToListAsync();
 
             return Page();
         }
