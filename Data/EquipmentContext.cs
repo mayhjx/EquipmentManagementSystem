@@ -13,7 +13,6 @@ using Newtonsoft.Json;
 
 namespace EquipmentManagementSystem.Data
 {
-
     public class EquipmentContext : DbContext
     {
         private string _userId;

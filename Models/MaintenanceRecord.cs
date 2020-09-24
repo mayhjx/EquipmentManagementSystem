@@ -15,6 +15,7 @@ namespace EquipmentManagementSystem.Models
         [StringLength(50)]
         public string ProjectName { get; set; }
 
+        [Display(Name = "项目ID")]
         public int? ProjectId { get; set; }
         public Project Project { get; set; }
 

@@ -53,6 +53,10 @@
 		<Compile Remove="Data\Migrations\Equipment\20200813035110_testToString.Designer.cs" />
 		<Compile Remove="Data\Migrations\Equipment\20200903095532_InstrumentAcceptance_RemoveInstrumentForeignKey.cs" />
 		<Compile Remove="Data\Migrations\Equipment\20200903095532_InstrumentAcceptance_RemoveInstrumentForeignKey.Designer.cs" />
+		<Compile Remove="Data\Migrations\Equipment\20200923031548_AddAuditTrailLog.cs" />
+		<Compile Remove="Data\Migrations\Equipment\20200923031548_AddAuditTrailLog.Designer.cs" />
+		<Compile Remove="Data\Migrations\Equipment\20200923031723_AddAuditTrailLog.cs" />
+		<Compile Remove="Data\Migrations\Equipment\20200923031723_AddAuditTrailLog.Designer.cs" />
 		<Compile Remove="Data\Migrations\Malfunction\20200703010458_ResultNullable.cs" />
 		<Compile Remove="Data\Migrations\Malfunction\20200703010458_ResultNullable.Designer.cs" />
 	</ItemGroup>
