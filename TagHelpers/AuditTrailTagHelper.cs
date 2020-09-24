@@ -43,7 +43,7 @@ namespace EquipmentManagementSystem.TagHelpers
                                             <td>记录ID：{log.PrimaryKeyValue}</td></tr>");
                 //< tr class='text-center bg-secondary'><td colspan='2'>旧值</td><td colspan='2'>新值</td>");
 
-                output.Content.AppendHtml("<tr><td colspan='2'>");
+                output.Content.AppendHtml("<tr><td colspan='2' width='50%'>");
 
                 if (log.OriginalValue?.Length > 0)
                 {
@@ -57,7 +57,7 @@ namespace EquipmentManagementSystem.TagHelpers
                 }
 
                 output.Content.AppendHtml("</td>");
-                output.Content.AppendHtml("<td colspan='2'>");
+                output.Content.AppendHtml("<td colspan='2' width='50%'>");
 
                 if (log.CurrentValue?.Length > 0)
                 {

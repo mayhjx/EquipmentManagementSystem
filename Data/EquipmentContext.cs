@@ -55,6 +55,11 @@ namespace EquipmentManagementSystem.Data
             //modelBuilder.Entity<Computer>().ToTable("Computer");
         }
 
+        public override int SaveChanges()
+        {
+            return SaveChangesAsync().GetAwaiter().GetResult();
+        }
+
         public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
         {
             var auditEntries = OnBeforeSaveChanges();
