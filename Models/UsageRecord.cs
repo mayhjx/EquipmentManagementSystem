@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EquipmentManagementSystem.Models
 {
@@ -8,9 +7,9 @@ namespace EquipmentManagementSystem.Models
     {
         public int Id { get; set; }
 
-        [Display(Name = "创建时间")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public DateTime CreatedTime { get; set; }
+        //[Display(Name = "创建时间")]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //public DateTime CreatedTime { get; set; }
 
         [Display(Name = "设备编号")]
         public string InstrumentId { get; set; }
