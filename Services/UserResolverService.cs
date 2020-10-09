@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Identity;
 
 namespace EquipmentManagementSystem.Services
 {
+    /// <summary>
+    /// 获取用户名和ID
+    /// </summary>
     public class UserResolverService
     {
         private readonly IHttpContextAccessor _context;
