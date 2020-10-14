@@ -6,19 +6,19 @@ using Microsoft.AspNetCore.Identity;
 
 namespace EquipmentManagementSystem.Authorization
 {
-    public class UsageRecordAuthorizationHandler :
-        AuthorizationHandler<OperationAuthorizationRequirement, UsageRecord>
+    public class MaintenanceRecordAuthorizationHandler :
+        AuthorizationHandler<OperationAuthorizationRequirement, MaintenanceRecord>
     {
         private readonly UserManager<User> _userManager;
 
-        public UsageRecordAuthorizationHandler(UserManager<User> userManager)
+        public MaintenanceRecordAuthorizationHandler(UserManager<User> userManager)
         {
             _userManager = userManager;
         }
 
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context,
                                                         OperationAuthorizationRequirement requirement,
-                                                        UsageRecord resource)
+                                                        MaintenanceRecord resource)
         {
             if (context.User == null || resource == null)
             {
@@ -51,7 +51,7 @@ namespace EquipmentManagementSystem.Authorization
                 }
                 else if (context.User.IsInRole(Constants.TechnicianRole))
                 {
-                    if (resource.Creator == _userManager.GetUserAsync(context.User).Result.Name)
+                    if (resource.Operator == _userManager.GetUserAsync(context.User).Result.Name)
                     {
                         context.Succeed(requirement);
                     }
@@ -73,7 +73,7 @@ namespace EquipmentManagementSystem.Authorization
                 }
                 else if (context.User.IsInRole(Constants.TechnicianRole))
                 {
-                    if (resource.Creator == _userManager.GetUserAsync(context.User).Result.Name)
+                    if (resource.Operator == _userManager.GetUserAsync(context.User).Result.Name)
                     {
                         context.Succeed(requirement);
                     }
