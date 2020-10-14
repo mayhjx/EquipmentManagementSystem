@@ -1,21 +1,24 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EquipmentManagementSystem.Authorization;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
+using EquipmentManagementSystem.Pages.Records;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace EquipmentManagementSystem.Pages.MaintenanceRecords
 {
-    public class EditModel : PageModel
+    public class EditModel : BasePageModel
     {
-        private readonly EquipmentContext _context;
-
-        public EditModel(EquipmentContext context)
+        public EditModel(EquipmentContext context,
+            UserManager<User> userManager,
+            IAuthorizationService authorizationService)
+            : base(context, userManager, authorizationService)
         {
-            _context = context;
         }
 
         [BindProperty]
@@ -36,6 +39,13 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
             if (MaintenanceRecord == null)
             {
                 return NotFound();
+            }
+
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, MaintenanceRecord, Operations.Update);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
             }
 
             AuditTrailLogs = await _context.AuditTrailLogs
@@ -89,6 +99,13 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
             if (maintenanceRecordToUpdate == null)
             {
                 return NotFound();
+            }
+
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, maintenanceRecordToUpdate, Operations.Update);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
             }
 
             if (await TryUpdateModelAsync<MaintenanceRecord>(

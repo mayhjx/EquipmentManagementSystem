@@ -22,7 +22,6 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
         public IActionResult OnGet()
         {
             PopulateProjectDropDownList(_context);
-
             return Page();
         }
 
