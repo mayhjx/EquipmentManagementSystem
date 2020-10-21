@@ -17,7 +17,7 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
                         <label asp-for="UsageRecord.ProjectName" class="control-label"></label>
-                        <select id="project" asp-for="UsageRecord.ProjectName" class="form-control select2" asp-items="@Model.ProjectsSelectList">
+                        <select id="project" asp-for="UsageRecord.ProjectName" class="form-control select2" asp-items="@Model.ProjectsSelectList" required>
                             <option value="">---请选择---</option>
                         </select>
                         <span asp-validation-for="UsageRecord.ProjectName" class="text-danger"></span>
@@ -71,7 +71,7 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="UsageRecord.BeginTimeOfTest" class="control-label"></label>
-                        <input asp-for="UsageRecord.BeginTimeOfTest" class="form-control" />
+                        <input asp-for="UsageRecord.BeginTimeOfTest" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
                         <span asp-validation-for="UsageRecord.BeginTimeOfTest" class="text-danger"></span>
                     </div>
                     <div class="form-group">
