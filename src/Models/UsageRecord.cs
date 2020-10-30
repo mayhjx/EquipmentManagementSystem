@@ -3,10 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace EquipmentManagementSystem.Models
 {
-    public class UsageRecord
+    public class UsageRecord : BaseEntity
     {
-        public int Id { get; set; }
-
         //[Display(Name = "创建时间")]
         //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         //public DateTime CreatedTime { get; set; }
