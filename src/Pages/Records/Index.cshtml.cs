@@ -2,13 +2,12 @@
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using EquipmentManagementSystem.Authorization;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
+using EquipmentManagementSystem.Models.Record;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace EquipmentManagementSystem.Pages.Records
 {
@@ -37,69 +36,69 @@ namespace EquipmentManagementSystem.Pages.Records
 
         public async Task OnGetAsync(Status status = Status.All)
         {
-            var usageRecord = from record in _context.UsageRecords
-                            .AsNoTracking()
-                            .Include(record => record.Instrument)
-                            .Include(record => record.Project)
-                                .ThenInclude(p => p.Group)
-                              select record;
+            //var usageRecord = from record in _context.UsageRecords
+            //                .AsNoTracking()
+            //                .Include(record => record.Instrument)
+            //                .Include(record => record.Project)
+            //                    .ThenInclude(p => p.Group)
+            //                  select record;
 
-            var maintenanceRecord = from record in _context.MaintenanceRecords
-                            .AsNoTracking()
-                            .Include(record => record.Instrument)
-                            .Include(record => record.Project)
-                                .ThenInclude(p => p.Group)
-                                    select record;
+            //var maintenanceRecord = from record in _context.MaintenanceRecords
+            //                .AsNoTracking()
+            //                .Include(record => record.Instrument)
+            //                .Include(record => record.Project)
+            //                    .ThenInclude(p => p.Group)
+            //                        select record;
 
-            // 显示使用中的记录
-            Search.Status = status;
-            if (Search.Status == Status.Using)
-            {
-                //Search.Status = Status.Using;
-                usageRecord = usageRecord.Where(record => record.EndTime == null);
-                maintenanceRecord = maintenanceRecord.Where(record => record.EndTime == null);
-            }
-
-            var isAuthorized = User.IsInRole(Constants.DirectorRole) || User.IsInRole(Constants.ManagerRole);
-
-            var projects = _context.Projects.AsNoTracking().Include(p => p.Group);
-
-            if (User.Identity.IsAuthenticated && !isAuthorized)
-            {
-                var currentUserGroup = (await _userManager.GetUserAsync(User)).Group;
-
-                var projectsOfcurrentUserGroup = await projects.AsNoTracking().Where(p => p.Group.Name == currentUserGroup).Select(p => p.Name).ToListAsync();
-
-                //ProjectSelectList = new SelectList(projects.AsNoTracking().Where(p => p.Group.Name == currentUserGroup).OrderBy(p => p.Name), "Name", "Name");
-
-                // 显示当前用户所属项目组的使用登记
-                usageRecord = from record in usageRecord
-                              where projectsOfcurrentUserGroup.Contains(record.ProjectName)
-                              select record;
-
-                maintenanceRecord = from record in maintenanceRecord
-                                    where projectsOfcurrentUserGroup.Contains(record.ProjectName)
-                                    select record;
-            }
-            //else
+            //// 显示使用中的记录
+            //Search.Status = status;
+            //if (Search.Status == Status.Using)
             //{
-            //    ProjectSelectList = new SelectList(projects.AsNoTracking().OrderBy(p => p.Name), "Name", "Name");
+            //    //Search.Status = Status.Using;
+            //    usageRecord = usageRecord.Where(record => record.EndTime == null);
+            //    maintenanceRecord = maintenanceRecord.Where(record => record.EndTime == null);
             //}
 
-            UsageRecords = await usageRecord.OrderByDescending(m => m.BeginTimeOfTest).ToListAsync();
-            MaintenanceRecords = await maintenanceRecord.OrderByDescending(m => m.BeginTime).ToListAsync();
+            //var isAuthorized = User.IsInRole(Constants.DirectorRole) || User.IsInRole(Constants.ManagerRole);
 
-            MaintenanceAuditTrailLogs = await _context.AuditTrailLogs
-                .AsNoTracking()
-                .Where(l => l.EntityName == MaintenanceRecord.GetType().Name)
-                .OrderByDescending(l => l.DateChanged)
-                .ToListAsync();
+            //var projects = _context.Projects.AsNoTracking().Include(p => p.Group);
 
-            UsageAuditTrailLogs = await _context.AuditTrailLogs
-                .AsNoTracking()
-                .Where(l => l.EntityName == UsageRecord.GetType().Name)
-                .OrderByDescending(l => l.DateChanged)
-                .ToListAsync();
+            //if (User.Identity.IsAuthenticated && !isAuthorized)
+            //{
+            //    var currentUserGroup = (await _userManager.GetUserAsync(User)).Group;
+
+            //    var projectsOfcurrentUserGroup = await projects.AsNoTracking().Where(p => p.Group.Name == currentUserGroup).Select(p => p.Name).ToListAsync();
+
+            //    //ProjectSelectList = new SelectList(projects.AsNoTracking().Where(p => p.Group.Name == currentUserGroup).OrderBy(p => p.Name), "Name", "Name");
+
+            //    // 显示当前用户所属项目组的使用登记
+            //    usageRecord = from record in usageRecord
+            //                  where projectsOfcurrentUserGroup.Contains(record.ProjectName)
+            //                  select record;
+
+            //    maintenanceRecord = from record in maintenanceRecord
+            //                        where projectsOfcurrentUserGroup.Contains(record.ProjectName)
+            //                        select record;
+            //}
+            ////else
+            ////{
+            ////    ProjectSelectList = new SelectList(projects.AsNoTracking().OrderBy(p => p.Name), "Name", "Name");
+            ////}
+
+            //UsageRecords = await usageRecord.OrderByDescending(m => m.BeginTime).ToListAsync();
+            //MaintenanceRecords = await maintenanceRecord.OrderByDescending(m => m.BeginTime).ToListAsync();
+
+            //MaintenanceAuditTrailLogs = await _context.AuditTrailLogs
+            //    .AsNoTracking()
+            //    .Where(l => l.EntityName == MaintenanceRecord.GetType().Name)
+            //    .OrderByDescending(l => l.DateChanged)
+            //    .ToListAsync();
+
+            //UsageAuditTrailLogs = await _context.AuditTrailLogs
+            //    .AsNoTracking()
+            //    .Where(l => l.EntityName == UsageRecord.GetType().Name)
+            //    .OrderByDescending(l => l.DateChanged)
+            //    .ToListAsync();
         }
 
         /// <summary>

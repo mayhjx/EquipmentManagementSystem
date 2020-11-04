@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using EquipmentManagementSystem.Models;
+using EquipmentManagementSystem.Models.Record;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Identity;
@@ -44,14 +45,14 @@ namespace EquipmentManagementSystem.Authorization
                 }
                 else if (context.User.IsInRole(Constants.PrincipalRole))
                 {
-                    if (_userManager.GetUserAsync(context.User).Result.Group == resource.Project.Group.Name)
+                    if (_userManager.GetUserAsync(context.User).Result.Group == resource.GroupName)
                     {
                         context.Succeed(requirement);
                     }
                 }
                 else if (context.User.IsInRole(Constants.TechnicianRole))
                 {
-                    if (resource.Creator == _userManager.GetUserAsync(context.User).Result.Name)
+                    if (resource.User == _userManager.GetUserAsync(context.User).Result.Name)
                     {
                         context.Succeed(requirement);
                     }
@@ -66,14 +67,14 @@ namespace EquipmentManagementSystem.Authorization
                 }
                 else if (context.User.IsInRole(Constants.PrincipalRole))
                 {
-                    if (_userManager.GetUserAsync(context.User).Result.Group == resource.Project.Group.Name)
+                    if (_userManager.GetUserAsync(context.User).Result.Group == resource.GroupName)
                     {
                         context.Succeed(requirement);
                     }
                 }
                 else if (context.User.IsInRole(Constants.TechnicianRole))
                 {
-                    if (resource.Creator == _userManager.GetUserAsync(context.User).Result.Name)
+                    if (resource.User == _userManager.GetUserAsync(context.User).Result.Name)
                     {
                         context.Succeed(requirement);
                     }

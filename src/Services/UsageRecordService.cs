@@ -1,53 +1,92 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using EquipmentManagementSystem.Models;
+using EquipmentManagementSystem.Data;
+using EquipmentManagementSystem.Models.Record;
 using EquipmentManagementSystem.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace EquipmentManagementSystem.Services
 {
     public class UsageRecordService : IUsageRecordService
     {
-        private readonly EfRepository<UsageRecord> _context;
+        private readonly EquipmentContext _context;
 
-        public UsageRecordService(EfRepository<UsageRecord> context)
+        public UsageRecordService(EquipmentContext context)
         {
             _context = context;
         }
 
-        public async Task<UsageRecord> GetRecordById(int id)
+        public async Task AddAsync(UsageRecord usageRecord)
         {
-            return await _context.GetByIdAsync(id);
+            _context.Add(usageRecord);
+            await _context.SaveChangesAsync();
         }
 
-        public async Task<UsageRecord> AddRecord(UsageRecord usageRecord)
+        public async Task DeleteAsync(UsageRecord usageRecord)
         {
-            await _context.AddAsync(usageRecord);
-            return usageRecord;
+            _context.Remove(usageRecord);
+            await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateRecord(UsageRecord usageRecord)
+        public async Task<UsageRecord> GetByIdAsync(int id)
         {
-            await _context.UpdateAsync(usageRecord);
+            return await _context.UsageRecords.FindAsync(id);
         }
 
-        public async Task DeleteRecord(UsageRecord usageRecord)
+        public async Task<UsageRecord> GetLastestRecordByProjectAndInstrumentAsync(string projectName, string instrumentId)
         {
-            await _context.DeleteAsync(usageRecord);
+            return await _context.UsageRecords.LastOrDefaultAsync(r => r.ProjectName == projectName && r.InstrumentId == instrumentId);
         }
 
-        public async Task<IList<UsageRecord>> GetNotFinishedRecordsOfGroup(string groupName)
+        public Task<List<float>> GetLastNColumnPressureAsync(string projectName, string instrument, int n)
         {
-            var records = await _context.ListAllAsync();
-            return records.Where(r => r.EndTime == null && r.g).ToList();
+            throw new System.NotImplementedException();
         }
 
-        public async Task<IList<UsageRecord>> GetRecordsOfGroup(string groupName)
+        public Task<List<float>> GetLastNTestAsync(string projectName, string instrument, int n)
         {
-            var records = await _context.ListAllAsync();
-            return records;
+            throw new System.NotImplementedException();
         }
 
+        public Task<List<float>> GetLastNVacuumDegreeAsync(string projectName, string instrument, int n)
+        {
+            throw new System.NotImplementedException();
+        }
 
+        public async Task<List<UsageRecord>> ListAllAsync()
+        {
+            return await _context.UsageRecords.AsNoTracking().ToListAsync();
+        }
+
+        public async Task<List<UsageRecord>> ListAllByGroupAsync(string groupName)
+        {
+            return await _context.UsageRecords.Where(r => r.GroupName == groupName).AsNoTracking().ToListAsync();
+        }
+
+        public async Task<List<UsageRecord>> ListAllByInstrumentAsync(string instrumentId)
+        {
+            return await _context.UsageRecords.Where(r => r.InstrumentId == instrumentId).AsNoTracking().ToListAsync();
+        }
+
+        public async Task<List<UsageRecord>> ListAllByProjectAsync(string projectName)
+        {
+            return await _context.UsageRecords.Where(r => r.ProjectName == projectName).AsNoTracking().ToListAsync();
+        }
+
+        public async Task UpdateAsync(UsageRecord usageRecord)
+        {
+            _context.Attach(usageRecord).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateEndTimeAsync(int id, DateTime endTime)
+        {
+            var usageRecord = await _context.UsageRecords.FindAsync(id);
+            usageRecord.EndTime = endTime;
+            _context.Attach(usageRecord).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
     }
 }

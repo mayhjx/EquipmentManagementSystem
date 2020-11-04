@@ -1,23 +1,27 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using EquipmentManagementSystem.Models;
+using EquipmentManagementSystem.Models.Record;
 
 namespace EquipmentManagementSystem.Services.Interfaces
 {
     interface IUsageRecordService
     {
-        Task<UsageRecord> GetRecordById(int id);
+        Task<UsageRecord> GetByIdAsync(int id);
+        Task AddAsync(UsageRecord usageRecord);
+        Task UpdateAsync(UsageRecord usageRecord);
+        Task UpdateEndTimeAsync(int id, DateTime endTime);
+        Task DeleteAsync(UsageRecord usageRecord);
+        Task<List<UsageRecord>> ListAllAsync();
 
-        Task<UsageRecord> AddRecord(UsageRecord usageRecord);
+        Task<List<UsageRecord>> ListAllByGroupAsync(string groupName);
+        Task<List<UsageRecord>> ListAllByProjectAsync(string projectName);
+        Task<List<UsageRecord>> ListAllByInstrumentAsync(string instrumentName);
 
-        Task UpdateRecord(UsageRecord usageRecord);
+        Task<List<float>> GetLastNColumnPressureAsync(string projectName, string instrument, int n);
+        Task<List<float>> GetLastNVacuumDegreeAsync(string projectName, string instrument, int n);
+        Task<List<float>> GetLastNTestAsync(string projectName, string instrument, int n);
 
-        Task DeleteRecord(UsageRecord usageRecord);
-
-        Task<IList<UsageRecord>> GetRecordsOfGroup(string groupName);
-
-        Task<IList<UsageRecord>> GetNotFinishedRecordsOfGroup(string groupName);
-
-        //Task<List<AuditTrailLog>> GetAuditTrailLogs(string entityName);
+        Task<UsageRecord> GetLastestRecordByProjectAndInstrumentAsync(string projectName, string instrument);
     }
 }

@@ -18,6 +18,15 @@ namespace EquipmentManagementSystem.Services
             _userManager = userManager;
         }
 
+        public string GetUserGroup()
+        {
+            if (_context.HttpContext?.User == null)
+            {
+                return string.Empty;
+            }
+            return _userManager.GetUserAsync(_context.HttpContext?.User).Result?.Group;
+        }
+
         public string GetUserId()
         {
             return _context.HttpContext?.User?.Identity?.Name;
@@ -27,7 +36,7 @@ namespace EquipmentManagementSystem.Services
         {
             if (_context.HttpContext?.User == null)
             {
-                return "";
+                return string.Empty;
             }
             return _userManager.GetUserAsync(_context.HttpContext?.User).Result?.Name;
         }
