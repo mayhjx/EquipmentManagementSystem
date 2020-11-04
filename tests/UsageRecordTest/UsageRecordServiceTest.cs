@@ -34,7 +34,8 @@ namespace tests
             }
         }
 
-        public async Task Test_()
+        [Fact]
+        public async Task Test_GetLastNColumnPressureAsync()
         {
 
         }

@@ -6,9 +6,17 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Pages\Records\UsageRecords\**" />
+	  <Compile Remove="Pages\ReportSystem\**" />
 	  <Compile Remove="wwwroot\uploadFiles\**" />
+	  <Content Remove="Pages\Records\UsageRecords\**" />
+	  <Content Remove="Pages\ReportSystem\**" />
 	  <Content Remove="wwwroot\uploadFiles\**" />
+	  <EmbeddedResource Remove="Pages\Records\UsageRecords\**" />
+	  <EmbeddedResource Remove="Pages\ReportSystem\**" />
 	  <EmbeddedResource Remove="wwwroot\uploadFiles\**" />
+	  <None Remove="Pages\Records\UsageRecords\**" />
+	  <None Remove="Pages\ReportSystem\**" />
 	  <None Remove="wwwroot\uploadFiles\**" />
 	</ItemGroup>
 

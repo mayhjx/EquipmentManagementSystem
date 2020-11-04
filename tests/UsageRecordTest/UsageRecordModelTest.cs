@@ -18,6 +18,7 @@ namespace tests
             usageRecord.SetColumnInfo(columns);
             var actual = usageRecord.GetColumnInfo();
 
+            Assert.Equal(usageRecord.Column, "[{\"Type\":\"A\",\"SerialNumber\":\"001\",\"Value\":1.0,\"Unit\":\"Mpa\"}]");
             Assert.Equal(columns[0].Type, actual[0].Type);
             Assert.Equal(columns[0].SerialNumber, actual[0].SerialNumber);
             Assert.Equal(columns[0].Value, actual[0].Value);
