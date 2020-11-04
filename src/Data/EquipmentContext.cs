@@ -6,7 +6,8 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using EquipmentManagementSystem.Models;
-using EquipmentManagementSystem.Services;
+using EquipmentManagementSystem.Models.Record;
+using EquipmentManagementSystem.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Newtonsoft.Json;
@@ -17,7 +18,7 @@ namespace EquipmentManagementSystem.Data
     {
         private string _userId;
         private string _userName;
-        public EquipmentContext(DbContextOptions<EquipmentContext> options, UserResolverService userService)
+        public EquipmentContext(DbContextOptions<EquipmentContext> options, IUserResolverService userService)
             : base(options)
         {
             _userId = userService.GetUserId();
@@ -68,7 +69,7 @@ namespace EquipmentManagementSystem.Data
             return result;
         }
 
-        public List<AuditEntry> OnBeforeSaveChanges()
+        private List<AuditEntry> OnBeforeSaveChanges()
         {
             var auditEntries = new List<AuditEntry>();
 
@@ -136,10 +137,14 @@ namespace EquipmentManagementSystem.Data
             return auditEntries.Where(_ => _.HasTemporaryProperties).ToList();
         }
 
-        public static string GetDisplayName(MemberInfo memberInfo)
+        private static string GetDisplayName(MemberInfo memberInfo)
         {
             // 返回DisplayAttribute名或者属性名
-            var attrName = memberInfo.Name;
+            //var attrName = memberInfo.Name;
+            string attrName = "";
+            if (memberInfo == null)
+                return attrName;
+
             DisplayAttribute attr = Attribute.GetCustomAttribute(memberInfo, typeof(DisplayAttribute)) as DisplayAttribute;
 
             if (attr != null)
@@ -175,7 +180,7 @@ namespace EquipmentManagementSystem.Data
         }
     }
 
-    public class AuditEntry
+    class AuditEntry
     {
         public AuditEntry(EntityEntry entry)
         {
