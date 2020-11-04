@@ -1,5 +1,6 @@
 ﻿using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Services;
+using EquipmentManagementSystem.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -36,7 +37,7 @@ namespace EquipmentManagementSystem
                 options.HeaderName = "MY-XSRF-TOKEN");
 
             // 用于在审计跟踪时获取当前用户
-            services.AddTransient<UserResolverService>();
+            services.AddTransient<IUserResolverService, UserResolverService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
