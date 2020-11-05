@@ -23,21 +23,21 @@
             </ul>
         </div>
         <div class="card-tools">
-            <form class="form-inline float-left" method="post">
+            @*<form class="form-inline float-left" method="post">
                 <label class="my-1 mr-2" for="status" asp-for="@Model.Search.Status">显示</label>
                 <select class="custom-select select2 my-1 mr-sm-2" id="status" asp-for="@Model.Search.Status" asp-items="@Html.GetEnumSelectList<EquipmentManagementSystem.Pages.Records.IndexModel.Status>()">
                 </select>
 
-                @*<label class="my-1 mr-2 ml-2" for="project" asp-for="@Model.Search.Project"></label>
+                <label class="my-1 mr-2 ml-2" for="project" asp-for="@Model.Search.Project"></label>
                     <select class="custom-select select2 my-1 mr-sm-2" id="project" asp-for="@Model.Search.Project" asp-items="@Model.ProjectSelectList">
                         <option value="">---请选择---</option>
                     </select>
 
                     <label class="my-1 mr-2 ml-2" for="instrument" asp-for="@Model.Search.Instrument"></label>
                     <select class="custom-select select2 my-1 mr-sm-2" style="min-width:110px" id="instrumentId" asp-for="@Model.Search.Instrument">
-                    </select>*@
-                @*<button type="submit" class="btn btn-outline-primary my-1">查询</button>*@
-            </form>
+                    </select>
+                    <button type="submit" class="btn btn-outline-primary my-1">查询</button>
+                </form>*@
         </div>
     </div>
 
@@ -48,37 +48,119 @@
                 <a asp-page="MaintenanceRecords/Create">
                     <input type="button" class="btn btn-outline-primary my-2" value="新建">
                 </a>
-                <audit-trail logs="Model.MaintenanceAuditTrailLogs" modal-id="maintenanceAuditTrailLog"></audit-trail>
+                <audit-trail logs="Model.MaintenanceRecordAuditTrailLogs" modal-id="maintenanceAuditTrailLog"></audit-trail>
+
+                @*<table id="index" class="table table-hover text-nowrap">
+                        <thead>
+                            <tr>
+                               <th>
+                                        @Html.DisplayNameFor(model => model.MaintenanceRecords[0].InstrumentId)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.MaintenanceRecords[0].ProjectName)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.MaintenanceRecords[0].BeginTime)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.MaintenanceRecords[0].EndTime)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.MaintenanceRecords[0].Type)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.MaintenanceRecords[0].Content)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.MaintenanceRecords[0].Operator)
+                                    </th>
+                                    <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.MaintenanceRecords)
+                                            {
+                                                <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.InstrumentId)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ProjectName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.BeginTime)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.EndTime)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Type)
+                                            </td>
+                                            <td>
+                                                <div class="text-wrap">
+                                                    @Html.DisplayFor(modelItem => item.Content)
+                                                </div>
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Operator)
+                                            </td>
+                                            <td>
+                                                @if ((await AuthorizationService.AuthorizeAsync(User, item, Operations.Update)).Succeeded)
+                                                {
+                                                    <a asp-page="MaintenanceRecords/Edit" asp-route-id="@item.Id"><i class="fas fa-pencil-alt fa-lg"></i></a>
+                                                }
+                                            </td>
+                                        </tr>
+                                }
+                        </tbody>
+                    </table>*@
+            </div>
+
+            @*使用记录*@
+            <div class="tab-pane fade table-responsive" id="usage-record" role="tabpanel" aria-labelledby="usage-record-tab">
+                <a asp-page="UsageRecords/Create">
+                    <input type="button" class="btn btn-outline-primary my-2" value="新建">
+                </a>
+                <audit-trail logs="Model.UsageRecordAuditTrailLogs" modal-id="usageAuditTrailLog"></audit-trail>
 
                 <table id="index" class="table table-hover text-nowrap">
                     <thead>
                         <tr>
                             <th>
-                                @Html.DisplayNameFor(model => model.MaintenanceRecords[0].InstrumentId)
+                                @Html.DisplayNameFor(model => model.UsageRecords[0].InstrumentId)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.MaintenanceRecords[0].ProjectName)
+                                @Html.DisplayNameFor(model => model.UsageRecords[0].ProjectName)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.MaintenanceRecords[0].BeginTime)
+                                @Html.DisplayNameFor(model => model.UsageRecords[0].BeginTime)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.MaintenanceRecords[0].EndTime)
+                                @Html.DisplayNameFor(model => model.UsageRecords[0].ClinicSampleNumber)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.MaintenanceRecords[0].Type)
+                                @Html.DisplayNameFor(model => model.UsageRecords[0].BatchSampleNumber)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.MaintenanceRecords[0].Content)
+                                @Html.DisplayNameFor(model => model.UsageRecords[0].VacuumDegree)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.MaintenanceRecords[0].Operator)
+                                @Html.DisplayNameFor(model => model.UsageRecords[0].Blank)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.UsageRecords[0].Test)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.UsageRecords[0].EndTime)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.UsageRecords[0].User)
                             </th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model.MaintenanceRecords)
+                        @foreach (var item in Model.UsageRecords)
                         {
                             <tr>
                                 <td>
@@ -91,115 +173,33 @@
                                     @Html.DisplayFor(modelItem => item.BeginTime)
                                 </td>
                                 <td>
+                                    @Html.DisplayFor(modelItem => item.ClinicSampleNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.BatchSampleNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.VacuumDegree)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Blank)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Test)
+                                </td>
+                                <td>
                                     @Html.DisplayFor(modelItem => item.EndTime)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Type)
-                                </td>
-                                <td>
-                                    <div class="text-wrap">
-                                        @Html.DisplayFor(modelItem => item.Content)
-                                    </div>
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Operator)
+                                    @Html.DisplayFor(modelItem => item.User)
                                 </td>
                                 <td>
                                     @if ((await AuthorizationService.AuthorizeAsync(User, item, Operations.Update)).Succeeded)
                                     {
-                                        <a asp-page="MaintenanceRecords/Edit" asp-route-id="@item.Id"><i class="fas fa-pencil-alt fa-lg"></i></a>
+                                        <a asp-page="UsageRecords/Edit" asp-route-id="@item.Id"><i class="fas fa-pencil-alt fa-lg"></i></a>
                                     }
                                 </td>
                             </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-
-            @*使用记录*@
-            <div class="tab-pane fade table-responsive" id="usage-record" role="tabpanel" aria-labelledby="usage-record-tab">
-                <a asp-page="UsageRecords/Create">
-                    <input type="button" class="btn btn-outline-primary my-2" value="新建">
-                </a>
-                <audit-trail logs="Model.UsageAuditTrailLogs" modal-id="usageAuditTrailLog"></audit-trail>
-
-                <table id="index" class="table table-hover text-nowrap">
-                    <thead>
-                        <tr>
-                            @*<th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].InstrumentId)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].ProjectName)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].BeginTime)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].SampleNumber)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].TestNumber)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].VacuumDegree)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].BlankSignal)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].TestSignal)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].EndTime)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].Creator)
-                                </th>
-                                <th></th>*@
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.UsageRecords)
-                        {
-                            @*<tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.InstrumentId)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.ProjectName)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.BeginTime)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.SampleNumber)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.TestNumber)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.VacuumDegree) @Html.DisplayFor(modelItem => item.VacuumDegreeUnit)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.BlankSignal)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.TestSignal)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.EndTime)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Creator)
-                                    </td>
-                                    <td>
-                                        @if ((await AuthorizationService.AuthorizeAsync(User, item, Operations.Update)).Succeeded)
-                                        {
-                                            <a asp-page="UsageRecords/Edit" asp-route-id="@item.Id"><i class="fas fa-pencil-alt fa-lg"></i></a>
-                                        }
-                                    </td>
-                                </tr>*@
                         }
                     </tbody>
                 </table>
@@ -235,9 +235,9 @@
                 console.log("当前浏览器不支持LocalStorage");
             }
 
-            $('#status').on('change', function () {
-                $('form').submit();
-            })
+            //$('#status').on('change', function () {
+            //    $('form').submit();
+            //})
             //$('#project').on('change', function () {
             //    $('form').submit();
             //})

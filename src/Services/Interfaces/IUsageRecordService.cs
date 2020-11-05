@@ -1,27 +1,25 @@
-﻿using System;
+﻿using EquipmentManagementSystem.Models.Record;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using EquipmentManagementSystem.Models.Record;
 
 namespace EquipmentManagementSystem.Services.Interfaces
 {
-    interface IUsageRecordService
+    public interface IUsageRecordService
     {
         Task<UsageRecord> GetByIdAsync(int id);
         Task AddAsync(UsageRecord usageRecord);
         Task UpdateAsync(UsageRecord usageRecord);
-        Task UpdateEndTimeAsync(int id, DateTime endTime);
         Task DeleteAsync(UsageRecord usageRecord);
         Task<List<UsageRecord>> ListAllAsync();
 
         Task<List<UsageRecord>> ListAllByGroupAsync(string groupName);
         Task<List<UsageRecord>> ListAllByProjectAsync(string projectName);
-        Task<List<UsageRecord>> ListAllByInstrumentAsync(string instrumentName);
+        Task<List<UsageRecord>> ListAllByInstrumentAsync(string instrumentId);
 
-        Task<List<float>> GetLastNColumnPressureAsync(string projectName, string instrument, int n);
-        Task<List<float>> GetLastNVacuumDegreeAsync(string projectName, string instrument, int n);
-        Task<List<float>> GetLastNTestAsync(string projectName, string instrument, int n);
+        Dictionary<string, List<float>> GetLastNColumnPressure(string projectName, string instrumentId, int n);
+        Dictionary<string, List<float>> GetLastNVacuumDegree(string projectName, string instrumentId, int n);
+        Dictionary<string, List<float>> GetLastNTest(string projectName, string instrumentId, int n);
 
-        Task<UsageRecord> GetLastestRecordByProjectAndInstrumentAsync(string projectName, string instrument);
+        Task<UsageRecord> GetLastestRecordByProjectAndInstrumentAsync(string projectName, string instrumentId);
     }
 }

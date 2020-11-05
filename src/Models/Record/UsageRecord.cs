@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Newtonsoft.Json;
 
 namespace EquipmentManagementSystem.Models.Record
 {
@@ -71,7 +71,7 @@ namespace EquipmentManagementSystem.Models.Record
 
         public List<Column> GetColumnInfo()
         {
-            return JsonConvert.DeserializeObject<List<Column>>(Column);
+            return string.IsNullOrEmpty(Column) ? null : JsonConvert.DeserializeObject<List<Column>>(Column);
         }
 
 
@@ -82,7 +82,7 @@ namespace EquipmentManagementSystem.Models.Record
 
         public List<VacuumDegree> GetVacuumDegreeInfo()
         {
-            return JsonConvert.DeserializeObject<List<VacuumDegree>>(VacuumDegree);
+            return string.IsNullOrEmpty(VacuumDegree) ? null : JsonConvert.DeserializeObject<List<VacuumDegree>>(VacuumDegree);
         }
 
         public void SetTestInfo(List<Test> tests)
@@ -92,7 +92,13 @@ namespace EquipmentManagementSystem.Models.Record
 
         public List<Test> GetTestInfo()
         {
-            return JsonConvert.DeserializeObject<List<Test>>(Test);
+
+            return string.IsNullOrEmpty(Test) ? null : JsonConvert.DeserializeObject<List<Test>>(Test);
+        }
+
+        public void UpdateEndTime(DateTime endTime)
+        {
+            EndTime = endTime;
         }
     }
 }

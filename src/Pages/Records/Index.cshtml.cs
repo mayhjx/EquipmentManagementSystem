@@ -1,142 +1,63 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using EquipmentManagementSystem.Authorization;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using EquipmentManagementSystem.Models.Record;
+using EquipmentManagementSystem.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Records
 {
-    [AllowAnonymous]
     public class IndexModel : BasePageModel
     {
+        private readonly IUsageRecordService _usageRecordService;
+        private readonly IUserResolverService _userResolverService;
+        private readonly IAuditTrailService _auditTrailService;
+
         public IndexModel(EquipmentContext context,
             UserManager<User> userManager,
-            IAuthorizationService authorizationService)
+            IAuthorizationService authorizationService,
+            IUsageRecordService usageRecordService,
+            IUserResolverService userResolverService,
+            IAuditTrailService auditTrailService)
             : base(context, userManager, authorizationService)
         {
+            _usageRecordService = usageRecordService;
+            _userResolverService = userResolverService;
+            _auditTrailService = auditTrailService;
         }
-
-        [BindProperty]
-        public SearchForm Search { get; set; } = new SearchForm();
 
         public IList<MaintenanceRecord> MaintenanceRecords { get; set; }
         public IList<UsageRecord> UsageRecords { get; set; }
+        public IList<AuditTrailLog> MaintenanceRecordAuditTrailLogs { get; set; }
+        public IList<AuditTrailLog> UsageRecordAuditTrailLogs { get; set; }
 
-        public MaintenanceRecord MaintenanceRecord { get; private set; } = new MaintenanceRecord();
-        public UsageRecord UsageRecord { get; private set; } = new UsageRecord();
-        public IList<AuditTrailLog> MaintenanceAuditTrailLogs { get; set; }
-        public IList<AuditTrailLog> UsageAuditTrailLogs { get; set; }
-
-        //public SelectList ProjectSelectList { get; set; }
-
-        public async Task OnGetAsync(Status status = Status.All)
+        public async Task OnGetAsync()
         {
-            //var usageRecord = from record in _context.UsageRecords
-            //                .AsNoTracking()
-            //                .Include(record => record.Instrument)
-            //                .Include(record => record.Project)
-            //                    .ThenInclude(p => p.Group)
-            //                  select record;
+            /* 如果当前用户是管理员，显示所有记录
+             * 如果当前用户非管理员，显示属于用户项目组的记录
+             * 默认显示所有记录
+             */
+            var isAuthorized = User.IsInRole(Constants.DirectorRole) || User.IsInRole(Constants.ManagerRole);
 
-            //var maintenanceRecord = from record in _context.MaintenanceRecords
-            //                .AsNoTracking()
-            //                .Include(record => record.Instrument)
-            //                .Include(record => record.Project)
-            //                    .ThenInclude(p => p.Group)
-            //                        select record;
+            if (isAuthorized)
+            {
+                // 用户为管理员，显示所有记录
+                UsageRecords = await _usageRecordService.ListAllAsync();
+            }
+            else
+            {
+                //  用户非管理员，显示用户所属项目组的使用登记
+                var groupOfUserGroup = _userResolverService.GetUserGroup();
+                UsageRecords = await _usageRecordService.ListAllByGroupAsync(groupOfUserGroup);
+            }
 
-            //// 显示使用中的记录
-            //Search.Status = status;
-            //if (Search.Status == Status.Using)
-            //{
-            //    //Search.Status = Status.Using;
-            //    usageRecord = usageRecord.Where(record => record.EndTime == null);
-            //    maintenanceRecord = maintenanceRecord.Where(record => record.EndTime == null);
-            //}
+            MaintenanceRecordAuditTrailLogs = await _auditTrailService.GetAuditTrailLogsAsync(new MaintenanceRecord().GetType().Name);
 
-            //var isAuthorized = User.IsInRole(Constants.DirectorRole) || User.IsInRole(Constants.ManagerRole);
-
-            //var projects = _context.Projects.AsNoTracking().Include(p => p.Group);
-
-            //if (User.Identity.IsAuthenticated && !isAuthorized)
-            //{
-            //    var currentUserGroup = (await _userManager.GetUserAsync(User)).Group;
-
-            //    var projectsOfcurrentUserGroup = await projects.AsNoTracking().Where(p => p.Group.Name == currentUserGroup).Select(p => p.Name).ToListAsync();
-
-            //    //ProjectSelectList = new SelectList(projects.AsNoTracking().Where(p => p.Group.Name == currentUserGroup).OrderBy(p => p.Name), "Name", "Name");
-
-            //    // 显示当前用户所属项目组的使用登记
-            //    usageRecord = from record in usageRecord
-            //                  where projectsOfcurrentUserGroup.Contains(record.ProjectName)
-            //                  select record;
-
-            //    maintenanceRecord = from record in maintenanceRecord
-            //                        where projectsOfcurrentUserGroup.Contains(record.ProjectName)
-            //                        select record;
-            //}
-            ////else
-            ////{
-            ////    ProjectSelectList = new SelectList(projects.AsNoTracking().OrderBy(p => p.Name), "Name", "Name");
-            ////}
-
-            //UsageRecords = await usageRecord.OrderByDescending(m => m.BeginTime).ToListAsync();
-            //MaintenanceRecords = await maintenanceRecord.OrderByDescending(m => m.BeginTime).ToListAsync();
-
-            //MaintenanceAuditTrailLogs = await _context.AuditTrailLogs
-            //    .AsNoTracking()
-            //    .Where(l => l.EntityName == MaintenanceRecord.GetType().Name)
-            //    .OrderByDescending(l => l.DateChanged)
-            //    .ToListAsync();
-
-            //UsageAuditTrailLogs = await _context.AuditTrailLogs
-            //    .AsNoTracking()
-            //    .Where(l => l.EntityName == UsageRecord.GetType().Name)
-            //    .OrderByDescending(l => l.DateChanged)
-            //    .ToListAsync();
+            UsageRecordAuditTrailLogs = await _auditTrailService.GetAuditTrailLogsAsync(new UsageRecord().GetType().Name);
         }
 
-        /// <summary>
-        /// 根据项目返回设备编号
-        /// </summary>
-        /// <param name="groupName">项目组名</param>
-        /// <returns></returns>
-        public JsonResult OnGetInstrumentFilter(string projectName)
-        {
-            var Result = new JsonResult(from m in _context.Instruments
-                                        where m.Projects.IndexOf(projectName) >= 0
-                                        select m.ID);
-            return Result;
-        }
-
-        public IActionResult OnPost()
-        {
-            return RedirectToPage("./Index", new { status = Search.Status });
-        }
-
-        public class SearchForm
-        {
-            [Display(Name = "")]
-            public Status Status { get; set; }
-
-            //[Display(Name = "检测项目")]
-            //public string Project { get; set; }
-
-            //[Display(Name = "设备编号")]
-            //public string Instrument { get; set; }
-        }
-
-        public enum Status
-        {
-            [Display(Name = "未完成")]
-            Using,
-            [Display(Name = "所有")]
-            All,
-        }
     }
 }
