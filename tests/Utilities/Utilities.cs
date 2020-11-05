@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using EquipmentManagementSystem.Data;
+﻿using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace RazorPagesTestSample.Tests
 {
@@ -69,6 +69,5 @@ namespace RazorPagesTestSample.Tests
                 .Returns(Task.FromResult(IdentityResult.Success)).Verifiable();
             return userManager;
         }
-
     }
 }
