@@ -38,6 +38,8 @@ namespace EquipmentManagementSystem
 
             // 用于在审计跟踪时获取当前用户
             services.AddTransient<IUserResolverService, UserResolverService>();
+            services.AddTransient<IAuditTrailService, AuditTrailService>();
+            services.AddTransient<IUsageRecordService, UsageRecordService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

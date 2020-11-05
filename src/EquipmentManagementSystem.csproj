@@ -6,16 +6,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Compile Remove="Pages\Records\UsageRecords\**" />
 	  <Compile Remove="Pages\ReportSystem\**" />
 	  <Compile Remove="wwwroot\uploadFiles\**" />
-	  <Content Remove="Pages\Records\UsageRecords\**" />
 	  <Content Remove="Pages\ReportSystem\**" />
 	  <Content Remove="wwwroot\uploadFiles\**" />
-	  <EmbeddedResource Remove="Pages\Records\UsageRecords\**" />
 	  <EmbeddedResource Remove="Pages\ReportSystem\**" />
 	  <EmbeddedResource Remove="wwwroot\uploadFiles\**" />
-	  <None Remove="Pages\Records\UsageRecords\**" />
 	  <None Remove="Pages\ReportSystem\**" />
 	  <None Remove="wwwroot\uploadFiles\**" />
 	</ItemGroup>
@@ -65,30 +61,40 @@
 		<Compile Remove="Data\Migrations\Equipment\20200923031548_AddAuditTrailLog.Designer.cs" />
 		<Compile Remove="Data\Migrations\Equipment\20200923031723_AddAuditTrailLog.cs" />
 		<Compile Remove="Data\Migrations\Equipment\20200923031723_AddAuditTrailLog.Designer.cs" />
+		<Compile Remove="Data\Migrations\Equipment\20201105072904_changeUsageRecordmodel.cs" />
+		<Compile Remove="Data\Migrations\Equipment\20201105072904_changeUsageRecordmodel.Designer.cs" />
 		<Compile Remove="Data\Migrations\Malfunction\20200703010458_ResultNullable.cs" />
 		<Compile Remove="Data\Migrations\Malfunction\20200703010458_ResultNullable.Designer.cs" />
+		<Compile Remove="Pages\Records\UsageRecords\Delete.cshtml.cs" />
+		<Compile Remove="Pages\Records\UsageRecords\Edit.cshtml.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Content Remove="Pages\Records\UsageRecords\Delete.cshtml" />
+	  <Content Remove="Pages\Records\UsageRecords\Edit.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="Pages\Records\UsageRecords\Create.cshtml" />
 		<None Include="Pages\Shared\_Layout.cshtml" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.7" />
-		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.7" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.7" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.9" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.9" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.9" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.9" />
-		<PackageReference Include="Microsoft.EntityFrameWorkCore.design" Version="3.1.7">
+		<PackageReference Include="Microsoft.EntityFrameWorkCore.design" Version="3.1.9">
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.EntityFrameWorkCore.Sqlite" Version="3.1.7" />
-		<PackageReference Include="Microsoft.EntityFrameWorkCore.Sqlserver" Version="3.1.7" />
-		<PackageReference Include="Microsoft.EntityFrameWorkCore.tools" Version="3.1.7">
+		<PackageReference Include="Microsoft.EntityFrameWorkCore.Sqlite" Version="3.1.9" />
+		<PackageReference Include="Microsoft.EntityFrameWorkCore.Sqlserver" Version="3.1.9" />
+		<PackageReference Include="Microsoft.EntityFrameWorkCore.tools" Version="3.1.9">
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.7" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.9" />
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.design" Version="3.1.4" />
 	</ItemGroup>
 
