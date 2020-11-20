@@ -1,0 +1,176 @@
+﻿@page "/usagerecord"
+@inject IUsageRecordRepository repository
+@inject IJSRuntime js
+
+<h3>Usage Record List</h3>
+
+<button class="btn btn-primary" @onclick="CreateRecords">
+    Create Records
+</button>
+
+<select @onchange="GetRecordsOfTargetProject">
+    <option value=""></option>
+    <option value="FXS-YZ01">FXS-YZ01</option>
+    <option value="FXS-YZ02">FXS-YZ02</option>
+</select>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <td></td>
+            <td>仪器编号</td>
+            <td>项目名称</td>
+            <td>开始时间</td>
+            <td>结束时间</td>
+            <td>备注</td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            @if (EmptyRecords != null)
+            {
+                <td></td>
+                <td><input class="form-control-sm" type="text" @bind="@EmptyRecords.InstrumentNumber" /></td>
+                <td><input class="form-control-sm" type="text" @bind="@EmptyRecords.ProjectName" /></td>
+                <td><input class="form-control-sm" type="datetime-local" @bind="@EmptyRecords.BeginTime" @bind:format="yyyy-MM-ddTHH:mm" /></td>
+                <td><input class="form-control-sm" type="datetime-local" @bind="@EmptyRecords.EndTime" @bind:format="yyyy-MM-ddTHH:mm" /></td>
+                <td><textarea class="form-control-sm" @bind="@EmptyRecords.Remark" /></td>
+                <td>
+                    <button class="btn btn-primary btn-sm" @onclick="Add">
+                        Save
+                    </button>
+                    <button class="btn btn-secondary btn-sm" @onclick="Cancel">
+                        Cancel
+                    </button>
+                </td>
+            }
+        </tr>
+        @foreach (var record in UsageRecords)
+        {
+            <tr>
+                <td>
+                    <span style="display:@HideOnEditing(record.Id);">@record.Id</span>
+                    <span style="display:@ShowOnEditing(record.Id);">@record.Id</span>
+                </td>
+                <td>
+                    <span style="display:@HideOnEditing(record.Id);">@record.InstrumentNumber</span>
+                    <input type="text" style="display:@ShowOnEditing(record.Id);" class="form-control-sm" @bind="@record.InstrumentNumber" />
+                </td>
+                <td>
+                    <span style="display:@HideOnEditing(record.Id);">@record.ProjectName</span>
+                    <input type="text" style="display:@ShowOnEditing(record.Id);" class="form-control-sm" @bind="@record.ProjectName" />
+                </td>
+                <td>
+                    <span style="display:@HideOnEditing(record.Id);">@record.BeginTime</span>
+                    <input type="datetime-local" style="display:@ShowOnEditing(record.Id);" class="form-control-sm" @bind="@record.BeginTime" @bind:format="yyyy-MM-ddTHH:mm" />
+                </td>
+                <td>
+                    <span style="display:@HideOnEditing(record.Id);">@record.EndTime</span>
+                    <input type="datetime-local" style="display:@ShowOnEditing(record.Id);" class="form-control-sm" @bind="@record.EndTime" @bind:format="yyyy-MM-ddTHH:mm" />
+                </td>
+                <td>
+                    <span style="display:@HideOnEditing(record.Id);">@record.Remark</span>
+                    <textarea style="display:@ShowOnEditing(record.Id);" class="form-control-sm" @bind="@record.Remark" />
+                </td>
+                <td>
+                    <button style="display:@HideOnEditing(record.Id);" class="btn btn-primary btn-sm" @onclick="(()=> EnableEdit(record.Id))">Edit</button>
+                    <button style="display:@HideOnEditing(record.Id);" class="btn btn-danger btn-sm" @onclick="(()=> Delete(record.Id))">Delete</button>
+                    <button style="display:@ShowOnEditing(record.Id);" class="btn btn-success btn-sm" @onclick="(()=> Update(record))">Update</button>
+                    <button style="display:@ShowOnEditing(record.Id);" class="btn btn-secondary btn-sm" @onclick="Cancel">Cancel</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@code {
+    IList<UsageRecord> UsageRecords = new List<UsageRecord>();
+    UsageRecord EmptyRecords;
+    int selectedId = -1;
+
+    protected override void OnInitialized()
+    {
+        Refresh();
+        base.OnInitialized();
+    }
+
+    void GetRecordsOfTargetProject(ChangeEventArgs e)
+    {
+        var selected = e.Value.ToString();
+        if (!string.IsNullOrEmpty(selected))
+        {
+            UsageRecords = repository.GetAllByInstrument(selected).ToList();
+        }
+        else
+        {
+            Refresh();
+        }
+    }
+
+    void Refresh()
+    {
+        EmptyRecords = null;
+        UsageRecords = repository.GetAll().ToList();
+        StateHasChanged();
+    }
+
+    void CreateRecords()
+    {
+        EmptyRecords = new UsageRecord() { InstrumentNumber = "FXS-YZ01" };
+    }
+
+    async Task Add()
+    {
+        await repository.Create(EmptyRecords);
+
+        Refresh();
+    }
+
+    void EnableEdit(int id)
+    {
+        selectedId = id;
+    }
+
+    string ShowOnEditing(int id)
+    {
+        return (selectedId == id) ? "" : "none";
+    }
+
+    string HideOnEditing(int id)
+    {
+        return (selectedId == id) ? "none" : "";
+    }
+
+    async Task Update(UsageRecord record)
+    {
+        await repository.Update(record);
+        selectedId = -1;
+        Refresh();
+    }
+
+    async Task Delete(int id)
+    {
+        bool choice = await js.InvokeAsync<bool>("confirm", "Are you sure to delete this item?");
+
+        if (choice == true)
+        {
+            var record = await repository.GetById(id);
+            if (record == null)
+            {
+
+            }
+
+            await repository.Delete(record);
+        }
+        Refresh();
+    }
+
+    void Cancel()
+    {
+        selectedId = -1;
+        Refresh();
+    }
+}
