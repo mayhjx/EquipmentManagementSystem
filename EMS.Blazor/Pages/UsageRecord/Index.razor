@@ -15,6 +15,7 @@
 </select>
 
 
+
 <table class="table">
     <thead>
         <tr>
@@ -28,11 +29,11 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            @if (EmptyRecords != null)
-            {
+        @if (EmptyRecords != null)
+        {
+            <tr>
                 <td></td>
-                <td><input class="form-control-sm" type="text" @bind="@EmptyRecords.InstrumentNumber" /></td>
+                <td><input form="form1" class="form-control-sm" type="text" @bind-value="@EmptyRecords.InstrumentNumber" /></td>
                 <td><input class="form-control-sm" type="text" @bind="@EmptyRecords.ProjectName" /></td>
                 <td><input class="form-control-sm" type="datetime-local" @bind="@EmptyRecords.BeginTime" @bind:format="yyyy-MM-ddTHH:mm" /></td>
                 <td><input class="form-control-sm" type="datetime-local" @bind="@EmptyRecords.EndTime" @bind:format="yyyy-MM-ddTHH:mm" /></td>
@@ -45,8 +46,8 @@
                         Cancel
                     </button>
                 </td>
-            }
-        </tr>
+            </tr>
+        }
         @foreach (var record in UsageRecords)
         {
             <tr>
@@ -102,7 +103,7 @@
         var selected = e.Value.ToString();
         if (!string.IsNullOrEmpty(selected))
         {
-            UsageRecords = repository.GetAllByInstrument(selected).ToList();
+            UsageRecords = repository.Find(r => r.InstrumentNumber == selected).ToList();
         }
         else
         {
@@ -115,6 +116,11 @@
         EmptyRecords = null;
         UsageRecords = repository.GetAll().ToList();
         StateHasChanged();
+    }
+
+    async Task HandelValidSubmit()
+    {
+        await Add();
     }
 
     void CreateRecords()

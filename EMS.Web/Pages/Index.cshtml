@@ -1,4 +1,6 @@
 ﻿@page
+@using EquipmentManagementSystem.Pages.Components
+
 @model IndexModel
 @{
     ViewData["Title"] = "看板";
@@ -217,6 +219,10 @@
         </div>
     </div>
 </div>
+
+
+@(await Html.RenderComponentAsync<Counter>(RenderMode.Server))
+
 
 @section Scripts {
     <script src="~/plugins/chart.js/Chart.bundle.min.js"></script>

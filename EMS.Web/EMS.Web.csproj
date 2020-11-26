@@ -6,14 +6,26 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Compile Remove="Pages\ReportSystem\**" />
-	  <Compile Remove="wwwroot\uploadFiles\**" />
-	  <Content Remove="Pages\ReportSystem\**" />
-	  <Content Remove="wwwroot\uploadFiles\**" />
-	  <EmbeddedResource Remove="Pages\ReportSystem\**" />
-	  <EmbeddedResource Remove="wwwroot\uploadFiles\**" />
-	  <None Remove="Pages\ReportSystem\**" />
-	  <None Remove="wwwroot\uploadFiles\**" />
+		<Compile Remove="Pages\Malfunctions\**" />
+		<Compile Remove="Pages\Management\**" />
+		<Compile Remove="Pages\Records\**" />
+		<Compile Remove="Pages\ReportSystem\**" />
+		<Compile Remove="wwwroot\uploadFiles\**" />
+		<Content Remove="Pages\Malfunctions\**" />
+		<Content Remove="Pages\Management\**" />
+		<Content Remove="Pages\Records\**" />
+		<Content Remove="Pages\ReportSystem\**" />
+		<Content Remove="wwwroot\uploadFiles\**" />
+		<EmbeddedResource Remove="Pages\Malfunctions\**" />
+		<EmbeddedResource Remove="Pages\Management\**" />
+		<EmbeddedResource Remove="Pages\Records\**" />
+		<EmbeddedResource Remove="Pages\ReportSystem\**" />
+		<EmbeddedResource Remove="wwwroot\uploadFiles\**" />
+		<None Remove="Pages\Malfunctions\**" />
+		<None Remove="Pages\Management\**" />
+		<None Remove="Pages\Records\**" />
+		<None Remove="Pages\ReportSystem\**" />
+		<None Remove="wwwroot\uploadFiles\**" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -65,17 +77,9 @@
 		<Compile Remove="Data\Migrations\Equipment\20201105072904_changeUsageRecordmodel.Designer.cs" />
 		<Compile Remove="Data\Migrations\Malfunction\20200703010458_ResultNullable.cs" />
 		<Compile Remove="Data\Migrations\Malfunction\20200703010458_ResultNullable.Designer.cs" />
-		<Compile Remove="Pages\Records\UsageRecords\Delete.cshtml.cs" />
-		<Compile Remove="Pages\Records\UsageRecords\Edit.cshtml.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Content Remove="Pages\Records\UsageRecords\Delete.cshtml" />
-	  <Content Remove="Pages\Records\UsageRecords\Edit.cshtml" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<None Include="Pages\Records\UsageRecords\Create.cshtml" />
 		<None Include="Pages\Shared\_Layout.cshtml" />
 	</ItemGroup>
 
@@ -96,6 +100,11 @@
 		</PackageReference>
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.9" />
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.design" Version="3.1.4" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\EMS.Core\EMS.Core.csproj" />
+		<ProjectReference Include="..\EMS.Infrastructure\EMS.Infrastructure.csproj" />
 	</ItemGroup>
 
 </Project>

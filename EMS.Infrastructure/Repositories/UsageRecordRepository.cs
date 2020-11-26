@@ -22,5 +22,10 @@ namespace Infrastructure.Repositories
         {
             return context.Set<UsageRecord>().Where(r => r.ProjectName == projectName);
         }
+
+        public IEnumerable<UsageRecord> GetAllByGroup(string groupName)
+        {
+            return context.Set<UsageRecord>().Where(r => r.GroupName == groupName);
+        }
     }
 }

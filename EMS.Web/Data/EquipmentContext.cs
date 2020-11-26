@@ -1,16 +1,15 @@
-﻿using System;
+﻿using EquipmentManagementSystem.Models;
+using EquipmentManagementSystem.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using EquipmentManagementSystem.Models;
-using EquipmentManagementSystem.Models.Record;
-using EquipmentManagementSystem.Services.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Newtonsoft.Json;
 
 namespace EquipmentManagementSystem.Data
 {

@@ -26,6 +26,7 @@ namespace EquipmentManagementSystem
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+            services.AddServerSideBlazor();
 
             services.AddDbContext<EquipmentContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("EquipmentContext")));
@@ -39,8 +40,6 @@ namespace EquipmentManagementSystem
             // 用于在审计跟踪时获取当前用户
             services.AddTransient<IUserResolverService, UserResolverService>();
             services.AddTransient<IAuditTrailService, AuditTrailService>();
-            services.AddTransient<IUsageRecordService, UsageRecordService>();
-            services.AddTransient<IMaintenanceRecordService, MaintenanceRecordService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -73,6 +72,7 @@ namespace EquipmentManagementSystem
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+                endpoints.MapBlazorHub();
             });
         }
     }

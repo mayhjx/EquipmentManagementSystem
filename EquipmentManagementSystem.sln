@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EMS.Core", "EMS.Core\EMS.Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EMS.Infrastructure", "EMS.Infrastructure\EMS.Infrastructure.csproj", "{F1CB2A1E-BBEC-4AEF-9094-BDB8D86A2CA1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EMS.Blazor", "EMS.Blazor\EMS.Blazor.csproj", "{8F0F83DB-22D0-4E68-9B1F-9A6EE742525F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EMS.Blazor", "EMS.Blazor\EMS.Blazor.csproj", "{8F0F83DB-22D0-4E68-9B1F-9A6EE742525F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
