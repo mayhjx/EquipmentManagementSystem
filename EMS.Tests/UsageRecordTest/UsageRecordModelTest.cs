@@ -1,4 +1,4 @@
-﻿using EquipmentManagementSystem.Models.Record;
+﻿using EMS.Core.Entities.UsageRecordAggregate;
 using System;
 using System.Collections.Generic;
 using Xunit;

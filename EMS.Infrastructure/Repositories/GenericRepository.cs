@@ -43,6 +43,7 @@ namespace EMS.Infrastructure.Repositories
 
         public async Task Update(T entity)
         {
+            context.Entry<T>(entity).State = EntityState.Modified;
             await context.SaveChangesAsync();
         }
 
