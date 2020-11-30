@@ -6,59 +6,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Compile Remove="wwwroot\uploadFiles\**" />
-	  <Content Remove="wwwroot\uploadFiles\**" />
-	  <EmbeddedResource Remove="wwwroot\uploadFiles\**" />
-	  <None Remove="wwwroot\uploadFiles\**" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Compile Remove="Data\Migrations\20200420071131_addMalfunctionsFields.cs" />
-		<Compile Remove="Data\Migrations\20200420071131_addMalfunctionsFields.Designer.cs" />
-		<Compile Remove="Data\Migrations\20200420071421_addMalfunctionsFiels.cs" />
-		<Compile Remove="Data\Migrations\20200420071421_addMalfunctionsFiels.Designer.cs" />
-		<Compile Remove="Data\Migrations\20200528010217_Initial.cs" />
-		<Compile Remove="Data\Migrations\20200528010217_Initial.Designer.cs" />
-		<Compile Remove="Data\Migrations\20200602073238_initial.cs" />
-		<Compile Remove="Data\Migrations\20200602073238_initial.Designer.cs" />
-		<Compile Remove="Data\Migrations\20200602074138_initial.cs" />
-		<Compile Remove="Data\Migrations\20200602074138_initial.Designer.cs" />
-		<Compile Remove="Data\Migrations\20200602075538_initial.cs" />
-		<Compile Remove="Data\Migrations\20200602075538_initial.Designer.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200612084308_addgroup_project_usagerecord.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200612084308_addgroup_project_usagerecord.Designer.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200612125231_idrequired.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200612125231_idrequired.Designer.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200617113351_ChangeProjectName.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200617113351_ChangeProjectName.Designer.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200618074431_AddCreatedTime.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200618074431_AddCreatedTime.Designer.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200618082323_ChangeUsageRecord.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200618082323_ChangeUsageRecord.Designer.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200618083212_ChangeUsageRecord.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200618083212_ChangeUsageRecord.Designer.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200623015606_addGroupId.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200623015606_addGroupId.Designer.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200623022717_SimpleTestTime_DatetimeType.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200623022717_SimpleTestTime_DatetimeType.Designer.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200624030238_ChangeSimpleTestTimeType.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200624030238_ChangeSimpleTestTimeType.Designer.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200713082223_ProjectNameToId.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200713082223_ProjectNameToId.Designer.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200715032736_AddVacuumDegreeAndBlankTestSignal.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200715032736_AddVacuumDegreeAndBlankTestSignal.Designer.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200804091657_addMaintenanceRecord_Type_Content.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200804091657_addMaintenanceRecord_Type_Content.Designer.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200813035110_testToString.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200813035110_testToString.Designer.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200903095532_InstrumentAcceptance_RemoveInstrumentForeignKey.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200903095532_InstrumentAcceptance_RemoveInstrumentForeignKey.Designer.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200923031548_AddAuditTrailLog.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200923031548_AddAuditTrailLog.Designer.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200923031723_AddAuditTrailLog.cs" />
-		<Compile Remove="Data\Migrations\Equipment\20200923031723_AddAuditTrailLog.Designer.cs" />
-		<Compile Remove="Data\Migrations\Malfunction\20200703010458_ResultNullable.cs" />
-		<Compile Remove="Data\Migrations\Malfunction\20200703010458_ResultNullable.Designer.cs" />
+		<Compile Remove="wwwroot\uploadFiles\**" />
+		<Content Remove="wwwroot\uploadFiles\**" />
+		<EmbeddedResource Remove="wwwroot\uploadFiles\**" />
+		<None Remove="wwwroot\uploadFiles\**" />
 	</ItemGroup>
 
 	<ItemGroup>
