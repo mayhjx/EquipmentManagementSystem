@@ -29,9 +29,6 @@ namespace EquipmentManagementSystem
             services.AddDbContext<EquipmentContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("EquipmentContext")));
 
-            services.AddDbContext<MalfunctionContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("EquipmentContext")));
-
             services.AddAntiforgery(options =>
                 options.HeaderName = "MY-XSRF-TOKEN");
 
