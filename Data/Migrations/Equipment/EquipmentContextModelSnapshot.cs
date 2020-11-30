@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace EquipmentManagementSystem.Migrations.Equipment
+namespace EquipmentManagementSystem.Migrations
 {
     [DbContext(typeof(EquipmentContext))]
     partial class EquipmentContextModelSnapshot : ModelSnapshot
@@ -88,7 +88,7 @@ namespace EquipmentManagementSystem.Migrations.Equipment
                         .IsUnique()
                         .HasFilter("[InstrumentId] IS NOT NULL");
 
-                    b.ToTable("Assert");
+                    b.ToTable("Asserts");
                 });
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.AuditTrailLog", b =>
@@ -124,7 +124,7 @@ namespace EquipmentManagementSystem.Migrations.Equipment
 
                     b.HasKey("Id");
 
-                    b.ToTable("AuditTrailLog");
+                    b.ToTable("AuditTrailLogs");
                 });
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.Calibration", b =>
@@ -157,7 +157,7 @@ namespace EquipmentManagementSystem.Migrations.Equipment
 
                     b.HasIndex("InstrumentID");
 
-                    b.ToTable("Calibration");
+                    b.ToTable("Calibrations");
                 });
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.Component", b =>
@@ -194,7 +194,7 @@ namespace EquipmentManagementSystem.Migrations.Equipment
 
                     b.HasIndex("InstrumentID");
 
-                    b.ToTable("Component");
+                    b.ToTable("Components");
                 });
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.Computer", b =>
@@ -241,7 +241,7 @@ namespace EquipmentManagementSystem.Migrations.Equipment
 
                     b.HasKey("Id");
 
-                    b.ToTable("Group");
+                    b.ToTable("Groups");
                 });
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.Instrument", b =>
@@ -300,7 +300,7 @@ namespace EquipmentManagementSystem.Migrations.Equipment
 
                     b.HasKey("ID");
 
-                    b.ToTable("Instrument");
+                    b.ToTable("Instruments");
                 });
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.InstrumentAcceptance", b =>
@@ -477,7 +477,7 @@ namespace EquipmentManagementSystem.Migrations.Equipment
 
                     b.HasKey("Id");
 
-                    b.ToTable("InstrumentAcceptance");
+                    b.ToTable("InstrumentAcceptances");
                 });
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.Investigation", b =>
@@ -544,7 +544,7 @@ namespace EquipmentManagementSystem.Migrations.Equipment
 
                     b.HasKey("Id");
 
-                    b.ToTable("MaintenanceContent");
+                    b.ToTable("MaintenanceContents");
                 });
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.MaintenanceRecord", b =>
@@ -648,6 +648,66 @@ namespace EquipmentManagementSystem.Migrations.Equipment
                     b.ToTable("MalfunctionInfo");
                 });
 
+            modelBuilder.Entity("EquipmentManagementSystem.Models.MalfunctionPart", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("MalfunctionParts");
+                });
+
+            modelBuilder.Entity("EquipmentManagementSystem.Models.MalfunctionPhenomenon", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Phenomenon")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("MalfunctionPhenomenon");
+                });
+
+            modelBuilder.Entity("EquipmentManagementSystem.Models.MalfunctionReason", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Reason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("MalfunctionReason");
+                });
+
+            modelBuilder.Entity("EquipmentManagementSystem.Models.MalfunctionSolution", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Solution")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("MalfunctionSolution");
+                });
+
             modelBuilder.Entity("EquipmentManagementSystem.Models.MalfunctionWorkOrder", b =>
                 {
                     b.Property<int>("ID")
@@ -713,7 +773,7 @@ namespace EquipmentManagementSystem.Migrations.Equipment
 
                     b.HasIndex("GroupId");
 
-                    b.ToTable("Project");
+                    b.ToTable("Projects");
                 });
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.Repair", b =>
@@ -872,7 +932,7 @@ namespace EquipmentManagementSystem.Migrations.Equipment
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("UsageRecord");
+                    b.ToTable("UsageRecords");
                 });
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.Validation", b =>

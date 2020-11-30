@@ -7,17 +7,17 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace EquipmentManagementSystem.Migrations.Equipment
+namespace EquipmentManagementSystem.Migrations
 {
     [DbContext(typeof(EquipmentContext))]
-    [Migration("20200805025747_validation_remove_byte_add_filepath_increaseFileNameLength")]
-    partial class validation_remove_byte_add_filepath_increaseFileNameLength
+    [Migration("20201130091138_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.3")
+                .HasAnnotation("ProductVersion", "3.1.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -90,7 +90,43 @@ namespace EquipmentManagementSystem.Migrations.Equipment
                         .IsUnique()
                         .HasFilter("[InstrumentId] IS NOT NULL");
 
-                    b.ToTable("Assert");
+                    b.ToTable("Asserts");
+                });
+
+            modelBuilder.Entity("EquipmentManagementSystem.Models.AuditTrailLog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Action")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CurrentValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateChanged")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EntityName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OriginalValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PrimaryKeyValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AuditTrailLogs");
                 });
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.Calibration", b =>
@@ -123,7 +159,7 @@ namespace EquipmentManagementSystem.Migrations.Equipment
 
                     b.HasIndex("InstrumentID");
 
-                    b.ToTable("Calibration");
+                    b.ToTable("Calibrations");
                 });
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.Component", b =>
@@ -160,7 +196,7 @@ namespace EquipmentManagementSystem.Migrations.Equipment
 
                     b.HasIndex("InstrumentID");
 
-                    b.ToTable("Component");
+                    b.ToTable("Components");
                 });
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.Computer", b =>
@@ -207,7 +243,7 @@ namespace EquipmentManagementSystem.Migrations.Equipment
 
                     b.HasKey("Id");
 
-                    b.ToTable("Group");
+                    b.ToTable("Groups");
                 });
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.Instrument", b =>
@@ -266,7 +302,184 @@ namespace EquipmentManagementSystem.Migrations.Equipment
 
                     b.HasKey("ID");
 
-                    b.ToTable("Instrument");
+                    b.ToTable("Instruments");
+                });
+
+            modelBuilder.Entity("EquipmentManagementSystem.Models.InstrumentAcceptance", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime?>("ArrivalDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("BusinessLicenseFileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BusinessLicenseFilePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ConfigurationListFileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ConfigurationListFilePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Creator")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("EquipmentAcceptanceDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EquipmentAcceptanceReportFileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EquipmentAcceptanceReportFilePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EquipmentCalibrationReportFileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EquipmentCalibrationReportFilePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EquipmentCertificateFileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EquipmentCertificateFilePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EquipmentFilesListFileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EquipmentFilesListFilePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EquipmentResumeFileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EquipmentResumeFilePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("EstimatedArrivalDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EvaluationReportFileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EvaluationReportFilePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("FactoryAcceptanceDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FactoryAcceptanceRemark")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FactoryAcceptanceReportFileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FactoryAcceptanceReportFilePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FactoryProductionLicenseFileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FactoryProductionLicenseFilePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FeasibilityReportFileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FeasibilityReportFilePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("InstallationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("InstallationNoteFileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("InstallationNoteFilePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("InstallationRemark")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("InstrumentID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("InventoryCertificateFileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("InventoryCertificateFilePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("InventoryRemark")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsAcceptance")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsArchived")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDemo")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsEngineerAssistance")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsFactoryAcceptance")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsInventoryComplete")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSelfBuilt")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsTrainingUseAndMaintenance")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ItemAcceptanceDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("MedicalDeviceRegistrationCertificateFileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MedicalDeviceRegistrationCertificateFilePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MethodConstructionRemark")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PuchaseRequisitionFileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PuchaseRequisitionFilePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ServiceReportFileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ServiceReportFilePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TrainingSignInFormFileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TrainingSignInFormFilePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("InstrumentAcceptances");
                 });
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.Investigation", b =>
@@ -311,42 +524,73 @@ namespace EquipmentManagementSystem.Migrations.Equipment
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("MaintenanceTypeId")
+                    b.Property<int>("Cycle")
                         .HasColumnType("int");
-
-                    b.Property<string>("Text")
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MaintenanceTypeId");
-
-                    b.ToTable("MaintenanceContent");
-                });
-
-            modelBuilder.Entity("EquipmentManagementSystem.Models.MaintenanceType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Cycle")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("InstrumentPlatform")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("RemindTime")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("RemindTime")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("Translation")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("MaintenanceType");
+                    b.ToTable("MaintenanceContents");
+                });
+
+            modelBuilder.Entity("EquipmentManagementSystem.Models.MaintenanceRecord", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime?>("BeginTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
+
+                    b.Property<DateTime?>("EndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("InstrumentId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Operator")
+                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(10);
+
+                    b.Property<int?>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProjectName")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InstrumentId");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("MaintenanceRecords");
                 });
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.MalfunctionInfo", b =>
@@ -406,6 +650,66 @@ namespace EquipmentManagementSystem.Migrations.Equipment
                     b.ToTable("MalfunctionInfo");
                 });
 
+            modelBuilder.Entity("EquipmentManagementSystem.Models.MalfunctionPart", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("MalfunctionParts");
+                });
+
+            modelBuilder.Entity("EquipmentManagementSystem.Models.MalfunctionPhenomenon", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Phenomenon")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("MalfunctionPhenomenon");
+                });
+
+            modelBuilder.Entity("EquipmentManagementSystem.Models.MalfunctionReason", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Reason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("MalfunctionReason");
+                });
+
+            modelBuilder.Entity("EquipmentManagementSystem.Models.MalfunctionSolution", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Solution")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("MalfunctionSolution");
+                });
+
             modelBuilder.Entity("EquipmentManagementSystem.Models.MalfunctionWorkOrder", b =>
                 {
                     b.Property<int>("ID")
@@ -442,12 +746,12 @@ namespace EquipmentManagementSystem.Migrations.Equipment
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Carrier")
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
 
                     b.Property<string>("ColumnType")
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
 
                     b.Property<string>("Detector")
                         .HasColumnType("nvarchar(20)")
@@ -471,7 +775,7 @@ namespace EquipmentManagementSystem.Migrations.Equipment
 
                     b.HasIndex("GroupId");
 
-                    b.ToTable("Project");
+                    b.ToTable("Projects");
                 });
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.Repair", b =>
@@ -566,9 +870,6 @@ namespace EquipmentManagementSystem.Migrations.Equipment
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime?>("BeginTimeOfMaintain")
-                        .HasColumnType("datetime2");
-
                     b.Property<DateTime?>("BeginTimeOfTest")
                         .HasColumnType("datetime2");
 
@@ -588,11 +889,6 @@ namespace EquipmentManagementSystem.Migrations.Equipment
 
                     b.Property<float?>("ColumnTwoPressure")
                         .HasColumnType("real");
-
-                    b.Property<DateTime>("CreatedTime")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getdate()");
 
                     b.Property<string>("Creator")
                         .HasColumnType("nvarchar(10)")
@@ -638,7 +934,7 @@ namespace EquipmentManagementSystem.Migrations.Equipment
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("UsageRecord");
+                    b.ToTable("UsageRecords");
                 });
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.Validation", b =>
@@ -731,13 +1027,15 @@ namespace EquipmentManagementSystem.Migrations.Equipment
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("EquipmentManagementSystem.Models.MaintenanceContent", b =>
+            modelBuilder.Entity("EquipmentManagementSystem.Models.MaintenanceRecord", b =>
                 {
-                    b.HasOne("EquipmentManagementSystem.Models.MaintenanceType", "MaintenanceType")
-                        .WithMany("Content")
-                        .HasForeignKey("MaintenanceTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("EquipmentManagementSystem.Models.Instrument", "Instrument")
+                        .WithMany()
+                        .HasForeignKey("InstrumentId");
+
+                    b.HasOne("EquipmentManagementSystem.Models.Project", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectId");
                 });
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.MalfunctionInfo", b =>
