@@ -1,18 +1,18 @@
-﻿using System;
-using System.Threading.Tasks;
-using EquipmentManagementSystem.Authorization;
+﻿using EquipmentManagementSystem.Authorization;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions.RepairRequests
 {
     public class EditModel : BasePageModel
     {
-        public EditModel(MalfunctionContext context,
+        public EditModel(EquipmentContext context,
             IAuthorizationService authorizationService,
             UserManager<User> userManager)
             : base(context, authorizationService, userManager)

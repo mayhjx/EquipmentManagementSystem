@@ -12,7 +12,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
 {
     public class EditModel : BasePageModel
     {
-        public EditModel(MalfunctionContext context,
+        public EditModel(EquipmentContext context,
             IAuthorizationService authorization,
             UserManager<User> userManager)
             : base(context, authorization, userManager)

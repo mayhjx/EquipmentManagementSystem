@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using EquipmentManagementSystem.Authorization;
+﻿using EquipmentManagementSystem.Authorization;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -8,13 +6,15 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
 {
     public class CreateModel : BasePageModel
     {
         private readonly EquipmentContext _equipmentContext;
-        public CreateModel(MalfunctionContext context,
+        public CreateModel(EquipmentContext context,
             IAuthorizationService authorizationService,
             UserManager<User> userManager,
             EquipmentContext equipmentContext)

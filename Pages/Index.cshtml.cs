@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using EquipmentManagementSystem.Data;
+﻿using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace EquipmentManagementSystem.Pages
 {
@@ -14,12 +14,10 @@ namespace EquipmentManagementSystem.Pages
     public class IndexModel : PageModel
     {
         private readonly EquipmentContext _equipmentContext;
-        private readonly MalfunctionContext _malfunctionContext;
 
-        public IndexModel(EquipmentContext context, MalfunctionContext malfunctionContext)
+        public IndexModel(EquipmentContext context)
         {
             _equipmentContext = context;
-            _malfunctionContext = malfunctionContext;
         }
 
         // 主检设备数量
@@ -135,7 +133,7 @@ namespace EquipmentManagementSystem.Pages
                                         .ToList();
 
             // 待跟进工单
-            MalfunctionWorkOrderOfFollowNumber = (from m in _malfunctionContext.MalfunctionWorkOrder
+            MalfunctionWorkOrderOfFollowNumber = (from m in _equipmentContext.MalfunctionWorkOrder
                                                   where m.Progress != WorkOrderProgress.Completed
                                                   select m)
                                                   .Count();

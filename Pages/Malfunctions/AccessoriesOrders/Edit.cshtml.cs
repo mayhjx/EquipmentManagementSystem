@@ -11,7 +11,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.AccessoriesOrders
 {
     public class EditModel : BasePageModel
     {
-        public EditModel(MalfunctionContext context,
+        public EditModel(EquipmentContext context,
             IAuthorizationService authorizationService,
             UserManager<User> userManager)
             : base(context, authorizationService, userManager)

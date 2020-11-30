@@ -8,12 +8,12 @@ namespace EquipmentManagementSystem.Pages.Malfunctions
 {
     public class BasePageModel : PageModel
     {
-        protected MalfunctionContext _context { get; }
+        protected EquipmentContext _context { get; }
         protected IAuthorizationService _authorizationService { get; }
         protected UserManager<User> _userManager { get; }
 
         public BasePageModel(
-            MalfunctionContext context,
+            EquipmentContext context,
             IAuthorizationService authorizationService,
             UserManager<User> userManager)
         {

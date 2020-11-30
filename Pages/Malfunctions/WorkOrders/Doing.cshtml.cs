@@ -12,9 +12,9 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
     [AllowAnonymous]
     public class DoingModel : PageModel
     {
-        private readonly MalfunctionContext _context;
+        private readonly EquipmentContext _context;
 
-        public DoingModel(MalfunctionContext context)
+        public DoingModel(EquipmentContext context)
         {
             _context = context;
         }

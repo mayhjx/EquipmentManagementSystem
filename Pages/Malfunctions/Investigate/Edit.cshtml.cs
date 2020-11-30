@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using EquipmentManagementSystem.Authorization;
+﻿using EquipmentManagementSystem.Authorization;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -7,12 +6,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions.Investigate
 {
     public class EditModel : BasePageModel
     {
-        public EditModel(MalfunctionContext context,
+        public EditModel(EquipmentContext context,
             IAuthorizationService authorizationService,
             UserManager<User> userManager)
             : base(context, authorizationService, userManager)

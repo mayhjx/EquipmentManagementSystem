@@ -1,17 +1,17 @@
-﻿using System.Threading.Tasks;
-using EquipmentManagementSystem.Data;
+﻿using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
 {
     public class DetailsModel : PageModel
     {
-        private readonly MalfunctionContext _context;
+        private readonly EquipmentContext _context;
 
-        public DetailsModel(MalfunctionContext context)
+        public DetailsModel(EquipmentContext context)
         {
             _context = context;
         }

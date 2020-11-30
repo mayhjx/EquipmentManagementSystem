@@ -1,9 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.IO;
-using System.Net;
-using System.Threading.Tasks;
-using EquipmentManagementSystem.Authorization;
+﻿using EquipmentManagementSystem.Authorization;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using EquipmentManagementSystem.Utilities;
@@ -13,6 +8,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.IO;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions.Validate
 {
@@ -21,7 +21,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Validate
         private readonly long _fileSizeLimit;
         private readonly string _uploadFilePath;
 
-        public EditModel(MalfunctionContext context,
+        public EditModel(EquipmentContext context,
             IAuthorizationService authorization,
             UserManager<User> userManager,
             IConfiguration config)

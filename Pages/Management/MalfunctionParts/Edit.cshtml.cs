@@ -9,9 +9,9 @@ namespace EquipmentManagementSystem.Pages.Management.MalfunctionParts
 {
     public class EditModel : PageModel
     {
-        private readonly EquipmentManagementSystem.Data.MalfunctionContext _context;
+        private readonly EquipmentManagementSystem.Data.EquipmentContext _context;
 
-        public EditModel(EquipmentManagementSystem.Data.MalfunctionContext context)
+        public EditModel(EquipmentManagementSystem.Data.EquipmentContext context)
         {
             _context = context;
         }

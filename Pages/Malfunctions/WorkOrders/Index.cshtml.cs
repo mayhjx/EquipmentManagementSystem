@@ -11,9 +11,9 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
     [AllowAnonymous]
     public class IndexModel : PageModel
     {
-        private readonly MalfunctionContext _context;
+        private readonly EquipmentContext _context;
 
-        public IndexModel(MalfunctionContext context)
+        public IndexModel(EquipmentContext context)
         {
             _context = context;
         }

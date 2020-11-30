@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using EquipmentManagementSystem.Data;
-using EquipmentManagementSystem.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Management.MalfunctionPhenomenons
 {
     public class EditModel : PageModel
     {
-        private readonly EquipmentManagementSystem.Data.MalfunctionContext _context;
+        private readonly EquipmentManagementSystem.Data.EquipmentContext _context;
 
-        public EditModel(EquipmentManagementSystem.Data.MalfunctionContext context)
+        public EditModel(EquipmentManagementSystem.Data.EquipmentContext context)
         {
             _context = context;
         }

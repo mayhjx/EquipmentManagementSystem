@@ -1,18 +1,18 @@
-﻿using System;
-using System.Threading.Tasks;
-using EquipmentManagementSystem.Authorization;
+﻿using EquipmentManagementSystem.Authorization;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
 {
     public class DeleteModel : BasePageModel
     {
-        public DeleteModel(MalfunctionContext context,
+        public DeleteModel(EquipmentContext context,
             IAuthorizationService authorizationService,
             UserManager<User> userManager)
             : base(context, authorizationService, userManager)

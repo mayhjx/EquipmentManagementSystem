@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using EquipmentManagementSystem.Data;
-using EquipmentManagementSystem.Models;
+using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Management.MalfunctionReasons
 {
     public class CreateModel : PageModel
     {
-        private readonly EquipmentManagementSystem.Data.MalfunctionContext _context;
+        private readonly EquipmentManagementSystem.Data.EquipmentContext _context;
 
-        public CreateModel(EquipmentManagementSystem.Data.MalfunctionContext context)
+        public CreateModel(EquipmentManagementSystem.Data.EquipmentContext context)
         {
             _context = context;
         }
