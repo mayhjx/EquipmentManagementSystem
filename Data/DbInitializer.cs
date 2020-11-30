@@ -37,23 +37,22 @@ namespace EquipmentManagementSystem.Data
                 DateTime.TryParse(data[3], out DateTime datetime);
 
                 context.Instruments.Add(
-                    new Instrument
-                    {
-                        ID = data[0],
-                        Platform = data[1],
-                        Name = data[2],
-                        StartUsingDate = datetime,
-                        CalibrationCycle = int.Parse(data[4]),
-                        MetrologicalCharacteristics = data[5],
-                        Status = InstrumentStatus.Using,
-                        Location = data[7],
-                        Principal = data[8],
-                        NewSystemCode = data[9],
-                        Group = data[10],
-                        Projects = data[11],
-                        Remark = data[12]
-                    }
-                );
+                new Instrument
+                {
+                    ID = data[0],
+                    Platform = data[1],
+                    Name = data[2],
+                    StartUsingDate = datetime,
+                    CalibrationCycle = int.Parse(data[4]),
+                    MetrologicalCharacteristics = data[5],
+                    Status = InstrumentStatus.Using,
+                    Location = data[7],
+                    Principal = data[8],
+                    NewSystemCode = data[9],
+                    Group = data[10],
+                    Projects = data[11],
+                    Remark = data[12]
+                });
             }
             context.SaveChanges();
         }

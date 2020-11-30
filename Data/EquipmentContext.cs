@@ -1,15 +1,15 @@
-﻿using System;
+﻿using EquipmentManagementSystem.Models;
+using EquipmentManagementSystem.Services;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using EquipmentManagementSystem.Models;
-using EquipmentManagementSystem.Services;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Newtonsoft.Json;
 
 namespace EquipmentManagementSystem.Data
 {
@@ -38,21 +38,20 @@ namespace EquipmentManagementSystem.Data
 
         //public DbSet<Computer> Computers { get; set; }
 
+        public DbSet<MalfunctionWorkOrder> MalfunctionWorkOrder { get; set; }
+        public DbSet<MalfunctionInfo> MalfunctionInfo { get; set; }
+        public DbSet<Investigation> Investigation { get; set; }
+        public DbSet<RepairRequest> RepairRequest { get; set; }
+        public DbSet<AccessoriesOrder> AccessoriesOrder { get; set; }
+        public DbSet<Repair> Repair { get; set; }
+        public DbSet<Validation> Validation { get; set; }
+        public DbSet<MalfunctionPart> MalfunctionParts { get; set; }
+        public DbSet<MalfunctionPhenomenon> MalfunctionPhenomenon { get; set; }
+        public DbSet<MalfunctionReason> MalfunctionReason { get; set; }
+        public DbSet<MalfunctionSolution> MalfunctionSolution { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Instrument>().ToTable("Instrument");
-            modelBuilder.Entity<Calibration>().ToTable("Calibration");
-            modelBuilder.Entity<Component>().ToTable("Component");
-            modelBuilder.Entity<Assert>().ToTable("Assert");
-            modelBuilder.Entity<Group>().ToTable("Group");
-            modelBuilder.Entity<Project>().ToTable("Project");
-            modelBuilder.Entity<UsageRecord>().ToTable("UsageRecord");
-            modelBuilder.Entity<MaintenanceContent>().ToTable("MaintenanceContent");
-            modelBuilder.Entity<MaintenanceRecord>().ToTable("MaintenanceRecords");
-            modelBuilder.Entity<InstrumentAcceptance>().ToTable("InstrumentAcceptance");
-            modelBuilder.Entity<AuditTrailLog>().ToTable("AuditTrailLog");
-
-            //modelBuilder.Entity<Computer>().ToTable("Computer");
         }
 
         public override int SaveChanges()
