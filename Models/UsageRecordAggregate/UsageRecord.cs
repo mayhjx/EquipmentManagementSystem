@@ -26,6 +26,10 @@ namespace EquipmentManagementSystem.Models
         //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
         //public DateTime? BeginTimeOfMaintain { get; set; }
 
+        //[Display(Name = "色谱柱信息")]
+        //public string Column { get; set; }
+
+        #region 待删除
         [Display(Name = "色谱柱一编号")]
         [StringLength(20)]
         public string ColumnNumber { get; set; }
@@ -42,6 +46,7 @@ namespace EquipmentManagementSystem.Models
 
         [Display(Name = "压力单位")]
         public PressureUnit PressureUnit { get; set; }
+        #endregion
 
         [Display(Name = "进样开始时间")]
         [DataType(DataType.DateTime)]
