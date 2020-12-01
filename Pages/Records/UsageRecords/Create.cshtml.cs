@@ -1,12 +1,12 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using EquipmentManagementSystem.Authorization;
+﻿using EquipmentManagementSystem.Authorization;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Records.UsageRecords
 {
@@ -21,7 +21,7 @@ namespace EquipmentManagementSystem.Pages.Records.UsageRecords
 
         public IActionResult OnGet()
         {
-            PopulateProjectDropDownList(_context);
+            PopulateProjectDropDownList();
             return Page();
         }
 
@@ -42,7 +42,7 @@ namespace EquipmentManagementSystem.Pages.Records.UsageRecords
         {
             if (!ModelState.IsValid)
             {
-                PopulateProjectDropDownList(_context);
+                PopulateProjectDropDownList();
                 return Page();
             }
 

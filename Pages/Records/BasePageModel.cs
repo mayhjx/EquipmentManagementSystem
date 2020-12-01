@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using EquipmentManagementSystem.Authorization;
+﻿using EquipmentManagementSystem.Authorization;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -7,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace EquipmentManagementSystem.Pages.Records
 {
@@ -27,8 +27,9 @@ namespace EquipmentManagementSystem.Pages.Records
         }
 
         public SelectList ProjectsSelectList { get; set; }
+        public SelectList InstrumentSelectList { get; set; }
 
-        public void PopulateProjectDropDownList(EquipmentContext _context)
+        public void PopulateProjectDropDownList()
         {
             var isAdmin = User.IsInRole(Constants.ManagerRole) || User.IsInRole(Constants.DirectorRole);
             var userGroup = _userManager.GetUserAsync(User).Result?.Group;
@@ -40,6 +41,20 @@ namespace EquipmentManagementSystem.Pages.Records
             else
             {
                 ProjectsSelectList = new SelectList(_context.Projects.Include(p => p.Group).Where(p => p.Group.Name == userGroup), "Name", "Name");
+            }
+        }
+        public void PopulateInstrumentDropDownList()
+        {
+            var isAdmin = User.IsInRole(Constants.ManagerRole) || User.IsInRole(Constants.DirectorRole);
+            var userGroup = _userManager.GetUserAsync(User).Result?.Group;
+
+            if (isAdmin || userGroup == null)
+            {
+                InstrumentSelectList = new SelectList(_context.Instruments, "ID", "ID");
+            }
+            else
+            {
+                InstrumentSelectList = new SelectList(_context.Instruments.Where(p => p.Group == userGroup), "ID", "ID");
             }
         }
     }

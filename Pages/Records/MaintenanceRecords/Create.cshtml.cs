@@ -1,12 +1,12 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using EquipmentManagementSystem.Data;
+﻿using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using EquipmentManagementSystem.Pages.Records;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.MaintenanceRecords
 {
@@ -21,7 +21,7 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
 
         public IActionResult OnGet()
         {
-            PopulateProjectDropDownList(_context);
+            PopulateProjectDropDownList();
             return Page();
         }
 
@@ -70,13 +70,13 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
         {
             if (!ModelState.IsValid)
             {
-                PopulateProjectDropDownList(_context);
+                PopulateProjectDropDownList();
                 return Page();
             }
 
             if (maintenanceType == null)
             {
-                PopulateProjectDropDownList(_context);
+                PopulateProjectDropDownList();
                 ModelState.AddModelError("", "请选择一个维护类型");
                 return Page();
             }
