@@ -1,4 +1,6 @@
 ﻿using EquipmentManagementSystem.Data;
+using EquipmentManagementSystem.Interfaces;
+using EquipmentManagementSystem.Repositories;
 using EquipmentManagementSystem.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -34,6 +36,10 @@ namespace EquipmentManagementSystem
 
             // 用于在审计跟踪时获取当前用户
             services.AddTransient<UserResolverService>();
+
+            services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddTransient<IUsageRecordRepository, UsageRecordRepository>();
+            services.AddTransient<IMaintenanceRecordRepository, MaintenanceRecordRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
