@@ -8,7 +8,7 @@ namespace EquipmentManagementSystem.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "AuditTrailLogs",
+                name: "AuditTrailLog",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -24,11 +24,11 @@ namespace EquipmentManagementSystem.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AuditTrailLogs", x => x.Id);
+                    table.PrimaryKey("PK_AuditTrailLog", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Groups",
+                name: "Group",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -37,11 +37,34 @@ namespace EquipmentManagementSystem.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Groups", x => x.Id);
+                    table.PrimaryKey("PK_Group", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "InstrumentAcceptances",
+                name: "Instrument",
+                columns: table => new
+                {
+                    ID = table.Column<string>(nullable: false),
+                    Platform = table.Column<string>(maxLength: 50, nullable: false),
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
+                    StartUsingDate = table.Column<DateTime>(nullable: false),
+                    CalibrationCycle = table.Column<int>(nullable: false),
+                    MetrologicalCharacteristics = table.Column<string>(maxLength: 10, nullable: true),
+                    Status = table.Column<int>(nullable: false),
+                    Location = table.Column<string>(maxLength: 50, nullable: false),
+                    Principal = table.Column<string>(maxLength: 10, nullable: false),
+                    Remark = table.Column<string>(maxLength: 999, nullable: true),
+                    NewSystemCode = table.Column<string>(maxLength: 10, nullable: true),
+                    Group = table.Column<string>(maxLength: 50, nullable: true),
+                    Projects = table.Column<string>(maxLength: 100, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Instrument", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "InstrumentAcceptance",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -104,34 +127,11 @@ namespace EquipmentManagementSystem.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_InstrumentAcceptances", x => x.Id);
+                    table.PrimaryKey("PK_InstrumentAcceptance", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Instruments",
-                columns: table => new
-                {
-                    ID = table.Column<string>(nullable: false),
-                    Platform = table.Column<string>(maxLength: 50, nullable: false),
-                    Name = table.Column<string>(maxLength: 50, nullable: false),
-                    StartUsingDate = table.Column<DateTime>(nullable: false),
-                    CalibrationCycle = table.Column<int>(nullable: false),
-                    MetrologicalCharacteristics = table.Column<string>(maxLength: 10, nullable: true),
-                    Status = table.Column<int>(nullable: false),
-                    Location = table.Column<string>(maxLength: 50, nullable: false),
-                    Principal = table.Column<string>(maxLength: 10, nullable: false),
-                    Remark = table.Column<string>(maxLength: 999, nullable: true),
-                    NewSystemCode = table.Column<string>(maxLength: 10, nullable: true),
-                    Group = table.Column<string>(maxLength: 50, nullable: true),
-                    Projects = table.Column<string>(maxLength: 100, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Instruments", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MaintenanceContents",
+                name: "MaintenanceContent",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -145,11 +145,11 @@ namespace EquipmentManagementSystem.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MaintenanceContents", x => x.Id);
+                    table.PrimaryKey("PK_MaintenanceContent", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "MalfunctionParts",
+                name: "MalfunctionPart",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
@@ -158,7 +158,7 @@ namespace EquipmentManagementSystem.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MalfunctionParts", x => x.ID);
+                    table.PrimaryKey("PK_MalfunctionPart", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -201,7 +201,7 @@ namespace EquipmentManagementSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Projects",
+                name: "Project",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -216,17 +216,17 @@ namespace EquipmentManagementSystem.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Projects", x => x.Id);
+                    table.PrimaryKey("PK_Project", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Projects_Groups_GroupId",
+                        name: "FK_Project_Group_GroupId",
                         column: x => x.GroupId,
-                        principalTable: "Groups",
+                        principalTable: "Group",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Asserts",
+                name: "Assert",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
@@ -240,17 +240,17 @@ namespace EquipmentManagementSystem.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Asserts", x => x.ID);
+                    table.PrimaryKey("PK_Assert", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Asserts_Instruments_InstrumentId",
+                        name: "FK_Assert_Instrument_InstrumentId",
                         column: x => x.InstrumentId,
-                        principalTable: "Instruments",
+                        principalTable: "Instrument",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Calibrations",
+                name: "Calibration",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
@@ -263,17 +263,17 @@ namespace EquipmentManagementSystem.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Calibrations", x => x.ID);
+                    table.PrimaryKey("PK_Calibration", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Calibrations_Instruments_InstrumentID",
+                        name: "FK_Calibration_Instrument_InstrumentID",
                         column: x => x.InstrumentID,
-                        principalTable: "Instruments",
+                        principalTable: "Instrument",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Components",
+                name: "Component",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
@@ -286,11 +286,11 @@ namespace EquipmentManagementSystem.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Components", x => x.ID);
+                    table.PrimaryKey("PK_Component", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Components_Instruments_InstrumentID",
+                        name: "FK_Component_Instrument_InstrumentID",
                         column: x => x.InstrumentID,
-                        principalTable: "Instruments",
+                        principalTable: "Instrument",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -310,9 +310,9 @@ namespace EquipmentManagementSystem.Migrations
                 {
                     table.PrimaryKey("PK_Computer", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Computer_Instruments_InstrumentID",
+                        name: "FK_Computer_Instrument_InstrumentID",
                         column: x => x.InstrumentID,
-                        principalTable: "Instruments",
+                        principalTable: "Instrument",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -326,15 +326,15 @@ namespace EquipmentManagementSystem.Migrations
                     InstrumentID = table.Column<string>(nullable: true),
                     Progress = table.Column<int>(nullable: false),
                     Creator = table.Column<string>(maxLength: 50, nullable: true),
-                    CreatedTime = table.Column<DateTime>(nullable: false)
+                    CreatedTime = table.Column<DateTime>(nullable: false, defaultValueSql: "getdate()")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MalfunctionWorkOrder", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_MalfunctionWorkOrder_Instruments_InstrumentID",
+                        name: "FK_MalfunctionWorkOrder_Instrument_InstrumentID",
                         column: x => x.InstrumentID,
-                        principalTable: "Instruments",
+                        principalTable: "Instrument",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -358,21 +358,21 @@ namespace EquipmentManagementSystem.Migrations
                 {
                     table.PrimaryKey("PK_MaintenanceRecords", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MaintenanceRecords_Instruments_InstrumentId",
+                        name: "FK_MaintenanceRecords_Instrument_InstrumentId",
                         column: x => x.InstrumentId,
-                        principalTable: "Instruments",
+                        principalTable: "Instrument",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_MaintenanceRecords_Projects_ProjectId",
+                        name: "FK_MaintenanceRecords_Project_ProjectId",
                         column: x => x.ProjectId,
-                        principalTable: "Projects",
+                        principalTable: "Project",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "UsageRecords",
+                name: "UsageRecord",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -398,17 +398,17 @@ namespace EquipmentManagementSystem.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UsageRecords", x => x.Id);
+                    table.PrimaryKey("PK_UsageRecord", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UsageRecords_Instruments_InstrumentId",
+                        name: "FK_UsageRecord_Instrument_InstrumentId",
                         column: x => x.InstrumentId,
-                        principalTable: "Instruments",
+                        principalTable: "Instrument",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_UsageRecords_Projects_ProjectId",
+                        name: "FK_UsageRecord_Project_ProjectId",
                         column: x => x.ProjectId,
-                        principalTable: "Projects",
+                        principalTable: "Project",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -575,20 +575,20 @@ namespace EquipmentManagementSystem.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Asserts_InstrumentId",
-                table: "Asserts",
+                name: "IX_Assert_InstrumentId",
+                table: "Assert",
                 column: "InstrumentId",
                 unique: true,
                 filter: "[InstrumentId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Calibrations_InstrumentID",
-                table: "Calibrations",
+                name: "IX_Calibration_InstrumentID",
+                table: "Calibration",
                 column: "InstrumentID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Components_InstrumentID",
-                table: "Components",
+                name: "IX_Component_InstrumentID",
+                table: "Component",
                 column: "InstrumentID");
 
             migrationBuilder.CreateIndex(
@@ -626,8 +626,8 @@ namespace EquipmentManagementSystem.Migrations
                 column: "InstrumentID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Projects_GroupId",
-                table: "Projects",
+                name: "IX_Project_GroupId",
+                table: "Project",
                 column: "GroupId");
 
             migrationBuilder.CreateIndex(
@@ -643,13 +643,13 @@ namespace EquipmentManagementSystem.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_UsageRecords_InstrumentId",
-                table: "UsageRecords",
+                name: "IX_UsageRecord_InstrumentId",
+                table: "UsageRecord",
                 column: "InstrumentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UsageRecords_ProjectId",
-                table: "UsageRecords",
+                name: "IX_UsageRecord_ProjectId",
+                table: "UsageRecord",
                 column: "ProjectId");
 
             migrationBuilder.CreateIndex(
@@ -665,28 +665,28 @@ namespace EquipmentManagementSystem.Migrations
                 name: "AccessoriesOrder");
 
             migrationBuilder.DropTable(
-                name: "Asserts");
+                name: "Assert");
 
             migrationBuilder.DropTable(
-                name: "AuditTrailLogs");
+                name: "AuditTrailLog");
 
             migrationBuilder.DropTable(
-                name: "Calibrations");
+                name: "Calibration");
 
             migrationBuilder.DropTable(
-                name: "Components");
+                name: "Component");
 
             migrationBuilder.DropTable(
                 name: "Computer");
 
             migrationBuilder.DropTable(
-                name: "InstrumentAcceptances");
+                name: "InstrumentAcceptance");
 
             migrationBuilder.DropTable(
                 name: "Investigation");
 
             migrationBuilder.DropTable(
-                name: "MaintenanceContents");
+                name: "MaintenanceContent");
 
             migrationBuilder.DropTable(
                 name: "MaintenanceRecords");
@@ -695,7 +695,7 @@ namespace EquipmentManagementSystem.Migrations
                 name: "MalfunctionInfo");
 
             migrationBuilder.DropTable(
-                name: "MalfunctionParts");
+                name: "MalfunctionPart");
 
             migrationBuilder.DropTable(
                 name: "MalfunctionPhenomenon");
@@ -713,22 +713,22 @@ namespace EquipmentManagementSystem.Migrations
                 name: "RepairRequest");
 
             migrationBuilder.DropTable(
-                name: "UsageRecords");
+                name: "UsageRecord");
 
             migrationBuilder.DropTable(
                 name: "Validation");
 
             migrationBuilder.DropTable(
-                name: "Projects");
+                name: "Project");
 
             migrationBuilder.DropTable(
                 name: "MalfunctionWorkOrder");
 
             migrationBuilder.DropTable(
-                name: "Groups");
+                name: "Group");
 
             migrationBuilder.DropTable(
-                name: "Instruments");
+                name: "Instrument");
         }
     }
 }

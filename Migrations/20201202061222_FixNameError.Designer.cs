@@ -4,14 +4,16 @@ using EquipmentManagementSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EquipmentManagementSystem.Migrations
 {
     [DbContext(typeof(EquipmentContext))]
-    partial class EquipmentContextModelSnapshot : ModelSnapshot
+    [Migration("20201202061222_FixNameError")]
+    partial class FixNameError
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -88,7 +90,7 @@ namespace EquipmentManagementSystem.Migrations
                         .IsUnique()
                         .HasFilter("[InstrumentId] IS NOT NULL");
 
-                    b.ToTable("Asserts");
+                    b.ToTable("Assert");
                 });
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.AuditTrailLog", b =>
@@ -124,7 +126,7 @@ namespace EquipmentManagementSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AuditTrailLogs");
+                    b.ToTable("AuditTrailLog");
                 });
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.Calibration", b =>
@@ -157,7 +159,7 @@ namespace EquipmentManagementSystem.Migrations
 
                     b.HasIndex("InstrumentID");
 
-                    b.ToTable("Calibrations");
+                    b.ToTable("Calibration");
                 });
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.Component", b =>
@@ -194,7 +196,7 @@ namespace EquipmentManagementSystem.Migrations
 
                     b.HasIndex("InstrumentID");
 
-                    b.ToTable("Components");
+                    b.ToTable("Component");
                 });
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.Computer", b =>
@@ -241,7 +243,7 @@ namespace EquipmentManagementSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Groups");
+                    b.ToTable("Group");
                 });
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.Instrument", b =>
@@ -300,7 +302,7 @@ namespace EquipmentManagementSystem.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Instruments");
+                    b.ToTable("Instrument");
                 });
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.InstrumentAcceptance", b =>
@@ -477,7 +479,7 @@ namespace EquipmentManagementSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("InstrumentAcceptances");
+                    b.ToTable("InstrumentAcceptance");
                 });
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.Investigation", b =>
@@ -544,7 +546,7 @@ namespace EquipmentManagementSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MaintenanceContents");
+                    b.ToTable("MaintenanceContent");
                 });
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.MaintenanceRecord", b =>
@@ -660,7 +662,7 @@ namespace EquipmentManagementSystem.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("MalfunctionParts");
+                    b.ToTable("MalfunctionPart");
                 });
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.MalfunctionPhenomenon", b =>
@@ -717,7 +719,8 @@ namespace EquipmentManagementSystem.Migrations
 
                     b.Property<DateTime>("CreatedTime")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getdate()");
 
                     b.Property<string>("Creator")
                         .HasColumnType("nvarchar(50)")
@@ -773,7 +776,7 @@ namespace EquipmentManagementSystem.Migrations
 
                     b.HasIndex("GroupId");
 
-                    b.ToTable("Projects");
+                    b.ToTable("Project");
                 });
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.Repair", b =>
@@ -868,38 +871,35 @@ namespace EquipmentManagementSystem.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime?>("BeginTimeOfTest")
+                    b.Property<DateTime?>("BeginTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("BlankSignal")
+                    b.Property<float?>("BlankSignal")
+                        .HasColumnType("real");
+
+                    b.Property<string>("ColumnPressureUnit")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ColumnNumber")
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
-
-                    b.Property<float?>("ColumnPressure")
-                        .HasColumnType("real");
-
-                    b.Property<string>("ColumnTwoNumber")
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
-
-                    b.Property<float?>("ColumnTwoPressure")
-                        .HasColumnType("real");
+                    b.Property<string>("ColumnType")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Creator")
-                        .HasColumnType("nvarchar(10)")
-                        .HasMaxLength(10);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("EndTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<float?>("HighVacuumDegree")
+                        .HasColumnType("real");
+
                     b.Property<string>("InstrumentId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("PressureUnit")
-                        .HasColumnType("int");
+                    b.Property<float?>("LowVacuumDegree")
+                        .HasColumnType("real");
+
+                    b.Property<string>("MobilePhase")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("ProjectId")
                         .HasColumnType("int");
@@ -911,20 +911,32 @@ namespace EquipmentManagementSystem.Migrations
                         .HasColumnType("nvarchar(999)")
                         .HasMaxLength(999);
 
-                    b.Property<int>("SampleNumber")
+                    b.Property<int?>("SampleNumber")
                         .HasColumnType("int");
 
-                    b.Property<int>("TestNumber")
+                    b.Property<int?>("SystemOneBatchNumber")
                         .HasColumnType("int");
 
-                    b.Property<string>("TestSignal")
+                    b.Property<string>("SystemOneColumnNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("VacuumDegree")
+                    b.Property<float?>("SystemOneColumnPressure")
+                        .HasColumnType("real");
+
+                    b.Property<int?>("SystemTwoBatchNumber")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SystemTwoColumnNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("VacuumDegreeUnit")
-                        .HasColumnType("int");
+                    b.Property<float?>("SystemTwoColumnPressure")
+                        .HasColumnType("real");
+
+                    b.Property<float?>("TestSignal")
+                        .HasColumnType("real");
+
+                    b.Property<string>("VacuumDegreeUnit")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -932,7 +944,7 @@ namespace EquipmentManagementSystem.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("UsageRecords");
+                    b.ToTable("UsageRecord");
                 });
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.Validation", b =>
