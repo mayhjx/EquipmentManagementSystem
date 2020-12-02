@@ -52,6 +52,32 @@ namespace EquipmentManagementSystem.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Instrument>().ToTable("Instrument");
+            modelBuilder.Entity<Calibration>().ToTable("Calibration");
+            modelBuilder.Entity<Component>().ToTable("Component");
+            modelBuilder.Entity<Assert>().ToTable("Assert");
+            modelBuilder.Entity<Group>().ToTable("Group");
+            modelBuilder.Entity<Project>().ToTable("Project");
+            modelBuilder.Entity<UsageRecord>().ToTable("UsageRecord");
+            modelBuilder.Entity<MaintenanceContent>().ToTable("MaintenanceContent");
+            modelBuilder.Entity<MaintenanceRecord>().ToTable("MaintenanceRecords");
+            modelBuilder.Entity<InstrumentAcceptance>().ToTable("InstrumentAcceptance");
+            modelBuilder.Entity<AuditTrailLog>().ToTable("AuditTrailLog");
+
+            modelBuilder.Entity<MalfunctionWorkOrder>().ToTable("MalfunctionWorkOrder")
+                                                           .Property(p => p.CreatedTime)
+                                                           .HasDefaultValueSql("getdate()");
+
+            modelBuilder.Entity<MalfunctionInfo>().ToTable("MalfunctionInfo");
+            modelBuilder.Entity<Investigation>().ToTable("Investigation");
+            modelBuilder.Entity<RepairRequest>().ToTable("RepairRequest");
+            modelBuilder.Entity<AccessoriesOrder>().ToTable("AccessoriesOrder");
+            modelBuilder.Entity<Repair>().ToTable("Repair");
+            modelBuilder.Entity<Validation>().ToTable("Validation");
+            modelBuilder.Entity<MalfunctionPart>().ToTable("MalfunctionPart");
+            modelBuilder.Entity<MalfunctionPhenomenon>().ToTable("MalfunctionPhenomenon");
+            modelBuilder.Entity<MalfunctionReason>().ToTable("MalfunctionReason");
+            modelBuilder.Entity<MalfunctionSolution>().ToTable("MalfunctionSolution");
         }
 
         public override int SaveChanges()
