@@ -29,9 +29,10 @@ namespace EquipmentManagementSystem.Repositories
 
             return _context.Set<UsageRecord>()
                 .AsEnumerable()
+                .Where(i => i.IsDelete == false)
                 .Where(i => i.InstrumentId == instrumentId)
-                .Where(i => i.BeginTimeOfTest.GetValueOrDefault().Year == date.GetValueOrDefault().Year)
-                .Where(i => i.BeginTimeOfTest.GetValueOrDefault().Month == date.GetValueOrDefault().Month)
+                .Where(i => i.BeginTime.GetValueOrDefault().Year == date.GetValueOrDefault().Year)
+                .Where(i => i.BeginTime.GetValueOrDefault().Month == date.GetValueOrDefault().Month)
                 .ToList();
         }
 
