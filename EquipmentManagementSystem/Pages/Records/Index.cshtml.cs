@@ -69,7 +69,7 @@ namespace EquipmentManagementSystem.Pages.Records
                 StatusMessage = statusMessage;
             }
 
-            UsageRecords = _usageRecordRepository.GetAllByInstrumentIdAndYearAndMonth(instrumentId, date);
+            UsageRecords = _usageRecordRepository.GetAllByInstrumentIdAndBeginTime(instrumentId, date);
             MaintenanceRecords = _maintenanceRecordRepository.GetAllByInstrumentIdAndYearAndMonth(instrumentId, date);
 
             //var usageRecord = from record in _context.UsageRecords
