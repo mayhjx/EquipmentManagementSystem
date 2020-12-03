@@ -18,9 +18,19 @@ namespace EquipmentManagementSystem.Repositories
             _context = context;
         }
 
-        public async Task<T> GetById(int id)
+        public async Task<T> GetById<TType>(TType id)
         {
             return await _context.Set<T>().FindAsync(id);
+        }
+
+        public async Task<IList<T>> GetAll()
+        {
+            return await _context.Set<T>().ToListAsync();
+        }
+
+        public IEnumerable<T> Find(Expression<Func<T, bool>> expression)
+        {
+            return _context.Set<T>().Where(expression);
         }
 
         public async Task Create(T entity)
@@ -39,11 +49,6 @@ namespace EquipmentManagementSystem.Repositories
         {
             _context.Entry<T>(entity).State = EntityState.Modified;
             await _context.SaveChangesAsync();
-        }
-
-        public IEnumerable<T> Find(Expression<Func<T, bool>> expression)
-        {
-            return _context.Set<T>().Where(expression);
         }
     }
 }

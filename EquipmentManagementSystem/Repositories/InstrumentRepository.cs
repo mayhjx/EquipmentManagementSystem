@@ -22,7 +22,7 @@ namespace EquipmentManagementSystem.Repositories
             return _context.Set<Instrument>().Where(i => i.Group == group).Select(i => i.ID).ToList();
         }
 
-        public List<string> GetAllInstrumentIdsByProject(string project)
+        public List<string> GetAllInstrumentIdByProject(string project)
         {
             return _context.Set<Instrument>().Where(i => i.HasProject(project)).Select(i => i.ID).ToList();
         }
