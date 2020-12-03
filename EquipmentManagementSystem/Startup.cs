@@ -38,6 +38,8 @@ namespace EquipmentManagementSystem
             services.AddTransient<UserResolverService>();
 
             services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddTransient<IUserResolverService, UserResolverService>();
+            services.AddTransient<IInstrumentRepository, InstrumentRepository>();
             services.AddTransient<IUsageRecordRepository, UsageRecordRepository>();
             services.AddTransient<IMaintenanceRecordRepository, MaintenanceRecordRepository>();
         }

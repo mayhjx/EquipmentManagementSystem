@@ -1,5 +1,5 @@
-﻿using EquipmentManagementSystem.Models;
-using EquipmentManagementSystem.Services;
+﻿using EquipmentManagementSystem.Interfaces;
+using EquipmentManagementSystem.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Newtonsoft.Json;
@@ -15,13 +15,15 @@ namespace EquipmentManagementSystem.Data
 {
     public class EquipmentContext : DbContext
     {
+        private readonly IUserResolverService _userResolverService;
         private string _userId;
         private string _userName;
-        public EquipmentContext(DbContextOptions<EquipmentContext> options, UserResolverService userService)
+        public EquipmentContext(DbContextOptions<EquipmentContext> options, IUserResolverService userResolverService)
             : base(options)
         {
-            _userId = userService.GetUserId();
-            _userName = userService.GetUserName();
+            _userResolverService = userResolverService;
+            _userId = _userResolverService.GetUserId();
+            _userName = _userResolverService.GetUserName();
         }
 
         public DbSet<Instrument> Instruments { get; set; }
@@ -93,7 +95,7 @@ namespace EquipmentManagementSystem.Data
             return result;
         }
 
-        public List<AuditEntry> OnBeforeSaveChanges()
+        List<AuditEntry> OnBeforeSaveChanges()
         {
             var auditEntries = new List<AuditEntry>();
 
@@ -200,7 +202,7 @@ namespace EquipmentManagementSystem.Data
         }
     }
 
-    public class AuditEntry
+    class AuditEntry
     {
         public AuditEntry(EntityEntry entry)
         {

@@ -1,4 +1,5 @@
-﻿using EquipmentManagementSystem.Models;
+﻿using EquipmentManagementSystem.Interfaces;
+using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 
@@ -7,7 +8,7 @@ namespace EquipmentManagementSystem.Services
     /// <summary>
     /// 获取用户名和ID
     /// </summary>
-    public class UserResolverService
+    public class UserResolverService : IUserResolverService
     {
         private readonly IHttpContextAccessor _context;
         private readonly UserManager<User> _userManager;
@@ -29,6 +30,15 @@ namespace EquipmentManagementSystem.Services
                 return "";
             }
             return _userManager.GetUserAsync(_context.HttpContext?.User).Result?.Name;
+        }
+
+        public string GetUserGroup()
+        {
+            if (_context.HttpContext?.User == null)
+            {
+                return "";
+            }
+            return _userManager.GetUserAsync(_context.HttpContext?.User).Result?.Group;
         }
     }
 }
