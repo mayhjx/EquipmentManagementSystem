@@ -8,6 +8,6 @@ namespace EquipmentManagementSystem.Interfaces
         public List<string> GetTestProjectsById(string instrumentId);
         public List<string> GetAllInstrumentId();
         public List<string> GetAllInstrumentIdByGroup(string group);
-        public List<string> GetAllInstrumentIdsByProject(string project);
+        public List<string> GetAllInstrumentIdByProject(string project);
     }
 }
