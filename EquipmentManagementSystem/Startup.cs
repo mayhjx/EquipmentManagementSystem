@@ -35,10 +35,8 @@ namespace EquipmentManagementSystem
                 options.HeaderName = "MY-XSRF-TOKEN");
 
             // 用于在审计跟踪时获取当前用户
-            services.AddTransient<UserResolverService>();
-
-            services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddTransient<IUserResolverService, UserResolverService>();
+            services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddTransient<IInstrumentRepository, InstrumentRepository>();
             services.AddTransient<IUsageRecordRepository, UsageRecordRepository>();
             services.AddTransient<IMaintenanceRecordRepository, MaintenanceRecordRepository>();
