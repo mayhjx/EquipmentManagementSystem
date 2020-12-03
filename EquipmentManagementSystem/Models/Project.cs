@@ -11,6 +11,9 @@ namespace EquipmentManagementSystem.Models
         [Display(Name = "项目名称")]
         public string Name { get; set; }
 
+        [Display(Name = "简称")]
+        public string ShortName { get; set; }
+
         [Display(Name = "所属项目组")]
         public int GroupId { get; set; }
         public Group Group { get; set; }
