@@ -27,7 +27,6 @@ namespace EquipmentManagementSystem.Pages.Records
         }
 
         public SelectList ProjectsSelectList { get; set; }
-        public SelectList InstrumentSelectList { get; set; }
 
         public void PopulateProjectDropDownList()
         {
@@ -41,20 +40,6 @@ namespace EquipmentManagementSystem.Pages.Records
             else
             {
                 ProjectsSelectList = new SelectList(_context.Projects.Include(p => p.Group).Where(p => p.Group.Name == userGroup), "Name", "Name");
-            }
-        }
-        public void PopulateInstrumentDropDownList()
-        {
-            var isAdmin = User.IsInRole(Constants.ManagerRole) || User.IsInRole(Constants.DirectorRole);
-            var userGroup = _userManager.GetUserAsync(User).Result?.Group;
-
-            if (isAdmin || userGroup == null)
-            {
-                InstrumentSelectList = new SelectList(_context.Instruments, "ID", "ID");
-            }
-            else
-            {
-                InstrumentSelectList = new SelectList(_context.Instruments.Where(p => p.Group == userGroup), "ID", "ID");
             }
         }
     }

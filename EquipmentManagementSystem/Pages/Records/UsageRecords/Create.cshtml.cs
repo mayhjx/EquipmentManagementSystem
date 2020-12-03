@@ -1,63 +1,41 @@
-﻿using EquipmentManagementSystem.Authorization;
-using EquipmentManagementSystem.Data;
+﻿using EquipmentManagementSystem.Interfaces;
 using EquipmentManagementSystem.Models;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Records.UsageRecords
 {
-    public class CreateModel : BasePageModel
+    public class CreateModel : PageModel
     {
-        public CreateModel(EquipmentContext context,
-            UserManager<User> userManager,
-            IAuthorizationService authorizationService)
-            : base(context, userManager, authorizationService)
+        private readonly IUsageRecordRepository _repo;
+        public CreateModel(IUsageRecordRepository usageRecordRepository)
         {
+            _repo = usageRecordRepository;
         }
 
-        public IActionResult OnGet()
+        public void OnGet()
         {
-            PopulateProjectDropDownList();
-            return Page();
-        }
-
-        public JsonResult OnGetInstrumentFilter(string projectName)
-        {
-            var result = new JsonResult(from m in _context.Instruments
-                                        where m.Projects.IndexOf(projectName) >= 0
-                                        select m.ID);
-            return result;
         }
 
         [BindProperty]
         public UsageRecord UsageRecord { get; set; }
 
-
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
-                PopulateProjectDropDownList();
                 return Page();
             }
 
-            UsageRecord.ProjectId = _context.Projects.FirstOrDefaultAsync(p => p.Name == UsageRecord.ProjectName).Result.Id;
+            //UsageRecord.ProjectId = _context.Projects.FirstOrDefaultAsync(p => p.Name == UsageRecord.ProjectName).Result.Id;
+            //var isAuthorized = await _authorizationService.AuthorizeAsync(User, UsageRecord, Operations.Create);
+            //if (!isAuthorized.Succeeded)
+            //{
+            //    return Forbid();
+            //}
 
-            var isAuthorized = await _authorizationService.AuthorizeAsync(User, UsageRecord, Operations.Create);
-
-            if (!isAuthorized.Succeeded)
-            {
-                return Forbid();
-            }
-
-            _context.UsageRecords.Add(UsageRecord);
-            await _context.SaveChangesAsync();
+            await _repo.Create(UsageRecord);
 
             return RedirectToPage("../Index", new { instrumentId = UsageRecord.InstrumentId });
         }
