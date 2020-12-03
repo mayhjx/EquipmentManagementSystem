@@ -20,7 +20,7 @@ namespace EquipmentManagementSystem.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public List<UsageRecord> GetAllByInstrumentIdAndYearAndMonth(string instrumentId, DateTime? date)
+        public List<UsageRecord> GetAllByInstrumentIdAndBeginTime(string instrumentId, DateTime? date)
         {
             if (date.GetValueOrDefault() == null)
             {
@@ -39,6 +39,17 @@ namespace EquipmentManagementSystem.Repositories
         public async Task UpdateEndTime(UsageRecord usageRecord, DateTime endTime)
         {
             usageRecord.EndTime = endTime;
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// fake delete
+        /// </summary>
+        /// <param name="usageRecord"></param>
+        /// <returns></returns>
+        public new async Task Delete(UsageRecord usageRecord)
+        {
+            usageRecord.IsDelete = true;
             await _context.SaveChangesAsync();
         }
     }
