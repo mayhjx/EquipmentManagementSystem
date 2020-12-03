@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using EquipmentManagementSystem.Data;
+﻿using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.ReportSystem
 {
@@ -105,8 +105,8 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
                                     .Include(r => r.Project)
                                     .ThenInclude(r => r.Group)
 
-                                   where r.BeginTimeOfTest >= Search.BeginTime
-                                   where r.BeginTimeOfTest < Search.EndTime.AddDays(1)
+                                   where r.BeginTime >= Search.BeginTime
+                                   where r.BeginTime < Search.EndTime.AddDays(1)
                                    select r;
 
                 var maintenanceRecords = from r in _context.MaintenanceRecords
@@ -170,7 +170,7 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
                                          select r;
                 }
 
-                UsageRecords = usageRecords.OrderBy(record => record.BeginTimeOfTest).ToList();
+                UsageRecords = usageRecords.OrderBy(record => record.BeginTime).ToList();
                 MaintenanceRecords = maintenanceRecords.OrderBy(record => record.BeginTime).ToList();
 
                 // 不同维护类型的维护内容和维护周期

@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using EquipmentManagementSystem.Authorization;
+﻿using EquipmentManagementSystem.Authorization;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Records.UsageRecords
 {
@@ -77,20 +77,20 @@ namespace EquipmentManagementSystem.Pages.Records.UsageRecords
                 return Forbid();
             }
 
-            if (await TryUpdateModelAsync<UsageRecord>(
-                UsageRecordToUpdate,
-                "UsageRecord",
-                // i => i.BeginTimeOfMaintain, 
-                i => i.BeginTimeOfTest,
-                i => i.ColumnNumber, i => i.ColumnPressure, i => i.PressureUnit,
-                i => i.ColumnTwoNumber, i => i.ColumnTwoPressure,
-                i => i.SampleNumber, i => i.TestNumber, i => i.VacuumDegree,
-                i => i.VacuumDegreeUnit, i => i.BlankSignal, i => i.TestSignal,
-                i => i.EndTime, i => i.Remark))
-            {
-                await _context.SaveChangesAsync();
-                return RedirectToPage("../Index");
-            }
+            //if (await TryUpdateModelAsync<UsageRecord>(
+            //    UsageRecordToUpdate,
+            //    "UsageRecord",
+            //    // i => i.BeginTimeOfMaintain, 
+            //    i => i.BeginTime,
+            //    i => i.SystemOneColumnNumber, i => i.SystemOneColumnPressure, i => i.SystemOneColumnPressureUnit,
+            //    i => i.SystemTwoColumnNumber, i => i.SystemTwoColumnPressure,
+            //    i => i.SampleNumber, i => i.SystemOneBatchNumber, i => i.SystemTwoBatchNumber, i => i.LowVacuumDegree, i => i.HighVacuumDegree,
+            //    i => i.VacuumDegreeUnit, i => i.BlankSignal, i => i.TestSignal,
+            //    i => i.EndTime, i => i.Remark))
+            //{
+            //    await _context.SaveChangesAsync();
+            //    return RedirectToPage("../Index");
+            //}
 
             return Page();
         }

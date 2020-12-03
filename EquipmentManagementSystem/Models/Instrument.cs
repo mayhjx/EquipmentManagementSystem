@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace EquipmentManagementSystem.Models
 {
@@ -70,6 +71,21 @@ namespace EquipmentManagementSystem.Models
         [Display(Name = "检测项目")]
         [StringLength(100)]
         public string Projects { get; set; }
+
+        public List<string> GetProjects()
+        {
+            return Projects.Split(", ").ToList();
+        }
+
+        public void SetProjects(List<string> projects)
+        {
+            Projects = string.Join(", ", projects);
+        }
+
+        public bool HasProject(string project)
+        {
+            return Projects.Contains(project);
+        }
 
         [Display(Name = "校准信息")]
         public ICollection<Calibration> Calibrations { get; set; }

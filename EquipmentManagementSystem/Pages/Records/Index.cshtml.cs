@@ -32,24 +32,43 @@ namespace EquipmentManagementSystem.Pages.Records
         public IList<MaintenanceRecord> MaintenanceRecords { get; set; }
         public IList<UsageRecord> UsageRecords { get; set; }
 
-        public MaintenanceRecord MaintenanceRecord { get; private set; } = new MaintenanceRecord();
-        public UsageRecord UsageRecord { get; private set; } = new UsageRecord();
+        //public MaintenanceRecord MaintenanceRecord { get; private set; } = new MaintenanceRecord();
+        //public UsageRecord UsageRecord { get; private set; } = new UsageRecord();
         public IList<AuditTrailLog> MaintenanceAuditTrailLogs { get; set; }
         public IList<AuditTrailLog> UsageAuditTrailLogs { get; set; }
 
+        [BindProperty]
+        public UsageRecord UsageRecord { get; set; }
 
-        public void OnGetAsync(string instrumentId, DateTime? date)
+        [TempData]
+        public string StatusMessage { get; set; }
+
+        public void OnGetAsync(string instrumentId, DateTime? date, string statusMessage)
         {
             if (instrumentId == null)
             {
                 instrumentId = Search.InstrumentSelectList[0].Text;
-                date = Search.Date;
+                Search.Instrument = Search.InstrumentSelectList[0].Text;
             }
             else
             {
                 Search.Instrument = instrumentId;
+            }
+
+            if (date == null)
+            {
+                date = Search.Date;
+            }
+            else
+            {
                 Search.Date = date.GetValueOrDefault();
             }
+
+            if (!string.IsNullOrEmpty(statusMessage))
+            {
+                StatusMessage = statusMessage;
+            }
+
             UsageRecords = _usageRecordRepository.GetAllByInstrumentIdAndYearAndMonth(instrumentId, date);
             MaintenanceRecords = _maintenanceRecordRepository.GetAllByInstrumentIdAndYearAndMonth(instrumentId, date);
 
@@ -131,10 +150,11 @@ namespace EquipmentManagementSystem.Pages.Records
         //    return Result;
         //}
 
-        public IActionResult OnPost()
+        public IActionResult OnPostSearch()
         {
             var selectedDate = Search.Date;
             var selectedInstrumentId = Search.Instrument;
+            StatusMessage = $"仪器编号{selectedInstrumentId}，日期{selectedDate}";
             return RedirectToPage("./Index", new { instrumentId = selectedInstrumentId, date = selectedDate });
         }
 
@@ -151,9 +171,8 @@ namespace EquipmentManagementSystem.Pages.Records
                 new SelectListItem{Value = "FXS-YZ01", Text = "FXS-YZ01"},
                 new SelectListItem{Value = "FXS-YZ02", Text = "FXS-YZ02"},
                 new SelectListItem{Value = "FXS-YZ03", Text = "FXS-YZ03"},
-                new SelectListItem{Value = "FXS-YZ04", Text = "FXS-YZ04"},
+                new SelectListItem{Value = "FXS-YZ17", Text = "FXS-YZ17"},
             };
         }
-
     }
 }

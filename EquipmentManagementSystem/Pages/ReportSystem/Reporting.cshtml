@@ -126,129 +126,131 @@
                     </div>
                 </div>
                 @*使用记录*@
-                <div class="tab-pane " id="data" style="position: relative; ">
-                    <div class="table-responsive">
-                        <table id="export" class="table table-hover text-nowrap">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.UsageRecords[0].InstrumentId)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.UsageRecords[0].ProjectName)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.UsageRecords[0].ColumnNumber)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.UsageRecords[0].ColumnPressure)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.UsageRecords[0].ColumnTwoNumber)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.UsageRecords[0].ColumnTwoPressure)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.UsageRecords[0].PressureUnit)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.UsageRecords[0].BeginTimeOfTest)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.UsageRecords[0].SampleNumber)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.UsageRecords[0].TestNumber)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.UsageRecords[0].VacuumDegree)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.UsageRecords[0].VacuumDegreeUnit)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.UsageRecords[0].BlankSignal)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.UsageRecords[0].TestSignal)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.UsageRecords[0].EndTime)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.UsageRecords[0].Creator)
-                                    </th>
-                                    <th>检测时长(h)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model.UsageRecords)
-                                {
+                @*
+                    <div class="tab-pane " id="data" style="position: relative; ">
+                        <div class="table-responsive">
+                            <table id="export" class="table table-hover text-nowrap">
+                                <thead>
                                     <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.InstrumentId)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.ProjectName)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.ColumnNumber)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.ColumnPressure)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.ColumnTwoNumber)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.ColumnTwoPressure)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.PressureUnit)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.BeginTimeOfTest)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.SampleNumber)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.TestNumber)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.VacuumDegree)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.VacuumDegreeUnit)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.BlankSignal)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.TestSignal)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.EndTime)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Creator)
-                                        </td>
-                                        <td class="time">
-                                            @((item.EndTime - item.BeginTimeOfTest).GetValueOrDefault().TotalHours.ToString("f1"))
-                                        </td>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.UsageRecords[0].InstrumentId)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.UsageRecords[0].ProjectName)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.UsageRecords[0].ColumnNumber)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.UsageRecords[0].ColumnPressure)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.UsageRecords[0].ColumnTwoNumber)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.UsageRecords[0].ColumnTwoPressure)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.UsageRecords[0].PressureUnit)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.UsageRecords[0].BeginTimeOfTest)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.UsageRecords[0].SampleNumber)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.UsageRecords[0].TestNumber)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.UsageRecords[0].VacuumDegree)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.UsageRecords[0].VacuumDegreeUnit)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.UsageRecords[0].BlankSignal)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.UsageRecords[0].TestSignal)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.UsageRecords[0].EndTime)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.UsageRecords[0].Creator)
+                                        </th>
+                                        <th>检测时长(h)</th>
                                     </tr>
-                                }
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td class="text-bold">总时长(h)</td>
-                                    <td id="total" class="text-bold"></td>
-                                </tr>
-                            </tfoot>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.UsageRecords)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.InstrumentId)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ProjectName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ColumnNumber)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ColumnPressure)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ColumnTwoNumber)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ColumnTwoPressure)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.PressureUnit)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.BeginTimeOfTest)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.SampleNumber)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TestNumber)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.VacuumDegree)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.VacuumDegreeUnit)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.BlankSignal)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TestSignal)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.EndTime)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Creator)
+                                            </td>
+                                            <td class="time">
+                                                @((item.EndTime - item.BeginTimeOfTest).GetValueOrDefault().TotalHours.ToString("f1"))
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td class="text-bold">总时长(h)</td>
+                                        <td id="total" class="text-bold"></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
                     </div>
-                </div>
+                *@
                 @*使用记录表*@
                 <div class="tab-pane" id="usage-datagrid" style="position: relative; ">
 
@@ -275,8 +277,8 @@
                         string pressureUnit = "", vacuumUnit = "", carrierType = "";
                         if (Model.UsageRecords.Count > 1)
                         {
-                            pressureUnit = Model.UsageRecords.Last().PressureUnit.ToString();
-                            vacuumUnit = Model.UsageRecords.Last().VacuumDegreeUnit.ToString();
+                            pressureUnit = Model.UsageRecords.Last().SystemOneColumnPressureUnit.ToString();
+                            vacuumUnit = Model.UsageRecords.Last().LowVacuumDegreeUnit.ToString();
                             carrierType = Model.UsageRecords.Last().Instrument.ID.Contains("YZ") ? "Liquid" : "Gas";
                         }
 
@@ -405,30 +407,30 @@
                                 <tbody class="text-center">
                                     @foreach (var item in Model.UsageRecords)
                                     {
-                                        <tr>
-                                            <td class="border border-dark align-middle text-nowrap">
-                                                @(item.BeginTimeOfTest.GetValueOrDefault() == DateTime.MinValue ? "": item.BeginTimeOfTest.GetValueOrDefault().ToString("yyyyMMdd HH:mm"))
-                                            </td>
-                                            <td class="border border-dark align-middle text-nowrap">
-                                                @(item.EndTime.GetValueOrDefault() == DateTime.MinValue ? "": item.EndTime.GetValueOrDefault().ToString("yyyyMMdd HH:mm"))
-                                            </td>
-                                            <td class="border border-dark align-middle text-break">@GetKeyFromValue(project, item.ProjectName)</td>
-                                            <td class="border border-dark align-middle">@GetKeyFromValue(carrier, item.Project.Carrier)</td>
-                                            <td class="border border-dark align-middle text-nowrap">
-                                                @(item.ColumnTwoNumber != null ? "S1: " + item.ColumnNumber : item.ColumnNumber)
-                                                @(item.ColumnTwoNumber != null ? " | S2: " + item.ColumnTwoNumber : "")
-                                                / @GetKeyFromValue(columnType, item.Project.ColumnType)
-                                            </td>
-                                            <td class="border border-dark align-middle text-nowrap">
-                                                @(item.ColumnTwoPressure != null ? "S1: " + item.ColumnPressure : item.ColumnPressure.ToString())
-                                                @(item.ColumnTwoPressure != null ? " | S2: " + item.ColumnTwoPressure : "")
-                                            </td>
-                                            <td class="border border-dark align-middle">@(item.VacuumDegree != null ? item.VacuumDegree : "N/A")</td>
-                                            <td class="border border-dark align-middle">@item.BlankSignal</td>
-                                            <td class="border border-dark align-middle">@item.TestSignal</td>
-                                            <td class="border border-dark align-middle text-nowrap">@item.Creator</td>
-                                            <td class="border border-dark align-middle">@GetKeyFromValue(other, item.Remark)</td>
-                                        </tr>
+                                        @*<tr>
+                                                <td class="border border-dark align-middle text-nowrap">
+                                                    @(item.BeginTime.GetValueOrDefault() == DateTime.MinValue ? "": item.BeginTimeOfTest.GetValueOrDefault().ToString("yyyyMMdd HH:mm"))
+                                                </td>
+                                                <td class="border border-dark align-middle text-nowrap">
+                                                    @(item.EndTime.GetValueOrDefault() == DateTime.MinValue ? "": item.EndTime.GetValueOrDefault().ToString("yyyyMMdd HH:mm"))
+                                                </td>
+                                                <td class="border border-dark align-middle text-break">@GetKeyFromValue(project, item.ProjectName)</td>
+                                                <td class="border border-dark align-middle">@GetKeyFromValue(carrier, item.Project.Carrier)</td>
+                                                <td class="border border-dark align-middle text-nowrap">
+                                                    @(item.ColumnTwoNumber != null ? "S1: " + item.ColumnNumber : item.ColumnNumber)
+                                                    @(item.ColumnTwoNumber != null ? " | S2: " + item.ColumnTwoNumber : "")
+                                                    / @GetKeyFromValue(columnType, item.Project.ColumnType)
+                                                </td>
+                                                <td class="border border-dark align-middle text-nowrap">
+                                                    @(item.ColumnTwoPressure != null ? "S1: " + item.ColumnPressure : item.ColumnPressure.ToString())
+                                                    @(item.ColumnTwoPressure != null ? " | S2: " + item.ColumnTwoPressure : "")
+                                                </td>
+                                                <td class="border border-dark align-middle">@(item.VacuumDegree != null ? item.VacuumDegree : "N/A")</td>
+                                                <td class="border border-dark align-middle">@item.BlankSignal</td>
+                                                <td class="border border-dark align-middle">@item.TestSignal</td>
+                                                <td class="border border-dark align-middle text-nowrap">@item.Creator</td>
+                                                <td class="border border-dark align-middle">@GetKeyFromValue(other, item.Remark)</td>
+                                            </tr>*@
                                     }
                                 </tbody>
                             </table>
@@ -735,7 +737,7 @@
                 {
                     foreach (var item in Model.UsageRecords)
                     {
-                        timeSpan = Math.Round((item.EndTime - item.BeginTimeOfTest).GetValueOrDefault().TotalHours,1);
+                        timeSpan = Math.Round((item.EndTime - item.BeginTime).GetValueOrDefault().TotalHours,1);
                         totalTime += timeSpan;
 
                         if(!instrument.ContainsKey(item.InstrumentId))
@@ -749,7 +751,7 @@
                             project.Add(item.ProjectName, new Dictionary<string, double>() { });
                         }
 
-                        var beginTime = item.BeginTimeOfTest.GetValueOrDefault().ToShortDateString();
+                        var beginTime = item.BeginTime.GetValueOrDefault().ToShortDateString();
                         var day = project[item.ProjectName];
                         if(!day.ContainsKey(beginTime))
                         {

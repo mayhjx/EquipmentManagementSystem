@@ -36,6 +36,7 @@ namespace EquipmentManagementSystem.Pages.Records.UsageRecords
         [BindProperty]
         public UsageRecord UsageRecord { get; set; }
 
+
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
@@ -58,7 +59,7 @@ namespace EquipmentManagementSystem.Pages.Records.UsageRecords
             _context.UsageRecords.Add(UsageRecord);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("../Index");
+            return RedirectToPage("../Index", new { instrumentId = UsageRecord.InstrumentId });
         }
     }
 }

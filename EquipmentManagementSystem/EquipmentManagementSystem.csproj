@@ -13,6 +13,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove=".gitignore" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<None Include="Pages\Shared\_Layout.cshtml" />
 	</ItemGroup>
 
