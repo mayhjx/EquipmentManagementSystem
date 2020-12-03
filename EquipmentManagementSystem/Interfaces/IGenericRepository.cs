@@ -7,7 +7,8 @@ namespace EquipmentManagementSystem.Interfaces
 {
     public interface IGenericRepository<T> where T : class
     {
-        Task<T> GetById(int id);
+        Task<T> GetById<TType>(TType id);
+        Task<IList<T>> GetAll();
         IEnumerable<T> Find(Expression<Func<T, bool>> expression);
         Task Create(T entity);
         Task Update(T entity);
