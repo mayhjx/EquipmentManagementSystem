@@ -11,7 +11,7 @@ namespace EMS.Test.UsageRecordTest
     public class RepositoryTest
     {
         [Fact]
-        public void GetAllByInstrumentIdAndBeginTime_ReturnThreeRecords()
+        public void GetAllByInstrumentIdAndBeginTime_Should_ReturnThreeRecords()
         {
             var options = new DbContextOptionsBuilder<EquipmentContext>()
                 .UseInMemoryDatabase(databaseName: "Test")
