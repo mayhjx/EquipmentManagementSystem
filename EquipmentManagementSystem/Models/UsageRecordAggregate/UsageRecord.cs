@@ -70,8 +70,11 @@ namespace EquipmentManagementSystem.Models
         [Display(Name = "Blank信号")]
         public float? BlankSignal { get; set; }
 
-        [Display(Name = "Test信号")]
-        public float? TestSignal { get; set; }
+        [Display(Name = "系统一Test信号")]
+        public float? SystemOneTestSignal { get; set; }
+
+        [Display(Name = "系统二Test信号")]
+        public float? SystemTwoTestSignal { get; set; }
 
         [Display(Name = "进样结束时间")]
         [DataType(DataType.DateTime)]
