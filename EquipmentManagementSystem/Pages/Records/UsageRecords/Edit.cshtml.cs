@@ -14,13 +14,13 @@ namespace EquipmentManagementSystem.Pages.Records.UsageRecords
             _repo = usageRecordRepository;
         }
 
+        public void OnGet()
+        {
+        }
+
         [BindProperty]
         public UsageRecord UsageRecord { get; set; }
 
-        public void OnGet()
-        {
-
-        }
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -35,9 +35,19 @@ namespace EquipmentManagementSystem.Pages.Records.UsageRecords
             //    return Forbid();
             //}
 
-            await _repo.Update(UsageRecord);
+            string message;
+            try
+            {
+                await _repo.Update(UsageRecord);
+                message = "修改成功";
+            }
+            catch
+            {
+                // create log
+                message = "修改失败，请刷新后重试！";
+            }
 
-            return RedirectToPage("../Index", new { instrumentId = UsageRecord.InstrumentId });
+            return RedirectToPage("../Index", new { instrumentId = UsageRecord.InstrumentId, statusMessage = message });
         }
     }
 }

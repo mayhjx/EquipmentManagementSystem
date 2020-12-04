@@ -1,9 +1,7 @@
-﻿using EquipmentManagementSystem.Data;
-using EquipmentManagementSystem.Interfaces;
+﻿using EquipmentManagementSystem.Interfaces;
 using EquipmentManagementSystem.Models;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
@@ -11,22 +9,17 @@ using System.ComponentModel.DataAnnotations;
 
 namespace EquipmentManagementSystem.Pages.Records
 {
-    [AllowAnonymous]
-    public class IndexModel : BasePageModel
+    public class IndexModel : PageModel
     {
         private readonly IUserResolverService _userResolverService;
         private readonly IInstrumentRepository _instrumentRepository;
         private readonly IUsageRecordRepository _usageRecordRepository;
         private readonly IMaintenanceRecordRepository _maintenanceRecordRepository;
 
-        public IndexModel(EquipmentContext context,
-            UserManager<User> userManager,
-            IAuthorizationService authorizationService,
-            IUserResolverService userResolverService,
+        public IndexModel(IUserResolverService userResolverService,
             IInstrumentRepository instrumentRepository,
             IUsageRecordRepository usageRecordRepository,
             IMaintenanceRecordRepository maintenanceRecordRepository)
-            : base(context, userManager, authorizationService)
         {
             _userResolverService = userResolverService;
             _instrumentRepository = instrumentRepository;
@@ -36,22 +29,23 @@ namespace EquipmentManagementSystem.Pages.Records
             Search = new SearchForm(_instrumentRepository);
         }
 
+        [TempData]
+        public string StatusMessage { get; set; }
+
         [BindProperty]
         public SearchForm Search { get; set; }
+        public SelectList ProjectsSelectList { get; set; }
 
-        public IList<MaintenanceRecord> MaintenanceRecords { get; set; }
         public IList<UsageRecord> UsageRecords { get; set; }
+        public IList<MaintenanceRecord> MaintenanceRecords { get; set; }
 
-        //public MaintenanceRecord MaintenanceRecord { get; private set; } = new MaintenanceRecord();
-        //public UsageRecord UsageRecord { get; private set; } = new UsageRecord();
-        public IList<AuditTrailLog> MaintenanceAuditTrailLogs { get; set; }
         public IList<AuditTrailLog> UsageAuditTrailLogs { get; set; }
+        public IList<AuditTrailLog> MaintenanceAuditTrailLogs { get; set; }
 
         [BindProperty]
         public UsageRecord UsageRecord { get; set; }
-
-        [TempData]
-        public string StatusMessage { get; set; }
+        [BindProperty]
+        public MaintenanceRecord MaintenanceRecord { get; set; }
 
         public void OnGetAsync(string instrumentId, DateTime? date, string statusMessage)
         {
@@ -98,7 +92,6 @@ namespace EquipmentManagementSystem.Pages.Records
             //    .OrderByDescending(l => l.DateChanged)
             //    .ToListAsync();
         }
-
 
         public IActionResult OnPostSearch()
         {

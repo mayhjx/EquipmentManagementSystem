@@ -15,16 +15,22 @@ namespace EquipmentManagementSystem.Pages.Records.UsageRecords
             _repo = usageRecordRepository;
         }
 
-        [BindProperty]
-        public UsageRecord UsageRecord { get; set; }
-
         public void OnGet()
         {
         }
 
+        [BindProperty]
+        public UsageRecord UsageRecord { get; set; }
+
         public async Task<JsonResult> OnPost(int id)
         {
             var usageRecord = await _repo.GetById(id);
+
+            if (usageRecord == null)
+            {
+                return new JsonResult("记录未找到，请刷新确认！");
+            }
+
             try
             {
                 await _repo.Delete(usageRecord);

@@ -35,9 +35,19 @@ namespace EquipmentManagementSystem.Pages.Records.UsageRecords
             //    return Forbid();
             //}
 
-            await _repo.Create(UsageRecord);
+            string message;
+            try
+            {
+                await _repo.Create(UsageRecord);
+                message = "新建成功";
+            }
+            catch
+            {
+                // create log
+                message = "新建失败，请刷新后重试！";
+            }
 
-            return RedirectToPage("../Index", new { instrumentId = UsageRecord.InstrumentId });
+            return RedirectToPage("../Index", new { instrumentId = UsageRecord.InstrumentId, statusMessage = message });
         }
     }
 }
