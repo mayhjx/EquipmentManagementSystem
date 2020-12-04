@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace EquipmentManagementSystem.Models
 {
@@ -29,7 +31,7 @@ namespace EquipmentManagementSystem.Models
 
         [Display(Name = "流动相/载气")]
         [StringLength(500)]
-        public string Carrier { get; set; }
+        public string MobilePhase { get; set; }
 
         [Display(Name = "离子源类型")]
         [StringLength(50)]
@@ -38,5 +40,23 @@ namespace EquipmentManagementSystem.Models
         [Display(Name = "检测器")]
         [StringLength(20)]
         public string Detector { get; set; }
+
+        public void SetColumnType(List<string> columntypes)
+        {
+            ColumnType = string.Join("|", columntypes);
+        }
+        public List<string> GetColumnType()
+        {
+            return ColumnType.Split("|").ToList();
+        }
+
+        public void SetMobilePhase(List<string> mobilePhases)
+        {
+            MobilePhase = string.Join("|", mobilePhases);
+        }
+        public List<string> GetMobilePhase()
+        {
+            return MobilePhase.Split("|").ToList();
+        }
     }
 }
