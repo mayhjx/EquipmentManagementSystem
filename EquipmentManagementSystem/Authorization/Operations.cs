@@ -28,7 +28,8 @@ namespace EquipmentManagementSystem.Authorization
         public static readonly string ApproveOperationName = "Approve";
 
         public static readonly string AdministratorRole = "Administrator";
-        public static readonly string DirectorRole = "设备主任";
+        public static readonly string DirectorRole = "中心主任";
+        public static readonly string SupervisorRole = "中心主管";
         public static readonly string ManagerRole = "设备管理员";
         public static readonly string PrincipalRole = "设备负责人";
         public static readonly string TechnicianRole = "技术员";
