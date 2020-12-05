@@ -11,7 +11,12 @@ namespace EquipmentManagementSystem.Areas.Identity.Data
         public static async Task InitializeAsync(IServiceProvider service)
         {
             var roleManager = service.GetRequiredService<RoleManager<IdentityRole>>();
-            await EnsureRolesAsync(roleManager);
+            await EnsureRolesAsync(roleManager, "Administrator");
+            await EnsureRolesAsync(roleManager, "中心主任");
+            await EnsureRolesAsync(roleManager, "中心主管");
+            await EnsureRolesAsync(roleManager, "设备管理员");
+            await EnsureRolesAsync(roleManager, "设备负责人");
+            await EnsureRolesAsync(roleManager, "技术员");
 
             var userManager = service.GetRequiredService<UserManager<User>>();
             await EnsureAdminAsync(userManager);
@@ -33,11 +38,11 @@ namespace EquipmentManagementSystem.Areas.Identity.Data
             await userManager.AddToRoleAsync(Admin, "Administrator");
         }
 
-        private static async Task EnsureRolesAsync(RoleManager<IdentityRole> roleManager)
+        private static async Task EnsureRolesAsync(RoleManager<IdentityRole> roleManager, string role)
         {
-            var alreadyExists = await roleManager.RoleExistsAsync("Administrator");
+            var alreadyExists = await roleManager.RoleExistsAsync(role);
             if (alreadyExists) return;
-            await roleManager.CreateAsync(new IdentityRole("Administrator"));
+            await roleManager.CreateAsync(new IdentityRole(role));
         }
     }
 }
