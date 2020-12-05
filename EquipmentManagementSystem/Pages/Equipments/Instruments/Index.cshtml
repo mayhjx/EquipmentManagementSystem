@@ -9,7 +9,7 @@
 <div class="card">
     <h4 class="card-header">
         设备一览
-        @if (SignInManager.IsSignedIn(User) && (await AuthorizationService.AuthorizeAsync(User, Model.Instrument[0], Operations.Create)).Succeeded)
+        @if (SignInManager.IsSignedIn(User) && (await AuthorizationService.AuthorizeAsync(User, Model.Instrument, Operations.Create)).Succeeded)
         {
             <a asp-page="Create">
                 <input type="button" class="btn btn-outline-primary btn-sm" value="新增设备" style="margin-left: 10px;">
@@ -22,31 +22,31 @@
             <thead>
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.Instrument[0].ID)
+                        @Html.DisplayNameFor(model => model.Instruments[0].ID)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Instrument[0].Name)
+                        @Html.DisplayNameFor(model => model.Instruments[0].Name)
                     </th>
                     <th>
-                        计划@(Html.DisplayNameFor(model => model.Instrument[0].Calibrations.First().Date))
+                        计划@(Html.DisplayNameFor(model => model.Instruments[0].Calibrations.First().Date))
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Instrument[0].Group)
+                        @Html.DisplayNameFor(model => model.Instruments[0].Group)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Instrument[0].Location)
+                        @Html.DisplayNameFor(model => model.Instruments[0].Location)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Instrument[0].Status)
+                        @Html.DisplayNameFor(model => model.Instruments[0].Status)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Instrument[0].Remark)
+                        @Html.DisplayNameFor(model => model.Instruments[0].Remark)
                     </th>
                     <th>&nbsp</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.Instrument)
+                @foreach (var item in Model.Instruments)
                 {
                     <tr>
                         <td>
