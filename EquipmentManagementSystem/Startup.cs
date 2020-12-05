@@ -37,6 +37,7 @@ namespace EquipmentManagementSystem
             // 用于在审计跟踪时获取当前用户
             services.AddTransient<IUserResolverService, UserResolverService>();
             services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddTransient<IGroupRepository, GroupRepository>();
             services.AddTransient<IProjectRepository, ProjectRepository>();
             services.AddTransient<IInstrumentRepository, InstrumentRepository>();
             services.AddTransient<IUsageRecordRepository, UsageRecordRepository>();
