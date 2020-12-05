@@ -78,6 +78,7 @@ namespace EquipmentManagementSystem.Areas.Identity
                 services.AddScoped<IAuthorizationHandler, UsageRecordAuthorizationHandler>();
                 services.AddScoped<IAuthorizationHandler, MaintenanceRecordAuthorizationHandler>();
                 services.AddSingleton<IAuthorizationHandler, AcceptanceAuthorizationHandler>();
+                services.AddSingleton<IAuthorizationHandler, UserManagementAuthorizationHandler>();
             });
         }
     }

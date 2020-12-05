@@ -10,7 +10,6 @@
     ViewData["Title"] = "用户管理";
 }
 
-
 <div class="card">
     <h4 class="card-header">
         用户
@@ -22,16 +21,16 @@
         <table id="index" class="table">
             <thead>
                 <tr>
-                    <td>@Html.DisplayNameFor(model => model.users[0].Group)</td>
-                    <td>@Html.DisplayNameFor(model => model.users[0].Name)</td>
-                    <td>@Html.DisplayNameFor(model => model.users[0].Number)</td>
-                    <td>@Html.DisplayNameFor(model => model.users[0].Email)</td>
+                    <td>@Html.DisplayNameFor(model => model.Users[0].Group)</td>
+                    <td>@Html.DisplayNameFor(model => model.Users[0].Name)</td>
+                    <td>@Html.DisplayNameFor(model => model.Users[0].Number)</td>
+                    <td>@Html.DisplayNameFor(model => model.Users[0].Email)</td>
                     <td>角色</td>
                     <td></td>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.users)
+                @foreach (var item in Model.Users)
                 {
                     <tr>
                         <td>
@@ -59,7 +58,3 @@
         </table>
     </div>
 </div>
-
-@section Scripts {
-
-}

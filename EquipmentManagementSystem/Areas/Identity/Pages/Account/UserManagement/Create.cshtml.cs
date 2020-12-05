@@ -1,33 +1,81 @@
 ﻿using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
+using EquipmentManagementSystem.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using EquipmentManagementSystem.Authorization;
 
 namespace EquipmentManagementSystem.Areas.Identity.Pages.Account.UserManagement
 {
-    [Authorize(Roles = "Administrator, 设备主任")]
-    public class CreateModel : PageModel
+    public class CreateModel : BasePageModel
     {
-        private readonly UserManager<User> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly EquipmentContext _context;
-        public CreateModel(EquipmentContext context, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+        private readonly IGroupRepository _groupRepo;
+        public CreateModel(IGroupRepository groupRepository , 
+            UserManager<User> userManager,
+            IAuthorizationService authorizationService) 
+            :base(userManager , authorizationService)
         {
-            _context = context;
-            _userManager = userManager;
-            _roleManager = roleManager;
+            _groupRepo = groupRepository;
+
+            Input = new InputForm();
         }
 
         [BindProperty]
-        public InputModel Input { get; set; }
+        public InputForm Input { get; set; }
 
-        public class InputModel
+        public SelectList Groups { get; set; }
+
+        public async Task<IActionResult> OnGet()
+        {
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, new User(), Operations.Create);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+
+            Groups = new SelectList(await _groupRepo.GetAll(), "Name", "Name");
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, new User(), Operations.Create);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+
+            var user = new User { UserName = Input.Number, Name = Input.Name, Email = Input.Email, Number = Input.Number, Group = Input.Group };
+            var result = await _userManager.CreateAsync(user, Input.Password);
+
+            if (result.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(user, Input.Role);
+                return RedirectToPage("./Index");
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+            return Page();
+        }
+
+        public class InputForm
         {
             [Required]
             [Display(Name = "项目组")]
@@ -47,11 +95,11 @@ namespace EquipmentManagementSystem.Areas.Identity.Pages.Account.UserManagement
             public string Email { get; set; }
 
             [Required]
-            [Display(Name = "角色")]
+            [Display(Name = "用户角色")]
             public string Role { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "{0}长度要求：大于等于{2}且小于{1}", MinimumLength = 6)]
+            [StringLength(100, MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "密码")]
             public string Password { get; set; }
@@ -60,36 +108,15 @@ namespace EquipmentManagementSystem.Areas.Identity.Pages.Account.UserManagement
             [Display(Name = "确认密码")]
             [Compare("Password", ErrorMessage = "确认密码与密码不一致")]
             public string ConfirmPassword { get; set; }
-        }
 
-        public IActionResult OnGet()
-        {
-            ViewData["Roles"] = new SelectList(_roleManager.Roles.Where(u => u.Name != "Administrator").ToList(), "Name", "Name");
-            ViewData["Groups"] = new SelectList(_context.Groups, "Name", "Name");
-            return Page();
-        }
-
-        public async Task<IActionResult> OnPostAsync()
-        {
-            if (!ModelState.IsValid)
+            public List<SelectListItem> Roles { get; } = new List<SelectListItem>
             {
-                return Page();
-            }
-
-            var user = new User { UserName = Input.Number, Name = Input.Name, Email = Input.Email, Number = Input.Number, Group = Input.Group };
-            var result = await _userManager.CreateAsync(user, Input.Password);
-
-            if (result.Succeeded)
-            {
-                await _userManager.AddToRoleAsync(user, Input.Role);
-                return RedirectToPage("./Index");
-            }
-
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError(string.Empty, error.Description);
-            }
-            return Page();
+                new SelectListItem { Value="中心主任",Text="中心主任"},
+                new SelectListItem { Value="中心主管",Text="中心主管"},
+                new SelectListItem { Value="设备管理员",Text="设备管理员"},
+                new SelectListItem { Value="设备负责人",Text="设备负责人"},
+                new SelectListItem { Value="技术员",Text="技术员"},
+            };
         }
     }
 }

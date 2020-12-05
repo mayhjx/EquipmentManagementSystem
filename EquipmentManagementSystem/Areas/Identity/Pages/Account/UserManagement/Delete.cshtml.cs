@@ -8,14 +8,12 @@ using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Areas.Identity.Pages.Account.UserManagement
 {
-    [Authorize(Roles = "Administrator, 设备主任")]
-    public class DeleteModel : PageModel
+    public class DeleteModel : BasePageModel
     {
-        private readonly UserManager<User> _userManager;
-
-        public DeleteModel(UserManager<User> userManager)
+        public DeleteModel(UserManager<User> userManager,
+            IAuthorizationService authorizationService)
+            : base(userManager, authorizationService)
         {
-            _userManager = userManager;
         }
 
         [BindProperty]

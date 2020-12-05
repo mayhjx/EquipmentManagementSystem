@@ -1,4 +1,5 @@
-﻿using EquipmentManagementSystem.Models;
+﻿using EquipmentManagementSystem.Authorization;
+using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -10,21 +11,26 @@ using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Areas.Identity.Pages.Account.UserManagement
 {
-    [Authorize(Roles = "Administrator, 设备主任")]
-    public class IndexModel : PageModel
+    public class IndexModel : BasePageModel
     {
-        private readonly UserManager<User> _userManager;
-
-        public IndexModel(UserManager<User> userManager)
+        public IndexModel(UserManager<User> userManager,
+            IAuthorizationService authorizationService)
+            : base(userManager, authorizationService)
         {
-            _userManager = userManager;
         }
 
-        public IList<User> users { get; set; }
+        public IList<User> Users { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
-            users = await _userManager.Users
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, new User(), Operations.Read);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+
+            Users = await _userManager.Users
                 .Where(u => u.UserName != "Admin")
                 .AsNoTracking()
                 .ToListAsync();
