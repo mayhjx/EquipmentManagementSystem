@@ -13,7 +13,7 @@ namespace EquipmentManagementSystem
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-            CreateDbIfNotExists(host);
+            //CreateDbIfNotExists(host);
             CreateAdminIfNotExists(host);
             CreateUserIfNotExists(host);
             host.Run();
