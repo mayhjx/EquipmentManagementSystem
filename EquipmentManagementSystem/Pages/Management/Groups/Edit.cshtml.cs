@@ -22,9 +22,7 @@ namespace EquipmentManagementSystem.Pages.Management.Groups
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            Group = await _context.Groups.Include(m => m.Projects)
-                                        .AsNoTracking()
-                                        .FirstOrDefaultAsync(m => m.Id == id);
+            Group = await _context.Groups.FirstOrDefaultAsync(m => m.Id == id);
 
             if (Group == null)
             {
