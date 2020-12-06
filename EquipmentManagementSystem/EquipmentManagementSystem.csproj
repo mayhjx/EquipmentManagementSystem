@@ -17,6 +17,24 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<None Include="Pages\Malfunctions\AccessoriesOrders\Edit.cshtml" />
+		<None Include="Pages\Malfunctions\Information\Edit.cshtml" />
+		<None Include="Pages\Malfunctions\Investigate\Edit.cshtml" />
+		<None Include="Pages\Malfunctions\RepairRequests\Edit.cshtml" />
+		<None Include="Pages\Malfunctions\Servicing\Edit.cshtml" />
+		<None Include="Pages\Malfunctions\Validate\Edit.cshtml" />
+		<None Include="Pages\Malfunctions\WorkOrders\Create.cshtml" />
+		<None Include="Pages\Malfunctions\WorkOrders\Delete.cshtml" />
+		<None Include="Pages\Malfunctions\WorkOrders\Details.cshtml" />
+		<None Include="Pages\Malfunctions\WorkOrders\Doing.cshtml" />
+		<None Include="Pages\Malfunctions\WorkOrders\Done.cshtml" />
+		<None Include="Pages\Malfunctions\WorkOrders\Edit.cshtml" />
+		<None Include="Pages\Malfunctions\WorkOrders\Index.cshtml" />
+		<None Include="Pages\Records\MaintenanceRecords\Create.cshtml" />
+		<None Include="Pages\Records\MaintenanceRecords\Delete.cshtml" />
+		<None Include="Pages\Records\MaintenanceRecords\Edit.cshtml" />
+		<None Include="Pages\Records\MaintenanceRecords\Index-abandon.cshtml" />
+		<None Include="Pages\ReportSystem\Reporting.cshtml" />
 		<None Include="Pages\Shared\_Layout.cshtml" />
 	</ItemGroup>
 
