@@ -4,24 +4,32 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Records
 {
     public class IndexModel : PageModel
     {
+        private readonly IAuditTrailRepository _auditTrailRepository;
         private readonly IUserResolverService _userResolverService;
+        private readonly IProjectRepository _projectRepository;
         private readonly IInstrumentRepository _instrumentRepository;
         private readonly IUsageRecordRepository _usageRecordRepository;
         private readonly IMaintenanceRecordRepository _maintenanceRecordRepository;
 
-        public IndexModel(IUserResolverService userResolverService,
+        public IndexModel(IAuditTrailRepository auditTrailRepository,
+            IUserResolverService userResolverService,
+            IProjectRepository projectRepository,
             IInstrumentRepository instrumentRepository,
             IUsageRecordRepository usageRecordRepository,
             IMaintenanceRecordRepository maintenanceRecordRepository)
         {
+            _auditTrailRepository = auditTrailRepository;
             _userResolverService = userResolverService;
+            _projectRepository = projectRepository;
             _instrumentRepository = instrumentRepository;
             _usageRecordRepository = usageRecordRepository;
             _maintenanceRecordRepository = maintenanceRecordRepository;
@@ -35,6 +43,10 @@ namespace EquipmentManagementSystem.Pages.Records
         [BindProperty]
         public SearchForm Search { get; set; }
         public SelectList ProjectsSelectList { get; set; }
+        public SelectList MobilePhaseSelectList { get; set; }
+        public SelectList ColumnTypeSelectList { get; set; }
+        public SelectList IonSourceSelectList { get; set; }
+        public SelectList DetectroSelectList { get; set; }
 
         public IList<UsageRecord> UsageRecords { get; set; }
         public IList<MaintenanceRecord> MaintenanceRecords { get; set; }
@@ -44,15 +56,15 @@ namespace EquipmentManagementSystem.Pages.Records
 
         [BindProperty]
         public UsageRecord UsageRecord { get; set; }
+
         [BindProperty]
         public MaintenanceRecord MaintenanceRecord { get; set; }
 
-        public void OnGetAsync(string instrumentId, DateTime? date, string statusMessage)
+        public async Task OnGetAsync(string instrumentId, DateTime? date, string statusMessage)
         {
             if (instrumentId == null)
             {
-                instrumentId = Search.InstrumentSelectList[0];
-                Search.Instrument = Search.InstrumentSelectList[0];
+                instrumentId = Search.InstrumentSelectList.FirstOrDefault();
             }
             else
             {
@@ -73,24 +85,48 @@ namespace EquipmentManagementSystem.Pages.Records
                 StatusMessage = statusMessage;
             }
 
-            ProjectsSelectList = new SelectList(_instrumentRepository.GetTestProjectsById(instrumentId), instrumentId);
+            
+            List<string> projectList = new List<string>();
+            List<string> mobilePhaseList = new List<string>();
+            List<string> columnTypeList = new List<string>();
+            List<string> ionSourceList = new List<string>();
+            List<string> detectorList = new List<string>();
+
+            if (instrumentId != null)
+            {
+                List<string> testProjectList = _instrumentRepository.GetTestProjectsById(instrumentId);
+                projectList = await _projectRepository.GetShortNamesByNames(testProjectList);
+
+                foreach(var project in testProjectList)
+                {
+                    mobilePhaseList.AddRange(await _projectRepository.GetMobilePhasesByName(project));
+                    columnTypeList.AddRange(await _projectRepository.GetColumnTypesByName(project));
+                    ionSourceList.AddRange(await _projectRepository.GetIonSourcesByName(project));
+                    detectorList.AddRange(await _projectRepository.GetDetectorsByName(project));
+                }
+            }
+
+            ProjectsSelectList = new SelectList(projectList);
+            MobilePhaseSelectList = new SelectList(mobilePhaseList);
+            ColumnTypeSelectList = new SelectList(columnTypeList);
+            IonSourceSelectList = new SelectList(ionSourceList);
+            DetectroSelectList = new SelectList(detectorList);
 
             UsageRecords = _usageRecordRepository.GetAllByInstrumentIdAndBeginTime(instrumentId, date);
             MaintenanceRecords = _maintenanceRecordRepository.GetAllByInstrumentIdAndYearAndMonth(instrumentId, date);
 
-            UsageRecord = new UsageRecord { Creator = _userResolverService.GetUserName() };
 
-            //MaintenanceAuditTrailLogs = await _context.AuditTrailLogs
-            //    .AsNoTracking()
-            //    .Where(l => l.EntityName == MaintenanceRecord.GetType().Name)
-            //    .OrderByDescending(l => l.DateChanged)
-            //    .ToListAsync();
+            // fill the value of latest record
 
-            //UsageAuditTrailLogs = await _context.AuditTrailLogs
-            //    .AsNoTracking()
-            //    .Where(l => l.EntityName == UsageRecord.GetType().Name)
-            //    .OrderByDescending(l => l.DateChanged)
-            //    .ToListAsync();
+            //var latestRecord = _usageRecordRepository.GetLatestRecordOfProject("VD");
+
+            UsageRecord = new UsageRecord {
+                InstrumentId = instrumentId,
+                Creator = _userResolverService.GetUserName() 
+            };
+
+            MaintenanceAuditTrailLogs = await _auditTrailRepository.GetAuditTrailLogs(new MaintenanceRecord().GetType().Name);
+            UsageAuditTrailLogs = await _auditTrailRepository.GetAuditTrailLogs(new UsageRecord().GetType().Name);
         }
 
         public IActionResult OnPostSearch()
@@ -98,6 +134,11 @@ namespace EquipmentManagementSystem.Pages.Records
             var selectedDate = Search.Date;
             var selectedInstrumentId = Search.Instrument;
             return RedirectToPage("./Index", new { instrumentId = selectedInstrumentId, date = selectedDate });
+        }
+
+        public JsonResult OnGetLatestRecordOfProject(string project)
+        {
+            return new JsonResult("");
         }
     }
 
@@ -107,6 +148,7 @@ namespace EquipmentManagementSystem.Pages.Records
         public SearchForm(IInstrumentRepository instrumentRepository)
         {
             InstrumentSelectList = instrumentRepository.GetAllInstrumentId();
+            Instrument = InstrumentSelectList.FirstOrDefault() ?? "";
         }
 
         [Display(Name = "月份")]
