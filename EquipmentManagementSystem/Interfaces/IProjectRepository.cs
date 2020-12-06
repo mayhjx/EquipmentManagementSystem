@@ -8,7 +8,8 @@ namespace EquipmentManagementSystem.Interfaces
     {
         public Task<List<string>> GetMobilePhasesByName(string projectName);
         public Task<List<string>> GetColumnTypesByName(string projectName);
-        public Task<List<string>> GetIonSourceTypesByName(string projectName);
-        public Task<List<string>> GetDetectorTypesByName(string projectName);
+        public Task<List<string>> GetIonSourcesByName(string projectName);
+        public Task<List<string>> GetDetectorsByName(string projectName);
+        public Task<List<string>> GetShortNamesByNames(List<string> projectName);
     }
 }

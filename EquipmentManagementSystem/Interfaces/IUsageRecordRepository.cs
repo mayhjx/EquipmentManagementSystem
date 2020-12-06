@@ -8,6 +8,7 @@ namespace EquipmentManagementSystem.Interfaces
     public interface IUsageRecordRepository : IGenericRepository<UsageRecord>
     {
         Task CreateRecords(List<UsageRecord> usageRecords);
+        UsageRecord GetLatestRecordOfProject(string projectName);
         List<UsageRecord> GetAllByInstrumentIdAndBeginTime(string instrumentId, DateTime? date);
         Task UpdateEndTime(UsageRecord usageRecord, DateTime endTime);
     }
