@@ -9,7 +9,6 @@ namespace EquipmentManagementSystem.Models
     {
         public int Id { get; set; }
 
-        [StringLength(50)]
         [Display(Name = "项目名称")]
         public string Name { get; set; }
 
@@ -17,8 +16,7 @@ namespace EquipmentManagementSystem.Models
         public string ShortName { get; set; }
 
         [Display(Name = "所属项目组")]
-        public int GroupId { get; set; }
-        public Group Group { get; set; }
+        public string GroupName { get; set; }
 
         [Display(Name = "单个样品检测时间")]
         [DataType(DataType.Time)]
@@ -26,23 +24,20 @@ namespace EquipmentManagementSystem.Models
         public DateTime? SimpleTestTime { get; set; }
 
         [Display(Name = "色谱柱类型")]
-        [StringLength(500)]
         public string ColumnType { get; set; }
 
         [Display(Name = "流动相/载气")]
-        [StringLength(500)]
         public string MobilePhase { get; set; }
 
         [Display(Name = "离子源类型")]
-        [StringLength(50)]
         public string IonSource { get; set; }
 
         [Display(Name = "检测器")]
-        [StringLength(20)]
         public string Detector { get; set; }
 
         public void SetColumnType(List<string> columntypes)
         {
+            columntypes.RemoveAll(l => string.IsNullOrEmpty(l));
             ColumnType = string.Join("|", columntypes);
         }
         public List<string> GetColumnType()
@@ -52,11 +47,32 @@ namespace EquipmentManagementSystem.Models
 
         public void SetMobilePhase(List<string> mobilePhases)
         {
+            mobilePhases.RemoveAll(l => string.IsNullOrEmpty(l));
             MobilePhase = string.Join("|", mobilePhases);
         }
         public List<string> GetMobilePhase()
         {
             return MobilePhase.Split("|").ToList();
+        }
+
+        public void SetIonSource(List<string> ionSources)
+        {
+            ionSources.RemoveAll(l => string.IsNullOrEmpty(l));
+            IonSource = string.Join("|", ionSources);
+        }
+        public List<string> GetIonSource()
+        {
+            return IonSource.Split("|").ToList();
+        }
+
+        public void SetDetector(List<string> detectors)
+        {
+            detectors.RemoveAll(l => string.IsNullOrEmpty(l));
+            Detector = string.Join("|", detectors);
+        }
+        public List<string> GetDetector()
+        {
+            return Detector.Split("|").ToList();
         }
     }
 }
