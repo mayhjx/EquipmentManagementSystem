@@ -1,8 +1,6 @@
 ﻿@page
 @model EquipmentManagementSystem.Pages.Records.IndexModel
-@inject SignInManager<User> signInManager
 @{
-    ViewData["Title"] = "维护使用";
 }
 
 <partial name="_StatusMessage" for="StatusMessage" />
@@ -13,72 +11,87 @@
             <ul class="nav nav-tabs">
                 <li class="nav-usageRecord">
                     <a class="nav-link active" id="maintenance-record-tab" data-toggle="pill" href="#maintenance-record" role="tab" aria-controls="maintenance-record" aria-selected="true">
-                        <h4 class="text-dark">维护记录</h4>
+                        <h5 class="text-dark">维护记录</h5>
                     </a>
                 </li>
                 <li class="nav-usageRecord">
                     <a class="nav-link" id="usage-record-tab" data-toggle="pill" href="#usage-record" role="tab" aria-controls="usage-record" aria-selected="false">
-                        <h4 class="text-dark">使用记录</h4>
+                        <h5 class="text-dark">使用记录</h5>
                     </a>
                 </li>
             </ul>
         </div>
         <div class="card-tools">
             <form id="search" class="form-inline float-left" method="post" asp-page-handler="Search">
-                <label class="my-1 mr-2" for="date">月份</label>
-                <input class="form-control" id="date" type="month" asp-for="Search.Date" />
-
                 <label class="my-1 mr-2 ml-2" for="instrument" asp-for="@Model.Search.Instrument"></label>
                 <select class="custom-select my-1 mr-2" id="instrumentId" asp-for="@Model.Search.Instrument">
-                    @foreach (var id in Model.Search.InstrumentSelectList)
+                    @if (Model.Search.InstrumentSelectList.Count == 0)
                     {
-                        <option value="@id">@id</option>
+                        <option value="">无仪器编号</option>
+                    }
+                    else
+                    {
+                        @foreach (var id in Model.Search.InstrumentSelectList)
+                        {
+                            <option value="@id">@id</option>
+                        }
                     }
                 </select>
 
-                @*<button class="btn btn-outline-primary my-1" asp-page-handler="Search">查询</button>*@
+                <label class="my-1 mr-2" for="date">月份</label>
+                <input class="form-control my-1 mr-2" id="date" type="month" asp-for="Search.Date" style="width:165px;" />
+
+                <button class="btn btn-outline-primary my-1 mr-2" asp-page-handler="Search">查询</button>
+                @* TODO *@
+                <button class="btn btn-outline-primary my-1" asp-page-handler="CreateReport">导出</button>
             </form>
         </div>
     </div>
 
     <div class="card-body pt-0">
         <div class="tab-content">
-            @*维护记录*@
-            <div class="tab-pane fade table-responsive active show" id="maintenance-record" role="tabpanel" aria-labelledby="maintenance-record-tab">
-                <a asp-page="MaintenanceRecords/Create">
-                    <input type="button" class="btn btn-outline-primary my-2" value="新建">
-                </a>
-                @*<audit-trail logs="Model.MaintenanceAuditTrailLogs" modal-id="maintenanceAuditTrailLog"></audit-trail>*@
+            @if (Model.Search.InstrumentSelectList.Count == 0)
+            {
+                <p>无仪器数据，请先在设备档案中新建</p>
+            }
+            else
+            {
+                @*维护记录*@
+                <div class="tab-pane fade table-responsive active show" id="maintenance-record" role="tabpanel" aria-labelledby="maintenance-record-tab">
+                    <a asp-page="MaintenanceRecords/Create">
+                        <input type="button" class="btn btn-outline-primary my-2" value="新建">
+                    </a>
+                    <audit-trail logs="Model.MaintenanceAuditTrailLogs" modal-id="maintenanceAuditTrailLog"></audit-trail>
 
-                <table id="" class="table table-hover text-nowrap">
-                    <thead>
-                        <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.MaintenanceRecords[0].InstrumentId)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.MaintenanceRecords[0].ProjectName)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.MaintenanceRecords[0].BeginTime)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.MaintenanceRecords[0].EndTime)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.MaintenanceRecords[0].Type)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.MaintenanceRecords[0].Content)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.MaintenanceRecords[0].Operator)
-                            </th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @*@foreach (var usageRecord in Model.MaintenanceRecords)
+                    <table id="" class="">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.MaintenanceRecords[0].InstrumentId)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.MaintenanceRecords[0].ProjectName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.MaintenanceRecords[0].BeginTime)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.MaintenanceRecords[0].EndTime)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.MaintenanceRecords[0].Type)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.MaintenanceRecords[0].Content)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.MaintenanceRecords[0].Operator)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var usageRecord in Model.MaintenanceRecords)
                             {
                                 <tr>
                                     <td>
@@ -111,238 +124,202 @@
                                         }
                                     </td>
                                 </tr>
-                            }*@
-                    </tbody>
-                </table>
-            </div>
+                            }
+                        </tbody>
+                    </table>
+                </div>
 
-            @*使用记录*@
-            <div class="tab-pane fade table-responsive" id="usage-record" role="tabpanel" aria-labelledby="usage-record-tab">
-                @*<a asp-page="UsageRecords/Create">
+                @*使用记录*@
+                <div class="tab-pane fade table-responsive" id="usage-record" role="tabpanel" aria-labelledby="usage-record-tab">
+                    @*<a asp-page="UsageRecords/Create">
                         <input type="button" class="btn btn-outline-primary my-2" value="新建">
-                    </a>*@
-                @*<audit-trail logs="Model.UsageAuditTrailLogs" modal-id="usageAuditTrailLog"></audit-trail>*@
+                    </a>
+                    <audit-trail logs="Model.UsageAuditTrailLogs" modal-id="usageAuditTrailLog"></audit-trail>*@
 
-                <table id="usage-record">
-                    <thead class="text-nowrap">
-                        <tr>
-                            @*<th hidden>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].InstrumentId)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].ProjectName)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].BeginTime)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].SampleNumber)
-                                </th>
-                                <th>
-                                    Batch样品数
-                                </th>
-                                <th>
-                                    真空度
-                                </th>
-                                <th>
-                                    色谱柱
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].BlankSignal)
-                                </th>
-                                <th>
-                                    Test信号
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].EndTime)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UsageRecords[0].Creator)
-                                </th>
-                                <th></th>*@
-                            <th>开始时间</th>
-                            <th>结束时间</th>
-                            <th>检测项目</th>
-                            <th>临床样数量</th>
-                            <th>Batch样品量</th>
-                            <th>真空度</th>
-                            <th>色谱柱</th>
-                            @*<th>流动相/载气</th>
-                                <th>离子源</th>
-                                <th>检测器</th>*@
-                            <th>空白</th>
-                            <th>Test</th>
-                            <th>操作者</th>
-                            <th>备注</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tfoot>
-                        <tr>
-                            <td colspan="5">
-                                色谱柱型号：
-                                <ol type="A">
-                                    <li></li>
-                                    <li></li>
-                                    <li></li>
-                                    <li></li>
-                                    <li></li>
-                                </ol>
-                            </td>
-                        </tr>
-                    </tfoot>
-                    <tbody>
-                        @foreach (var usageRecord in Model.UsageRecords)
-                        {
+                    <table id="usage-record">
+                        <thead class="text-nowrap">
+                            <tr>
+                                <th>开始时间</th>
+                                <th>结束时间</th>
+                                <th>检测项目</th>
+                                <th>临床样数量</th>
+                                <th>Batch样品量</th>
+                                <th>真空度</th>
+                                <th>色谱柱</th>
+                                <th>空白</th>
+                                <th>Test</th>
+                                <th>操作者</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var usageRecord in Model.UsageRecords)
+                            {
+                                @* update-form *@
+                                <tr>
+                                    <td>
+                                        <input form="update-form" type="hidden" asp-for="@usageRecord.Id" disabled />
+                                        <input form="update-form" type="hidden" asp-for="@usageRecord.InstrumentId" disabled />
+                                        <input form="update-form" size="5" asp-for="@usageRecord.BeginTime" required disabled />
+                                    </td>
+                                    <td>
+                                        <input form="update-form" size="5" asp-for="@usageRecord.EndTime" disabled />
+                                    </td>
+                                    <td>
+                                        <select form="update-form" asp-for="@usageRecord.ProjectName" asp-items="@Model.ProjectsSelectList" disabled></select>
+                                    </td>
+                                    <td>
+                                        <input form="update-form" size="5" asp-for="@usageRecord.SampleNumber" placeholder="一" disabled />
+                                    </td>
+                                    <td>
+                                        S1：<input form="update-form" size="5" asp-for="@usageRecord.SystemOneBatchNumber" placeholder="一" disabled />
+                                        <br />
+                                        S2：<input form="update-form" size="5" asp-for="@usageRecord.SystemTwoBatchNumber" placeholder="一" disabled />
+                                    </td>
+                                    <td>
+                                        低：<input form="update-form" size="5" asp-for="@usageRecord.LowVacuumDegree" placeholder="一" disabled />
+                                        <select form="update-form" asp-for="@usageRecord.LowVacuumDegreeUnit" disabled>
+                                            <option value="torr">torr</option>
+                                            <option value="mbar">Pa</option>
+                                        </select>
+                                        <br />
+                                        高：<input form="update-form" size="5" asp-for="@usageRecord.HighVacuumDegree" placeholder="一" disabled />
+                                        <select form="update-form" asp-for="@usageRecord.HighVacuumDegreeUnit" disabled>
+                                            <option value="torr">torr</option>
+                                            <option value="mbar">Pa</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        S1：<input form="update-form" size="5" asp-for="@usageRecord.SystemOneColumnNumber" placeholder="一" disabled />
+                                        <input type="number" min="0" step="any" form="update-form" size="5" asp-for="@usageRecord.SystemOneColumnPressure" placeholder="一" disabled />
+                                        <select form="update-form" asp-for="@usageRecord.SystemOneColumnPressureUnit" disabled>
+                                            <option value="Mpa">Mpa</option>
+                                            <option value="Bar">Bar</option>
+                                            <option value="Psi">Psi</option>
+                                        </select>
+                                        <br />
+                                        S2：<input form="update-form" size="5" asp-for="@usageRecord.SystemTwoColumnNumber" placeholder="一" disabled />
+                                        <input type="number" min="0" step="any" form="update-form" size="5" asp-for="@usageRecord.SystemTwoColumnPressure" placeholder="一" disabled />
+                                        <select form="update-form" asp-for="@usageRecord.SystemTwoColumnPressureUnit" disabled>
+                                            <option value="Mpa">Mpa</option>
+                                            <option value="Bar">Bar</option>
+                                            <option value="Psi">Psi</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input form="update-form" size="5" asp-for="@usageRecord.BlankSignal" placeholder="一" disabled />
+                                    </td>
+                                    <td>
+                                        S1：<input form="update-form" size="5" asp-for="@usageRecord.SystemOneTestSignal" placeholder="一" disabled />
+                                        <br />
+                                        S2：<input form="update-form" size="5" asp-for="@usageRecord.SystemTwoTestSignal" placeholder="一" disabled />
+                                    </td>
+                                    <td>
+                                        <input form="update-form" size="5" asp-for="@usageRecord.Creator" placeholder="一" disabled />
+                                    </td>
+                                    <td>
+                                        <button class="edit-btn" data-id="@usageRecord.Id">编辑</button>
+                                        <button class="delete-btn" data-id="@usageRecord.Id">删除</button>
+                                        <button class="update-btn" form="update-form" style="display: none;">保存</button>
+                                        <button class="cancel-btn" style="display: none;">取消</button>
+                                    </td>
+                                </tr>
+                            }
+                            @* create-form *@
                             <tr>
                                 <td>
-                                    <input form="update-form" type="hidden" asp-for="@usageRecord.Id" disabled />
-                                    <input form="update-form" type="hidden" asp-for="@usageRecord.InstrumentId" disabled />
-                                    <input form="update-form" size="5" asp-for="@usageRecord.BeginTime" required disabled />
+                                    <input form="create-form" size="8" asp-for="UsageRecord.InstrumentId" type="hidden" />
+                                    <input form="create-form" size="5" asp-for="UsageRecord.BeginTime" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" required />
                                 </td>
                                 <td>
-                                    <input form="update-form" size="5" asp-for="@usageRecord.EndTime" disabled />
+                                    <input form="create-form" size="5" asp-for="UsageRecord.EndTime" />
                                 </td>
                                 <td>
-                                    <select form="update-form" asp-for="@usageRecord.ProjectName" asp-items="@Model.ProjectsSelectList" disabled></select>
+                                    <select form="create-form" asp-for="UsageRecord.ProjectName" asp-items="@Model.ProjectsSelectList"></select>
                                 </td>
                                 <td>
-                                    <input form="update-form" size="5" asp-for="@usageRecord.SampleNumber" placeholder="一" disabled />
+                                    <input form="create-form" size="5" asp-for="UsageRecord.SampleNumber" />
                                 </td>
                                 <td>
-                                    S1：<input form="update-form" size="5" asp-for="@usageRecord.SystemOneBatchNumber" placeholder="一" disabled />
+                                    S1：<input form="create-form" size="5" asp-for="UsageRecord.SystemOneBatchNumber" />
                                     <br />
-                                    S2：<input form="update-form" size="5" asp-for="@usageRecord.SystemTwoBatchNumber" placeholder="一" disabled />
+                                    S2：<input form="create-form" size="5" asp-for="UsageRecord.SystemTwoBatchNumber" />
                                 </td>
                                 <td>
-                                    低：<input form="update-form" size="5" asp-for="@usageRecord.LowVacuumDegree" placeholder="一" disabled />
-                                    <select form="update-form" asp-for="@usageRecord.LowVacuumDegreeUnit" disabled>
+                                    低：<input form="create-form" size="5" asp-for="UsageRecord.LowVacuumDegree" />
+                                    <select form="create-form" asp-for="UsageRecord.LowVacuumDegreeUnit">
                                         <option value="torr">torr</option>
                                         <option value="mbar">Pa</option>
                                     </select>
                                     <br />
-                                    高：<input form="update-form" size="5" asp-for="@usageRecord.HighVacuumDegree" placeholder="一" disabled />
-                                    <select form="update-form" asp-for="@usageRecord.HighVacuumDegreeUnit" disabled>
+                                    高：<input form="create-form" size="5" asp-for="UsageRecord.HighVacuumDegree" />
+                                    <select form="create-form" asp-for="UsageRecord.HighVacuumDegreeUnit">
                                         <option value="torr">torr</option>
                                         <option value="mbar">Pa</option>
                                     </select>
                                 </td>
                                 <td>
-                                    S1：<input form="update-form" size="5" asp-for="@usageRecord.SystemOneColumnNumber" placeholder="一" disabled />
-                                    <input type="number" min="0" step="any" form="update-form" size="5" asp-for="@usageRecord.SystemOneColumnPressure" placeholder="一" disabled />
-                                    <select form="update-form" asp-for="@usageRecord.SystemOneColumnPressureUnit" disabled>
+                                    S1：<input form="create-form" size="5" asp-for="UsageRecord.SystemOneColumnNumber" placeholder="编号" />
+                                    <input type="number" min="0" step="any" form="create-form" size="5" asp-for="UsageRecord.SystemOneColumnPressure" placeholder="压力" />
+                                    <select form="create-form" asp-for="UsageRecord.SystemOneColumnPressureUnit">
                                         <option value="Mpa">Mpa</option>
                                         <option value="Bar">Bar</option>
                                         <option value="Psi">Psi</option>
                                     </select>
                                     <br />
-                                    S2：<input form="update-form" size="5" asp-for="@usageRecord.SystemTwoColumnNumber" placeholder="一" disabled />
-                                    <input type="number" min="0" step="any" form="update-form" size="5" asp-for="@usageRecord.SystemTwoColumnPressure" placeholder="一" disabled />
-                                    <select form="update-form" asp-for="@usageRecord.SystemTwoColumnPressureUnit" disabled>
+                                    S2：<input form="create-form" size="5" asp-for="UsageRecord.SystemTwoColumnNumber" placeholder="编号" />
+                                    <input type="number" min="0" step="any" form="create-form" size="5" asp-for="UsageRecord.SystemTwoColumnPressure" placeholder="压力" />
+                                    <select form="create-form" asp-for="UsageRecord.SystemTwoColumnPressureUnit">
                                         <option value="Mpa">Mpa</option>
                                         <option value="Bar">Bar</option>
                                         <option value="Psi">Psi</option>
                                     </select>
                                 </td>
                                 <td>
-                                    <input form="update-form" size="5" asp-for="@usageRecord.BlankSignal" placeholder="一" disabled />
+                                    <input form="create-form" size="5" asp-for="UsageRecord.BlankSignal" />
                                 </td>
                                 <td>
-                                    S1：<input form="update-form" size="5" asp-for="@usageRecord.SystemOneTestSignal" placeholder="一" disabled />
+                                    S1：<input form="create-form" size="5" asp-for="UsageRecord.SystemOneTestSignal" />
                                     <br />
-                                    S2：<input form="update-form" size="5" asp-for="@usageRecord.SystemTwoTestSignal" placeholder="一" disabled />
+                                    S2：<input form="update-form" size="5" asp-for="UsageRecord.SystemTwoTestSignal" />
                                 </td>
                                 <td>
-                                    <input form="update-form" size="5" asp-for="@usageRecord.Creator" placeholder="一" disabled />
+                                    <input form="create-form" size="5" asp-for="UsageRecord.Creator" />
                                 </td>
                                 <td>
-                                    <input form="update-form" size="5" asp-for="@usageRecord.Remark" disabled />
-                                </td>
-                                <td>
-                                    <button class="edit-btn" data-id="@usageRecord.Id">编辑</button>
-                                    <button class="delete-btn" data-id="@usageRecord.Id">删除</button>
-                                    <button class="update-btn" form="update-form" style="display: none;">保存</button>
-                                    <button class="cancel-btn" style="display: none;">取消</button>
+                                    <button form="create-form" id="create-btn">新建</button>
                                 </td>
                             </tr>
-                        }
-
-                        <tr>
-                            <td>
-                                <input form="create-form" size="8" asp-for="UsageRecord.InstrumentId" value="@Model.Search.Instrument" type="hidden" />
-                                <input form="create-form" size="5" asp-for="UsageRecord.BeginTime" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" required />
-                            </td>
-                            <td>
-                                <input form="create-form" size="5" asp-for="UsageRecord.EndTime" />
-                            </td>
-                            <td>
-                                <select form="create-form" asp-for="UsageRecord.ProjectName" asp-items="@Model.ProjectsSelectList"></select>
-                            </td>
-                            <td>
-                                <input form="create-form" size="5" asp-for="UsageRecord.SampleNumber" />
-                            </td>
-                            <td>
-                                S1：<input form="create-form" size="5" asp-for="UsageRecord.SystemOneBatchNumber" />
-                                <br />
-                                S2：<input form="create-form" size="5" asp-for="UsageRecord.SystemTwoBatchNumber" />
-                            </td>
-                            <td>
-                                低：<input form="create-form" size="5" asp-for="UsageRecord.LowVacuumDegree" />
-                                <select form="create-form" asp-for="UsageRecord.LowVacuumDegreeUnit">
-                                    <option value="torr">torr</option>
-                                    <option value="mbar">Pa</option>
-                                </select>
-                                <br />
-                                高：<input form="create-form" size="5" asp-for="UsageRecord.HighVacuumDegree" />
-                                <select form="create-form" asp-for="UsageRecord.HighVacuumDegreeUnit">
-                                    <option value="torr">torr</option>
-                                    <option value="mbar">Pa</option>
-                                </select>
-                            </td>
-                            <td>
-                                S1：<input form="create-form" size="5" asp-for="UsageRecord.SystemOneColumnNumber" placeholder="编号" />
-                                <input type="number" min="0" step="any" form="create-form" size="5" asp-for="UsageRecord.SystemOneColumnPressure" placeholder="压力" />
-                                <select form="create-form" asp-for="UsageRecord.SystemOneColumnPressureUnit">
-                                    <option value="Mpa">Mpa</option>
-                                    <option value="Bar">Bar</option>
-                                    <option value="Psi">Psi</option>
-                                </select>
-                                <br />
-                                S2：<input form="create-form" size="5" asp-for="UsageRecord.SystemTwoColumnNumber" placeholder="编号" />
-                                <input type="number" min="0" step="any" form="create-form" size="5" asp-for="UsageRecord.SystemTwoColumnPressure" placeholder="压力" />
-                                <select form="create-form" asp-for="UsageRecord.SystemTwoColumnPressureUnit">
-                                    <option value="Mpa">Mpa</option>
-                                    <option value="Bar">Bar</option>
-                                    <option value="Psi">Psi</option>
-                                </select>
-                            </td>
-                            <td>
-                                <input form="create-form" size="5" asp-for="UsageRecord.BlankSignal" />
-                            </td>
-                            <td>
-                                S1：<input form="create-form" size="5" asp-for="UsageRecord.SystemOneTestSignal" />
-                                <br />
-                                S2：<input form="update-form" size="5" asp-for="UsageRecord.SystemTwoTestSignal" />
-                            </td>
-                            <td>
-                                <input form="create-form" size="5" asp-for="UsageRecord.Creator" />
-                            </td>
-                            <td>
-                                <input form="create-form" size="5" asp-for="UsageRecord.Remark" />
-                            </td>
-                            <td>
-                                <button form="create-form" id="create-btn">新建</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <form id="create-form" method="post" asp-page="UsageRecords/Create">
-                </form>
-                <form id="update-form" method="post" asp-page="UsageRecords/Edit">
-                </form>
-                <form id="delete-form" method="post" asp-page="UsageRecords/Delete">
-                </form>
-            </div>
+                            <tr>
+                                <td colspan="3">
+                                    <label>流动相/载气：</label>
+                                    <select form="create-form" asp-for="UsageRecord.MobilePhase" asp-items="Model.MobilePhaseSelectList"></select>
+                                    <br />
+                                    <label>色谱柱类型：</label>
+                                    <select form="create-form" asp-for="UsageRecord.ColumnType" asp-items="Model.ColumnTypeSelectList"></select>
+                                </td>
+                                <td colspan="3">
+                                    <label>离子源：</label>
+                                    <select form="create-form" asp-for="UsageRecord.IonSource" asp-items="Model.IonSourceSelectList"></select>
+                                    <br />
+                                    <label>检测器：</label>
+                                    <select form="create-form" asp-for="UsageRecord.Detector" asp-items="Model.DetectroSelectList"></select>
+                                </td>
+                                <td colspan="6">
+                                    <label>备注：</label>
+                                    <textarea form="create-form" asp-for="UsageRecord.Remark" style="width:100%;"></textarea>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <form id="create-form" method="post" asp-page="UsageRecords/Create">
+                    </form>
+                    <form id="update-form" method="post" asp-page="UsageRecords/Edit">
+                    </form>
+                    <form id="delete-form" method="post" asp-page="UsageRecords/Delete">
+                    </form>
+                </div>
+            }
         </div>
     </div>
 </div>
@@ -367,18 +344,16 @@
         margin: 0px;
     }
 
-    input[type=Number] {
+    input[type="number"] {
         width: 60px;
     }
 
-    input[type=datetime-local] {
+    input[type="datetime-local"] {
         width: 188px;
     }
 </style>
 
 @section Scripts {
-    @*<script src="~/js/Records.js" asp-append-version="true"></script>*@
-
     <script language="javascript">
         $(".edit-btn").click(function () {
             $(".cancel-btn").click();
@@ -400,7 +375,6 @@
             currentRow.find("td").find("input").prop("disabled", true);
             currentRow.find("td").find("select").prop("disabled", true);
         });
-
 
         $(".delete-btn").click(function () {
             if (!confirm("确认删除该条记录？")) {
@@ -444,12 +418,12 @@
                 console.log("当前浏览器不支持LocalStorage");
             }
 
-            $('#date').on('change', function () {
-                $('form#search').submit();
-            })
-            $('#instrumentId').on('change', function () {
-                $('form#search').submit();
-            })
+            //$('#date').on('change', function () {
+            //    $('form#search').submit();
+            //})
+            //$('#instrumentId').on('change', function () {
+            //    $('form#search').submit();
+            //})
         })
     </script>
 }
