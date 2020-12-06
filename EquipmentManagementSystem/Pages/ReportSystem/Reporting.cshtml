@@ -266,10 +266,10 @@
                         foreach (var item in Model.UsageRecords)
                         {
                             AddKeyValueToDic(project, item.ProjectName);
-                            AddKeyValueToDic(columnType, item.Project.ColumnType);
-                            AddKeyValueToDic(ionSource, item.Project.IonSource);
-                            AddKeyValueToDic(carrier, item.Project.MobilePhase);
-                            AddKeyValueToDic(detector, item.Project.Detector);
+                            AddKeyValueToDic(columnType, item.ColumnType);
+                            AddKeyValueToDic(ionSource, item.IonSource);
+                            AddKeyValueToDic(carrier, item.MobilePhase);
+                            AddKeyValueToDic(detector, item.Detector);
                             AddKeyValueToDic(other, item.Remark);
                         }
 

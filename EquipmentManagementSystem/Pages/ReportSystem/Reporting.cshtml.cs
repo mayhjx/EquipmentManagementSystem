@@ -102,8 +102,8 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
                 var usageRecords = from r in _context.UsageRecords
                                     .AsNoTracking()
                                     .Include(r => r.Instrument)
-                                    .Include(r => r.Project)
-                                    .ThenInclude(r => r.Group)
+                                    //.Include(r => r.Project)
+                                    //.ThenInclude(r => r.Group)
 
                                    where r.BeginTime >= Search.BeginTime
                                    where r.BeginTime < Search.EndTime.AddDays(1)
@@ -151,7 +151,7 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
                 if (Search.Group != null)
                 {
                     usageRecords = from r in usageRecords
-                                   where r.Project.Group.Name == Search.Group
+                                   where r.GroupName == Search.Group
                                    select r;
 
                     maintenanceRecords = from r in maintenanceRecords
