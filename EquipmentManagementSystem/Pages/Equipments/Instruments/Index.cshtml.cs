@@ -19,11 +19,14 @@ namespace EquipmentManagementSystem.Pages.Equipments.Instruments
             _context = context;
         }
 
-        public IList<Instrument> Instrument { get; set; }
+        public IList<Instrument> Instruments { get; set; }
+
+        // 用来在Index Page确认新建权限
+        public Instrument Instrument { get; } = new Instrument();
 
         public async Task OnGetAsync()
         {
-            Instrument = await _context.Instruments.OrderBy(m => m.ID)
+            Instruments = await _context.Instruments.OrderBy(m => m.ID)
                                                     .AsNoTracking()
                                                     .Include(m => m.Calibrations)
                                                     .ToListAsync();
