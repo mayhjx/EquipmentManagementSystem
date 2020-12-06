@@ -28,19 +28,19 @@ namespace EquipmentManagementSystem.Pages.Records
 
         public SelectList ProjectsSelectList { get; set; }
 
-        public void PopulateProjectDropDownList()
-        {
-            var isAdmin = User.IsInRole(Constants.ManagerRole) || User.IsInRole(Constants.DirectorRole);
-            var userGroup = _userManager.GetUserAsync(User).Result?.Group;
+        //public void PopulateProjectDropDownList()
+        //{
+        //    var isAdmin = User.IsInRole(Constants.ManagerRole) || User.IsInRole(Constants.DirectorRole);
+        //    var userGroup = _userManager.GetUserAsync(User).Result?.Group;
 
-            if (isAdmin || userGroup == null)
-            {
-                ProjectsSelectList = new SelectList(_context.Projects, "Name", "Name");
-            }
-            else
-            {
-                ProjectsSelectList = new SelectList(_context.Projects.Include(p => p.Group).Where(p => p.Group.Name == userGroup), "Name", "Name");
-            }
-        }
+        //    if (isAdmin || userGroup == null)
+        //    {
+        //        ProjectsSelectList = new SelectList(_context.Projects, "Name", "Name");
+        //    }
+        //    else
+        //    {
+        //        ProjectsSelectList = new SelectList(_context.Projects.Include(p => p.Group).Where(p => p.Group.Name == userGroup), "Name", "Name");
+        //    }
+        //}
     }
 }
