@@ -11,59 +11,216 @@ namespace EMS.Test.ProjectTest
 {
     public class RepositoryTest
     {
-        //[Fact]
-        //public async Task SetAndGet_ColumnTypesByName_ShouldBe_Same()
-        //{
-        //    var options = new DbContextOptionsBuilder<EquipmentContext>()
-        //        .UseInMemoryDatabase(databaseName: nameof(SetAndGet_ColumnTypesByName_ShouldBe_Same))
-        //        .Options;
+        [Fact]
+        public async Task GetShortNamesByNames_Should_ReturnShortNameList()
+        {
+            var options = new DbContextOptionsBuilder<EquipmentContext>()
+                .UseInMemoryDatabase(databaseName: nameof(GetShortNamesByNames_Should_ReturnShortNameList))
+                .Options;
 
-        //    var columnTypes = new List<string> { "A", "B" };
+            using (var context = Utilities.CreateContext(options))
+            {
+                context.Projects.AddRange(new Project[]{
+                    new Project{Name = "25-OHD", ShortName = "VD"},                
+                    new Project{Name = "甲氧基肾上腺素", ShortName = "MNs"},
+                });
+                await context.SaveChangesAsync();
+            }
 
-        //    // Insert seed data into the database using one instance of the context
-        //    using (var context = Utilities.CreateContext(options))
-        //    {
-        //        var project = new Project() { Name = "Test" };
-        //        project.SetColumnType(columnTypes);
-        //        context.Projects.Add(project);
-        //        context.SaveChanges();
-        //    }
+            using (var context = Utilities.CreateContext(options))
+            {
+                var repo = new ProjectRepository(context);
+                var result = await repo.GetShortNamesByNames(new List<string> { "25-OHD", "甲氧基肾上腺素" });
+                Assert.Equal(new List<string> { "VD", "MNs" }, result);
+            }
+        }
 
-        //    // Use a clean instance of the context to run the test
-        //    using (var context = Utilities.CreateContext(options))
-        //    {
-        //        var repo = new ProjectRepository(context);
-        //        var result = await repo.GetColumnTypesByName("Test");
-        //        Assert.Equal(columnTypes, result);
-        //    }
-        //}
+        [Fact]
+        public async Task GetShortsNameByNames_NotDataExists_Should_ReturnEmptyList()
+        {
+            var options = new DbContextOptionsBuilder<EquipmentContext>()
+                .UseInMemoryDatabase(databaseName: nameof(GetShortsNameByNames_NotDataExists_Should_ReturnEmptyList))
+                .Options;
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                var repo = new ProjectRepository(context);
+                var result = await repo.GetShortNamesByNames(new List<string> { });
+                Assert.Empty (result);
+            }
+        }
+
+        [Fact]
+        public async Task GetColumnTypesByName_ShouldBe_ReturnColumnTypeList()
+        {
+            var options = new DbContextOptionsBuilder<EquipmentContext>()
+                .UseInMemoryDatabase(databaseName: nameof(GetColumnTypesByName_ShouldBe_ReturnColumnTypeList))
+                .Options;
+
+            var columnTypes = new List<string> { "A", "B" };
+
+            // Insert seed data into the database using one instance of the context
+            using (var context = Utilities.CreateContext(options))
+            {
+                var project = new Project() { Name = "Test" };
+                project.SetColumnType(columnTypes);
+                context.Projects.Add(project);
+                context.SaveChanges();
+            }
+
+            // Use a clean instance of the context to run the test
+            using (var context = Utilities.CreateContext(options))
+            {
+                var repo = new ProjectRepository(context);
+                var result = await repo.GetColumnTypesByName("Test");
+                Assert.Equal(columnTypes, result);
+            }
+        }
+
+        [Fact]
+        public async Task GetColumnTypesByName_NoData_ShouldBe_ReturnEmptyList()
+        {
+            var options = new DbContextOptionsBuilder<EquipmentContext>()
+                .UseInMemoryDatabase(databaseName: nameof(GetColumnTypesByName_NoData_ShouldBe_ReturnEmptyList))
+                .Options;
+
+            // Use a clean instance of the context to run the test
+            using (var context = Utilities.CreateContext(options))
+            {
+                var repo = new ProjectRepository(context);
+                var result = await repo.GetColumnTypesByName("Test");
+                Assert.Empty(result);
+            }
+        }
 
 
-        //[Fact]
-        //public async Task SetAndGet_MobilePhaseByName_ShouldBe_Same()
-        //{
-        //    var options = new DbContextOptionsBuilder<EquipmentContext>()
-        //        .UseInMemoryDatabase(databaseName: nameof(SetAndGet_MobilePhaseByName_ShouldBe_Same))
-        //        .Options;
+        [Fact]
+        public async Task GetMobilePhasesByName_ShouldBe_ReturnMobilePhaseLis()
+        {
+            var options = new DbContextOptionsBuilder<EquipmentContext>()
+                .UseInMemoryDatabase(databaseName: nameof(GetMobilePhasesByName_ShouldBe_ReturnMobilePhaseLis))
+                .Options;
 
-        //    var mobilePhases = new List<string> { "A", "B" };
+            var mobilePhases = new List<string> { "A", "B" };
 
-        //    // Insert seed data into the database using one instance of the context
-        //    using (var context = Utilities.CreateContext(options))
-        //    {
-        //        var project = new Project() { Name = "Test" };
-        //        project.SetMobilePhase(mobilePhases);
-        //        context.Projects.Add(project);
-        //        context.SaveChanges();
-        //    }
+            // Insert seed data into the database using one instance of the context
+            using (var context = Utilities.CreateContext(options))
+            {
+                var project = new Project() { Name = "Test" };
+                project.SetMobilePhase(mobilePhases);
+                context.Projects.Add(project);
+                context.SaveChanges();
+            }
 
-        //    // Use a clean instance of the context to run the test
-        //    using (var context = Utilities.CreateContext(options))
-        //    {
-        //        var repo = new ProjectRepository(context);
-        //        var result = await repo.GetMobilePhasesByName("Test");
-        //        Assert.Equal(mobilePhases, result);
-        //    }
-        //}
+            // Use a clean instance of the context to run the test
+            using (var context = Utilities.CreateContext(options))
+            {
+                var repo = new ProjectRepository(context);
+                var result = await repo.GetMobilePhasesByName("Test");
+                Assert.Equal(mobilePhases, result);
+            }
+        }
+
+        [Fact]
+        public async Task GetMobilePhasesByName_NoData_ShouldBe_ReturnEmptyList()
+        {
+            var options = new DbContextOptionsBuilder<EquipmentContext>()
+                .UseInMemoryDatabase(databaseName: nameof(GetMobilePhasesByName_NoData_ShouldBe_ReturnEmptyList))
+                .Options;
+
+            // Use a clean instance of the context to run the test
+            using (var context = Utilities.CreateContext(options))
+            {
+                var repo = new ProjectRepository(context);
+                var result = await repo.GetMobilePhasesByName("Test");
+                Assert.Empty(result);
+            }
+        }
+
+        [Fact]
+        public async Task GetIonSourcesByName_ShouldBe_ReturnMobilePhaseLis()
+        {
+            var options = new DbContextOptionsBuilder<EquipmentContext>()
+                .UseInMemoryDatabase(databaseName: nameof(GetIonSourcesByName_ShouldBe_ReturnMobilePhaseLis))
+                .Options;
+
+            var mobilePhases = new List<string> { "A", "B" };
+
+            // Insert seed data into the database using one instance of the context
+            using (var context = Utilities.CreateContext(options))
+            {
+                var project = new Project() { Name = "Test" };
+                project.SetIonSource(mobilePhases);
+                context.Projects.Add(project);
+                context.SaveChanges();
+            }
+
+            // Use a clean instance of the context to run the test
+            using (var context = Utilities.CreateContext(options))
+            {
+                var repo = new ProjectRepository(context);
+                var result = await repo.GetIonSourcesByName("Test");
+                Assert.Equal(mobilePhases, result);
+            }
+        }
+
+        [Fact]
+        public async Task GetIonSourcesByName_NoData_ShouldBe_ReturnEmptyList()
+        {
+            var options = new DbContextOptionsBuilder<EquipmentContext>()
+                .UseInMemoryDatabase(databaseName: nameof(GetIonSourcesByName_NoData_ShouldBe_ReturnEmptyList))
+                .Options;
+
+            // Use a clean instance of the context to run the test
+            using (var context = Utilities.CreateContext(options))
+            {
+                var repo = new ProjectRepository(context);
+                var result = await repo.GetIonSourcesByName("Test");
+                Assert.Empty(result);
+            }
+        }
+
+        [Fact]
+        public async Task GetDetectorByName_ShouldBe_ReturnMobilePhaseLis()
+        {
+            var options = new DbContextOptionsBuilder<EquipmentContext>()
+                .UseInMemoryDatabase(databaseName: nameof(GetDetectorByName_ShouldBe_ReturnMobilePhaseLis))
+                .Options;
+
+            var mobilePhases = new List<string> { "A", "B" };
+
+            // Insert seed data into the database using one instance of the context
+            using (var context = Utilities.CreateContext(options))
+            {
+                var project = new Project() { Name = "Test" };
+                project.SetDetector(mobilePhases);
+                context.Projects.Add(project);
+                context.SaveChanges();
+            }
+
+            // Use a clean instance of the context to run the test
+            using (var context = Utilities.CreateContext(options))
+            {
+                var repo = new ProjectRepository(context);
+                var result = await repo.GetDetectorsByName("Test");
+                Assert.Equal(mobilePhases, result);
+            }
+        }
+
+        [Fact]
+        public async Task GetDetectorByName_NoData_ShouldBe_ReturnEmptyList()
+        {
+            var options = new DbContextOptionsBuilder<EquipmentContext>()
+                .UseInMemoryDatabase(databaseName: nameof(GetColumnTypesByName_NoData_ShouldBe_ReturnEmptyList))
+                .Options;
+
+            // Use a clean instance of the context to run the test
+            using (var context = Utilities.CreateContext(options))
+            {
+                var repo = new ProjectRepository(context);
+                var result = await repo.GetDetectorsByName("Test");
+                Assert.Empty(result);
+            }
+        }
     }
 }
