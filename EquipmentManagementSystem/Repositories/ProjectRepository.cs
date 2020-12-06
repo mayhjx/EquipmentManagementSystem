@@ -18,6 +18,16 @@ namespace EquipmentManagementSystem.Repositories
             return (await _context.Projects.FirstOrDefaultAsync(p => p.Name == projectName)).GetColumnType();
         }
 
+        public async Task<List<string>> GetDetectorTypesByName(string projectName)
+        {
+            return (await _context.Projects.FirstOrDefaultAsync(p => p.Name == projectName)).GetDetector();
+        }
+
+        public async Task<List<string>> GetIonSourceTypesByName(string projectName)
+        {
+            return (await _context.Projects.FirstOrDefaultAsync(p => p.Name == projectName)).GetIonSource();
+        }
+
         public async Task<List<string>> GetMobilePhasesByName(string projectName)
         {
             return (await _context.Projects.FirstOrDefaultAsync(p => p.Name == projectName)).GetMobilePhase();
