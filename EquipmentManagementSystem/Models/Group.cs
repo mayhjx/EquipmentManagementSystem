@@ -11,6 +11,5 @@ namespace EquipmentManagementSystem.Models
         [Display(Name = "组名")]
         public string Name { get; set; }
 
-        public ICollection<Project> Projects { get; set; }
     }
 }
