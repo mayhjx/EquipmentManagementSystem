@@ -14,7 +14,7 @@ namespace EMS.Test.UsageRecordTest
         public void GetAllByInstrumentIdAndBeginTime_Should_ReturnThreeRecords()
         {
             var options = new DbContextOptionsBuilder<EquipmentContext>()
-                .UseInMemoryDatabase(databaseName: "Test")
+                .UseInMemoryDatabase(databaseName: "GetAllByInstrumentIdAndBeginTime_Should_ReturnThreeRecords")
                 .Options;
 
             // Insert seed data into the database using one instance of the context
@@ -23,6 +23,7 @@ namespace EMS.Test.UsageRecordTest
                 context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 01, 01) });
                 context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 01, 02) });
                 context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 01, 03) });
+                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 01, 04), IsDelete=true });
                 context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ02", BeginTime = new DateTime(2020, 01, 01) });
                 context.SaveChanges();
             }
