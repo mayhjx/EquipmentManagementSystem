@@ -12,16 +12,22 @@
     <div class="card-body">
         <dl class="row">
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Project.GroupId)
+                @Html.DisplayNameFor(model => model.Project.GroupName)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Project.Group.Name)
+                @Html.DisplayFor(model => model.Project.GroupName)
             </dd>
             <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Project.Name)
             </dt>
             <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.Project.Name)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Project.ShortName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Project.ShortName)
             </dd>
             <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Project.SimpleTestTime)
@@ -33,25 +39,25 @@
                 @Html.DisplayNameFor(model => model.Project.ColumnType)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Project.ColumnType)
+                <list list="Model.Project.GetColumnType()"></list>
             </dd>
             <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Project.MobilePhase)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Project.MobilePhase)
+                <list list="Model.Project.GetMobilePhase()"></list>
             </dd>
             <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Project.IonSource)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Project.IonSource)
+                <list list="Model.Project.GetIonSource()"></list>
             </dd>
             <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Project.Detector)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Project.Detector)
+                <list list="Model.Project.GetDetector()"></list>
             </dd>
         </dl>
 

@@ -1,23 +1,24 @@
-﻿using EquipmentManagementSystem.Models;
+﻿using EquipmentManagementSystem.Interfaces;
+using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Management.Projects
 {
-    public class CreateModel : PageModel
+    public class CreateModel : BasePageModel
     {
-        private readonly EquipmentManagementSystem.Data.EquipmentContext _context;
-
-        public CreateModel(EquipmentManagementSystem.Data.EquipmentContext context)
+        private readonly IGroupRepository _groupRepo;
+        public CreateModel(IProjectRepository projectRepository, IGroupRepository groupRepository) : base(projectRepository)
         {
-            _context = context;
+            _groupRepo = groupRepository;
         }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGet()
         {
-            GroupSelectList = new SelectList(_context.Groups, "Id", "Name");
+            GroupSelectList = new SelectList(await _groupRepo.GetAll(), "Name", "Name");
             return Page();
         }
 
@@ -26,17 +27,32 @@ namespace EquipmentManagementSystem.Pages.Management.Projects
 
         public SelectList GroupSelectList { get; set; }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://aka.ms/RazorPagesCRUD.
+        [BindProperty]
+        public List<string> ColumnTypes { get; set; }
+
+        [BindProperty]
+        public List<string> MobilePhases { get; set; }
+
+        [BindProperty]
+        public List<string> IonSources { get; set; }
+
+        [BindProperty]
+        public List<string> Detectors { get; set; }
+
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
+                GroupSelectList = new SelectList(await _groupRepo.GetAll(), "Name", "Name");
                 return Page();
             }
 
-            _context.Projects.Add(Project);
-            await _context.SaveChangesAsync();
+            Project.SetColumnType(ColumnTypes);
+            Project.SetMobilePhase(MobilePhases);
+            Project.SetIonSource(IonSources);
+            Project.SetDetector(Detectors);
+
+            await _projectRepository.Create(Project);
 
             return RedirectToPage("./Index");
         }

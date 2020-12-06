@@ -1,19 +1,14 @@
-﻿using EquipmentManagementSystem.Data;
+﻿using EquipmentManagementSystem.Interfaces;
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Management.Projects
 {
-    public class DeleteModel : PageModel
+    public class DeleteModel : BasePageModel
     {
-        private readonly EquipmentContext _context;
-
-        public DeleteModel(EquipmentContext context)
+        public DeleteModel(IProjectRepository projectRepository):base(projectRepository)
         {
-            _context = context;
         }
 
         [BindProperty]
@@ -21,9 +16,7 @@ namespace EquipmentManagementSystem.Pages.Management.Projects
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            Project = await _context.Projects.Include(m => m.Group)
-                                            .AsNoTracking()
-                                            .FirstOrDefaultAsync(m => m.Id == id);
+            Project = await _projectRepository.GetById(id); 
 
             if (Project == null)
             {
@@ -35,12 +28,11 @@ namespace EquipmentManagementSystem.Pages.Management.Projects
 
         public async Task<IActionResult> OnPostAsync(int id)
         {
-            Project = await _context.Projects.FindAsync(id);
+            Project = await _projectRepository.GetById(id); 
 
             if (Project != null)
             {
-                _context.Projects.Remove(Project);
-                await _context.SaveChangesAsync();
+                await _projectRepository.Delete(Project);
             }
 
             return RedirectToPage("./Index");

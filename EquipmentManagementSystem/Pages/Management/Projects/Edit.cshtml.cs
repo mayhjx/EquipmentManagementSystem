@@ -1,26 +1,40 @@
 ﻿using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
+using EquipmentManagementSystem.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace EquipmentManagementSystem.Pages.Management.Projects
 {
-    public class EditModel : PageModel
+    public class EditModel : BasePageModel
     {
-        private readonly EquipmentContext _context;
-
-        public EditModel(EquipmentContext context)
+        private readonly IGroupRepository _groupRepo;
+        public EditModel(IProjectRepository projectRepository, IGroupRepository groupRepository):base(projectRepository)
         {
-            _context = context;
+            _groupRepo = groupRepository;
         }
 
         [BindProperty]
         public Project Project { get; set; }
+
         public SelectList GroupSelectList { get; set; }
+
+        [BindProperty]
+        public List<string> ColumnTypes { get; set; }
+
+        [BindProperty]
+        public List<string> MobilePhases { get; set; }
+
+        [BindProperty]
+        public List<string> IonSources { get; set; }
+
+        [BindProperty]
+        public List<string> Detectors { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,14 +43,18 @@ namespace EquipmentManagementSystem.Pages.Management.Projects
                 return NotFound();
             }
 
-            Project = await _context.Projects.FirstOrDefaultAsync(m => m.Id == id);
+            Project = await _projectRepository.GetById(id);
 
             if (Project == null)
             {
                 return NotFound();
             }
 
-            GroupSelectList = new SelectList(_context.Groups, "Id", "Name");
+            ColumnTypes = Project.GetColumnType();
+            MobilePhases = Project.GetMobilePhase();
+            IonSources = Project.GetIonSource();
+            Detectors = Project.GetDetector();
+            GroupSelectList = new SelectList(await _groupRepo.GetAll(), "Name", "Name");
 
             return Page();
         }
@@ -50,15 +68,17 @@ namespace EquipmentManagementSystem.Pages.Management.Projects
                 return Page();
             }
 
-            _context.Attach(Project).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                Project.SetColumnType(ColumnTypes);
+                Project.SetMobilePhase(MobilePhases);
+                Project.SetIonSource(IonSources);
+                Project.SetDetector(Detectors);
+                await _projectRepository.Update(Project);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProjectExists(Project.Id))
+                if (!await ProjectExists(Project.Id))
                 {
                     return NotFound();
                 }
@@ -71,9 +91,9 @@ namespace EquipmentManagementSystem.Pages.Management.Projects
             return RedirectToPage("./Index");
         }
 
-        private bool ProjectExists(int id)
+        private async Task<bool> ProjectExists(int id)
         {
-            return _context.Projects.Any(e => e.Id == id);
+            return await _projectRepository.GetById(id) != null;
         }
     }
 }
