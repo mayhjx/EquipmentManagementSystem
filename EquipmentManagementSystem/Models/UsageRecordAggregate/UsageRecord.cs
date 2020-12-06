@@ -11,11 +11,11 @@ namespace EquipmentManagementSystem.Models
         public string InstrumentId { get; set; }
         public Instrument Instrument { get; set; }
 
+        [Display(Name = "项目组")]
+        public string GroupName { get; set; }
+
         [Display(Name = "项目名称")]
         public string ProjectName { get; set; }
-
-        public int? ProjectId { get; set; }
-        public Project Project { get; set; }
 
         [Display(Name = "进样开始时间")]
         [DataType(DataType.DateTime)]
@@ -75,6 +75,12 @@ namespace EquipmentManagementSystem.Models
 
         [Display(Name = "系统二Test信号")]
         public float? SystemTwoTestSignal { get; set; }
+
+        [Display(Name = "离子源")]
+        public string IonSource { get; set; }
+
+        [Display(Name = "检测器")]
+        public string Detector { get; set; }
 
         [Display(Name = "进样结束时间")]
         [DataType(DataType.DateTime)]
