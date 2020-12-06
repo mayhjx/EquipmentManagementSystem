@@ -4,14 +4,16 @@ using EquipmentManagementSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EquipmentManagementSystem.Migrations
 {
     [DbContext(typeof(EquipmentContext))]
-    partial class EquipmentContextModelSnapshot : ModelSnapshot
+    [Migration("20201206024201_project_Add_GroupName")]
+    partial class project_Add_GroupName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -750,6 +752,9 @@ namespace EquipmentManagementSystem.Migrations
                     b.Property<string>("Detector")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("GroupId")
+                        .HasColumnType("int");
+
                     b.Property<string>("GroupName")
                         .HasColumnType("nvarchar(max)");
 
@@ -769,6 +774,8 @@ namespace EquipmentManagementSystem.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
 
                     b.ToTable("Project");
                 });
@@ -1072,6 +1079,13 @@ namespace EquipmentManagementSystem.Migrations
                     b.HasOne("EquipmentManagementSystem.Models.Instrument", "Instrument")
                         .WithMany("MalfunctionWorkOrder")
                         .HasForeignKey("InstrumentID");
+                });
+
+            modelBuilder.Entity("EquipmentManagementSystem.Models.Project", b =>
+                {
+                    b.HasOne("EquipmentManagementSystem.Models.Group", null)
+                        .WithMany("Projects")
+                        .HasForeignKey("GroupId");
                 });
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.Repair", b =>

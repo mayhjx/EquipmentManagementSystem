@@ -4,14 +4,16 @@ using EquipmentManagementSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EquipmentManagementSystem.Migrations
 {
     [DbContext(typeof(EquipmentContext))]
-    partial class EquipmentContextModelSnapshot : ModelSnapshot
+    [Migration("20201206003113_UsageRecord_RemoveProjectForeignKey_Add_GroupName")]
+    partial class UsageRecord_RemoveProjectForeignKey_Add_GroupName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -745,22 +747,27 @@ namespace EquipmentManagementSystem.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ColumnType")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
 
                     b.Property<string>("Detector")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
 
-                    b.Property<string>("GroupName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("GroupId")
+                        .HasColumnType("int");
 
                     b.Property<string>("IonSource")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<string>("MobilePhase")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<string>("ShortName")
                         .HasColumnType("nvarchar(max)");
@@ -769,6 +776,8 @@ namespace EquipmentManagementSystem.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
 
                     b.ToTable("Project");
                 });
@@ -1072,6 +1081,15 @@ namespace EquipmentManagementSystem.Migrations
                     b.HasOne("EquipmentManagementSystem.Models.Instrument", "Instrument")
                         .WithMany("MalfunctionWorkOrder")
                         .HasForeignKey("InstrumentID");
+                });
+
+            modelBuilder.Entity("EquipmentManagementSystem.Models.Project", b =>
+                {
+                    b.HasOne("EquipmentManagementSystem.Models.Group", "Group")
+                        .WithMany("Projects")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.Repair", b =>
