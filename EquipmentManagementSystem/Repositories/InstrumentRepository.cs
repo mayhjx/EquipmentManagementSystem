@@ -24,12 +24,12 @@ namespace EquipmentManagementSystem.Repositories
 
         public List<string> GetAllInstrumentIdByProject(string project)
         {
-            return _context.Set<Instrument>().Where(i => i.HasProject(project)).Select(i => i.ID).ToList();
+            return _context.Set<Instrument>().AsEnumerable().Where(i => i.HasProject(project)).Select(i => i.ID).ToList();
         }
 
         public List<string> GetTestProjectsById(string instrumentId)
         {
-            return _context.Set<Instrument>().Find(instrumentId).GetProjects();
+            return _context.Set<Instrument>().Find(instrumentId)?.GetProjects() ?? new List<string>();
         }
     }
 }

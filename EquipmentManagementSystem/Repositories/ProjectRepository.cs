@@ -15,22 +15,36 @@ namespace EquipmentManagementSystem.Repositories
 
         public async Task<List<string>> GetColumnTypesByName(string projectName)
         {
-            return (await _context.Projects.FirstOrDefaultAsync(p => p.Name == projectName)).GetColumnType();
+            return (await _context.Projects.FirstOrDefaultAsync(p => p.Name == projectName))?.GetColumnType() ?? new List<string>();
         }
 
-        public async Task<List<string>> GetDetectorTypesByName(string projectName)
+        public async Task<List<string>> GetDetectorsByName(string projectName)
         {
-            return (await _context.Projects.FirstOrDefaultAsync(p => p.Name == projectName)).GetDetector();
+            return (await _context.Projects.FirstOrDefaultAsync(p => p.Name == projectName))?.GetDetector() ?? new List<string>();
         }
 
-        public async Task<List<string>> GetIonSourceTypesByName(string projectName)
+        public async Task<List<string>> GetIonSourcesByName(string projectName)
         {
-            return (await _context.Projects.FirstOrDefaultAsync(p => p.Name == projectName)).GetIonSource();
+            return (await _context.Projects.FirstOrDefaultAsync(p => p.Name == projectName))?.GetIonSource() ?? new List<string>();
         }
 
         public async Task<List<string>> GetMobilePhasesByName(string projectName)
         {
-            return (await _context.Projects.FirstOrDefaultAsync(p => p.Name == projectName)).GetMobilePhase();
+            return (await _context.Projects.FirstOrDefaultAsync(p => p.Name == projectName))?.GetMobilePhase() ?? new List<string>();
+        }
+
+        public async Task<List<string>> GetShortNamesByNames(List<string> projectName)
+        {
+            var result = new List<string>();
+            foreach(var name in projectName)
+            {
+                var project = await _context.Projects.FirstOrDefaultAsync(i => i.Name == name);
+                if(project != null)
+                {
+                    result.Add(project.ShortName);
+                }
+            }
+            return result;
         }
     }
 }

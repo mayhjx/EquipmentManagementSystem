@@ -52,5 +52,14 @@ namespace EquipmentManagementSystem.Repositories
             usageRecord.IsDelete = true;
             await _context.SaveChangesAsync();
         }
+
+        public UsageRecord GetLatestRecordOfProject(string projectName)
+        {
+            return _context.UsageRecords
+                .Where(i => i.IsDelete == false)
+                .Where(i=>i.ProjectName == projectName)
+                .ToList()
+                .LastOrDefault();
+        }
     }
 }
