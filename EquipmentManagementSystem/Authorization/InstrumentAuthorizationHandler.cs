@@ -28,7 +28,8 @@ namespace EquipmentManagementSystem.Authorization
 
             if (requirement.Name == Constants.CreateOperationName)
             {
-                if (context.User.IsInRole(Constants.DirectorRole) ||
+                if (context.User.IsInRole(Constants.AdministratorRole) || 
+                    context.User.IsInRole(Constants.DirectorRole) ||
                     context.User.IsInRole(Constants.ManagerRole))
                 {
                     context.Succeed(requirement);
@@ -44,7 +45,8 @@ namespace EquipmentManagementSystem.Authorization
             {
                 var currentUserGroup = _userManager.GetUserAsync(context.User).Result.Group ?? null;
 
-                if (context.User.IsInRole(Constants.DirectorRole) ||
+                if (context.User.IsInRole(Constants.AdministratorRole) ||
+                    context.User.IsInRole(Constants.DirectorRole) ||
                     context.User.IsInRole(Constants.ManagerRole) ||
                     (context.User.IsInRole(Constants.PrincipalRole) && currentUserGroup == resource.Group))
                 {
