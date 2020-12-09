@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -39,7 +38,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
                 // 获取技术员或设备负责人所属项目组的设备编号
                 var userGroup = _userManager.GetUserAsync(User).Result.Group;
                 // 获取所属项目组的项目
-                var userProjects = _equipmentContext.Projects.Include(p => p.Group).Where(p => p.Group.Name == userGroup);
+                var userProjects = _equipmentContext.Projects.Where(p => p.GroupName == userGroup);
 
                 // 获取项目使用的设备编号
                 var instruments = from m in _equipmentContext.Instruments

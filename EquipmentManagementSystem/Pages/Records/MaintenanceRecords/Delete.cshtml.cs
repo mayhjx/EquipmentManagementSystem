@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using EquipmentManagementSystem.Authorization;
+﻿using EquipmentManagementSystem.Authorization;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using EquipmentManagementSystem.Pages.Records;
@@ -7,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.MaintenanceRecords
 {
@@ -35,7 +35,6 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
                                 .AsNoTracking()
                                 .Include(m => m.Instrument)
                                 .Include(m => m.Project)
-                                    .ThenInclude(p => p.Group)
                                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (MaintenanceRecord == null)
@@ -63,7 +62,6 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
             MaintenanceRecord = await _context.MaintenanceRecords
                                 .AsNoTracking()
                                 .Include(m => m.Project)
-                                    .ThenInclude(p => p.Group)
                                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (MaintenanceRecord == null)

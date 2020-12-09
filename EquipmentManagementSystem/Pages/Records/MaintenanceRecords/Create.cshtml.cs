@@ -21,7 +21,6 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
 
         public IActionResult OnGet()
         {
-            PopulateProjectDropDownList();
             return Page();
         }
 
@@ -70,13 +69,11 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
         {
             if (!ModelState.IsValid)
             {
-                PopulateProjectDropDownList();
                 return Page();
             }
 
             if (maintenanceType == null)
             {
-                PopulateProjectDropDownList();
                 ModelState.AddModelError("", "请选择一个维护类型");
                 return Page();
             }
