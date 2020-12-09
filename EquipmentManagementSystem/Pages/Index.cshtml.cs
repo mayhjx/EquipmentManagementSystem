@@ -42,7 +42,7 @@ namespace EquipmentManagementSystem.Pages
                                 .AsNoTracking()
                                 .Include(m => m.Calibrations)
                                 .AsEnumerable()
-                                  where (m.Status == InstrumentStatus.Using)
+                                  where (m.Status == "正常")
                                   where (m.Calibrations.Count > 0 && m.Calibrations.Last().Date != DateTime.MinValue)
                                   let remainDay = m.Calibrations.Last().Date.AddYears(m.CalibrationCycle) - DateTime.Today
                                   where remainDay.Days < 30 // 到期前30天内

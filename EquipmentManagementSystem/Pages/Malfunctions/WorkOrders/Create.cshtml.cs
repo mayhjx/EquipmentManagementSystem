@@ -73,7 +73,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
 
             // 改变故障设备的状态
             MalfunctionWorkOrder.Instrument = await _context.Set<Instrument>().FindAsync(MalfunctionWorkOrder.InstrumentID);
-            MalfunctionWorkOrder.Instrument.Status = InstrumentStatus.Malfunction;
+            MalfunctionWorkOrder.Instrument.Status = "故障";
 
             // 新建工单关联的内容
             MalfunctionWorkOrder.Investigation = new Investigation { };

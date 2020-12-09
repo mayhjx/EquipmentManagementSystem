@@ -69,8 +69,8 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
                 if (MalfunctionWorkOrder.Progress < WorkOrderProgress.Completed)
                     MalfunctionWorkOrder.Progress = WorkOrderProgress.Completed;
 
-                if (MalfunctionWorkOrder.Instrument.Status == InstrumentStatus.Malfunction)
-                    MalfunctionWorkOrder.Instrument.Status = InstrumentStatus.Using;
+                if (MalfunctionWorkOrder.Instrument.Status == "故障")
+                    MalfunctionWorkOrder.Instrument.Status = "正常";
 
                 await _context.SaveChangesAsync();
 
@@ -104,8 +104,8 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
                 if (MalfunctionWorkOrder.Progress < WorkOrderProgress.Completed)
                     MalfunctionWorkOrder.Progress = WorkOrderProgress.Completed;
 
-                if (MalfunctionWorkOrder.Instrument.Status == InstrumentStatus.Malfunction)
-                    MalfunctionWorkOrder.Instrument.Status = InstrumentStatus.Using;
+                if (MalfunctionWorkOrder.Instrument.Status == "故障")
+                    MalfunctionWorkOrder.Instrument.Status = "正常";
 
                 await _context.SaveChangesAsync();
                 return new JsonResult("工单已完成！");

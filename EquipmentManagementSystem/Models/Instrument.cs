@@ -38,7 +38,7 @@ namespace EquipmentManagementSystem.Models
         public string MetrologicalCharacteristics { get; set; }
 
         [Display(Name = "状态")]
-        public InstrumentStatus Status { get; set; }
+        public string Status { get; set; }
 
         [Required]
         [Display(Name = "存放位置")]

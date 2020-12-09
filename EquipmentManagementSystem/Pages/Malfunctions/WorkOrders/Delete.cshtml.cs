@@ -64,7 +64,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
 
             // 改变故障设备的状态
             MalfunctionWorkOrder.Instrument = await _context.Set<Instrument>().FindAsync(MalfunctionWorkOrder.InstrumentID);
-            MalfunctionWorkOrder.Instrument.Status = InstrumentStatus.Using;
+            MalfunctionWorkOrder.Instrument.Status = "正常";
 
             _context.MalfunctionWorkOrder.Remove(MalfunctionWorkOrder);
             await _context.SaveChangesAsync();
@@ -94,7 +94,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
             {
                 // 改变故障设备的状态
                 MalfunctionWorkOrder.Instrument = await _context.Set<Instrument>().FindAsync(MalfunctionWorkOrder.InstrumentID);
-                MalfunctionWorkOrder.Instrument.Status = InstrumentStatus.Using;
+                MalfunctionWorkOrder.Instrument.Status = "正常";
 
                 _context.MalfunctionWorkOrder.Remove(MalfunctionWorkOrder);
                 await _context.SaveChangesAsync();
