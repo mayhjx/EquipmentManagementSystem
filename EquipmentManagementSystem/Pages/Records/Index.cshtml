@@ -3,7 +3,7 @@
 @{
 }
 
-<partial name="_StatusMessage" for="StatusMessage" />
+@*<partial name="_StatusMessage" for="StatusMessage" />*@
 
 <div class="card card-primary card-outline card-outline-tabs">
     <div class="card-header p-0 border-bottom-0">
@@ -132,9 +132,9 @@
                 @*使用记录*@
                 <div class="tab-pane fade table-responsive" id="usage-record" role="tabpanel" aria-labelledby="usage-record-tab">
                     @*<a asp-page="UsageRecords/Create">
-                        <input type="button" class="btn btn-outline-primary my-2" value="新建">
-                    </a>
-                    <audit-trail logs="Model.UsageAuditTrailLogs" modal-id="usageAuditTrailLog"></audit-trail>*@
+                            <input type="button" class="btn btn-outline-primary my-2" value="新建">
+                        </a>
+                        <audit-trail logs="Model.UsageAuditTrailLogs" modal-id="usageAuditTrailLog"></audit-trail>*@
 
                     <table id="usage-record">
                         <thead class="text-nowrap">
@@ -235,7 +235,7 @@
                                     <input form="create-form" size="5" asp-for="UsageRecord.EndTime" />
                                 </td>
                                 <td>
-                                    <select form="create-form" asp-for="UsageRecord.ProjectName" asp-items="@Model.ProjectsSelectList"></select>
+                                    <select id="select-project" form="create-form" asp-for="UsageRecord.ProjectName" asp-items="@Model.ProjectsSelectList"></select>
                                 </td>
                                 <td>
                                     <input form="create-form" size="5" asp-for="UsageRecord.SampleNumber" />
@@ -403,6 +403,51 @@
             $.ajax(options);
         });
 
+        function getLatestRecord() {
+            var project = $("#select-project").val();
+            $.get(`Records/Index?handler=LatestRecordOfProject&project=${project}`, function (data) {
+                setInitialValue(data);
+            });
+        };
+
+        function setInitialValue(data) {
+            if (data != null) {
+                //console.log(data);
+                // 色谱柱编号
+                $("#UsageRecord_SystemOneColumnNumber").val(data.systemOneColumnNumber);
+                $("#UsageRecord_SystemTwoColumnNumber").val(data.systemTwoColumnNumber);
+
+                // 色谱柱，真空度单位
+                $("#UsageRecord_HighVacuumDegreeUnit").val(data.highVacuumDegreeUnit);
+                $("#UsageRecord_LowVacuumDegreeUnit").val(data.lowVacuumDegreeUnit);
+                $("#UsageRecord_SystemOneColumnPressureUnit").val(data.systemOneColumnPressureUnit);
+                $("#UsageRecord_SystemTwoColumnPressureUnit").val(data.systemTwoColumnPressureUnit);
+
+                // 色谱柱，流动相，离子源，检测器
+                $("#UsageRecord_MobilePhase").val(data.mobilePhase);
+                $("#UsageRecord_ColumnType").val(data.columnType);
+                $("#UsageRecord_IonSource").val(data.ionSource);
+                $("#UsageRecord_Detector").val(data.detector);
+            }
+            else {
+                // 重置
+                $("#UsageRecord_SystemOneColumnNumber").val("");
+                $("#UsageRecord_SystemTwoColumnNumber").val("");
+
+                $("#UsageRecord_HighVacuumDegreeUnit")[0].selectedIndex = 0;
+                $("#UsageRecord_LowVacuumDegreeUnit")[0].selectedIndex = 0;
+                $("#UsageRecord_SystemOneColumnPressureUnit")[0].selectedIndex = 0;
+                $("#UsageRecord_SystemTwoColumnPressureUnit")[0].selectedIndex = 0;
+
+                $("#UsageRecord_MobilePhase")[0].selectedIndex = 0;
+                $("#UsageRecord_ColumnType")[0].selectedIndex = 0;
+                $("#UsageRecord_IonSource")[0].selectedIndex = 0;
+                $("#UsageRecord_Detector")[0].selectedIndex = 0;
+            }
+        }
+
+        $("#select-project").on("change", getLatestRecord);
+
         $(document).ready(function () {
             // 重新激活上次选择的Tab
             if (localStorage) {
@@ -416,14 +461,17 @@
             }
             else {
                 console.log("当前浏览器不支持LocalStorage");
-            }
+            };
 
-            //$('#date').on('change', function () {
-            //    $('form#search').submit();
-            //})
-            //$('#instrumentId').on('change', function () {
-            //    $('form#search').submit();
-            //})
+            $('#date').on('change', function () {
+                $('form#search').submit();
+            });
+
+            $('#instrumentId').on('change', function () {
+                $('form#search').submit();
+            });
+
+            getLatestRecord();
         })
     </script>
 }

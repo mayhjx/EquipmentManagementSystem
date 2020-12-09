@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Records
@@ -85,7 +85,7 @@ namespace EquipmentManagementSystem.Pages.Records
                 StatusMessage = statusMessage;
             }
 
-            
+
             List<string> projectList = new List<string>();
             List<string> mobilePhaseList = new List<string>();
             List<string> columnTypeList = new List<string>();
@@ -97,7 +97,7 @@ namespace EquipmentManagementSystem.Pages.Records
                 List<string> testProjectList = _instrumentRepository.GetTestProjectsById(instrumentId);
                 projectList = await _projectRepository.GetShortNamesByNames(testProjectList);
 
-                foreach(var project in testProjectList)
+                foreach (var project in testProjectList)
                 {
                     mobilePhaseList.AddRange(await _projectRepository.GetMobilePhasesByName(project));
                     columnTypeList.AddRange(await _projectRepository.GetColumnTypesByName(project));
@@ -106,27 +106,34 @@ namespace EquipmentManagementSystem.Pages.Records
                 }
             }
 
-            ProjectsSelectList = new SelectList(projectList);
             MobilePhaseSelectList = new SelectList(mobilePhaseList);
             ColumnTypeSelectList = new SelectList(columnTypeList);
             IonSourceSelectList = new SelectList(ionSourceList);
             DetectroSelectList = new SelectList(detectorList);
+            ProjectsSelectList = new SelectList(projectList);
 
             UsageRecords = _usageRecordRepository.GetAllByInstrumentIdAndBeginTime(instrumentId, date);
             MaintenanceRecords = _maintenanceRecordRepository.GetAllByInstrumentIdAndYearAndMonth(instrumentId, date);
-
 
             // fill the value of latest record
 
             //var latestRecord = _usageRecordRepository.GetLatestRecordOfProject("VD");
 
-            UsageRecord = new UsageRecord {
+            UsageRecord = new UsageRecord
+            {
                 InstrumentId = instrumentId,
-                Creator = _userResolverService.GetUserName() 
+                Creator = _userResolverService.GetUserName()
             };
 
             MaintenanceAuditTrailLogs = await _auditTrailRepository.GetAuditTrailLogs(new MaintenanceRecord().GetType().Name);
             UsageAuditTrailLogs = await _auditTrailRepository.GetAuditTrailLogs(new UsageRecord().GetType().Name);
+        }
+
+        public JsonResult OnGetLatestRecordOfProject(string project)
+        {
+            // 如果没有记录，返回null
+            var latestRecord = _usageRecordRepository.GetLatestRecordOfProject(project);
+            return new JsonResult(latestRecord);
         }
 
         public IActionResult OnPostSearch()
@@ -134,11 +141,6 @@ namespace EquipmentManagementSystem.Pages.Records
             var selectedDate = Search.Date;
             var selectedInstrumentId = Search.Instrument;
             return RedirectToPage("./Index", new { instrumentId = selectedInstrumentId, date = selectedDate });
-        }
-
-        public JsonResult OnGetLatestRecordOfProject(string project)
-        {
-            return new JsonResult("");
         }
     }
 
