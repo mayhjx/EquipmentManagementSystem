@@ -96,15 +96,4 @@ namespace EquipmentManagementSystem.Models
 
         public bool IsDelete { get; set; }
     }
-
-    public enum PressureUnit
-    {
-        Mpa, Psi, Bar
-    }
-
-    public enum VacuumDegreeUnit
-    {
-        torr, Mpa
-    }
-
 }
