@@ -42,7 +42,7 @@ namespace EquipmentManagementSystem.Models
         }
         public List<string> GetColumnType()
         {
-            return ColumnType.Split("|").ToList();
+            return ColumnType?.Split("|").ToList() ?? new List<string>();
         }
 
         public void SetMobilePhase(List<string> mobilePhases)
@@ -52,7 +52,7 @@ namespace EquipmentManagementSystem.Models
         }
         public List<string> GetMobilePhase()
         {
-            return MobilePhase.Split("|").ToList();
+            return MobilePhase?.Split("|").ToList() ?? new List<string>();
         }
 
         public void SetIonSource(List<string> ionSources)
@@ -62,7 +62,7 @@ namespace EquipmentManagementSystem.Models
         }
         public List<string> GetIonSource()
         {
-            return IonSource.Split("|").ToList();
+            return IonSource?.Split("|").ToList() ?? new List<string>();
         }
 
         public void SetDetector(List<string> detectors)
@@ -72,7 +72,7 @@ namespace EquipmentManagementSystem.Models
         }
         public List<string> GetDetector()
         {
-            return Detector.Split("|").ToList();
+            return Detector?.Split("|").ToList() ?? new List<string>();
         }
     }
 }

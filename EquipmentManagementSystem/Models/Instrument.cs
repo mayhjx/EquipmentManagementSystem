@@ -74,7 +74,7 @@ namespace EquipmentManagementSystem.Models
 
         public List<string> GetProjects()
         {
-            return Projects.Split(", ").ToList();
+            return Projects?.Split(", ").ToList() ?? new List<string>();
         }
 
         public void SetProjects(List<string> projects)
@@ -84,7 +84,7 @@ namespace EquipmentManagementSystem.Models
 
         public bool HasProject(string project)
         {
-            return Projects.Contains(project);
+            return Projects?.Contains(project) ?? false;
         }
 
         [Display(Name = "校准信息")]
