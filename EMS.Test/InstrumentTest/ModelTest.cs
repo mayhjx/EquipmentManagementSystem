@@ -8,28 +8,28 @@ namespace EMS.Test.InstrumentTest
     public class ModelTest
     {
         [Fact]
-        public void SetProjects()
+        public void SetProjects_ThenGet_Shouldbe_Same()
         {
             List<string> projects = new List<string> { "A", "B", "C" };
             var Instrument = new Instrument();
 
             Instrument.SetProjects(projects);
 
-            Assert.Equal("A, B, C", Instrument.Projects);
+            Assert.Equal(projects, Instrument.GetProjects());
         }
 
         [Fact]
-        public void GetProjects()
+        public void GetProjects_Null_ShouldReturnEmptyList()
         {
-            var Instrument = new Instrument { Projects = "A, B, C" };
+            var Instrument = new Instrument { };
 
             var projects = Instrument.GetProjects();
 
-            Assert.Equal(new List<string> { "A", "B", "C" }, projects);
+            Assert.Equal(new List<string> { }, projects);
         }
 
         [Fact]
-        public void HasProjects_True()
+        public void HasProjects_Shouldbe_True()
         {
             var Instrument = new Instrument { Projects = "A, B, C" };
 
@@ -39,11 +39,21 @@ namespace EMS.Test.InstrumentTest
         }
 
         [Fact]
-        public void HasProjects_False()
+        public void HasProjects_Shouldbe_False()
         {
             var Instrument = new Instrument { Projects = "A, B, C" };
 
             var target = "D";
+
+            Assert.False(Instrument.HasProject(target));
+        }
+
+        [Fact]
+        public void HasProjects_Null_Shouldbe_False()
+        {
+            var Instrument = new Instrument { Projects = null };
+
+            var target = "A";
 
             Assert.False(Instrument.HasProject(target));
         }

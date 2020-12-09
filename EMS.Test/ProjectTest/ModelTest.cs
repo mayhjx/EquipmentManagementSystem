@@ -8,7 +8,17 @@ namespace EMS.Test.ProjectTest
     public class ModelTest
     {
         [Fact]
-        public void SetMobilePhase_AndGet_ShouldBeSame()
+        public void GetMobilePhase_Null_ShouldBeReturnEmptyList()
+        {
+            var project = new Project();
+
+            var result = project.GetMobilePhase();
+
+            Assert.Equal(new List<string>(), result);
+        }
+
+        [Fact]
+        public void SetMobilePhase_ShouldBeSame()
         {
             List<string> mobilePhases = new List<string> { "A", "B" };
             var project = new Project();
@@ -19,7 +29,17 @@ namespace EMS.Test.ProjectTest
         }
 
         [Fact]
-        public void SetColumnType_AndGet_ShouldBeSame()
+        public void GetColumnType_Null_ShouldBeReturnEmptyList()
+        {
+            var project = new Project();
+
+            var result = project.GetColumnType();
+
+            Assert.Equal(new List<string>(), result);
+        }
+
+        [Fact]
+        public void SetColumnType_ShouldBeSame()
         {
             List<string> columnTypes = new List<string> { "A", "B", "C" };
             var project = new Project();
@@ -30,7 +50,17 @@ namespace EMS.Test.ProjectTest
         }
 
         [Fact]
-        public void SetIonSource_AndGet_ShouldBeSame()
+        public void GetIonSource_Null_ShouldBeReturnEmptyList()
+        {
+            var project = new Project();
+
+            var result = project.GetIonSource();
+
+            Assert.Equal(new List<string>(), result);
+        }
+
+        [Fact]
+        public void SetIonSource_ShouldBeSame()
         {
             List<string> ionSources = new List<string> { "A", "B", "C" };
             var project = new Project();
@@ -41,7 +71,18 @@ namespace EMS.Test.ProjectTest
         }
 
         [Fact]
-        public void SetDetector_AndGet_ShouldBeSame()
+        public void GetDetector_Null_ShouldBeReturnEmptyList()
+        {
+            var project = new Project();
+
+            var result = project.GetDetector();
+
+            Assert.Equal(new List<string>(), result);
+        }
+
+
+        [Fact]
+        public void SetDetector_ShouldBeSame()
         {
             List<string> detectors = new List<string> { "A", "B", "C" };
             var project = new Project();
@@ -52,7 +93,7 @@ namespace EMS.Test.ProjectTest
         }
 
         [Fact]
-        public void SetMobilePhase_AndGet_ShouldRemoveEmptyElement()
+        public void SetMobilePhase_ShouldRemoveEmptyElement()
         {
             List<string> mobilePhases = new List<string> { "A", "B", "" };
             var project = new Project();
@@ -63,7 +104,7 @@ namespace EMS.Test.ProjectTest
         }
 
         [Fact]
-        public void SetColumnType_AndGet_ShouldRemoveEmptyElement()
+        public void SetColumnType_ShouldRemoveEmptyElement()
         {
             List<string> columnTypes = new List<string> { "A", "B", "" };
             var project = new Project();
@@ -74,7 +115,7 @@ namespace EMS.Test.ProjectTest
         }
 
         [Fact]
-        public void SetIonSource_AndGet_ShouldRemoveEmptyElement()
+        public void SetIonSource_ShouldRemoveEmptyElement()
         {
             List<string> ionSources = new List<string> { "A", "B", "" };
             var project = new Project();
@@ -85,7 +126,7 @@ namespace EMS.Test.ProjectTest
         }
 
         [Fact]
-        public void SetDetector_AndGet_ShouldRemoveEmptyElement()
+        public void SetDetector_ShouldRemoveEmptyElement()
         {
             List<string> detectors = new List<string> { "A", "B", "" };
             var project = new Project();
