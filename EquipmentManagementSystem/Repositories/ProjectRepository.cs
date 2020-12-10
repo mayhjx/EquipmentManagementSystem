@@ -13,19 +13,19 @@ namespace EquipmentManagementSystem.Repositories
         {
         }
 
-        public async Task<List<string>> GetColumnTypesByName(string projectName)
+        public async Task<string> GetColumnTypesByName(string projectName)
         {
-            return (await _context.Projects.FirstOrDefaultAsync(p => p.Name == projectName))?.GetColumnType() ?? new List<string>();
+            return (await _context.Projects.FirstOrDefaultAsync(p => p.Name == projectName))?.ColumnType ?? string.Empty;
         }
 
-        public async Task<List<string>> GetDetectorsByName(string projectName)
+        public async Task<string> GetDetectorsByName(string projectName)
         {
-            return (await _context.Projects.FirstOrDefaultAsync(p => p.Name == projectName))?.GetDetector() ?? new List<string>();
+            return (await _context.Projects.FirstOrDefaultAsync(p => p.Name == projectName))?.Detector ?? string.Empty;
         }
 
-        public async Task<List<string>> GetIonSourcesByName(string projectName)
+        public async Task<string> GetIonSourcesByName(string projectName)
         {
-            return (await _context.Projects.FirstOrDefaultAsync(p => p.Name == projectName))?.GetIonSource() ?? new List<string>();
+            return (await _context.Projects.FirstOrDefaultAsync(p => p.Name == projectName))?.IonSource ?? string.Empty;
         }
 
         public async Task<List<string>> GetMobilePhasesByName(string projectName)
@@ -36,10 +36,10 @@ namespace EquipmentManagementSystem.Repositories
         public async Task<List<string>> GetShortNamesByNames(List<string> projectName)
         {
             var result = new List<string>();
-            foreach(var name in projectName)
+            foreach (var name in projectName)
             {
                 var project = await _context.Projects.FirstOrDefaultAsync(i => i.Name == name);
-                if(project != null)
+                if (project != null)
                 {
                     result.Add(project.ShortName);
                 }
