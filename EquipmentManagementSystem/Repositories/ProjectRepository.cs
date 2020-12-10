@@ -13,24 +13,29 @@ namespace EquipmentManagementSystem.Repositories
         {
         }
 
-        public async Task<string> GetColumnTypesByName(string projectName)
+        public async Task<string> GetColumnTypesByShortName(string projectShortName)
         {
-            return (await _context.Projects.FirstOrDefaultAsync(p => p.Name == projectName))?.ColumnType ?? string.Empty;
+            return (await _context.Projects.FirstOrDefaultAsync(p => p.ShortName == projectShortName))?.ColumnType ?? string.Empty;
         }
 
-        public async Task<string> GetDetectorsByName(string projectName)
+        public async Task<string> GetDetectorsByShortName(string projectShortName)
         {
-            return (await _context.Projects.FirstOrDefaultAsync(p => p.Name == projectName))?.Detector ?? string.Empty;
+            return (await _context.Projects.FirstOrDefaultAsync(p => p.ShortName == projectShortName))?.Detector ?? string.Empty;
         }
 
-        public async Task<string> GetIonSourcesByName(string projectName)
+        public async Task<string> GetIonSourcesByShortName(string projectShortName)
         {
-            return (await _context.Projects.FirstOrDefaultAsync(p => p.Name == projectName))?.IonSource ?? string.Empty;
+            return (await _context.Projects.FirstOrDefaultAsync(p => p.ShortName == projectShortName))?.IonSource ?? string.Empty;
         }
 
-        public async Task<List<string>> GetMobilePhasesByName(string projectName)
+        public async Task<string> GetMobilePhasesByShortName(string projectShortName)
         {
-            return (await _context.Projects.FirstOrDefaultAsync(p => p.Name == projectName))?.GetMobilePhase() ?? new List<string>();
+            return (await _context.Projects.FirstOrDefaultAsync(p => p.ShortName == projectShortName))?.MobilePhase ?? string.Empty;
+        }
+
+        public async Task<string> GetGroupNameByShortName(string projectShortName)
+        {
+            return (await _context.Projects.FirstOrDefaultAsync(p => p.ShortName == projectShortName))?.GroupName ?? string.Empty;
         }
 
         public async Task<List<string>> GetShortNamesByNames(List<string> projectName)

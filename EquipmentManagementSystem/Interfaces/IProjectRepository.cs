@@ -6,10 +6,11 @@ namespace EquipmentManagementSystem.Interfaces
 {
     public interface IProjectRepository : IGenericRepository<Project>
     {
-        public Task<List<string>> GetMobilePhasesByName(string projectName);
-        public Task<string> GetColumnTypesByName(string projectName);
-        public Task<string> GetIonSourcesByName(string projectName);
-        public Task<string> GetDetectorsByName(string projectName);
+        public Task<string> GetMobilePhasesByShortName(string projectName);
+        public Task<string> GetColumnTypesByShortName(string projectName);
+        public Task<string> GetIonSourcesByShortName(string projectName);
+        public Task<string> GetDetectorsByShortName(string projectName);
+        public Task<string> GetGroupNameByShortName(string projectName);
         public Task<List<string>> GetShortNamesByNames(List<string> projectName);
     }
 }
