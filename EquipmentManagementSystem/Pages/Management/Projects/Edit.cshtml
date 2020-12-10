@@ -36,49 +36,34 @@
                         <input asp-for="Project.SimpleTestTime" step="1" class="form-control" />
                         <span asp-validation-for="Project.SimpleTestTime" class="text-danger"></span>
                     </div>
+                    <span class="text-sm text-gray">备注：以下内容根据实际情况填写。</span>
+                    <hr />
                     <div class="form-group">
                         <label asp-for="Project.ColumnType" class="control-label"></label>
-                        @foreach (var columntype in Model.ColumnTypes)
-                        {
-                            <div>
-                                <input name="ColumnTypes" value="@columntype" class="" required />
-                                <button class="remove-input" type="button">X</button>
-                            </div>
-                        }
-                        <button type="button" id="add-ColumnType">新增</button>
+                        <input asp-for="Project.ColumnType" class="form-control" />
+                        <span asp-validation-for="Project.ColumnType" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Project.MobilePhase" class="control-label"></label>
-                        @foreach (var mobilePhase in Model.MobilePhases)
-                        {
-                            <div>
-                                <input name="MobilePhases" value="@mobilePhase" class="" required />
-                                <button class="remove-input" type="button">X</button>
-                            </div>
-                        }
-                        <button type="button" id="add-MobilePhase">新增</button>
+                        <input asp-for="MobilePhases[0]" class="form-control" placeholder="Pump A" />
+                        <input asp-for="MobilePhases[1]" class="form-control" placeholder="Pump B" />
+                        <input asp-for="MobilePhases[2]" class="form-control" placeholder="Pump C" />
+                        <input asp-for="MobilePhases[3]" class="form-control" placeholder="Pump D" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Project.CarrierGas" class="control-label"></label>
+                        <input asp-for="Project.CarrierGas" class="form-control" />
+                        <span asp-validation-for="Project.CarrierGas" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Project.IonSource" class="control-label"></label>
-                        @foreach (var ionSource in Model.IonSources)
-                        {
-                            <div>
-                                <input name="IonSources" value="@ionSource" class="" required />
-                                <button class="remove-input" type="button">X</button>
-                            </div>
-                        }
-                        <button type="button" id="add-IonSource">新增</button>
+                        <input asp-for="Project.IonSource" class="form-control" />
+                        <span asp-validation-for="Project.IonSource" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Project.Detector" class="control-label"></label>
-                        @foreach (var detector in Model.Detectors)
-                        {
-                            <div>
-                                <input name="Detectors" value="@detector" class="" required />
-                                <button class="remove-input" type="button">X</button>
-                            </div>
-                        }
-                        <button type="button" id="add-Detector">新增</button>
+                        <input asp-for="Project.Detector" class="form-control" />
+                        <span asp-validation-for="Project.Detector" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <input type="submit" value="保存" class="btn btn-primary" />
@@ -94,5 +79,4 @@
 </div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script src="~/js/Project.js" asp-append-version="true"></script>
 }

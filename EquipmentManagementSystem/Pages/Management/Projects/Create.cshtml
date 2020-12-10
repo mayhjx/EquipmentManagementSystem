@@ -32,37 +32,34 @@
                         <input type="time" asp-for="Project.SimpleTestTime" step="1" class="form-control">
                         <span asp-validation-for="Project.SimpleTestTime" class="text-danger"></span>
                     </div>
+                    <span class="text-sm text-gray">备注：以下内容根据实际情况填写。</span>
+                    <hr />
                     <div class="form-group">
                         <label asp-for="Project.ColumnType" class="control-label"></label>
-                        <div>
-                            <input asp-for="ColumnTypes" class="" required />
-                            <button class="remove-input" type="button">X</button>
-                        </div>
-                        <button type="button" id="add-ColumnType" class="">新增</button>
+                        <input asp-for="Project.ColumnType" class="form-control" />
+                        <span asp-validation-for="Project.ColumnType" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Project.MobilePhase" class="control-label"></label>
-                        <div>
-                            <input asp-for="MobilePhases" class="" required />
-                            <button class="remove-input" type="button">X</button>
-                        </div>
-                        <button type="button" id="add-MobilePhase" class="">新增</button>
+                        <input asp-for="MobilePhases" class="form-control" placeholder="Pump A" />
+                        <input asp-for="MobilePhases" class="form-control" placeholder="Pump B" />
+                        <input asp-for="MobilePhases" class="form-control" placeholder="Pump C" />
+                        <input asp-for="MobilePhases" class="form-control" placeholder="Pump D" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Project.CarrierGas" class="control-label"></label>
+                        <input asp-for="Project.CarrierGas" class="form-control" />
+                        <span asp-validation-for="Project.CarrierGas" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Project.IonSource" class="control-label"></label>
-                        <div>
-                            <input asp-for="IonSources" class="" required />
-                            <button class="remove-input" type="button">X</button>
-                        </div>
-                        <button type="button" id="add-IonSource" class="">新增</button>
+                        <input asp-for="Project.IonSource" class="form-control" />
+                        <span asp-validation-for="Project.IonSource" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Project.Detector" class="control-label"></label>
-                        <div>
-                            <input asp-for="Detectors" class="" required />
-                            <button class="remove-input" type="button">X</button>
-                        </div>
-                        <button type="button" id="add-Detector" class="">新增</button>
+                        <input asp-for="Project.Detector" class="form-control" />
+                        <span asp-validation-for="Project.Detector" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <input type="submit" value="新建" class="btn btn-primary" />
@@ -78,5 +75,4 @@
 </div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script src="~/js/Project.js" asp-append-version="true"></script>
 }

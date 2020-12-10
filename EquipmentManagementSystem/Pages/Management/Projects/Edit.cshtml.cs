@@ -1,20 +1,17 @@
-﻿using EquipmentManagementSystem.Data;
+﻿using EquipmentManagementSystem.Interfaces;
 using EquipmentManagementSystem.Models;
-using EquipmentManagementSystem.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Management.Projects
 {
     public class EditModel : BasePageModel
     {
         private readonly IGroupRepository _groupRepo;
-        public EditModel(IProjectRepository projectRepository, IGroupRepository groupRepository):base(projectRepository)
+        public EditModel(IProjectRepository projectRepository, IGroupRepository groupRepository) : base(projectRepository)
         {
             _groupRepo = groupRepository;
         }
@@ -25,16 +22,7 @@ namespace EquipmentManagementSystem.Pages.Management.Projects
         public SelectList GroupSelectList { get; set; }
 
         [BindProperty]
-        public List<string> ColumnTypes { get; set; }
-
-        [BindProperty]
-        public List<string> MobilePhases { get; set; }
-
-        [BindProperty]
-        public List<string> IonSources { get; set; }
-
-        [BindProperty]
-        public List<string> Detectors { get; set; }
+        public List<string> MobilePhases { get; set; } = new List<string> { "", "", "", "" };
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -50,10 +38,12 @@ namespace EquipmentManagementSystem.Pages.Management.Projects
                 return NotFound();
             }
 
-            ColumnTypes = Project.GetColumnType();
-            MobilePhases = Project.GetMobilePhase();
-            IonSources = Project.GetIonSource();
-            Detectors = Project.GetDetector();
+            var mobilePhaseOfProject = Project.GetMobilePhase();
+            for (int i = 0; i < mobilePhaseOfProject.Count; i++)
+            {
+                MobilePhases[i] = mobilePhaseOfProject[i];
+            }
+
             GroupSelectList = new SelectList(await _groupRepo.GetAll(), "Name", "Name");
 
             return Page();
@@ -70,10 +60,7 @@ namespace EquipmentManagementSystem.Pages.Management.Projects
 
             try
             {
-                Project.SetColumnType(ColumnTypes);
                 Project.SetMobilePhase(MobilePhases);
-                Project.SetIonSource(IonSources);
-                Project.SetDetector(Detectors);
                 await _projectRepository.Update(Project);
             }
             catch (DbUpdateConcurrencyException)

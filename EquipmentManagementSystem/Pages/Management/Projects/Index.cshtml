@@ -32,7 +32,7 @@
                         @Html.DisplayNameFor(model => model.Project[0].ColumnType)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Project[0].MobilePhase)
+                        流动相/载气
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Project[0].IonSource)
@@ -46,36 +46,36 @@
             <tbody>
                 @foreach (var item in Model.Project)
                 {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.GroupName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ShortName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SimpleTestTime)
-                    </td>
-                    <td>
-                        <list list="item.GetColumnType()" />
-                    </td>
-                    <td>
-                        <list list="item.GetMobilePhase()" />
-                    </td>
-                    <td>
-                        <list list="item.GetIonSource()" />
-                    </td>
-                    <td>
-                        <list list="item.GetDetector()" />
-                    </td>
-                    <td>
-                        <a asp-page="./Edit" asp-route-id="@item.Id">编辑</a> |
-                        <a asp-page="./Delete" asp-route-id="@item.Id">删除</a>
-                    </td>
-                </tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.GroupName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ShortName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SimpleTestTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ColumnType)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MobilePhase)  @Html.DisplayFor(modelItem => item.CarrierGas)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IonSource)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Detector)
+                        </td>
+                        <td>
+                            <a asp-page="./Edit" asp-route-id="@item.Id">编辑</a> |
+                            <a asp-page="./Delete" asp-route-id="@item.Id">删除</a>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>

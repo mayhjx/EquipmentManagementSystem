@@ -1,7 +1,6 @@
 ﻿using EquipmentManagementSystem.Interfaces;
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -28,16 +27,7 @@ namespace EquipmentManagementSystem.Pages.Management.Projects
         public SelectList GroupSelectList { get; set; }
 
         [BindProperty]
-        public List<string> ColumnTypes { get; set; }
-
-        [BindProperty]
         public List<string> MobilePhases { get; set; }
-
-        [BindProperty]
-        public List<string> IonSources { get; set; }
-
-        [BindProperty]
-        public List<string> Detectors { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -47,10 +37,7 @@ namespace EquipmentManagementSystem.Pages.Management.Projects
                 return Page();
             }
 
-            Project.SetColumnType(ColumnTypes);
             Project.SetMobilePhase(MobilePhases);
-            Project.SetIonSource(IonSources);
-            Project.SetDetector(Detectors);
 
             await _projectRepository.Create(Project);
 

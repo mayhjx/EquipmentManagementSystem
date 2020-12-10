@@ -1,11 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using EquipmentManagementSystem.Data;
-using EquipmentManagementSystem.Interfaces;
+﻿using EquipmentManagementSystem.Interfaces;
 using EquipmentManagementSystem.Models;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Management.Projects
 {
