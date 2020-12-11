@@ -43,6 +43,7 @@ namespace EquipmentManagementSystem
             services.AddTransient<IInstrumentRepository, InstrumentRepository>();
             services.AddTransient<IUsageRecordRepository, UsageRecordRepository>();
             services.AddTransient<IMaintenanceRecordRepository, MaintenanceRecordRepository>();
+            services.AddTransient<IMaintenanceContentRepository, MaintenanceContentRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
