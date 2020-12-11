@@ -44,7 +44,7 @@ namespace EquipmentManagementSystem.Authorization
                 }
                 else if (context.User.IsInRole(Constants.PrincipalRole))
                 {
-                    if (_userManager.GetUserAsync(context.User).Result.Group == resource.Project.GroupName)
+                    if (_userManager.GetUserAsync(context.User).Result.Group == resource.GroupName)
                     {
                         context.Succeed(requirement);
                     }
@@ -66,7 +66,7 @@ namespace EquipmentManagementSystem.Authorization
                 }
                 else if (context.User.IsInRole(Constants.PrincipalRole))
                 {
-                    if (_userManager.GetUserAsync(context.User).Result.Group == resource.Project.GroupName)
+                    if (_userManager.GetUserAsync(context.User).Result.Group == resource.GroupName)
                     {
                         context.Succeed(requirement);
                     }

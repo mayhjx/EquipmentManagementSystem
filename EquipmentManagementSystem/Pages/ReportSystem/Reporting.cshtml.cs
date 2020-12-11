@@ -62,8 +62,6 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
 
             var Result = new JsonResult(_context.Projects
                 .AsNoTracking()
-                .Include(p => p.Group)
-                .Where(g => g.Group.Name == Group)
                 .Select(p => p.Name));
 
             return Result;
@@ -102,8 +100,8 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
                 var usageRecords = from r in _context.UsageRecords
                                     .AsNoTracking()
                                     .Include(r => r.Instrument)
-                                    //.Include(r => r.Project)
-                                    //.ThenInclude(r => r.Group)
+                                       //.Include(r => r.Project)
+                                       //.ThenInclude(r => r.Group)
 
                                    where r.BeginTime >= Search.BeginTime
                                    where r.BeginTime < Search.EndTime.AddDays(1)
@@ -112,8 +110,6 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
                 var maintenanceRecords = from r in _context.MaintenanceRecords
                                         .AsNoTracking()
                                         .Include(r => r.Instrument)
-                                        .Include(r => r.Project)
-                                        .ThenInclude(r => r.Group)
                                          where r.BeginTime >= Search.BeginTime
                                          where r.BeginTime < Search.EndTime.AddDays(1)
                                          select r;
@@ -155,7 +151,7 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
                                    select r;
 
                     maintenanceRecords = from r in maintenanceRecords
-                                         where r.Project.Group.Name == Search.Group
+                                         where r.GroupName == Search.Group
                                          select r;
                 }
 
