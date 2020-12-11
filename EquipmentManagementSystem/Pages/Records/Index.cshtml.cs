@@ -42,11 +42,8 @@ namespace EquipmentManagementSystem.Pages.Records
 
         [BindProperty]
         public SearchForm Search { get; set; }
+
         public SelectList ProjectsSelectList { get; set; }
-        public SelectList MobilePhaseSelectList { get; set; }
-        public SelectList ColumnTypeSelectList { get; set; }
-        public SelectList IonSourceSelectList { get; set; }
-        public SelectList DetectroSelectList { get; set; }
 
         public IList<UsageRecord> UsageRecords { get; set; }
         public IList<MaintenanceRecord> MaintenanceRecords { get; set; }
@@ -85,39 +82,18 @@ namespace EquipmentManagementSystem.Pages.Records
                 StatusMessage = statusMessage;
             }
 
-
-            List<string> projectList = new List<string>();
-            List<string> mobilePhaseList = new List<string>();
-            List<string> columnTypeList = new List<string>();
-            List<string> ionSourceList = new List<string>();
-            List<string> detectorList = new List<string>();
+            List<string> projectShortNameList = new List<string>();
 
             if (instrumentId != null)
             {
                 List<string> testProjectList = _instrumentRepository.GetTestProjectsById(instrumentId);
-                projectList = await _projectRepository.GetShortNamesByNames(testProjectList);
-
-                foreach (var project in testProjectList)
-                {
-                    mobilePhaseList.AddRange(await _projectRepository.GetMobilePhasesByName(project));
-                    columnTypeList.AddRange(await _projectRepository.GetColumnTypesByName(project));
-                    ionSourceList.AddRange(await _projectRepository.GetIonSourcesByName(project));
-                    detectorList.AddRange(await _projectRepository.GetDetectorsByName(project));
-                }
+                projectShortNameList = await _projectRepository.GetShortNamesByNames(testProjectList);
             }
 
-            MobilePhaseSelectList = new SelectList(mobilePhaseList);
-            ColumnTypeSelectList = new SelectList(columnTypeList);
-            IonSourceSelectList = new SelectList(ionSourceList);
-            DetectroSelectList = new SelectList(detectorList);
-            ProjectsSelectList = new SelectList(projectList);
+            ProjectsSelectList = new SelectList(projectShortNameList);
 
             UsageRecords = _usageRecordRepository.GetAllByInstrumentIdAndBeginTime(instrumentId, date);
             MaintenanceRecords = _maintenanceRecordRepository.GetAllByInstrumentIdAndYearAndMonth(instrumentId, date);
-
-            // fill the value of latest record
-
-            //var latestRecord = _usageRecordRepository.GetLatestRecordOfProject("VD");
 
             UsageRecord = new UsageRecord
             {
