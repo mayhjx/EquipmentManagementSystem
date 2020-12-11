@@ -4,14 +4,16 @@ using EquipmentManagementSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EquipmentManagementSystem.Migrations
 {
     [DbContext(typeof(EquipmentContext))]
-    partial class EquipmentContextModelSnapshot : ModelSnapshot
+    [Migration("20201211095330_MaintenanceRecord_Add_GroupName_Remove_ProjectFK")]
+    partial class MaintenanceRecord_Add_GroupName_Remove_ProjectFK
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -871,6 +873,9 @@ namespace EquipmentManagementSystem.Migrations
                     b.Property<string>("ColumnType")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Creator")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Detector")
                         .HasColumnType("nvarchar(max)");
 
@@ -902,9 +907,6 @@ namespace EquipmentManagementSystem.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MobilePhase")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Operator")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProjectName")
