@@ -139,185 +139,304 @@
                     <table id="usage-record">
                         <thead class="text-nowrap">
                             <tr>
-                                <th>开始时间</th>
-                                <th>结束时间</th>
-                                <th>检测项目</th>
-                                <th>临床样数量</th>
-                                <th>Batch样品量</th>
-                                <th>真空度</th>
-                                <th>色谱柱</th>
-                                <th>空白</th>
-                                <th>Test</th>
-                                <th>操作者</th>
-                                <th></th>
+                                <th class="time">开始时间</th>
+                                <th class="time">结束时间</th>
+                                <th class="projectname">检测项目</th>
+                                <th class="samplenumber">临床样数量</th>
+                                <th class="batchnumber">Batch样品量</th>
+                                <th class="vacuumdegree">真空度</th>
+                                <th class="columntype">色谱柱</th>
+                                <th class="blank">Blank</th>
+                                <th class="test">Test</th>
+                                <th class="remark">备注</th>
+                                <th class="creator">操作者</th>
+                                <th class="btn"></th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var usageRecord in Model.UsageRecords)
                             {
-                                @* update-form *@
-                                <tr>
+                                @* view row *@
+                                <tr class="view-row">
+                                    <td>@Html.DisplayFor(item => usageRecord.BeginTime)</td>
+                                    <td>@Html.DisplayFor(item => usageRecord.EndTime)</td>
+                                    <td>@Html.DisplayFor(item => usageRecord.ProjectName)</td>
+                                    <td>@Html.DisplayFor(item => usageRecord.SampleNumber)</td>
                                     <td>
-                                        <input form="update-form" type="hidden" asp-for="@usageRecord.Id" disabled />
-                                        <input form="update-form" type="hidden" asp-for="@usageRecord.InstrumentId" disabled />
-                                        <input form="update-form" size="5" asp-for="@usageRecord.BeginTime" required disabled />
+                                        @if (usageRecord.SystemOneBatchNumber != null && usageRecord.SystemTwoBatchNumber != null)
+                                        {
+                                            <text>S1：</text>
+                                            @Html.DisplayFor(item => usageRecord.SystemOneBatchNumber)
+                                            <br />
+                                            <text>S2：</text>
+                                            @Html.DisplayFor(item => usageRecord.SystemTwoBatchNumber)
+                                        }
+                                        else
+                                        {
+                                            @Html.DisplayFor(item => usageRecord.SystemOneBatchNumber)
+                                        }
                                     </td>
                                     <td>
-                                        <input form="update-form" size="5" asp-for="@usageRecord.EndTime" disabled />
+                                        @if (usageRecord.LowVacuumDegree != null && usageRecord.HighVacuumDegree != null)
+                                        {
+                                            <text>低：</text>
+                                            @Html.DisplayFor(item => usageRecord.LowVacuumDegree)<text>&nbsp;</text>
+                                            @Html.DisplayFor(item => usageRecord.LowVacuumDegreeUnit)
+                                            <br />
+                                            <text>高：</text>
+                                            @Html.DisplayFor(item => usageRecord.HighVacuumDegree)<text>&nbsp;</text>
+                                            @Html.DisplayFor(item => usageRecord.HighVacuumDegreeUnit)
+                                        }
+                                        else if (usageRecord.LowVacuumDegree != null)
+                                        {
+                                            <text>低：</text>
+                                            @Html.DisplayFor(item => usageRecord.LowVacuumDegree)
+                                            @Html.DisplayFor(item => usageRecord.LowVacuumDegreeUnit)
+                                        }
+                                        else if (usageRecord.HighVacuumDegree != null)
+                                        {
+                                            <text>高：</text>
+                                            @Html.DisplayFor(item => usageRecord.HighVacuumDegree)
+                                            @Html.DisplayFor(item => usageRecord.HighVacuumDegreeUnit)
+                                        }
                                     </td>
                                     <td>
-                                        <select form="update-form" asp-for="@usageRecord.ProjectName" asp-items="@Model.ProjectsSelectList" disabled></select>
+                                        @if (usageRecord.SystemOneColumnPressure != null && usageRecord.SystemTwoColumnPressure != null)
+                                        {
+                                            <text>S1：</text>
+                                            @Html.DisplayFor(item => usageRecord.SystemOneColumnNumber)<text>&nbsp;</text>
+                                            @Html.DisplayFor(item => usageRecord.SystemOneColumnPressure)<text>&nbsp;</text>
+                                            @Html.DisplayFor(item => usageRecord.SystemOneColumnPressureUnit)
+                                            <br />
+                                            <text>S2：</text>
+                                            @Html.DisplayFor(item => usageRecord.SystemTwoColumnNumber)<text>&nbsp;</text>
+                                            @Html.DisplayFor(item => usageRecord.SystemTwoColumnPressure)<text>&nbsp;</text>
+                                            @Html.DisplayFor(item => usageRecord.SystemTwoColumnPressureUnit)
+                                        }
+                                        else if (usageRecord.SystemOneColumnPressure != null)
+                                        {
+                                            @Html.DisplayFor(item => usageRecord.SystemOneColumnNumber)<text>&nbsp;</text>
+                                            @Html.DisplayFor(item => usageRecord.SystemOneColumnPressure)<text>&nbsp;</text>
+                                            @Html.DisplayFor(item => usageRecord.SystemOneColumnPressureUnit)
+                                        }
+                                        else if (usageRecord.SystemTwoColumnPressure != null)
+                                        {
+                                            @Html.DisplayFor(item => usageRecord.SystemTwoColumnNumber)<text>&nbsp;</text>
+                                            @Html.DisplayFor(item => usageRecord.SystemTwoColumnPressure)<text>&nbsp;</text>
+                                            @Html.DisplayFor(item => usageRecord.SystemTwoColumnPressureUnit)
+                                        }
                                     </td>
+                                    <td>@Html.DisplayFor(item => usageRecord.BlankSignal)</td>
                                     <td>
-                                        <input form="update-form" size="5" asp-for="@usageRecord.SampleNumber" placeholder="一" disabled />
+                                        @if (usageRecord.SystemOneTestSignal != null && usageRecord.SystemTwoTestSignal != null)
+                                        {
+                                            <text>S1：</text>
+                                            @Html.DisplayFor(item => usageRecord.SystemOneTestSignal)
+                                            <br />
+                                            <text>S2：</text>
+                                            @Html.DisplayFor(item => usageRecord.SystemTwoTestSignal)
+                                        }
+                                        else
+                                        {
+                                            @Html.DisplayFor(item => usageRecord.SystemOneTestSignal)
+                                        }
                                     </td>
-                                    <td>
-                                        S1：<input form="update-form" size="5" asp-for="@usageRecord.SystemOneBatchNumber" placeholder="一" disabled />
-                                        <br />
-                                        S2：<input form="update-form" size="5" asp-for="@usageRecord.SystemTwoBatchNumber" placeholder="一" disabled />
-                                    </td>
-                                    <td>
-                                        低：<input form="update-form" size="5" asp-for="@usageRecord.LowVacuumDegree" placeholder="一" disabled />
-                                        <select form="update-form" asp-for="@usageRecord.LowVacuumDegreeUnit" disabled>
-                                            <option value="torr">torr</option>
-                                            <option value="mbar">Pa</option>
-                                        </select>
-                                        <br />
-                                        高：<input form="update-form" size="5" asp-for="@usageRecord.HighVacuumDegree" placeholder="一" disabled />
-                                        <select form="update-form" asp-for="@usageRecord.HighVacuumDegreeUnit" disabled>
-                                            <option value="torr">torr</option>
-                                            <option value="mbar">Pa</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        S1：<input form="update-form" size="5" asp-for="@usageRecord.SystemOneColumnNumber" placeholder="一" disabled />
-                                        <input type="number" min="0" step="any" form="update-form" size="5" asp-for="@usageRecord.SystemOneColumnPressure" placeholder="一" disabled />
-                                        <select form="update-form" asp-for="@usageRecord.SystemOneColumnPressureUnit" disabled>
-                                            <option value="Mpa">Mpa</option>
-                                            <option value="Bar">Bar</option>
-                                            <option value="Psi">Psi</option>
-                                        </select>
-                                        <br />
-                                        S2：<input form="update-form" size="5" asp-for="@usageRecord.SystemTwoColumnNumber" placeholder="一" disabled />
-                                        <input type="number" min="0" step="any" form="update-form" size="5" asp-for="@usageRecord.SystemTwoColumnPressure" placeholder="一" disabled />
-                                        <select form="update-form" asp-for="@usageRecord.SystemTwoColumnPressureUnit" disabled>
-                                            <option value="Mpa">Mpa</option>
-                                            <option value="Bar">Bar</option>
-                                            <option value="Psi">Psi</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <input form="update-form" size="5" asp-for="@usageRecord.BlankSignal" placeholder="一" disabled />
-                                    </td>
-                                    <td>
-                                        S1：<input form="update-form" size="5" asp-for="@usageRecord.SystemOneTestSignal" placeholder="一" disabled />
-                                        <br />
-                                        S2：<input form="update-form" size="5" asp-for="@usageRecord.SystemTwoTestSignal" placeholder="一" disabled />
-                                    </td>
-                                    <td>
-                                        <input form="update-form" size="5" asp-for="@usageRecord.Creator" placeholder="一" disabled />
-                                    </td>
+                                    <td>@Html.DisplayFor(item => usageRecord.Remark)</td>
+                                    <td>@Html.DisplayFor(item => usageRecord.Creator)</td>
                                     <td>
                                         <button class="edit-btn" data-id="@usageRecord.Id">编辑</button>
                                         <button class="delete-btn" data-id="@usageRecord.Id">删除</button>
-                                        <button class="update-btn" form="update-form" style="display: none;">保存</button>
-                                        <button class="cancel-btn" style="display: none;">取消</button>
+                                    </td>
+                                </tr>
+                                @* update-row *@
+                                <tr class="update-row">
+                                    <td>
+                                        <input form="edit-form" type="hidden" asp-for="@usageRecord.Id" disabled />
+                                        <input form="edit-form" type="hidden" asp-for="@usageRecord.InstrumentId" disabled />
+                                        <input form="edit-form" asp-for="@usageRecord.BeginTime" required disabled />
+                                    </td>
+                                    <td>
+                                        <input form="edit-form" asp-for="@usageRecord.EndTime" disabled />
+                                    </td>
+                                    <td>
+                                        <select form="edit-form" asp-for="@usageRecord.ProjectName" asp-items="@Model.ProjectsSelectList" disabled></select>
+                                    </td>
+                                    <td>
+                                        <input form="edit-form" min="0" asp-for="@usageRecord.SampleNumber" disabled />
+                                    </td>
+                                    <td>
+                                        <input form="edit-form" min="0" asp-for="@usageRecord.SystemOneBatchNumber" placeholder="S1" disabled />
+                                        <br />
+                                        <input form="edit-form" min="0" asp-for="@usageRecord.SystemTwoBatchNumber" placeholder="S2" disabled />
+                                    </td>
+                                    <td>
+                                        <input form="edit-form" type="number" step="any" asp-for="@usageRecord.LowVacuumDegree" placeholder="低真空" disabled />
+                                        <select form="edit-form" asp-for="@usageRecord.LowVacuumDegreeUnit" disabled>
+                                            <option value="e-5torr">e-5torr</option>
+                                            <option value="e-6torr">e-6torr</option>
+                                            <option value="e+2Pa">e+2Pa</option>
+                                            <option value="e+1Pa">e+1Pa</option>
+                                            <option value="e-3Pa">e-3Pa</option>
+                                            <option value="e-4Pa">e-4Pa</option>
+                                        </select>
+                                        <br />
+                                        <input form="edit-form" type="number" step="any" asp-for="@usageRecord.HighVacuumDegree" placeholder="高真空" disabled />
+                                        <select form="edit-form" asp-for="@usageRecord.HighVacuumDegreeUnit" disabled>
+                                            <option value="e-5torr">e-5torr</option>
+                                            <option value="e-6torr">e-6torr</option>
+                                            <option value="e+2Pa">e+2Pa</option>
+                                            <option value="e+1Pa">e+1Pa</option>
+                                            <option value="e-3Pa">e-3Pa</option>
+                                            <option value="e-4Pa">e-4Pa</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input form="edit-form" asp-for="@usageRecord.SystemOneColumnNumber" placeholder="S1编号" disabled />
+                                        <input form="edit-form" type="number" min="0" step="any" asp-for="@usageRecord.SystemOneColumnPressure" placeholder="S1压力" disabled />
+                                        <select form="edit-form" asp-for="@usageRecord.SystemOneColumnPressureUnit" disabled>
+                                            <option value="Mpa">Mpa</option>
+                                            <option value="Kpa">Kpa</option>
+                                            <option value="Bar">Bar</option>
+                                            <option value="Psi">Psi</option>
+                                        </select>
+                                        <br />
+                                        <input form="edit-form" asp-for="@usageRecord.SystemTwoColumnNumber" placeholder="S2编号" disabled />
+                                        <input form="edit-form" type="number" min="0" step="any" asp-for="@usageRecord.SystemTwoColumnPressure" placeholder="S2压力" disabled />
+                                        <select form="edit-form" asp-for="@usageRecord.SystemTwoColumnPressureUnit" disabled>
+                                            <option value="Mpa">Mpa</option>
+                                            <option value="Kpa">Kpa</option>
+                                            <option value="Bar">Bar</option>
+                                            <option value="Psi">Psi</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input form="edit-form" asp-for="@usageRecord.BlankSignal" disabled />
+                                    </td>
+                                    <td>
+                                        <input form="edit-form" asp-for="@usageRecord.SystemOneTestSignal" placeholder="S1" disabled />
+                                        <br />
+                                        <input form="edit-form" asp-for="@usageRecord.SystemTwoTestSignal" placeholder="S2" disabled />
+                                    </td>
+                                    <td>
+                                        <textarea form="edit-form" asp-for="@usageRecord.Remark" disabled></textarea>
+                                    </td>
+                                    <td>
+                                        <input form="edit-form" asp-for="@usageRecord.Creator" disabled />
+                                    </td>
+                                    <td>
+                                        <button class="update-btn" form="edit-form" disabled>保存</button>
+                                        <button class="cancel-btn" disabled>取消</button>
+                                    </td>
+                                    <td hidden>
+                                        <label>流动相/载气：</label>
+                                        <input form="edit-form" asp-for="UsageRecord.MobilePhase" />
+                                        <label>色谱柱类型：</label>
+                                        <input form="edit-form" asp-for="UsageRecord.ColumnType" />
+                                        <label>离子源：</label>
+                                        <input form="edit-form" asp-for="UsageRecord.IonSource" />
+                                        <label>检测器：</label>
+                                        <input form="edit-form" asp-for="UsageRecord.Detector" />
                                     </td>
                                 </tr>
                             }
-                            @* create-form *@
-                            <tr>
+                            @* create-row *@
+                            <tr id="create-row">
                                 <td>
-                                    <input form="create-form" size="8" asp-for="UsageRecord.InstrumentId" type="hidden" />
-                                    <input form="create-form" size="5" asp-for="UsageRecord.BeginTime" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" required />
+                                    <input form="create-form" asp-for="UsageRecord.InstrumentId" type="hidden" />
+                                    <input form="create-form" asp-for="UsageRecord.BeginTime" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" required />
                                 </td>
                                 <td>
-                                    <input form="create-form" size="5" asp-for="UsageRecord.EndTime" />
+                                    <input form="create-form" asp-for="UsageRecord.EndTime" />
                                 </td>
                                 <td>
-                                    <select id="select-project" form="create-form" asp-for="UsageRecord.ProjectName" asp-items="@Model.ProjectsSelectList"></select>
+                                    <select id="select-project" form="create-form" asp-for="UsageRecord.ProjectName" asp-items="@Model.ProjectsSelectList">
+                                    </select>
                                 </td>
                                 <td>
-                                    <input form="create-form" size="5" asp-for="UsageRecord.SampleNumber" />
+                                    <input form="create-form" min="0" asp-for="UsageRecord.SampleNumber" />
                                 </td>
                                 <td>
-                                    S1：<input form="create-form" size="5" asp-for="UsageRecord.SystemOneBatchNumber" />
+                                    <input form="create-form" min="0" asp-for="UsageRecord.SystemOneBatchNumber" placeholder="S1" />
                                     <br />
-                                    S2：<input form="create-form" size="5" asp-for="UsageRecord.SystemTwoBatchNumber" />
+                                    <input form="create-form" min="0" asp-for="UsageRecord.SystemTwoBatchNumber" placeholder="S2" />
                                 </td>
                                 <td>
-                                    低：<input form="create-form" size="5" asp-for="UsageRecord.LowVacuumDegree" />
+                                    <input form="create-form" type="number" step="any" asp-for="UsageRecord.LowVacuumDegree" placeholder="低真空" />
                                     <select form="create-form" asp-for="UsageRecord.LowVacuumDegreeUnit">
-                                        <option value="torr">torr</option>
-                                        <option value="mbar">Pa</option>
+                                        <option value="e-5torr">e-5torr</option>
+                                        <option value="e-6torr">e-6torr</option>
+                                        <option value="e+2Pa">e+2Pa</option>
+                                        <option value="e+1Pa">e+1Pa</option>
+                                        <option value="e-3Pa">e-3Pa</option>
+                                        <option value="e-4Pa">e-4Pa</option>
                                     </select>
                                     <br />
-                                    高：<input form="create-form" size="5" asp-for="UsageRecord.HighVacuumDegree" />
+                                    <input form="create-form" type="number" step="any" asp-for="UsageRecord.HighVacuumDegree" placeholder="高真空" />
                                     <select form="create-form" asp-for="UsageRecord.HighVacuumDegreeUnit">
-                                        <option value="torr">torr</option>
-                                        <option value="mbar">Pa</option>
+                                        <option value="e-5torr">e-5torr</option>
+                                        <option value="e-6torr">e-6torr</option>
+                                        <option value="e+2Pa">e+2Pa</option>
+                                        <option value="e+1Pa">e+1Pa</option>
+                                        <option value="e-3Pa">e-3Pa</option>
+                                        <option value="e-4Pa">e-4Pa</option>
                                     </select>
                                 </td>
                                 <td>
-                                    S1：<input form="create-form" size="5" asp-for="UsageRecord.SystemOneColumnNumber" placeholder="编号" />
-                                    <input type="number" min="0" step="any" form="create-form" size="5" asp-for="UsageRecord.SystemOneColumnPressure" placeholder="压力" />
+                                    <input form="create-form" asp-for="UsageRecord.SystemOneColumnNumber" placeholder="S1编号" />
+                                    <input type="number" min="0" step="any" form="create-form" asp-for="UsageRecord.SystemOneColumnPressure" placeholder="S1压力" />
                                     <select form="create-form" asp-for="UsageRecord.SystemOneColumnPressureUnit">
                                         <option value="Mpa">Mpa</option>
+                                        <option value="Kpa">Kpa</option>
                                         <option value="Bar">Bar</option>
                                         <option value="Psi">Psi</option>
                                     </select>
                                     <br />
-                                    S2：<input form="create-form" size="5" asp-for="UsageRecord.SystemTwoColumnNumber" placeholder="编号" />
-                                    <input type="number" min="0" step="any" form="create-form" size="5" asp-for="UsageRecord.SystemTwoColumnPressure" placeholder="压力" />
+                                    <input form="create-form" asp-for="UsageRecord.SystemTwoColumnNumber" placeholder="S2编号" />
+                                    <input type="number" min="0" step="any" form="create-form" asp-for="UsageRecord.SystemTwoColumnPressure" placeholder="S2压力" />
                                     <select form="create-form" asp-for="UsageRecord.SystemTwoColumnPressureUnit">
                                         <option value="Mpa">Mpa</option>
+                                        <option value="Kpa">Kpa</option>
                                         <option value="Bar">Bar</option>
                                         <option value="Psi">Psi</option>
                                     </select>
                                 </td>
                                 <td>
-                                    <input form="create-form" size="5" asp-for="UsageRecord.BlankSignal" />
+                                    <input form="create-form" asp-for="UsageRecord.BlankSignal"
+                                           pattern="^[+-]?[\d]+([\.][\d]+)?([Ee][+-]?[\d]+)?$"
+                                           title="请使用科学计数法，例：3.1e+05，如果是N/A的话不需要输入。" />
                                 </td>
                                 <td>
-                                    S1：<input form="create-form" size="5" asp-for="UsageRecord.SystemOneTestSignal" />
+                                    <input form="create-form" asp-for="UsageRecord.SystemOneTestSignal"
+                                           placeholder="S1"
+                                           pattern="^[+-]?[\d]+([\.][\d]+)?([Ee][+-]?[\d]+)?$"
+                                           title="请使用科学计数法，例：3.1e+05，如果是N/A的话不需要输入。" />
                                     <br />
-                                    S2：<input form="update-form" size="5" asp-for="UsageRecord.SystemTwoTestSignal" />
+                                    <input form="create-form" asp-for="UsageRecord.SystemTwoTestSignal"
+                                           placeholder="S2"
+                                           pattern="^[+-]?[\d]+([\.][\d]+)?([Ee][+-]?[\d]+)?$"
+                                           title="请使用科学计数法，例：3.1e+05，如果是N/A的话不需要输入。" />
                                 </td>
                                 <td>
-                                    <input form="create-form" size="5" asp-for="UsageRecord.Creator" />
+                                    <textarea form="create-form" asp-for="UsageRecord.Remark"></textarea>
+                                </td>
+                                <td>
+                                    <input form="create-form" asp-for="UsageRecord.Creator" required />
                                 </td>
                                 <td>
                                     <button form="create-form" id="create-btn">新建</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">
-                                    <label>流动相/载气：</label>
-                                    <select form="create-form" asp-for="UsageRecord.MobilePhase" asp-items="Model.MobilePhaseSelectList"></select>
-                                    <br />
-                                    <label>色谱柱类型：</label>
-                                    <select form="create-form" asp-for="UsageRecord.ColumnType" asp-items="Model.ColumnTypeSelectList"></select>
-                                </td>
-                                <td colspan="3">
-                                    <label>离子源：</label>
-                                    <select form="create-form" asp-for="UsageRecord.IonSource" asp-items="Model.IonSourceSelectList"></select>
-                                    <br />
-                                    <label>检测器：</label>
-                                    <select form="create-form" asp-for="UsageRecord.Detector" asp-items="Model.DetectroSelectList"></select>
-                                </td>
-                                <td colspan="6">
-                                    <label>备注：</label>
-                                    <textarea form="create-form" asp-for="UsageRecord.Remark" style="width:100%;"></textarea>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                     <form id="create-form" method="post" asp-page="UsageRecords/Create">
                     </form>
-                    <form id="update-form" method="post" asp-page="UsageRecords/Edit">
+                    <form id="edit-form" method="post" asp-page="UsageRecords/Edit">
                     </form>
                     <form id="delete-form" method="post" asp-page="UsageRecords/Delete">
                     </form>
+                    <div>
+                        <p>备注：单系统仪器填写S1对应的输入框。</p>
+                    </div>
                 </div>
             }
         </div>
@@ -325,55 +444,162 @@
 </div>
 
 <style>
-    [disabled] {
-        background-color: white;
-        border: none;
-        color: black;
-    }
-
     table {
         border: 1px solid;
+        border-collapse: collapse;
         width: 100%;
+        table-layout: fixed;
     }
 
-    tr, th, td {
-        border: 1px solid;
+        table tr:hover {
+            background: #e9e9e9;
+        }
+
+        /* table column width */
+        table thead tr th.time {
+            width: 190px;
+        }
+
+        table thead tr th.projectname {
+            width: 85px;
+        }
+
+        table thead tr th.samplenumber {
+            width: 85px;
+        }
+
+        table thead tr th.batchnumber {
+            width: 92px;
+        }
+
+        table thead tr th.vacuumdegree {
+            width: 165px;
+        }
+
+        table thead tr th.columntype {
+            width: 230px;
+        }
+
+        table thead tr th.blank {
+            width: 92px;
+        }
+
+        table thead tr th.test {
+            width: 92px;
+        }
+
+        table thead tr th.remark {
+            width: 165px;
+        }
+
+        table thead tr th.creator {
+            width: 65px;
+        }
+
+        table thead tr th.btn {
+            width: 54px;
+        }
+
+        table tr#create-row {
+            border: 2px solid;
+        }
+
+        table tr.update-row {
+            background-color: moccasin;
+            display: none;
+        }
+
+        table tr, th, td {
+            border: 1px solid;
+        }
+
+        table th, td {
+            text-align: center;
+        }
+
+    input#UsageRecord_LowVacuumDegree,
+    input#UsageRecord_HighVacuumDegree,
+    input#usageRecord_LowVacuumDegree,
+    input#usageRecord_HighVacuumDegree {
+        width: 80px;
     }
 
-    td {
-        margin: 0px;
+    input#UsageRecord_SystemOneColumnNumber,
+    input#UsageRecord_SystemTwoColumnNumber,
+    input#usageRecord_SystemOneColumnNumber,
+    input#usageRecord_SystemTwoColumnNumber {
+        width: 80px;
     }
 
-    input[type="number"] {
+    input#UsageRecord_BlankSignal,
+    input#usageRecord_BlankSignal {
+        width: 85px;
+    }
+
+    input#UsageRecord_SystemOneTestSignal, input#UsageRecord_SystemTwoTestSignal,
+    input#usageRecord_SystemOneTestSignal, input#usageRecord_SystemTwoTestSignal {
+        width: 85px;
+    }
+
+    input#UsageRecord_SampleNumber,
+    input#usageRecord_SampleNumber {
+        width: 75px;
+        text-align: right;
+    }
+
+    input#UsageRecord_SystemOneBatchNumber,
+    input#usageRecord_SystemOneBatchNumber,
+    input#UsageRecord_SystemTwoBatchNumber,
+    input#usageRecord_SystemTwoBatchNumber {
+        width: 80px;
+        text-align: right;
+    }
+
+    input#UsageRecord_SystemOneColumnPressure,
+    input#usageRecord_SystemOneColumnPressure,
+    input#UsageRecord_SystemTwoColumnPressure,
+    input#usageRecord_SystemTwoColumnPressure {
+        width: 80px;
+        text-align: right;
+    }
+
+    input[name="UsageRecord.Creator"],
+    input[name="usageRecord.Creator"] {
         width: 60px;
     }
 
     input[type="datetime-local"] {
-        width: 188px;
+        width: 187px;
+    }
+
+    select {
+        height: 30px;
+    }
+
+    textarea {
+        width: 163px;
     }
 </style>
 
 @section Scripts {
     <script language="javascript">
         $(".edit-btn").click(function () {
+            // 将其他已在编辑状态的行取消编辑
             $(".cancel-btn").click();
-            // 将选定行的元素设为可编辑状态
-            var currentRow = $(this).closest("tr");
-            currentRow.find(".edit-btn").hide();
-            currentRow.find(".delete-btn").hide();
-            currentRow.find(".update-btn").show();
-            currentRow.find(".cancel-btn").show();
-            currentRow.find("td").children().prop("disabled", false);
+            var RowOfViewRecord = $(this).closest("tr");
+            // 选定行的下一行是编辑行
+            var RowOfEditRecord = RowOfViewRecord.next("tr");
+            RowOfViewRecord.hide();
+            RowOfEditRecord.show();
+            RowOfEditRecord.find("td").children().prop("disabled", false);
         });
 
         $(".cancel-btn").click(function () {
-            var currentRow = $(this).closest("tr");
-            currentRow.find(".edit-btn").show();
-            currentRow.find(".delete-btn").show();
-            currentRow.find(".update-btn").hide();
-            currentRow.find(".cancel-btn").hide();
-            currentRow.find("td").find("input").prop("disabled", true);
-            currentRow.find("td").find("select").prop("disabled", true);
+            var RowOfEditRecord = $(this).closest("tr");
+            var RowOfViewRecord = RowOfEditRecord.prev("tr");
+            RowOfEditRecord.hide();
+            RowOfEditRecord.find("td").children().prop("disabled", true);
+            RowOfViewRecord.show();
         });
 
         $(".delete-btn").click(function () {
@@ -382,7 +608,7 @@
             }
 
             let id = $(this).attr("data-id");
-            let record = this;
+            let record = $(this).closest("tr"); // 调用ajax后，this就不再是delete-btn了，所以需要先获取
 
             var options = {};
             options.url = "Records/UsageRecords/Delete?id=" + id;
@@ -393,8 +619,9 @@
                     $('input:hidden[name="__RequestVerificationToken"]').val());
             };
             options.success = function (msg) {
+                record.next("tr.update-row").remove(); // 删除对应的编辑行
+                record.remove(); // 删除行
                 console.log(msg);
-                $(record).parent().parent().remove(); // delete this record
             };
             options.error = function (msg) {
                 alert(msg);
@@ -402,6 +629,8 @@
 
             $.ajax(options);
         });
+
+        $("#select-project").on("change", getLatestRecord);
 
         function getLatestRecord() {
             var project = $("#select-project").val();
@@ -422,12 +651,6 @@
                 $("#UsageRecord_LowVacuumDegreeUnit").val(data.lowVacuumDegreeUnit);
                 $("#UsageRecord_SystemOneColumnPressureUnit").val(data.systemOneColumnPressureUnit);
                 $("#UsageRecord_SystemTwoColumnPressureUnit").val(data.systemTwoColumnPressureUnit);
-
-                // 色谱柱，流动相，离子源，检测器
-                $("#UsageRecord_MobilePhase").val(data.mobilePhase);
-                $("#UsageRecord_ColumnType").val(data.columnType);
-                $("#UsageRecord_IonSource").val(data.ionSource);
-                $("#UsageRecord_Detector").val(data.detector);
             }
             else {
                 // 重置
@@ -438,15 +661,8 @@
                 $("#UsageRecord_LowVacuumDegreeUnit")[0].selectedIndex = 0;
                 $("#UsageRecord_SystemOneColumnPressureUnit")[0].selectedIndex = 0;
                 $("#UsageRecord_SystemTwoColumnPressureUnit")[0].selectedIndex = 0;
-
-                $("#UsageRecord_MobilePhase")[0].selectedIndex = 0;
-                $("#UsageRecord_ColumnType")[0].selectedIndex = 0;
-                $("#UsageRecord_IonSource")[0].selectedIndex = 0;
-                $("#UsageRecord_Detector")[0].selectedIndex = 0;
             }
         }
-
-        $("#select-project").on("change", getLatestRecord);
 
         $(document).ready(function () {
             // 重新激活上次选择的Tab
