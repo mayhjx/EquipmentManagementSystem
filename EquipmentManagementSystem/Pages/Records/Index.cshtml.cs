@@ -98,7 +98,7 @@ namespace EquipmentManagementSystem.Pages.Records
             UsageRecord = new UsageRecord
             {
                 InstrumentId = instrumentId,
-                Creator = _userResolverService.GetUserName()
+                Operator = _userResolverService.GetUserName()
             };
 
             MaintenanceAuditTrailLogs = await _auditTrailRepository.GetAuditTrailLogs(new MaintenanceRecord().GetType().Name);
@@ -125,7 +125,7 @@ namespace EquipmentManagementSystem.Pages.Records
         public SearchForm() { }
         public SearchForm(IInstrumentRepository instrumentRepository)
         {
-            InstrumentSelectList = instrumentRepository.GetAllInstrumentId();
+            InstrumentSelectList = instrumentRepository.GetAllInstrumentId(); // TODO 跟用户关联
             Instrument = InstrumentSelectList.FirstOrDefault() ?? "";
         }
 
