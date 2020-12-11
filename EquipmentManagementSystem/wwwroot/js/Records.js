@@ -1,134 +1,108 @@
-﻿
-$(document).ready(function () {
-
-    // 根据所选项目获取仪器下拉列表
-    $("#project").on("change", function () {
-        var project = $(this).val();
-        $("#instrumentId").removeAttr("disabled");
-        $("#instrumentId").empty();
-        $.getJSON(`?handler=InstrumentFilter&projectName=${project}`,
-            (data) => {
-                if (data.length > 0) {
-                    $.each(data, function (i, item) {
-                        $("#instrumentId").append(`<option value='${item}'>${item}</option>`);
-                        $(":radio").removeAttr("disabled");
-                    });
-                    // 维护内容
-                    getMaintenanceContext(data[0]);
-                }
-                else {
-                    $("#instrumentId").empty();
-                    $("#instrumentId").append("<option value=''>无可选设备</option>");
-                }
-            });
-    });
-
-    // 使用记录页面色谱柱压力输入
-    $("button#showSystemOne").click(function (e) {
-        // 显示系统一色谱柱压力输入框
-        e.preventDefault();
-        $("button#showSystemOne").attr("hidden", "");
-        $("div#systemOne").removeAttr("hidden");
-        $("button#showSystemTwo").removeAttr("hidden");
-    })
-
-    var unit = $("select#SystemOnePressureUnit").html();
-    var checkvalue = $("select#SystemOnePressureUnit").val();
-    $("select#SystemTwoPressureUnit").empty();
-    $("select#SystemTwoPressureUnit").append(unit);
-    $("select#SystemTwoPressureUnit").val(checkvalue);
-
-    $("button#showSystemTwo").click(function (e) {
-        // 显示系统二色谱柱压力输入框
-        e.preventDefault();
-        $("div#systemTwo").removeAttr("hidden");
-        $("button#showSystemTwo").attr("hidden", "");
-        // 系统二色谱柱压力单位与系统一同步
-        var checkvalue = $("select#SystemOnePressureUnit").val();
-        var unit = $("select#SystemOnePressureUnit").html();
-        $("select#SystemTwoPressureUnit").empty();
-        $("select#SystemTwoPressureUnit").append(unit);
-        $("select#SystemTwoPressureUnit").val(checkvalue);
-    })
-
-    $("select#SystemOnePressureUnit").change(function () {
-        // 更新系统二色谱柱压力单位
-        var checkvalue = $(this).val();
-        $("select#SystemTwoPressureUnit").val(checkvalue);
-    })
-
-    $("select#SystemTwoPressureUnit").change(function () {
-        // 更新系统一色谱柱压力单位
-        var checkvalue = $(this).val();
-        $("select#SystemOnePressureUnit").val(checkvalue);
-    })
-
-    $('input:radio').on('click', function (e) {
-        $('input:checkbox').prop("checked", false);
-        $('input:checkbox').prop("disabled", true);
-        var type = e.target.value;
-        if (type == "临时维护") {
-            $("textarea#other").focus();
-        }
-        $(`input:checkbox.${type}`).prop('disabled', false);
-        $(`input:checkbox.${type}`).prop('checked', true);
-
-
-    });
-
-    //    $("input:radio").on("click", function (e) {
-    //        var type = e.target.value;
-    //        var instrument = $("#instrumentId").val();
-    //        // 删除已生成的维护内容选项
-    //        $("input:checkbox").parent().remove();
-    //        // 隐藏临时维护内容输入框
-    //        $("div#otherContent").attr("hidden", "hidden");
-
-    //        if (type == "临时维护") {
-    //            $("div#otherContent").removeAttr("hidden");
-    //        }
-    //        else {
-    //            $.getJSON(`?handler=MaintenanceContents&instrument=${instrument}&maintenanceType=${type}`, (data) => {
-    //                if (data.length > 0) {
-    //                    $.each(data, function (i, item) {
-    //                        var html = `<div class="form-check">
-    //<input id="Content-${i}" type="checkbox" name="MaintenanceContent" value="${item}" checked />
-    //<label class="form-check-label" for="Content-${i}">${item}</label></div>`;
-    //                        $(e.target).parent().after(html);
-    //                    })
-    //                }
-    //            });
-    //        }
-    //    });
-
-    $(document).ajaxError(function () {
-        console.log("ajax Error");
-    });
+﻿// 使用记录
+$(".edit-btn").click(function () {
+    // 将其他已在编辑状态的行取消编辑
+    $(".cancel-btn").click();
+    var RowOfViewRecord = $(this).closest("tr");
+    // 选定行的下一行是编辑行
+    var RowOfEditRecord = RowOfViewRecord.next("tr");
+    RowOfViewRecord.hide();
+    RowOfEditRecord.show();
+    RowOfEditRecord.find("td").children().prop("disabled", false);
 });
 
-// 函数放在$(document).ready()外面就可以跨文件调用
-function getMaintenanceContext(instrumentId) {
-    // 删除已生成的维护内容选项
-    $("input:checkbox").parent().remove();
-    $.getJSON(`?handler=MaintenanceContents&instrument=${instrumentId}&maintenanceType=""`, (data) => {
-        if (data.length > 0) {
-            var content;
-            console.log("获取维护内容成功!");
-            $.each(data, function (i, item) {
-                content = `<div class="form-check">
-                                <input id="Content-${i}" class="${item.type}" type="checkbox" name="maintenanceContent" value="${item.text}" disabled />
-                                <label class="form-check-label" for="Content-${i}">${item.text}</label></div>`;
-                $(`input:radio[value='${item.type}']`).parent().after(content);
-            });
-            AddOtherTemporary()
-        }
+$(".cancel-btn").click(function () {
+    var RowOfEditRecord = $(this).closest("tr");
+    var RowOfViewRecord = RowOfEditRecord.prev("tr");
+    RowOfEditRecord.hide();
+    RowOfEditRecord.find("td").children().prop("disabled", true);
+    RowOfViewRecord.show();
+});
+
+$(".delete-btn").click(function () {
+    if (!confirm("确认删除该条记录？")) {
+        return false;
+    }
+
+    let id = $(this).attr("data-id");
+    let record = $(this).closest("tr"); // 调用ajax后，this就不再是delete-btn了，所以需要先获取
+
+    var options = {};
+    options.url = "Records/UsageRecords/Delete?id=" + id;
+    options.type = "post";
+    options.dataType = "json";
+    options.beforeSend = function (xhr) {
+        xhr.setRequestHeader("MY-XSRF-TOKEN",
+            $('input:hidden[name="__RequestVerificationToken"]').val());
+    };
+    options.success = function (msg) {
+        record.next("tr.update-row").remove(); // 删除对应的编辑行
+        record.remove(); // 删除行
+        console.log(msg);
+    };
+    options.error = function (msg) {
+        alert(msg);
+    };
+
+    $.ajax(options);
+});
+
+$("#select-project").on("change", getLatestRecord);
+
+// 初始化使用记录
+function getLatestRecord() {
+    var project = $("#select-project").val();
+    $.get(`Records/Index?handler=LatestRecordOfProject&project=${project}`, function (data) {
+        setInitialValue(data);
     });
+};
+
+function setInitialValue(data) {
+    if (data != null) {
+        //console.log(data);
+        // 色谱柱编号
+        $("#UsageRecord_SystemOneColumnNumber").val(data.systemOneColumnNumber);
+        $("#UsageRecord_SystemTwoColumnNumber").val(data.systemTwoColumnNumber);
+
+        // 色谱柱，真空度单位
+        $("#UsageRecord_HighVacuumDegreeUnit").val(data.highVacuumDegreeUnit);
+        $("#UsageRecord_LowVacuumDegreeUnit").val(data.lowVacuumDegreeUnit);
+        $("#UsageRecord_SystemOneColumnPressureUnit").val(data.systemOneColumnPressureUnit);
+        $("#UsageRecord_SystemTwoColumnPressureUnit").val(data.systemTwoColumnPressureUnit);
+    }
+    else {
+        // 重置
+        $("#UsageRecord_SystemOneColumnNumber").val("");
+        $("#UsageRecord_SystemTwoColumnNumber").val("");
+
+        $("#UsageRecord_HighVacuumDegreeUnit")[0].selectedIndex = 0;
+        $("#UsageRecord_LowVacuumDegreeUnit")[0].selectedIndex = 0;
+        $("#UsageRecord_SystemOneColumnPressureUnit")[0].selectedIndex = 0;
+        $("#UsageRecord_SystemTwoColumnPressureUnit")[0].selectedIndex = 0;
+    }
 }
 
-// 将临时维护的其他输入框移动到预设选项的后面
-function AddOtherTemporary() {
-    var temporary = $('input:radio[value="临时维护"]');
-    lastItem = temporary.parent().siblings().last().parent();
-    $("div#otherContent").appendTo(lastItem);
-    $("div#otherContent").removeAttr("hidden");
-}
+$(document).ready(function () {
+    // 重新激活上次选择的Tab
+    if (localStorage) {
+        $('div.card-title a[data-toggle="pill"').on('click', function () {
+            localStorage.setItem('activeTab', $(this).attr('href'));
+        });
+        var activeTab = localStorage.getItem('activeTab');
+        if (activeTab) {
+            $('.nav-usageRecord a[href="' + activeTab + '"]').tab('show');
+        }
+    }
+    else {
+        console.log("当前浏览器不支持LocalStorage");
+    };
+
+    $('#date').on('change', function () {
+        $('form#search').submit();
+    });
+
+    $('#instrumentId').on('change', function () {
+        $('form#search').submit();
+    });
+
+    getLatestRecord();
+})
