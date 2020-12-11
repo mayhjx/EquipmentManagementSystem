@@ -51,7 +51,7 @@ namespace EquipmentManagementSystem.Authorization
                 }
                 else if (context.User.IsInRole(Constants.TechnicianRole))
                 {
-                    if (resource.Creator == _userManager.GetUserAsync(context.User).Result.Name)
+                    if (resource.Operator == _userManager.GetUserAsync(context.User).Result.Name)
                     {
                         context.Succeed(requirement);
                     }
@@ -73,7 +73,7 @@ namespace EquipmentManagementSystem.Authorization
                 }
                 else if (context.User.IsInRole(Constants.TechnicianRole))
                 {
-                    if (resource.Creator == _userManager.GetUserAsync(context.User).Result.Name)
+                    if (resource.Operator == _userManager.GetUserAsync(context.User).Result.Name)
                     {
                         context.Succeed(requirement);
                     }
