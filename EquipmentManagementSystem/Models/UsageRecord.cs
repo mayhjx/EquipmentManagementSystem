@@ -87,8 +87,8 @@ namespace EquipmentManagementSystem.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
         public DateTime? EndTime { get; set; }
 
-        [Display(Name = "使用者")]
-        public string Creator { get; set; }
+        [Display(Name = "操作者")]
+        public string Operator { get; set; }
 
         [Display(Name = "备注")]
         [StringLength(999)]
