@@ -8,10 +8,12 @@ namespace EquipmentManagementSystem.Pages.Records.UsageRecords
 {
     public class EditModel : PageModel
     {
-        private readonly IUsageRecordRepository _repo;
-        public EditModel(IUsageRecordRepository usageRecordRepository)
+        private readonly IProjectRepository _projectRepo;
+        private readonly IUsageRecordRepository _usageRecordRepo;
+        public EditModel(IUsageRecordRepository usageRecordRepository, IProjectRepository projectRepository)
         {
-            _repo = usageRecordRepository;
+            _projectRepo = projectRepository;
+            _usageRecordRepo = usageRecordRepository;
         }
 
         public void OnGet()
@@ -38,7 +40,13 @@ namespace EquipmentManagementSystem.Pages.Records.UsageRecords
             string message;
             try
             {
-                await _repo.Update(UsageRecord);
+                UsageRecord.GroupName = await _projectRepo.GetGroupNameByShortName(UsageRecord.ProjectName);
+                UsageRecord.MobilePhase = await _projectRepo.GetMobilePhasesByShortName(UsageRecord.ProjectName);
+                UsageRecord.ColumnType = await _projectRepo.GetColumnTypesByShortName(UsageRecord.ProjectName);
+                UsageRecord.IonSource = await _projectRepo.GetIonSourcesByShortName(UsageRecord.ProjectName);
+                UsageRecord.Detector = await _projectRepo.GetDetectorsByShortName(UsageRecord.ProjectName);
+
+                await _usageRecordRepo.Update(UsageRecord);
                 message = "修改成功";
             }
             catch

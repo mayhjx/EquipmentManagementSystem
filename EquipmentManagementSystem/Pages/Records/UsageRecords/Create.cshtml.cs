@@ -2,16 +2,19 @@
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
 using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Records.UsageRecords
 {
     public class CreateModel : PageModel
     {
-        private readonly IUsageRecordRepository _repo;
-        public CreateModel(IUsageRecordRepository usageRecordRepository)
+        private readonly IUsageRecordRepository _usageRecordRepo;
+        private readonly IProjectRepository _projectRepo;
+        public CreateModel(IUsageRecordRepository usageRecordRepository, IProjectRepository projectRepository)
         {
-            _repo = usageRecordRepository;
+            _usageRecordRepo = usageRecordRepository;
+            _projectRepo = projectRepository;
         }
 
         public void OnGet()
@@ -35,13 +38,19 @@ namespace EquipmentManagementSystem.Pages.Records.UsageRecords
             //    return Forbid();
             //}
 
+            UsageRecord.GroupName = await _projectRepo.GetGroupNameByShortName(UsageRecord.ProjectName);
+            UsageRecord.MobilePhase = await _projectRepo.GetMobilePhasesByShortName(UsageRecord.ProjectName);
+            UsageRecord.ColumnType = await _projectRepo.GetColumnTypesByShortName(UsageRecord.ProjectName);
+            UsageRecord.IonSource = await _projectRepo.GetIonSourcesByShortName(UsageRecord.ProjectName);
+            UsageRecord.Detector = await _projectRepo.GetDetectorsByShortName(UsageRecord.ProjectName);
+
             string message;
             try
             {
-                await _repo.Create(UsageRecord);
+                await _usageRecordRepo.Create(UsageRecord);
                 message = "新建成功";
             }
-            catch
+            catch (Exception ex)
             {
                 // create log
                 message = "新建失败，请刷新后重试！";
