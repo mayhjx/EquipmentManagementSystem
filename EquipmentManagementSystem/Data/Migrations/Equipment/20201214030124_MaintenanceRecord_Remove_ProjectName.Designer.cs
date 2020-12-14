@@ -4,14 +4,16 @@ using EquipmentManagementSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EquipmentManagementSystem.Migrations
 {
     [DbContext(typeof(EquipmentContext))]
-    partial class EquipmentContextModelSnapshot : ModelSnapshot
+    [Migration("20201214030124_MaintenanceRecord_Remove_ProjectName")]
+    partial class MaintenanceRecord_Remove_ProjectName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -557,7 +559,7 @@ namespace EquipmentManagementSystem.Migrations
                     b.Property<DateTime?>("BeginTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Daily")
+                    b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("EndTime")
@@ -569,25 +571,13 @@ namespace EquipmentManagementSystem.Migrations
                     b.Property<string>("InstrumentId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Monthly")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Operator")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Other")
+                    b.Property<string>("OtherContent")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Quarterly")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Temporary")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Weekly")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Yearly")
+                    b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
