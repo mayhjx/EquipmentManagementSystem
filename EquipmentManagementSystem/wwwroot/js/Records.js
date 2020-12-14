@@ -35,9 +35,13 @@ $(".delete-btn").click(function () {
             $('input:hidden[name="__RequestVerificationToken"]').val());
     };
     options.success = function (msg) {
-        record.next("tr.update-row").remove(); // 删除对应的编辑行
-        record.remove(); // 删除行
-        console.log(msg);
+        if (msg.indexOf("成功") != -1) {
+            record.next("tr.update-row").remove(); // 删除对应的编辑行
+            record.remove(); // 删除行
+        }
+        else {
+            alert(msg);
+        }
     };
     options.error = function (msg) {
         alert(msg);
