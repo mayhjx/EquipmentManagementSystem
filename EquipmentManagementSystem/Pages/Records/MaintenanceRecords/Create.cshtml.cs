@@ -12,45 +12,75 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
         private readonly IInstrumentRepository _instrumentRepository;
         private readonly IUserResolverService _userResolverService;
         private readonly IMaintenanceContentRepository _maintenanceContentRepository;
+        private readonly IMaintenanceRecordRepository _maintenanceRecordRepository;
 
         public CreateModel(IInstrumentRepository instrumentRepository,
             IUserResolverService userResolverService,
-            IMaintenanceContentRepository maintenanceContentRepository)
+            IMaintenanceContentRepository maintenanceContentRepository,
+            IMaintenanceRecordRepository maintenanceRecordRepository)
         {
             _instrumentRepository = instrumentRepository;
             _userResolverService = userResolverService;
             _maintenanceContentRepository = maintenanceContentRepository;
+            _maintenanceRecordRepository = maintenanceRecordRepository;
         }
 
-        [BindProperty]
-        public MaintenanceRecord MaintenanceRecord { get; set; }
-
         public string CurrentUserName { get; set; }
-
+        public string SelectedInstrumentId { get; set; } = "";
         public List<string> InstrumentSelectList { get; set; }
 
         [BindProperty]
+        public MaintenanceRecord MaintenanceRecord { get; set; }
+        [BindProperty]
         public List<string> SelectedInstruments { get; set; }
+        [BindProperty]
+        public string[] DailyMaintenanceContent { get; set; }
+        [BindProperty]
+        public string[] WeeklyMaintenanceContent { get; set; }
+        [BindProperty]
+        public string[] MonthlyMaintenanceContent { get; set; }
+        [BindProperty]
+        public string[] QuarterlyMaintenanceContent { get; set; }
+        [BindProperty]
+        public string[] YearlyMaintenanceContent { get; set; }
+        [BindProperty]
+        public string[] TemporaryMaintenanceContent { get; set; }
+        [BindProperty]
+        public string OtherMaintenanceContent { get; set; }
 
-        public IActionResult OnGet()
+        public IActionResult OnGet(string instrumentId)
         {
             InstrumentSelectList = _instrumentRepository.GetAllInstrumentId();
             CurrentUserName = _userResolverService.GetUserName();
+            if (!string.IsNullOrEmpty(instrumentId))
+            {
+                SelectedInstrumentId = instrumentId;
+            }
             return Page();
         }
 
-        ///// <summary>
-        ///// 返回包含某项目的设备编号
-        ///// </summary>
-        ///// <param name="projectName"></param>
-        ///// <returns></returns>
-        //public JsonResult OnGetInstrumentFilter(string projectName)
-        //{
-        //    var result = new JsonResult(from m in _context.Instruments
-        //                                where m.Projects.IndexOf(projectName) >= 0
-        //                                select m.ID);
-        //    return result;
-        //}
+        public async Task<IActionResult> OnPostAsync()
+        {
+            if (!ModelState.IsValid)
+            {
+                InstrumentSelectList = _instrumentRepository.GetAllInstrumentId();
+                CurrentUserName = _userResolverService.GetUserName();
+                return Page();
+            }
+
+            MaintenanceRecord.GroupName = _userResolverService.GetUserGroup();
+            MaintenanceRecord.SetDaily(DailyMaintenanceContent);
+            MaintenanceRecord.SetWeekly(WeeklyMaintenanceContent);
+            MaintenanceRecord.SetMonthly(MonthlyMaintenanceContent);
+            MaintenanceRecord.SetQuarterly(QuarterlyMaintenanceContent);
+            MaintenanceRecord.SetYearly(YearlyMaintenanceContent);
+            MaintenanceRecord.SetTemporary(TemporaryMaintenanceContent);
+            MaintenanceRecord.SetOther(OtherMaintenanceContent);
+
+            await _maintenanceRecordRepository.Create(MaintenanceRecord);
+
+            return RedirectToPage("../Index", new { instrumentId = MaintenanceRecord.InstrumentId, date = MaintenanceRecord.BeginTime });
+        }
 
         /// <summary>
         /// 返回对应设备平台的维护内容
@@ -74,41 +104,5 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
 
             return result;
         }
-
-
-        // TODO 
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://aka.ms/RazorPagesCRUD.
-        //public async Task<IActionResult> OnPostAsync(string maintenanceType, string[] maintenanceContent, string otherMaintenanceContent)
-        //{
-        //if (!ModelState.IsValid)
-        //{
-        //    return Page();
-        //}
-
-        //if (maintenanceType == null)
-        //{
-        //    ModelState.AddModelError("", "请选择一个维护类型");
-        //    return Page();
-        //}
-
-        //MaintenanceRecord.ProjectId = _context.Projects.FirstOrDefaultAsync(p => p.Name == MaintenanceRecord.ProjectName).Result.Id;
-        //MaintenanceRecord.Type = maintenanceType;
-
-        //if (maintenanceContent.Length > 0)
-        //{
-        //    MaintenanceRecord.Content = string.Join(", ", maintenanceContent);
-        //}
-
-        //if (maintenanceType == "临时维护" && otherMaintenanceContent != null)
-        //{
-        //    MaintenanceRecord.Content += (maintenanceContent.Length > 0 ? ", " : "") + $"其他：{otherMaintenanceContent}";
-        //}
-
-        //_context.MaintenanceRecords.Add(MaintenanceRecord);
-        //await _context.SaveChangesAsync();
-
-        //return RedirectToPage("../Index");
-        //}
     }
 }

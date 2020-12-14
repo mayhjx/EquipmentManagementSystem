@@ -20,11 +20,6 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="MaintenanceRecord.Id" />
                     <div class="form-group">
-                        <label asp-for="MaintenanceRecord.ProjectName" class="control-label"></label>
-                        <input id="project" asp-for="MaintenanceRecord.ProjectName" class="form-control" readonly />
-                        <span asp-validation-for="MaintenanceRecord.ProjectName" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
                         <label asp-for="MaintenanceRecord.InstrumentId" class="control-label"></label>
                         <input id="instrumentId" asp-for="MaintenanceRecord.InstrumentId" class="form-control" readonly />
                         <span asp-validation-for="MaintenanceRecord.InstrumentId" class="text-danger"></span>
@@ -47,67 +42,76 @@
                 </div>
                 <div class="col-12 col-xl-7 offset-xl-1">
                     <div class="form-group">
-                        <label class="control-label">维护类型</label>
+                        <h5>维护类型</h5>
+                        <hr />
                         <div class="form-row">
                             <div class="col-xl-4 col-12">
-                                <div class="form-check mt-2">
-                                    <input type="radio" name="MaintenanceType" value="日常维护" id="Daily" class="form-check-input" />
+                                <div class="form-check">
+                                    <input type="checkbox" value="日常维护" id="Daily" class="form-check-input" />
                                     <label for="Daily" class="form-check-label text-bold">日常维护</label>
                                 </div>
+                                <ul id="日常维护">
+                                </ul>
                             </div>
                             <div class="col-xl-4 col-12">
-                                <div class="form-check mt-2">
-                                    <input type="radio" name="MaintenanceType" value="周维护" id="Weekly" class="form-check-input" />
+                                <div class="form-check">
+                                    <input type="checkbox" value="周维护" id="Weekly" class="form-check-input" />
                                     <label for="Weekly" class="form-check-label text-bold">周维护</label>
                                 </div>
+                                <ul id="周维护">
+                                </ul>
                             </div>
                             <div class="col-xl-4 col-12">
-                                <div class="form-check mt-2">
-                                    <input type="radio" name="MaintenanceType" value="月度维护" id="Monthly" class="form-check-input" />
+                                <div class="form-check">
+                                    <input type="checkbox" value="月度维护" id="Monthly" class="form-check-input" />
                                     <label for="Monthly" class="form-check-label text-bold">月度维护</label>
                                 </div>
+                                <ul id="月度维护">
+                                </ul>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="col-xl-4 col-12">
-                                <div class="form-check mt-2">
-                                    <input type="radio" name="MaintenanceType" value="季度维护" id="Quarterly" class="form-check-input" />
+                                <div class="form-check">
+                                    <input type="checkbox" value="季度维护" id="Quarterly" class="form-check-input" />
                                     <label for="Quarterly" class="form-check-label text-bold">季度维护</label>
                                 </div>
+                                <ul id="季度维护">
+                                </ul>
                             </div>
                             <div class="col-xl-4 col-12">
-                                <div class="form-check mt-2">
-                                    <input type="radio" name="MaintenanceType" value="年度PM维护" id="Annual" class="form-check-input" />
-                                    <label for="Annual" class="form-check-label text-bold">年度PM维护</label>
+                                <div class="form-check">
+                                    <input type="checkbox" value="年度维护" id="Yearly" class="form-check-input" />
+                                    <label for="Yearly" class="form-check-label text-bold">年度维护</label>
                                 </div>
+                                <ul id="年度维护">
+                                </ul>
                             </div>
                             <div class="col-xl-4 col-12">
-                                <div class="form-check mt-2">
-                                    <input type="radio" name="MaintenanceType" value="临时维护" id="Temporarily" class="form-check-input" />
+                                <div class="form-check">
+                                    <input type="checkbox" value="临时维护" id="Temporarily" class="form-check-input" />
                                     <label for="Temporarily" class="form-check-label text-bold">临时维护</label>
-
-                                    <div class="form-group pl-3" id="otherContent" hidden>
-                                        <label for="other">其他：</label>
-                                        <textarea id="other" name="otherMaintenanceContent" class="form-control" rows="3"></textarea>
-                                    </div>
+                                </div>
+                                <ul id="临时维护">
+                                </ul>
+                                <div class="form-group pl-3" id="otherContent">
+                                    <label for="other">其他：</label>
+                                    <textarea id="other" name="otherMaintenanceContent" class="form-control" rows="3">
+                                    </textarea>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-4">
-                    <a asp-page="../Index" class="btn btn-default">返回</a>
-                </div>
-                <div class="col-4 text-center">
-                    <input type="submit" value="保存" class="btn btn-primary" />
-                </div>
-                <div class="col-4">
-                    <a class="btn btn-danger float-right" asp-page="./Delete" asp-route-id="@Model.MaintenanceRecord.Id">删除</a>
-                </div>
+
+            <div class="form-group">
+                <input type="submit" value="保存" class="btn btn-primary" />
             </div>
         </form>
+        <div>
+            <a asp-page="../Index" asp-route-instrumentId="@Model.MaintenanceRecord.InstrumentId">返回</a>
+        </div>
     </div>
 </div>
 
@@ -115,34 +119,39 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script src="~/js/Records.js" asp-append-version="true"></script>
+    <script src="~/js/MaintenanceRecord.js" asp-append-version="true"></script>
     <script>
         $(document).ready(function () {
-            var instrumentId = $('#instrumentId').val();
-            var targetType = @Json.Serialize(Model.MaintenanceRecord.Type);
-            var selectedContents = @Json.Serialize(Model.MaintenanceRecord.Content?.Split(", " , StringSplitOptions.RemoveEmptyEntries));
-
-            // 获取其他维护内容
-            var lastContent = selectedContents[selectedContents.length - 1];
-            var otherContent;
-            if (lastContent.search(/其他/) >= 0) {
-                otherContent = lastContent.split("其他：")[1];
-            }
-
+            let instrumentId = $('#instrumentId').val();
             getMaintenanceContext(instrumentId);
+
+            let daily = @Json.Serialize(Model.MaintenanceRecord.GetDaily());
+            let weekly = @Json.Serialize(Model.MaintenanceRecord.GetWeekly());
+            let monthly = @Json.Serialize(Model.MaintenanceRecord.GetMonthly());
+            let quarterly = @Json.Serialize(Model.MaintenanceRecord.GetQuarterly());
+            let yearly = @Json.Serialize(Model.MaintenanceRecord.GetYearly());
+            let temporary = @Json.Serialize(Model.MaintenanceRecord.GetTemporary());
+            let other = @Json.Serialize(Model.MaintenanceRecord.GetOther());
+
             // 等待getMaintenanceContext的getJson方法完成后只选中目标维护内容
             $(document).ajaxComplete(function () {
-                $(`input:checkbox.${targetType}`).each(function (i, item) {
-                    $(this).prop("disabled", false);
-                    if (selectedContents.includes(item.value)) {
+                checkByRecord("日常维护", daily);
+                checkByRecord("周维护", weekly);
+                checkByRecord("月度维护", monthly);
+                checkByRecord("季度维护", quarterly);
+                checkByRecord("年度维护", yearly);
+                checkByRecord("临时维护", temporary);
+            });
+
+            $("textarea#other").val(other);
+
+            function checkByRecord(id, content) {
+                $(`ul#${id} input`).each(function (i, item) {
+                    if (content.includes(item.value)) {
                         $(this).prop("checked", true);
                     }
                 });
-            });
-            if (targetType == "临时维护") {
-                $("textarea#other").val(otherContent);
             }
-            $(`input:radio[value='${targetType}']`).prop('checked', true);
         });
     </script>
 }

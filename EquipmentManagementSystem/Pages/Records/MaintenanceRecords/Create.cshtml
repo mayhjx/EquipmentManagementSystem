@@ -17,18 +17,21 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
                         <label asp-for="MaintenanceRecord.InstrumentId" class="control-label"></label>
-                        <select id="instrument" class="custom-select" asp-for="MaintenanceRecord.InstrumentId">
+                        <select id="instrumentId" class="custom-select" asp-for="MaintenanceRecord.InstrumentId">
                             <option value="" selected disabled hidden>---请选择---</option>
                             @foreach (var id in Model.InstrumentSelectList)
                             {
-                                <option value="@id">@id</option>
+                                if (id == Model.SelectedInstrumentId)
+                                {
+                                    <option value="@id" selected>@id</option>
+                                }
+                                else
+                                {
+                                    <option value="@id">@id</option>
+                                }
                             }
                         </select>
                     </div>
-                    @*<div class="form-group">
-                            <label asp-for="MaintenanceRecord.InstrumentId" class="control-label"></label>
-                            <select id="instrumentId" asp-for="MaintenanceRecord.InstrumentId" class="custom-select select2" disabled></select>
-                        </div>*@
                     <div class="form-group">
                         <label asp-for="MaintenanceRecord.BeginTime" class="control-label"></label>
                         <input asp-for="MaintenanceRecord.BeginTime" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
@@ -47,65 +50,73 @@
                 </div>
                 <div class="col-12 col-xl-7 offset-xl-1">
                     <div class="form-group">
-                        <label class="control-label">维护类型</label>
+                        <h5>维护类型</h5>
+                        <hr />
                         <div class="form-row">
                             <div class="col-xl-4 col-12">
-                                <div class="form-check mt-2">
-                                    <input type="radio" name="MaintenanceType" value="日常维护" id="Daily" class="form-check-input" disabled />
+                                <div class="form-check">
+                                    <input type="checkbox" value="日常维护" id="Daily" class="form-check-input" />
                                     <label for="Daily" class="form-check-label text-bold">日常维护</label>
                                 </div>
+                                <ul id="日常维护">
+                                </ul>
                             </div>
                             <div class="col-xl-4 col-12">
-                                <div class="form-check mt-2">
-                                    <input type="radio" name="MaintenanceType" value="周维护" id="Weekly" class="form-check-input" disabled />
+                                <div class="form-check">
+                                    <input type="checkbox" value="周维护" id="Weekly" class="form-check-input" />
                                     <label for="Weekly" class="form-check-label text-bold">周维护</label>
                                 </div>
+                                <ul id="周维护">
+                                </ul>
                             </div>
                             <div class="col-xl-4 col-12">
-                                <div class="form-check mt-2">
-                                    <input type="radio" name="MaintenanceType" value="月度维护" id="Monthly" class="form-check-input" disabled />
+                                <div class="form-check">
+                                    <input type="checkbox" value="月度维护" id="Monthly" class="form-check-input" />
                                     <label for="Monthly" class="form-check-label text-bold">月度维护</label>
                                 </div>
+                                <ul id="月度维护">
+                                </ul>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="col-xl-4 col-12">
-                                <div class="form-check mt-2">
-                                    <input type="radio" name="MaintenanceType" value="季度维护" id="Quarterly" class="form-check-input" disabled />
+                                <div class="form-check">
+                                    <input type="checkbox" value="季度维护" id="Quarterly" class="form-check-input" />
                                     <label for="Quarterly" class="form-check-label text-bold">季度维护</label>
                                 </div>
+                                <ul id="季度维护">
+                                </ul>
                             </div>
                             <div class="col-xl-4 col-12">
-                                <div class="form-check mt-2">
-                                    <input type="radio" name="MaintenanceType" value="年度PM维护" id="Annual" class="form-check-input" disabled />
-                                    <label for="Annual" class="form-check-label text-bold">年度PM维护</label>
+                                <div class="form-check">
+                                    <input type="checkbox" value="年度维护" id="Yearly" class="form-check-input" />
+                                    <label for="Yearly" class="form-check-label text-bold">年度维护</label>
                                 </div>
+                                <ul id="年度维护">
+                                </ul>
                             </div>
                             <div class="col-xl-4 col-12">
-                                <div class="form-check mt-2">
-                                    <input type="radio" name="MaintenanceType" value="临时维护" id="Temporarily" class="form-check-input" disabled />
+                                <div class="form-check">
+                                    <input type="checkbox" value="临时维护" id="Temporarily" class="form-check-input" />
                                     <label for="Temporarily" class="form-check-label text-bold">临时维护</label>
-
-                                    @*<div class="form-group pl-3" id="otherContent">
-                                            <label for="other">其他：</label>
-                                            <textarea id="other" name="otherMaintenanceContent" class="form-control" rows="3"></textarea>
-                                        </div>*@
+                                </div>
+                                <ul id="临时维护">
+                                </ul>
+                                <div class="form-group pl-3" id="otherContent">
+                                    <label for="other">其他：</label>
+                                    <textarea id="other" name="otherMaintenanceContent" class="form-control" rows="3"></textarea>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-12 col-xl-1 offset-xl-5">
-                    <div class="form-group">
-                        <input type="submit" value="新建" class="btn btn-primary btn-block" />
-                    </div>
-                </div>
+            <div class="form-group">
+                <input type="submit" value="新建" class="btn btn-primary" />
             </div>
         </form>
         <div>
-            <a asp-page="../Index">返回</a>
+            <a asp-page="../Index" asp-route-instrumentId="@Model.SelectedInstrumentId">返回</a>
         </div>
     </div>
 </div>
@@ -113,11 +124,16 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script src="~/js/MaintenanceRecord.js" asp-append-version="true"></script>
-    @*<script>
-            $(document).ready(function () {
-                $(document).ajaxComplete(function () {
-                    $(`input:radio[value='日常维护']`).click();
-                });
+    <script>
+        $(document).ready(function () {
+            let instrumentId = $("select#instrumentId").val();
+
+            $("select#instrumentId").on("change", function () {
+                instrumentId = $(this).val();
+                getMaintenanceContext(instrumentId);
             });
-        </script>*@
+
+            getMaintenanceContext(instrumentId);
+        });
+    </script>
 }
