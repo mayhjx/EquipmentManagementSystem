@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using EquipmentManagementSystem.Data;
+﻿using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Management.MaintenanceContents
 {
@@ -30,7 +30,7 @@ namespace EquipmentManagementSystem.Pages.Management.MaintenanceContents
             new SelectListItem { Value = "周维护", Text = "周维护" },
             new SelectListItem { Value = "月度维护", Text = "月度维护"  },
             new SelectListItem { Value = "季度维护", Text = "季度维护"  },
-            new SelectListItem { Value = "年度PM维护", Text = "年度PM维护"  },
+            new SelectListItem { Value = "年度维护", Text = "年度维护"  },
             new SelectListItem { Value = "临时维护", Text = "临时维护"  },
         };
 
