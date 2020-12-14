@@ -1,90 +1,52 @@
-﻿using EquipmentManagementSystem.Authorization;
-using EquipmentManagementSystem.Data;
+﻿using EquipmentManagementSystem.Interfaces;
 using EquipmentManagementSystem.Models;
-using EquipmentManagementSystem.Pages.Records;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.MaintenanceRecords
 {
-    public class DeleteModel : BasePageModel
+    public class DeleteModel : PageModel
     {
-
-        public DeleteModel(EquipmentContext context,
-            UserManager<User> userManager,
-            IAuthorizationService authorizationService)
-            : base(context, userManager, authorizationService)
+        private readonly IMaintenanceRecordRepository _maintenanceRecordRepository;
+        public DeleteModel(IMaintenanceRecordRepository maintenanceRecordRepository)
         {
+            _maintenanceRecordRepository = maintenanceRecordRepository;
+        }
+
+        public void OnGet()
+        {
+
         }
 
         [BindProperty]
         public MaintenanceRecord MaintenanceRecord { get; set; }
-        public string ErrorMessage { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id, bool? saveChangesError = false)
+        public async Task<JsonResult> OnPostAsync(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            MaintenanceRecord = await _context.MaintenanceRecords
-                                .AsNoTracking()
-                                .Include(m => m.Instrument)
-                                .Include(m => m.Project)
-                                .FirstOrDefaultAsync(m => m.Id == id);
+            MaintenanceRecord = await _maintenanceRecordRepository.GetById(id);
 
             if (MaintenanceRecord == null)
             {
-                return NotFound();
+                return new JsonResult("记录未找到，请刷新确认！");
             }
 
-            var isAuthorized = await _authorizationService.AuthorizeAsync(User, MaintenanceRecord, Operations.Delete);
+            //var isAuthorized = await _authorizationService.AuthorizeAsync(User, MaintenanceRecord, Operations.Delete);
 
-            if (!isAuthorized.Succeeded)
-            {
-                return Forbid();
-            }
-
-            if (saveChangesError.GetValueOrDefault())
-            {
-                ErrorMessage = "删除失败，请重试！";
-            }
-
-            return Page();
-        }
-
-        public async Task<IActionResult> OnPostAsync(int id)
-        {
-            MaintenanceRecord = await _context.MaintenanceRecords
-                                .AsNoTracking()
-                                .Include(m => m.Project)
-                                .FirstOrDefaultAsync(m => m.Id == id);
-
-            if (MaintenanceRecord == null)
-            {
-                return NotFound();
-            }
-
-            var isAuthorized = await _authorizationService.AuthorizeAsync(User, MaintenanceRecord, Operations.Delete);
-
-            if (!isAuthorized.Succeeded)
-            {
-                return Forbid();
-            }
+            //if (!isAuthorized.Succeeded)
+            //{
+            //    return Forbid();
+            //}
 
             try
             {
-                _context.MaintenanceRecords.Remove(MaintenanceRecord);
-                await _context.SaveChangesAsync();
-                return RedirectToPage("../Index");
+                await _maintenanceRecordRepository.Delete(MaintenanceRecord);
+                return new JsonResult("删除成功！");
             }
             catch (DbUpdateException)
             {
-                return RedirectToAction("./Delete", new { id, saveChangesError = true });
+                return new JsonResult("删除失败，请刷新后重试！");
             }
         }
     }
