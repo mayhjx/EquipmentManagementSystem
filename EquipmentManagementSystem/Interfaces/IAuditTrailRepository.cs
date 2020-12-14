@@ -6,6 +6,6 @@ namespace EquipmentManagementSystem.Interfaces
 {
     public interface IAuditTrailRepository
     {
-        Task<List<AuditTrailLog>> GetAuditTrailLogs(string entityName);
+        Task<List<AuditTrailLog>> GetAuditTrailLogs(string entityName, int? id = null);
     }
 }
