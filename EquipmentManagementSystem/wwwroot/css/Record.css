@@ -59,7 +59,7 @@ th.remark {
     width: 165px;
 }
 
-th.creator {
+th.operator {
     width: 65px;
 }
 
@@ -117,8 +117,8 @@ input#usageRecord_SystemTwoColumnPressure {
     width: 80px;
 }
 
-input[name="UsageRecord.Creator"],
-input[name="usageRecord.Creator"] {
+input[name="UsageRecord.Operator"],
+input[name="usageRecord.Operator"] {
     width: 60px;
 }
 
