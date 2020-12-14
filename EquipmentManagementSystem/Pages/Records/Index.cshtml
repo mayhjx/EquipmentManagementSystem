@@ -57,76 +57,104 @@
             else
             {
                 @*维护记录*@
+                // 固定显示31天
+                int columnNumber = 31;
+                int totalColSpan = 33;
+                string InstrumentPlatform = "LCMS";
                 <div class="tab-pane fade table-responsive active show" id="maintenance-record" role="tabpanel" aria-labelledby="maintenance-record-tab">
-                    <a asp-page="MaintenanceRecords/Create">
-                        <input type="button" class="btn btn-outline-primary my-2" value="新建">
+                    <a asp-page="MaintenanceRecords/Create" asp-route-instrumentId="@Model.Search.Instrument">
+                        <input type="button" class="btn btn-primary my-2" value="新建">
                     </a>
                     @*<audit-trail logs="Model.MaintenanceAuditTrailLogs" modal-id="maintenanceAuditTrailLog"></audit-trail>*@
 
-                    <table id="manintenance-record">
-                        <thead>
-                            <tr>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.MaintenanceRecords[0].InstrumentId)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.MaintenanceRecords[0].ProjectName)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.MaintenanceRecords[0].BeginTime)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.MaintenanceRecords[0].EndTime)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.MaintenanceRecords[0].Type)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.MaintenanceRecords[0].Content)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.MaintenanceRecords[0].Operator)
-                                </th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var usageRecord in Model.MaintenanceRecords)
-                            {
+                    <h6>仪器编号：@Model.Search.Instrument</h6>
+
+                    <div>
+
+                        <table id="manintenance-record">
+                            <thead>
                                 <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => usageRecord.InstrumentId)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => usageRecord.ProjectName)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => usageRecord.BeginTime)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => usageRecord.EndTime)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => usageRecord.Type)
-                                    </td>
-                                    <td>
-                                        <div class="text-wrap">
-                                            @Html.DisplayFor(modelItem => usageRecord.Content)
-                                        </div>
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => usageRecord.Operator)
-                                    </td>
-                                    <td>
-                                        @if ((await AuthorizationService.AuthorizeAsync(User, usageRecord, Operations.Update)).Succeeded)
-                                        {
-                                            <a asp-page="MaintenanceRecords/Edit" asp-route-id="@usageRecord.Id"><i class="fas fa-pencil-alt fa-lg"></i></a>
-                                        }
-                                    </td>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.MaintenanceRecords[0].BeginTime)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.MaintenanceRecords[0].EndTime)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.MaintenanceRecords[0].Daily)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.MaintenanceRecords[0].Weekly)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.MaintenanceRecords[0].Monthly)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.MaintenanceRecords[0].Quarterly)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.MaintenanceRecords[0].Yearly)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.MaintenanceRecords[0].Temporary)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.MaintenanceRecords[0].Operator)
+                                    </th>
+                                    <th></th>
                                 </tr>
-                            }
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach (var Record in Model.MaintenanceRecords)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => Record.BeginTime)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => Record.EndTime)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => Record.Daily)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => Record.Weekly)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => Record.Monthly)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => Record.Quarterly)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => Record.Yearly)
+                                        </td>
+                                        <td>
+                                            <div class="text-wrap">
+                                                @Html.DisplayFor(modelItem => Record.Temporary)
+                                                @if (Record.Other != null)
+                                                {
+                                                    <text>其他：</text>
+                                                    @Html.DisplayFor(modelItem => Record.Other)
+                                                }
+                                            </div>
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => Record.Operator)
+                                        </td>
+                                        <td>
+                                            @if ((await AuthorizationService.AuthorizeAsync(User, Record, Operations.Update)).Succeeded)
+                                            {
+                                                <a class="btn btn-sm btn-outline-primary" asp-page="MaintenanceRecords/Edit" asp-route-id="@Record.Id">编辑</a>
+                                                <button class="delete-maintenance-record-btn btn btn-sm btn-outline-danger" data-id="@Record.Id">删除</button>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
                 </div>
 
                 @*使用记录*@
@@ -149,7 +177,7 @@
                                 <th class="blank">Blank</th>
                                 <th class="test">Test</th>
                                 <th class="remark">备注</th>
-                                <th class="creator">操作者</th>
+                                <th class="operator">操作者</th>
                                 <th class="button">&nbsp;</th>
                             </tr>
                         </thead>
@@ -242,10 +270,10 @@
                                         }
                                     </td>
                                     <td class="remark">@Html.DisplayFor(item => usageRecord.Remark)</td>
-                                    <td class="creator">@Html.DisplayFor(item => usageRecord.Operator)</td>
+                                    <td class="operator">@Html.DisplayFor(item => usageRecord.Operator)</td>
                                     <td class="button">
                                         <button class="edit-btn btn btn-sm btn-outline-primary" data-id="@usageRecord.Id">编辑</button>
-                                        <button class="delete-btn btn btn-sm btn-outline-danger" data-id="@usageRecord.Id">删除</button>
+                                        <button class="delete-usage-record-btn btn btn-sm btn-outline-danger" data-id="@usageRecord.Id">删除</button>
                                     </td>
                                 </tr>
                                 @* update-row *@
@@ -310,7 +338,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <input form="edit-form" asp-for="@usageRecord.BlankSignal"
+                                        <input form="edit-form" asp-for="@usageRecord.SystemTwoColumnPressureUnit"
                                                pattern="^[+-]?[\d]+([\.][\d]+)?([Ee][+-]?[\d]+)?$"
                                                title="请使用科学计数法，例：3.1e+05，如果是N/A的话不需要输入。"
                                                disabled />
@@ -322,17 +350,17 @@
                                                title="请使用科学计数法，例：3.1e+05，如果是N/A的话不需要输入。"
                                                disabled />
                                         <br />
-                                        <input form="edit-form" asp-for="@usageRecord.SystemTwoTestSignal"
+                                        <input form="edit-form" asp-for="@usageRecord.BlankSignal"
                                                placeholder="S2"
                                                pattern="^[+-]?[\d]+([\.][\d]+)?([Ee][+-]?[\d]+)?$"
                                                title="请使用科学计数法，例：3.1e+05，如果是N/A的话不需要输入。"
                                                disabled />
                                     </td>
                                     <td>
-                                        <textarea form="edit-form" asp-for="@usageRecord.Remark" disabled></textarea>
+                                        <textarea form="edit-form" asp-for="@usageRecord.SystemOneTestSignal" disabled></textarea>
                                     </td>
                                     <td>
-                                        <input form="edit-form" asp-for="@usageRecord.Operator" disabled required />
+                                        <input form="edit-form" asp-for="@usageRecord.SystemTwoTestSignal" disabled required />
                                     </td>
                                     <td class="button">
                                         <button class="update-btn btn btn-sm btn-success" form="edit-form" disabled>保存</button>

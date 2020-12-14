@@ -26,7 +26,7 @@
         <!-- small box -->
         <div class="small-box bg-info">
             <div class="inner">
-                <h3>@Model.InstrumentToBeMaintained.Count</h3>
+                <h3>@*@Model.InstrumentToBeMaintained.Count*@0</h3>
 
                 <p>待维护设备</p>
             </div>
@@ -130,45 +130,45 @@
     </div>
 </div>
 
-<div class="modal fade" id="InstrumentToBeMaintained" tabindex="-1" role="dialog" aria-labelledby="InstrumentToBeMaintained" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="InstrumentToBeMaintained">待维护设备</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body p-0">
-                <div class="card-body">
-                    <table id="index" class="table table-sm">
-                        <thead>
-                            <tr>
-                                <td>@Html.DisplayNameFor(model => model.InstrumentToBeMaintained[0].InstrumentId)</td>
-                                <td>@Html.DisplayNameFor(model => model.InstrumentToBeMaintained[0].MaintenanceType)</td>
-                                <td>@Html.DisplayNameFor(model => model.InstrumentToBeMaintained[0].MaintenanceContent)</td>
-                                <td>@Html.DisplayNameFor(model => model.InstrumentToBeMaintained[0].MaintenanceTime)</td>
-                                <td>@Html.DisplayNameFor(model => model.InstrumentToBeMaintained[0].NextMaintenanceTime)</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model.InstrumentToBeMaintained)
-                            {
+@*<div class="modal fade" id="InstrumentToBeMaintained" tabindex="-1" role="dialog" aria-labelledby="InstrumentToBeMaintained" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="InstrumentToBeMaintained">待维护设备</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body p-0">
+                    <div class="card-body">
+                        <table id="index" class="table table-sm">
+                            <thead>
                                 <tr>
-                                    <td>@Html.DisplayFor(modelItem => item.InstrumentId)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.MaintenanceType)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.MaintenanceContent)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.MaintenanceTime)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.NextMaintenanceTime)</td>
+                                    <td>@Html.DisplayNameFor(model => model.InstrumentToBeMaintained[0].InstrumentId)</td>
+                                    <td>@Html.DisplayNameFor(model => model.InstrumentToBeMaintained[0].MaintenanceType)</td>
+                                    <td>@Html.DisplayNameFor(model => model.InstrumentToBeMaintained[0].MaintenanceContent)</td>
+                                    <td>@Html.DisplayNameFor(model => model.InstrumentToBeMaintained[0].MaintenanceTime)</td>
+                                    <td>@Html.DisplayNameFor(model => model.InstrumentToBeMaintained[0].NextMaintenanceTime)</td>
                                 </tr>
-                            }
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.InstrumentToBeMaintained)
+                                {
+                                    <tr>
+                                        <td>@Html.DisplayFor(modelItem => item.InstrumentId)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.MaintenanceType)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.MaintenanceContent)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.MaintenanceTime)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.NextMaintenanceTime)</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    </div>*@
 
 
 <div class="row invisible">
