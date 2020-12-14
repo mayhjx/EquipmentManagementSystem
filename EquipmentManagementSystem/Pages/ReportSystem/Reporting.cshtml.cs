@@ -140,7 +140,7 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
                                    select r;
 
                     maintenanceRecords = from r in maintenanceRecords
-                                             //where r.ProjectName == Search.Project
+                                         where r.ProjectName == Search.Project
                                          select r;
                 }
 

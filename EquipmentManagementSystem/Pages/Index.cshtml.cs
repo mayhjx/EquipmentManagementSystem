@@ -96,41 +96,41 @@ namespace EquipmentManagementSystem.Pages
             }
 
             // 将合并的维护内容拆分成一条条记录
-            //var maintenanceInfo = (from record in _equipmentContext.MaintenanceRecords
-            //                        .AsNoTracking()
-            //                        .Include(m => m.Instrument)
-            //                        .OrderBy(record => record.InstrumentId)
-            //                        .OrderByDescending(record => record.BeginTime) // 时间倒序排列
-            //                        .AsEnumerable()
-            //                       //where record.Type != "临时维护" && record.Type != "日常维护" // 排除临时维护和日常维护
-            //                       let platFrom = record.Instrument.Platform
-            //                       let contents = record.Content.Split(", ")
-            //                       // 拆分维护内容
-            //                       from content in contents
-            //                       let cycle = maintenanceCycleOfPlatform[platFrom][content]
-            //                       let remindTime = maintenanceRemindTimeOfPlatform[platFrom][content]
-            //                       let lastMaintenanceDay = record.EndTime.GetValueOrDefault() // 上次维护时间
-            //                       where lastMaintenanceDay != DateTime.MinValue // 排除无结束时间的记录
-            //                       select new MaintenanceInfo
-            //                       {
-            //                           InstrumentId = record.InstrumentId,
-            //                           MaintenanceType = record.Type,
-            //                           MaintenanceContent = content,
-            //                           MaintenanceTime = lastMaintenanceDay,
-            //                           cycle = cycle,
-            //                           remindTime = remindTime,
-            //                           NextMaintenanceTime = lastMaintenanceDay.AddDays(cycle)
-            //                       })
-            //                        .ToList();
+            var maintenanceInfo = (from record in _equipmentContext.MaintenanceRecords
+                                    .AsNoTracking()
+                                    .Include(m => m.Instrument)
+                                    .OrderBy(record => record.InstrumentId)
+                                    .OrderByDescending(record => record.BeginTime) // 时间倒序排列
+                                    .AsEnumerable()
+                                   where record.Type != "临时维护" && record.Type != "日常维护" // 排除临时维护和日常维护
+                                   let platFrom = record.Instrument.Platform
+                                   let contents = record.Content.Split(", ")
+                                   // 拆分维护内容
+                                   from content in contents
+                                   let cycle = maintenanceCycleOfPlatform[platFrom][content]
+                                   let remindTime = maintenanceRemindTimeOfPlatform[platFrom][content]
+                                   let lastMaintenanceDay = record.EndTime.GetValueOrDefault() // 上次维护时间
+                                   where lastMaintenanceDay != DateTime.MinValue // 排除无结束时间的记录
+                                   select new MaintenanceInfo
+                                   {
+                                       InstrumentId = record.InstrumentId,
+                                       MaintenanceType = record.Type,
+                                       MaintenanceContent = content,
+                                       MaintenanceTime = lastMaintenanceDay,
+                                       cycle = cycle,
+                                       remindTime = remindTime,
+                                       NextMaintenanceTime = lastMaintenanceDay.AddDays(cycle)
+                                   })
+                                    .ToList();
 
             // 获取最新的维护记录
-            //maintenanceInfo = RemoveDuplicatesRecord(maintenanceInfo);
+            maintenanceInfo = RemoveDuplicatesRecord(maintenanceInfo);
 
-            //// 遍历维护记录，如果 下次维护周期 - 倒数提醒天数 <= 今天 则提示需要维护
-            //InstrumentToBeMaintained = (from record in maintenanceInfo
-            //                            where record.NextMaintenanceTime.AddDays(-record.remindTime) <= DateTime.Today
-            //                            select record)
-            //                            .ToList();
+            // 遍历维护记录，如果 下次维护周期 - 倒数提醒天数 <= 今天 则提示需要维护
+            InstrumentToBeMaintained = (from record in maintenanceInfo
+                                        where record.NextMaintenanceTime.AddDays(-record.remindTime) <= DateTime.Today
+                                        select record)
+                                        .ToList();
 
             // 待跟进工单
             MalfunctionWorkOrderOfFollowNumber = (from m in _equipmentContext.MalfunctionWorkOrder
