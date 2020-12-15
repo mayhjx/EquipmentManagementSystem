@@ -2,6 +2,7 @@
 using EquipmentManagementSystem.Interfaces;
 using EquipmentManagementSystem.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,15 +17,24 @@ namespace EquipmentManagementSystem.Repositories
             _context = context;
         }
 
-        // TODO 限制时间范围或记录数量
-        public async Task<List<AuditTrailLog>> GetAuditTrailLogs(string entityName, int? id = null)
+        public async Task<List<AuditTrailLog>> GetAuditTrailLogs(string entityName, int? pk = null, DateTime? yearOrMonth = null)
         {
-            return await _context.AuditTrailLogs
-                .AsNoTracking()
-                .Where(l => l.EntityName == entityName)
-                .Where(l => id != null && l.PrimaryKeyValue == id.ToString())
-                .OrderByDescending(l => l.DateChanged)
-                .ToListAsync();
+            var result = _context.AuditTrailLogs
+                .Where(l => l.EntityName == entityName);
+
+            // 限制时间范围
+            if (yearOrMonth != null)
+            {
+                result = result.Where(l => l.DateChanged.Year == yearOrMonth.GetValueOrDefault().Year &&
+                                            l.DateChanged.Month == yearOrMonth.GetValueOrDefault().Month);
+            }
+
+            if (pk != null)
+            {
+                result = result.Where(l => l.PrimaryKeyValue == pk.ToString());
+            }
+
+            return await result.OrderByDescending(l => l.DateChanged).ToListAsync();
         }
     }
 }
