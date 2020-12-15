@@ -42,8 +42,7 @@
                 <input class="form-control my-1 mr-2" id="date" type="month" asp-for="Search.Date" style="width:165px;" />
 
                 <button class="btn btn-outline-primary my-1 mr-2" asp-page-handler="Search">查询</button>
-                @* TODO *@
-                <button class="btn btn-outline-primary my-1" asp-page-handler="CreateReport">导出</button>
+                <button type="button" class="btn btn-outline-primary my-1" onclick="createReport()">导出</button>
             </form>
         </div>
     </div>
@@ -57,84 +56,252 @@
             else
             {
                 @*维护记录*@
+                int columnNumber = 31; // 固定显示31天
+                int totalColSpan = 33;
+                string InstrumentPlatform = Model.Platform;
                 <div class="tab-pane fade table-responsive active show" id="maintenance-record" role="tabpanel" aria-labelledby="maintenance-record-tab">
-                    <a asp-page="MaintenanceRecords/Create">
-                        <input type="button" class="btn btn-outline-primary my-2" value="新建">
-                    </a>
-                    @*<audit-trail logs="Model.MaintenanceAuditTrailLogs" modal-id="maintenanceAuditTrailLog"></audit-trail>*@
-
-                    <table id="manintenance-record">
+                    <table id="maintenance-record">
                         <thead>
-                            <tr>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.MaintenanceRecords[0].InstrumentId)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.MaintenanceRecords[0].ProjectName)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.MaintenanceRecords[0].BeginTime)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.MaintenanceRecords[0].EndTime)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.MaintenanceRecords[0].Type)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.MaintenanceRecords[0].Content)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.MaintenanceRecords[0].Operator)
-                                </th>
-                                <th></th>
+                            <tr class="title">
+                                <td colspan="@totalColSpan">
+                                    <h5>
+                                        @(InstrumentPlatform == "LCMS" ? "液相色谱串联质谱联用仪维护记录表" :
+                                            InstrumentPlatform == "GCMS" ? "气质联用仪维护记录表" :
+                                            InstrumentPlatform == "UPLC" ? "超高效液相色谱仪维护记录表" : "_______________维护记录表")
+                                    </h5>
+                                    <h5>
+                                        @(InstrumentPlatform == "LCMS" ? "LC-MS/MS Maintenance Form" :
+                                            InstrumentPlatform == "GCMS" ? "GC-MS Maintenance Form" :
+                                            InstrumentPlatform == "UPLC" ? "UHPLC Maintenance Form" : "_______________Maintenance Form")
+                                    </h5>
+                                </td>
+                            </tr>
+                            <tr class="head">
+                                <td colspan="12" style="text-align:left;"> @Model.Search.Date.ToString(@"yyyy 年 \Year MM 月 \M\on\t\h")</td>
+                                <td colspan="10" style="text-align:left;">仪器编号 No.：@(Model.Search.Instrument)</td>
+                                <td colspan="11" style="text-align:right;">
+                                    @(InstrumentPlatform == "LCMS" ? "表号 Form：KM-SOP0314.202.02" :
+                                        InstrumentPlatform == "GCMS" ? "表号 Form：KM-SOP0314.201.02" :
+                                        InstrumentPlatform == "UPLC" ? "表号 Form：KM-SOP0314.204.02" : "表号 Form：KM-SOP0314. _____ .02")
+                                </td>
                             </tr>
                         </thead>
+                        <tfoot>
+                            <tr>
+                                <td colspan="@totalColSpan" style="text-align:left;padding-left:10px;">
+                                    备注 remark：Y，该工作日已完成该项维护； N，经评估该工作日无需进行该项维护。
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="@totalColSpan">使用回顾</td>
+                            </tr>
+                            <tr>
+                                <td>评估意见<br />Comment</td>
+                                <td colspan="@(totalColSpan - 19)"></td>
+                                <td colspan="4">评估人/日期<br />Evaluator/Date</td>
+                                <td colspan="5"></td>
+                                <td colspan="4">审批人/日期<br />Approver/Date</td>
+                                <td colspan="5"></td>
+                            </tr>
+                        </tfoot>
                         <tbody>
-                            @foreach (var usageRecord in Model.MaintenanceRecords)
+                            <tr>
+                                <td></td>
+                                <td>日期 Date</td>
+                                @for (int i = 1; i <= columnNumber; i++)
+                                {
+                                    <td class="days" data-id="@Model.RecordsIdOfMonth[i-1]">@i</td>
+
+                                }
+                            </tr>
+                            <tr>
+                                <td class="left" rowspan="@(Model.DailyMaintenanceContent.Count+2)">
+                                    日常维护<br />Daily
+                                </td>
+                            </tr>
+                            @foreach (var content in Model.DailyMaintenanceContent)
                             {
                                 <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => usageRecord.InstrumentId)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => usageRecord.ProjectName)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => usageRecord.BeginTime)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => usageRecord.EndTime)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => usageRecord.Type)
-                                    </td>
-                                    <td>
-                                        <div class="text-wrap">
-                                            @Html.DisplayFor(modelItem => usageRecord.Content)
-                                        </div>
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => usageRecord.Operator)
-                                    </td>
-                                    <td>
-                                        @if ((await AuthorizationService.AuthorizeAsync(User, usageRecord, Operations.Update)).Succeeded)
-                                        {
-                                            <a asp-page="MaintenanceRecords/Edit" asp-route-id="@usageRecord.Id"><i class="fas fa-pencil-alt fa-lg"></i></a>
-                                        }
+                                    <td class="maintenance-content">@content</td>
+                                    @foreach (var yOrN in Model.DailyMaintenanceSituation[content])
+                                    {
+                                        <td>@yOrN</td>
+                                    }
+                                </tr>
+                            }
+                            <tr>
+                                <td class="operator">操作者</td>
+                                @foreach (var op in Model.DailyMaintenanceOperator)
+                                {
+                                    <td><p class="operator text-vertical">@op</p></td>
+                                }
+                            </tr>
+                            <tr>
+                                <td class="left" rowspan="@(Model.WeeklyMaintenanceContent.Count+2)">
+                                    周维护<br />Weekly
+                                </td>
+                            </tr>
+                            @{
+                                // 周维护有4个，每个维护内容占用的colspan
+                                var colSpanOfWeekly = new int[] { 7, 8, 8, 8 };
+                            }
+                            @foreach (var content in Model.WeeklyMaintenanceContent)
+                            {
+                                <tr>
+                                    <td class="maintenance-content">@content</td>
+                                    @for (int i = 0; i < colSpanOfWeekly.Length; i++)
+                                    {
+                                        var yOrN = Model.WeekyMaintenanceSituation[content][i];
+                                        <td colspan="@colSpanOfWeekly[i]">@yOrN</td>
+                                    }
+                                </tr>
+                            }
+                            <tr>
+                                <td class="operator">操作者</td>
+                                @for (int i = 0; i < colSpanOfWeekly.Length; i++)
+                                {
+                                    var op = Model.WeeklyMaintenanceOperator[i];
+                                    <td colspan="@colSpanOfWeekly[i]">@op</td>
+                                }
+                            </tr>
+                            @{
+                                var otherRowSpan = 1;
+                                var rowOfTemporary = 1;
+                                if (InstrumentPlatform == "LCMS")
+                                {
+                                    otherRowSpan = 7;
+                                    rowOfTemporary = 3;
+                                }
+                                else if (InstrumentPlatform == "GCMS")
+                                {
+                                    otherRowSpan = 10;
+                                    rowOfTemporary = 6;
+                                }
+                                else if (InstrumentPlatform == "UPLC")
+                                {
+                                    otherRowSpan = 12;
+                                    rowOfTemporary = 8;
+                                }
+                            }
+                            <tr>
+                                <td class="left" rowspan="@otherRowSpan">
+                                    其他<br />Others
+                                </td>
+                            </tr>
+                            @foreach (var tem in Model.TemporaryMaintenanceRecord)
+                            {
+                                <tr>
+                                    <td class="maintenance-content">临时维护<br />操作者/日期</td>
+                                    <td colspan="@columnNumber">
+                                        @tem
                                     </td>
                                 </tr>
                             }
+                            @for (int i = 1; i <= rowOfTemporary - Model.TemporaryMaintenanceRecord.Count; i++)
+                            {
+                                // 补充行
+                                <tr>
+                                    <td class="maintenance-content">临时维护<br />操作者/日期</td>
+                                    <td colspan="@columnNumber"></td>
+                                </tr>
+                            }
+                            <tr>
+                                <td class="maintenance-content">月度维护<br />操作者/日期</td>
+                                <td colspan="@columnNumber">@Model.MonthlyMaintenanceRecord</td>
+                            </tr>
+                            <tr>
+                                <td class="maintenance-content">季度维护<br />操作者/日期</td>
+                                <td colspan="@columnNumber">@Model.QuarterlyMaintenanceRecord</td>
+                            </tr>
+                            <tr>
+                                <td class="maintenance-content">年度维护<br />操作者/日期</td>
+                                <td colspan="@columnNumber">@Model.YearlyMaintenanceRecord</td>
+                            </tr>
                         </tbody>
                     </table>
+
+                    <style>
+                        @@media print {
+                            @@page {
+                                size: A4 landscape;
+                                margin: 2cm,2mm,3mm,2mm;
+                            }
+
+                            a {
+                                display: none;
+                            }
+
+                            button {
+                                display: none !important;
+                            }
+
+                            div.card-title, div.card-tools {
+                                display: none;
+                            }
+                        }
+
+                        @@media screen {
+                            tr.title {
+                                display: none;
+                                border-bottom: 1px solid #FFF;
+                            }
+
+                            tfoot {
+                                display: none;
+                            }
+                        }
+
+                        table#maintenance-record {
+                            table-layout: initial;
+                            font-family: 'Times New Roman',sans-serif;
+                        }
+
+                        tr.title td {
+                            border: 1px solid #FFF;
+                        }
+
+                        tr.head td {
+                            border-top: 1px solid #FFF;
+                            border-left: 1px solid #FFF;
+                            border-right: 1px solid #FFF;
+                        }
+
+                        td.left {
+                            width: 7%;
+                            font-weight: bold;
+                        }
+
+                        td.maintenance-content, td.operator {
+                            text-align: left;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                            padding-left: 10px;
+                            padding-right: 10px;
+                        }
+
+                        p.text-vertical {
+                            margin: 2px auto;
+                            width: 16px;
+                            font-size: 18px;
+                        }
+
+                        td.operator {
+                            font-weight: bold;
+                        }
+
+                        td.days {
+                            width: 2.7%;
+                            height: 40px;
+                        }
+                    </style>
+                    <a asp-page="MaintenanceRecords/Create" asp-route-instrumentId="@Model.Search.Instrument">
+                        <input type="button" class="btn btn-primary my-2" value="新建">
+                    </a>
+                    <audit-trail logs="Model.MaintenanceAuditTrailLogs" modal-id="maintenanceAuditTrailLog"></audit-trail>
                 </div>
 
                 @*使用记录*@
                 <div class="tab-pane fade table-responsive" id="usage-record" role="tabpanel" aria-labelledby="usage-record-tab">
-                    @*<a asp-page="UsageRecords/Create">
-                            <input type="button" class="btn btn-outline-primary my-2" value="新建">
-                        </a>
-                        <audit-trail logs="Model.UsageAuditTrailLogs" modal-id="usageAuditTrailLog"></audit-trail>*@
                     <h6>仪器编号：@Model.Search.Instrument</h6>
                     <table id="usage-record">
                         <thead class="text-nowrap">
@@ -149,7 +316,7 @@
                                 <th class="blank">Blank</th>
                                 <th class="test">Test</th>
                                 <th class="remark">备注</th>
-                                <th class="creator">操作者</th>
+                                <th class="operator">操作者</th>
                                 <th class="button">&nbsp;</th>
                             </tr>
                         </thead>
@@ -242,10 +409,10 @@
                                         }
                                     </td>
                                     <td class="remark">@Html.DisplayFor(item => usageRecord.Remark)</td>
-                                    <td class="creator">@Html.DisplayFor(item => usageRecord.Operator)</td>
+                                    <td class="operator">@Html.DisplayFor(item => usageRecord.Operator)</td>
                                     <td class="button">
                                         <button class="edit-btn btn btn-sm btn-outline-primary" data-id="@usageRecord.Id">编辑</button>
-                                        <button class="delete-btn btn btn-sm btn-outline-danger" data-id="@usageRecord.Id">删除</button>
+                                        <button class="delete-usage-record-btn btn btn-sm btn-outline-danger" data-id="@usageRecord.Id">删除</button>
                                     </td>
                                 </tr>
                                 @* update-row *@
@@ -310,7 +477,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <input form="edit-form" asp-for="@usageRecord.BlankSignal"
+                                        <input form="edit-form" asp-for="@usageRecord.SystemTwoColumnPressureUnit"
                                                pattern="^[+-]?[\d]+([\.][\d]+)?([Ee][+-]?[\d]+)?$"
                                                title="请使用科学计数法，例：3.1e+05，如果是N/A的话不需要输入。"
                                                disabled />
@@ -322,17 +489,17 @@
                                                title="请使用科学计数法，例：3.1e+05，如果是N/A的话不需要输入。"
                                                disabled />
                                         <br />
-                                        <input form="edit-form" asp-for="@usageRecord.SystemTwoTestSignal"
+                                        <input form="edit-form" asp-for="@usageRecord.SystemTwoColumnPressureUnit"
                                                placeholder="S2"
                                                pattern="^[+-]?[\d]+([\.][\d]+)?([Ee][+-]?[\d]+)?$"
                                                title="请使用科学计数法，例：3.1e+05，如果是N/A的话不需要输入。"
                                                disabled />
                                     </td>
                                     <td>
-                                        <textarea form="edit-form" asp-for="@usageRecord.Remark" disabled></textarea>
+                                        <textarea form="edit-form" asp-for="@usageRecord.SystemOneTestSignal" disabled></textarea>
                                     </td>
                                     <td>
-                                        <input form="edit-form" asp-for="@usageRecord.Operator" disabled required />
+                                        <input form="edit-form" asp-for="@usageRecord.BlankSignal" disabled required />
                                     </td>
                                     <td class="button">
                                         <button class="update-btn btn btn-sm btn-success" form="edit-form" disabled>保存</button>
@@ -435,6 +602,7 @@
                         <li>单系统仪器填写S1对应的输入框；</li>
                         <li>真空度单位，色谱柱编号、单位自动预设为上一次填写的值；</li>
                     </ol>
+                    <audit-trail logs="Model.UsageAuditTrailLogs" modal-id="usageAuditTrailLog"></audit-trail>
                 </div>
             }
         </div>
@@ -451,4 +619,16 @@
 
 @section Scripts {
     <script src="~/js/Records.js" asp-append-version="true"></script>
+    <script>
+        function createReport() {
+            document.title = "@(Model.Search.Instrument)_@(Model.Search.Date.ToString("yyyyMM"))_记录表";
+            window.print();
+            document.title = "设备管理平台";
+        }
+
+        $("td.days").on("click", function () {
+            let id = $(this).attr("data-id");
+            console.log(id);
+        })
+    </script>
 }

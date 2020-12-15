@@ -19,13 +19,17 @@ namespace EquipmentManagementSystem.Pages.Records
         private readonly IInstrumentRepository _instrumentRepository;
         private readonly IUsageRecordRepository _usageRecordRepository;
         private readonly IMaintenanceRecordRepository _maintenanceRecordRepository;
+        private readonly IMaintenanceRecordService _maintenanceRecordService;
+        private readonly IMaintenanceContentRepository _maintenanceContentRepository;
 
         public IndexModel(IAuditTrailRepository auditTrailRepository,
             IUserResolverService userResolverService,
             IProjectRepository projectRepository,
             IInstrumentRepository instrumentRepository,
             IUsageRecordRepository usageRecordRepository,
-            IMaintenanceRecordRepository maintenanceRecordRepository)
+            IMaintenanceRecordRepository maintenanceRecordRepository,
+            IMaintenanceRecordService maintenanceRecordService,
+            IMaintenanceContentRepository maintenanceContentRepository)
         {
             _auditTrailRepository = auditTrailRepository;
             _userResolverService = userResolverService;
@@ -33,6 +37,8 @@ namespace EquipmentManagementSystem.Pages.Records
             _instrumentRepository = instrumentRepository;
             _usageRecordRepository = usageRecordRepository;
             _maintenanceRecordRepository = maintenanceRecordRepository;
+            _maintenanceRecordService = maintenanceRecordService;
+            _maintenanceContentRepository = maintenanceContentRepository;
 
             Search = new SearchForm(_instrumentRepository);
         }
@@ -48,14 +54,28 @@ namespace EquipmentManagementSystem.Pages.Records
         public IList<UsageRecord> UsageRecords { get; set; }
         public IList<MaintenanceRecord> MaintenanceRecords { get; set; }
 
+        #region 操作日志
         public IList<AuditTrailLog> UsageAuditTrailLogs { get; set; }
         public IList<AuditTrailLog> MaintenanceAuditTrailLogs { get; set; }
+        #endregion
 
         [BindProperty]
         public UsageRecord UsageRecord { get; set; }
 
-        [BindProperty]
-        public MaintenanceRecord MaintenanceRecord { get; set; }
+        #region 维护记录表相关属性
+        public List<string> RecordsIdOfMonth { get; set; }
+        public string Platform { get; set; }
+        public List<string> DailyMaintenanceContent { get; set; }
+        public List<string> WeeklyMaintenanceContent { get; set; }
+        public List<string> DailyMaintenanceOperator { get; set; }
+        public List<string> WeeklyMaintenanceOperator { get; set; }
+        public Dictionary<string, List<string>> DailyMaintenanceSituation { get; set; }
+        public Dictionary<string, List<string>> WeekyMaintenanceSituation { get; set; }
+        public List<string> TemporaryMaintenanceRecord { get; set; }
+        public string MonthlyMaintenanceRecord { get; set; }
+        public string QuarterlyMaintenanceRecord { get; set; }
+        public string YearlyMaintenanceRecord { get; set; }
+        #endregion
 
         public async Task OnGetAsync(string instrumentId, DateTime? date, string statusMessage)
         {
@@ -92,17 +112,57 @@ namespace EquipmentManagementSystem.Pages.Records
 
             ProjectsSelectList = new SelectList(projectShortNameList);
 
+            // 记录列表
             UsageRecords = _usageRecordRepository.GetAllByInstrumentIdAndBeginTime(instrumentId, date);
             MaintenanceRecords = _maintenanceRecordRepository.GetAllByInstrumentIdAndYearAndMonth(instrumentId, date);
 
+            // 新的使用记录实例
             UsageRecord = new UsageRecord
             {
                 InstrumentId = instrumentId,
                 Operator = _userResolverService.GetUserName()
             };
 
-            MaintenanceAuditTrailLogs = await _auditTrailRepository.GetAuditTrailLogs(new MaintenanceRecord().GetType().Name);
-            UsageAuditTrailLogs = await _auditTrailRepository.GetAuditTrailLogs(new UsageRecord().GetType().Name);
+            Platform = (await _instrumentRepository.GetById(instrumentId)).Platform;
+
+            #region 使用记录表相关
+
+            #endregion
+
+            #region 维护记录表相关
+            RecordsIdOfMonth = _maintenanceRecordService.GetRecordIdOfMonth(instrumentId, date.GetValueOrDefault());
+            DailyMaintenanceContent = _maintenanceContentRepository.GetDailyContentByInstrumentPlatform(Platform);
+            WeeklyMaintenanceContent = _maintenanceContentRepository.GetWeeklyContentByInstrumentPlatform(Platform);
+            DailyMaintenanceOperator = _maintenanceRecordService.GetDailyMaintenanceOperatorOfMonth(instrumentId, date.GetValueOrDefault());
+            DailyMaintenanceSituation = await _maintenanceRecordService.GetDailyMaintenanceSituationOfMonth(instrumentId, date.GetValueOrDefault());
+            WeeklyMaintenanceOperator = await _maintenanceRecordService.GetWeeklyMaintenanceOperatorOfMonth(instrumentId, date.GetValueOrDefault());
+            WeekyMaintenanceSituation = await _maintenanceRecordService.GetWeeklyMaintenanceSituationOfMonth(instrumentId, date.GetValueOrDefault());
+
+            MonthlyMaintenanceRecord = MaintenanceRecords.Where(i => !string.IsNullOrEmpty(i.Monthly))
+                .Select(i => $"{i.Monthly} {i.Operator}/{i.BeginTime.GetValueOrDefault():yyyy-MM-dd}")
+                .FirstOrDefault();
+
+            QuarterlyMaintenanceRecord = MaintenanceRecords.Where(i => !string.IsNullOrEmpty(i.Quarterly))
+                .Select(i => $"{i.Quarterly} {i.Operator}/{i.BeginTime.GetValueOrDefault():yyyy-MM-dd}")
+                .FirstOrDefault();
+
+            YearlyMaintenanceRecord = MaintenanceRecords.Where(i => !string.IsNullOrEmpty(i.Yearly))
+                .Select(i => $"{i.Yearly} {i.Operator}/{i.BeginTime.GetValueOrDefault():yyyy-MM-dd}")
+                .FirstOrDefault();
+
+            TemporaryMaintenanceRecord = MaintenanceRecords.Where(i => !string.IsNullOrEmpty(i.Temporary))
+                .Select(i => $"{i.Temporary} {i.Operator}/{i.BeginTime.GetValueOrDefault():yyyy-MM-dd}")
+                .ToList();
+
+            // 其他维护内容
+            TemporaryMaintenanceRecord.AddRange(MaintenanceRecords.Where(i => !string.IsNullOrEmpty(i.Other))
+                .Select(i => $"{i.Other} {i.Operator}/{i.BeginTime.GetValueOrDefault():yyyy-MM-dd}")
+                .ToList());
+            #endregion
+
+            // 当前仪器和月份的操作日志
+            MaintenanceAuditTrailLogs = await _auditTrailRepository.GetAuditTrailLogs(new MaintenanceRecord().GetType().Name, null, Search.Date);
+            UsageAuditTrailLogs = await _auditTrailRepository.GetAuditTrailLogs(new UsageRecord().GetType().Name, null, Search.Date);
         }
 
         public JsonResult OnGetLatestRecordOfProject(string project)
