@@ -60,7 +60,7 @@ namespace EquipmentManagementSystem.Models
 
         public List<string> GetDaily()
         {
-            return Daily.Split(",").ToList();
+            return Daily?.Split(",").ToList() ?? new List<string>();
         }
 
         public void SetWeekly(string[] content)
@@ -70,7 +70,7 @@ namespace EquipmentManagementSystem.Models
 
         public List<string> GetWeekly()
         {
-            return Weekly.Split(",").ToList();
+            return Weekly?.Split(",").ToList() ?? new List<string>();
         }
 
         public void SetMonthly(string[] content)
@@ -80,7 +80,7 @@ namespace EquipmentManagementSystem.Models
 
         public List<string> GetMonthly()
         {
-            return Monthly.Split(",").ToList();
+            return Monthly?.Split(",").ToList() ?? new List<string>();
         }
 
         public void SetQuarterly(string[] content)
@@ -90,7 +90,7 @@ namespace EquipmentManagementSystem.Models
 
         public List<string> GetQuarterly()
         {
-            return Quarterly.Split(",").ToList();
+            return Quarterly?.Split(",").ToList() ?? new List<string>();
         }
 
         public void SetYearly(string[] content)
@@ -100,7 +100,7 @@ namespace EquipmentManagementSystem.Models
 
         public List<string> GetYearly()
         {
-            return Yearly.Split(",").ToList();
+            return Yearly?.Split(",").ToList() ?? new List<string>();
         }
 
         public void SetTemporary(string[] content)
@@ -110,7 +110,7 @@ namespace EquipmentManagementSystem.Models
 
         public List<string> GetTemporary()
         {
-            return Temporary.Split(",").ToList();
+            return Temporary?.Split(",").ToList() ?? new List<string>();
         }
 
         public void SetOther(string content)
