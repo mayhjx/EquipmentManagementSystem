@@ -10,7 +10,7 @@ $('div > input:checkbox').on("click", function () {
 })
 
 // 选中或不取消选中维护内容时更新类型checkbox的状态
-$("ul").on("click", "li input:checkbox", function () {
+$("ul").on("change", "li input:checkbox", function () {
     let parentul = $(this).closest("ul");
     let ulid = parentul.attr("id");
 
