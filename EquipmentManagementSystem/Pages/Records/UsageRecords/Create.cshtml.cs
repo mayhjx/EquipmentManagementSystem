@@ -2,7 +2,6 @@
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System;
 using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Records.UsageRecords
@@ -50,7 +49,7 @@ namespace EquipmentManagementSystem.Pages.Records.UsageRecords
                 await _usageRecordRepo.Create(UsageRecord);
                 message = "新建成功";
             }
-            catch (Exception ex)
+            catch
             {
                 // create log
                 message = "新建失败，请刷新后重试！";
