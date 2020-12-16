@@ -59,8 +59,9 @@ namespace EquipmentManagementSystem.Services
             var dailyMaintenanceOperator = InitialList(31);
 
             List<MaintenanceRecord> records = _recordRepository.GetAllByInstrumentIdAndYearAndMonth(instrumentId, month);
+            var recordsHasDaily = records.Where(i => !string.IsNullOrEmpty(i.Daily)).ToList();
 
-            foreach (var record in records)
+            foreach (var record in recordsHasDaily)
             {
                 var day = record.BeginTime.GetValueOrDefault().Day;
                 var Operator = record.Operator;
@@ -111,19 +112,10 @@ namespace EquipmentManagementSystem.Services
             return weeklyMaintenanceSituation;
         }
 
-        public async Task<List<string>> GetWeeklyMaintenanceOperatorOfMonth(string instrumentId, DateTime month)
+        public List<string> GetWeeklyMaintenanceOperatorOfMonth(string instrumentId, DateTime month)
         {
             var weeklyMaintenanceOperator = InitialList(4);
 
-            var instrument = await _instrumentRepository.GetById(instrumentId);
-            string platform = string.Empty;
-
-            if (instrument != null)
-            {
-                platform = instrument.Platform;
-            }
-
-            List<string> contents = _contentRepository.GetWeeklyContentByInstrumentPlatform(platform);
             List<MaintenanceRecord> records = _recordRepository.GetAllByInstrumentIdAndYearAndMonth(instrumentId, month);
             var recordsHasWeekly = records.Where(i => !string.IsNullOrEmpty(i.Weekly)).ToList();
 
@@ -166,5 +158,7 @@ namespace EquipmentManagementSystem.Services
 
             return recordId;
         }
+
+
     }
 }

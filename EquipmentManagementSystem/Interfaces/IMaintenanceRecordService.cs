@@ -43,6 +43,6 @@ namespace EquipmentManagementSystem.Interfaces
         /// <param name="instrumentId">仪器编号</param>
         /// <param name="month">月份</param>
         /// <returns></returns>
-        Task<List<string>> GetWeeklyMaintenanceOperatorOfMonth(string instrumentId, DateTime month);
+        List<string> GetWeeklyMaintenanceOperatorOfMonth(string instrumentId, DateTime month);
     }
 }
