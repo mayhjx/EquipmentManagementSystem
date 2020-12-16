@@ -14,12 +14,6 @@ namespace EquipmentManagementSystem.Repositories
         {
         }
 
-        public async Task CreateRecords(List<UsageRecord> usageRecords)
-        {
-            await _context.Set<UsageRecord>().AddRangeAsync(usageRecords);
-            await _context.SaveChangesAsync();
-        }
-
         public List<UsageRecord> GetAllByInstrumentIdAndBeginTime(string instrumentId, DateTime? date)
         {
             if (date.GetValueOrDefault() == null)
@@ -57,9 +51,83 @@ namespace EquipmentManagementSystem.Repositories
         {
             return _context.UsageRecords
                 .Where(i => i.IsDelete == false)
-                .Where(i=>i.ProjectName == projectName)
+                .Where(i => i.ProjectName == projectName)
                 .ToList()
                 .LastOrDefault();
+        }
+
+        public Dictionary<char, string> GetMobilePhaseOrCarrierGasOfRecord(string instrumentId, DateTime month)
+        {
+            /*
+             * 初始化字典，key为自增的大写字母
+             * 循环某个月份某台仪器的UsageRecords
+             * 判断其流动相/载气
+             * 如果字典的值不包含该流动相/载气，则添加到字典中
+             */
+            var mobilePhaseOrCarrierGas = new Dictionary<char, string>();
+            var records = GetAllByInstrumentIdAndBeginTime(instrumentId, month);
+
+            foreach (var r in records)
+            {
+                var mobilePhase = r.GetMobilePhase();
+                foreach (var mp in mobilePhase)
+                {
+                    if (!mobilePhaseOrCarrierGas.ContainsValue(mp))
+                    {
+                        char key = (char)(mobilePhaseOrCarrierGas.Keys.Count + 65);
+                        mobilePhaseOrCarrierGas.Add(key, mp);
+                    }
+                }
+            }
+            return mobilePhaseOrCarrierGas;
+        }
+
+        public Dictionary<char, string> GetColumnTypeOfRecord(string instrumentId, DateTime month)
+        {
+            var columnType = new Dictionary<char, string>();
+            var records = GetAllByInstrumentIdAndBeginTime(instrumentId, month);
+
+            foreach (var r in records)
+            {
+                if (!columnType.ContainsValue(r.ColumnType))
+                {
+                    char key = (char)(columnType.Keys.Count + 65);
+                    columnType.Add(key, r.ColumnType);
+                }
+            }
+            return columnType;
+        }
+
+        public Dictionary<char, string> GetIonSourceOfRecord(string instrumentId, DateTime month)
+        {
+            var ionSource = new Dictionary<char, string>();
+            var records = GetAllByInstrumentIdAndBeginTime(instrumentId, month);
+
+            foreach (var r in records)
+            {
+                if (!ionSource.ContainsValue(r.IonSource))
+                {
+                    char key = (char)(ionSource.Keys.Count + 65);
+                    ionSource.Add(key, r.IonSource);
+                }
+            }
+            return ionSource;
+        }
+
+        public Dictionary<char, string> GetDetectorOfRecord(string instrumentId, DateTime month)
+        {
+            var detector = new Dictionary<char, string>();
+            var records = GetAllByInstrumentIdAndBeginTime(instrumentId, month);
+
+            foreach (var r in records)
+            {
+                if (!detector.ContainsValue(r.Detector))
+                {
+                    char key = (char)(detector.Keys.Count + 65);
+                    detector.Add(key, r.Detector);
+                }
+            }
+            return detector;
         }
     }
 }
