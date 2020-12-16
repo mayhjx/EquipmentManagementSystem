@@ -92,18 +92,18 @@ namespace EMS.Test.UsageRecordTest
 
             using (var context = Utilities.CreateContext(options))
             {
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", ProjectName = "A" });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ02", ProjectName = "A" });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ03", ProjectName = "A", IsDelete = true });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ03", ProjectName = "B" });
+                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ02", ProjectName = "A", SampleNumber=100 });
+                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ02", ProjectName = "A", SampleNumber = 101 });
+                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ03", ProjectName = "A", SampleNumber = 102 });
+                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ02", ProjectName = "A", SampleNumber = 103, IsDelete = true });
                 context.SaveChanges();
             }
 
             using (var context = Utilities.CreateContext(options))
             {
                 var repo = new UsageRecordRepository(context);
-                var project = repo.GetLatestRecordOfProject("A");
-                Assert.Equal("FXS-YZ02", project.InstrumentId);
+                var project = repo.GetLatestRecordOfProject("A", "FXS-YZ02");
+                Assert.Equal(101, project.SampleNumber);
             }
         }
 
@@ -117,7 +117,7 @@ namespace EMS.Test.UsageRecordTest
             using (var context = Utilities.CreateContext(options))
             {
                 var repo = new UsageRecordRepository(context);
-                var project = repo.GetLatestRecordOfProject("No Input");
+                var project = repo.GetLatestRecordOfProject("No project", "No instrument");
                 Assert.Null(project);
             }
         }
