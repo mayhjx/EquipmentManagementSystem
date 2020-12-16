@@ -1,8 +1,10 @@
 ﻿using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Interfaces;
 using EquipmentManagementSystem.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Repositories
 {
@@ -25,6 +27,18 @@ namespace EquipmentManagementSystem.Repositories
         public List<string> GetAllInstrumentIdByProject(string project)
         {
             return _context.Set<Instrument>().AsEnumerable().Where(i => i.HasProject(project)).Select(i => i.ID).ToList();
+        }
+
+        public async Task<string> GetModelById(string instrumentId)
+        {
+            var result = (await _context.Set<Instrument>()
+                        .AsNoTracking()
+                        .Include(m => m.Components)
+                        .FirstOrDefaultAsync(m => m.ID == instrumentId))
+                        .Components
+                        .FirstOrDefault(c => c.Name.Contains("主机"))?.Model;
+
+            return result ?? "";
         }
 
         public List<string> GetTestProjectsById(string instrumentId)
