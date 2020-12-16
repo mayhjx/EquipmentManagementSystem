@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using EquipmentManagementSystem.Models;
+﻿using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace EquipmentManagementSystem.TagHelpers
 {
@@ -17,7 +17,7 @@ namespace EquipmentManagementSystem.TagHelpers
 
             output.Content.SetHtmlContent($@"
                 <button type='button' class='btn btn-outline-secondary' data-toggle='modal' data-target='#{ModalId}' style='margin-right:10px;margin-left:10px; '>
-                    历史
+                    日志
                 </button> ");
 
             output.Content.AppendHtml($@"
