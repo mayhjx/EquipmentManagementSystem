@@ -78,3 +78,34 @@ function getContentOfInstrument(instrumentId) {
         }
     });
 }
+
+
+$(".delete-maintenance-record-btn").click(function () {
+    if (!confirm("确认删除该条记录？")) {
+        return false;
+    }
+
+    let id = $(this).attr("data-id");
+
+    var options = {};
+    options.url = "Records/MaintenanceRecords/Delete?id=" + id;
+    options.type = "post";
+    options.dataType = "json";
+    options.beforeSend = function (xhr) {
+        xhr.setRequestHeader("MY-XSRF-TOKEN",
+            $('input:hidden[name="__RequestVerificationToken"]').val());
+    };
+    options.success = function (msg) {
+        if (msg.indexOf("成功") != -1) {
+            location.reload();
+        }
+        else {
+            alert(msg);
+        }
+    };
+    options.error = function (msg) {
+        alert(msg);
+    };
+
+    $.ajax(options);
+});
