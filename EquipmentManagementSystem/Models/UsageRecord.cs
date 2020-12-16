@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace EquipmentManagementSystem.Models
 {
@@ -24,6 +26,11 @@ namespace EquipmentManagementSystem.Models
 
         [Display(Name = "流动相/载气")]
         public string MobilePhase { get; set; }
+
+        public List<string> GetMobilePhase()
+        {
+            return MobilePhase?.Split("|").ToList() ?? new List<string>();
+        }
 
         [Display(Name = "色谱柱类型")]
         public string ColumnType { get; set; }
