@@ -22,7 +22,15 @@ $(document).ready(function () {
         $('form#search').submit();
     });
 
-    getLatestRecord();
+    let project = $("select.select-project").val();
+    let instrumentId = $("select#instrumentId").val();
+    getLatestRecord(project, instrumentId);
+
+    $(".select-project").on("change", function () {
+        let project = $(this).val();
+        let instrumentId = $("select#instrumentId").val();
+        getLatestRecord(project, instrumentId);
+    });
 })
 
 $(".edit-btn").click(function () {
@@ -76,36 +84,33 @@ $(".delete-usage-record-btn").click(function () {
     $.ajax(options);
 });
 
-$("#select-project").on("change", getLatestRecord);
-
-// 初始化使用记录
-function getLatestRecord() {
-    var project = $("#select-project").val();
-    $.get(`Records/Index?handler=LatestRecordOfProject&project=${project}`, function (data) {
+// 获取最新一条记录
+function getLatestRecord(project, instrumentId) {
+    $.get(`Records/Index?handler=LatestRecordOfProject&project=${project}&instrumentId=${instrumentId}`, function (data) {
+        //console.log(data);
         setInitialValue(data);
     });
 };
 
+// 初始化新使用记录的值
 function setInitialValue(data) {
     if (data != null) {
-        //console.log(data);
         // 色谱柱编号
         $("#UsageRecord_SystemOneColumnNumber").val(data.systemOneColumnNumber);
         $("#UsageRecord_SystemTwoColumnNumber").val(data.systemTwoColumnNumber);
 
         // 色谱柱，真空度单位
-        $("#UsageRecord_HighVacuumDegreeUnit").val(data.highVacuumDegreeUnit);
         $("#UsageRecord_LowVacuumDegreeUnit").val(data.lowVacuumDegreeUnit);
+        $("#UsageRecord_HighVacuumDegreeUnit").val(data.highVacuumDegreeUnit);
         $("#UsageRecord_SystemOneColumnPressureUnit").val(data.systemOneColumnPressureUnit);
         $("#UsageRecord_SystemTwoColumnPressureUnit").val(data.systemTwoColumnPressureUnit);
     }
-    else {
-        // 重置
+    else {// 重置
         $("#UsageRecord_SystemOneColumnNumber").val("");
         $("#UsageRecord_SystemTwoColumnNumber").val("");
 
-        $("#UsageRecord_HighVacuumDegreeUnit")[0].selectedIndex = 0;
         $("#UsageRecord_LowVacuumDegreeUnit")[0].selectedIndex = 0;
+        $("#UsageRecord_HighVacuumDegreeUnit")[0].selectedIndex = 0;
         $("#UsageRecord_SystemOneColumnPressureUnit")[0].selectedIndex = 0;
         $("#UsageRecord_SystemTwoColumnPressureUnit")[0].selectedIndex = 0;
     }
