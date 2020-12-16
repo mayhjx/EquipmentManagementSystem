@@ -60,8 +60,8 @@ namespace EMS.Test.InstrumentTest
             // Insert seed data into the database using one instance of the context
             using (var context = Utilities.CreateContext(options))
             {
-                context.Instruments.Add(new Instrument { ID = "FXS-YZ01"});
-                context.Instruments.Add(new Instrument { ID = "FXS-YZ02"});
+                context.Instruments.Add(new Instrument { ID = "FXS-YZ01" });
+                context.Instruments.Add(new Instrument { ID = "FXS-YZ02" });
                 context.SaveChanges();
             }
 
@@ -69,7 +69,7 @@ namespace EMS.Test.InstrumentTest
             {
                 var repo = new InstrumentRepository(context);
                 var result = repo.GetAllInstrumentId();
-                Assert.Equal(new List<string> { "FXS-YZ01", "FXS-YZ02"}, result);
+                Assert.Equal(new List<string> { "FXS-YZ01", "FXS-YZ02" }, result);
             }
         }
 
@@ -163,5 +163,29 @@ namespace EMS.Test.InstrumentTest
                 Assert.Empty(result);
             }
         }
+
+        //[Fact]
+        //public async Task GetModelById_Should_Return()
+        //{
+        //    // EntityFramework InMemory不是关系型数据库，无法实现外键关联
+        //    //var options = new DbContextOptionsBuilder<EquipmentContext>()
+        //    //    .UseInMemoryDatabase(databaseName: nameof(GetModelById_Should_Return))
+        //    //    .Options;
+
+        //    //using (var context = Utilities.CreateContext(options))
+        //    //{
+        //    //    var instrument = new Instrument { ID = "FXS-YZ01" };
+        //    //    context.Instruments.Add(instrument);
+        //    //    context.Components.Add(new Component { Instrument = instrument, InstrumentID = "FXS-YZ01", Model = "Test", Name = "A" });
+        //    //    context.SaveChanges();
+        //    //}
+
+        //    //using (var context = Utilities.CreateContext(options))
+        //    //{
+        //    //    var repo = new InstrumentRepository(context);
+        //    //    var result = await repo.GetModelById("FXS-YZ01");
+        //    //    Assert.Equal("Test", result);
+        //    //}
+        //}
     }
 }
