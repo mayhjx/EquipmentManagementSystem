@@ -95,7 +95,7 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
                 return Page();
             }
 
-            if (Search.Category == Category.Record)
+            if (Search.Category == Category.Usage)
             {
                 var usageRecords = from r in _context.UsageRecords
                                     .AsNoTracking()
@@ -103,15 +103,13 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
                                        //.Include(r => r.Project)
                                        //.ThenInclude(r => r.Group)
 
-                                   where r.BeginTime >= Search.BeginTime
-                                   where r.BeginTime < Search.EndTime.AddDays(1)
+                                   where r.BeginTime >= Search.Month
                                    select r;
 
                 var maintenanceRecords = from r in _context.MaintenanceRecords
                                         .AsNoTracking()
                                         .Include(r => r.Instrument)
-                                         where r.BeginTime >= Search.BeginTime
-                                         where r.BeginTime < Search.EndTime.AddDays(1)
+                                         where r.BeginTime >= Search.Month
                                          select r;
 
                 if (Search.Instrument != null)
@@ -140,7 +138,7 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
                                    select r;
 
                     maintenanceRecords = from r in maintenanceRecords
-                                         where r.ProjectName == Search.Project
+                                         //where r.ProjectName == Search.Project
                                          select r;
                 }
 
@@ -226,15 +224,10 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
             [Display(Name = "类别")]
             public Category Category { get; set; }
 
-            [Required(ErrorMessage = "请输入起始时间")]
-            [Display(Name = "起始时间")]
+            [Required(ErrorMessage = "请输入月份")]
+            [Display(Name = "月份")]
             [DataType(DataType.Date)]
-            public DateTime BeginTime { get; set; } = DateTime.Now.AddDays(-30);
-
-            [Required(ErrorMessage = "请输入结束时间")]
-            [Display(Name = "结束时间")]
-            [DataType(DataType.Date)]
-            public DateTime EndTime { get; set; } = DateTime.Now;
+            public DateTime Month { get; set; } = DateTime.Now;
 
             //[Required(ErrorMessage = "请先选择平台")]
             [Display(Name = "设备平台")]
@@ -254,10 +247,10 @@ namespace EquipmentManagementSystem.Pages.ReportSystem
 
         public enum Category
         {
-            [Display(Name = "维护使用")]
-            Record,
-            //[Display(Name = "故障工单")]
-            //Malfunction,
+            [Display(Name = "使用率")]
+            Usage,
+            [Display(Name = "故障率")]
+            Malfunction,
         }
     }
 }
