@@ -7,7 +7,7 @@ namespace EquipmentManagementSystem.TagHelpers
 {
     public class AuditTrailTagHelper : TagHelper
     {
-        public IList<AuditTrailLog> logs { get; set; }
+        public IList<AuditTrailLog> Logs { get; set; }
         public string ModalId { get; set; }
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
@@ -32,7 +32,7 @@ namespace EquipmentManagementSystem.TagHelpers
                         </div>
                         <div class='modal-body'>");
 
-            foreach (var log in logs)
+            foreach (var log in Logs)
             {
                 output.Content.AppendHtml($@"<table class='table table-bordered table-sm table-striped'>
                                             <tbody>
