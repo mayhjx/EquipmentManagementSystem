@@ -133,7 +133,7 @@ namespace EquipmentManagementSystem.Services
                 if (i == 4) break;
                 var op = record.Operator;
                 var date = record.BeginTime.GetValueOrDefault().ToString("yyyy-MM-dd");
-                weeklyMaintenanceOperator[i++] = $"{op} {date}";
+                weeklyMaintenanceOperator[i++] = $"{op}/{date}";
             }
 
             return weeklyMaintenanceOperator;
