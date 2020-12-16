@@ -47,11 +47,12 @@ namespace EquipmentManagementSystem.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public UsageRecord GetLatestRecordOfProject(string projectName)
+        public UsageRecord GetLatestRecordOfProject(string projectName, string instrumentId)
         {
             return _context.UsageRecords
                 .Where(i => i.IsDelete == false)
                 .Where(i => i.ProjectName == projectName)
+                .Where(i => i.InstrumentId == instrumentId)
                 .ToList()
                 .LastOrDefault();
         }

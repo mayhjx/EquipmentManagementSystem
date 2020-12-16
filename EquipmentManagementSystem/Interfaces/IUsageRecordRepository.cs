@@ -7,7 +7,12 @@ namespace EquipmentManagementSystem.Interfaces
 {
     public interface IUsageRecordRepository : IGenericRepository<UsageRecord>
     {
-        UsageRecord GetLatestRecordOfProject(string projectName);
+        /// <summary>
+        /// 返回某个项目某台仪器的最新一条记录，用于预设新记录的值
+        /// </summary>
+        /// <param name="projectName"></param>
+        /// <returns></returns>
+        UsageRecord GetLatestRecordOfProject(string projectName, string instrumentId);
         List<UsageRecord> GetAllByInstrumentIdAndBeginTime(string instrumentId, DateTime? date);
         Task UpdateEndTime(UsageRecord usageRecord, DateTime endTime);
 
