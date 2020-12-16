@@ -42,7 +42,7 @@
                 <input class="form-control my-1 mr-2" id="date" type="month" asp-for="Search.Date" style="width:165px;" />
 
                 <button class="btn btn-outline-primary my-1 mr-2" asp-page-handler="Search">查询</button>
-                <button type="button" class="btn btn-outline-primary my-1" onclick="createReport()">导出</button>
+
             </form>
         </div>
     </div>
@@ -110,8 +110,32 @@
                                 <td>日期 Date</td>
                                 @for (int i = 1; i <= columnNumber; i++)
                                 {
-                                    <td class="days" data-id="@Model.RecordsIdOfMonth[i-1]">@i</td>
+                                    var id = @Model.RecordsIdOfMonth[i - 1];
 
+                                    var selectedDate = new DateTime(Model.Search.Date.Year, Model.Search.Date.Month, i, 8, 30, 00);
+                                    <td class="days">
+                                        <span class="hide-in-screen">@i</span>
+
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            @i
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                            @if (Model.DailyMaintenanceOperator[i - 1] != "")
+                                            {
+                                                <a class="dropdown-item" asp-page="MaintenanceRecords/Edit" asp-route-Id="@id">编辑</a>
+                                                <a class="dropdown-item delete-maintenance-record-btn" href="#" data-id="@id">删除</a>
+                                            }
+                                            else
+                                            {
+                                                <a class="dropdown-item"
+                                                   asp-page="MaintenanceRecords/Create"
+                                                   asp-route-instrumentId="@Model.Search.Instrument"
+                                                   asp-route-beginTime="@selectedDate">
+                                                    新建
+                                                </a>
+                                            }
+                                        </div>
+                                    </td>
                                 }
                             </tr>
                             <tr>
@@ -165,7 +189,7 @@
                                 }
                             </tr>
                             @{
-                                var otherRowSpan = 1;
+                                var otherRowSpan = 5;
                                 var rowOfTemporary = 1;
                                 if (InstrumentPlatform == "LCMS")
                                 {
@@ -246,6 +270,10 @@
                                 border-bottom: 1px solid #FFF;
                             }
 
+                            td.days span.hide-in-screen {
+                                display: none;
+                            }
+
                             tfoot {
                                 display: none;
                             }
@@ -272,6 +300,7 @@
                         }
 
                         td.maintenance-content, td.operator {
+                            width: auto;
                             text-align: left;
                             text-overflow: ellipsis;
                             white-space: nowrap;
@@ -294,10 +323,11 @@
                             height: 40px;
                         }
                     </style>
-                    <a asp-page="MaintenanceRecords/Create" asp-route-instrumentId="@Model.Search.Instrument">
-                        <input type="button" class="btn btn-primary my-2" value="新建">
-                    </a>
+                    @*<a asp-page="MaintenanceRecords/Create" asp-route-instrumentId="@Model.Search.Instrument">
+                            <input type="button" class="btn btn-primary my-2" value="新建">
+                        </a>*@
                     <audit-trail logs="Model.MaintenanceAuditTrailLogs" modal-id="maintenanceAuditTrailLog"></audit-trail>
+                    <button type="button" class="btn btn-outline-primary my-1" onclick="createReport()">导出</button>
                 </div>
 
                 @*使用记录*@
@@ -603,6 +633,7 @@
                         <li>真空度单位，色谱柱编号、单位自动预设为上一次填写的值；</li>
                     </ol>
                     <audit-trail logs="Model.UsageAuditTrailLogs" modal-id="usageAuditTrailLog"></audit-trail>
+                    <button type="button" class="btn btn-outline-primary my-1" onclick="createReport()">导出</button>
                 </div>
             }
         </div>
