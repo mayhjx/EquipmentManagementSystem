@@ -1,14 +1,32 @@
-﻿
-/*使用记录*/
+﻿/*使用记录*/
 table {
     border: 1px solid black;
     border-collapse: collapse;
     width: 100%;
     table-layout: fixed;
+    font-family: 'Times New Roman',sans-serif;
+}
+
+@media (max-width: 1600px) {
+    table {
+        border: 1px solid black;
+        border-collapse: collapse;
+        width: 1450px;
+        table-layout: fixed;
+        font-family: 'Times New Roman',sans-serif;
+    }
+}
+
+tbody {
+    font-size: 15px;
+}
+
+tfoot {
+    font-size: 15px;
 }
 
 tbody tr:hover {
-    background: #e9e9e9;
+    background-color: moccasin;
 }
 
 table tr, th, td {
@@ -24,48 +42,69 @@ thead th {
     padding-bottom: 10px;
 }
 
+td {
+    padding: 2px;
+}
+
 /* table column width */
-th.time {
-    width: 190px;
-}
-
-th.projectname {
-    width: 85px;
-}
-
-th.samplenumber {
-    width: 85px;
-}
-
-th.batchnumber {
-    width: 92px;
-}
-
-th.vacuumdegree {
-    width: 170px;
-}
-
-th.columntype {
-    width: 230px;
-}
-
-th.blank {
-    width: 92px;
-}
-
-th.test {
-    width: 92px;
-}
-
-th.remark {
+col.time {
     width: 165px;
 }
 
-th.operator {
+col.projectname {
+    width: 75px;
+}
+
+
+col.columnnumber {
+    width: 125px;
+}
+
+col.mobilephase {
+    width: 100px;
+}
+
+col.samplenumber {
+    width: 85px;
+}
+
+col.batchnumber {
+    width: 92px;
+}
+
+col.column {
+    width: 200px;
+}
+
+col.ionsource {
+    width: 80px;
+}
+
+col.detector {
+    width: 80px;
+}
+
+col.vacuumdegree {
+    width: 150px;
+}
+
+col.blank {
+    width: 75px;
+}
+
+col.test {
+    width: 75px;
+}
+
+col.operator {
     width: 65px;
 }
 
-th.button {
+col.remark {
+    width: 100px;
+}
+
+col.button {
     width: 100px;
 }
 
@@ -74,58 +113,68 @@ tr.update-row {
     display: none;
 }
 
-input#UsageRecord_LowVacuumDegree,
-input#UsageRecord_HighVacuumDegree,
-input#usageRecord_LowVacuumDegree,
-input#usageRecord_HighVacuumDegree {
-    width: 80px;
-}
-
-input#UsageRecord_SystemOneColumnNumber,
-input#UsageRecord_SystemTwoColumnNumber,
-input#usageRecord_SystemOneColumnNumber,
-input#usageRecord_SystemTwoColumnNumber {
-    width: 80px;
-}
-
-input#UsageRecord_BlankSignal,
-input#usageRecord_BlankSignal {
-    width: 85px;
-    text-align: right;
-}
-
-input#UsageRecord_SystemOneTestSignal, input#UsageRecord_SystemTwoTestSignal,
-input#usageRecord_SystemOneTestSignal, input#usageRecord_SystemTwoTestSignal {
-    width: 85px;
-    text-align: right;
-}
-
 input#UsageRecord_SampleNumber,
 input#usageRecord_SampleNumber {
-    width: 75px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+input[type="datetime-local"] {
+    width: 100%;
+    box-sizing: border-box;
 }
 
 input#UsageRecord_SystemOneBatchNumber,
 input#usageRecord_SystemOneBatchNumber,
 input#UsageRecord_SystemTwoBatchNumber,
 input#usageRecord_SystemTwoBatchNumber {
-    width: 80px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+input#UsageRecord_SystemOneColumnNumber,
+input#UsageRecord_SystemTwoColumnNumber,
+input#usageRecord_SystemOneColumnNumber,
+input#usageRecord_SystemTwoColumnNumber {
+    width: 40%;
+    box-sizing: border-box;
 }
 
 input#UsageRecord_SystemOneColumnPressure,
 input#usageRecord_SystemOneColumnPressure,
 input#UsageRecord_SystemTwoColumnPressure,
 input#usageRecord_SystemTwoColumnPressure {
-    width: 80px;
+    width: 30%;
+    box-sizing: border-box;
+}
+
+/*真空度*/
+input#UsageRecord_LowVacuumDegree,
+input#UsageRecord_HighVacuumDegree,
+input#usageRecord_LowVacuumDegree,
+input#usageRecord_HighVacuumDegree {
+    width: 50%;
+    box-sizing: border-box;
+}
+
+input#UsageRecord_BlankSignal,
+input#usageRecord_BlankSignal {
+    width: 100%;
+    box-sizing: border-box;
+    text-align: right;
+}
+
+input#UsageRecord_SystemOneTestSignal, input#UsageRecord_SystemTwoTestSignal,
+input#usageRecord_SystemOneTestSignal, input#usageRecord_SystemTwoTestSignal {
+    width: 100%;
+    box-sizing: border-box;
+    text-align: right;
 }
 
 input[name="UsageRecord.Operator"],
 input[name="usageRecord.Operator"] {
-    width: 60px;
-}
-
-input[type="datetime-local"] {
-    width: 187px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 input[type="number"] {
@@ -136,51 +185,23 @@ select {
     height: 30px;
 }
 
+    select.select-project {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
 textarea {
-    width: 163px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 /*维护记录*/
-@media print {
-    @page {
-        size: A4 landscape;
-        margin: 2cm,2mm,3mm,2mm;
-    }
-
-    a {
-        display: none;
-    }
-
-    button {
-        display: none !important;
-    }
-
-    div.card-title, div.card-tools {
-        display: none;
-    }
-}
-
-@media screen {
-    tr.title {
-        display: none;
-        border-bottom: 1px solid #FFF;
-    }
-
-    td.days span.hide-in-screen {
-        display: none;
-    }
-
-    tfoot {
-        display: none;
-    }
-}
-
 table#maintenance-record {
     table-layout: initial;
     font-family: 'Times New Roman',sans-serif;
 }
 
-tr.title td {
+tr.title th {
     border: 1px solid #FFF;
 }
 
@@ -206,8 +227,8 @@ td.maintenance-content, td.operator {
 
 p.text-vertical {
     margin: 2px auto;
-    width: 16px;
-    font-size: 18px;
+    width: 14px;
+    font-size: 14px;
 }
 
 td.operator {
@@ -217,4 +238,87 @@ td.operator {
 td.days {
     width: 2.7%;
     height: 40px;
+}
+
+
+
+@media print {
+    @page {
+        size: A4 landscape;
+        margin-top: 0.7cm;
+    }
+
+    table {
+        width: 100%;
+        table-layout: auto;
+        font-family: 'Times New Roman',sans-serif;
+    }
+
+    col {
+        width: unset;
+    }
+
+    thead {
+        font-size: 22px;
+    }
+
+    tbody {
+        font-size: 20px;
+    }
+
+    tfoot {
+        font-size: 20px;
+    }
+
+    p.text-vertical {
+        font-size: 22px;
+    }
+
+    a {
+        display: none;
+    }
+
+    button {
+        display: none !important;
+    }
+
+    div.card-title, div.card-tools {
+        display: none;
+    }
+
+    th.samplenumber, td.samplenumber,
+    th.batchnumber, td.batchnumber,
+    th.button, td.button {
+        display: none;
+    }
+
+    tr#create-row {
+        display: none;
+    }
+
+    div.remark {
+        display: none;
+    }
+}
+
+@media screen {
+    tr.title {
+        display: none;
+        border-bottom: 1px solid #FFF;
+    }
+
+    td.days span.hide-in-screen {
+        display: none;
+    }
+
+    tfoot {
+        display: none;
+    }
+
+    .columnnumber,
+    .mobilephase,
+    .ionsource,
+    .detector {
+        display: none;
+    }
 }
