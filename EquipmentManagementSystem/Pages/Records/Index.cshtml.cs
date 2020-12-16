@@ -184,10 +184,10 @@ namespace EquipmentManagementSystem.Pages.Records
             MaintenanceAuditTrailLogs = await _auditTrailRepository.GetAuditTrailLogs(new MaintenanceRecord().GetType().Name, null, Search.Date);
         }
 
-        public JsonResult OnGetLatestRecordOfProject(string project)
+        public JsonResult OnGetLatestRecordOfProject(string project, string instrumentId)
         {
             // 如果没有记录，返回null
-            var latestRecord = _usageRecordRepository.GetLatestRecordOfProject(project);
+            var latestRecord = _usageRecordRepository.GetLatestRecordOfProject(project, instrumentId);
             return new JsonResult(latestRecord);
         }
 
