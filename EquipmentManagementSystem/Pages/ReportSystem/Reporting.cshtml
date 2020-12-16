@@ -21,14 +21,9 @@
                             </select>
                         </div>
                         <div class="col-xl-auto col-sm-6 my-0">
-                            <label asp-for="Search.BeginTime" class="control-label"></label>
-                            <span asp-validation-for="Search.BeginTime" class="text-danger"></span>
-                            <input asp-for="Search.BeginTime" class="form-control" />
-                        </div>
-                        <div class="col-xl-auto col-sm-6 my-0">
-                            <label asp-for="Search.EndTime" class="control-label"></label>
-                            <span asp-validation-for="Search.EndTime" class="text-danger"></span>
-                            <input asp-for="Search.EndTime" class="form-control" />
+                            <label asp-for="Search.Month" class="control-label"></label>
+                            <span asp-validation-for="Search.Month" class="text-danger"></span>
+                            <input asp-for="Search.Month" type="month" class="form-control" />
                         </div>
                         <div class="col-xl-auto col-sm-6 my-0">
                             <label asp-for="Search.Platform" class="control-label"></label>
@@ -82,40 +77,14 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#data" data-toggle="pill" role="tab">使用记录</a>
                 </li>
-                <li class="nav-item">
+                @*<li class="nav-item">
                     <a class="nav-link" href="#usage-datagrid" data-toggle="pill" role="tab">使用记录表</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#maintenance-datagrid" data-toggle="pill" role="tab">维护记录表</a>
-                </li>
+                </li>*@
             </ul>
         </div>
-        @{
-            void AddKeyValueToDic(Dictionary<char, string> dic, string value)
-            {
-                if (value != null && !dic.ContainsValue(value))
-                {
-                    // A, B, C, ...
-                    char key = (char)(dic.Keys.Count + 65);
-                    dic.Add(key, value);
-                }
-            }
-
-            string GetKeyFromValue(Dictionary<char, string> dic, string value)
-            {
-                string key = string.Empty;
-                if (value == null) return string.Empty;
-
-                foreach (KeyValuePair<char, string> kvp in dic)
-                {
-                    if (kvp.Value == value)
-                    {
-                        return kvp.Key.ToString();
-                    }
-                }
-                return key;
-            }
-        }
         <div class="card-body">
             <div class="tab-content p-0">
                 @*使用时长直方图*@
@@ -269,19 +238,6 @@
     <script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="~/plugins/chart.js/Chart.bundle.min.js"></script>
     <script>
-        $(document).ready(function () {
-            $("button#exportUsageRecord").click(function () {
-                document.title = "使用记录表_@Model.Search.Instrument";
-                window.print();
-                document.title = "设备管理平台";
-            });
-            $("button#exportMaintenanceRecord").click(function () {
-                document.title = "维护记录表_@Model.Search.Instrument";
-                window.print();
-                document.title = "设备管理平台";
-            })
-        });
-
         // exportMaintenanceRecord
         $(document).ready(function () {
             @{
@@ -442,12 +398,6 @@
                         "last": "尾页"
                     }
                 },
-                buttons: [{
-                    extend: 'excel',
-                    text: '导出',
-                    footer: true,
-                    filename: "使用记录-@(Model.Search?.BeginTime.ToShortDateString())_@(Model.Search?.EndTime.ToShortDateString())"
-                }]
             });
 
             // 计算总时长
@@ -455,78 +405,3 @@
         });
     </script>
 }
-
-@*@if (Model.MalfunctionWorkOrders != null)
-    {
-        <table id="export" class="table table-hover text-nowrap">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrders[0].InstrumentID)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrders[0].MalfunctionInfo.Part)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrders[0].MalfunctionInfo.Phenomenon)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrders[0].MalfunctionInfo.BeginTime)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrders[0].MalfunctionInfo.FoundedTime)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrders[0].RepairRequest.RequestTime)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrders[0].Maintenance.BeginTime)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.MalfunctionWorkOrders[0].Validation.FinishedTime)
-                    </th>
-                    <th>维修耗时(h)</th>
-                    <th>故障时长(h)</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.MalfunctionWorkOrders)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.InstrumentID)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.MalfunctionInfo.Part)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.MalfunctionInfo.Phenomenon)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.MalfunctionInfo.BeginTime)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.MalfunctionInfo.FoundedTime)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.RepairRequest.RequestTime)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Maintenance.BeginTime)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Validation.FinishedTime)
-                        </td>
-                        <td>@((item.Maintenance.EndTime - item.Maintenance.BeginTime).GetValueOrDefault().TotalHours.ToString("f1"))</td>
-                        <td class="time">@((item.Validation.FinishedTime - item.MalfunctionInfo.BeginTime).GetValueOrDefault().TotalHours.ToString("f1"))</td>
-                    </tr>
-                }
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td class="text-bold">总时长(h)</td>
-                    <td id="total" class="text-bold"></td>
-                </tr>
-            </tfoot>
-        </table>
-    }*@
