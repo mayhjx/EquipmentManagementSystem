@@ -2,6 +2,7 @@
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -27,6 +28,7 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
 
         public string CurrentUserName { get; set; }
         public string SelectedInstrumentId { get; set; } = "";
+        public DateTime BeginTime { get; set; }
         public List<string> InstrumentSelectList { get; set; }
 
         [BindProperty]
@@ -48,14 +50,17 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
         [BindProperty]
         public string OtherMaintenanceContent { get; set; }
 
-        public IActionResult OnGet(string instrumentId)
+        public IActionResult OnGet(string instrumentId, DateTime beginTime)
         {
             InstrumentSelectList = _instrumentRepository.GetAllInstrumentId();
             CurrentUserName = _userResolverService.GetUserName();
+            BeginTime = beginTime;
+
             if (!string.IsNullOrEmpty(instrumentId))
             {
                 SelectedInstrumentId = instrumentId;
             }
+
             return Page();
         }
 
