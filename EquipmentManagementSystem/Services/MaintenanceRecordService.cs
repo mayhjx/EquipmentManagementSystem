@@ -64,7 +64,7 @@ namespace EquipmentManagementSystem.Services
             foreach (var record in records)
             {
                 var day = record.BeginTime.GetValueOrDefault().Day;
-                var Operator = record.Operator;
+                var Operator = !string.IsNullOrEmpty(record.Daily) ? record.Operator : "/";
                 dailyMaintenanceOperator[day - 1] = Operator;
             }
 
@@ -117,10 +117,10 @@ namespace EquipmentManagementSystem.Services
             var weeklyMaintenanceOperator = InitialList(4);
 
             List<MaintenanceRecord> records = _recordRepository.GetAllByInstrumentIdAndYearAndMonth(instrumentId, month);
-            //var recordsHasWeekly = records.Where(i => !string.IsNullOrEmpty(i.Weekly)).ToList();
+            var recordsHasWeekly = records.Where(i => !string.IsNullOrEmpty(i.Weekly)).ToList();
 
             var i = 0;
-            foreach (var record in records)
+            foreach (var record in recordsHasWeekly)
             {
                 if (i == 4) break;
                 var op = record.Operator;
