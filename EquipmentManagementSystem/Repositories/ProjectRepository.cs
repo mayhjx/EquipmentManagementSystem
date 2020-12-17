@@ -3,6 +3,7 @@ using EquipmentManagementSystem.Interfaces;
 using EquipmentManagementSystem.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Repositories
@@ -50,6 +51,16 @@ namespace EquipmentManagementSystem.Repositories
                 }
             }
             return result;
+        }
+
+        /// <summary>
+        /// 返回某项目组的所有检测项目
+        /// </summary>
+        /// <param name="group"></param>
+        /// <returns></returns>
+        public List<string> GetByGroup(string group)
+        {
+            return _context.Set<Project>().Where(i => i.GroupName == group).Select(i => i.Name).ToList();
         }
     }
 }
