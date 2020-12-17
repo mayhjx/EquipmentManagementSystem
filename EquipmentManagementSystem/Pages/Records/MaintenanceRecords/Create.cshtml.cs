@@ -1,5 +1,7 @@
-﻿using EquipmentManagementSystem.Interfaces;
+﻿using EquipmentManagementSystem.Authorization;
+using EquipmentManagementSystem.Interfaces;
 using EquipmentManagementSystem.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
@@ -14,16 +16,19 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
         private readonly IUserResolverService _userResolverService;
         private readonly IMaintenanceContentRepository _maintenanceContentRepository;
         private readonly IMaintenanceRecordRepository _maintenanceRecordRepository;
+        private readonly IAuthorizationService _authorizationService;
 
         public CreateModel(IInstrumentRepository instrumentRepository,
             IUserResolverService userResolverService,
             IMaintenanceContentRepository maintenanceContentRepository,
-            IMaintenanceRecordRepository maintenanceRecordRepository)
+            IMaintenanceRecordRepository maintenanceRecordRepository,
+            IAuthorizationService authorizationService)
         {
             _instrumentRepository = instrumentRepository;
             _userResolverService = userResolverService;
             _maintenanceContentRepository = maintenanceContentRepository;
             _maintenanceRecordRepository = maintenanceRecordRepository;
+            _authorizationService = authorizationService;
         }
 
         public string CurrentUserName { get; set; }
@@ -71,6 +76,13 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
                 InstrumentSelectList = _instrumentRepository.GetAllInstrumentId();
                 CurrentUserName = _userResolverService.GetUserName();
                 return Page();
+            }
+
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, MaintenanceRecord, Operations.Create);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
             }
 
             MaintenanceRecord.GroupName = _userResolverService.GetUserGroup();

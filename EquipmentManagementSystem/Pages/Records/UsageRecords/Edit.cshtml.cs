@@ -1,5 +1,7 @@
-﻿using EquipmentManagementSystem.Interfaces;
+﻿using EquipmentManagementSystem.Authorization;
+using EquipmentManagementSystem.Interfaces;
 using EquipmentManagementSystem.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Threading.Tasks;
@@ -10,10 +12,15 @@ namespace EquipmentManagementSystem.Pages.Records.UsageRecords
     {
         private readonly IProjectRepository _projectRepo;
         private readonly IUsageRecordRepository _usageRecordRepo;
-        public EditModel(IUsageRecordRepository usageRecordRepository, IProjectRepository projectRepository)
+        private readonly IAuthorizationService _authorizationService;
+
+        public EditModel(IUsageRecordRepository usageRecordRepository,
+            IProjectRepository projectRepository,
+            IAuthorizationService authorizationService)
         {
             _projectRepo = projectRepository;
             _usageRecordRepo = usageRecordRepository;
+            _authorizationService = authorizationService;
         }
 
         public void OnGet()
@@ -30,12 +37,12 @@ namespace EquipmentManagementSystem.Pages.Records.UsageRecords
                 return Page();
             }
 
-            //var isAuthorized = await _authorizationService.AuthorizeAsync(User, UsageRecordToUpdate, Operations.Update);
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, UsageRecord, Operations.Update);
 
-            //if (!isAuthorized.Succeeded)
-            //{
-            //    return Forbid();
-            //}
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
 
             string message;
             try

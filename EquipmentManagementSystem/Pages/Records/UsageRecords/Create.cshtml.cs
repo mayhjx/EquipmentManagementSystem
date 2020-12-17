@@ -1,5 +1,7 @@
-﻿using EquipmentManagementSystem.Interfaces;
+﻿using EquipmentManagementSystem.Authorization;
+using EquipmentManagementSystem.Interfaces;
 using EquipmentManagementSystem.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Threading.Tasks;
@@ -10,10 +12,16 @@ namespace EquipmentManagementSystem.Pages.Records.UsageRecords
     {
         private readonly IUsageRecordRepository _usageRecordRepo;
         private readonly IProjectRepository _projectRepo;
-        public CreateModel(IUsageRecordRepository usageRecordRepository, IProjectRepository projectRepository)
+        private readonly IAuthorizationService _authorizationService;
+
+        public CreateModel(
+            IUsageRecordRepository usageRecordRepository,
+            IProjectRepository projectRepository,
+            IAuthorizationService authorizationHandler)
         {
             _usageRecordRepo = usageRecordRepository;
             _projectRepo = projectRepository;
+            _authorizationService = authorizationHandler;
         }
 
         public void OnGet()
@@ -30,12 +38,11 @@ namespace EquipmentManagementSystem.Pages.Records.UsageRecords
                 return Page();
             }
 
-            //UsageRecord.ProjectId = _context.Projects.FirstOrDefaultAsync(p => p.Name == UsageRecord.ProjectName).Result.Id;
-            //var isAuthorized = await _authorizationService.AuthorizeAsync(User, UsageRecord, Operations.Create);
-            //if (!isAuthorized.Succeeded)
-            //{
-            //    return Forbid();
-            //}
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, UsageRecord, Operations.Create);
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
 
             UsageRecord.GroupName = await _projectRepo.GetGroupNameByShortName(UsageRecord.ProjectName);
             UsageRecord.MobilePhase = await _projectRepo.GetMobilePhasesByShortName(UsageRecord.ProjectName);

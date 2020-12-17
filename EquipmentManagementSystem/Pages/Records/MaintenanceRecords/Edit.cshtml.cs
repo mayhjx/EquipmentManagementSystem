@@ -1,5 +1,7 @@
-﻿using EquipmentManagementSystem.Interfaces;
+﻿using EquipmentManagementSystem.Authorization;
+using EquipmentManagementSystem.Interfaces;
 using EquipmentManagementSystem.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
@@ -14,18 +16,21 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
         private readonly IUserResolverService _userResolverService;
         private readonly IMaintenanceContentRepository _maintenanceContentRepository;
         private readonly IMaintenanceRecordRepository _maintenanceRecordRepository;
+        private readonly IAuthorizationService _authorizationService;
 
         public EditModel(IAuditTrailRepository auditTrailRepository,
             IInstrumentRepository instrumentRepository,
             IUserResolverService userResolverService,
             IMaintenanceContentRepository maintenanceContentRepository,
-            IMaintenanceRecordRepository maintenanceRecordRepository)
+            IMaintenanceRecordRepository maintenanceRecordRepository,
+            IAuthorizationService authorizationService)
         {
             _auditTrailRepository = auditTrailRepository;
             _instrumentRepository = instrumentRepository;
             _userResolverService = userResolverService;
             _maintenanceContentRepository = maintenanceContentRepository;
             _maintenanceRecordRepository = maintenanceRecordRepository;
+            _authorizationService = authorizationService;
         }
 
         [BindProperty]
@@ -61,12 +66,12 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
                 return NotFound();
             }
 
-            //var isAuthorized = await _authorizationService.AuthorizeAsync(User, MaintenanceRecord, Operations.Update);
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, MaintenanceRecord, Operations.Update);
 
-            //if (!isAuthorized.Succeeded)
-            //{
-            //    return Forbid();
-            //}
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
 
             AuditTrailLogs = await _auditTrailRepository.GetAuditTrailLogs(new MaintenanceRecord().GetType().Name, id);
 
@@ -80,12 +85,12 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
                 return Page();
             }
 
-            //var isAuthorized = await _authorizationService.AuthorizeAsync(User, MaintentanceRecord, Operations.Update);
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, MaintenanceRecord, Operations.Update);
 
-            //if (!isAuthorized.Succeeded)
-            //{
-            //    return Forbid();
-            //}
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
 
             MaintenanceRecord.GroupName = _userResolverService.GetUserGroup();
             MaintenanceRecord.SetDaily(DailyMaintenanceContent);

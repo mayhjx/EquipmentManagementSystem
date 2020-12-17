@@ -1,5 +1,7 @@
-﻿using EquipmentManagementSystem.Interfaces;
+﻿using EquipmentManagementSystem.Authorization;
+using EquipmentManagementSystem.Interfaces;
 using EquipmentManagementSystem.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -10,9 +12,14 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
     public class DeleteModel : PageModel
     {
         private readonly IMaintenanceRecordRepository _maintenanceRecordRepository;
-        public DeleteModel(IMaintenanceRecordRepository maintenanceRecordRepository)
+        private readonly IAuthorizationService _authorizationService;
+
+        public DeleteModel(IMaintenanceRecordRepository maintenanceRecordRepository,
+            IAuthorizationService authorizationService)
         {
             _maintenanceRecordRepository = maintenanceRecordRepository;
+            _authorizationService = authorizationService;
+
         }
 
         public void OnGet()
@@ -32,12 +39,12 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
                 return new JsonResult("记录未找到，请刷新确认！");
             }
 
-            //var isAuthorized = await _authorizationService.AuthorizeAsync(User, MaintenanceRecord, Operations.Delete);
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, MaintenanceRecord, Operations.Delete);
 
-            //if (!isAuthorized.Succeeded)
-            //{
-            //    return Forbid();
-            //}
+            if (!isAuthorized.Succeeded)
+            {
+                return new JsonResult("无权限！");
+            }
 
             try
             {
