@@ -25,9 +25,9 @@ tbody {
     font-size: 15px;
 }
 
-tbody tr:hover {
-    background-color: moccasin;
-}
+    tbody tr:hover {
+        background-color: moccasin;
+    }
 
 tr.days:hover {
     background-color: white;
@@ -247,8 +247,12 @@ p.text-vertical {
 
     table {
         width: 100%;
-        table-layout: auto;
+        table-layout: fixed;
         font-family: 'Times New Roman',sans-serif;
+    }
+
+    colgroup {
+        display: none;
     }
 
     thead {
