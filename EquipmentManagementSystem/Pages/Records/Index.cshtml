@@ -742,7 +742,8 @@
     <script src="~/js/MaintenanceRecord.js" asp-append-version="true"></script>
     <script>
         function createReport() {
-            document.title = "@(Model.Search.Instrument)_@(Model.Search.Date.ToString("yyyyMM"))_记录表";
+            var activeTab = $(`a[href="${localStorage.getItem('activeTab')}"]`).children().text();
+            document.title = `@(Model.Search.Instrument)_@(Model.Search.Date.ToString("yyyyMM"))_${activeTab}表` ;
             window.print();
             document.title = "设备管理平台";
         }
