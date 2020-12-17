@@ -88,11 +88,15 @@ namespace EquipmentManagementSystem.Pages.Records
         public IList<AuditTrailLog> MaintenanceAuditTrailLogs { get; set; }
         #endregion
 
-        public async Task OnGetAsync(string instrumentId, DateTime? date, string statusMessage)
+        public async Task<IActionResult> OnGetAsync(string instrumentId, DateTime? date, string statusMessage)
         {
             if (instrumentId == null)
             {
                 instrumentId = Search.InstrumentSelectList.FirstOrDefault();
+                if (instrumentId == null)
+                {
+                    return Page();
+                }
             }
             else
             {
@@ -134,7 +138,7 @@ namespace EquipmentManagementSystem.Pages.Records
                 Operator = _userResolverService.GetUserName()
             };
 
-            Platform = (await _instrumentRepository.GetById(instrumentId)).Platform;
+            Platform = (await _instrumentRepository.GetById(instrumentId))?.Platform;
             InstrumentModel = await _instrumentRepository.GetModelById(instrumentId);
 
             #region 使用记录表相关
@@ -183,6 +187,8 @@ namespace EquipmentManagementSystem.Pages.Records
             // 当前仪器和月份的操作日志
             UsageAuditTrailLogs = await _auditTrailRepository.GetAuditTrailLogs(new UsageRecord().GetType().Name, null, Search.Date);
             MaintenanceAuditTrailLogs = await _auditTrailRepository.GetAuditTrailLogs(new MaintenanceRecord().GetType().Name, null, Search.Date);
+
+            return Page();
         }
 
         public JsonResult OnGetLatestRecordOfProject(string project, string instrumentId)
