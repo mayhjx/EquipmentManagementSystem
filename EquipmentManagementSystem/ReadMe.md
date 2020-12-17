@@ -24,7 +24,6 @@ EquipmentContext中仪器和故障部分分开
 TODO:
 忘记密码
 使用记录显示总时长，总标本量，总batch样品量
-*使用记录预览行真空度显示数量级
 报表显示每月的使用率，故障率
 看板待维护设备显示季度和年度维护
 
@@ -34,4 +33,9 @@ Tips:
 Git bash: $git reset --soft HEAD~1
 Usage: Undo the most recent commit while keeping the changes made in that commit to staging.
 
+css:
+设置width: 100%; box-sizing: border-box;可以让元素在调整td的width时自动适应；
+如果table的table-layout: fixed，且thead中有跨越所有列的tr的话，可以设置table的<colgroup><col />...</colgroup?>的宽度调整每一列的宽度；
+
 https://www.smashingmagazine.com/2015/01/designing-for-print-with-css/
+table-layout:https://css-tricks.com/almanac/properties/t/table-layout/
