@@ -33,7 +33,6 @@
 		<None Include="Pages\Records\MaintenanceRecords\Create.cshtml" />
 		<None Include="Pages\Records\MaintenanceRecords\Delete.cshtml" />
 		<None Include="Pages\Records\MaintenanceRecords\Edit.cshtml" />
-		<None Include="Pages\Records\MaintenanceRecords\Index-abandon.cshtml" />
 		<None Include="Pages\ReportSystem\Reporting.cshtml" />
 		<None Include="Pages\Shared\_Layout.cshtml" />
 	</ItemGroup>
