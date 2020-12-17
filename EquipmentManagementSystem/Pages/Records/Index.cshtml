@@ -492,18 +492,18 @@
                                         @if (usageRecord.SystemOneTestSignal != null && usageRecord.SystemTwoTestSignal != null)
                                         {
                                             <text>S1：</text>
-                                            @(usageRecord.SystemOneTestSignal.GetValueOrDefault().ToString("0.##e0"))
+                                            @(usageRecord.SystemOneTestSignal.GetValueOrDefault().ToString("0.0e+0"))
                                             <br />
                                             <text>S2：</text>
-                                            @(usageRecord.SystemTwoTestSignal.GetValueOrDefault().ToString("0.##e0"))
+                                            @(usageRecord.SystemTwoTestSignal.GetValueOrDefault().ToString("0.0e+0"))
                                         }
                                         else if (usageRecord.SystemOneTestSignal != null)
                                         {
-                                            @(usageRecord.SystemOneTestSignal.GetValueOrDefault().ToString("0.##e0"))
+                                            @(usageRecord.SystemOneTestSignal.GetValueOrDefault().ToString("0.0e+0"))
                                         }
                                         else if (usageRecord.SystemTwoTestSignal != null)
                                         {
-                                            @(usageRecord.SystemTwoTestSignal.GetValueOrDefault().ToString("0.##e0"))
+                                            @(usageRecord.SystemTwoTestSignal.GetValueOrDefault().ToString("0.0e+0"))
                                         }
                                     </td>
                                     <td>@Html.DisplayFor(item => usageRecord.Operator)</td>
@@ -707,6 +707,7 @@
                         <ol>
                             <li>单系统仪器填写S1对应的输入框；</li>
                             <li>真空度单位，色谱柱编号、单位自动预设为上一次填写的值；</li>
+                            <li>新建记录时请确认当前色谱柱编号是否正确。</li>
                         </ol>
                     </div>
                     <audit-trail Logs="Model.UsageAuditTrailLogs" modal-id="usageAuditTrailLog"></audit-trail>
