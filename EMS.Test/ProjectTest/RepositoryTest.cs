@@ -285,5 +285,47 @@ namespace EMS.Test.ProjectTest
                 Assert.Equal("", result);
             }
         }
+
+        [Fact]
+        public void GetByGroup_Should_ReturnThree()
+        {
+            var options = new DbContextOptionsBuilder<EquipmentContext>()
+                .UseInMemoryDatabase(databaseName: nameof(GetByGroup_Should_ReturnThree))
+                .Options;
+
+            // Insert seed data into the database using one instance of the context
+            using (var context = Utilities.CreateContext(options))
+            {
+                context.Projects.Add(new Project() { Name = "Project 1", GroupName = "Test" });
+                context.Projects.Add(new Project() { Name = "Project 2", GroupName = "Test" });
+                context.Projects.Add(new Project() { Name = "Project 3", GroupName = "Test" });
+                context.Projects.Add(new Project() { Name = "Project 4", GroupName = "" });
+                context.SaveChanges();
+            }
+
+            // Use a clean instance of the context to run the test
+            using (var context = Utilities.CreateContext(options))
+            {
+                var repo = new ProjectRepository(context);
+                var result = repo.GetByGroup("Test");
+                Assert.Equal(3, result.Count);
+            }
+        }
+
+        [Fact]
+        public void GetByGroup_NoData_Should_Empty()
+        {
+            var options = new DbContextOptionsBuilder<EquipmentContext>()
+                .UseInMemoryDatabase(databaseName: nameof(GetByGroup_NoData_Should_Empty))
+                .Options;
+
+            // Use a clean instance of the context to run the test
+            using (var context = Utilities.CreateContext(options))
+            {
+                var repo = new ProjectRepository(context);
+                var result = repo.GetByGroup("Test");
+                Assert.Empty(result);
+            }
+        }
     }
 }
