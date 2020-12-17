@@ -17,7 +17,7 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
                         <label asp-for="MaintenanceRecord.InstrumentId" class="control-label"></label>
-                        <input id="instrumentId" asp-for="MaintenanceRecord.InstrumentId" class="form-control" value="@Model.SelectedInstrumentId" readonly />
+                        <input id="instrumentId" asp-for="MaintenanceRecord.InstrumentId" class="form-control" value="@Model.SelectedInstrumentId" readonly required />
 
                         @*<select id="instrumentId" class="custom-select" asp-for="MaintenanceRecord.InstrumentId">
                                 <option value="" selected disabled hidden>---请选择---</option>
@@ -36,7 +36,7 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="MaintenanceRecord.BeginTime" class="control-label"></label>
-                        <input asp-for="MaintenanceRecord.BeginTime" class="form-control" value="@Model.BeginTime.ToString("yyyy-MM-ddTHH:mm")" />
+                        <input asp-for="MaintenanceRecord.BeginTime" class="form-control" value="@Model.BeginTime.ToString("yyyy-MM-ddTHH:mm")" required />
                         <span asp-validation-for="MaintenanceRecord.BeginTime" class="text-danger"></span>
                     </div>
                     <div class="form-group">
@@ -46,7 +46,7 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="MaintenanceRecord.Operator" class="control-label"></label>
-                        <input asp-for="MaintenanceRecord.Operator" value="@Model.CurrentUserName" class="form-control" />
+                        <input asp-for="MaintenanceRecord.Operator" value="@Model.CurrentUserName" class="form-control" required />
                         <span asp-validation-for="MaintenanceRecord.Operator" class="text-danger"></span>
                     </div>
                 </div>
