@@ -36,7 +36,7 @@ namespace EquipmentManagementSystem.Pages.Records.UsageRecords
                 return new JsonResult("记录未找到，请刷新确认！");
             }
 
-            var isAuthorized = await _authorizationService.AuthorizeAsync(User, UsageRecord, Operations.Delete);
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, usageRecord, Operations.Delete);
 
             if (!isAuthorized.Succeeded)
             {
