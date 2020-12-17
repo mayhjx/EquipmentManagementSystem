@@ -243,12 +243,18 @@ p.text-vertical {
     @page {
         size: A4 landscape;
         margin-top: 0.7cm;
+        margin-bottom: 0.7cm;
     }
 
     table {
         width: 100%;
         table-layout: fixed;
         font-family: 'Times New Roman',sans-serif;
+    }
+
+    thead, tbody, tfoot, th, tr, td {
+        break-inside: avoid;
+        page-break-inside: avoid;
     }
 
     colgroup {
