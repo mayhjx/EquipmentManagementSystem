@@ -59,9 +59,9 @@ namespace EquipmentManagementSystem.Services
             var dailyMaintenanceOperator = InitialList(31);
 
             List<MaintenanceRecord> records = _recordRepository.GetAllByInstrumentIdAndYearAndMonth(instrumentId, month);
-            var recordsHasDaily = records.Where(i => !string.IsNullOrEmpty(i.Daily)).ToList();
+            //var recordsHasDaily = records.Where(i => !string.IsNullOrEmpty(i.Daily)).ToList();
 
-            foreach (var record in recordsHasDaily)
+            foreach (var record in records)
             {
                 var day = record.BeginTime.GetValueOrDefault().Day;
                 var Operator = record.Operator;
@@ -117,10 +117,10 @@ namespace EquipmentManagementSystem.Services
             var weeklyMaintenanceOperator = InitialList(4);
 
             List<MaintenanceRecord> records = _recordRepository.GetAllByInstrumentIdAndYearAndMonth(instrumentId, month);
-            var recordsHasWeekly = records.Where(i => !string.IsNullOrEmpty(i.Weekly)).ToList();
+            //var recordsHasWeekly = records.Where(i => !string.IsNullOrEmpty(i.Weekly)).ToList();
 
             var i = 0;
-            foreach (var record in recordsHasWeekly)
+            foreach (var record in records)
             {
                 if (i == 4) break;
                 var op = record.Operator;
