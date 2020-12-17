@@ -29,7 +29,8 @@ namespace EquipmentManagementSystem.Pages.Records
             IUsageRecordRepository usageRecordRepository,
             IMaintenanceRecordRepository maintenanceRecordRepository,
             IMaintenanceRecordService maintenanceRecordService,
-            IMaintenanceContentRepository maintenanceContentRepository)
+            IMaintenanceContentRepository maintenanceContentRepository,
+            IInstrumentService instrumentService)
         {
             _auditTrailRepository = auditTrailRepository;
             _userResolverService = userResolverService;
@@ -40,7 +41,7 @@ namespace EquipmentManagementSystem.Pages.Records
             _maintenanceRecordService = maintenanceRecordService;
             _maintenanceContentRepository = maintenanceContentRepository;
 
-            Search = new SearchForm(_instrumentRepository);
+            Search = new SearchForm(instrumentService, instrumentRepository, _userResolverService);
         }
 
         [TempData]
@@ -202,9 +203,19 @@ namespace EquipmentManagementSystem.Pages.Records
     public class SearchForm
     {
         public SearchForm() { }
-        public SearchForm(IInstrumentRepository instrumentRepository)
+        public SearchForm(IInstrumentService instrumentService,
+            IInstrumentRepository instrumentRepository,
+            IUserResolverService userResolverService)
         {
-            InstrumentSelectList = instrumentRepository.GetAllInstrumentId(); // TODO 跟用户关联
+            var group = userResolverService.GetUserGroup();
+            if (group == "质谱中心")
+            {
+                InstrumentSelectList = instrumentRepository.GetAllInstrumentId();
+            }
+            else
+            {
+                InstrumentSelectList = instrumentService.GetInstrumentIdRelateToProjectsOfGroup(group); //  跟用户关联
+            }
             Instrument = InstrumentSelectList.FirstOrDefault() ?? "";
         }
 
