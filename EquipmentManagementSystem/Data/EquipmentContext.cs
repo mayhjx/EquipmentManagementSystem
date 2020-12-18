@@ -95,8 +95,9 @@ namespace EquipmentManagementSystem.Data
             return result;
         }
 
-        List<AuditEntry> OnBeforeSaveChanges()
+        private List<AuditEntry> OnBeforeSaveChanges()
         {
+            ChangeTracker.DetectChanges();
             var auditEntries = new List<AuditEntry>();
 
             foreach (var entry in ChangeTracker.Entries())
@@ -147,16 +148,19 @@ namespace EquipmentManagementSystem.Data
                         case EntityState.Modified:
                             if (property.IsModified)
                             {
-                                auditEntry.Action = EntityState.Modified.ToString();
-                                auditEntry.OriginalValue[propertyName] = property.OriginalValue;
-                                auditEntry.CurrentValue[propertyName] = property.CurrentValue;
+                                if(property.OriginalValue?.ToString() != property.CurrentValue?.ToString())
+                                {
+                                    auditEntry.Action = EntityState.Modified.ToString();
+                                    auditEntry.OriginalValue[propertyName] = property.OriginalValue;
+                                    auditEntry.CurrentValue[propertyName] = property.CurrentValue;
+                                }
                             }
                             break;
                     }
                 }
             }
 
-            foreach (var auditEntry in auditEntries.Where(_ => !_.HasTemporaryProperties))
+            foreach (var auditEntry in auditEntries.Where(_ => !_.HasTemporaryProperties && _.Action != null))
             {
                 AuditTrailLogs.Add(auditEntry.ToAudit());
             }
@@ -195,8 +199,8 @@ namespace EquipmentManagementSystem.Data
                     {
                         auditEntry.CurrentValue[prop.Metadata.Name] = prop.CurrentValue;
                     }
-                    AuditTrailLogs.Add(auditEntry.ToAudit());
                 }
+                AuditTrailLogs.Add(auditEntry.ToAudit());
             }
             return SaveChangesAsync();
         }
