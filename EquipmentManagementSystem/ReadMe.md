@@ -39,3 +39,5 @@ css:
 
 https://www.smashingmagazine.com/2015/01/designing-for-print-with-css/
 table-layout:https://css-tricks.com/almanac/properties/t/table-layout/
+
+要实现跟踪编辑操作的话，要先获取对应的记录，然后使用TryUpdateModelAsync等方法更新记录，才能通过ChangeTracker获取真正的旧值和新值。
