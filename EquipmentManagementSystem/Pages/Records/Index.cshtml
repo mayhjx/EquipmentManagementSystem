@@ -51,7 +51,7 @@
         <div class="tab-content">
             @if (Model.Search.InstrumentSelectList.Count == 0)
             {
-                <p>无仪器数据，请先在设备档案中新建</p>
+                <p>当前用户所在项目组无可用仪器，请先在设备档案中设置检测项目</p>
             }
             else
             {
@@ -529,7 +529,7 @@
                                 @* update-row *@
                                 <tr class="update-row">
                                     <td class="time">
-                                        <input form="edit-form" type="hidden" asp-for="@usageRecord.Id" disabled />
+                                        <input form="edit-form" name="id" type="hidden" asp-for="@usageRecord.Id" disabled />
                                         <input form="edit-form" type="hidden" asp-for="@usageRecord.InstrumentId" disabled />
                                         <input form="edit-form" asp-for="@usageRecord.BeginTime" required disabled />
                                     </td>
@@ -733,7 +733,7 @@
 </div>
 
 <form id="create-form" method="post" asp-page="UsageRecords/Create" hidden></form>
-<form id="edit-form" method="post" asp-page="UsageRecords/Edit" hidden></form>
+<form id="edit-form" method="post" asp-page="UsageRecords/Edit" ></form>
 <form id="delete-form" method="post" asp-page="UsageRecords/Delete" hidden></form>
 
 <link rel="stylesheet" href="~/css/Record.css" asp-append-version="true">
