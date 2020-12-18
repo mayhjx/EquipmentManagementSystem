@@ -30,11 +30,23 @@ namespace EquipmentManagementSystem.Pages.Records.UsageRecords
         [BindProperty]
         public UsageRecord UsageRecord { get; set; }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (!ModelState.IsValid)
+            if (id == null)
             {
-                return Page();
+                return NotFound();
+            }
+
+            //if (!ModelState.IsValid)
+            //{
+            //    return Page();
+            //}
+
+            UsageRecord = await _usageRecordRepo.GetById(id);
+
+            if (UsageRecord == null)
+            {
+                return NotFound();
             }
 
             var isAuthorized = await _authorizationService.AuthorizeAsync(User, UsageRecord, Operations.Update);
@@ -45,7 +57,7 @@ namespace EquipmentManagementSystem.Pages.Records.UsageRecords
             }
 
             string message;
-            try
+            if (await TryUpdateModelAsync(UsageRecord, "usageRecord"))
             {
                 UsageRecord.GroupName = await _projectRepo.GetGroupNameByShortName(UsageRecord.ProjectName);
                 UsageRecord.MobilePhase = await _projectRepo.GetMobilePhasesByShortName(UsageRecord.ProjectName);
@@ -54,14 +66,12 @@ namespace EquipmentManagementSystem.Pages.Records.UsageRecords
                 UsageRecord.Detector = await _projectRepo.GetDetectorsByShortName(UsageRecord.ProjectName);
 
                 await _usageRecordRepo.Update(UsageRecord);
-                message = "修改成功";
-            }
-            catch
-            {
-                // create log
-                message = "修改失败，请刷新后重试！";
+                 message = "修改成功";
+
+                return RedirectToPage("../Index", new { instrumentId = UsageRecord.InstrumentId, statusMessage = message });
             }
 
+             message = "修改失败，请刷新后重试！";
             return RedirectToPage("../Index", new { instrumentId = UsageRecord.InstrumentId, statusMessage = message });
         }
     }

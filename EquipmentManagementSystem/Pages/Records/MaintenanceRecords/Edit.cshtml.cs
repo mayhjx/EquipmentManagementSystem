@@ -78,11 +78,23 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
             if (!ModelState.IsValid)
             {
                 return Page();
+            }
+
+            MaintenanceRecord = await _maintenanceRecordRepository.GetById(id);
+
+            if (MaintenanceRecord == null)
+            {
+                return NotFound();
             }
 
             var isAuthorized = await _authorizationService.AuthorizeAsync(User, MaintenanceRecord, Operations.Update);
@@ -92,18 +104,23 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
                 return Forbid();
             }
 
-            MaintenanceRecord.GroupName = _userResolverService.GetUserGroup();
-            MaintenanceRecord.SetDaily(DailyMaintenanceContent);
-            MaintenanceRecord.SetWeekly(WeeklyMaintenanceContent);
-            MaintenanceRecord.SetMonthly(MonthlyMaintenanceContent);
-            MaintenanceRecord.SetQuarterly(QuarterlyMaintenanceContent);
-            MaintenanceRecord.SetYearly(YearlyMaintenanceContent);
-            MaintenanceRecord.SetTemporary(TemporaryMaintenanceContent);
-            MaintenanceRecord.SetOther(OtherMaintenanceContent);
+            if (await TryUpdateModelAsync(MaintenanceRecord, "MaintenanceRecord"))
+            {
+                MaintenanceRecord.GroupName = _userResolverService.GetUserGroup();
+                MaintenanceRecord.SetDaily(DailyMaintenanceContent);
+                MaintenanceRecord.SetWeekly(WeeklyMaintenanceContent);
+                MaintenanceRecord.SetMonthly(MonthlyMaintenanceContent);
+                MaintenanceRecord.SetQuarterly(QuarterlyMaintenanceContent);
+                MaintenanceRecord.SetYearly(YearlyMaintenanceContent);
+                MaintenanceRecord.SetTemporary(TemporaryMaintenanceContent);
+                MaintenanceRecord.SetOther(OtherMaintenanceContent);
 
-            await _maintenanceRecordRepository.Update(MaintenanceRecord);
+                await _maintenanceRecordRepository.Update(MaintenanceRecord);
 
-            return RedirectToPage("../Index", new { instrumentId = MaintenanceRecord.InstrumentId, date = MaintenanceRecord.BeginTime });
+                return RedirectToPage("../Index", new { instrumentId = MaintenanceRecord.InstrumentId, date = MaintenanceRecord.BeginTime });
+            }
+
+            return Page();
         }
 
         /// <summary>
