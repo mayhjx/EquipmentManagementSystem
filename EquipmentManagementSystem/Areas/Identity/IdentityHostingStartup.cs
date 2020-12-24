@@ -68,14 +68,16 @@ namespace EquipmentManagementSystem.Areas.Identity
                     config.Filters.Add(new AuthorizeFilter(policy));
                 });
 
-                services.AddScoped<IAuthorizationHandler, TechnicianAuthorizationHandler>();
-                services.AddScoped<IAuthorizationHandler, PrincipalAuthorizationHandler>();
-                services.AddSingleton<IAuthorizationHandler, ManagerAuthorizationHandler>();
-                services.AddSingleton<IAuthorizationHandler, DirectorAuthorizationHandler>();
-                services.AddSingleton<IAuthorizationHandler, AdministratorAuthorizationHandler>();
+                //services.AddScoped<IAuthorizationHandler, TechnicianAuthorizationHandler>();
+                //services.AddScoped<IAuthorizationHandler, PrincipalAuthorizationHandler>();
+                //services.AddSingleton<IAuthorizationHandler, ManagerAuthorizationHandler>();
+                //services.AddSingleton<IAuthorizationHandler, DirectorAuthorizationHandler>();
+                //services.AddSingleton<IAuthorizationHandler, AdministratorAuthorizationHandler>();
                 services.AddScoped<IAuthorizationHandler, InstrumentAuthorizationHandler>();
+                services.AddSingleton<IAuthorizationHandler, MalfunctionAuthorizationHandler>();
                 services.AddScoped<IAuthorizationHandler, CalibrationAuthorizationHandler>();
-                services.AddScoped<IAuthorizationHandler, RecordAuthorizationHandler>();
+                services.AddScoped<IAuthorizationHandler, UsageRecordAuthorizationHandler>();
+                services.AddScoped<IAuthorizationHandler, MaintenanceRecordAuthorizationHandler>();
                 services.AddSingleton<IAuthorizationHandler, AcceptanceAuthorizationHandler>();
                 services.AddSingleton<IAuthorizationHandler, UserManagementAuthorizationHandler>();
             });
