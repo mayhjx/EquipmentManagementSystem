@@ -1,11 +1,12 @@
 @page
 @inject UserManager<User> UserManager
+@inject IAuthorizationService _authorizationService
 @model EquipmentManagementSystem.Pages.Instruments.DetailsModel
 
 @{
     ViewData["Title"] = "详细信息";
-    var CanCreateCalibrationAndMalfunction = User.IsInRole(Constants.DirectorRole) || User.IsInRole(Constants.ManagerRole) ||
-                                            (User.IsInRole(Constants.PrincipalRole) && UserManager.GetUserAsync(User).Result.Group == Model.Instrument.Group);
+    var CanCreateCalibration = (await _authorizationService.AuthorizeAsync(User, Model.Calibration, Operations.Create)).Succeeded;
+    var CanCreateMalfunction = (await _authorizationService.AuthorizeAsync(User, Model.MalfunctionWorkOrder, Operations.Create)).Succeeded;
 }
 
 <div class="card">
@@ -338,7 +339,7 @@
                             <i class="fa fa-balance-scale" aria-hidden="true"></i> 校准信息
                         </p>
                         <div class="card-tools">
-                            @if (CanCreateCalibrationAndMalfunction)
+                            @if (CanCreateCalibration)
                             {
                                 <a asp-page="../Calibrations/Create" asp-route-id="@Model.Instrument.ID">
                                     <i class="fa fa-plus fa-lg" aria-hidden="true"></i>@*新建*@
@@ -392,7 +393,7 @@
                             <i class="fa fa-wrench" aria-hidden="true"></i> 故障信息
                         </p>
                         <div class="card-tools">
-                            @if (CanCreateCalibrationAndMalfunction)
+                            @if (CanCreateMalfunction)
                             {
                                 <a asp-page="/Malfunctions/WorkOrders/Create" asp-route-id="@Model.Instrument.ID">
                                     <i class="fa fa-plus fa-lg" aria-hidden="true"></i>@*新建*@
