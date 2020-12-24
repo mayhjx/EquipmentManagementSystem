@@ -1,11 +1,11 @@
-﻿using System.Threading.Tasks;
-using EquipmentManagementSystem.Authorization;
+﻿using EquipmentManagementSystem.Authorization;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using EquipmentManagementSystem.Pages.Instruments;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Calibrations
 {
@@ -21,14 +21,6 @@ namespace EquipmentManagementSystem.Pages.Calibrations
         public IActionResult OnGet(string id)
         {
             instrumentId = id;
-
-            var isAuthorized = User.IsInRole(Constants.DirectorRole) || User.IsInRole(Constants.ManagerRole) ||
-                            _userManager.GetUserAsync(User).Result.Group == _context.Instruments.FindAsync(id).Result.Group;
-
-            if (!isAuthorized)
-            {
-                return Forbid();
-            }
 
             return Page();
         }
@@ -47,11 +39,9 @@ namespace EquipmentManagementSystem.Pages.Calibrations
                 return Page();
             }
 
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, Calibration, Operations.Create);
 
-            var isAuthorized = User.IsInRole(Constants.DirectorRole) || User.IsInRole(Constants.ManagerRole) ||
-                            _userManager.GetUserAsync(User).Result.Group == _context.Instruments.FindAsync(Calibration.InstrumentID).Result.Group;
-
-            if (!isAuthorized)
+            if (!isAuthorized.Succeeded)
             {
                 return Forbid();
             }
