@@ -38,17 +38,17 @@ namespace EquipmentManagementSystem.Pages.Records.UsageRecords
                 return Page();
             }
 
-            var isAuthorized = await _authorizationService.AuthorizeAsync(User, UsageRecord, Operations.Create);
-            if (!isAuthorized.Succeeded)
-            {
-                return Forbid();
-            }
-
             UsageRecord.GroupName = await _projectRepo.GetGroupNameByShortName(UsageRecord.ProjectName);
             UsageRecord.MobilePhase = await _projectRepo.GetMobilePhasesByShortName(UsageRecord.ProjectName);
             UsageRecord.ColumnType = await _projectRepo.GetColumnTypesByShortName(UsageRecord.ProjectName);
             UsageRecord.IonSource = await _projectRepo.GetIonSourcesByShortName(UsageRecord.ProjectName);
             UsageRecord.Detector = await _projectRepo.GetDetectorsByShortName(UsageRecord.ProjectName);
+
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, UsageRecord, Operations.Create);
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
 
             string message;
             try
