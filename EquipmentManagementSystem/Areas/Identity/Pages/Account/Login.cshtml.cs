@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Areas.Identity.Pages.Account
@@ -81,9 +82,37 @@ namespace EquipmentManagementSystem.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Number, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    var user = await _userManager.FindByNameAsync(Input.Number);
+                    var claimsPrincipal = await _signInManager.CreateUserPrincipalAsync(user);
+
+                    // 添加Group到Claim，用于在AuthorizationService模块中进行验证
+                    if (claimsPrincipal.HasClaim(i => i.Type == "Group"))
+                    {
+                        var oldCalim = claimsPrincipal.FindFirst("Group");
+                        await _userManager.ReplaceClaimAsync(user, oldCalim, new Claim("Group", user.Group));
+                    }
+                    else
+                    {
+                        await _userManager.AddClaimAsync(user, new Claim("Group", user.Group));
+                    }
+
+                    // 添加用户名到Claim，用于在AuthorizationService模块中进行验证
+                    if (claimsPrincipal.HasClaim(i => i.Type == ClaimTypes.GivenName))
+                    {
+                        var oldCalim = claimsPrincipal.FindFirst(ClaimTypes.GivenName);
+                        await _userManager.ReplaceClaimAsync(user, oldCalim, new Claim(ClaimTypes.GivenName, user.Name));
+                    }
+                    else
+                    {
+                        await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.GivenName, user.Name));
+                    }
+
+                    await _signInManager.RefreshSignInAsync(user);
+
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }
+
                 //if (result.RequiresTwoFactor)
                 //{
                 //    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
