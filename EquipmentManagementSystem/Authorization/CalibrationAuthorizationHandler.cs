@@ -1,41 +1,24 @@
-﻿using System.Threading.Tasks;
-using EquipmentManagementSystem.Models;
+﻿using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
-using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Authorization
 {
     public class CalibrationAuthorizationHandler :
         AuthorizationHandler<OperationAuthorizationRequirement, Calibration>
     {
-        private readonly UserManager<User> _userManager;
-
-        public CalibrationAuthorizationHandler(UserManager<User> userManager)
+        public CalibrationAuthorizationHandler()
         {
-            _userManager = userManager;
         }
 
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context,
                                                         OperationAuthorizationRequirement requirement,
                                                         Calibration resource)
         {
-            if (context.User == null || resource == null)
+            if (context.User == null)
             {
                 return Task.CompletedTask;
-            }
-
-
-            if (requirement.Name == Constants.CreateOperationName)
-            {
-                var currentUserGroup = _userManager.GetUserAsync(context.User).Result.Group ?? null;
-
-                if (context.User.IsInRole(Constants.DirectorRole) ||
-                    context.User.IsInRole(Constants.ManagerRole) ||
-                    (context.User.IsInRole(Constants.PrincipalRole) && currentUserGroup == resource.Instrument.Group))
-                {
-                    context.Succeed(requirement);
-                }
             }
 
             if (requirement.Name == Constants.ReadOperationName)
@@ -43,10 +26,17 @@ namespace EquipmentManagementSystem.Authorization
                 context.Succeed(requirement);
             }
 
+            if (requirement.Name == Constants.CreateOperationName)
+            {
+                if (context.User.IsInRole(Constants.DirectorRole) ||
+                    context.User.IsInRole(Constants.ManagerRole))
+                {
+                    context.Succeed(requirement);
+                }
+            }
+
             if (requirement.Name == Constants.UpdateOperationName)
             {
-                //var currentUserGroup = _userManager.GetUserAsync(context.User).Result.Group ?? null;
-
                 if (context.User.IsInRole(Constants.DirectorRole) ||
                     context.User.IsInRole(Constants.ManagerRole))
                 {

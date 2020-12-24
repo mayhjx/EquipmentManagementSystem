@@ -1,7 +1,6 @@
 ﻿using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
-using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Authorization
@@ -9,11 +8,8 @@ namespace EquipmentManagementSystem.Authorization
     public class InstrumentAuthorizationHandler :
         AuthorizationHandler<OperationAuthorizationRequirement, Instrument>
     {
-        private readonly UserManager<User> _userManager;
-
-        public InstrumentAuthorizationHandler(UserManager<User> userManager)
+        public InstrumentAuthorizationHandler()
         {
-            _userManager = userManager;
         }
 
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context,
@@ -25,28 +21,24 @@ namespace EquipmentManagementSystem.Authorization
                 return Task.CompletedTask;
             }
 
-
-            if (requirement.Name == Constants.CreateOperationName)
-            {
-                if (context.User.IsInRole(Constants.AdministratorRole) || 
-                    context.User.IsInRole(Constants.DirectorRole) ||
-                    context.User.IsInRole(Constants.ManagerRole))
-                {
-                    context.Succeed(requirement);
-                }
-            }
-
             if (requirement.Name == Constants.ReadOperationName)
             {
                 context.Succeed(requirement);
             }
 
+            if (requirement.Name == Constants.CreateOperationName)
+            {
+                if (context.User.IsInRole(Constants.DirectorRole))
+                {
+                    context.Succeed(requirement);
+                }
+            }
+
             if (requirement.Name == Constants.UpdateOperationName)
             {
-                var currentUserGroup = _userManager.GetUserAsync(context.User).Result.Group ?? null;
+                var currentUserGroup = context.User.FindFirst("Group")?.Value;
 
-                if (context.User.IsInRole(Constants.AdministratorRole) ||
-                    context.User.IsInRole(Constants.DirectorRole) ||
+                if (context.User.IsInRole(Constants.DirectorRole) ||
                     context.User.IsInRole(Constants.ManagerRole) ||
                     (context.User.IsInRole(Constants.PrincipalRole) && currentUserGroup == resource.Group))
                 {
