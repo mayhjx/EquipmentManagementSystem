@@ -101,6 +101,6 @@ namespace EquipmentManagementSystem.Models
         [StringLength(999)]
         public string Remark { get; set; }
 
-        public bool IsDelete { get; set; }
+        //public bool IsDelete { get; set; }
     }
 }

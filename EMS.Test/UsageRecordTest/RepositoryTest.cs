@@ -3,7 +3,6 @@ using EquipmentManagementSystem.Models;
 using EquipmentManagementSystem.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Threading.Tasks;
 using Xunit;
 using Assert = Xunit.Assert;
 
@@ -24,7 +23,6 @@ namespace EMS.Test.UsageRecordTest
                 context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 01, 01) });
                 context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 01, 02) });
                 context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 01, 03) });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 01, 04), IsDelete = true });
                 context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ02", BeginTime = new DateTime(2020, 01, 01) });
                 context.SaveChanges();
             }
@@ -56,32 +54,32 @@ namespace EMS.Test.UsageRecordTest
             }
         }
 
-        [Fact]
-        public async Task FakeDelete()
-        {
-            var options = new DbContextOptionsBuilder<EquipmentContext>()
-                .UseInMemoryDatabase(databaseName: nameof(GetAllByInstrumentIdAndBeginTime_NoData_Should_ReturnEmptyList))
-                .Options;
+        //[Fact]
+        //public async Task FakeDelete()
+        //{
+        //    var options = new DbContextOptionsBuilder<EquipmentContext>()
+        //        .UseInMemoryDatabase(databaseName: nameof(GetAllByInstrumentIdAndBeginTime_NoData_Should_ReturnEmptyList))
+        //        .Options;
 
-            using (var context = Utilities.CreateContext(options))
-            {
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01" });
-                context.SaveChanges();
-            }
+        //    using (var context = Utilities.CreateContext(options))
+        //    {
+        //        context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01" });
+        //        context.SaveChanges();
+        //    }
 
-            using (var context = Utilities.CreateContext(options))
-            {
-                var repo = new UsageRecordRepository(context);
-                var project = await repo.GetById(1);
-                await repo.Delete(project);
-            }
+        //    using (var context = Utilities.CreateContext(options))
+        //    {
+        //        var repo = new UsageRecordRepository(context);
+        //        var project = await repo.GetById(1);
+        //        await repo.Delete(project);
+        //    }
 
-            using (var context = Utilities.CreateContext(options))
-            {
-                var project = await context.UsageRecords.SingleAsync();
-                Assert.True(project.IsDelete);
-            }
-        }
+        //    using (var context = Utilities.CreateContext(options))
+        //    {
+        //        var project = await context.UsageRecords.SingleAsync();
+        //        Assert.True(project.IsDelete);
+        //    }
+        //}
 
         [Fact]
         public void GetLatestRecordOfProject_Should_ReturnLatestNoDeleteRecordOfProject()
@@ -92,10 +90,9 @@ namespace EMS.Test.UsageRecordTest
 
             using (var context = Utilities.CreateContext(options))
             {
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ02", ProjectName = "A", SampleNumber=100 });
+                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ02", ProjectName = "A", SampleNumber = 100 });
                 context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ02", ProjectName = "A", SampleNumber = 101 });
                 context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ03", ProjectName = "A", SampleNumber = 102 });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ02", ProjectName = "A", SampleNumber = 103, IsDelete = true });
                 context.SaveChanges();
             }
 
