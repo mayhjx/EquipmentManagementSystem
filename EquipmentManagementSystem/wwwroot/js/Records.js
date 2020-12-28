@@ -86,7 +86,7 @@ $(".delete-usage-record-btn").click(function () {
 
 // 获取最新一条记录
 function getLatestRecord(project, instrumentId) {
-    $.get(`Records/Index?handler=LatestRecordOfProject&project=${project}&instrumentId=${instrumentId}`, function (data) {
+    $.get(`Records/UsageRecords/AjaxHelper?handler=LatestRecordOfProject&project=${project}&instrumentId=${instrumentId}`, function (data) {
         //console.log(data);
         setInitialValue(data);
     });

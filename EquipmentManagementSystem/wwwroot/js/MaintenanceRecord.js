@@ -48,7 +48,7 @@ function DeleteAllExistsContent() {
 }
 
 function getContentOfInstrument(instrumentId) {
-    $.getJSON(`?handler=MaintenanceContents&instrument=${instrumentId}`, (data) => {
+    $.getJSON(`AjaxHelper?handler=MaintenanceContents&instrument=${instrumentId}`, (data) => {
         if (Array.isArray(data)) {
             $.each(data, function (i, item) {
                 // 为了分开保存不同类型的维护内容
