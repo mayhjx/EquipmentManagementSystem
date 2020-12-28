@@ -36,14 +36,11 @@ namespace EquipmentManagementSystem.Repositories
             await _context.SaveChangesAsync();
         }
 
-        /// <summary>
-        /// fake delete
-        /// </summary>
-        /// <param name="usageRecord"></param>
-        /// <returns></returns>
         public new async Task Delete(UsageRecord usageRecord)
         {
-            usageRecord.IsDelete = true;
+            //usageRecord.IsDelete = true;
+            //await _context.SaveChangesAsync();
+            _context.Set<UsageRecord>().Remove(usageRecord);
             await _context.SaveChangesAsync();
         }
 
