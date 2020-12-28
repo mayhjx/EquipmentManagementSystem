@@ -177,7 +177,7 @@ namespace EquipmentManagementSystem.Pages.Records
                 .Select(i => $"{i.Temporary} {i.Operator}/{i.BeginTime.GetValueOrDefault():yyyy-MM-dd}")
                 .ToList();
 
-            // 其他维护内容
+            // “其他”维护内容
             TemporaryMaintenanceRecord.AddRange(MaintenanceRecords.Where(i => !string.IsNullOrEmpty(i.Other))
                 .OrderBy(i => i.BeginTime)
                 .Select(i => $"{i.Other} {i.Operator}/{i.BeginTime.GetValueOrDefault():yyyy-MM-dd}")
@@ -189,13 +189,6 @@ namespace EquipmentManagementSystem.Pages.Records
             MaintenanceAuditTrailLogs = await _auditTrailRepository.GetAuditTrailLogs(new MaintenanceRecord().GetType().Name, null, Search.Date);
 
             return Page();
-        }
-
-        public JsonResult OnGetLatestRecordOfProject(string project, string instrumentId)
-        {
-            // 如果没有记录，返回null
-            var latestRecord = _usageRecordRepository.GetLatestRecordOfProject(project, instrumentId);
-            return new JsonResult(latestRecord);
         }
 
         public IActionResult OnPostSearch()

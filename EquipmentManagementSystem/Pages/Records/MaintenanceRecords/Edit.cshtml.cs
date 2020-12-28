@@ -12,23 +12,17 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
     public class EditModel : PageModel
     {
         private readonly IAuditTrailRepository _auditTrailRepository;
-        private readonly IInstrumentRepository _instrumentRepository;
         private readonly IUserResolverService _userResolverService;
-        private readonly IMaintenanceContentRepository _maintenanceContentRepository;
         private readonly IMaintenanceRecordRepository _maintenanceRecordRepository;
         private readonly IAuthorizationService _authorizationService;
 
         public EditModel(IAuditTrailRepository auditTrailRepository,
-            IInstrumentRepository instrumentRepository,
             IUserResolverService userResolverService,
-            IMaintenanceContentRepository maintenanceContentRepository,
             IMaintenanceRecordRepository maintenanceRecordRepository,
             IAuthorizationService authorizationService)
         {
             _auditTrailRepository = auditTrailRepository;
-            _instrumentRepository = instrumentRepository;
             _userResolverService = userResolverService;
-            _maintenanceContentRepository = maintenanceContentRepository;
             _maintenanceRecordRepository = maintenanceRecordRepository;
             _authorizationService = authorizationService;
         }
@@ -121,29 +115,6 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
             }
 
             return Page();
-        }
-
-        /// <summary>
-        /// 返回对应设备平台的维护内容
-        /// </summary>
-        public async Task<JsonResult> OnGetMaintenanceContents(string instrument)
-        {
-            var platform = (await _instrumentRepository.GetById(instrument)).Platform;
-            if (platform == null)
-            {
-                return new JsonResult("该仪器未设置平台");
-            }
-
-            var contents = _maintenanceContentRepository.GetByInstrumentPlatform(platform);
-
-            if (contents.Count == 0)
-            {
-                return new JsonResult("该设备平台未设置维护内容");
-            }
-
-            var result = new JsonResult(contents);
-
-            return result;
         }
     }
 }

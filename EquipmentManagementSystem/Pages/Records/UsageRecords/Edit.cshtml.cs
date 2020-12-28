@@ -66,12 +66,12 @@ namespace EquipmentManagementSystem.Pages.Records.UsageRecords
                 UsageRecord.Detector = await _projectRepo.GetDetectorsByShortName(UsageRecord.ProjectName);
 
                 await _usageRecordRepo.Update(UsageRecord);
-                 message = "修改成功";
+                message = "修改成功";
 
                 return RedirectToPage("../Index", new { instrumentId = UsageRecord.InstrumentId, statusMessage = message });
             }
 
-             message = "修改失败，请刷新后重试！";
+            message = "修改失败，请刷新后重试！";
             return RedirectToPage("../Index", new { instrumentId = UsageRecord.InstrumentId, statusMessage = message });
         }
     }
