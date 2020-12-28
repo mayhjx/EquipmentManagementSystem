@@ -1,7 +1,7 @@
-﻿using System.Threading.Tasks;
-using EquipmentManagementSystem.Models;
+﻿using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
+using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Authorization
 {
@@ -42,8 +42,7 @@ namespace EquipmentManagementSystem.Authorization
 
             if (requirement.Name == Constants.DeleteOperationName)
             {
-                if (context.User.IsInRole(Constants.DirectorRole) ||
-                    context.User.IsInRole(Constants.ManagerRole))
+                if (context.User.IsInRole(Constants.DirectorRole))
                 {
                     context.Succeed(requirement);
                 }

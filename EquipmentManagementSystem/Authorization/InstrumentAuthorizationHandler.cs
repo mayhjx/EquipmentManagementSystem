@@ -36,11 +36,9 @@ namespace EquipmentManagementSystem.Authorization
 
             if (requirement.Name == Constants.UpdateOperationName)
             {
-                var currentUserGroup = context.User.FindFirst("Group")?.Value;
-
                 if (context.User.IsInRole(Constants.DirectorRole) ||
                     context.User.IsInRole(Constants.ManagerRole) ||
-                    (context.User.IsInRole(Constants.PrincipalRole) && currentUserGroup == resource.Group))
+                    context.User.IsInRole(Constants.SupervisorRole))
                 {
                     context.Succeed(requirement);
                 }
