@@ -41,14 +41,14 @@ $(".edit-btn").click(function () {
     var RowOfEditRecord = RowOfViewRecord.next("tr");
     RowOfViewRecord.hide();
     RowOfEditRecord.show();
-    RowOfEditRecord.find("td").children().prop("disabled", false);
+    RowOfEditRecord.find(":disabled").prop("disabled", false);
 });
 
 $(".cancel-btn").click(function () {
     var RowOfEditRecord = $(this).closest("tr");
     var RowOfViewRecord = RowOfEditRecord.prev("tr");
     RowOfEditRecord.hide();
-    RowOfEditRecord.find("td").children().prop("disabled", true);
+    RowOfEditRecord.find("input,button,textarea,select").prop("disabled", true);
     RowOfViewRecord.show();
 });
 
