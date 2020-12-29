@@ -29,7 +29,7 @@ namespace EMS.Test.AuditTrailTest
             using (var context = Utilities.CreateContext(options))
             {
                 var repo = new AuditTrailRepository(context);
-                var result = await repo.GetAuditTrailLogs("UsageRecord");
+                var result = await repo.GetAuditTrailLogs("UsageRecord", null, null);
                 Assert.Equal(4, result.Count);
             }
         }

@@ -367,5 +367,245 @@ namespace EMS.Test.UsageRecordTest
                 Assert.Empty(project);
             }
         }
+
+        [Fact]
+        public void GetTotalHoursOfRecords_ShouldBeEqual_Thirty()
+        {
+            var options = new DbContextOptionsBuilder<EquipmentContext>()
+                .UseInMemoryDatabase(databaseName: nameof(GetTotalHoursOfRecords_ShouldBeEqual_Thirty))
+                .Options;
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 01, 08, 00, 00), EndTime = new DateTime(2020, 12, 01, 18, 00, 00) });
+                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 02, 08, 00, 00), EndTime = new DateTime(2020, 12, 02, 18, 00, 00) });
+                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 03, 08, 00, 00), EndTime = new DateTime(2020, 12, 03, 18, 00, 00) });
+                context.SaveChanges();
+            }
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                var repo = new UsageRecordRepository(context);
+                var records = repo.GetAllByInstrumentIdAndBeginTime("FXS-YZ01", new DateTime(2020, 12, 01));
+                var totalHours = repo.GetTotalHoursOfRecords(records);
+                Assert.Equal(30, totalHours);
+            }
+        }
+
+        [Fact]
+        public void GetTotalHoursOfRecords_NoEndTime_ShouldBeEqual_Twenty()
+        {
+            var options = new DbContextOptionsBuilder<EquipmentContext>()
+                .UseInMemoryDatabase(databaseName: nameof(GetTotalHoursOfRecords_NoEndTime_ShouldBeEqual_Twenty))
+                .Options;
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 01, 08, 00, 00), EndTime = new DateTime(2020, 12, 01, 18, 00, 00) });
+                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 02, 08, 00, 00), EndTime = new DateTime(2020, 12, 02, 18, 00, 00) });
+                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 03, 08, 00, 00) });
+                context.SaveChanges();
+            }
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                var repo = new UsageRecordRepository(context);
+                var records = repo.GetAllByInstrumentIdAndBeginTime("FXS-YZ01", new DateTime(2020, 12, 01));
+                var totalHours = repo.GetTotalHoursOfRecords(records);
+                Assert.Equal(20, totalHours);
+            }
+        }
+
+        [Fact]
+        public void GetTotalSampleNumberOfRecords_ShouldBeEqual_300()
+        {
+            var options = new DbContextOptionsBuilder<EquipmentContext>()
+                .UseInMemoryDatabase(databaseName: nameof(GetTotalSampleNumberOfRecords_ShouldBeEqual_300))
+                .Options;
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 01, 08, 00, 00), SampleNumber = 100 });
+                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 02, 08, 00, 00), SampleNumber = 100 });
+                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 03, 08, 00, 00), SampleNumber = 100 });
+                context.SaveChanges();
+            }
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                var repo = new UsageRecordRepository(context);
+                var records = repo.GetAllByInstrumentIdAndBeginTime("FXS-YZ01", new DateTime(2020, 12, 01));
+                var totalHours = repo.GetTotalSampleNumberOfRecords(records);
+                Assert.Equal(300, totalHours);
+            }
+        }
+
+        [Fact]
+        public void GetTotalSampleNumberOfRecords_NoData_ShouldBeEqual_0()
+        {
+            var options = new DbContextOptionsBuilder<EquipmentContext>()
+                .UseInMemoryDatabase(databaseName: nameof(GetTotalSampleNumberOfRecords_NoData_ShouldBeEqual_0))
+                .Options;
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 01, 08, 00, 00) });
+                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 02, 08, 00, 00) });
+                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 03, 08, 00, 00) });
+                context.SaveChanges();
+            }
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                var repo = new UsageRecordRepository(context);
+                var records = repo.GetAllByInstrumentIdAndBeginTime("FXS-YZ01", new DateTime(2020, 12, 01));
+                var totalHours = repo.GetTotalSampleNumberOfRecords(records);
+                Assert.Equal(0, totalHours);
+            }
+        }
+
+        [Fact]
+        public void GetTotalBatchNumberOfRecords_ShouldBeEqual_9()
+        {
+            var options = new DbContextOptionsBuilder<EquipmentContext>()
+                .UseInMemoryDatabase(databaseName: nameof(GetTotalBatchNumberOfRecords_ShouldBeEqual_9))
+                .Options;
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 01, 08, 00, 00), SystemOneBatchNumber = 1, SystemTwoBatchNumber = 2 });
+                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 02, 08, 00, 00), SystemOneBatchNumber = 1, SystemTwoBatchNumber = 2 });
+                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 03, 08, 00, 00), SystemOneBatchNumber = 1, SystemTwoBatchNumber = 2 });
+                context.SaveChanges();
+            }
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                var repo = new UsageRecordRepository(context);
+                var records = repo.GetAllByInstrumentIdAndBeginTime("FXS-YZ01", new DateTime(2020, 12, 01));
+                var totalHours = repo.GetTotalBatchNumberOfRecords(records);
+                Assert.Equal(9, totalHours);
+            }
+        }
+
+        [Fact]
+        public void GetTotalBatchNumberOfRecords_NoData_ShouldBeEqual_0()
+        {
+            var options = new DbContextOptionsBuilder<EquipmentContext>()
+                .UseInMemoryDatabase(databaseName: nameof(GetTotalBatchNumberOfRecords_NoData_ShouldBeEqual_0))
+                .Options;
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 01, 08, 00, 00) });
+                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 02, 08, 00, 00) });
+                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 03, 08, 00, 00) });
+                context.SaveChanges();
+            }
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                var repo = new UsageRecordRepository(context);
+                var records = repo.GetAllByInstrumentIdAndBeginTime("FXS-YZ01", new DateTime(2020, 12, 01));
+                var totalHours = repo.GetTotalBatchNumberOfRecords(records);
+                Assert.Equal(0, totalHours);
+            }
+        }
+
+        [Fact]
+        public void GetTotalS1BatchNumberOfRecords_ShouldBeEqual_3()
+        {
+            var options = new DbContextOptionsBuilder<EquipmentContext>()
+                .UseInMemoryDatabase(databaseName: nameof(GetTotalS1BatchNumberOfRecords_ShouldBeEqual_3))
+                .Options;
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 01, 08, 00, 00), SystemOneBatchNumber = 1 });
+                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 02, 08, 00, 00), SystemOneBatchNumber = 1 });
+                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 03, 08, 00, 00), SystemOneBatchNumber = 1 });
+                context.SaveChanges();
+            }
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                var repo = new UsageRecordRepository(context);
+                var records = repo.GetAllByInstrumentIdAndBeginTime("FXS-YZ01", new DateTime(2020, 12, 01));
+                var totalHours = repo.GetTotalS1BatchNumberOfRecords(records);
+                Assert.Equal(3, totalHours);
+            }
+        }
+
+        [Fact]
+        public void GetTotalS1BatchNumberOfRecords_NoData_ShouldBeEqual_0()
+        {
+            var options = new DbContextOptionsBuilder<EquipmentContext>()
+                .UseInMemoryDatabase(databaseName: nameof(GetTotalS1BatchNumberOfRecords_NoData_ShouldBeEqual_0))
+                .Options;
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 01, 08, 00, 00) });
+                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 02, 08, 00, 00) });
+                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 03, 08, 00, 00) });
+                context.SaveChanges();
+            }
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                var repo = new UsageRecordRepository(context);
+                var records = repo.GetAllByInstrumentIdAndBeginTime("FXS-YZ01", new DateTime(2020, 12, 01));
+                var totalHours = repo.GetTotalS1BatchNumberOfRecords(records);
+                Assert.Equal(0, totalHours);
+            }
+        }
+
+        [Fact]
+        public void GetTotalS2BatchNumberOfRecords_ShouldBeEqual_3()
+        {
+            var options = new DbContextOptionsBuilder<EquipmentContext>()
+                .UseInMemoryDatabase(databaseName: nameof(GetTotalS2BatchNumberOfRecords_ShouldBeEqual_3))
+                .Options;
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 01, 08, 00, 00), SystemTwoBatchNumber = 1 });
+                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 02, 08, 00, 00), SystemTwoBatchNumber = 1 });
+                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 03, 08, 00, 00), SystemTwoBatchNumber = 1 });
+                context.SaveChanges();
+            }
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                var repo = new UsageRecordRepository(context);
+                var records = repo.GetAllByInstrumentIdAndBeginTime("FXS-YZ01", new DateTime(2020, 12, 01));
+                var totalHours = repo.GetTotalS2BatchNumberOfRecords(records);
+                Assert.Equal(3, totalHours);
+            }
+        }
+
+        [Fact]
+        public void GetTotalS2BatchNumberOfRecords_NoData_ShouldBeEqual_0()
+        {
+            var options = new DbContextOptionsBuilder<EquipmentContext>()
+                .UseInMemoryDatabase(databaseName: nameof(GetTotalS2BatchNumberOfRecords_NoData_ShouldBeEqual_0))
+                .Options;
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 01, 08, 00, 00) });
+                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 02, 08, 00, 00) });
+                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 03, 08, 00, 00) });
+                context.SaveChanges();
+            }
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                var repo = new UsageRecordRepository(context);
+                var records = repo.GetAllByInstrumentIdAndBeginTime("FXS-YZ01", new DateTime(2020, 12, 01));
+                var totalHours = repo.GetTotalS2BatchNumberOfRecords(records);
+                Assert.Equal(0, totalHours);
+            }
+        }
     }
 }

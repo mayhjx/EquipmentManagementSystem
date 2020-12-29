@@ -41,7 +41,7 @@ namespace EMS.Test.InstrumentTest
         }
 
         [Fact]
-        public async Task Handler_Instrument_Update_SameGroup_ShouldSucceed()
+        public async Task Handler_Instrument_Update_SameGroup_ShouldFail()
         {
             var resource = new Instrument { Group = "VD" };
             var user = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim> {
@@ -54,7 +54,7 @@ namespace EMS.Test.InstrumentTest
             var authzHandler = new InstrumentAuthorizationHandler();
             await authzHandler.HandleAsync(authzContext);
 
-            Assert.True(authzContext.HasSucceeded);
+            Assert.False(authzContext.HasSucceeded);
         }
 
         [Fact]
