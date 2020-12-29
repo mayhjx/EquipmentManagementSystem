@@ -23,7 +23,6 @@ namespace EquipmentManagementSystem.Repositories
 
             return _context.Set<UsageRecord>()
                 .AsEnumerable()
-                .Where(i => i.IsDelete == false)
                 .Where(i => i.InstrumentId == instrumentId)
                 .Where(i => i.BeginTime.GetValueOrDefault().Year == date.GetValueOrDefault().Year)
                 .Where(i => i.BeginTime.GetValueOrDefault().Month == date.GetValueOrDefault().Month)
@@ -47,7 +46,6 @@ namespace EquipmentManagementSystem.Repositories
         public UsageRecord GetLatestRecordOfProject(string projectName, string instrumentId)
         {
             return _context.UsageRecords
-                .Where(i => i.IsDelete == false)
                 .Where(i => i.ProjectName == projectName)
                 .Where(i => i.InstrumentId == instrumentId)
                 .ToList()
@@ -70,7 +68,7 @@ namespace EquipmentManagementSystem.Repositories
                 var mobilePhase = r.GetMobilePhase();
                 foreach (var mp in mobilePhase)
                 {
-                    if (!mobilePhaseOrCarrierGas.ContainsValue(mp))
+                    if (!mobilePhaseOrCarrierGas.ContainsValue(mp) && !string.IsNullOrEmpty(mp))
                     {
                         char key = (char)(mobilePhaseOrCarrierGas.Keys.Count + 65);
                         mobilePhaseOrCarrierGas.Add(key, mp);
@@ -87,7 +85,7 @@ namespace EquipmentManagementSystem.Repositories
 
             foreach (var r in records)
             {
-                if (!columnType.ContainsValue(r.ColumnType))
+                if (!columnType.ContainsValue(r.ColumnType) && !string.IsNullOrEmpty(r.ColumnType))
                 {
                     char key = (char)(columnType.Keys.Count + 65);
                     columnType.Add(key, r.ColumnType);
@@ -103,7 +101,7 @@ namespace EquipmentManagementSystem.Repositories
 
             foreach (var r in records)
             {
-                if (!ionSource.ContainsValue(r.IonSource))
+                if (!ionSource.ContainsValue(r.IonSource) && !string.IsNullOrEmpty(r.IonSource))
                 {
                     char key = (char)(ionSource.Keys.Count + 65);
                     ionSource.Add(key, r.IonSource);
@@ -119,13 +117,74 @@ namespace EquipmentManagementSystem.Repositories
 
             foreach (var r in records)
             {
-                if (!detector.ContainsValue(r.Detector))
+                if (!detector.ContainsValue(r.Detector) && !string.IsNullOrEmpty(r.Detector))
                 {
                     char key = (char)(detector.Keys.Count + 65);
                     detector.Add(key, r.Detector);
                 }
             }
             return detector;
+        }
+
+        public double GetTotalHoursOfRecords(List<UsageRecord> usageRecords)
+        {
+            double total = 0;
+            foreach (var record in usageRecords)
+            {
+                var beginTime = record.BeginTime;
+                var endTime = record.EndTime;
+
+                if (beginTime != null && endTime != null)
+                {
+                    total += (endTime - beginTime).GetValueOrDefault().TotalHours;
+                }
+            }
+            return total;
+        }
+
+        public int GetTotalSampleNumberOfRecords(List<UsageRecord> usageRecords)
+        {
+            int total = 0;
+            foreach (var record in usageRecords)
+            {
+                var number = record.SampleNumber.GetValueOrDefault();
+                total += number;
+            }
+            return total;
+        }
+
+        public int GetTotalBatchNumberOfRecords(List<UsageRecord> usageRecords)
+        {
+            int total = 0;
+            foreach (var record in usageRecords)
+            {
+                var s1Number = record.SystemOneBatchNumber.GetValueOrDefault();
+                var s2Number = record.SystemTwoBatchNumber.GetValueOrDefault();
+                total += s1Number + s2Number;
+            }
+            return total;
+        }
+
+        public int GetTotalS1BatchNumberOfRecords(List<UsageRecord> usageRecords)
+        {
+            int total = 0;
+            foreach (var record in usageRecords)
+            {
+                var number = record.SystemOneBatchNumber.GetValueOrDefault();
+                total += number;
+            }
+            return total;
+        }
+
+        public int GetTotalS2BatchNumberOfRecords(List<UsageRecord> usageRecords)
+        {
+            int total = 0;
+            foreach (var record in usageRecords)
+            {
+                var number = record.SystemTwoBatchNumber.GetValueOrDefault();
+                total += number;
+            }
+            return total;
         }
     }
 }

@@ -26,5 +26,11 @@ namespace EquipmentManagementSystem.Interfaces
         Dictionary<char, string> GetColumnTypeOfRecord(string instrumentId, DateTime month);
         Dictionary<char, string> GetIonSourceOfRecord(string instrumentId, DateTime month);
         Dictionary<char, string> GetDetectorOfRecord(string instrumentId, DateTime month);
+
+        double GetTotalHoursOfRecords(List<UsageRecord> usageRecords);
+        int GetTotalSampleNumberOfRecords(List<UsageRecord> usageRecords);
+        int GetTotalBatchNumberOfRecords(List<UsageRecord> usageRecords);
+        int GetTotalS1BatchNumberOfRecords(List<UsageRecord> usageRecords);
+        int GetTotalS2BatchNumberOfRecords(List<UsageRecord> usageRecords);
     }
 }
