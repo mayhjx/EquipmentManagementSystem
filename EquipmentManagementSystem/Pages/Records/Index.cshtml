@@ -87,15 +87,15 @@
                             </tr>
                         </thead>
                         <tfoot>
-                            <tr>
+                            <tr class="tfoot">
                                 <td colspan="@totalColSpan" style="text-align:left;padding-left:10px;">
                                     备注 remark：Y，该工作日已完成该项维护； N，经评估该工作日无需进行该项维护。
                                 </td>
                             </tr>
-                            <tr>
+                            <tr class="tfoot">
                                 <td colspan="@totalColSpan">使用回顾</td>
                             </tr>
-                            <tr>
+                            <tr class="tfoot">
                                 <td>评估意见<br />Comment</td>
                                 <td colspan="@(totalColSpan - 19)"></td>
                                 <td colspan="4">评估人/日期<br />Evaluator/Date</td>
@@ -404,7 +404,7 @@
                             </tr>
                         </thead>
                         <tfoot>
-                            <tr class="tfoot-total">
+                            <tr class="total">
                                 <td colspan="12" style="text-align:left;padding-left:10px;">
                                     总计：
                                     使用时长：@Model.TotalHours.ToString("F1") 小时，
