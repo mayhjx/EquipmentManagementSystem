@@ -49,43 +49,48 @@ namespace EquipmentManagementSystem.Pages.Records
 
         [BindProperty]
         public SearchForm Search { get; set; }
-        public SelectList ProjectsSelectList { get; set; }
+        public SelectList ProjectsSelectList { get; private set; }
 
-        public IList<UsageRecord> UsageRecords { get; set; }
-        public IList<MaintenanceRecord> MaintenanceRecords { get; set; }
+        public List<UsageRecord> UsageRecords { get; private set; }
+        public List<MaintenanceRecord> MaintenanceRecords { get; private set; }
 
         [BindProperty]
         public UsageRecord UsageRecord { get; set; }
-        public string Platform { get; set; }
-        public string InstrumentModel { get; set; }
+        public string Platform { get; private set; }
+        public string InstrumentModel { get; private set; }
 
-        #region 维护记录表相关属性
-        public string MobilePhaseOrCarrierGas { get; set; }
-        public string ColumnPressureUnit { get; set; }
-        public string VacuumDegreeUnit { get; set; }
-        public Dictionary<char, string> MobilePhaseList { get; set; }
-        public Dictionary<char, string> ColumnTypeList { get; set; }
-        public Dictionary<char, string> IonSourceList { get; set; }
-        public Dictionary<char, string> DetectorList { get; set; }
+        #region 使用记录表相关属性
+        public string MobilePhaseOrCarrierGas { get; private set; }
+        public string ColumnPressureUnit { get; private set; }
+        public string VacuumDegreeUnit { get; private set; }
+        public Dictionary<char, string> MobilePhaseList { get; private set; }
+        public Dictionary<char, string> ColumnTypeList { get; private set; }
+        public Dictionary<char, string> IonSourceList { get; private set; }
+        public Dictionary<char, string> DetectorList { get; private set; }
+        public double TotalHours { get; private set; }
+        public int TotalSampleNumber { get; private set; }
+        public int TotalBatchNumber { get; private set; }
+        public int TotalS1BatchNumber { get; private set; }
+        public int TotalS2BatchNumber { get; private set; }
         #endregion
 
         #region 维护记录表相关属性
-        public List<string> RecordsIdOfMonth { get; set; }
-        public List<string> DailyMaintenanceContent { get; set; }
-        public List<string> WeeklyMaintenanceContent { get; set; }
-        public List<string> DailyMaintenanceOperator { get; set; }
-        public List<string> WeeklyMaintenanceOperator { get; set; }
-        public Dictionary<string, List<string>> DailyMaintenanceSituation { get; set; }
-        public Dictionary<string, List<string>> WeekyMaintenanceSituation { get; set; }
-        public List<string> TemporaryMaintenanceRecord { get; set; }
-        public string MonthlyMaintenanceRecord { get; set; }
-        public string QuarterlyMaintenanceRecord { get; set; }
-        public string YearlyMaintenanceRecord { get; set; }
+        public List<string> RecordsIdOfMonth { get; private set; }
+        public List<string> DailyMaintenanceContent { get; private set; }
+        public List<string> WeeklyMaintenanceContent { get; private set; }
+        public List<string> DailyMaintenanceOperator { get; private set; }
+        public List<string> WeeklyMaintenanceOperator { get; private set; }
+        public Dictionary<string, List<string>> DailyMaintenanceSituation { get; private set; }
+        public Dictionary<string, List<string>> WeekyMaintenanceSituation { get; private set; }
+        public List<string> TemporaryMaintenanceRecord { get; private set; }
+        public string MonthlyMaintenanceRecord { get; private set; }
+        public string QuarterlyMaintenanceRecord { get; private set; }
+        public string YearlyMaintenanceRecord { get; private set; }
         #endregion
 
         #region 操作日志
-        public IList<AuditTrailLog> UsageAuditTrailLogs { get; set; }
-        public IList<AuditTrailLog> MaintenanceAuditTrailLogs { get; set; }
+        public IEnumerable<IGrouping<string, AuditTrailLog>> UsageAuditTrailLogs { get; private set; }
+        public IEnumerable<IGrouping<string, AuditTrailLog>> MaintenanceAuditTrailLogs { get; private set; }
         #endregion
 
         public async Task<IActionResult> OnGetAsync(string instrumentId, DateTime? date, string statusMessage)
@@ -127,10 +132,6 @@ namespace EquipmentManagementSystem.Pages.Records
 
             ProjectsSelectList = new SelectList(projectShortNameList);
 
-            // 记录列表
-            UsageRecords = _usageRecordRepository.GetAllByInstrumentIdAndBeginTime(instrumentId, date);
-            MaintenanceRecords = _maintenanceRecordRepository.GetAllByInstrumentIdAndYearAndMonth(instrumentId, date);
-
             // 新的使用记录实例
             UsageRecord = new UsageRecord
             {
@@ -142,16 +143,23 @@ namespace EquipmentManagementSystem.Pages.Records
             InstrumentModel = await _instrumentRepository.GetModelById(instrumentId);
 
             #region 使用记录表相关
+            UsageRecords = _usageRecordRepository.GetAllByInstrumentIdAndBeginTime(instrumentId, date);
             MobilePhaseOrCarrierGas = Platform == "GCMS" ? "gas" : "mobilephase";
             ColumnPressureUnit = UsageRecords.FirstOrDefault()?.SystemOneColumnPressureUnit ?? "";
-            VacuumDegreeUnit = UsageRecords.FirstOrDefault()?.LowVacuumDegreeUnit ?? "";
+            VacuumDegreeUnit = UsageRecords.FirstOrDefault()?.LowVacuumDegreeUnit.Split(" ")[1] ?? "";
             MobilePhaseList = _usageRecordRepository.GetMobilePhaseOrCarrierGasOfRecord(instrumentId, date.GetValueOrDefault());
             ColumnTypeList = _usageRecordRepository.GetColumnTypeOfRecord(instrumentId, date.GetValueOrDefault());
             IonSourceList = _usageRecordRepository.GetIonSourceOfRecord(instrumentId, date.GetValueOrDefault());
             DetectorList = _usageRecordRepository.GetDetectorOfRecord(instrumentId, date.GetValueOrDefault());
+            TotalHours = _usageRecordRepository.GetTotalHoursOfRecords(UsageRecords);
+            TotalSampleNumber = _usageRecordRepository.GetTotalSampleNumberOfRecords(UsageRecords);
+            TotalBatchNumber = _usageRecordRepository.GetTotalBatchNumberOfRecords(UsageRecords);
+            TotalS1BatchNumber = _usageRecordRepository.GetTotalS1BatchNumberOfRecords(UsageRecords);
+            TotalS2BatchNumber = _usageRecordRepository.GetTotalS2BatchNumberOfRecords(UsageRecords);
             #endregion
 
             #region 维护记录表相关
+            MaintenanceRecords = _maintenanceRecordRepository.GetAllByInstrumentIdAndYearAndMonth(instrumentId, date);
             RecordsIdOfMonth = _maintenanceRecordService.GetRecordIdOfMonth(instrumentId, date.GetValueOrDefault());
             DailyMaintenanceContent = _maintenanceContentRepository.GetDailyContentByInstrumentPlatform(Platform);
             WeeklyMaintenanceContent = _maintenanceContentRepository.GetWeeklyContentByInstrumentPlatform(Platform);
@@ -185,8 +193,8 @@ namespace EquipmentManagementSystem.Pages.Records
             #endregion
 
             // 当前仪器和月份的操作日志
-            UsageAuditTrailLogs = await _auditTrailRepository.GetAuditTrailLogs(new UsageRecord().GetType().Name, null, Search.Date);
-            MaintenanceAuditTrailLogs = await _auditTrailRepository.GetAuditTrailLogs(new MaintenanceRecord().GetType().Name, null, Search.Date);
+            UsageAuditTrailLogs = _auditTrailRepository.GetAuditTrailLogsGroupingByPK(new UsageRecord().GetType().Name, Search.Date);
+            MaintenanceAuditTrailLogs = _auditTrailRepository.GetAuditTrailLogsGroupingByPK(new MaintenanceRecord().GetType().Name, Search.Date);
 
             return Page();
         }
