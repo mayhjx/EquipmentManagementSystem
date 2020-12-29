@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EquipmentManagementSystem", "EquipmentManagementSystem\EquipmentManagementSystem.csproj", "{DA400AAA-662A-4D79-BD38-839E21003C2B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EMS.Test", "EMS.Test\EMS.Test.csproj", "{0CC6A667-879F-47CF-8CFC-C9DF1EF1FE15}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EMS.Test", "EMS.Test\EMS.Test.csproj", "{0CC6A667-879F-47CF-8CFC-C9DF1EF1FE15}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
