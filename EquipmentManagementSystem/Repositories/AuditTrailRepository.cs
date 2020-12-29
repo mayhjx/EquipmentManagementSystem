@@ -16,17 +16,14 @@ namespace EquipmentManagementSystem.Repositories
         {
             _context = context;
         }
-
-        public async Task<List<AuditTrailLog>> GetAuditTrailLogs(string entityName, int? pk = null, DateTime? yearOrMonth = null)
+        public async Task<List<AuditTrailLog>> GetAuditTrailLogs(string entityName, int? pk = null, DateTime? date = null)
         {
-            var result = _context.AuditTrailLogs
-                .Where(l => l.EntityName == entityName);
+            var result = _context.AuditTrailLogs.Where(l => l.EntityName == entityName);
 
-            // 限制时间范围
-            if (yearOrMonth != null)
+            if (date != null)
             {
-                result = result.Where(l => l.DateChanged.Year == yearOrMonth.GetValueOrDefault().Year &&
-                                            l.DateChanged.Month == yearOrMonth.GetValueOrDefault().Month);
+                result = result.Where(l => l.DateChanged.Year == date.GetValueOrDefault().Year &&
+                                            l.DateChanged.Month == date.GetValueOrDefault().Month);
             }
 
             if (pk != null)
@@ -35,6 +32,19 @@ namespace EquipmentManagementSystem.Repositories
             }
 
             return await result.OrderByDescending(l => l.DateChanged).ToListAsync();
+        }
+
+        public IEnumerable<IGrouping<string, AuditTrailLog>> GetAuditTrailLogsGroupingByPK(string entityName, DateTime? date = null)
+        {
+            var result = _context.AuditTrailLogs.Where(l => l.EntityName == entityName);
+
+            if (date != null)
+            {
+                result = result.Where(l => l.DateChanged.Year == date.GetValueOrDefault().Year &&
+                                            l.DateChanged.Month == date.GetValueOrDefault().Month);
+            }
+
+            return result.AsEnumerable().GroupBy(i => i.PrimaryKeyValue.ToString());
         }
     }
 }
