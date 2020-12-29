@@ -59,7 +59,7 @@ tr.title th {
     border: 1px solid #FFF;
 }
 
-tr.head td {
+tr.small-title td {
     border-top: 1px solid #FFF;
     border-left: 1px solid #FFF;
     border-right: 1px solid #FFF;
@@ -150,6 +150,10 @@ col.button {
     width: 100px;
 }
 
+div.button {
+    display: flex;
+    justify-content: space-between;
+}
 
 input#UsageRecord_SampleNumber,
 input#usageRecord_SampleNumber {
@@ -232,7 +236,6 @@ textarea {
     box-sizing: border-box;
 }
 
-
 p.text-vertical {
     margin: 2px auto;
     width: 14px;
@@ -295,7 +298,9 @@ p.text-vertical {
         display: none;
     }
 
-    tr#create-row {
+
+
+    tr.view-head, tr#create-row {
         display: none;
     }
 
@@ -311,11 +316,15 @@ p.text-vertical {
         border-bottom: 1px solid #FFF;
     }
 
+    tr.head {
+        display: none;
+    }
+
     .hide-in-screen {
         display: none;
     }
 
-    tfoot {
+    tr.tfoot {
         display: none;
     }
 
