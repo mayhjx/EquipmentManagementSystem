@@ -276,6 +276,10 @@ p.text-vertical {
         font-size: 20px;
     }
 
+    tr.total {
+        display: none;
+    }
+
     p.text-vertical {
         font-size: 22px;
     }
@@ -297,8 +301,6 @@ p.text-vertical {
     th.button, td.button {
         display: none;
     }
-
-
 
     tr.view-head, tr#create-row {
         display: none;
