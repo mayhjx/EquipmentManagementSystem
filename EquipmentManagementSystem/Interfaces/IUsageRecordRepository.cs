@@ -13,7 +13,7 @@ namespace EquipmentManagementSystem.Interfaces
         /// <param name="projectName"></param>
         /// <returns></returns>
         UsageRecord GetLatestRecordOfProject(string projectName, string instrumentId);
-        List<UsageRecord> GetAllByInstrumentIdAndBeginTime(string instrumentId, DateTime? date);
+        List<UsageRecord> GetAllByInstrumentIdAndMonthOfBeginTime(string instrumentId, DateTime date);
         Task UpdateEndTime(UsageRecord usageRecord, DateTime endTime);
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace EquipmentManagementSystem.Interfaces
         Dictionary<char, string> GetIonSourceOfRecord(string instrumentId, DateTime month);
         Dictionary<char, string> GetDetectorOfRecord(string instrumentId, DateTime month);
 
-        double GetTotalHoursOfRecords(List<UsageRecord> usageRecords);
+        double GetTotalUsageHoursOfRecords(List<UsageRecord> usageRecords);
         int GetTotalSampleNumberOfRecords(List<UsageRecord> usageRecords);
         int GetTotalBatchNumberOfRecords(List<UsageRecord> usageRecords);
         int GetTotalS1BatchNumberOfRecords(List<UsageRecord> usageRecords);

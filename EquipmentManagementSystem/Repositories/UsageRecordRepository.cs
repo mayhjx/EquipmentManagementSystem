@@ -14,18 +14,13 @@ namespace EquipmentManagementSystem.Repositories
         {
         }
 
-        public List<UsageRecord> GetAllByInstrumentIdAndBeginTime(string instrumentId, DateTime? date)
+        public List<UsageRecord> GetAllByInstrumentIdAndMonthOfBeginTime(string instrumentId, DateTime date)
         {
-            if (date.GetValueOrDefault() == null)
-            {
-                date = DateTime.Now;
-            }
-
             return _context.Set<UsageRecord>()
                 .AsEnumerable()
                 .Where(i => i.InstrumentId == instrumentId)
-                .Where(i => i.BeginTime.GetValueOrDefault().Year == date.GetValueOrDefault().Year)
-                .Where(i => i.BeginTime.GetValueOrDefault().Month == date.GetValueOrDefault().Month)
+                .Where(i => i.BeginTime.GetValueOrDefault().Year == date.Year)
+                .Where(i => i.BeginTime.GetValueOrDefault().Month == date.Month)
                 .ToList();
         }
 
@@ -61,7 +56,7 @@ namespace EquipmentManagementSystem.Repositories
              * 如果字典的值不包含该流动相/载气，则添加到字典中
              */
             var mobilePhaseOrCarrierGas = new Dictionary<char, string>();
-            var records = GetAllByInstrumentIdAndBeginTime(instrumentId, month);
+            var records = GetAllByInstrumentIdAndMonthOfBeginTime(instrumentId, month);
 
             foreach (var r in records)
             {
@@ -81,7 +76,7 @@ namespace EquipmentManagementSystem.Repositories
         public Dictionary<char, string> GetColumnTypeOfRecord(string instrumentId, DateTime month)
         {
             var columnType = new Dictionary<char, string>();
-            var records = GetAllByInstrumentIdAndBeginTime(instrumentId, month);
+            var records = GetAllByInstrumentIdAndMonthOfBeginTime(instrumentId, month);
 
             foreach (var r in records)
             {
@@ -97,7 +92,7 @@ namespace EquipmentManagementSystem.Repositories
         public Dictionary<char, string> GetIonSourceOfRecord(string instrumentId, DateTime month)
         {
             var ionSource = new Dictionary<char, string>();
-            var records = GetAllByInstrumentIdAndBeginTime(instrumentId, month);
+            var records = GetAllByInstrumentIdAndMonthOfBeginTime(instrumentId, month);
 
             foreach (var r in records)
             {
@@ -113,7 +108,7 @@ namespace EquipmentManagementSystem.Repositories
         public Dictionary<char, string> GetDetectorOfRecord(string instrumentId, DateTime month)
         {
             var detector = new Dictionary<char, string>();
-            var records = GetAllByInstrumentIdAndBeginTime(instrumentId, month);
+            var records = GetAllByInstrumentIdAndMonthOfBeginTime(instrumentId, month);
 
             foreach (var r in records)
             {
@@ -126,7 +121,7 @@ namespace EquipmentManagementSystem.Repositories
             return detector;
         }
 
-        public double GetTotalHoursOfRecords(List<UsageRecord> usageRecords)
+        public double GetTotalUsageHoursOfRecords(List<UsageRecord> usageRecords)
         {
             double total = 0;
             foreach (var record in usageRecords)
