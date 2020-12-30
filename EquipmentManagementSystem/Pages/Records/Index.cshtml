@@ -24,7 +24,7 @@
         <div class="card-tools">
             <form id="search" class="form-inline float-left" method="post" asp-page-handler="Search">
                 <label class="my-1 mr-2 ml-2" for="instrument" asp-for="@Model.Search.Instrument"></label>
-                <select class="custom-select my-1 mr-2" id="instrumentId" asp-for="@Model.Search.Instrument">
+                <select class="custom-select select2 my-1" id="instrumentId" asp-for="@Model.Search.Instrument">
                     @if (Model.Search.InstrumentSelectList.Count == 0)
                     {
                         <option value="">无仪器编号</option>
@@ -38,7 +38,7 @@
                     }
                 </select>
 
-                <label class="my-1 mr-2" for="date">月份</label>
+                <label class="my-1 ml-2 mr-2" for="date">月份</label>
                 <input class="form-control my-1 mr-2" id="date" type="month" asp-for="Search.Date" style="width:165px;" />
 
                 <button class="btn btn-outline-primary my-1 mr-2" asp-page-handler="Search">查询</button>
