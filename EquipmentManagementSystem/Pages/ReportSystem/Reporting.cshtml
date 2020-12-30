@@ -1,407 +1,151 @@
 ﻿@page
 @model EquipmentManagementSystem.Pages.ReportSystem.ReportingModel
 @{
-    ViewData["Title"] = "报表系统";
+    ViewData["Title"] = "";
 }
 
-<div class="card d-print-none">
+<div class="card">
     <div class="card-header">
-        <h4>查询条件</h4>
+        <h4>查询</h4>
     </div>
     <div class="card-body">
         <div class="row">
             <div class="col-12">
-                <form method="post">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-row">
-                        <div class="col-xl-auto col-sm-6 my-0">
-                            <label asp-for="Search.Category" class="control-label"></label>
-                            <span asp-validation-for="Search.Category" class="text-danger"></span>
-                            <select asp-for="Search.Category" class="custom-select select2" asp-items="@Html.GetEnumSelectList<EquipmentManagementSystem.Pages.ReportSystem.ReportingModel.Category>()">
-                            </select>
-                        </div>
-                        <div class="col-xl-auto col-sm-6 my-0">
-                            <label asp-for="Search.Month" class="control-label"></label>
-                            <span asp-validation-for="Search.Month" class="text-danger"></span>
-                            <input asp-for="Search.Month" type="month" class="form-control" />
-                        </div>
-                        <div class="col-xl-auto col-sm-6 my-0">
-                            <label asp-for="Search.Platform" class="control-label"></label>
-                            <span asp-validation-for="Search.Platform" class="text-danger"></span>
-                            <select id="platform" asp-for="Search.Platform" asp-items="@Model.PlatformSelectList" class="custom-select select2">
-                                <option value="">---请选择---</option>
-                            </select>
-                        </div>
-                        <div class="col-xl-auto col-sm-6 my-0">
-                            <label asp-for="Search.Group" class="control-label"></label>
-                            <span asp-validation-for="Search.Group" class="text-danger"></span>
-                            <select id="group" asp-for="Search.Group" asp-items="@Model.GroupSelectList" class="custom-select select2">
-                                <option value="">---请选择---</option>
-                            </select>
-                        </div>
-                        <div class="col-xl-3 col-sm-6 my-0">
-                            <label asp-for="Search.Project" class="control-label"></label>
-                            <span asp-validation-for="Search.Project" class="text-danger"></span>
-                            <select id="project" asp-for="Search.Project" asp-items="@Model.ProjectSelectList" class="custom-select select2">
-                                <option value="">---请选择---</option>
-                            </select>
-                        </div>
-                        <div class="col-xl-1 col-sm-6 my-0">
-                            <label asp-for="Search.Instrument" class="control-label"></label>
-                            <span asp-validation-for="Search.Instrument" class="text-danger"></span>
-                            <select id="instrument" asp-for="Search.Instrument" asp-items="@Model.InstrumentSelectList" class="custom-select select2">
-                                <option value="">---请选择---</option>
-                            </select>
-                        </div>
-                        <div class="col-xl-auto col-sm-6 pt-2">
-                            <input type="submit" class="btn btn-primary mt-4 btn-block" value="查询" />
-                        </div>
-                    </div>
+                <form method="post" class="form-inline ">
+                    <label asp-for="Search.Year" class="control-label mr-2"></label>
+                    <input asp-for="Search.Year" type="number" min="1900" max="9999" class="form-control mr-2" required />
+
+                    <label asp-for="Search.InstrumentId" class="control-label mr-2"></label>
+                    <select asp-for="Search.InstrumentId" class="custom-select select2" required>
+                        <option value="" hidden disabled selected>---请选择---</option>
+                        @foreach (var id in Model.Search.InstrumentSelectList)
+                        {
+                            <option value="@id">@id</option>
+                        }
+                    </select>
+                    <input type="submit" class="btn btn-primary ml-2" value="查询" />
                 </form>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-6">
+                @*使用时长直方图*@
+                <canvas id="usage-chart" height="400" width="600" aria-label="使用时长直方图" role="img"></canvas>
+            </div>
+            <div class="col-6">
+                @*故障时长直方图*@
+                <canvas id="malfunction-chart" height="400" width="600" aria-label="故障时长直方图" role="img"></canvas>
             </div>
         </div>
     </div>
 </div>
 
-@if (Model.UsageRecords != null)
-{
-    <div class="card card-primary card-outline card-outline-tabs">
-        <div class="card-header d-print-none p-0 border-bottom-0">
-            <ul class="nav nav-tabs nav-justified">
-                <li class="pt-2 px-3">
-                    <h3 class="card-title">查询结果</h3>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="#data-chart" data-toggle="pill" role="tab">使用时长柱状图</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#data" data-toggle="pill" role="tab">使用记录</a>
-                </li>
-                @*<li class="nav-item">
-                    <a class="nav-link" href="#usage-datagrid" data-toggle="pill" role="tab">使用记录表</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#maintenance-datagrid" data-toggle="pill" role="tab">维护记录表</a>
-                </li>*@
-            </ul>
-        </div>
-        <div class="card-body">
-            <div class="tab-content p-0">
-                @*使用时长直方图*@
-                <div class="chart tab-pane active" id="data-chart" style="position: relative;">
-                    <div class="chartjs-size-monitor">
-                        <div class="chartjs-size-monitor-expand"><div class=""></div></div>
-                        <div class="chartjs-size-monitor-shrink"><div class=""></div></div>
-                    </div>
-                </div>
-                @*使用记录*@
-                @*
-                    <div class="tab-pane " id="data" style="position: relative; ">
-                        <div class="table-responsive">
-                            <table id="export" class="table table-hover text-nowrap">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.UsageRecords[0].InstrumentId)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.UsageRecords[0].ProjectName)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.UsageRecords[0].ColumnNumber)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.UsageRecords[0].ColumnPressure)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.UsageRecords[0].ColumnTwoNumber)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.UsageRecords[0].ColumnTwoPressure)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.UsageRecords[0].PressureUnit)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.UsageRecords[0].BeginTimeOfTest)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.UsageRecords[0].SampleNumber)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.UsageRecords[0].TestNumber)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.UsageRecords[0].VacuumDegree)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.UsageRecords[0].VacuumDegreeUnit)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.UsageRecords[0].BlankSignal)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.UsageRecords[0].TestSignal)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.UsageRecords[0].EndTime)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.UsageRecords[0].Creator)
-                                        </th>
-                                        <th>检测时长(h)</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model.UsageRecords)
-                                    {
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.InstrumentId)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.ProjectName)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.ColumnNumber)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.ColumnPressure)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.ColumnTwoNumber)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.ColumnTwoPressure)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.PressureUnit)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.BeginTimeOfTest)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.SampleNumber)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.TestNumber)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.VacuumDegree)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.VacuumDegreeUnit)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.BlankSignal)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.TestSignal)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.EndTime)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Creator)
-                                            </td>
-                                            <td class="time">
-                                                @((item.EndTime - item.BeginTimeOfTest).GetValueOrDefault().TotalHours.ToString("f1"))
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td class="text-bold">总时长(h)</td>
-                                        <td id="total" class="text-bold"></td>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                    </div>
-                *@
-                
-                
-            </div>
-        </div>
-    </div>
-}
-
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <link href="~/plugins/datatables-buttons/css/buttons.bootstrap4.min.css" rel="stylesheet" />
-    <script src="~/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
-    <script src="~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-    <script src="~/plugins/jszip/jszip.min.js"></script>
-    <script src="~/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
-    <script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="~/plugins/chart.js/Chart.bundle.min.js"></script>
     <script>
-        // exportMaintenanceRecord
         $(document).ready(function () {
-            @{
-                double timeSpan = 0;
-                double totalTime = 0;
-                // 设备编号，检测项目，检测时长
-                var instrument = new Dictionary<string, Dictionary<string, Dictionary<string, double>>>();
-                if (Model.UsageRecords != null)
-                {
-                    foreach (var item in Model.UsageRecords)
-                    {
-                        timeSpan = Math.Round((item.EndTime - item.BeginTime).GetValueOrDefault().TotalHours,1);
-                        totalTime += timeSpan;
+            let instrumentId = @(Json.Serialize(Model.Search.InstrumentId));
 
-                        if(!instrument.ContainsKey(item.InstrumentId))
-                        {
-                            instrument.Add(item.InstrumentId, new Dictionary<string, Dictionary<string, double>>() { });
-                        }
-
-                        var project = instrument[item.InstrumentId];
-                        if(!project.ContainsKey(item.ProjectName))
-                        {
-                            project.Add(item.ProjectName, new Dictionary<string, double>() { });
-                        }
-
-                        var beginTime = item.BeginTime.GetValueOrDefault().ToShortDateString();
-                        var day = project[item.ProjectName];
-                        if(!day.ContainsKey(beginTime))
-                        {
-                            day.Add(beginTime, timeSpan);
-                        }
-                    }
-                }
-            }
-            // chartjs
-            var div = document.getElementById('data-chart');
-            if (!div) return;
-
-            let instruments = @(Json.Serialize(instrument));
-            if (Object.keys(instruments).length == 0) {
-                div.innerHTML = "<p>未查询到数据！</p>";
+            if (instrumentId == null) {
                 return;
             }
 
-            for (let num in instruments) {
-                for (let project in instruments[num]) {
-                    var canvas = document.createElement("canvas");
-                    var br = document.createElement("br");
+            let year = @(Json.Serialize(Model.Search.Year));
+            let monthlyUsageHour = @(Json.Serialize(Model.MonthlyUsageHour));
+            let monthlyMalfunctionHour = @(Json.Serialize(Model.MonthlyMalfunctionHour));
 
-                    canvas.height = "275";
-                    canvas.width = "900";
+            let labels = new Array();
+            for (i = 1; i <= 12; i++) {
+                labels[i - 1] = i;
+            }
 
-                    div.appendChild(canvas);
-                    canvas.append("<p>当前浏览器不支持查看该元素！</p>");
-                    div.appendChild(br);
-
-                    var ctx = canvas.getContext('2d');
-                    var chart = new Chart(ctx, {
-                    // The type of chart we want to create
-                    type: 'bar',
-
-                    // The data for our dataset
-                    data: {
-                        labels: Object.keys(instruments[num][project]),
-                        datasets: [{
-                            label: num + "  " + project + '  使用时长',
-                            backgroundColor: 'rgb(65, 105, 225)',
-                            borderColor: 'rgb(65, 105, 225)',
-                            data: Object.values(instruments[num][project]),
-                        }]
-                        },
-                        // Configuration options go here
-                        options: {
-                            scales: {
-                                xAxes: [{
-                                    type: 'time',
-                                    time: {
-                                        unit: "day",
-                                        displayFormats: {
-                                            day: "YYYY-MM-DD"
-                                        }
-                                    },
-                                }],
-                                yAxes: [{
-                                    ticks: {
-                                        max: 24,
-                                        beginAtZero: false
-                                    },
-                                    scaleLabel: {
-                                        display: true,
-                                        labelString: "小时",
-                                    }
-                                }]
-                            }
-                        }
-                    });
-                }
-            };
-        });
-
-        $(document).ready(function () {
-            // 动态生成检测项目
-            $("select#group").on("change", function () {
-                var group = $(this).val();
-                $("select#project").removeAttr("disabled");
-                $("select#project").empty();
-                $("select#project").append("<option value=''>---请选择---</option>");
-                $.getJSON(`?handler=ProjectFilter&group=${group}`, (data) => {
-                    if (data.length > 0) {
-                        $.each(data, function (i, item) {
-                            $("select#project").append(`<option value='${item}'>${item}</option>`);
-                        });
-                    }
-                    else {
-                        $("select#project").empty();
-                        $("select#project").append("<option value=''>无可选项目</option>");
-                    }
-                });
-            });
-
-            // 动态生成设备编号
-            $("select#project").on("change", function () {
-                var project = $(this).val();
-                $("select#instrument").removeAttr("disabled");
-                $("select#instrument").empty();
-                $("select#instrument").append("<option value=''>---请选择---</option>");
-                $.getJSON(`?handler=InstrumentFilter&projectName=${project}`, (data) => {
-                    if (data.length > 0) {
-                        $.each(data, function (i, item) {
-                            $("select#instrument").append(`<option value='${item}'>${item}</option>`);
-                        });
-                    }
-                    else {
-                        $("select#instrument").empty();
-                        $("select#instrument").append("<option value=''>无可选设备</option>");
-                    }
-                });
-            });
-
-            $('table#export').DataTable({
-                dom: "irtpB",
-                language: {
-                    "emptyTable": "没有数据", //没有数据时要显示的字符串
-                    "info": "当前 _START_ 条到 _END_ 条 共 _TOTAL_ 条",//左下角的信息，变量可以自定义，到官网详细查看
-                    "infoEmpty": "无记录",//当没有数据时，左下角的信息
-                    "infoFiltered": "(从 _MAX_ 条记录过滤)",//当表格过滤的时候，将此字符串附加到主要信息
-                    "infoPostFix": "",//在摘要信息后继续追加的字符串
-                    "thousands": ",",//千分位分隔符
-                    "lengthMenu": "每页 _MENU_ 条记录",//用来描述分页长度选项的字符串
-                    "loadingRecords": "加载中...",//用来描述数据在加载中等待的提示字符串 - 当异步读取数据的时候显示
-                    "processing": "处理中...",//用来描述加载进度的字符串
-                    "search": "搜索：",//用来描述搜索输入框的字符串
-                    "zeroRecords": "没有找到",//当没有搜索到结果时，显示
-                    "paginate": {
-                        "first": "首页",
-                        "previous": "上一页",
-                        "next": "下一页",
-                        "last": "尾页"
-                    }
+            var ctx = document.getElementById('usage-chart').getContext('2d');
+            var usageChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: `${instrumentId}`,
+                        backgroundColor: 'rgb(65, 105, 225)',
+                        borderColor: 'rgb(65, 105, 225)',
+                        data: monthlyUsageHour,
+                    }]
                 },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    title: {
+                        display: true,
+                        text: `${year} 年设备使用时长`,
+                        fontSize: 16
+                    },
+                    scales: {
+                        xAxes: [{
+                            ticks: {
+                                beginAtZero: false
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: "月份",
+                            }
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: "小时",
+                            }
+                        }]
+                    }
+                }
             });
 
-            // 计算总时长
-            $("td#total").text(@totalTime.ToString("f1"));
+            var ctx = document.getElementById('malfunction-chart').getContext('2d');
+            var malfunctionChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: `${instrumentId}`,
+                        backgroundColor: 'rgb(65, 105, 225)',
+                        borderColor: 'rgb(65, 105, 225)',
+                        data: monthlyMalfunctionHour,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    title: {
+                        display: true,
+                        text: `${year} 年设备故障时长`,
+                        fontSize: 16
+                    },
+                    scales: {
+                        xAxes: [{
+                            ticks: {
+                                beginAtZero: false
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: "月份",
+                            }
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: "小时",
+                            }
+                        }]
+                    }
+                }
+            });
         });
     </script>
 }
