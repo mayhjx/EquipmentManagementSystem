@@ -139,7 +139,7 @@ namespace EquipmentManagementSystem.Repositories
                     total += (endTime - beginTime).GetValueOrDefault().TotalHours;
                 }
             }
-            return total;
+            return Math.Round(total, 1);
         }
 
         public int GetTotalSampleNumberOfRecords(List<UsageRecord> usageRecords)
