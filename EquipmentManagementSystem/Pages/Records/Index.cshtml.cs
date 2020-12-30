@@ -143,7 +143,7 @@ namespace EquipmentManagementSystem.Pages.Records
             InstrumentModel = await _instrumentRepository.GetModelById(instrumentId);
 
             #region 使用记录表相关
-            UsageRecords = _usageRecordRepository.GetAllByInstrumentIdAndBeginTime(instrumentId, date);
+            UsageRecords = _usageRecordRepository.GetAllByInstrumentIdAndMonthOfBeginTime(instrumentId, date.GetValueOrDefault());
             MobilePhaseOrCarrierGas = Platform == "GCMS" ? "gas" : "mobilephase";
             ColumnPressureUnit = UsageRecords.FirstOrDefault()?.SystemOneColumnPressureUnit ?? "";
             VacuumDegreeUnit = UsageRecords.FirstOrDefault()?.LowVacuumDegreeUnit.Split(" ")[1] ?? "";
@@ -151,7 +151,7 @@ namespace EquipmentManagementSystem.Pages.Records
             ColumnTypeList = _usageRecordRepository.GetColumnTypeOfRecord(instrumentId, date.GetValueOrDefault());
             IonSourceList = _usageRecordRepository.GetIonSourceOfRecord(instrumentId, date.GetValueOrDefault());
             DetectorList = _usageRecordRepository.GetDetectorOfRecord(instrumentId, date.GetValueOrDefault());
-            TotalHours = _usageRecordRepository.GetTotalHoursOfRecords(UsageRecords);
+            TotalHours = _usageRecordRepository.GetTotalUsageHoursOfRecords(UsageRecords);
             TotalSampleNumber = _usageRecordRepository.GetTotalSampleNumberOfRecords(UsageRecords);
             TotalBatchNumber = _usageRecordRepository.GetTotalBatchNumberOfRecords(UsageRecords);
             TotalS1BatchNumber = _usageRecordRepository.GetTotalS1BatchNumberOfRecords(UsageRecords);
