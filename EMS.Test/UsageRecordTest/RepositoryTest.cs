@@ -31,7 +31,7 @@ namespace EMS.Test.UsageRecordTest
             using (var context = Utilities.CreateContext(options))
             {
                 var repo = new UsageRecordRepository(context);
-                var result = repo.GetAllByInstrumentIdAndBeginTime("FXS-YZ01", new DateTime(2020, 01, 01));
+                var result = repo.GetAllByInstrumentIdAndMonthOfBeginTime("FXS-YZ01", new DateTime(2020, 01, 01));
                 Assert.Equal(3, result.Count);
             }
         }
@@ -49,7 +49,7 @@ namespace EMS.Test.UsageRecordTest
             using (var context = Utilities.CreateContext(options))
             {
                 var repo = new UsageRecordRepository(context);
-                var result = repo.GetAllByInstrumentIdAndBeginTime("FXS-YZ01", new DateTime(2020, 01, 01));
+                var result = repo.GetAllByInstrumentIdAndMonthOfBeginTime("FXS-YZ01", new DateTime(2020, 01, 01));
                 Assert.Empty(result);
             }
         }
@@ -386,8 +386,8 @@ namespace EMS.Test.UsageRecordTest
             using (var context = Utilities.CreateContext(options))
             {
                 var repo = new UsageRecordRepository(context);
-                var records = repo.GetAllByInstrumentIdAndBeginTime("FXS-YZ01", new DateTime(2020, 12, 01));
-                var totalHours = repo.GetTotalHoursOfRecords(records);
+                var records = repo.GetAllByInstrumentIdAndMonthOfBeginTime("FXS-YZ01", new DateTime(2020, 12, 01));
+                var totalHours = repo.GetTotalUsageHoursOfRecords(records);
                 Assert.Equal(30, totalHours);
             }
         }
@@ -410,8 +410,8 @@ namespace EMS.Test.UsageRecordTest
             using (var context = Utilities.CreateContext(options))
             {
                 var repo = new UsageRecordRepository(context);
-                var records = repo.GetAllByInstrumentIdAndBeginTime("FXS-YZ01", new DateTime(2020, 12, 01));
-                var totalHours = repo.GetTotalHoursOfRecords(records);
+                var records = repo.GetAllByInstrumentIdAndMonthOfBeginTime("FXS-YZ01", new DateTime(2020, 12, 01));
+                var totalHours = repo.GetTotalUsageHoursOfRecords(records);
                 Assert.Equal(20, totalHours);
             }
         }
@@ -434,7 +434,7 @@ namespace EMS.Test.UsageRecordTest
             using (var context = Utilities.CreateContext(options))
             {
                 var repo = new UsageRecordRepository(context);
-                var records = repo.GetAllByInstrumentIdAndBeginTime("FXS-YZ01", new DateTime(2020, 12, 01));
+                var records = repo.GetAllByInstrumentIdAndMonthOfBeginTime("FXS-YZ01", new DateTime(2020, 12, 01));
                 var totalHours = repo.GetTotalSampleNumberOfRecords(records);
                 Assert.Equal(300, totalHours);
             }
@@ -458,7 +458,7 @@ namespace EMS.Test.UsageRecordTest
             using (var context = Utilities.CreateContext(options))
             {
                 var repo = new UsageRecordRepository(context);
-                var records = repo.GetAllByInstrumentIdAndBeginTime("FXS-YZ01", new DateTime(2020, 12, 01));
+                var records = repo.GetAllByInstrumentIdAndMonthOfBeginTime("FXS-YZ01", new DateTime(2020, 12, 01));
                 var totalHours = repo.GetTotalSampleNumberOfRecords(records);
                 Assert.Equal(0, totalHours);
             }
@@ -482,7 +482,7 @@ namespace EMS.Test.UsageRecordTest
             using (var context = Utilities.CreateContext(options))
             {
                 var repo = new UsageRecordRepository(context);
-                var records = repo.GetAllByInstrumentIdAndBeginTime("FXS-YZ01", new DateTime(2020, 12, 01));
+                var records = repo.GetAllByInstrumentIdAndMonthOfBeginTime("FXS-YZ01", new DateTime(2020, 12, 01));
                 var totalHours = repo.GetTotalBatchNumberOfRecords(records);
                 Assert.Equal(9, totalHours);
             }
@@ -506,7 +506,7 @@ namespace EMS.Test.UsageRecordTest
             using (var context = Utilities.CreateContext(options))
             {
                 var repo = new UsageRecordRepository(context);
-                var records = repo.GetAllByInstrumentIdAndBeginTime("FXS-YZ01", new DateTime(2020, 12, 01));
+                var records = repo.GetAllByInstrumentIdAndMonthOfBeginTime("FXS-YZ01", new DateTime(2020, 12, 01));
                 var totalHours = repo.GetTotalBatchNumberOfRecords(records);
                 Assert.Equal(0, totalHours);
             }
@@ -530,7 +530,7 @@ namespace EMS.Test.UsageRecordTest
             using (var context = Utilities.CreateContext(options))
             {
                 var repo = new UsageRecordRepository(context);
-                var records = repo.GetAllByInstrumentIdAndBeginTime("FXS-YZ01", new DateTime(2020, 12, 01));
+                var records = repo.GetAllByInstrumentIdAndMonthOfBeginTime("FXS-YZ01", new DateTime(2020, 12, 01));
                 var totalHours = repo.GetTotalS1BatchNumberOfRecords(records);
                 Assert.Equal(3, totalHours);
             }
@@ -554,7 +554,7 @@ namespace EMS.Test.UsageRecordTest
             using (var context = Utilities.CreateContext(options))
             {
                 var repo = new UsageRecordRepository(context);
-                var records = repo.GetAllByInstrumentIdAndBeginTime("FXS-YZ01", new DateTime(2020, 12, 01));
+                var records = repo.GetAllByInstrumentIdAndMonthOfBeginTime("FXS-YZ01", new DateTime(2020, 12, 01));
                 var totalHours = repo.GetTotalS1BatchNumberOfRecords(records);
                 Assert.Equal(0, totalHours);
             }
@@ -578,7 +578,7 @@ namespace EMS.Test.UsageRecordTest
             using (var context = Utilities.CreateContext(options))
             {
                 var repo = new UsageRecordRepository(context);
-                var records = repo.GetAllByInstrumentIdAndBeginTime("FXS-YZ01", new DateTime(2020, 12, 01));
+                var records = repo.GetAllByInstrumentIdAndMonthOfBeginTime("FXS-YZ01", new DateTime(2020, 12, 01));
                 var totalHours = repo.GetTotalS2BatchNumberOfRecords(records);
                 Assert.Equal(3, totalHours);
             }
@@ -602,7 +602,7 @@ namespace EMS.Test.UsageRecordTest
             using (var context = Utilities.CreateContext(options))
             {
                 var repo = new UsageRecordRepository(context);
-                var records = repo.GetAllByInstrumentIdAndBeginTime("FXS-YZ01", new DateTime(2020, 12, 01));
+                var records = repo.GetAllByInstrumentIdAndMonthOfBeginTime("FXS-YZ01", new DateTime(2020, 12, 01));
                 var totalHours = repo.GetTotalS2BatchNumberOfRecords(records);
                 Assert.Equal(0, totalHours);
             }
