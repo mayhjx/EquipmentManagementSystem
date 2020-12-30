@@ -43,6 +43,7 @@ namespace EquipmentManagementSystem
             services.AddTransient<IInstrumentRepository, InstrumentRepository>();
             services.AddTransient<IInstrumentService, InstrumentService>();
             services.AddTransient<IUsageRecordRepository, UsageRecordRepository>();
+            services.AddTransient<IMalfunctionRepository, MalfunctionRepository>();
             services.AddTransient<IMaintenanceRecordRepository, MaintenanceRecordRepository>();
             services.AddTransient<IMaintenanceContentRepository, MaintenanceContentRepository>();
             services.AddTransient<IMaintenanceRecordService, MaintenanceRecordService>();
