@@ -377,7 +377,7 @@
                                     Batch样品量
                                 </td>
                                 <td class="column">
-                                    压力（@Model.ColumnPressureUnit）
+                                    色谱柱编号/压力（@Model.ColumnPressureUnit）
                                 </td>
                                 <td class="ionsource">
                                     离子源
@@ -420,7 +420,7 @@
                                             流动相/载气：@string.Join(" ", Model.MobilePhaseList).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
                                         </li>
                                         <li>
-                                            色谱柱类型：@string.Join(" ", Model.ColumnTypeList).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
+                                            色谱柱编号：@string.Join(" ", Model.ColumnTypeList).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
                                         </li>
                                         <li>
                                             离子源：@string.Join(" ", Model.IonSourceList).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
@@ -480,26 +480,34 @@
                                     <td class="time">@Html.DisplayFor(item => usageRecord.EndTime)</td>
                                     <td class="projectname">@Html.DisplayFor(item => usageRecord.ProjectName)</td>
                                     <td class="columnnumber">
-                                        @if (usageRecord.SystemOneColumnNumber != null && usageRecord.SystemTwoColumnNumber != null)
+                                        @if (!string.IsNullOrEmpty(usageRecord.ColumnType))
                                         {
-                                            <text>S1：</text>
-                                            @Html.DisplayFor(item => usageRecord.SystemOneColumnNumber)
-                                            <br />
-                                            <text>S2：</text>
-                                            @Html.DisplayFor(item => usageRecord.SystemTwoColumnNumber)
-                                        }
-                                        else if (usageRecord.SystemOneColumnNumber != null)
-                                        {
-                                            @Html.DisplayFor(item => usageRecord.SystemOneColumnNumber)
-                                        }
-                                        else if (usageRecord.SystemTwoColumnNumber != null)
-                                        {
-                                            @Html.DisplayFor(item => usageRecord.SystemTwoColumnNumber)
+                                            @GetKeyByValue(Model.ColumnTypeList, usageRecord.ColumnType)
                                         }
                                         else
                                         {
                                             <span>@emptyValue</span>
                                         }
+                                        @*@if (usageRecord.SystemOneColumnNumber != null && usageRecord.SystemTwoColumnNumber != null)
+                                        {
+                                            <text>S1：</text>
+                                            @GetKeyByValue(Model.ColumnNumberList, usageRecord.SystemOneColumnNumber)
+                                            <br />
+                                            <text>S2：</text>
+                                            @GetKeyByValue(Model.ColumnNumberList, usageRecord.SystemTwoColumnNumber)
+                                        }
+                                        else if (usageRecord.SystemOneColumnNumber != null)
+                                        {
+                                            @GetKeyByValue(Model.ColumnNumberList, usageRecord.SystemOneColumnNumber)
+                                        }
+                                        else if (usageRecord.SystemTwoColumnNumber != null)
+                                        {
+                                            @GetKeyByValue(Model.ColumnNumberList, usageRecord.SystemTwoColumnNumber)
+                                        }
+                                        else
+                                        {
+                                            <span>@emptyValue</span>
+                                        }*@
                                     </td>
                                     <td class="mobilephase">@GetKeyByValue(Model.MobilePhaseList, usageRecord.MobilePhase)</td>
                                     <td class="samplenumber">
@@ -538,17 +546,21 @@
                                         @if (usageRecord.SystemOneColumnPressure != null && usageRecord.SystemTwoColumnPressure != null)
                                         {
                                             <text>S1：</text>
+                                            <span class="d-print-none">@Html.DisplayFor(item => usageRecord.SystemOneColumnNumber) / </span>
                                             @Html.DisplayFor(item => usageRecord.SystemOneColumnPressure)
                                             <br />
                                             <text>S2：</text>
+                                            <span class="d-print-none">@Html.DisplayFor(item => usageRecord.SystemTwoColumnNumber) / </span>
                                             @Html.DisplayFor(item => usageRecord.SystemTwoColumnPressure)
                                         }
                                         else if (usageRecord.SystemOneColumnPressure != null)
                                         {
+                                            <span class="d-print-none">@Html.DisplayFor(item => usageRecord.SystemOneColumnNumber) / </span>
                                             @Html.DisplayFor(item => usageRecord.SystemOneColumnPressure)
                                         }
                                         else if (usageRecord.SystemTwoColumnPressure != null)
                                         {
+                                            <span class="d-print-none">@Html.DisplayFor(item => usageRecord.SystemTwoColumnNumber) / </span>
                                             @Html.DisplayFor(item => usageRecord.SystemTwoColumnPressure)
                                         }
                                         else
@@ -709,7 +721,7 @@
                                         <input form="edit-form" asp-for="@usageRecord.Operator" disabled required />
                                     </td>
                                     <td class="remark">
-                                        <textarea form="edit-form" asp-for="@usageRecord.Remark" disabled></textarea>
+                                        <textarea form="edit-form" asp-for="@usageRecord.Remark" placeholder="限20字以内" disabled></textarea>
                                     </td>
                                     <td class="button">
                                         <div class="button">
@@ -804,7 +816,7 @@
                                     <input form="create-form" asp-for="UsageRecord.Operator" required />
                                 </td>
                                 <td class="remark">
-                                    <textarea form="create-form" asp-for="UsageRecord.Remark"></textarea>
+                                    <textarea form="create-form" asp-for="UsageRecord.Remark" placeholder="限20字以内"></textarea>
                                 </td>
                                 <td class="button">
                                     <button form="create-form" id="create-btn" class="btn btn-block btn-primary">新建</button>
@@ -830,7 +842,7 @@
 </div>
 
 <form id="create-form" method="post" asp-page="UsageRecords/Create" hidden></form>
-<form id="edit-form" method="post" asp-page="UsageRecords/Edit"></form>
+<form id="edit-form" method="post" asp-page="UsageRecords/Edit" hidden></form>
 <form id="delete-form" method="post" asp-page="UsageRecords/Delete" hidden></form>
 
 <link rel="stylesheet" href="~/css/Record.css" asp-append-version="true">
