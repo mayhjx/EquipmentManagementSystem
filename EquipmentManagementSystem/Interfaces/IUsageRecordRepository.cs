@@ -24,6 +24,7 @@ namespace EquipmentManagementSystem.Interfaces
         /// <returns>字典，key是自增的大写字母，value是流动相/载气</returns>
         Dictionary<char, string> GetMobilePhaseOrCarrierGasOfRecord(string instrumentId, DateTime month);
         Dictionary<char, string> GetColumnTypeOfRecord(string instrumentId, DateTime month);
+        //Dictionary<char, string> GetColumnNumberOfRecord(string instrumentId, DateTime dateTime);
         Dictionary<char, string> GetIonSourceOfRecord(string instrumentId, DateTime month);
         Dictionary<char, string> GetDetectorOfRecord(string instrumentId, DateTime month);
 

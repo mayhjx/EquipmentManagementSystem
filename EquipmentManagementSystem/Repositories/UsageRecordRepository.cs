@@ -89,6 +89,28 @@ namespace EquipmentManagementSystem.Repositories
             return columnType;
         }
 
+        //public Dictionary<char, string> GetColumnNumberOfRecord(string instrumentId, DateTime month)
+        //{
+        //    var columnNumber = new Dictionary<char, string>();
+        //    var records = GetAllByInstrumentIdAndMonthOfBeginTime(instrumentId, month);
+
+        //    foreach (var r in records)
+        //    {
+        //        if (!columnNumber.ContainsValue(r.SystemOneColumnNumber) && !string.IsNullOrEmpty(r.SystemOneColumnNumber))
+        //        {
+        //            char key = (char)(columnNumber.Keys.Count + 65);
+        //            columnNumber.Add(key, r.SystemOneColumnNumber);
+        //        }
+        //        if (!columnNumber.ContainsValue(r.SystemTwoColumnNumber) && !string.IsNullOrEmpty(r.SystemTwoColumnNumber))
+        //        {
+        //            char key = (char)(columnNumber.Keys.Count + 65);
+        //            columnNumber.Add(key, r.SystemTwoColumnNumber);
+        //        }
+
+        //    }
+        //    return columnNumber;
+        //}
+
         public Dictionary<char, string> GetIonSourceOfRecord(string instrumentId, DateTime month)
         {
             var ionSource = new Dictionary<char, string>();
