@@ -16,12 +16,10 @@ namespace EquipmentManagementSystem.Models
 
         [Required]
         [Display(Name = "平台")]
-        [StringLength(50, MinimumLength = 1)]
         public string Platform { get; set; }
 
         [Required]
         [Display(Name = "名称")]
-        [StringLength(50, MinimumLength = 1)]
         public string Name { get; set; }
 
         [Display(Name = "启用日期")]
@@ -51,7 +49,6 @@ namespace EquipmentManagementSystem.Models
         public string Principal { get; set; }
 
         [Display(Name = "备注")]
-        [StringLength(999)]
         public string Remark { get; set; }
 
         [Display(Name = "新系统编号")]
@@ -65,11 +62,9 @@ namespace EquipmentManagementSystem.Models
         public Assert Assert { get; set; }
 
         [Display(Name = "所属项目组")]
-        [StringLength(50)]
         public string Group { get; set; }
 
         [Display(Name = "检测项目")]
-        [StringLength(100)]
         public string Projects { get; set; }
 
         public List<string> GetProjects()
