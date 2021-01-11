@@ -182,10 +182,10 @@ namespace EMS.Test.UsageRecordTest
         }
 
         [Fact]
-        public void GetColumnTypeOfRecord_OneMobilePhase_Shoule_ReturnOne()
+        public void GetColumnTypeOfRecord_ThreeSameMobilePhase_Shoule_ReturnOne()
         {
             var options = new DbContextOptionsBuilder<EquipmentContext>()
-                .UseInMemoryDatabase(databaseName: nameof(GetColumnTypeOfRecord_OneMobilePhase_Shoule_ReturnOne))
+                .UseInMemoryDatabase(databaseName: nameof(GetColumnTypeOfRecord_ThreeSameMobilePhase_Shoule_ReturnOne))
                 .Options;
 
             using (var context = Utilities.CreateContext(options))
@@ -227,6 +227,62 @@ namespace EMS.Test.UsageRecordTest
                 Assert.Equal(3, project.Count);
             }
         }
+
+        //[Fact]
+        //public void GetColumnNumberOfRecord_Should_ReturnThree()
+        //{
+        //    var options = new DbContextOptionsBuilder<EquipmentContext>()
+        //        .UseInMemoryDatabase(databaseName: nameof(GetColumnNumberOfRecord_Should_ReturnThree))
+        //        .Options;
+
+        //    using (var context = Utilities.CreateContext(options))
+        //    {
+        //        context.UsageRecords.Add(new UsageRecord { 
+        //            InstrumentId = "FXS-YZ01",
+        //            ProjectName = "1", 
+        //            BeginTime = new DateTime(2020, 12, 01), 
+        //            SystemOneColumnNumber="Test-0",
+        //            SystemTwoColumnNumber="Test-1",
+        //        });
+        //        context.UsageRecords.Add(new UsageRecord { 
+        //            InstrumentId = "FXS-YZ01",
+        //            ProjectName = "2", 
+        //            BeginTime = new DateTime(2020, 12, 01),
+        //            SystemOneColumnNumber = "Test-2",
+        //            SystemTwoColumnNumber = "Test-3",
+        //        });
+        //        context.UsageRecords.Add(new UsageRecord
+        //        {
+        //            InstrumentId = "FXS-YZ01",
+        //            ProjectName = "3",
+        //            BeginTime = new DateTime(2020, 12, 01),
+        //            SystemOneColumnNumber = "Test-4",
+        //        });
+        //        context.SaveChanges();
+        //    }
+
+        //    using (var context = Utilities.CreateContext(options))
+        //    {
+        //        var repo = new UsageRecordRepository(context);
+        //        var project = repo.GetColumnNumberOfRecord("FXS-YZ01", new DateTime(2020, 12, 01));
+        //        Assert.Equal(5, project.Count);
+        //    }
+        //}
+
+        //[Fact]
+        //public void GetColumnNumberOfRecord_NoData_Should_ReturnEmptyList()
+        //{
+        //    var options = new DbContextOptionsBuilder<EquipmentContext>()
+        //        .UseInMemoryDatabase(databaseName: nameof(GetColumnNumberOfRecord_NoData_Should_ReturnEmptyList))
+        //        .Options;
+
+        //    using (var context = Utilities.CreateContext(options))
+        //    {
+        //        var repo = new UsageRecordRepository(context);
+        //        var project = repo.GetColumnNumberOfRecord("FXS-YZ01", new DateTime(2020, 12, 01));
+        //        Assert.Empty(project);
+        //    }
+        //}
 
         [Fact]
         public void GetColumnTypeOfRecord_NotData_Shoule_ReturnEmptyDic()
