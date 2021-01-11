@@ -98,7 +98,7 @@ namespace EquipmentManagementSystem.Models
         public string Operator { get; set; }
 
         [Display(Name = "备注")]
-        [StringLength(999)]
+        [StringLength(20)]
         public string Remark { get; set; }
 
         //public bool IsDelete { get; set; }
