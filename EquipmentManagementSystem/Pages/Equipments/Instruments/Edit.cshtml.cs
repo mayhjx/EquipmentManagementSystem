@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using EquipmentManagementSystem.Authorization;
 using EquipmentManagementSystem.Data;
@@ -46,7 +47,7 @@ namespace EquipmentManagementSystem.Pages.Instruments
         public Instrument Instrument { get; set; }
 
         [BindProperty]
-        public string[] SelectedProject { get; set; }
+        public List<string> SelectedProject { get; set; }
 
         public SelectList GroupProject { get; set; }
 
@@ -75,7 +76,7 @@ namespace EquipmentManagementSystem.Pages.Instruments
                     i => i.CalibrationCycle, i => i.MetrologicalCharacteristics, i => i.Location,
                     i => i.Principal, i => i.Group, i => i.Projects, i => i.NewSystemCode, i => i.Remark))
             {
-                Instrument.Projects = string.Join(", ", SelectedProject);
+                Instrument.SetProjects(SelectedProject);
                 await _context.SaveChangesAsync();
                 return RedirectToPage("../Instruments/Details", new { id = Instrument.ID });
             }
