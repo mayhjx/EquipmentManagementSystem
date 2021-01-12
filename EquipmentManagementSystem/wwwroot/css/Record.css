@@ -76,11 +76,13 @@ td.maintenance-content, td.operator {
     text-overflow: ellipsis;
     white-space: nowrap;
     padding-left: 10px;
-    padding-right: 10px;
+}
+
+td.remark {
+    text-align: left;
 }
 
 td.operator {
-    font-weight: bold;
 }
 
 td.days {
@@ -155,13 +157,13 @@ div.button {
     justify-content: space-between;
 }
 
-input#UsageRecord_SampleNumber,
-input#usageRecord_SampleNumber {
+input[type="datetime-local"] {
     width: 100%;
     box-sizing: border-box;
 }
 
-input[type="datetime-local"] {
+input#UsageRecord_SampleNumber,
+input#usageRecord_SampleNumber {
     width: 100%;
     box-sizing: border-box;
 }
@@ -198,13 +200,7 @@ input#usageRecord_HighVacuumDegree {
     box-sizing: border-box;
 }
 
-input#UsageRecord_BlankSignal,
-input#usageRecord_BlankSignal {
-    width: 100%;
-    box-sizing: border-box;
-    text-align: right;
-}
-
+input#UsageRecord_BlankSignal, input#usageRecord_BlankSignal,
 input#UsageRecord_SystemOneTestSignal, input#UsageRecord_SystemTwoTestSignal,
 input#usageRecord_SystemOneTestSignal, input#usageRecord_SystemTwoTestSignal {
     width: 100%;
@@ -307,6 +303,10 @@ p.text-vertical {
     }
 
     div.remark {
+        display: none;
+    }
+
+    .hide-in-print {
         display: none;
     }
 }
