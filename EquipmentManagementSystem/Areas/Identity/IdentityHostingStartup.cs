@@ -1,4 +1,5 @@
 ﻿using EquipmentManagementSystem.Authorization;
+using EquipmentManagementSystem.Authorization.Malfunction;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -68,18 +69,22 @@ namespace EquipmentManagementSystem.Areas.Identity
                     config.Filters.Add(new AuthorizeFilter(policy));
                 });
 
-                //services.AddScoped<IAuthorizationHandler, TechnicianAuthorizationHandler>();
-                //services.AddScoped<IAuthorizationHandler, PrincipalAuthorizationHandler>();
-                //services.AddSingleton<IAuthorizationHandler, ManagerAuthorizationHandler>();
-                //services.AddSingleton<IAuthorizationHandler, DirectorAuthorizationHandler>();
-                //services.AddSingleton<IAuthorizationHandler, AdministratorAuthorizationHandler>();
-                services.AddScoped<IAuthorizationHandler, InstrumentAuthorizationHandler>();
-                services.AddSingleton<IAuthorizationHandler, MalfunctionAuthorizationHandler>();
-                services.AddScoped<IAuthorizationHandler, CalibrationAuthorizationHandler>();
-                services.AddScoped<IAuthorizationHandler, UsageRecordAuthorizationHandler>();
-                services.AddScoped<IAuthorizationHandler, MaintenanceRecordAuthorizationHandler>();
-                services.AddSingleton<IAuthorizationHandler, AcceptanceAuthorizationHandler>();
-                services.AddSingleton<IAuthorizationHandler, UserManagementAuthorizationHandler>();
+                services.AddTransient<IAuthorizationHandler, UserManagementAuthorizationHandler>();
+
+                services.AddTransient<IAuthorizationHandler, InstrumentAuthorizationHandler>();
+                services.AddTransient<IAuthorizationHandler, CalibrationAuthorizationHandler>();
+                services.AddTransient<IAuthorizationHandler, AcceptanceAuthorizationHandler>();
+
+                services.AddTransient<IAuthorizationHandler, UsageRecordAuthorizationHandler>();
+                services.AddTransient<IAuthorizationHandler, MaintenanceRecordAuthorizationHandler>();
+
+                services.AddTransient<IAuthorizationHandler, WorkOrderAuthorizationHandler>();
+                services.AddTransient<IAuthorizationHandler, MalfunctionInfoAuthorizationHandler>();
+                services.AddTransient<IAuthorizationHandler, InvestigationAuthorizationHandler>();
+                services.AddTransient<IAuthorizationHandler, RepairRequestAuthorizationHandler>();
+                services.AddTransient<IAuthorizationHandler, AccessoriesOrderAuthorizationHandler>();
+                services.AddTransient<IAuthorizationHandler, RepairAuthorizationHandler>();
+                services.AddTransient<IAuthorizationHandler, ValidationAuthorizationHandler>();
             });
         }
     }
