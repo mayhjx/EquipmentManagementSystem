@@ -32,7 +32,7 @@ namespace EquipmentManagementSystem.Authorization.Malfunction
 
             if (requirement.Name == Constants.UpdateOperationName)
             {
-                if (context.User.IsInRole(Constants.DirectorRole) || context.User.IsInRole(Constants.ManagerRole))
+                if (context.User.IsInRole(Constants.DirectorRole) || context.User.IsInRole(Constants.ManagerRole) || context.User.IsInRole(Constants.SupervisorRole))
                 {
                     context.Succeed(requirement);
                 }

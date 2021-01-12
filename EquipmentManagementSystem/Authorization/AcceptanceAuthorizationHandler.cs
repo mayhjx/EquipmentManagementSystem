@@ -29,7 +29,8 @@ namespace EquipmentManagementSystem.Authorization
             if (requirement.Name == Constants.ReadOperationName)
             {
                 if (context.User.IsInRole(Constants.DirectorRole) ||
-                    context.User.IsInRole(Constants.ManagerRole))
+                    context.User.IsInRole(Constants.ManagerRole) || 
+                    context.User.IsInRole(Constants.SupervisorRole))
                 {
                     context.Succeed(requirement);
                 }
