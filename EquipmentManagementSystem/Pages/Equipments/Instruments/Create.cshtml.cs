@@ -1,10 +1,13 @@
-﻿using EquipmentManagementSystem.Data;
+﻿using EquipmentManagementSystem.Authorization;
+using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Threading.Tasks;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace EquipmentManagementSystem.Pages.Instruments
 {
@@ -17,8 +20,15 @@ namespace EquipmentManagementSystem.Pages.Instruments
         {
         }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGet()
         {
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, new Instrument(), Operations.Create);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+
             GroupsSelectList = new SelectList(_context.Groups, "Name", "Name");
             ProjectsSelectList = new SelectList(_context.Projects, "Name", "Name");
 
@@ -29,7 +39,7 @@ namespace EquipmentManagementSystem.Pages.Instruments
         public Instrument Instrument { get; set; }
 
         [BindProperty]
-        public string[] SelectedProject { get; set; }
+        public List<string> SelectedProject { get; set; }
 
         public SelectList ProjectsSelectList { get; set; }
         public MultiSelectList GroupsSelectList { get; set; }
@@ -43,7 +53,14 @@ namespace EquipmentManagementSystem.Pages.Instruments
                 return Page();
             }
 
-            Instrument.Projects = string.Join(", ", SelectedProject);
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, Instrument, Operations.Create);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+
+            Instrument.SetProjects(SelectedProject);
 
             _context.Instruments.Add(Instrument);
             await _context.SaveChangesAsync();

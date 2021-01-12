@@ -1,5 +1,8 @@
-﻿using EquipmentManagementSystem.Data;
+﻿using EquipmentManagementSystem.Authorization;
+using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -8,13 +11,13 @@ using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Instruments
 {
-    public class DetailsModel : PageModel
+    public class DetailsModel : BasePageModel
     {
-        private readonly EquipmentContext _context;
-
-        public DetailsModel(EquipmentContext context)
+        public DetailsModel(EquipmentContext context,
+            UserManager<User> userManager,
+            IAuthorizationService authorizationService)
+            : base(context, userManager, authorizationService)
         {
-            _context = context;
         }
 
         public Instrument Instrument { get; set; }
@@ -35,17 +38,26 @@ namespace EquipmentManagementSystem.Pages.Instruments
                                     .ThenInclude(e => e.MalfunctionInfo)
                                 .FirstOrDefaultAsync(m => m.ID == id);
 
+            if (Instrument == null)
+            {
+                return NotFound();
+            }
+
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, Instrument, Operations.Read);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+
             InstrumentAcceptance = await _context.InstrumentAcceptances
                                 .AsNoTracking()
                                 .FirstOrDefaultAsync(m => m.InstrumentID == id);
 
             Calibration = Instrument.Calibrations.FirstOrDefault() ?? new Calibration { Instrument = Instrument };
-            MalfunctionWorkOrder = Instrument.MalfunctionWorkOrder.FirstOrDefault() ?? new MalfunctionWorkOrder { Instrument = Instrument };
 
-            if (Instrument == null)
-            {
-                return NotFound();
-            }
+            MalfunctionWorkOrder = Instrument.MalfunctionWorkOrder.FirstOrDefault() ?? new MalfunctionWorkOrder { Instrument = Instrument };
+            
             return Page();
         }
     }

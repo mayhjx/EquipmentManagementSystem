@@ -1,22 +1,26 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EquipmentManagementSystem.Authorization;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
+using EquipmentManagementSystem.Pages.Instruments;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace EquipmentManagementSystem.Pages.Equipments.Instruments
 {
     [AllowAnonymous]
-    public class IndexModel : PageModel
+    public class IndexModel : BasePageModel
     {
-        private readonly EquipmentContext _context;
-
-        public IndexModel(EquipmentContext context)
+        public IndexModel(EquipmentContext context,
+            UserManager<User> userManager,
+            IAuthorizationService authorizationService)
+            : base(context, userManager, authorizationService)
         {
-            _context = context;
         }
 
         public IList<Instrument> Instruments { get; set; }
@@ -24,12 +28,20 @@ namespace EquipmentManagementSystem.Pages.Equipments.Instruments
         // 用来在Index Page确认新建权限
         public Instrument Instrument { get; } = new Instrument();
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, Instrument, Operations.Read);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+
             Instruments = await _context.Instruments.OrderBy(m => m.ID)
                                                     .AsNoTracking()
                                                     .Include(m => m.Calibrations)
                                                     .ToListAsync();
+            return Page();
         }
     }
 }
