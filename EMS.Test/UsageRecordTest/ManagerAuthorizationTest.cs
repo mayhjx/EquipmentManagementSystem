@@ -55,7 +55,7 @@ namespace EMS.Test.UsageRecordTest
         }
 
         [Fact]
-        public async Task Handler_UsageRecord_Delete_ShouldSucceed()
+        public async Task Handler_UsageRecord_Delete_ShouldFail()
         {
             var resource = new UsageRecord { };
             var user = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim> { new Claim(ClaimTypes.Role, Constants.ManagerRole) }));
@@ -65,7 +65,7 @@ namespace EMS.Test.UsageRecordTest
             var authzHandler = new UsageRecordAuthorizationHandler();
             await authzHandler.HandleAsync(authzContext);
 
-            Assert.True(authzContext.HasSucceeded);
+            Assert.False(authzContext.HasSucceeded);
         }
     }
 }

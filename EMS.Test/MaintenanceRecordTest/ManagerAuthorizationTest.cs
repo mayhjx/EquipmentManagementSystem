@@ -55,7 +55,7 @@ namespace EMS.Test.MaintenanceRecordTest
         }
 
         [Fact]
-        public async Task Handler_MaintenanceRecord_Delete_ShouldSucceed()
+        public async Task Handler_MaintenanceRecord_Delete_ShouldFail()
         {
             var resource = new MaintenanceRecord { };
             var user = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim> { new Claim(ClaimTypes.Role, Constants.ManagerRole) }));
@@ -65,7 +65,7 @@ namespace EMS.Test.MaintenanceRecordTest
             var authzHandler = new MaintenanceRecordAuthorizationHandler();
             await authzHandler.HandleAsync(authzContext);
 
-            Assert.True(authzContext.HasSucceeded);
+            Assert.False(authzContext.HasSucceeded);
         }
     }
 }

@@ -77,7 +77,7 @@ namespace EMS.Test.UsageRecordTest
         }
 
         [Fact]
-        public async Task Handler_UsageRecord_Delete_SameGroup_ShouldSucceed()
+        public async Task Handler_UsageRecord_Delete_ShouldFail()
         {
             var resource = new UsageRecord { GroupName = "VD" };
             var user = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim> {
@@ -90,24 +90,24 @@ namespace EMS.Test.UsageRecordTest
             var authzHandler = new UsageRecordAuthorizationHandler();
             await authzHandler.HandleAsync(authzContext);
 
-            Assert.True(authzContext.HasSucceeded);
-        }
-
-        [Fact]
-        public async Task Handler_UsageRecord_Delete_DifferentGroup_ShouldFail()
-        {
-            var resource = new UsageRecord { GroupName = "VD" };
-            var user = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim> {
-                new Claim(ClaimTypes.Role, Constants.PrincipalRole),
-                new Claim("Group", "VAE")
-            }));
-            var requirement = new OperationAuthorizationRequirement { Name = Constants.DeleteOperationName };
-
-            var authzContext = new AuthorizationHandlerContext(new List<IAuthorizationRequirement> { requirement }, user, resource);
-            var authzHandler = new UsageRecordAuthorizationHandler();
-            await authzHandler.HandleAsync(authzContext);
-
             Assert.False(authzContext.HasSucceeded);
         }
+
+        //[Fact]
+        //public async Task Handler_UsageRecord_Delete_DifferentGroup_ShouldFail()
+        //{
+        //    var resource = new UsageRecord { GroupName = "VD" };
+        //    var user = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim> {
+        //        new Claim(ClaimTypes.Role, Constants.PrincipalRole),
+        //        new Claim("Group", "VAE")
+        //    }));
+        //    var requirement = new OperationAuthorizationRequirement { Name = Constants.DeleteOperationName };
+
+        //    var authzContext = new AuthorizationHandlerContext(new List<IAuthorizationRequirement> { requirement }, user, resource);
+        //    var authzHandler = new UsageRecordAuthorizationHandler();
+        //    await authzHandler.HandleAsync(authzContext);
+
+        //    Assert.False(authzContext.HasSucceeded);
+        //}
     }
 }
