@@ -93,7 +93,7 @@ td.days {
 
 /* usage record table 列宽 */
 col.time {
-    width: 165px;
+    width: 160px;
 }
 
 col.projectname {
@@ -117,7 +117,7 @@ col.batchnumber {
 }
 
 col.column {
-    width: 200px;
+    width: 230px;
 }
 
 col.ionsource {
@@ -129,7 +129,7 @@ col.detector {
 }
 
 col.vacuumdegree {
-    width: 150px;
+    width: 130px;
 }
 
 col.blank {
