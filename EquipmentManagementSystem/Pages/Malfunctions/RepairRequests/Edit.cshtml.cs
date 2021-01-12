@@ -40,7 +40,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.RepairRequests
                 return RedirectToPage("../WorkOrders/Details", new { id = RepairRequest.MalfunctionWorkOrderID });
             }
 
-            var isAuthorized = await _authorizationService.AuthorizeAsync(User, RepairRequest.MalfunctionWorkOrder, Operations.Update);
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, RepairRequest, Operations.Update);
 
             if (!isAuthorized.Succeeded)
             {
@@ -63,7 +63,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.RepairRequests
                 return NotFound();
             }
 
-            var isAuthorized = await _authorizationService.AuthorizeAsync(User, RepairRequest.MalfunctionWorkOrder, Operations.Update);
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, RepairRequest, Operations.Update);
 
             if (!isAuthorized.Succeeded)
             {
@@ -107,7 +107,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.RepairRequests
                 return new JsonResult("未找到该记录");
             }
 
-            var isAuthorized = await _authorizationService.AuthorizeAsync(User, RepairRequest.MalfunctionWorkOrder, Operations.Approve);
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, RepairRequest, Operations.Approve);
 
             if (!isAuthorized.Succeeded)
             {

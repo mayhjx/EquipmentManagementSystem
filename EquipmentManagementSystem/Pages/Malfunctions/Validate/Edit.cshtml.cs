@@ -56,7 +56,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Validate
                 return RedirectToPage("../WorkOrders/Details", new { id = Validation.MalfunctionWorkOrderID });
             }
 
-            var isAuthorized = await _authorizationService.AuthorizeAsync(User, Validation.MalfunctionWorkOrder, Operations.Update);
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, Validation, Operations.Update);
 
             if (!isAuthorized.Succeeded)
             {
@@ -124,7 +124,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Validate
                 return RedirectToPage("../WorkOrders/Details", new { id = Validation.MalfunctionWorkOrderID });
             }
 
-            var isAuthorized = await _authorizationService.AuthorizeAsync(User, Validation.MalfunctionWorkOrder, Operations.Update);
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, Validation, Operations.Update);
 
             if (!isAuthorized.Succeeded)
             {
@@ -203,7 +203,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Validate
                 return new JsonResult("未找到该记录");
             }
 
-            var isAuthorized = await _authorizationService.AuthorizeAsync(User, Validation.MalfunctionWorkOrder, Operations.Update);
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, Validation, Operations.Approve);
 
             if (!isAuthorized.Succeeded)
             {

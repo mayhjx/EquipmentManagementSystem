@@ -51,7 +51,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Servicing
                 return RedirectToPage("../WorkOrders/Details", new { id = Repair.MalfunctionWorkOrderID });
             }
 
-            var isAuthorized = await _authorizationService.AuthorizeAsync(User, Repair.MalfunctionWorkOrder, Operations.Update);
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, Repair, Operations.Update);
 
             if (!isAuthorized.Succeeded)
             {
@@ -115,7 +115,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Servicing
                 return RedirectToPage("../WorkOrders/Details", new { id = Repair.MalfunctionWorkOrderID });
             }
 
-            var isAuthorized = await _authorizationService.AuthorizeAsync(User, Repair.MalfunctionWorkOrder, Operations.Update);
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, Repair, Operations.Update);
 
             if (!isAuthorized.Succeeded)
             {

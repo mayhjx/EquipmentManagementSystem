@@ -37,7 +37,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Information
 
             MalfunctionInfo = await _context.MalfunctionInfo
                                         .Include(m => m.MalfunctionWorkOrder)
-                                        .ThenInclude(m => m.Instrument)
+                                            .ThenInclude(m => m.Instrument)
                                         .FirstOrDefaultAsync(m => m.ID == id);
 
             if (MalfunctionInfo == null)
@@ -51,7 +51,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Information
                 return RedirectToPage("../WorkOrders/Details", new { id = MalfunctionInfo.MalfunctionWorkOrderID });
             }
 
-            var isAuthorized = await _authorizationService.AuthorizeAsync(User, MalfunctionInfo.MalfunctionWorkOrder, Operations.Update);
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, MalfunctionInfo, Operations.Update);
 
             if (!isAuthorized.Succeeded)
             {
@@ -105,7 +105,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Information
 
             MalfunctionInfo = await _context.MalfunctionInfo
                                         .Include(m => m.MalfunctionWorkOrder)
-                                        .ThenInclude(m => m.Instrument)
+                                            .ThenInclude(m => m.Instrument)
                                         .FirstOrDefaultAsync(m => m.ID == id);
 
             if (MalfunctionInfo == null)
@@ -119,7 +119,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Information
                 return RedirectToPage("../WorkOrders/Details", new { id = MalfunctionInfo.MalfunctionWorkOrderID });
             }
 
-            var isAuthorized = await _authorizationService.AuthorizeAsync(User, MalfunctionInfo.MalfunctionWorkOrder, Operations.Update);
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, MalfunctionInfo, Operations.Update);
 
             if (!isAuthorized.Succeeded)
             {
@@ -174,7 +174,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.Information
                 return new JsonResult("未找到该记录");
             }
 
-            var isAuthorized = await _authorizationService.AuthorizeAsync(User, MalfunctionInfo.MalfunctionWorkOrder, Operations.Comfirm);
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, MalfunctionInfo, Operations.Comfirm);
 
             if (!isAuthorized.Succeeded)
             {

@@ -39,7 +39,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.AccessoriesOrders
                 return RedirectToPage("../WorkOrders/Details", new { id = AccessoriesOrder.MalfunctionWorkOrderID });
             }
 
-            var isAuthorized = await _authorizationService.AuthorizeAsync(User, AccessoriesOrder.MalfunctionWorkOrder, Operations.Update);
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, AccessoriesOrder, Operations.Update);
 
             if (!isAuthorized.Succeeded)
             {
@@ -67,7 +67,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.AccessoriesOrders
                 return RedirectToPage("../WorkOrders/Details", new { id = AccessoriesOrder.MalfunctionWorkOrderID });
             }
 
-            var isAuthorized = await _authorizationService.AuthorizeAsync(User, AccessoriesOrder.MalfunctionWorkOrder, Operations.Update);
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, AccessoriesOrder, Operations.Update);
 
             if (!isAuthorized.Succeeded)
             {
