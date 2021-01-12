@@ -342,7 +342,7 @@
                                 </td>
                                 <td class="test">
                                     信号<br />
-                                    signal
+                                    Signal
                                 </td>
                                 <td>
                                     操作者<br />
@@ -409,7 +409,11 @@
                                     总计：
                                     使用时长：@Model.TotalHours.ToString("F1") 小时，
                                     临床样数量：@Model.TotalSampleNumber 个，
-                                    Batch样品量：@Model.TotalBatchNumber 个（其中S1 Batch样品量：@Model.TotalS1BatchNumber 个，S2 Batch样品量：@Model.TotalS2BatchNumber 个）。
+                                    Batch样品量：@Model.TotalBatchNumber 个
+                                    @if (Model.TotalS2BatchNumber != 0)
+                                    {
+                                        <text>（其中S1 Batch样品量：@Model.TotalS1BatchNumber 个，S2 Batch样品量：@Model.TotalS2BatchNumber 个）。</text>
+                                    }
                                 </td>
                             </tr>
                             <tr class="tfoot">
@@ -633,7 +637,7 @@
                                         }
                                         else
                                         {
-                                            <h6 class="text-center"> / </h6>
+                                            <h6 class="text-center">/</h6>
                                         }
                                     </td>
                                     <td class="button">
