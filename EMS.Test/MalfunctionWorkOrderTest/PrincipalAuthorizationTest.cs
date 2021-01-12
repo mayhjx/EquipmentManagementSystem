@@ -1,4 +1,5 @@
 ﻿using EquipmentManagementSystem.Authorization;
+using EquipmentManagementSystem.Authorization.Malfunction;
 using EquipmentManagementSystem.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
@@ -21,7 +22,7 @@ namespace EMS.Test.MalfunctionWorkOrderTest
             var requirement = new OperationAuthorizationRequirement { Name = Constants.ReadOperationName };
 
             var authzContext = new AuthorizationHandlerContext(new List<IAuthorizationRequirement> { requirement }, user, resource);
-            var authzHandler = new MalfunctionAuthorizationHandler();
+            var authzHandler = new WorkOrderAuthorizationHandler();
             await authzHandler.HandleAsync(authzContext);
 
             Assert.True(authzContext.HasSucceeded);
@@ -35,7 +36,7 @@ namespace EMS.Test.MalfunctionWorkOrderTest
             var requirement = new OperationAuthorizationRequirement { Name = Constants.CreateOperationName };
 
             var authzContext = new AuthorizationHandlerContext(new List<IAuthorizationRequirement> { requirement }, user, resource);
-            var authzHandler = new MalfunctionAuthorizationHandler();
+            var authzHandler = new WorkOrderAuthorizationHandler();
             await authzHandler.HandleAsync(authzContext);
 
             Assert.True(authzContext.HasSucceeded);
@@ -52,7 +53,7 @@ namespace EMS.Test.MalfunctionWorkOrderTest
             var requirement = new OperationAuthorizationRequirement { Name = Constants.UpdateOperationName };
 
             var authzContext = new AuthorizationHandlerContext(new List<IAuthorizationRequirement> { requirement }, user, resource);
-            var authzHandler = new MalfunctionAuthorizationHandler();
+            var authzHandler = new WorkOrderAuthorizationHandler();
             await authzHandler.HandleAsync(authzContext);
 
             Assert.True(authzContext.HasSucceeded);
@@ -69,14 +70,14 @@ namespace EMS.Test.MalfunctionWorkOrderTest
             var requirement = new OperationAuthorizationRequirement { Name = Constants.UpdateOperationName };
 
             var authzContext = new AuthorizationHandlerContext(new List<IAuthorizationRequirement> { requirement }, user, resource);
-            var authzHandler = new MalfunctionAuthorizationHandler();
+            var authzHandler = new WorkOrderAuthorizationHandler();
             await authzHandler.HandleAsync(authzContext);
 
             Assert.False(authzContext.HasSucceeded);
         }
 
         [Fact]
-        public async Task Handler_DeleteMalfunctionWorkOrderWithOwnedGroup_ShouldSucceed()
+        public async Task Handler_DeleteMalfunctionWorkOrder_ShouldFail()
         {
             var resource = new MalfunctionWorkOrder { Instrument = new Instrument { Group = "VD" } };
             var user = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim> {
@@ -86,33 +87,33 @@ namespace EMS.Test.MalfunctionWorkOrderTest
             var requirement = new OperationAuthorizationRequirement { Name = Constants.DeleteOperationName };
 
             var authzContext = new AuthorizationHandlerContext(new List<IAuthorizationRequirement> { requirement }, user, resource);
-            var authzHandler = new MalfunctionAuthorizationHandler();
-            await authzHandler.HandleAsync(authzContext);
-
-            Assert.True(authzContext.HasSucceeded);
-        }
-
-        [Fact]
-        public async Task Handler_DeleteMalfunctionWorkOrderWithDifferentGroup_ShouldFail()
-        {
-            var resource = new MalfunctionWorkOrder { Instrument = new Instrument { Group = "VD" } };
-            var user = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim> {
-                new Claim(ClaimTypes.Role, Constants.PrincipalRole),
-                new Claim("Group", "VAE")
-            }));
-            var requirement = new OperationAuthorizationRequirement { Name = Constants.DeleteOperationName };
-
-            var authzContext = new AuthorizationHandlerContext(new List<IAuthorizationRequirement> { requirement }, user, resource);
-            var authzHandler = new MalfunctionAuthorizationHandler();
+            var authzHandler = new WorkOrderAuthorizationHandler();
             await authzHandler.HandleAsync(authzContext);
 
             Assert.False(authzContext.HasSucceeded);
         }
 
+        //[Fact]
+        //public async Task Handler_DeleteMalfunctionWorkOrderWithDifferentGroup_ShouldFail()
+        //{
+        //    var resource = new MalfunctionWorkOrder { Instrument = new Instrument { Group = "VD" } };
+        //    var user = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim> {
+        //        new Claim(ClaimTypes.Role, Constants.PrincipalRole),
+        //        new Claim("Group", "VAE")
+        //    }));
+        //    var requirement = new OperationAuthorizationRequirement { Name = Constants.DeleteOperationName };
+
+        //    var authzContext = new AuthorizationHandlerContext(new List<IAuthorizationRequirement> { requirement }, user, resource);
+        //    var authzHandler = new WorkOrderAuthorizationHandler();
+        //    await authzHandler.HandleAsync(authzContext);
+
+        //    Assert.False(authzContext.HasSucceeded);
+        //}
+
         [Fact]
         public async Task Handler_ComfirmMalfunctionInfomationWithOwnedGroup_ShouldSucceed()
         {
-            var resource = new MalfunctionWorkOrder { Instrument = new Instrument { Group = "VD" } };
+            var resource =new MalfunctionInfo { MalfunctionWorkOrder = new MalfunctionWorkOrder { Instrument = new Instrument { Group = "VD" } } };
             var user = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim> {
                 new Claim(ClaimTypes.Role, Constants.PrincipalRole),
                 new Claim("Group", "VD")
@@ -120,7 +121,7 @@ namespace EMS.Test.MalfunctionWorkOrderTest
             var requirement = new OperationAuthorizationRequirement { Name = Constants.ComfirmOperationName };
 
             var authzContext = new AuthorizationHandlerContext(new List<IAuthorizationRequirement> { requirement }, user, resource);
-            var authzHandler = new MalfunctionAuthorizationHandler();
+            var authzHandler = new MalfunctionInfoAuthorizationHandler();
             await authzHandler.HandleAsync(authzContext);
 
             Assert.True(authzContext.HasSucceeded);
@@ -137,21 +138,35 @@ namespace EMS.Test.MalfunctionWorkOrderTest
             var requirement = new OperationAuthorizationRequirement { Name = Constants.ComfirmOperationName };
 
             var authzContext = new AuthorizationHandlerContext(new List<IAuthorizationRequirement> { requirement }, user, resource);
-            var authzHandler = new MalfunctionAuthorizationHandler();
+            var authzHandler = new WorkOrderAuthorizationHandler();
             await authzHandler.HandleAsync(authzContext);
 
             Assert.False(authzContext.HasSucceeded);
         }
 
         [Fact]
-        public async Task Handler_ApproveRepairRequestAndValidationReport_ShouldFail()
+        public async Task Handler_ApproveRepairRequest_ShouldFail()
         {
-            var resource = new MalfunctionWorkOrder { };
+            var resource = new RepairRequest { };
             var user = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim> { new Claim(ClaimTypes.Role, Constants.PrincipalRole) }));
             var requirement = new OperationAuthorizationRequirement { Name = Constants.ApproveOperationName };
 
             var authzContext = new AuthorizationHandlerContext(new List<IAuthorizationRequirement> { requirement }, user, resource);
-            var authzHandler = new MalfunctionAuthorizationHandler();
+            var authzHandler = new RepairRequestAuthorizationHandler();
+            await authzHandler.HandleAsync(authzContext);
+
+            Assert.False(authzContext.HasSucceeded);
+        }
+
+        [Fact]
+        public async Task Handler_ApproveValidationReport_ShouldFail()
+        {
+            var resource = new Validation { };
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim> { new Claim(ClaimTypes.Role, Constants.PrincipalRole) }));
+            var requirement = new OperationAuthorizationRequirement { Name = Constants.ApproveOperationName };
+
+            var authzContext = new AuthorizationHandlerContext(new List<IAuthorizationRequirement> { requirement }, user, resource);
+            var authzHandler = new ValidationAuthorizationHandler();
             await authzHandler.HandleAsync(authzContext);
 
             Assert.False(authzContext.HasSucceeded);
