@@ -130,8 +130,8 @@
                                     <dd class="col-sm-7">
                                         @if (!string.IsNullOrEmpty(Model.Instrument.Projects))
                                         {
-                                            <ul class="list-unstyled">
-                                                @foreach (var project in Model.Instrument.Projects.Split(", "))
+                                            <ul >
+                                                @foreach (var project in Model.Instrument.GetProjects())
                                                 {
                                                     <li>@project</li>
                                                 }
