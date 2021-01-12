@@ -43,10 +43,11 @@ namespace EMS.Test.MalfunctionWorkOrderTest
         [Fact]
         public async Task Handler_UpdateMalfunctionWorkOrderWithOwned_ShouldSucceed()
         {
-            var resource = new MalfunctionWorkOrder { Creator = "Test" };
+            var resource = new MalfunctionWorkOrder { Creator = "Test", Instrument = new Instrument { ID = "FXS-YZ01", Group = "Test" } };
             var user = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim> {
                 new Claim(ClaimTypes.Role, Constants.TechnicianRole),
                 new Claim(ClaimTypes.GivenName, "Test"),
+                new Claim("Group", "Test"),
             }));
             var requirement = new OperationAuthorizationRequirement { Name = Constants.UpdateOperationName };
 
@@ -60,7 +61,7 @@ namespace EMS.Test.MalfunctionWorkOrderTest
         [Fact]
         public async Task Handler_UpdateMalfunctionWorkOrderWithIllegalUser_ShouldFail()
         {
-            var resource = new MalfunctionWorkOrder { Creator = "Test 1" };
+            var resource = new MalfunctionWorkOrder { Creator = "Test 1" , Instrument = new Instrument { ID = "FXS-YZ01", Group = "Test" } };
             var user = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim> {
                 new Claim(ClaimTypes.Role, Constants.TechnicianRole),
                 new Claim(ClaimTypes.GivenName, "Test 2"),
@@ -75,7 +76,7 @@ namespace EMS.Test.MalfunctionWorkOrderTest
         }
 
         [Fact]
-        public async Task Handler_DeleteMalfunctionWorkOrderWithOwner_ShouldSucceed()
+        public async Task Handler_DeleteMalfunctionWorkOrderWithOwner_ShouldFail()
         {
             var resource = new MalfunctionWorkOrder { Creator = "Test" };
             var user = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim> {
@@ -88,7 +89,7 @@ namespace EMS.Test.MalfunctionWorkOrderTest
             var authzHandler = new MalfunctionAuthorizationHandler();
             await authzHandler.HandleAsync(authzContext);
 
-            Assert.True(authzContext.HasSucceeded);
+            Assert.False(authzContext.HasSucceeded);
         }
 
         [Fact]

@@ -43,10 +43,11 @@ namespace EMS.Test.MaintenanceRecordTest
         [Fact]
         public async Task Handler_UpdateMaintenanceRecordWithOwned_ShouldSucceed()
         {
-            var resource = new MaintenanceRecord { Operator = "Test" };
+            var resource = new MaintenanceRecord { Operator = "Test", GroupName="Group" };
             var user = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim> {
                 new Claim(ClaimTypes.Role, Constants.TechnicianRole),
                 new Claim(ClaimTypes.GivenName, "Test"),
+                new Claim("Group", "Group"),
             }));
             var requirement = new OperationAuthorizationRequirement { Name = Constants.UpdateOperationName };
 
@@ -75,7 +76,7 @@ namespace EMS.Test.MaintenanceRecordTest
         }
 
         [Fact]
-        public async Task Handler_DeleteMaintenanceRecordWithOwner_ShouldSucceed()
+        public async Task Handler_DeleteMaintenanceRecordWithOwner_ShouldFail()
         {
             var resource = new MaintenanceRecord { Operator = "Test" };
             var user = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim> {
@@ -88,7 +89,7 @@ namespace EMS.Test.MaintenanceRecordTest
             var authzHandler = new MaintenanceRecordAuthorizationHandler();
             await authzHandler.HandleAsync(authzContext);
 
-            Assert.True(authzContext.HasSucceeded);
+            Assert.False(authzContext.HasSucceeded);
         }
 
         [Fact]

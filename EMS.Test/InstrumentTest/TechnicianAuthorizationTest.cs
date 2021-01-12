@@ -13,7 +13,7 @@ namespace EMS.Test.InstrumentTest
     public class TechnicianAuthorizationTest
     {
         [Fact]
-        public async Task Handler_Instrument_Read_ShouldSucceed()
+        public async Task Handler_Instrument_Read_ShouldFail()
         {
             var resource = new Instrument { };
             var user = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim> { new Claim(ClaimTypes.Role, Constants.TechnicianRole) }));
@@ -23,7 +23,7 @@ namespace EMS.Test.InstrumentTest
             var authzHandler = new InstrumentAuthorizationHandler();
             await authzHandler.HandleAsync(authzContext);
 
-            Assert.True(authzContext.HasSucceeded);
+            Assert.False(authzContext.HasSucceeded);
         }
 
         [Fact]

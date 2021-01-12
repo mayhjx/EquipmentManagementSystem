@@ -43,10 +43,11 @@ namespace EMS.Test.UsageRecordTest
         [Fact]
         public async Task Handler_UpdateUsageRecordWithOwned_ShouldSucceed()
         {
-            var resource = new UsageRecord { Operator = "Test" };
+            var resource = new UsageRecord { Operator = "Test" ,GroupName="Group"};
             var user = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim> {
                 new Claim(ClaimTypes.Role, Constants.TechnicianRole),
                 new Claim(ClaimTypes.GivenName, "Test"),
+                new Claim("Group", "Group"),
             }));
             var requirement = new OperationAuthorizationRequirement { Name = Constants.UpdateOperationName };
 
@@ -75,7 +76,7 @@ namespace EMS.Test.UsageRecordTest
         }
 
         [Fact]
-        public async Task Handler_DeleteUsageRecordWithOwner_ShouldSucceed()
+        public async Task Handler_DeleteUsageRecordWithOwner_ShouldFail()
         {
             var resource = new UsageRecord { Operator = "Test" };
             var user = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim> {
@@ -88,7 +89,7 @@ namespace EMS.Test.UsageRecordTest
             var authzHandler = new UsageRecordAuthorizationHandler();
             await authzHandler.HandleAsync(authzContext);
 
-            Assert.True(authzContext.HasSucceeded);
+            Assert.False(authzContext.HasSucceeded);
         }
 
         [Fact]
