@@ -18,11 +18,14 @@
                         级别：@(UserManager.GetRolesAsync(UserManager.GetUserAsync(User).Result).Result[0])
                     </span>
                 </a>
-                <a href="#" class="dropdown-item">
-                    <span class="">
-                        项目组：@UserManager.GetUserAsync(User).Result.Group
-                    </span>
-                </a>
+                @if (!string.IsNullOrEmpty(UserManager.GetUserAsync(User).Result.Group))
+                {
+                    <a href="#" class="dropdown-item">
+                        <span class="">
+                            项目组：@UserManager.GetUserAsync(User).Result.Group
+                        </span>
+                    </a>
+                }
                 <div class="dropdown-divider"></div>
                 <a asp-area="Identity" asp-page="/Account/UserManagement/ChangePassword" class="dropdown-item">
                     修改密码
