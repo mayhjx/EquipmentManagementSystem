@@ -82,7 +82,7 @@
                         <td>
                             @if ((await AuthorizationService.AuthorizeAsync(User, item, Operations.Update)).Succeeded)
                             {
-                                <a asp-page="./Edit" asp-route-id="@item.Id"><i class="fa fa-eye fa-lg" aria-hidden="true"></i></a>@*编辑*@
+                                <a asp-page="./Edit" asp-route-id="@item.Id"><i class="fa fa-edit fa-lg" aria-hidden="true"></i></a>@*编辑*@
                             }
                         </td>
                     </tr>
