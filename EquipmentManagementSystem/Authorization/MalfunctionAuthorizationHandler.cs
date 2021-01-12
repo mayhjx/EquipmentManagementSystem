@@ -40,7 +40,9 @@ namespace EquipmentManagementSystem.Authorization
                 {
                     context.Succeed(requirement);
                 }
-                else if (context.User.IsInRole(Constants.TechnicianRole) && resource.Creator == context.User.FindFirst(ClaimTypes.GivenName)?.Value)
+                else if (context.User.IsInRole(Constants.TechnicianRole) &&
+                    resource.Instrument.Group == context.User.FindFirst("Group")?.Value &&
+                    resource.Creator == context.User.FindFirst(ClaimTypes.GivenName)?.Value)
                 {
                     context.Succeed(requirement);
                 }
@@ -56,10 +58,10 @@ namespace EquipmentManagementSystem.Authorization
                 {
                     context.Succeed(requirement);
                 }
-                else if (context.User.IsInRole(Constants.TechnicianRole) && resource.Creator == context.User.FindFirst(ClaimTypes.GivenName)?.Value)
-                {
-                    context.Succeed(requirement);
-                }
+                //else if (context.User.IsInRole(Constants.TechnicianRole) && resource.Creator == context.User.FindFirst(ClaimTypes.GivenName)?.Value)
+                //{
+                //    context.Succeed(requirement);
+                //}
             }
 
             if (requirement.Name == Constants.ComfirmOperationName)
