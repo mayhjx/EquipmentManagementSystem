@@ -1,28 +1,32 @@
 ﻿using EquipmentManagementSystem.Authorization;
 using EquipmentManagementSystem.Data;
 using EquipmentManagementSystem.Models;
+using EquipmentManagementSystem.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Linq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
 {
     public class CreateModel : BasePageModel
     {
-        private readonly EquipmentContext _equipmentContext;
+        private readonly IInstrumentService _instrumentService;
+        private readonly IInstrumentRepository _instrumentRepository;
         public CreateModel(EquipmentContext context,
             IAuthorizationService authorizationService,
             UserManager<User> userManager,
-            EquipmentContext equipmentContext)
+            IInstrumentService instrumentService,
+            IInstrumentRepository instrumentRepository)
             : base(context, authorizationService, userManager)
         {
-            _equipmentContext = equipmentContext;
+            _instrumentService = instrumentService;
+            _instrumentRepository = instrumentRepository;
         }
 
-        public IActionResult OnGet(string id)
+        public IActionResult OnGet()
         {
 
             var isAdmin = User.IsInRole(Constants.ManagerRole) ||
@@ -31,22 +35,13 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
             if (isAdmin)
             {
                 // 获取所有设备编号
-                InstrumentSelectList = new SelectList(_equipmentContext.Instruments.OrderBy(m => m.ID), "ID", "ID", id);
+                InstrumentSelectList = _instrumentRepository.GetAllInstrumentId();
             }
             else
             {
                 // 获取技术员或设备负责人所属项目组的设备编号
                 var userGroup = _userManager.GetUserAsync(User).Result.Group;
-                // 获取所属项目组的项目
-                var userProjects = _equipmentContext.Projects.Where(p => p.GroupName == userGroup);
-
-                // 获取项目使用的设备编号
-                var instruments = from m in _equipmentContext.Instruments
-                                  from p in userProjects
-                                  where m.Projects.IndexOf(p.Name) >= 0
-                                  select m;
-
-                InstrumentSelectList = new SelectList(instruments, "ID", "ID", id);
+                InstrumentSelectList = _instrumentService.GetInstrumentIdRelateToProjectsOfGroup(userGroup);
             }
 
             MalfunctionPhenomenonSelectList = new SelectList(_context.MalfunctionPhenomenon, "Phenomenon", "Phenomenon");
@@ -57,7 +52,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
         [BindProperty]
         public MalfunctionWorkOrder MalfunctionWorkOrder { get; set; }
 
-        public SelectList InstrumentSelectList { get; set; }
+        public List<string> InstrumentSelectList { get; set; }
 
         public SelectList MalfunctionPhenomenonSelectList { get; set; }
 
