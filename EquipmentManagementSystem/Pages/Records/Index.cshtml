@@ -1,5 +1,7 @@
 ﻿@page
 @model EquipmentManagementSystem.Pages.Records.IndexModel
+@inject IAuthorizationService _authorizationService
+
 @{
 }
 
@@ -123,19 +125,34 @@
                                                 @i
                                             </a>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                @if (Model.DailyMaintenanceOperator[i - 1] != "")
+                                                @if (!string.IsNullOrEmpty(Model.DailyMaintenanceOperator[i - 1]))
                                                 {
-                                                    <a class="dropdown-item" asp-page="MaintenanceRecords/Edit" asp-route-Id="@id">编辑</a>
-                                                    <a class="dropdown-item delete-maintenance-record-btn" href="#" data-id="@id">删除</a>
+                                                    var maintenanceRecord = Model.MaintenanceRecords.SingleOrDefault(i => i.Id == int.Parse(id));
+
+                                                    @if ((await AuthorizationService.AuthorizeAsync(User, maintenanceRecord, Operations.Update)).Succeeded)
+                                                    {
+                                                        <a class="dropdown-item" asp-page="MaintenanceRecords/Edit" asp-route-Id="@id">编辑</a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="dropdown-item">-</span>
+                                                    }
+                                                    @if ((await AuthorizationService.AuthorizeAsync(User, maintenanceRecord, Operations.Delete)).Succeeded)
+                                                    {
+                                                        <a class="dropdown-item delete-maintenance-record-btn" href="#" data-id="@id">删除</a>
+                                                    }
                                                 }
                                                 else
                                                 {
-                                                    <a class="dropdown-item"
-                                                       asp-page="MaintenanceRecords/Create"
-                                                       asp-route-instrumentId="@Model.Search.Instrument"
-                                                       asp-route-beginTime="@selectedDate.ToString("yyyy-MM-ddTHH:mm")">
-                                                        新建
-                                                    </a>
+                                                    @if ((await AuthorizationService.AuthorizeAsync(User, Model.MaintenanceRecord, Operations.Create)).Succeeded)
+                                                    {
+                                                        <a class="dropdown-item"
+                                                           asp-page="MaintenanceRecords/Create"
+                                                           asp-route-instrumentId="@Model.Search.Instrument"
+                                                           asp-route-beginTime="@selectedDate.ToString("yyyy-MM-ddTHH:mm")">
+                                                            新建
+                                                        </a>
+                                                    }
                                                 }
                                             </div>
                                         </td>
@@ -494,25 +511,25 @@
                                             <span>@emptyValue</span>
                                         }
                                         @*@if (usageRecord.SystemOneColumnNumber != null && usageRecord.SystemTwoColumnNumber != null)
-                                        {
-                                            <text>S1：</text>
-                                            @GetKeyByValue(Model.ColumnNumberList, usageRecord.SystemOneColumnNumber)
-                                            <br />
-                                            <text>S2：</text>
-                                            @GetKeyByValue(Model.ColumnNumberList, usageRecord.SystemTwoColumnNumber)
-                                        }
-                                        else if (usageRecord.SystemOneColumnNumber != null)
-                                        {
-                                            @GetKeyByValue(Model.ColumnNumberList, usageRecord.SystemOneColumnNumber)
-                                        }
-                                        else if (usageRecord.SystemTwoColumnNumber != null)
-                                        {
-                                            @GetKeyByValue(Model.ColumnNumberList, usageRecord.SystemTwoColumnNumber)
-                                        }
-                                        else
-                                        {
-                                            <span>@emptyValue</span>
-                                        }*@
+                                            {
+                                                <text>S1：</text>
+                                                @GetKeyByValue(Model.ColumnNumberList, usageRecord.SystemOneColumnNumber)
+                                                <br />
+                                                <text>S2：</text>
+                                                @GetKeyByValue(Model.ColumnNumberList, usageRecord.SystemTwoColumnNumber)
+                                            }
+                                            else if (usageRecord.SystemOneColumnNumber != null)
+                                            {
+                                                @GetKeyByValue(Model.ColumnNumberList, usageRecord.SystemOneColumnNumber)
+                                            }
+                                            else if (usageRecord.SystemTwoColumnNumber != null)
+                                            {
+                                                @GetKeyByValue(Model.ColumnNumberList, usageRecord.SystemTwoColumnNumber)
+                                            }
+                                            else
+                                            {
+                                                <span>@emptyValue</span>
+                                            }*@
                                     </td>
                                     <td class="mobilephase">@GetKeyByValue(Model.MobilePhaseList, usageRecord.MobilePhase)</td>
                                     <td class="samplenumber">
@@ -642,8 +659,14 @@
                                     </td>
                                     <td class="button">
                                         <div class="button">
-                                            <button class="edit-btn btn btn-sm btn-outline-primary" data-id="@usageRecord.Id">编辑</button>
-                                            <button class="delete-usage-record-btn btn btn-sm btn-outline-danger" data-id="@usageRecord.Id">删除</button>
+                                            @if ((await AuthorizationService.AuthorizeAsync(User, usageRecord, Operations.Update)).Succeeded)
+                                            {
+                                                <button class="edit-btn btn btn-sm btn-outline-primary" data-id="@usageRecord.Id">编辑</button>
+                                            }
+                                            @if ((await AuthorizationService.AuthorizeAsync(User, usageRecord, Operations.Delete)).Succeeded)
+                                            {
+                                                <button class="delete-usage-record-btn btn btn-sm btn-outline-danger" data-id="@usageRecord.Id">删除</button>
+                                            }
                                         </div>
                                     </td>
                                 </tr>

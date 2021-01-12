@@ -56,6 +56,8 @@ namespace EquipmentManagementSystem.Pages.Records
 
         [BindProperty]
         public UsageRecord UsageRecord { get; set; }
+        public MaintenanceRecord MaintenanceRecord { get; private set; } = new MaintenanceRecord(); // for authorization
+
         public string Platform { get; private set; }
         public string InstrumentModel { get; private set; }
 
@@ -75,7 +77,6 @@ namespace EquipmentManagementSystem.Pages.Records
         #endregion
 
         #region 维护记录表相关属性
-        public MaintenanceRecord MaintenanceRecord { get; private set; } = new MaintenanceRecord(); // for authoriztion
         public List<string> RecordsIdOfMonth { get; private set; }
         public List<string> DailyMaintenanceContent { get; private set; }
         public List<string> WeeklyMaintenanceContent { get; private set; }
