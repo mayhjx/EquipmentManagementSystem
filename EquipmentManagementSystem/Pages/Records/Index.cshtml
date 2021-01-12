@@ -164,7 +164,7 @@
                                 </tr>
                             }
                             <tr>
-                                <td class="operator">操作者</td>
+                                <td class="operator text-bold">操作者</td>
                                 @foreach (var op in Model.DailyMaintenanceOperator)
                                 {
                                     <td><p class="operator text-vertical">@op</p></td>
@@ -191,7 +191,7 @@
                                 </tr>
                             }
                             <tr>
-                                <td class="operator">操作者</td>
+                                <td class="operator text-bold">操作者</td>
                                 @for (int i = 0; i < colSpanOfWeekly.Length; i++)
                                 {
                                     var op = Model.WeeklyMaintenanceOperator[i];
@@ -458,9 +458,10 @@
                             @{
                                 string GetKeyByValue(Dictionary<char, string> dic, string value)
                                 {
+                                    // 字典里是所有记录的值,没有数据表示不适用,返回N/A
+                                    if (dic.Count == 0) return emptyValue;
                                     string key = string.Empty;
                                     if (string.IsNullOrEmpty(value)) return key;
-                                    if (dic.Count == 0) return key;
 
                                     foreach (KeyValuePair<char, string> kvp in dic)
                                     {
@@ -546,21 +547,21 @@
                                         @if (usageRecord.SystemOneColumnPressure != null && usageRecord.SystemTwoColumnPressure != null)
                                         {
                                             <text>S1：</text>
-                                            <span class="d-print-none">@Html.DisplayFor(item => usageRecord.SystemOneColumnNumber) / </span>
+                                            <span class="hide-in-print">@Html.DisplayFor(item => usageRecord.SystemOneColumnNumber) / </span>
                                             @Html.DisplayFor(item => usageRecord.SystemOneColumnPressure)
                                             <br />
                                             <text>S2：</text>
-                                            <span class="d-print-none">@Html.DisplayFor(item => usageRecord.SystemTwoColumnNumber) / </span>
+                                            <span class="hide-in-print">@Html.DisplayFor(item => usageRecord.SystemTwoColumnNumber) / </span>
                                             @Html.DisplayFor(item => usageRecord.SystemTwoColumnPressure)
                                         }
                                         else if (usageRecord.SystemOneColumnPressure != null)
                                         {
-                                            <span class="d-print-none">@Html.DisplayFor(item => usageRecord.SystemOneColumnNumber) / </span>
+                                            <span class="hide-in-print">@Html.DisplayFor(item => usageRecord.SystemOneColumnNumber) / </span>
                                             @Html.DisplayFor(item => usageRecord.SystemOneColumnPressure)
                                         }
                                         else if (usageRecord.SystemTwoColumnPressure != null)
                                         {
-                                            <span class="d-print-none">@Html.DisplayFor(item => usageRecord.SystemTwoColumnNumber) / </span>
+                                            <span class="hide-in-print">@Html.DisplayFor(item => usageRecord.SystemTwoColumnNumber) / </span>
                                             @Html.DisplayFor(item => usageRecord.SystemTwoColumnPressure)
                                         }
                                         else
@@ -574,18 +575,18 @@
                                         @if (usageRecord.LowVacuumDegree != null && usageRecord.HighVacuumDegree != null)
                                         {
                                             <text>低真空：</text>
-                                            @Html.DisplayFor(item => usageRecord.LowVacuumDegree) @(usageRecord.LowVacuumDegreeUnit.Split(" ")[0])
+                                            @(usageRecord.LowVacuumDegree.GetValueOrDefault().ToString("F1")) @(usageRecord.LowVacuumDegreeUnit.Split(" ")[0])
                                             <br />
                                             <text>高真空：</text>
-                                            @Html.DisplayFor(item => usageRecord.HighVacuumDegree) @(usageRecord.HighVacuumDegreeUnit.Split(" ")[0])
+                                            @(usageRecord.HighVacuumDegree.GetValueOrDefault().ToString("F1")) @(usageRecord.HighVacuumDegreeUnit.Split(" ")[0])
                                         }
                                         else if (usageRecord.LowVacuumDegree != null)
                                         {
-                                            @Html.DisplayFor(item => usageRecord.LowVacuumDegree) @(usageRecord.LowVacuumDegreeUnit.Split(" ")[0])
+                                            @(usageRecord.LowVacuumDegree.GetValueOrDefault().ToString("F1")) @(usageRecord.LowVacuumDegreeUnit.Split(" ")[0])
                                         }
                                         else if (usageRecord.HighVacuumDegree != null)
                                         {
-                                            @Html.DisplayFor(item => usageRecord.HighVacuumDegree) @(usageRecord.HighVacuumDegreeUnit.Split(" ")[0])
+                                            @(usageRecord.HighVacuumDegree.GetValueOrDefault().ToString("F1")) @(usageRecord.HighVacuumDegreeUnit.Split(" ")[0])
                                         }
                                         else
                                         {
@@ -625,7 +626,16 @@
                                         }
                                     </td>
                                     <td>@Html.DisplayFor(item => usageRecord.Operator)</td>
-                                    <td class="remark">@Html.DisplayFor(item => usageRecord.Remark)</td>
+                                    <td class="remark">
+                                        @if (!string.IsNullOrEmpty(usageRecord.Remark))
+                                        {
+                                            @Html.DisplayFor(item => usageRecord.Remark)
+                                        }
+                                        else
+                                        {
+                                            <span>/</span>
+                                        }
+                                    </td>
                                     <td class="button">
                                         <div class="button">
                                             <button class="edit-btn btn btn-sm btn-outline-primary" data-id="@usageRecord.Id">编辑</button>
