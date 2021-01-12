@@ -31,14 +31,38 @@
     // 工单是否完成
     var IsCompleted = Model.MalfunctionWorkOrder.Progress == Models.WorkOrderProgress.Completed;
 
-    // 授权编辑
-    var CanEdit = await AuthorizationService.AuthorizeAsync(User, Model.MalfunctionWorkOrder, Operations.Update);
+    // 授权编辑故障工单
+    var CanEditWorkOrder = await AuthorizationService.AuthorizeAsync(User, Model.MalfunctionWorkOrder, Operations.Update);
+
+    // 授权删除故障工单
+    var CanDeleteWorkOrder = await AuthorizationService.AuthorizeAsync(User, Model.MalfunctionWorkOrder, Operations.Delete);
+
+    // 授权编辑故障信息
+    var CanEditInfo = await AuthorizationService.AuthorizeAsync(User, Model.MalfunctionWorkOrder.MalfunctionInfo, Operations.Update);
+
+    // 授权编辑故障排查
+    var CanEditInvestigation = await AuthorizationService.AuthorizeAsync(User, Model.MalfunctionWorkOrder.Investigation, Operations.Update);
+
+    // 授权编辑维修申请
+    var CanEditRepairRequest = await AuthorizationService.AuthorizeAsync(User, Model.MalfunctionWorkOrder.RepairRequest, Operations.Update);
+
+    // 授权编辑配件下单
+    var CanEditAccessoriesOrder = await AuthorizationService.AuthorizeAsync(User, Model.MalfunctionWorkOrder.AccessoriesOrder, Operations.Update);
+
+    // 授权编辑维修过程
+    var CanEditRepair = await AuthorizationService.AuthorizeAsync(User, Model.MalfunctionWorkOrder.Repair, Operations.Update);
+
+    // 授权编辑性能验证
+    var CanEditValidation = await AuthorizationService.AuthorizeAsync(User, Model.MalfunctionWorkOrder.Validation, Operations.Update);
 
     // 授权确认故障信息
-    var CanComfirmInformation = await AuthorizationService.AuthorizeAsync(User, Model.MalfunctionWorkOrder, Operations.Comfirm);
+    var CanComfirmInformation = await AuthorizationService.AuthorizeAsync(User, Model.MalfunctionWorkOrder.MalfunctionInfo, Operations.Comfirm);
 
-    // 授权批准
-    var CanApprove = await AuthorizationService.AuthorizeAsync(User, Model.MalfunctionWorkOrder, Operations.Approve);
+    // 授权批准维修申请
+    var CanApproveRepairRequest = await AuthorizationService.AuthorizeAsync(User, Model.MalfunctionWorkOrder.RepairRequest, Operations.Approve);
+
+    // 授权批准性能验证
+    var CanApproveValidation = await AuthorizationService.AuthorizeAsync(User, Model.MalfunctionWorkOrder.Validation, Operations.Approve);
 
     @functions{
         private void FileManager(string fileName, string filePath)
@@ -194,7 +218,7 @@
                         @if (!IsCompleted && !InfomationIsComfirm)
                         {
                             <div class="card-footer">
-                                @if (CanEdit.Succeeded)
+                                @if (CanEditInfo.Succeeded)
                                 {
                                     <a asp-page="../Information/Edit" asp-route-id="@Model.MalfunctionWorkOrder.MalfunctionInfo.ID" class="btn btn-outline-primary">
                                         编辑
@@ -347,7 +371,7 @@
 
                                         </div>
                                     </div>
-                                    @if (!IsCompleted && CanEdit.Succeeded)
+                                    @if (!IsCompleted && CanEditInvestigation.Succeeded)
                                     {
                                         <div class="card-footer">
                                             <a asp-page="../Investigate/Edit" asp-route-id="@Model.MalfunctionWorkOrder.Investigation.ID" class="btn btn-outline-primary">
@@ -383,13 +407,13 @@
                                             @Html.DisplayFor(model => model.MalfunctionWorkOrder.RepairRequest.Engineer)
                                         </dd>
                                     </dl>
-                                    @if (!IsCompleted && !RepairRequestIsComfirm && CanEdit.Succeeded)
+                                    @if (!IsCompleted && !RepairRequestIsComfirm && CanEditRepairRequest.Succeeded)
                                     {
                                         <div class="card-footer">
                                             <a asp-page="../RepairRequests/Edit" asp-route-id="@Model.MalfunctionWorkOrder.RepairRequest.ID" class="btn btn-outline-primary">
                                                 编辑
                                             </a>
-                                            @if (CanApprove.Succeeded)
+                                            @if (CanApproveRepairRequest.Succeeded)
                                             {
                                                 // 批准维修申请
                                                 <div class="float-right">
@@ -445,7 +469,7 @@
                                             @Html.DisplayFor(model => model.MalfunctionWorkOrder.AccessoriesOrder.Remark)
                                         </dd>
                                     </dl>
-                                    @if (!IsCompleted && CanEdit.Succeeded)
+                                    @if (!IsCompleted && CanEditAccessoriesOrder.Succeeded)
                                     {
                                         <div class="card-footer">
                                             <a asp-page="../AccessoriesOrders/Edit" asp-route-id="@Model.MalfunctionWorkOrder.AccessoriesOrder.ID" class="btn btn-outline-primary">
@@ -549,7 +573,7 @@
                                     </div>
                                 </div>
                             </div>
-                            @if (!IsCompleted && CanEdit.Succeeded)
+                            @if (!IsCompleted && CanEditRepair.Succeeded)
                             {
                                 <div class="card-footer">
                                     <a asp-page="../Servicing/Edit" asp-route-id="@Model.MalfunctionWorkOrder.Repair.ID" class="btn btn-outline-primary">
@@ -619,13 +643,13 @@
                                 </dl>
                             </div>
                             <div class="card-footer">
-                                @if (!ValidationIsComfirm && CanEdit.Succeeded)
+                                @if (!ValidationIsComfirm && CanEditValidation.Succeeded)
                                 {
                                     <a asp-page="../Validate/Edit" asp-route-id="@Model.MalfunctionWorkOrder.Validation.ID" class="btn btn-outline-primary">
                                         编辑
                                     </a>
                                 }
-                                @if (!ValidationIsComfirm && CanApprove.Succeeded)
+                                @if (!ValidationIsComfirm && CanApproveValidation.Succeeded)
                                 {
                                     // 确认性能验证
                                     <div class="float-right">
@@ -688,7 +712,7 @@
                         </a>
                     }
 
-                    @if (IsComfirmAll && !IsCompleted && CanEdit.Succeeded)
+                    @if (IsComfirmAll && !IsCompleted && CanEditWorkOrder.Succeeded)
                     {
                         @Html.AntiForgeryToken();
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-completeWorkOrder">
@@ -714,7 +738,7 @@
                             </div>
                         </div>
                     }
-                    @if (!IsCompleted && CanEdit.Succeeded)
+                    @if (!IsCompleted && CanDeleteWorkOrder.Succeeded)
                     {
                         <button type="button" class="btn btn-outline-danger  float-right" data-toggle="modal" data-target="#modal-deleteWorkOrder">
                             删除
