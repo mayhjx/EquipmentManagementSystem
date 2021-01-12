@@ -154,7 +154,7 @@ col.button {
 
 div.button {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
 input[type="datetime-local"] {
