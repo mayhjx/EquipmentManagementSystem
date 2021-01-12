@@ -75,68 +75,78 @@
                     <ul class="nav nav-pills nav-sidebar nav-child-indent flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
                         with font-awesome or any other icon font library -->
-                        <li class="nav-item has-treeview">
-                            <a href="#Equipments" data-target="#" data-toggle="pill" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    设备档案
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a asp-page="/Equipments/Instruments/Index" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>主检设备</p>
-                                    </a>
-                                </li>
-                                @*<li class="nav-item">
-                                        <a href="#" class="nav-link">
+                        @if ((await AuthorizationService.AuthorizeAsync(User, new Instrument(), Operations.Read)).Succeeded)
+                        {
+                            <li class="nav-item has-treeview">
+                                <a href="#Equipments" data-target="#" data-toggle="pill" class="nav-link">
+                                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                                    <p>
+                                        设备档案
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a asp-page="/Equipments/Instruments/Index" class="nav-link">
                                             <i class="nav-icon far fa-circle"></i>
-                                            <p>辅助设备</p>
+                                            <p>主检设备</p>
                                         </a>
-                                    </li>*@
-                                <li class="nav-item">
-                                    <a asp-page="/Equipments/Acceptance/Index" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>待验收设备</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                                    </li>
+                                    @*<li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                <i class="nav-icon far fa-circle"></i>
+                                                <p>辅助设备</p>
+                                            </a>
+                                        </li>*@
+                                    <li class="nav-item">
+                                        <a asp-page="/Equipments/Acceptance/Index" class="nav-link">
+                                            <i class="nav-icon far fa-circle"></i>
+                                            <p>待验收设备</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
 
-                        <li class="nav-item has-treeview">
-                            <a href="#Malfunctions" data-target="#" data-toggle="pill" class="nav-link">
-                                <i class="nav-icon fas fa-wrench"></i>
-                                <p>
-                                    故障跟进
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a asp-page="/Malfunctions/WorkOrders/Doing" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>待跟进工单</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-page="/Malfunctions/WorkOrders/Done" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>已完成工单</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                        @if ((await AuthorizationService.AuthorizeAsync(User, new MalfunctionWorkOrder(), Operations.Read)).Succeeded)
+                        {
+                            <li class="nav-item has-treeview">
+                                <a href="#Malfunctions" data-target="#" data-toggle="pill" class="nav-link">
+                                    <i class="nav-icon fas fa-wrench"></i>
+                                    <p>
+                                        故障跟进
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a asp-page="/Malfunctions/WorkOrders/Doing" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>待跟进工单</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-page="/Malfunctions/WorkOrders/Done" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>已完成工单</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
 
-                        <li class="nav-item">
-                            <a asp-page="/Records/Index" class="nav-link">
-                                <i class="nav-icon far fa-edit"></i>
-                                <p>
-                                    维护使用
-                                </p>
-                            </a>
-                        </li>
+                        @if ((await AuthorizationService.AuthorizeAsync(User, new UsageRecord(), Operations.Read)).Succeeded)
+                        {
+                            <li class="nav-item">
+                                <a asp-page="/Records/Index" class="nav-link">
+                                    <i class="nav-icon far fa-edit"></i>
+                                    <p>
+                                        维护使用
+                                    </p>
+                                </a>
+                            </li>
+                        }
+
                         <li class="nav-item">
                             <a asp-page="/ReportSystem/Reporting" class="nav-link">
                                 <i class="nav-icon far fa-file-alt"></i>
