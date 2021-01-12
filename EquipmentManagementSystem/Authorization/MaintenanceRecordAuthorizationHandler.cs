@@ -53,14 +53,14 @@ namespace EquipmentManagementSystem.Authorization
 
             if (requirement.Name == Constants.DeleteOperationName)
             {
-                if (context.User.IsInRole(Constants.DirectorRole) || context.User.IsInRole(Constants.ManagerRole) || context.User.IsInRole(Constants.SupervisorRole))
+                if (context.User.IsInRole(Constants.DirectorRole))
                 {
                     context.Succeed(requirement);
                 }
-                else if (context.User.IsInRole(Constants.PrincipalRole) && resource.GroupName == context.User.FindFirst("Group")?.Value)
-                {
-                    context.Succeed(requirement);
-                }
+                //else if (context.User.IsInRole(Constants.PrincipalRole) && resource.GroupName == context.User.FindFirst("Group")?.Value)
+                //{
+                //    context.Succeed(requirement);
+                //}
                 //else if (context.User.IsInRole(Constants.TechnicianRole) && resource.Operator == context.User.FindFirst(ClaimTypes.GivenName)?.Value)
                 //{
                 //    context.Succeed(requirement);
