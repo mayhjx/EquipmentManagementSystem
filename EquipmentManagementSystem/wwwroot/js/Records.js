@@ -22,11 +22,13 @@ $(document).ready(function () {
         $('form#search').submit();
     });
 
-    let project = $("select.select-project").val();
+    // 更新新建行的色谱柱编号
+    let project = $("select.select-project:last").val();
     let instrumentId = $("select#instrumentId").val();
     getLatestRecord(project, instrumentId);
 
-    $(".select-project").on("change", function () {
+    // 更新新建行的色谱柱编号
+    $(".select-project:last").on("change", function () {
         let project = $(this).val();
         let instrumentId = $("select#instrumentId").val();
         getLatestRecord(project, instrumentId);
