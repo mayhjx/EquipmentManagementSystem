@@ -23,7 +23,10 @@ namespace EquipmentManagementSystem.Authorization
 
             if (requirement.Name == Constants.ReadOperationName)
             {
-                context.Succeed(requirement);
+                if(!context.User.IsInRole(Constants.TechnicianRole))
+                {
+                    context.Succeed(requirement);
+                }
             }
 
             if (requirement.Name == Constants.CreateOperationName)
