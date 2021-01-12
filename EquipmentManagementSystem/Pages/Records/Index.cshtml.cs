@@ -75,6 +75,7 @@ namespace EquipmentManagementSystem.Pages.Records
         #endregion
 
         #region 维护记录表相关属性
+        public MaintenanceRecord MaintenanceRecord { get; private set; } = new MaintenanceRecord(); // for authoriztion
         public List<string> RecordsIdOfMonth { get; private set; }
         public List<string> DailyMaintenanceContent { get; private set; }
         public List<string> WeeklyMaintenanceContent { get; private set; }
@@ -214,14 +215,15 @@ namespace EquipmentManagementSystem.Pages.Records
             IInstrumentRepository instrumentRepository,
             IUserResolverService userResolverService)
         {
+            // 默认管理者无GRoup,返回所有设备编号
             var group = userResolverService.GetUserGroup();
-            if (group == "质谱中心")
+            if (!string.IsNullOrEmpty(group))
             {
-                InstrumentSelectList = instrumentRepository.GetAllInstrumentId();
+                InstrumentSelectList = instrumentService.GetInstrumentIdRelateToProjectsOfGroup(group); //  跟用户关联
             }
             else
             {
-                InstrumentSelectList = instrumentService.GetInstrumentIdRelateToProjectsOfGroup(group); //  跟用户关联
+                InstrumentSelectList = instrumentRepository.GetAllInstrumentId();
             }
             Instrument = InstrumentSelectList.FirstOrDefault() ?? "";
         }
