@@ -336,9 +336,10 @@
                                 <td class="batchnumber">Batch样品量</td>
                                 <td class="column" style="text-align:left;padding-left:10px;">
                                     压力<br />
-                                    <i class="far fa-@(Model.ColumnPressureUnit == "Psi" ? "check-" : "")square" aria-hidden="true"></i> Psi<br />
+                                    <i class="far fa-@(Model.ColumnPressureUnit == "PSI" ? "check-" : "")square" aria-hidden="true"></i> PSI<br />
                                     <i class="far fa-@(Model.ColumnPressureUnit == "Bar" ? "check-" : "")square" aria-hidden="true"></i> Bar<br />
-                                    <i class="far fa-@(Model.ColumnPressureUnit == "Mpa" ? "check-" : "")square" aria-hidden="true"></i> Mpa
+                                    <i class="far fa-@(Model.ColumnPressureUnit == "MPa" ? "check-" : "")square" aria-hidden="true"></i> MPa<br />
+                                    <i class="far fa-@(Model.ColumnPressureUnit == "kPa" ? "check-" : "")square" aria-hidden="true"></i> kPa
                                 </td>
                                 <td class="ionsource">
                                     离子源<br />
@@ -365,7 +366,7 @@
                                     操作者<br />
                                     Operator
                                 </td>
-                                <td class="remark">
+                                <td>
                                     备注<br />
                                     Remark
                                 </td>
@@ -697,19 +698,19 @@
                                         <input form="edit-form" asp-for="@usageRecord.SystemOneColumnNumber" placeholder="S1编号" disabled />
                                         <input form="edit-form" type="number" min="0" step="any" asp-for="@usageRecord.SystemOneColumnPressure" placeholder="S1压力" disabled />
                                         <select form="edit-form" asp-for="@usageRecord.SystemOneColumnPressureUnit" disabled>
-                                            <option value="Mpa">Mpa</option>
-                                            @*<option value="Kpa">Kpa</option>*@
+                                            <option value="MPa">MPa</option>
+                                            <option value="kPa">kPa</option>
                                             <option value="Bar">Bar</option>
-                                            <option value="Psi">Psi</option>
+                                            <option value="PSI">PSI</option>
                                         </select>
                                         <br />
                                         <input form="edit-form" asp-for="@usageRecord.SystemTwoColumnNumber" placeholder="S2编号" disabled />
                                         <input form="edit-form" type="number" min="0" step="any" asp-for="@usageRecord.SystemTwoColumnPressure" placeholder="S2压力" disabled />
                                         <select form="edit-form" asp-for="@usageRecord.SystemTwoColumnPressureUnit" disabled>
-                                            <option value="Mpa">Mpa</option>
-                                            @*<option value="Kpa">Kpa</option>*@
+                                            <option value="MPa">MPa</option>
+                                            <option value="kPa">kPa</option>
                                             <option value="Bar">Bar</option>
-                                            <option value="Psi">Psi</option>
+                                            <option value="PSI">PSI</option>
                                         </select>
                                     </td>
                                     <td class="ionsource">离子源</td>
@@ -717,6 +718,8 @@
                                     <td class="vacuumdegree">
                                         <input form="edit-form" type="number" step="any" asp-for="@usageRecord.LowVacuumDegree" placeholder="低真空" disabled />
                                         <select form="edit-form" asp-for="@usageRecord.LowVacuumDegreeUnit" disabled>
+                                            <option value="e-3 torr">e-3 torr</option>
+                                            <option value="e-4 torr">e-4 torr</option>
                                             <option value="e-5 torr">e-5 torr</option>
                                             <option value="e-6 torr">e-6 torr</option>
                                             <option value="e+2 Pa">e+2 Pa</option>
@@ -727,6 +730,8 @@
                                         <br />
                                         <input form="edit-form" type="number" step="any" asp-for="@usageRecord.HighVacuumDegree" placeholder="高真空" disabled />
                                         <select form="edit-form" asp-for="@usageRecord.HighVacuumDegreeUnit" disabled>
+                                            <option value="e-3 torr">e-3 torr</option>
+                                            <option value="e-4 torr">e-4 torr</option>
                                             <option value="e-5 torr">e-5 torr</option>
                                             <option value="e-6 torr">e-6 torr</option>
                                             <option value="e+2 Pa">e+2 Pa</option>
@@ -795,19 +800,19 @@
                                     <input form="create-form" asp-for="UsageRecord.SystemOneColumnNumber" placeholder="S1编号" />
                                     <input form="create-form" type="number" min="0" step="any" asp-for="UsageRecord.SystemOneColumnPressure" placeholder="S1压力" />
                                     <select form="create-form" asp-for="UsageRecord.SystemOneColumnPressureUnit">
-                                        <option value="Mpa">Mpa</option>
-                                        @*<option value="Kpa">Kpa</option>*@
+                                        <option value="MPa">MPa</option>
+                                        <option value="kPa">kPa</option>
                                         <option value="Bar">Bar</option>
-                                        <option value="Psi">Psi</option>
+                                        <option value="PSI">PSI</option>
                                     </select>
                                     <br />
                                     <input form="create-form" asp-for="UsageRecord.SystemTwoColumnNumber" placeholder="S2编号" />
                                     <input form="create-form" type="number" min="0" step="any" asp-for="UsageRecord.SystemTwoColumnPressure" placeholder="S2压力" />
                                     <select form="create-form" asp-for="UsageRecord.SystemTwoColumnPressureUnit">
-                                        <option value="Mpa">Mpa</option>
-                                        @*<option value="Kpa">Kpa</option>*@
+                                        <option value="MPa">MPa</option>
+                                        <option value="kPa">kPa</option>
                                         <option value="Bar">Bar</option>
-                                        <option value="Psi">Psi</option>
+                                        <option value="PSI">PSI</option>
                                     </select>
                                 </td>
                                 <td class="ionsource">离子源</td>
@@ -815,6 +820,8 @@
                                 <td class="vacuumdegree">
                                     <input form="create-form" type="number" min="0" step="any" asp-for="UsageRecord.LowVacuumDegree" placeholder="低真空" />
                                     <select form="create-form" asp-for="UsageRecord.LowVacuumDegreeUnit">
+                                        <option value="e-3 torr">e-3 torr</option>
+                                        <option value="e-4 torr">e-4 torr</option>
                                         <option value="e-5 torr">e-5 torr</option>
                                         <option value="e-6 torr">e-6 torr</option>
                                         <option value="e+2 Pa">e+2 Pa</option>
@@ -825,6 +832,8 @@
                                     <br />
                                     <input form="create-form" type="number" min="0" step="any" asp-for="UsageRecord.HighVacuumDegree" placeholder="高真空" />
                                     <select form="create-form" asp-for="UsageRecord.HighVacuumDegreeUnit">
+                                        <option value="e-3 torr">e-3 torr</option>
+                                        <option value="e-4 torr">e-4 torr</option>
                                         <option value="e-5 torr">e-5 torr</option>
                                         <option value="e-6 torr">e-6 torr</option>
                                         <option value="e+2 Pa">e+2 Pa</option>
