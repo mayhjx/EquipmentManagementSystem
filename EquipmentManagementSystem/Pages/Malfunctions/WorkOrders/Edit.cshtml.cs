@@ -81,7 +81,7 @@ namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
         }
 
         // 更新工单进度为已完成
-        public async Task<IActionResult> OnPostCompleteWorkOrderAsync(int id)
+        public async Task<JsonResult> OnPostCompleteWorkOrderAsync(int id)
         {
             MalfunctionWorkOrder = await _context.MalfunctionWorkOrder
                                         .Include(m => m.Instrument)
