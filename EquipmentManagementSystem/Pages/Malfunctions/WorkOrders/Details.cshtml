@@ -215,7 +215,7 @@
                                 </div>
                             </div>
                         </div>
-                        @if (!IsCompleted && !InfomationIsComfirm)
+                        @if (!IsCompleted && !InfomationIsComfirm && CanEditInfo.Succeeded)
                         {
                             <div class="card-footer">
                                 @if (CanEditInfo.Succeeded)
