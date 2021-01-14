@@ -89,38 +89,39 @@
                         <thead>
                             <tr>
                                 <th>
+                                    @Html.DisplayNameFor(model => model.InstrumentOfExpire[0].Group)
+                                </th>
+                                <th>
                                     @Html.DisplayNameFor(model => model.InstrumentOfExpire[0].ID)
                                 </th>
                                 <th>
                                     到期日期
                                 </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.InstrumentOfExpire[0].Group)
-                                </th>
+
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in Model.InstrumentOfExpire)
                             {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.ID)
-                                    </td>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Group)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ID)
+                                </td>
 
-                                    <td>
-                                        @if (item.Calibrations != null)
+                                <td>
+                                    @if (item.Calibrations != null)
+                                    {
+                                        var lastCalibrationDateTime = item.Calibrations.Last().Date;
+                                        if (lastCalibrationDateTime != null)
                                         {
-                                            var lastCalibrationDateTime = item.Calibrations.Last().Date;
-                                            if (lastCalibrationDateTime != null)
-                                            {
-                                                @(lastCalibrationDateTime.AddYears(item.CalibrationCycle).AddDays(-1).ToShortDateString())
-                                            }
+                                            @(lastCalibrationDateTime.AddYears(item.CalibrationCycle).AddDays(-1).ToShortDateString())
                                         }
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Group)
-                                    </td>
-                                </tr>
+                                    }
+                                </td>
+                            </tr>
                             }
                         </tbody>
                     </table>
@@ -171,99 +172,5 @@
 </div>*@
 
 
-<div class="row invisible">
-    <div class="col-xl-6 col-12">
-        <div class="card">
-            <div class="card-header">
-                <div class="card-title pt-2">
-                    <form>
-                        <div class="form-inline">
-                            <select class="custom-select">
-                                <option>2020</option>
-                            </select>
-                            <label>&nbsp;年故障率</label>
-                        </div>
-                    </form>
-                </div>
-                <div class="card-tools">
-
-                </div>
-            </div>
-            <div class="card-body">
-                <canvas id="malfunction-chart" width="764" height="250" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 764px;"></canvas>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-6 col-12">
-        <div class="card">
-            <div class="card-header">
-                <div class="card-title pt-2">
-                    <form>
-                        <div class="form-inline">
-                            <select class="custom-select">
-                                <option>2020</option>
-                            </select>
-                            <label>&nbsp;年使用率</label>
-                        </div>
-                    </form>
-                </div>
-                <div class="card-tools">
-
-                </div>
-            </div>
-            <div class="card-body">
-                <canvas id="usage-chart" width="764" height="250" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 764px;"></canvas>
-            </div>
-        </div>
-    </div>
-</div>
-
 @section Scripts {
-    <script src="~/plugins/chart.js/Chart.bundle.min.js"></script>
-
-    <script>
-        var malfunctionChartCanvas = $('#malfunction-chart').get(0).getContext('2d');
-        var malfunctionData = {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-            datasets: [
-                {
-                    label: 'LCMS',
-                    backgroundColor: 'rgba(60,141,188,0.9)',
-                    borderColor: 'rgba(60,141,188,0.8)',
-                    pointRadius: false,
-                    pointColor: '#3b8bba',
-                    pointStrokeColor: 'rgba(60,141,188,1)',
-                    pointHighlightFill: '#fff',
-                    pointHighlightStroke: 'rgba(60,141,188,1)',
-                    data: [28, 48, 40, 19, 86, 27, 90]
-                },
-                {
-                    label: 'GCMS',
-                    backgroundColor: 'rgba(210, 214, 222, 1)',
-                    borderColor: 'rgba(210, 214, 222, 1)',
-                    pointRadius: false,
-                    pointColor: 'rgba(210, 214, 222, 1)',
-                    pointStrokeColor: '#c1c7d1',
-                    pointHighlightFill: '#fff',
-                    pointHighlightStroke: 'rgba(220,220,220,1)',
-                    data: [65, 59, 80, 81, 56, 55, 40]
-                },
-            ]
-        };
-
-        var malfunctionChartOptions = {};
-
-        var malfunctionChart = new Chart(malfunctionChartCanvas, {
-            type: 'bar',
-            data: malfunctionData,
-            options: malfunctionChartOptions
-        })
-
-        var usageChartCanvas = $('#usage-chart').get(0).getContext('2d');
-        var usageChart = new Chart(usageChartCanvas, {
-            type: 'bar',
-            data: malfunctionData,
-            options: malfunctionChartOptions
-        })
-    </script>
 }

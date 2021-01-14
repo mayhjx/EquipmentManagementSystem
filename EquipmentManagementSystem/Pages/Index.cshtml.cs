@@ -46,6 +46,7 @@ namespace EquipmentManagementSystem.Pages
                                   let remainDay = m.Calibrations.Last().Date.AddYears(m.CalibrationCycle) - DateTime.Today
                                   where remainDay.Days < 30 // 到期前30天内
                                   select m)
+                                  .OrderBy(m => m.Group)
                                 .ToList();
 
 
