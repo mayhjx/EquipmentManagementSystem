@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace EquipmentManagementSystem.Repositories
 {
@@ -33,6 +34,28 @@ namespace EquipmentManagementSystem.Repositories
                 .Where(i => i.BeginTime.GetValueOrDefault().Year == date.GetValueOrDefault().Year)
                 .Where(i => i.BeginTime.GetValueOrDefault().Month == date.GetValueOrDefault().Month)
                 .ToList();
+        }
+
+        public MaintenanceRecord GetLatestQuarterlyRecordOfInstrumentId(string instrumentId)
+        {
+            return _context.Set<MaintenanceRecord>()
+                .AsNoTracking()
+                .AsEnumerable()
+                .OrderBy(i => i.BeginTime)
+                .Where(i => i.InstrumentId == instrumentId)
+                .Where(i => !string.IsNullOrEmpty(i.Quarterly))
+                .LastOrDefault();
+        }
+
+        public MaintenanceRecord GetLatestYearlyRecordOfInstrumentId(string instrumentId)
+        {
+            return _context.Set<MaintenanceRecord>()
+                .AsNoTracking()
+                .AsEnumerable()
+                .OrderBy(i => i.BeginTime)
+                .Where(i => i.InstrumentId == instrumentId)
+                .Where(i => !string.IsNullOrEmpty(i.Yearly))
+                .LastOrDefault();
         }
     }
 }

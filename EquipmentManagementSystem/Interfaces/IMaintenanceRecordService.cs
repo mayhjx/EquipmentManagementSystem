@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using static EquipmentManagementSystem.Pages.IndexModel;
 
 namespace EquipmentManagementSystem.Interfaces
 {
@@ -44,5 +45,17 @@ namespace EquipmentManagementSystem.Interfaces
         /// <param name="month">月份</param>
         /// <returns></returns>
         List<string> GetWeeklyMaintenanceOperatorOfMonth(string instrumentId, DateTime month);
+
+        /// <summary>
+        /// 获取所有设备季度维护的待维护提醒
+        /// </summary>
+        /// <returns></returns>
+        public Task<List<MaintenanceInfo>> GetToBeMaintenanceInfoOfQuarterly();
+
+        /// <summary>
+        /// 获取所有设备年度维护的待维护提醒
+        /// </summary>
+        /// <returns></returns>
+        public Task<List<MaintenanceInfo>> GetToBeMaintenanceInfoOfYearly();
     }
 }

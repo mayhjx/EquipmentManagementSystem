@@ -26,7 +26,7 @@
         <!-- small box -->
         <div class="small-box bg-info">
             <div class="inner">
-                <h3>@*@Model.InstrumentToBeMaintained.Count*@0</h3>
+                <h3>@(Model.ToBeMaintainedOfYearly.Count + Model.ToBeMaintainedOfQuarterly.Count)</h3>
 
                 <p>待维护设备</p>
             </div>
@@ -103,25 +103,25 @@
                         <tbody>
                             @foreach (var item in Model.InstrumentOfExpire)
                             {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Group)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ID)
-                                </td>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Group)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ID)
+                                    </td>
 
-                                <td>
-                                    @if (item.Calibrations != null)
-                                    {
-                                        var lastCalibrationDateTime = item.Calibrations.Last().Date;
-                                        if (lastCalibrationDateTime != null)
+                                    <td>
+                                        @if (item.Calibrations != null)
                                         {
-                                            @(lastCalibrationDateTime.AddYears(item.CalibrationCycle).AddDays(-1).ToShortDateString())
+                                            var lastCalibrationDateTime = item.Calibrations.Last().Date;
+                                            if (lastCalibrationDateTime != null)
+                                            {
+                                                @(lastCalibrationDateTime.AddYears(item.CalibrationCycle).AddDays(-1).ToShortDateString())
+                                            }
                                         }
-                                    }
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
                             }
                         </tbody>
                     </table>
@@ -131,8 +131,8 @@
     </div>
 </div>
 
-@*<div class="modal fade" id="InstrumentToBeMaintained" tabindex="-1" role="dialog" aria-labelledby="InstrumentToBeMaintained" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+<div class="modal fade" id="InstrumentToBeMaintained" tabindex="-1" role="dialog" aria-labelledby="InstrumentToBeMaintained" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="InstrumentToBeMaintained">待维护设备</h5>
@@ -142,34 +142,65 @@
             </div>
             <div class="modal-body p-0">
                 <div class="card-body">
-                    <table id="index" class="table table-sm">
-                        <thead>
-                            <tr>
-                                <td>@Html.DisplayNameFor(model => model.InstrumentToBeMaintained[0].InstrumentId)</td>
-                                <td>@Html.DisplayNameFor(model => model.InstrumentToBeMaintained[0].MaintenanceType)</td>
-                                <td>@Html.DisplayNameFor(model => model.InstrumentToBeMaintained[0].MaintenanceContent)</td>
-                                <td>@Html.DisplayNameFor(model => model.InstrumentToBeMaintained[0].MaintenanceTime)</td>
-                                <td>@Html.DisplayNameFor(model => model.InstrumentToBeMaintained[0].NextMaintenanceTime)</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model.InstrumentToBeMaintained)
-                            {
-                                <tr>
-                                    <td>@Html.DisplayFor(modelItem => item.InstrumentId)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.MaintenanceType)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.MaintenanceContent)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.MaintenanceTime)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.NextMaintenanceTime)</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
+                    <div class="row">
+                        <div class="col-6">
+                            <h6>季度维护待维护内容</h6>
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <td>@Html.DisplayNameFor(model => model.ToBeMaintainedOfQuarterly[0].Group)</td>
+                                        <td>@Html.DisplayNameFor(model => model.ToBeMaintainedOfQuarterly[0].InstrumentId)</td>
+                                        <td>@Html.DisplayNameFor(model => model.ToBeMaintainedOfQuarterly[0].MaintenanceContent)</td>
+                                        <td>@Html.DisplayNameFor(model => model.ToBeMaintainedOfQuarterly[0].MaintenanceTime)</td>
+                                        <td>@Html.DisplayNameFor(model => model.ToBeMaintainedOfQuarterly[0].NextMaintenanceTime)</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.ToBeMaintainedOfQuarterly)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(modelItem => item.Group)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.InstrumentId)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.MaintenanceContent)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.MaintenanceTime)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.NextMaintenanceTime)</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-6">
+                            <h6>年度维护待维护内容</h6>
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <td>@Html.DisplayNameFor(model => model.ToBeMaintainedOfYearly[0].Group)</td>
+                                        <td>@Html.DisplayNameFor(model => model.ToBeMaintainedOfYearly[0].InstrumentId)</td>
+                                        <td>@Html.DisplayNameFor(model => model.ToBeMaintainedOfYearly[0].MaintenanceContent)</td>
+                                        <td>@Html.DisplayNameFor(model => model.ToBeMaintainedOfYearly[0].MaintenanceTime)</td>
+                                        <td>@Html.DisplayNameFor(model => model.ToBeMaintainedOfYearly[0].NextMaintenanceTime)</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.ToBeMaintainedOfYearly)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(modelItem => item.Group)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.InstrumentId)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.MaintenanceContent)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.MaintenanceTime)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.NextMaintenanceTime)</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>*@
+</div>
 
 
 @section Scripts {

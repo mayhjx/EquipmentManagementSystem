@@ -26,5 +26,25 @@ namespace EquipmentManagementSystem.Repositories
         {
             return _context.MaintenanceContents.Where(i => i.InstrumentPlatform == platform).Where(i => i.Type == "周维护").Select(i => i.Text).ToList();
         }
+
+        public int GetMaintenanceCycleOfPlatform(string platform, string maintenanceType, string content)
+        {
+            // 如果不存在则返回int类型的最大值，表示无限周期
+            return _context.MaintenanceContents
+                .Where(i => i.InstrumentPlatform == platform)
+                .Where(i => i.Type == maintenanceType)
+                .FirstOrDefault(i => i.Text == content)?
+                .Cycle ?? int.MaxValue;
+        }
+
+        public int GetRemindTimeOfPlatform(string platform, string maintenanceType, string content)
+        {
+            // 如果不存在则返回0，表示不提醒
+            return _context.MaintenanceContents
+                .Where(i => i.InstrumentPlatform == platform)
+                .Where(i => i.Type == maintenanceType)
+                .FirstOrDefault(i => i.Text == content)?
+                .RemindTime ?? 0;
+        }
     }
 }
