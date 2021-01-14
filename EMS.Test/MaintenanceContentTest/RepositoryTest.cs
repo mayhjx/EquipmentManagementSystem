@@ -125,5 +125,79 @@ namespace EMS.Test.MaintenanceContentTest
                 Assert.Empty(result);
             }
         }
+
+        [Fact]
+        public void GetMaintenanceCycleOfPlatform()
+        {
+            var options = new DbContextOptionsBuilder<EquipmentContext>()
+                .UseInMemoryDatabase(databaseName: nameof(GetMaintenanceCycleOfPlatform))
+                .Options;
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                context.MaintenanceContents.Add(new MaintenanceContent { InstrumentPlatform = "LCMS", Type = "季度维护", Text = "A", Cycle = 181 });
+                context.MaintenanceContents.Add(new MaintenanceContent { InstrumentPlatform = "LCMS", Type = "季度维护", Text = "B", Cycle = 180 });
+                context.SaveChanges();
+            }
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                var repo = new MaintenanceContentRepository(context);
+                var result = repo.GetMaintenanceCycleOfPlatform("LCMS", "季度维护", "B");
+                Assert.Equal(180, result);
+            }
+        }
+
+        [Fact]
+        public void GetMaintenanceCycleOfPlatform_NoData_ShouldReturnZero()
+        {
+            var options = new DbContextOptionsBuilder<EquipmentContext>()
+                .UseInMemoryDatabase(databaseName: nameof(GetMaintenanceCycleOfPlatform_NoData_ShouldReturnZero))
+                .Options;
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                var repo = new MaintenanceContentRepository(context);
+                var result = repo.GetMaintenanceCycleOfPlatform("LCMS", "季度维护", "B");
+                Assert.Equal(int.MaxValue, result);
+            }
+        }
+
+        [Fact]
+        public void GetRemindTimeOfPlatform()
+        {
+            var options = new DbContextOptionsBuilder<EquipmentContext>()
+                .UseInMemoryDatabase(databaseName: nameof(GetRemindTimeOfPlatform))
+                .Options;
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                context.MaintenanceContents.Add(new MaintenanceContent { InstrumentPlatform = "LCMS", Type = "季度维护", Text = "A", RemindTime = 31 });
+                context.MaintenanceContents.Add(new MaintenanceContent { InstrumentPlatform = "LCMS", Type = "季度维护", Text = "B", RemindTime = 30 });
+                context.SaveChanges();
+            }
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                var repo = new MaintenanceContentRepository(context);
+                var result = repo.GetRemindTimeOfPlatform("LCMS", "季度维护", "B");
+                Assert.Equal(30, result);
+            }
+        }
+
+        [Fact]
+        public void GetRemindTimeOfPlatform_NoData_ShouldReturnZero()
+        {
+            var options = new DbContextOptionsBuilder<EquipmentContext>()
+                .UseInMemoryDatabase(databaseName: nameof(GetRemindTimeOfPlatform_NoData_ShouldReturnZero))
+                .Options;
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                var repo = new MaintenanceContentRepository(context);
+                var result = repo.GetRemindTimeOfPlatform("LCMS", "季度维护", "B");
+                Assert.Equal(0, result);
+            }
+        }
     }
 }

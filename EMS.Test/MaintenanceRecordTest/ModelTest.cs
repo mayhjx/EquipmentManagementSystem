@@ -29,16 +29,6 @@ namespace EMS.Test.MaintenanceRecordTest
         }
 
         [Fact]
-        public void GetDaily_NoData_ShouldBeEmptyList()
-        {
-            var maintenanceRecord = new MaintenanceRecord();
-
-            var result = maintenanceRecord.GetDaily();
-
-            Assert.Empty(result);
-        }
-
-        [Fact]
         public void SetWeekly_ThenGet_ShouldEqual()
         {
             string[] content = new string[] { "A", "B", "C" };

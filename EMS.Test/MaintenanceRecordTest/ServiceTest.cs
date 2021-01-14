@@ -229,5 +229,249 @@ namespace EMS.Test.MaintenanceRecordTest
                 Assert.Equal(new[] { "Y", "N", "N", "" }, result["C"]);
             }
         }
+
+        [Fact]
+        public async Task GetToBeMaintenanceInfoOfQuarterly_ShouldReturnSingleRecord()
+        {
+            var options = new DbContextOptionsBuilder<EquipmentContext>()
+                .UseInMemoryDatabase(databaseName: nameof(GetToBeMaintenanceInfoOfQuarterly_ShouldReturnSingleRecord))
+                .Options;
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                context.Instruments.Add(new Instrument
+                {
+                    ID = "FXS-YZ01",
+                    Platform = "LCMS",
+                    Group = "VD"
+                });
+
+                context.MaintenanceContents.Add(new MaintenanceContent
+                {
+                    InstrumentPlatform = "LCMS",
+                    Type = "季度维护",
+                    Text= "调谐",
+                    Cycle = 180,
+                    RemindTime = 30,
+                });
+
+                context.MaintenanceRecords.Add(new MaintenanceRecord
+                {
+                    BeginTime = new System.DateTime(2020,01,01),
+                    InstrumentId = "FXS-YZ01",
+                    Quarterly = "调谐",
+                    Operator = "Test"
+                });
+
+                context.MaintenanceRecords.Add(new MaintenanceRecord
+                {
+                    BeginTime = new System.DateTime(2020, 06, 28),
+                    InstrumentId = "FXS-YZ01",
+                    Quarterly = "调谐",
+                    Operator = "Test"
+                });
+
+                await context.SaveChangesAsync();
+            }
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                var instrumentRepo = new InstrumentRepository(context);
+                var recordRepo = new MaintenanceRecordRepository(context);
+                var contentRepo = new MaintenanceContentRepository(context);
+                var service = new MaintenanceRecordService(instrumentRepo, contentRepo, recordRepo);
+
+                var result =await service.GetToBeMaintenanceInfoOfQuarterly();
+
+                Assert.Single(result);
+            }
+        }
+
+        [Fact]
+        public async Task GetToBeMaintenanceInfoOfQuarterly_NoSatisifiedRecord_ShouldEmptyList()
+        {
+            var options = new DbContextOptionsBuilder<EquipmentContext>()
+                .UseInMemoryDatabase(databaseName: nameof(GetToBeMaintenanceInfoOfQuarterly_NoSatisifiedRecord_ShouldEmptyList))
+                .Options;
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                context.Instruments.Add(new Instrument
+                {
+                    ID = "FXS-YZ01",
+                    Platform = "LCMS",
+                    Group = "VD"
+                });
+
+                context.MaintenanceContents.Add(new MaintenanceContent
+                {
+                    InstrumentPlatform = "LCMS",
+                    Type = "季度维护",
+                    Text = "调谐",
+                    Cycle = 180,
+                    RemindTime = 30,
+                });
+
+                context.MaintenanceRecords.Add(new MaintenanceRecord
+                {
+                    BeginTime = System.DateTime.Now.AddDays(-1),
+                    InstrumentId = "FXS-YZ01",
+                    Quarterly = "调谐",
+                    Operator = "Test"
+                });
+
+                await context.SaveChangesAsync();
+            }
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                var instrumentRepo = new InstrumentRepository(context);
+                var recordRepo = new MaintenanceRecordRepository(context);
+                var contentRepo = new MaintenanceContentRepository(context);
+                var service = new MaintenanceRecordService(instrumentRepo, contentRepo, recordRepo);
+
+                var result = await service.GetToBeMaintenanceInfoOfQuarterly();
+
+                Assert.Empty(result);
+            }
+        }
+
+        [Fact]
+        public async Task GetToBeMaintenanceInfoOfQuarterly_NoRecord_ShouldEmptyList()
+        {
+            var options = new DbContextOptionsBuilder<EquipmentContext>()
+                .UseInMemoryDatabase(databaseName: nameof(GetToBeMaintenanceInfoOfQuarterly_NoRecord_ShouldEmptyList))
+                .Options;
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                var instrumentRepo = new InstrumentRepository(context);
+                var recordRepo = new MaintenanceRecordRepository(context);
+                var contentRepo = new MaintenanceContentRepository(context);
+                var service = new MaintenanceRecordService(instrumentRepo, contentRepo, recordRepo);
+
+                var result = await service.GetToBeMaintenanceInfoOfQuarterly();
+
+                Assert.Empty(result);
+            }
+        }
+
+        [Fact]
+        public async Task GetToBeMaintenanceInfoOfYearly_ShouldReturnSingleRecord()
+        {
+            var options = new DbContextOptionsBuilder<EquipmentContext>()
+                .UseInMemoryDatabase(databaseName: nameof(GetToBeMaintenanceInfoOfYearly_ShouldReturnSingleRecord))
+                .Options;
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                context.Instruments.Add(new Instrument
+                {
+                    ID = "FXS-YZ01",
+                    Platform = "LCMS",
+                    Group = "VD"
+                });
+
+                context.MaintenanceContents.Add(new MaintenanceContent
+                {
+                    InstrumentPlatform = "LCMS",
+                    Type = "年度维护",
+                    Text = "除尘",
+                    Cycle = 365,
+                    RemindTime = 30,
+                });
+
+                context.MaintenanceRecords.Add(new MaintenanceRecord
+                {
+                    BeginTime = new System.DateTime(2020, 01, 01),
+                    InstrumentId = "FXS-YZ01",
+                    Yearly = "除尘",
+                    Operator = "Test"
+                });
+
+                await context.SaveChangesAsync();
+            }
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                var instrumentRepo = new InstrumentRepository(context);
+                var recordRepo = new MaintenanceRecordRepository(context);
+                var contentRepo = new MaintenanceContentRepository(context);
+                var service = new MaintenanceRecordService(instrumentRepo, contentRepo, recordRepo);
+
+                var result = await service.GetToBeMaintenanceInfoOfYearly();
+
+                Assert.Single(result);
+            }
+        }
+
+        [Fact]
+        public async Task GetToBeMaintenanceInfoOfYearly_NoSatisifiedRecord_ShouldEmptyList()
+        {
+            var options = new DbContextOptionsBuilder<EquipmentContext>()
+                .UseInMemoryDatabase(databaseName: nameof(GetToBeMaintenanceInfoOfYearly_NoSatisifiedRecord_ShouldEmptyList))
+                .Options;
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                context.Instruments.Add(new Instrument
+                {
+                    ID = "FXS-YZ01",
+                    Platform = "LCMS",
+                    Group = "VD"
+                });
+
+                context.MaintenanceContents.Add(new MaintenanceContent
+                {
+                    InstrumentPlatform = "LCMS",
+                    Type = "年度维护",
+                    Text = "调谐",
+                    Cycle = 180,
+                    RemindTime = 30,
+                });
+
+                context.MaintenanceRecords.Add(new MaintenanceRecord
+                {
+                    BeginTime = System.DateTime.Now.AddDays(-1),
+                    InstrumentId = "FXS-YZ01",
+                    Yearly = "调谐",
+                    Operator = "Test"
+                });
+
+                await context.SaveChangesAsync();
+            }
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                var instrumentRepo = new InstrumentRepository(context);
+                var recordRepo = new MaintenanceRecordRepository(context);
+                var contentRepo = new MaintenanceContentRepository(context);
+                var service = new MaintenanceRecordService(instrumentRepo, contentRepo, recordRepo);
+
+                var result = await service.GetToBeMaintenanceInfoOfYearly();
+
+                Assert.Empty(result);
+            }
+        }
+
+        [Fact]
+        public async Task GetToBeMaintenanceInfoOfYearly_NoRecord_ShouldEmptyList()
+        {
+            var options = new DbContextOptionsBuilder<EquipmentContext>()
+                .UseInMemoryDatabase(databaseName: nameof(GetToBeMaintenanceInfoOfYearly_NoRecord_ShouldEmptyList))
+                .Options;
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                var instrumentRepo = new InstrumentRepository(context);
+                var recordRepo = new MaintenanceRecordRepository(context);
+                var contentRepo = new MaintenanceContentRepository(context);
+                var service = new MaintenanceRecordService(instrumentRepo, contentRepo, recordRepo);
+
+                var result = await service.GetToBeMaintenanceInfoOfYearly();
+
+                Assert.Empty(result);
+            }
+        }
     }
 }
