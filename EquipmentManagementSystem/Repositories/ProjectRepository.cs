@@ -31,7 +31,13 @@ namespace EquipmentManagementSystem.Repositories
 
         public async Task<string> GetMobilePhasesByShortName(string projectShortName)
         {
-            return (await _context.Projects.FirstOrDefaultAsync(p => p.ShortName == projectShortName))?.MobilePhase ?? string.Empty;
+            // 如果流动相为空的话返回载气
+            var mobilePhase = (await _context.Projects.FirstOrDefaultAsync(p => p.ShortName == projectShortName))?.MobilePhase;
+            var carrierGas = (await _context.Projects.FirstOrDefaultAsync(p => p.ShortName == projectShortName))?.CarrierGas;
+
+            return string.IsNullOrEmpty(mobilePhase) ? 
+                string.IsNullOrEmpty(carrierGas) ? "": carrierGas 
+                : mobilePhase;
         }
 
         public async Task<string> GetGroupNameByShortName(string projectShortName)

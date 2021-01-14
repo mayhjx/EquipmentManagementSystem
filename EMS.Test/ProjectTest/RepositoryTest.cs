@@ -121,6 +121,30 @@ namespace EMS.Test.ProjectTest
         }
 
         [Fact]
+        public async Task GetMobilePhasesByShortName_NoMobilePhases_HaveCarrierGas_ShouldBe_ReturnCarrierGas()
+        {
+            var options = new DbContextOptionsBuilder<EquipmentContext>()
+                .UseInMemoryDatabase(databaseName: nameof(GetMobilePhasesByShortName_NoMobilePhases_HaveCarrierGas_ShouldBe_ReturnCarrierGas))
+                .Options;
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                var project = new Project() { Name = "Test", ShortName = "Test" };
+                project.CarrierGas = "氦气";
+                context.Projects.Add(project);
+                context.SaveChanges();
+            }
+
+            // Use a clean instance of the context to run the test
+            using (var context = Utilities.CreateContext(options))
+            {
+                var repo = new ProjectRepository(context);
+                var result = await repo.GetMobilePhasesByShortName("Test");
+                Assert.Equal("氦气", result);
+            }
+        }
+
+        [Fact]
         public async Task GetMobilePhasesByShortName_NoData_ShouldBe_ReturnEmptyString()
         {
             var options = new DbContextOptionsBuilder<EquipmentContext>()
