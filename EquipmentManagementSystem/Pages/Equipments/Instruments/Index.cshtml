@@ -73,24 +73,24 @@
                         </td>
                         <td>
                             @{
-                                var status = item.Status.ToString();
-                                if (status == "Using")
+                                var status = item.Status;
+                                if (status == "正常")
                                 {
                                     <span class="badge badge-success text-md">正常</span>
                                 }
-                                else if (status == "Malfunction")
+                                else if (status == "故障")
                                 {
                                     <span class="badge badge-warning text-md">故障</span>
                                 }
-                                else if (status == "StopUsing")
+                                else if (status == "停用")
                                 {
                                     <span class="badge badge-warning text-md">停用</span>
                                 }
-                                else if (status == "Allocate")
+                                else if (status == "调拨")
                                 {
                                     <span class="badge badge-warning text-md">调拨</span>
                                 }
-                                else if (status == "Scrapped")
+                                else if (status == "报废")
                                 {
                                     <span class="badge badge-danger text-md">报废</span>
                                 }

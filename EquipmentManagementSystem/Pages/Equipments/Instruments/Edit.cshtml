@@ -80,7 +80,13 @@
                         </div>
                         <div class="form-group col-md-4">
                             <label asp-for="Instrument.Status" class="control-label"></label>
-                            <select asp-for="Instrument.Status" class="custom-select" asp-items="@Html.GetEnumSelectList<EquipmentManagementSystem.Models.InstrumentStatus>()"></select>
+                            <select asp-for="Instrument.Status" class="custom-select">
+                                <option value="正常">正常</option>
+                                <option value="故障">故障</option>
+                                <option value="停用">停用</option>
+                                <option value="调拨">调拨</option>
+                                <option value="报废">报废</option>
+                            </select>
                             <span asp-validation-for="Instrument.Status" class="text-danger"></span>
                         </div>
                     </div>

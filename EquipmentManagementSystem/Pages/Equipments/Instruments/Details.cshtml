@@ -14,26 +14,26 @@
         <h4>
             @Html.DisplayFor(mdoel => Model.Instrument.ID)
             @{
-                var status = Model.Instrument.Status.ToString();
-                if (status == "Using")
+                var status = Model.Instrument.Status;
+                if (status == "正常")
                 {
-                    <span class="badge badge-success">正常</span>
+                    <span class="badge badge-success text-md">正常</span>
                 }
-                else if (status == "Malfunction")
+                else if (status == "故障")
                 {
-                    <span class="badge badge-warning">故障</span>
+                    <span class="badge badge-warning text-md">故障</span>
                 }
-                else if (status == "StopUsing")
+                else if (status == "停用")
                 {
-                    <span class="badge badge-warning">停用</span>
+                    <span class="badge badge-warning text-md">停用</span>
                 }
-                else if (status == "Allocate")
+                else if (status == "调拨")
                 {
-                    <span class="badge badge-warning">调拨</span>
+                    <span class="badge badge-warning text-md">调拨</span>
                 }
-                else if (status == "Scrapped")
+                else if (status == "报废")
                 {
-                    <span class="badge badge-danger">报废</span>
+                    <span class="badge badge-danger text-md">报废</span>
                 }
             }
         </h4>
