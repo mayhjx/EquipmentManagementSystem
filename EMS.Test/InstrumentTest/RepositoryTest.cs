@@ -3,6 +3,7 @@ using EquipmentManagementSystem.Models;
 using EquipmentManagementSystem.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xunit;
 using Assert = Xunit.Assert;
 
@@ -161,6 +162,55 @@ namespace EMS.Test.InstrumentTest
                 var repo = new InstrumentRepository(context);
                 var result = repo.GetAllInstrumentIdByProject("VD");
                 Assert.Empty(result);
+            }
+        }
+
+        [Fact]
+        public async Task GetLatestCalibratedDateOfInstrument_ShouleBe_latestDate()
+        {
+            var options = new DbContextOptionsBuilder<EquipmentContext>()
+                .UseInMemoryDatabase(databaseName: nameof(GetLatestCalibratedDateOfInstrument_ShouleBe_latestDate))
+                .Options;
+
+            var latestDate = new System.DateTime(2020, 06, 01);
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                context.Instruments.Add(new Instrument { ID = "FXS-YZ01" });
+                context.Calibrations.Add(new Calibration { InstrumentID = "FXS-YZ01", Date = new System.DateTime(2020, 01, 01) });
+                context.Calibrations.Add(new Calibration { InstrumentID = "FXS-YZ01", Date = latestDate });
+                context.SaveChanges();
+            }
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                var repo = new InstrumentRepository(context);
+                var result = await repo.GetLatestCalibratedDateOfInstrument("FXS-YZ01");
+                Assert.Equal(latestDate, result);
+            }
+        }
+
+        [Fact]
+        public async Task GetLatestCalibratedDateOfInstrument_NoDate_ShouldBeMinValue()
+        {
+            var options = new DbContextOptionsBuilder<EquipmentContext>()
+                .UseInMemoryDatabase(databaseName: nameof(GetLatestCalibratedDateOfInstrument_NoDate_ShouldBeMinValue))
+                .Options;
+
+            var latestDate = new System.DateTime(2020, 06, 01);
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                context.Instruments.Add(new Instrument { ID = "FXS-YZ01" });
+                context.Calibrations.Add(new Calibration { InstrumentID = "FXS-YZ01" });
+                context.SaveChanges();
+            }
+
+            using (var context = Utilities.CreateContext(options))
+            {
+                var repo = new InstrumentRepository(context);
+                var result = await repo.GetLatestCalibratedDateOfInstrument("FXS-YZ01");
+                Assert.Equal(System.DateTime.MinValue,result);
             }
         }
 

@@ -3,6 +3,7 @@ using EquipmentManagementSystem.Models;
 using EquipmentManagementSystem.Repositories;
 using EquipmentManagementSystem.Services;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 using Xunit;
 using Assert = Xunit.Assert;
 
@@ -102,6 +103,98 @@ namespace EMS.Test.InstrumentTest
 
                 var repo = new InstrumentService(projectRepo, instrumentRepo);
                 var result = repo.GetInstrumentIdRelateToProjectsOfGroup("Group A");
+                Assert.Empty(result);
+            }
+        }
+
+
+        [Fact]
+        public async Task GetToBeCalibateInstrument_PlanDateHasBeenExceedee_ShouldBeReturnSingle()
+        {
+            // 计划校准时间已过
+            var options = new DbContextOptionsBuilder<EquipmentContext>()
+                .UseInMemoryDatabase(databaseName: nameof(GetToBeCalibateInstrument_PlanDateHasBeenExceedee_ShouldBeReturnSingle))
+                .Options;
+
+            // Insert seed data into the database using one instance of the context
+            using (var context = Utilities.CreateContext(options))
+            {
+                context.Instruments.Add(new Instrument { ID = "FXS-YZ01", CalibrationCycle = 1, Group="VD" });
+                context.Calibrations.Add(new Calibration { InstrumentID = "FXS-YZ01", Date = System.DateTime.Now.AddDays(-380)});
+
+                context.SaveChanges();
+            }
+
+            // Use a clean instance of the context to run the test
+            using (var context = Utilities.CreateContext(options))
+            {
+                var projectRepo = new ProjectRepository(context);
+                var instrumentRepo = new InstrumentRepository(context);
+
+                var repo = new InstrumentService(projectRepo, instrumentRepo);
+                var result = await repo.GetToBeCalibateInstrument();
+                Assert.Single(result);
+            }
+        }
+
+        [Fact]
+        public async Task GetToBeCalibateInstrument_29DaysLeftBeforePlanDate_ShouldBeReturnSingle()
+        {
+            // 离计划校准时间还剩29天
+            var options = new DbContextOptionsBuilder<EquipmentContext>()
+                .UseInMemoryDatabase(databaseName: nameof(GetToBeCalibateInstrument_29DaysLeftBeforePlanDate_ShouldBeReturnSingle))
+                .Options;
+
+            var day = System.DateTime.IsLeapYear(System.DateTime.Now.Year) ? 366-29 : 365-29;
+
+            // Insert seed data into the database using one instance of the context
+            using (var context = Utilities.CreateContext(options))
+            {
+                context.Instruments.Add(new Instrument { ID = "FXS-YZ01", CalibrationCycle = 1, Group = "VD" });
+                context.Calibrations.Add(new Calibration { InstrumentID = "FXS-YZ01", Date = System.DateTime.Now.AddDays(-day) });
+
+                context.SaveChanges();
+            }
+
+            // Use a clean instance of the context to run the test
+            using (var context = Utilities.CreateContext(options))
+            {
+                var projectRepo = new ProjectRepository(context);
+                var instrumentRepo = new InstrumentRepository(context);
+
+                var repo = new InstrumentService(projectRepo, instrumentRepo);
+                var result = await repo.GetToBeCalibateInstrument();
+                Assert.Single(result);
+            }
+        }
+
+        [Fact]
+        public async Task GetToBeCalibateInstrument_31DaysLeftBeforePlanDate_ShouldBeReturnSingle()
+        {
+            // 离计划校准时间还剩31天
+            var options = new DbContextOptionsBuilder<EquipmentContext>()
+                .UseInMemoryDatabase(databaseName: nameof(GetToBeCalibateInstrument_31DaysLeftBeforePlanDate_ShouldBeReturnSingle))
+                .Options;
+
+            var day = System.DateTime.IsLeapYear(System.DateTime.Now.Year) ? 366 - 31 : 365 - 31;
+
+            // Insert seed data into the database using one instance of the context
+            using (var context = Utilities.CreateContext(options))
+            {
+                context.Instruments.Add(new Instrument { ID = "FXS-YZ01", CalibrationCycle = 1, Group = "VD" });
+                context.Calibrations.Add(new Calibration { InstrumentID = "FXS-YZ01", Date = System.DateTime.Now.AddDays(-day) });
+
+                context.SaveChanges();
+            }
+
+            // Use a clean instance of the context to run the test
+            using (var context = Utilities.CreateContext(options))
+            {
+                var projectRepo = new ProjectRepository(context);
+                var instrumentRepo = new InstrumentRepository(context);
+
+                var repo = new InstrumentService(projectRepo, instrumentRepo);
+                var result = await repo.GetToBeCalibateInstrument();
                 Assert.Empty(result);
             }
         }
