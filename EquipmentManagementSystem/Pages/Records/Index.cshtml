@@ -597,18 +597,18 @@
                                         @if (usageRecord.LowVacuumDegree != null && usageRecord.HighVacuumDegree != null)
                                         {
                                             <text>低真空：</text>
-                                            @(usageRecord.LowVacuumDegree.GetValueOrDefault().ToString("F1")) @(usageRecord.LowVacuumDegreeUnit.Split(" ")[0])
+                                            @(usageRecord.LowVacuumDegree) @(usageRecord.LowVacuumDegreeUnit.Split(" ")[0])
                                             <br />
                                             <text>高真空：</text>
-                                            @(usageRecord.HighVacuumDegree.GetValueOrDefault().ToString("F1")) @(usageRecord.HighVacuumDegreeUnit.Split(" ")[0])
+                                            @(usageRecord.HighVacuumDegree) @(usageRecord.HighVacuumDegreeUnit.Split(" ")[0])
                                         }
                                         else if (usageRecord.LowVacuumDegree != null)
                                         {
-                                            @(usageRecord.LowVacuumDegree.GetValueOrDefault().ToString("F1")) @(usageRecord.LowVacuumDegreeUnit.Split(" ")[0])
+                                            @(usageRecord.LowVacuumDegree) @(usageRecord.LowVacuumDegreeUnit.Split(" ")[0])
                                         }
                                         else if (usageRecord.HighVacuumDegree != null)
                                         {
-                                            @(usageRecord.HighVacuumDegree.GetValueOrDefault().ToString("F1")) @(usageRecord.HighVacuumDegreeUnit.Split(" ")[0])
+                                            @(usageRecord.HighVacuumDegree) @(usageRecord.HighVacuumDegreeUnit.Split(" ")[0])
                                         }
                                         else
                                         {
@@ -716,7 +716,11 @@
                                     <td class="ionsource">离子源</td>
                                     <td class="detector">检测器</td>
                                     <td class="vacuumdegree">
-                                        <input form="edit-form" type="number" step="any" asp-for="@usageRecord.LowVacuumDegree" placeholder="低真空" disabled />
+                                        <input form="edit-form"
+                                               asp-for="@usageRecord.LowVacuumDegree"
+                                               pattern="^[<>]?[0-9.]+$"
+                                               title="请输入数值，首位可为“<”或“>”"
+                                               placeholder="低真空" disabled />
                                         <select form="edit-form" asp-for="@usageRecord.LowVacuumDegreeUnit" disabled>
                                             <option value="e-3 torr">e-3 torr</option>
                                             <option value="e-4 torr">e-4 torr</option>
@@ -728,7 +732,11 @@
                                             <option value="e-4 Pa">e-4 Pa</option>
                                         </select>
                                         <br />
-                                        <input form="edit-form" type="number" step="any" asp-for="@usageRecord.HighVacuumDegree" placeholder="高真空" disabled />
+                                        <input form="edit-form"
+                                               asp-for="@usageRecord.HighVacuumDegree"
+                                               pattern="^[<>]?[0-9.]+$"
+                                               title="请输入数值，首位可为“<”或“>”"
+                                               placeholder="高真空" disabled />
                                         <select form="edit-form" asp-for="@usageRecord.HighVacuumDegreeUnit" disabled>
                                             <option value="e-3 torr">e-3 torr</option>
                                             <option value="e-4 torr">e-4 torr</option>
@@ -818,7 +826,11 @@
                                 <td class="ionsource">离子源</td>
                                 <td class="detector">检测器</td>
                                 <td class="vacuumdegree">
-                                    <input form="create-form" type="number" min="0" step="any" asp-for="UsageRecord.LowVacuumDegree" placeholder="低真空" />
+                                    <input form="create-form"
+                                           asp-for="UsageRecord.LowVacuumDegree"
+                                           pattern="^[<>]?[0-9.]+$"
+                                           title="请输入数值，首位可为“<”或“>”"
+                                           placeholder="低真空" />
                                     <select form="create-form" asp-for="UsageRecord.LowVacuumDegreeUnit">
                                         <option value="e-3 torr">e-3 torr</option>
                                         <option value="e-4 torr">e-4 torr</option>
@@ -830,7 +842,11 @@
                                         <option value="e-4 Pa">e-4 Pa</option>
                                     </select>
                                     <br />
-                                    <input form="create-form" type="number" min="0" step="any" asp-for="UsageRecord.HighVacuumDegree" placeholder="高真空" />
+                                    <input form="create-form"
+                                           asp-for="UsageRecord.HighVacuumDegree"
+                                           pattern="^[<>]?[0-9.]+$"
+                                           title="请输入数值，首位可为“<”或“>”"
+                                           placeholder="高真空" />
                                     <select form="create-form" asp-for="UsageRecord.HighVacuumDegreeUnit">
                                         <option value="e-3 torr">e-3 torr</option>
                                         <option value="e-4 torr">e-4 torr</option>

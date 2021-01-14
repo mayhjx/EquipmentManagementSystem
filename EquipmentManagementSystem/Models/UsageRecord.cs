@@ -63,13 +63,13 @@ namespace EquipmentManagementSystem.Models
         public int? SystemTwoBatchNumber { get; set; }
 
         [Display(Name = "低真空")]
-        public float? LowVacuumDegree { get; set; }
+        public string LowVacuumDegree { get; set; }
 
         [Display(Name = "低真空度单位")]
         public string LowVacuumDegreeUnit { get; set; }
 
         [Display(Name = "高真空")]
-        public float? HighVacuumDegree { get; set; }
+        public string HighVacuumDegree { get; set; }
 
         [Display(Name = "高真空度单位")]
         public string HighVacuumDegreeUnit { get; set; }
