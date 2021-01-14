@@ -16,10 +16,14 @@ namespace EquipmentManagementSystem.Pages
     {
         private readonly EquipmentContext _equipmentContext;
         private readonly IMaintenanceRecordService _maintenanceRecordService;
+        private readonly IInstrumentService _instrumentService;
 
-        public IndexModel(EquipmentContext context, IMaintenanceRecordService maintenanceRecordService)
+        public IndexModel(EquipmentContext equipmentContext,
+            IMaintenanceRecordService maintenanceRecordService, 
+            IInstrumentService instrumentService)
         {
-            _equipmentContext = context;
+            _equipmentContext = equipmentContext;
+            _instrumentService = instrumentService;
             _maintenanceRecordService = maintenanceRecordService;
         }
 
@@ -27,7 +31,7 @@ namespace EquipmentManagementSystem.Pages
         public int InstrumentNumber { get; set; }
 
         // 待校准的主检设备
-        public List<Instrument> InstrumentOfExpire { get; set; }
+        public List<string> InstrumentOfExpire { get; set; }
 
         // 季度维护待维护
         public List<MaintenanceInfo> ToBeMaintainedOfQuarterly { get; set; }
@@ -42,23 +46,12 @@ namespace EquipmentManagementSystem.Pages
         public async Task OnGet()
         {
             InstrumentNumber = _equipmentContext.Instruments.Count();
-            
+
             // 待校准设备
-            InstrumentOfExpire = (from m in _equipmentContext.Instruments
-                                .AsNoTracking()
-                                .Include(m => m.Calibrations)
-                                .AsEnumerable()
-                                  where (m.Status == "正常")
-                                  where (m.Calibrations.Count > 0 && m.Calibrations.Last().Date != DateTime.MinValue)
-                                  let remainDay = m.Calibrations.Last().Date.AddYears(m.CalibrationCycle) - DateTime.Today
-                                  where remainDay.Days < 30 // 到期前30天内
-                                  select m)
-                                .OrderBy(m => m.Group)
-                                .ToList();
+            InstrumentOfExpire = await _instrumentService.GetToBeCalibateInstrument();
 
-
+            // 待维护设备
             ToBeMaintainedOfQuarterly = (await _maintenanceRecordService.GetToBeMaintenanceInfoOfQuarterly()).OrderBy(i => i.Group).ToList();
-
             ToBeMaintainedOfYearly = (await _maintenanceRecordService.GetToBeMaintenanceInfoOfYearly()).OrderBy(i => i.Group).ToList();
 
             // 待跟进工单

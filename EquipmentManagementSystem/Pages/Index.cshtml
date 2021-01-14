@@ -89,13 +89,13 @@
                         <thead>
                             <tr>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.InstrumentOfExpire[0].Group)
+                                    所属项目组
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.InstrumentOfExpire[0].ID)
+                                    设备编号
                                 </th>
                                 <th>
-                                    到期日期
+                                    计划校准日期
                                 </th>
 
                             </tr>
@@ -103,23 +103,18 @@
                         <tbody>
                             @foreach (var item in Model.InstrumentOfExpire)
                             {
+                                var Group = item.Split(":")[0];
+                                var Id = item.Split(":")[1];
+                                var PlanDate = item.Split(":")[2];
                                 <tr>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Group)
+                                        @Group
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.ID)
+                                        @Id
                                     </td>
-
                                     <td>
-                                        @if (item.Calibrations != null)
-                                        {
-                                            var lastCalibrationDateTime = item.Calibrations.Last().Date;
-                                            if (lastCalibrationDateTime != null)
-                                            {
-                                                @(lastCalibrationDateTime.AddYears(item.CalibrationCycle).AddDays(-1).ToShortDateString())
-                                            }
-                                        }
+                                        @PlanDate
                                     </td>
                                 </tr>
                             }

@@ -1,6 +1,8 @@
 ﻿using EquipmentManagementSystem.Interfaces;
+using EquipmentManagementSystem.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Services
 {
@@ -28,6 +30,31 @@ namespace EquipmentManagementSystem.Services
                 result.AddRange(instruments);
             }
             return result.Distinct().ToList();
+        }
+
+        public async Task<List<string>> GetToBeCalibateInstrument()
+        {
+            const int remindDay = 30;
+            var toBeCalibrate = new List<string>();
+            var instrumentIds = _instrumentRepository.GetAllInstrumentId();
+
+            foreach(var id in instrumentIds)
+            {
+                var latestDate = (await _instrumentRepository.GetLatestCalibratedDateOfInstrument(id)).GetValueOrDefault();
+                if (latestDate == System.DateTime.MinValue) continue; // 无校准日期
+
+                // 计划校准日期
+                var calibrateCycle = (await _instrumentRepository.GetById(id)).CalibrationCycle;
+                var planCalibarateDate = latestDate.AddYears(calibrateCycle);
+
+                if(planCalibarateDate <= System.DateTime.Now || (planCalibarateDate - System.DateTime.Now).Days <= remindDay)
+                {
+                    var group = (await _instrumentRepository.GetById(id)).Group;
+                    toBeCalibrate.Add($"{group}:{id}:{planCalibarateDate.ToShortDateString()}");
+                }
+            }
+
+            return toBeCalibrate.OrderBy(i=>i).ToList();
         }
     }
 }

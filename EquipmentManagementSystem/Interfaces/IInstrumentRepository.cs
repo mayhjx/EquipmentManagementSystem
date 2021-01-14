@@ -1,6 +1,7 @@
 ﻿using EquipmentManagementSystem.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System;
 
 namespace EquipmentManagementSystem.Interfaces
 {
@@ -11,5 +12,6 @@ namespace EquipmentManagementSystem.Interfaces
         public List<string> GetAllInstrumentIdByGroup(string group);
         public List<string> GetAllInstrumentIdByProject(string project);
         public Task<string> GetModelById(string instrumentId);
+        public Task<DateTime?> GetLatestCalibratedDateOfInstrument(string instrumentId);
     }
 }

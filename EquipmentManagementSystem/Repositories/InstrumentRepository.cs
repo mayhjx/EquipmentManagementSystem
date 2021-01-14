@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System;
 
 namespace EquipmentManagementSystem.Repositories
 {
@@ -44,6 +45,16 @@ namespace EquipmentManagementSystem.Repositories
         public List<string> GetTestProjectsById(string instrumentId)
         {
             return _context.Set<Instrument>().Find(instrumentId)?.GetProjects() ?? new List<string>();
+        }
+
+        public async Task<DateTime?> GetLatestCalibratedDateOfInstrument(string instrumentId)
+        {
+            return (await _context.Set<Calibration>()
+                .AsNoTracking()
+                .OrderBy(i => i.Date)
+                .Where(i => i.InstrumentID == instrumentId)
+                .LastOrDefaultAsync())?
+                .Date;
         }
     }
 }
