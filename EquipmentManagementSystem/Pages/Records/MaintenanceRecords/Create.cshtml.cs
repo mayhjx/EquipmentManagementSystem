@@ -85,7 +85,7 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
                 return Forbid();
             }
 
-            MaintenanceRecord.GroupName = _userResolverService.GetUserGroup();
+            MaintenanceRecord.GroupName = (await _instrumentRepository.GetById(MaintenanceRecord.InstrumentId)).Group;
             MaintenanceRecord.SetDaily(DailyMaintenanceContent);
             MaintenanceRecord.SetWeekly(WeeklyMaintenanceContent);
             MaintenanceRecord.SetMonthly(MonthlyMaintenanceContent);

@@ -11,18 +11,18 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
 {
     public class EditModel : PageModel
     {
+        private readonly IInstrumentRepository _instrumentRepository;
         private readonly IAuditTrailRepository _auditTrailRepository;
-        private readonly IUserResolverService _userResolverService;
         private readonly IMaintenanceRecordRepository _maintenanceRecordRepository;
         private readonly IAuthorizationService _authorizationService;
 
-        public EditModel(IAuditTrailRepository auditTrailRepository,
-            IUserResolverService userResolverService,
+        public EditModel(IInstrumentRepository instrumentRepository,
+            IAuditTrailRepository auditTrailRepository,
             IMaintenanceRecordRepository maintenanceRecordRepository,
             IAuthorizationService authorizationService)
         {
+            _instrumentRepository = instrumentRepository;
             _auditTrailRepository = auditTrailRepository;
-            _userResolverService = userResolverService;
             _maintenanceRecordRepository = maintenanceRecordRepository;
             _authorizationService = authorizationService;
         }
@@ -100,7 +100,7 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
 
             if (await TryUpdateModelAsync(MaintenanceRecord, "MaintenanceRecord"))
             {
-                MaintenanceRecord.GroupName = _userResolverService.GetUserGroup();
+                MaintenanceRecord.GroupName = (await _instrumentRepository.GetById(MaintenanceRecord.InstrumentId)).Group;
                 MaintenanceRecord.SetDaily(DailyMaintenanceContent);
                 MaintenanceRecord.SetWeekly(WeeklyMaintenanceContent);
                 MaintenanceRecord.SetMonthly(MonthlyMaintenanceContent);
