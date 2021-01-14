@@ -18,7 +18,7 @@ namespace EquipmentManagementSystem.Areas.Identity.Data
             var wwwrootPath = services.GetRequiredService<IWebHostEnvironment>().WebRootPath;
             var userManager = services.GetRequiredService<UserManager<User>>();
 
-            path = Path.Combine(wwwrootPath, "Users.csv");
+            path = Path.Combine(wwwrootPath, "NewUser20210115.csv");
 
             string[] Datas = Reader(path);
 
