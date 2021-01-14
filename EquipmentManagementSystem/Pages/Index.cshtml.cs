@@ -10,7 +10,6 @@ using System.Linq;
 
 namespace EquipmentManagementSystem.Pages
 {
-    [AllowAnonymous]
     public class IndexModel : PageModel
     {
         private readonly EquipmentContext _equipmentContext;
