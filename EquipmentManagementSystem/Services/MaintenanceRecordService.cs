@@ -183,16 +183,15 @@ namespace EquipmentManagementSystem.Services
                     var quarterlyContent = record.GetQuarterly();
                     foreach (var content in quarterlyContent)
                     {
-                        var cycle = _contentRepository.GetMaintenanceCycleOfPlatform(platform, maintenanceType, content);
                         var remindTime = _contentRepository.GetRemindTimeOfPlatform(platform, maintenanceType, content);
-
                         // 为0时不提醒
                         if (remindTime == 0) continue;
 
-                        // 距离上次维护已过多少天
-                        var day = (DateTime.Now - record.BeginTime.GetValueOrDefault()).Days;
+                        var cycle = _contentRepository.GetMaintenanceCycleOfPlatform(platform, maintenanceType, content);
+                        // 计划维护时间
+                        var planMaintainDay = record.BeginTime.GetValueOrDefault().AddDays(cycle);
 
-                        if (day >= cycle || (cycle - day) <= remindTime)
+                        if (planMaintainDay <= DateTime.Now || (planMaintainDay - DateTime.Now ).Days <= remindTime)
                         {
                             info.Add(new MaintenanceInfo
                             {
