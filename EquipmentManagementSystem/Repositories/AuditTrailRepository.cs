@@ -46,5 +46,21 @@ namespace EquipmentManagementSystem.Repositories
 
             return result.AsEnumerable().GroupBy(i => i.PrimaryKeyValue.ToString());
         }
+
+        public IEnumerable<IGrouping<string, AuditTrailLog>> GetAuditTrailLogsGroupingByPKOfInstrumentId(string entityName, string instrumentId, DateTime? date = null)
+        {
+            var result = _context.AuditTrailLogs.Where(l => l.EntityName == entityName);
+
+            if (date != null)
+            {
+                result = result.Where(l => l.DateChanged.Year == date.GetValueOrDefault().Year &&
+                                            l.DateChanged.Month == date.GetValueOrDefault().Month);
+            }
+
+            return result.AsEnumerable()
+                .GroupBy(i => i.PrimaryKeyValue.ToString())
+                .Where(l => l.First().OriginalValue != null && l.First().OriginalValue.Contains(instrumentId) || 
+                             l.First().CurrentValue != null && l.First().CurrentValue.Contains(instrumentId));
+        }
     }
 }

@@ -195,8 +195,8 @@ namespace EquipmentManagementSystem.Pages.Records
             #endregion
 
             // 当前仪器和月份的操作日志
-            UsageAuditTrailLogs = _auditTrailRepository.GetAuditTrailLogsGroupingByPK(new UsageRecord().GetType().Name, Search.Date);
-            MaintenanceAuditTrailLogs = _auditTrailRepository.GetAuditTrailLogsGroupingByPK(new MaintenanceRecord().GetType().Name, Search.Date);
+            UsageAuditTrailLogs = _auditTrailRepository.GetAuditTrailLogsGroupingByPKOfInstrumentId(new UsageRecord().GetType().Name,Search.Instrument, Search.Date);
+            MaintenanceAuditTrailLogs = _auditTrailRepository.GetAuditTrailLogsGroupingByPKOfInstrumentId(new MaintenanceRecord().GetType().Name, Search.Instrument, Search.Date);
 
             return Page();
         }

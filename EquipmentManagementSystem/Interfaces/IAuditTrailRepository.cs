@@ -10,5 +10,6 @@ namespace EquipmentManagementSystem.Interfaces
     {
         Task<List<AuditTrailLog>> GetAuditTrailLogs(string entityName, int? pk = null, DateTime? date = null);
         IEnumerable<IGrouping<string, AuditTrailLog>> GetAuditTrailLogsGroupingByPK(string entityName, DateTime? date = null);
+        IEnumerable<IGrouping<string, AuditTrailLog>> GetAuditTrailLogsGroupingByPKOfInstrumentId(string entityName, string instrumentId, DateTime? date = null);
     }
 }
