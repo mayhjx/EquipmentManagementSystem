@@ -36,7 +36,7 @@ namespace EMS.Test.ReportTest
                         expectTotal += endHour - beginHour;
                         UsageRecords.Add(new UsageRecord
                         {
-                            InstrumentId = "FXS-YZ01",
+                            InstrumentID = "FXS-YZ01",
                             BeginTime = new DateTime(year, month, day, beginHour, 00, 00),
                             EndTime = new DateTime(year, month, day, endHour, 00, 00)
                         });

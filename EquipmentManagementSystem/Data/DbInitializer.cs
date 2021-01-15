@@ -106,7 +106,7 @@ namespace EquipmentManagementSystem.Data
                 context.Asserts.Add(
                     new Assert
                     {
-                        InstrumentId = data[0],
+                        InstrumentID = data[0],
                         Code = data[1],
                         Name = data[2],
                         EntryDate = datetime,

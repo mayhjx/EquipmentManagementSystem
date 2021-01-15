@@ -26,9 +26,9 @@ namespace EMS.Test.MaintenanceRecordTest
                 context.MaintenanceContents.Add(new MaintenanceContent { InstrumentPlatform = "LCMS", Type = "日常维护", Text = "B" });
                 context.MaintenanceContents.Add(new MaintenanceContent { InstrumentPlatform = "LCMS", Type = "日常维护", Text = "C" });
 
-                context.MaintenanceRecords.Add(new MaintenanceRecord { InstrumentId = "FXS-YZ99", BeginTime = new System.DateTime(2020, 12, 01), Daily = "A,B,C" });
-                context.MaintenanceRecords.Add(new MaintenanceRecord { InstrumentId = "FXS-YZ99", BeginTime = new System.DateTime(2020, 12, 02), Daily = "A,B" });
-                context.MaintenanceRecords.Add(new MaintenanceRecord { InstrumentId = "FXS-YZ99", BeginTime = new System.DateTime(2020, 12, 03), Daily = "A" });
+                context.MaintenanceRecords.Add(new MaintenanceRecord { InstrumentID = "FXS-YZ99", BeginTime = new System.DateTime(2020, 12, 01), Daily = "A,B,C" });
+                context.MaintenanceRecords.Add(new MaintenanceRecord { InstrumentID = "FXS-YZ99", BeginTime = new System.DateTime(2020, 12, 02), Daily = "A,B" });
+                context.MaintenanceRecords.Add(new MaintenanceRecord { InstrumentID = "FXS-YZ99", BeginTime = new System.DateTime(2020, 12, 03), Daily = "A" });
 
                 context.SaveChanges();
             }
@@ -64,9 +64,9 @@ namespace EMS.Test.MaintenanceRecordTest
                 context.MaintenanceContents.Add(new MaintenanceContent { InstrumentPlatform = "LCMS", Type = "日常维护", Text = "B" });
                 context.MaintenanceContents.Add(new MaintenanceContent { InstrumentPlatform = "LCMS", Type = "日常维护", Text = "C" });
 
-                context.MaintenanceRecords.Add(new MaintenanceRecord { InstrumentId = "FXS-YZ99", BeginTime = new System.DateTime(2020, 12, 01), Daily = "A,B,C" });
-                context.MaintenanceRecords.Add(new MaintenanceRecord { InstrumentId = "FXS-YZ99", BeginTime = new System.DateTime(2020, 12, 02), Daily = "A,B" });
-                context.MaintenanceRecords.Add(new MaintenanceRecord { InstrumentId = "FXS-YZ99", BeginTime = new System.DateTime(2020, 12, 03), Daily = "A" });
+                context.MaintenanceRecords.Add(new MaintenanceRecord { InstrumentID = "FXS-YZ99", BeginTime = new System.DateTime(2020, 12, 01), Daily = "A,B,C" });
+                context.MaintenanceRecords.Add(new MaintenanceRecord { InstrumentID = "FXS-YZ99", BeginTime = new System.DateTime(2020, 12, 02), Daily = "A,B" });
+                context.MaintenanceRecords.Add(new MaintenanceRecord { InstrumentID = "FXS-YZ99", BeginTime = new System.DateTime(2020, 12, 03), Daily = "A" });
 
                 context.SaveChanges();
             }
@@ -99,9 +99,9 @@ namespace EMS.Test.MaintenanceRecordTest
                 //context.MaintenanceContents.Add(new MaintenanceContent { InstrumentPlatform = "LCMS", Type = "日常维护", Text = "B" });
                 //context.MaintenanceContents.Add(new MaintenanceContent { InstrumentPlatform = "LCMS", Type = "日常维护", Text = "C" });
 
-                context.MaintenanceRecords.Add(new MaintenanceRecord { InstrumentId = "FXS-YZ99", BeginTime = new System.DateTime(2020, 12, 01), Daily = "A,B,C" });
-                context.MaintenanceRecords.Add(new MaintenanceRecord { InstrumentId = "FXS-YZ99", BeginTime = new System.DateTime(2020, 12, 02), Daily = "A,B" });
-                context.MaintenanceRecords.Add(new MaintenanceRecord { InstrumentId = "FXS-YZ99", BeginTime = new System.DateTime(2020, 12, 03), Daily = "A" });
+                context.MaintenanceRecords.Add(new MaintenanceRecord { InstrumentID = "FXS-YZ99", BeginTime = new System.DateTime(2020, 12, 01), Daily = "A,B,C" });
+                context.MaintenanceRecords.Add(new MaintenanceRecord { InstrumentID = "FXS-YZ99", BeginTime = new System.DateTime(2020, 12, 02), Daily = "A,B" });
+                context.MaintenanceRecords.Add(new MaintenanceRecord { InstrumentID = "FXS-YZ99", BeginTime = new System.DateTime(2020, 12, 03), Daily = "A" });
 
                 context.SaveChanges();
             }
@@ -171,9 +171,9 @@ namespace EMS.Test.MaintenanceRecordTest
                 context.MaintenanceContents.Add(new MaintenanceContent { InstrumentPlatform = "LCMS", Type = "日常维护", Text = "B" });
                 context.MaintenanceContents.Add(new MaintenanceContent { InstrumentPlatform = "LCMS", Type = "日常维护", Text = "C" });
 
-                context.MaintenanceRecords.Add(new MaintenanceRecord { InstrumentId = "FXS-YZ99", BeginTime = new System.DateTime(2020, 12, 01), Daily = "A,B,C", Operator = "Test 1" });
-                context.MaintenanceRecords.Add(new MaintenanceRecord { InstrumentId = "FXS-YZ99", BeginTime = new System.DateTime(2020, 12, 02), Daily = "A,B", Operator = "Test 1" });
-                context.MaintenanceRecords.Add(new MaintenanceRecord { InstrumentId = "FXS-YZ99", BeginTime = new System.DateTime(2020, 12, 03), Daily = "A", Operator = "Test 1" });
+                context.MaintenanceRecords.Add(new MaintenanceRecord { InstrumentID = "FXS-YZ99", BeginTime = new System.DateTime(2020, 12, 01), Daily = "A,B,C", Operator = "Test 1" });
+                context.MaintenanceRecords.Add(new MaintenanceRecord { InstrumentID = "FXS-YZ99", BeginTime = new System.DateTime(2020, 12, 02), Daily = "A,B", Operator = "Test 1" });
+                context.MaintenanceRecords.Add(new MaintenanceRecord { InstrumentID = "FXS-YZ99", BeginTime = new System.DateTime(2020, 12, 03), Daily = "A", Operator = "Test 1" });
 
                 context.SaveChanges();
             }
@@ -207,9 +207,9 @@ namespace EMS.Test.MaintenanceRecordTest
                 context.MaintenanceContents.Add(new MaintenanceContent { InstrumentPlatform = "LCMS", Type = "周维护", Text = "B" });
                 context.MaintenanceContents.Add(new MaintenanceContent { InstrumentPlatform = "LCMS", Type = "周维护", Text = "C" });
 
-                context.MaintenanceRecords.Add(new MaintenanceRecord { InstrumentId = "FXS-YZ99", BeginTime = new System.DateTime(2020, 12, 01), Weekly = "A,B,C" });
-                context.MaintenanceRecords.Add(new MaintenanceRecord { InstrumentId = "FXS-YZ99", BeginTime = new System.DateTime(2020, 12, 08), Weekly = "A,B" });
-                context.MaintenanceRecords.Add(new MaintenanceRecord { InstrumentId = "FXS-YZ99", BeginTime = new System.DateTime(2020, 12, 16), Weekly = "A" });
+                context.MaintenanceRecords.Add(new MaintenanceRecord { InstrumentID = "FXS-YZ99", BeginTime = new System.DateTime(2020, 12, 01), Weekly = "A,B,C" });
+                context.MaintenanceRecords.Add(new MaintenanceRecord { InstrumentID = "FXS-YZ99", BeginTime = new System.DateTime(2020, 12, 08), Weekly = "A,B" });
+                context.MaintenanceRecords.Add(new MaintenanceRecord { InstrumentID = "FXS-YZ99", BeginTime = new System.DateTime(2020, 12, 16), Weekly = "A" });
 
                 context.SaveChanges();
             }
@@ -258,7 +258,7 @@ namespace EMS.Test.MaintenanceRecordTest
                 context.MaintenanceRecords.Add(new MaintenanceRecord
                 {
                     BeginTime = new System.DateTime(2020,01,01),
-                    InstrumentId = "FXS-YZ01",
+                    InstrumentID = "FXS-YZ01",
                     Quarterly = "调谐",
                     Operator = "Test"
                 });
@@ -266,7 +266,7 @@ namespace EMS.Test.MaintenanceRecordTest
                 context.MaintenanceRecords.Add(new MaintenanceRecord
                 {
                     BeginTime = new System.DateTime(2020, 06, 28),
-                    InstrumentId = "FXS-YZ01",
+                    InstrumentID = "FXS-YZ01",
                     Quarterly = "调谐",
                     Operator = "Test"
                 });
@@ -315,7 +315,7 @@ namespace EMS.Test.MaintenanceRecordTest
                 context.MaintenanceRecords.Add(new MaintenanceRecord
                 {
                     BeginTime = System.DateTime.Now.AddDays(-1),
-                    InstrumentId = "FXS-YZ01",
+                    InstrumentID = "FXS-YZ01",
                     Quarterly = "调谐",
                     Operator = "Test"
                 });
@@ -384,7 +384,7 @@ namespace EMS.Test.MaintenanceRecordTest
                 context.MaintenanceRecords.Add(new MaintenanceRecord
                 {
                     BeginTime = new System.DateTime(2020, 01, 01),
-                    InstrumentId = "FXS-YZ01",
+                    InstrumentID = "FXS-YZ01",
                     Yearly = "除尘",
                     Operator = "Test"
                 });
@@ -433,7 +433,7 @@ namespace EMS.Test.MaintenanceRecordTest
                 context.MaintenanceRecords.Add(new MaintenanceRecord
                 {
                     BeginTime = System.DateTime.Now.AddDays(-1),
-                    InstrumentId = "FXS-YZ01",
+                    InstrumentID = "FXS-YZ01",
                     Yearly = "调谐",
                     Operator = "Test"
                 });

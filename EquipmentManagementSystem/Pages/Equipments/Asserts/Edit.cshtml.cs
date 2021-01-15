@@ -58,7 +58,7 @@ namespace EquipmentManagementSystem.Pages.Asserts
             {
                 await _context.SaveChangesAsync();
 
-                return RedirectToPage("../Instruments/Details", new { id = Assert.InstrumentId });
+                return RedirectToPage("../Instruments/Details", new { id = Assert.InstrumentID });
             }
             return Page();
         }

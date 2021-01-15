@@ -675,7 +675,7 @@
                                 <tr class="update-row">
                                     <td class="time">
                                         <input form="edit-form" name="id" type="hidden" asp-for="@usageRecord.Id" disabled />
-                                        <input form="edit-form" type="hidden" asp-for="@usageRecord.InstrumentId" disabled />
+                                        <input form="edit-form" type="hidden" asp-for="@usageRecord.InstrumentID" disabled />
                                         <input form="edit-form" asp-for="@usageRecord.BeginTime" required disabled />
                                     </td>
                                     <td class="time">
@@ -784,7 +784,7 @@
                             @* create-row *@
                             <tr id="create-row">
                                 <td class="time">
-                                    <input form="create-form" asp-for="UsageRecord.InstrumentId" type="hidden" />
+                                    <input form="create-form" asp-for="UsageRecord.InstrumentID" type="hidden" />
                                     <input form="create-form" asp-for="UsageRecord.BeginTime" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" required />
                                 </td>
                                 <td class="time">

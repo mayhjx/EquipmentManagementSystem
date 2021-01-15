@@ -8,7 +8,7 @@ namespace EquipmentManagementSystem.Models
         public int ID { get; set; }
 
         [Display(Name = "编号")]
-        public string InstrumentId { get; set; }
+        public string InstrumentID { get; set; }
 
         public Instrument Instrument { get; set; }
 

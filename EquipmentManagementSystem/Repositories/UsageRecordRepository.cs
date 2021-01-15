@@ -18,7 +18,7 @@ namespace EquipmentManagementSystem.Repositories
         {
             return _context.Set<UsageRecord>()
                 .AsEnumerable()
-                .Where(i => i.InstrumentId == instrumentId)
+                .Where(i => i.InstrumentID == instrumentId)
                 .Where(i => i.BeginTime.GetValueOrDefault().Year == date.Year)
                 .Where(i => i.BeginTime.GetValueOrDefault().Month == date.Month)
                 .ToList();
@@ -42,7 +42,7 @@ namespace EquipmentManagementSystem.Repositories
         {
             return _context.UsageRecords
                 .Where(i => i.ProjectName == projectName)
-                .Where(i => i.InstrumentId == instrumentId)
+                .Where(i => i.InstrumentID == instrumentId)
                 .ToList()
                 .LastOrDefault();
         }

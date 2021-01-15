@@ -85,7 +85,7 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
                 return Forbid();
             }
 
-            MaintenanceRecord.GroupName = (await _instrumentRepository.GetById(MaintenanceRecord.InstrumentId)).Group;
+            MaintenanceRecord.GroupName = (await _instrumentRepository.GetById(MaintenanceRecord.InstrumentID)).Group;
             MaintenanceRecord.SetDaily(DailyMaintenanceContent);
             MaintenanceRecord.SetWeekly(WeeklyMaintenanceContent);
             MaintenanceRecord.SetMonthly(MonthlyMaintenanceContent);
@@ -96,7 +96,7 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
 
             await _maintenanceRecordRepository.Create(MaintenanceRecord);
 
-            return RedirectToPage("../Index", new { instrumentId = MaintenanceRecord.InstrumentId, date = MaintenanceRecord.BeginTime });
+            return RedirectToPage("../Index", new { instrumentId = MaintenanceRecord.InstrumentID, date = MaintenanceRecord.BeginTime });
         }
     }
 }

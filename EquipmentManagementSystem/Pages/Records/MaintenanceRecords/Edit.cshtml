@@ -20,9 +20,9 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="MaintenanceRecord.Id" />
                     <div class="form-group">
-                        <label asp-for="MaintenanceRecord.InstrumentId" class="control-label"></label>
-                        <input id="instrumentId" asp-for="MaintenanceRecord.InstrumentId" class="form-control" readonly />
-                        <span asp-validation-for="MaintenanceRecord.InstrumentId" class="text-danger"></span>
+                        <label asp-for="MaintenanceRecord.InstrumentID" class="control-label"></label>
+                        <input id="instrumentId" asp-for="MaintenanceRecord.InstrumentID" class="form-control" readonly />
+                        <span asp-validation-for="MaintenanceRecord.InstrumentID" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="MaintenanceRecord.BeginTime" class="control-label"></label>
@@ -110,7 +110,7 @@
             </div>
         </form>
         <div>
-            <a asp-page="../Index" asp-route-instrumentId="@Model.MaintenanceRecord.InstrumentId">返回</a>
+            <a asp-page="../Index" asp-route-instrumentId="@Model.MaintenanceRecord.InstrumentID">返回</a>
         </div>
     </div>
 </div>

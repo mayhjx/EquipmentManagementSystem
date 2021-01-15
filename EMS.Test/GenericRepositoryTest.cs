@@ -19,8 +19,8 @@ namespace EMS.Test
 
             using (var context = Utilities.CreateContext(options))
             {
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01" });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ02" });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01" });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ02" });
                 context.SaveChanges();
             }
 
@@ -29,7 +29,7 @@ namespace EMS.Test
             {
                 var repo = new GenericRepository<UsageRecord>(context);
                 var result = repo.GetById(1).Result;
-                Assert.Equal("FXS-YZ01", result.InstrumentId);
+                Assert.Equal("FXS-YZ01", result.InstrumentID);
             }
         }
 
@@ -80,7 +80,7 @@ namespace EMS.Test
                 .UseInMemoryDatabase(databaseName: "CreateOneRecord")
                 .Options;
 
-            var usageRecord = new UsageRecord { InstrumentId = "FXS-YZ02" };
+            var usageRecord = new UsageRecord { InstrumentID = "FXS-YZ02" };
 
             using (var context = Utilities.CreateContext(options))
             {
@@ -92,7 +92,7 @@ namespace EMS.Test
             {
                 var result = context.UsageRecords.Find(1);
                 var records = await context.UsageRecords.ToListAsync();
-                Assert.Equal("FXS-YZ02", result.InstrumentId);
+                Assert.Equal("FXS-YZ02", result.InstrumentID);
                 Assert.Single(records);
             }
         }
@@ -104,7 +104,7 @@ namespace EMS.Test
                 .UseInMemoryDatabase(databaseName: "UpdateARecord")
                 .Options;
 
-            var usageRecord = new UsageRecord { InstrumentId = "FXS-YZ02" };
+            var usageRecord = new UsageRecord { InstrumentID = "FXS-YZ02" };
 
 
             using (var context = Utilities.CreateContext(options))
@@ -125,7 +125,7 @@ namespace EMS.Test
             using (var context = Utilities.CreateContext(options))
             {
                 var usageRecordAfterUpdate = context.UsageRecords.Find(1);
-                Assert.Equal(usageRecord.InstrumentId, usageRecordAfterUpdate.InstrumentId);
+                Assert.Equal(usageRecord.InstrumentID, usageRecordAfterUpdate.InstrumentID);
                 Assert.Equal("Test", usageRecordAfterUpdate.ProjectName);
             }
         }

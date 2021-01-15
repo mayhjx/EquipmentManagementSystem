@@ -4,14 +4,16 @@ using EquipmentManagementSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EquipmentManagementSystem.Migrations
 {
     [DbContext(typeof(EquipmentContext))]
-    partial class EquipmentContextModelSnapshot : ModelSnapshot
+    [Migration("20210115025241_ChangeFKName")]
+    partial class ChangeFKName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -561,7 +563,7 @@ namespace EquipmentManagementSystem.Migrations
                     b.Property<string>("GroupName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("InstrumentID")
+                    b.Property<string>("InstrumentId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Monthly")
@@ -587,7 +589,7 @@ namespace EquipmentManagementSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("InstrumentID");
+                    b.HasIndex("InstrumentId");
 
                     b.ToTable("MaintenanceRecords");
                 });
@@ -893,7 +895,7 @@ namespace EquipmentManagementSystem.Migrations
                     b.Property<string>("HighVacuumDegreeUnit")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("InstrumentID")
+                    b.Property<string>("InstrumentId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("IonSource")
@@ -953,7 +955,7 @@ namespace EquipmentManagementSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("InstrumentID");
+                    b.HasIndex("InstrumentId");
 
                     b.ToTable("UsageRecord");
                 });
@@ -1052,7 +1054,7 @@ namespace EquipmentManagementSystem.Migrations
                 {
                     b.HasOne("EquipmentManagementSystem.Models.Instrument", "Instrument")
                         .WithMany()
-                        .HasForeignKey("InstrumentID");
+                        .HasForeignKey("InstrumentId");
                 });
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.MalfunctionInfo", b =>
@@ -1093,7 +1095,7 @@ namespace EquipmentManagementSystem.Migrations
                 {
                     b.HasOne("EquipmentManagementSystem.Models.Instrument", "Instrument")
                         .WithMany()
-                        .HasForeignKey("InstrumentID");
+                        .HasForeignKey("InstrumentId");
                 });
 
             modelBuilder.Entity("EquipmentManagementSystem.Models.Validation", b =>

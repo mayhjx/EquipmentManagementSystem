@@ -30,7 +30,7 @@ namespace EquipmentManagementSystem.Repositories
 
             return _context.Set<MaintenanceRecord>()
                 .AsEnumerable()
-                .Where(i => i.InstrumentId == instrumentId)
+                .Where(i => i.InstrumentID == instrumentId)
                 .Where(i => i.BeginTime.GetValueOrDefault().Year == date.GetValueOrDefault().Year)
                 .Where(i => i.BeginTime.GetValueOrDefault().Month == date.GetValueOrDefault().Month)
                 .ToList();
@@ -42,7 +42,7 @@ namespace EquipmentManagementSystem.Repositories
                 .AsNoTracking()
                 .AsEnumerable()
                 .OrderBy(i => i.BeginTime)
-                .Where(i => i.InstrumentId == instrumentId)
+                .Where(i => i.InstrumentID == instrumentId)
                 .Where(i => !string.IsNullOrEmpty(i.Quarterly))
                 .LastOrDefault();
         }
@@ -53,7 +53,7 @@ namespace EquipmentManagementSystem.Repositories
                 .AsNoTracking()
                 .AsEnumerable()
                 .OrderBy(i => i.BeginTime)
-                .Where(i => i.InstrumentId == instrumentId)
+                .Where(i => i.InstrumentID == instrumentId)
                 .Where(i => !string.IsNullOrEmpty(i.Yearly))
                 .LastOrDefault();
         }

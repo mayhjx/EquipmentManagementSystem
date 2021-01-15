@@ -22,19 +22,19 @@ namespace EMS.Test.MaintenanceRecordTest
             {
                 context.MaintenanceRecords.Add(new MaintenanceRecord
                 {
-                    InstrumentId = "FXS-YZ01",
+                    InstrumentID = "FXS-YZ01",
                     BeginTime = new DateTime(2020, 01, 01),
                     Quarterly = "1"
                 });
                 context.MaintenanceRecords.Add(new MaintenanceRecord
                 {
-                    InstrumentId = "FXS-YZ01",
+                    InstrumentID = "FXS-YZ01",
                     BeginTime = new DateTime(2020, 01, 03),
                     Quarterly = "3"
                 });
                 context.MaintenanceRecords.Add(new MaintenanceRecord
                 {
-                    InstrumentId = "FXS-YZ01",
+                    InstrumentID = "FXS-YZ01",
                     BeginTime = new DateTime(2020, 01, 02),
                     Quarterly = "2"
                 });
@@ -80,19 +80,19 @@ namespace EMS.Test.MaintenanceRecordTest
             {
                 context.MaintenanceRecords.Add(new MaintenanceRecord
                 {
-                    InstrumentId = "FXS-YZ01",
+                    InstrumentID = "FXS-YZ01",
                     BeginTime = new DateTime(2020, 01, 01),
                     Yearly = "1"
                 });
                 context.MaintenanceRecords.Add(new MaintenanceRecord
                 {
-                    InstrumentId = "FXS-YZ01",
+                    InstrumentID = "FXS-YZ01",
                     BeginTime = new DateTime(2020, 01, 03),
                     Yearly = "3"
                 });
                 context.MaintenanceRecords.Add(new MaintenanceRecord
                 {
-                    InstrumentId = "FXS-YZ01",
+                    InstrumentID = "FXS-YZ01",
                     BeginTime = new DateTime(2020, 01, 02),
                     Yearly = "2"
                 });

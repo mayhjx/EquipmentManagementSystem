@@ -62,7 +62,7 @@ namespace EquipmentManagementSystem.Pages.Records.UsageRecords
                 message = "新建失败，请刷新后重试！";
             }
 
-            return RedirectToPage("../Index", new { instrumentId = UsageRecord.InstrumentId, statusMessage = message });
+            return RedirectToPage("../Index", new { instrumentId = UsageRecord.InstrumentID, statusMessage = message });
         }
     }
 }

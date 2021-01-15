@@ -137,7 +137,7 @@ namespace EquipmentManagementSystem.Pages.Records
             // 新的使用记录实例
             UsageRecord = new UsageRecord
             {
-                InstrumentId = instrumentId,
+                InstrumentID = instrumentId,
                 Operator = _userResolverService.GetUserName()
             };
 

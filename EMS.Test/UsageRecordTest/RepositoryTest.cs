@@ -20,10 +20,10 @@ namespace EMS.Test.UsageRecordTest
             // Insert seed data into the database using one instance of the context
             using (var context = Utilities.CreateContext(options))
             {
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 01, 01) });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 01, 02) });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 01, 03) });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ02", BeginTime = new DateTime(2020, 01, 01) });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 01, 01) });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 01, 02) });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 01, 03) });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ02", BeginTime = new DateTime(2020, 01, 01) });
                 context.SaveChanges();
             }
 
@@ -63,7 +63,7 @@ namespace EMS.Test.UsageRecordTest
 
         //    using (var context = Utilities.CreateContext(options))
         //    {
-        //        context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01" });
+        //        context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01" });
         //        context.SaveChanges();
         //    }
 
@@ -90,9 +90,9 @@ namespace EMS.Test.UsageRecordTest
 
             using (var context = Utilities.CreateContext(options))
             {
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ02", ProjectName = "A", SampleNumber = 100 });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ02", ProjectName = "A", SampleNumber = 101 });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ03", ProjectName = "A", SampleNumber = 102 });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ02", ProjectName = "A", SampleNumber = 100 });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ02", ProjectName = "A", SampleNumber = 101 });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ03", ProjectName = "A", SampleNumber = 102 });
                 context.SaveChanges();
             }
 
@@ -128,9 +128,9 @@ namespace EMS.Test.UsageRecordTest
 
             using (var context = Utilities.CreateContext(options))
             {
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 01), MobilePhase = "A" });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 02), MobilePhase = "A" });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 04), MobilePhase = "A" });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 01), MobilePhase = "A" });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 02), MobilePhase = "A" });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 04), MobilePhase = "A" });
                 context.SaveChanges();
             }
 
@@ -152,9 +152,9 @@ namespace EMS.Test.UsageRecordTest
 
             using (var context = Utilities.CreateContext(options))
             {
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", ProjectName = "1", BeginTime = new DateTime(2020, 12, 01), MobilePhase = "A" });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", ProjectName = "2", BeginTime = new DateTime(2020, 12, 01), MobilePhase = "C" });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", ProjectName = "1", BeginTime = new DateTime(2020, 12, 30), MobilePhase = "B" });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", ProjectName = "1", BeginTime = new DateTime(2020, 12, 01), MobilePhase = "A" });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", ProjectName = "2", BeginTime = new DateTime(2020, 12, 01), MobilePhase = "C" });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", ProjectName = "1", BeginTime = new DateTime(2020, 12, 30), MobilePhase = "B" });
                 context.SaveChanges();
             }
 
@@ -190,9 +190,9 @@ namespace EMS.Test.UsageRecordTest
 
             using (var context = Utilities.CreateContext(options))
             {
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 01), ColumnType = "Type A" });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 02), ColumnType = "Type A" });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 04), ColumnType = "Type A" });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 01), ColumnType = "Type A" });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 02), ColumnType = "Type A" });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 04), ColumnType = "Type A" });
                 context.SaveChanges();
             }
 
@@ -214,9 +214,9 @@ namespace EMS.Test.UsageRecordTest
 
             using (var context = Utilities.CreateContext(options))
             {
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", ProjectName = "1", BeginTime = new DateTime(2020, 12, 01), ColumnType = "Type A" });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", ProjectName = "2", BeginTime = new DateTime(2020, 12, 01), ColumnType = "Type C" });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", ProjectName = "1", BeginTime = new DateTime(2020, 12, 30), ColumnType = "Type B" });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", ProjectName = "1", BeginTime = new DateTime(2020, 12, 01), ColumnType = "Type A" });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", ProjectName = "2", BeginTime = new DateTime(2020, 12, 01), ColumnType = "Type C" });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", ProjectName = "1", BeginTime = new DateTime(2020, 12, 30), ColumnType = "Type B" });
                 context.SaveChanges();
             }
 
@@ -238,14 +238,14 @@ namespace EMS.Test.UsageRecordTest
         //    using (var context = Utilities.CreateContext(options))
         //    {
         //        context.UsageRecords.Add(new UsageRecord { 
-        //            InstrumentId = "FXS-YZ01",
+        //            InstrumentID = "FXS-YZ01",
         //            ProjectName = "1", 
         //            BeginTime = new DateTime(2020, 12, 01), 
         //            SystemOneColumnNumber="Test-0",
         //            SystemTwoColumnNumber="Test-1",
         //        });
         //        context.UsageRecords.Add(new UsageRecord { 
-        //            InstrumentId = "FXS-YZ01",
+        //            InstrumentID = "FXS-YZ01",
         //            ProjectName = "2", 
         //            BeginTime = new DateTime(2020, 12, 01),
         //            SystemOneColumnNumber = "Test-2",
@@ -253,7 +253,7 @@ namespace EMS.Test.UsageRecordTest
         //        });
         //        context.UsageRecords.Add(new UsageRecord
         //        {
-        //            InstrumentId = "FXS-YZ01",
+        //            InstrumentID = "FXS-YZ01",
         //            ProjectName = "3",
         //            BeginTime = new DateTime(2020, 12, 01),
         //            SystemOneColumnNumber = "Test-4",
@@ -308,9 +308,9 @@ namespace EMS.Test.UsageRecordTest
 
             using (var context = Utilities.CreateContext(options))
             {
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 01), IonSource = "IonSource A" });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 02), IonSource = "IonSource A" });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 04), IonSource = "IonSource A" });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 01), IonSource = "IonSource A" });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 02), IonSource = "IonSource A" });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 04), IonSource = "IonSource A" });
                 context.SaveChanges();
             }
 
@@ -332,9 +332,9 @@ namespace EMS.Test.UsageRecordTest
 
             using (var context = Utilities.CreateContext(options))
             {
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", ProjectName = "1", BeginTime = new DateTime(2020, 12, 01), IonSource = "IonSource A" });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", ProjectName = "2", BeginTime = new DateTime(2020, 12, 01), IonSource = "IonSource C" });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", ProjectName = "1", BeginTime = new DateTime(2020, 12, 30), IonSource = "IonSource B" });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", ProjectName = "1", BeginTime = new DateTime(2020, 12, 01), IonSource = "IonSource A" });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", ProjectName = "2", BeginTime = new DateTime(2020, 12, 01), IonSource = "IonSource C" });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", ProjectName = "1", BeginTime = new DateTime(2020, 12, 30), IonSource = "IonSource B" });
                 context.SaveChanges();
             }
 
@@ -371,9 +371,9 @@ namespace EMS.Test.UsageRecordTest
 
             using (var context = Utilities.CreateContext(options))
             {
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 01), Detector = "Detector A" });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 02), Detector = "Detector A" });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 04), Detector = "Detector A" });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 01), Detector = "Detector A" });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 02), Detector = "Detector A" });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 04), Detector = "Detector A" });
                 context.SaveChanges();
             }
 
@@ -395,9 +395,9 @@ namespace EMS.Test.UsageRecordTest
 
             using (var context = Utilities.CreateContext(options))
             {
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", ProjectName = "1", BeginTime = new DateTime(2020, 12, 01), Detector = "Detector A" });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", ProjectName = "2", BeginTime = new DateTime(2020, 12, 01), Detector = "Detector C" });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", ProjectName = "1", BeginTime = new DateTime(2020, 12, 30), Detector = "Detector B" });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", ProjectName = "1", BeginTime = new DateTime(2020, 12, 01), Detector = "Detector A" });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", ProjectName = "2", BeginTime = new DateTime(2020, 12, 01), Detector = "Detector C" });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", ProjectName = "1", BeginTime = new DateTime(2020, 12, 30), Detector = "Detector B" });
                 context.SaveChanges();
             }
 
@@ -433,9 +433,9 @@ namespace EMS.Test.UsageRecordTest
 
             using (var context = Utilities.CreateContext(options))
             {
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 01, 08, 00, 00), EndTime = new DateTime(2020, 12, 01, 18, 00, 00) });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 02, 08, 00, 00), EndTime = new DateTime(2020, 12, 02, 18, 00, 00) });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 03, 08, 00, 00), EndTime = new DateTime(2020, 12, 03, 18, 00, 00) });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 01, 08, 00, 00), EndTime = new DateTime(2020, 12, 01, 18, 00, 00) });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 02, 08, 00, 00), EndTime = new DateTime(2020, 12, 02, 18, 00, 00) });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 03, 08, 00, 00), EndTime = new DateTime(2020, 12, 03, 18, 00, 00) });
                 context.SaveChanges();
             }
 
@@ -457,9 +457,9 @@ namespace EMS.Test.UsageRecordTest
 
             using (var context = Utilities.CreateContext(options))
             {
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 01, 08, 00, 00), EndTime = new DateTime(2020, 12, 01, 18, 00, 00) });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 02, 08, 00, 00), EndTime = new DateTime(2020, 12, 02, 18, 00, 00) });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 03, 08, 00, 00) });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 01, 08, 00, 00), EndTime = new DateTime(2020, 12, 01, 18, 00, 00) });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 02, 08, 00, 00), EndTime = new DateTime(2020, 12, 02, 18, 00, 00) });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 03, 08, 00, 00) });
                 context.SaveChanges();
             }
 
@@ -481,9 +481,9 @@ namespace EMS.Test.UsageRecordTest
 
             using (var context = Utilities.CreateContext(options))
             {
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 01, 08, 00, 00), SampleNumber = 100 });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 02, 08, 00, 00), SampleNumber = 100 });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 03, 08, 00, 00), SampleNumber = 100 });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 01, 08, 00, 00), SampleNumber = 100 });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 02, 08, 00, 00), SampleNumber = 100 });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 03, 08, 00, 00), SampleNumber = 100 });
                 context.SaveChanges();
             }
 
@@ -505,9 +505,9 @@ namespace EMS.Test.UsageRecordTest
 
             using (var context = Utilities.CreateContext(options))
             {
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 01, 08, 00, 00) });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 02, 08, 00, 00) });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 03, 08, 00, 00) });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 01, 08, 00, 00) });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 02, 08, 00, 00) });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 03, 08, 00, 00) });
                 context.SaveChanges();
             }
 
@@ -529,9 +529,9 @@ namespace EMS.Test.UsageRecordTest
 
             using (var context = Utilities.CreateContext(options))
             {
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 01, 08, 00, 00), SystemOneBatchNumber = 1, SystemTwoBatchNumber = 2 });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 02, 08, 00, 00), SystemOneBatchNumber = 1, SystemTwoBatchNumber = 2 });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 03, 08, 00, 00), SystemOneBatchNumber = 1, SystemTwoBatchNumber = 2 });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 01, 08, 00, 00), SystemOneBatchNumber = 1, SystemTwoBatchNumber = 2 });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 02, 08, 00, 00), SystemOneBatchNumber = 1, SystemTwoBatchNumber = 2 });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 03, 08, 00, 00), SystemOneBatchNumber = 1, SystemTwoBatchNumber = 2 });
                 context.SaveChanges();
             }
 
@@ -553,9 +553,9 @@ namespace EMS.Test.UsageRecordTest
 
             using (var context = Utilities.CreateContext(options))
             {
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 01, 08, 00, 00) });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 02, 08, 00, 00) });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 03, 08, 00, 00) });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 01, 08, 00, 00) });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 02, 08, 00, 00) });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 03, 08, 00, 00) });
                 context.SaveChanges();
             }
 
@@ -577,9 +577,9 @@ namespace EMS.Test.UsageRecordTest
 
             using (var context = Utilities.CreateContext(options))
             {
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 01, 08, 00, 00), SystemOneBatchNumber = 1 });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 02, 08, 00, 00), SystemOneBatchNumber = 1 });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 03, 08, 00, 00), SystemOneBatchNumber = 1 });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 01, 08, 00, 00), SystemOneBatchNumber = 1 });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 02, 08, 00, 00), SystemOneBatchNumber = 1 });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 03, 08, 00, 00), SystemOneBatchNumber = 1 });
                 context.SaveChanges();
             }
 
@@ -601,9 +601,9 @@ namespace EMS.Test.UsageRecordTest
 
             using (var context = Utilities.CreateContext(options))
             {
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 01, 08, 00, 00) });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 02, 08, 00, 00) });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 03, 08, 00, 00) });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 01, 08, 00, 00) });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 02, 08, 00, 00) });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 03, 08, 00, 00) });
                 context.SaveChanges();
             }
 
@@ -625,9 +625,9 @@ namespace EMS.Test.UsageRecordTest
 
             using (var context = Utilities.CreateContext(options))
             {
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 01, 08, 00, 00), SystemTwoBatchNumber = 1 });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 02, 08, 00, 00), SystemTwoBatchNumber = 1 });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 03, 08, 00, 00), SystemTwoBatchNumber = 1 });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 01, 08, 00, 00), SystemTwoBatchNumber = 1 });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 02, 08, 00, 00), SystemTwoBatchNumber = 1 });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 03, 08, 00, 00), SystemTwoBatchNumber = 1 });
                 context.SaveChanges();
             }
 
@@ -649,9 +649,9 @@ namespace EMS.Test.UsageRecordTest
 
             using (var context = Utilities.CreateContext(options))
             {
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 01, 08, 00, 00) });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 02, 08, 00, 00) });
-                context.UsageRecords.Add(new UsageRecord { InstrumentId = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 03, 08, 00, 00) });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 01, 08, 00, 00) });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 02, 08, 00, 00) });
+                context.UsageRecords.Add(new UsageRecord { InstrumentID = "FXS-YZ01", BeginTime = new DateTime(2020, 12, 03, 08, 00, 00) });
                 context.SaveChanges();
             }
 
