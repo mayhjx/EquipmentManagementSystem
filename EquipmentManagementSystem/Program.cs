@@ -15,8 +15,8 @@ namespace EquipmentManagementSystem
             var host = CreateHostBuilder(args).Build();
             //UpdateProjectsOfInstrument(host);
             //CreateDbIfNotExists(host);
-            CreateAdminIfNotExists(host);
-            CreateUserIfNotExists(host);
+            //CreateAdminIfNotExists(host);
+            //CreateUserIfNotExists(host);
             host.Run();
         }
 
