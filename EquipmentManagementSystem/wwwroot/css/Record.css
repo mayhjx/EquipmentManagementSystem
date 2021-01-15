@@ -196,7 +196,7 @@ input#UsageRecord_LowVacuumDegree,
 input#UsageRecord_HighVacuumDegree,
 input#usageRecord_LowVacuumDegree,
 input#usageRecord_HighVacuumDegree {
-    width: 50%;
+    width: 45%;
     box-sizing: border-box;
 }
 
