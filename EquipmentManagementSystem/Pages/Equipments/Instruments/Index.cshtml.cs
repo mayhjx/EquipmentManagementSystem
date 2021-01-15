@@ -13,7 +13,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EquipmentManagementSystem.Pages.Equipments.Instruments
 {
-    [AllowAnonymous]
     public class IndexModel : BasePageModel
     {
         public IndexModel(EquipmentContext context,

@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
 {
-    [AllowAnonymous]
     public class DoingModel : PageModel
     {
         private readonly EquipmentContext _context;

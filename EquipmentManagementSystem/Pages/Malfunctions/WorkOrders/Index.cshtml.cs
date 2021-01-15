@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Malfunctions.WorkOrders
 {
-    [AllowAnonymous]
     public class IndexModel : PageModel
     {
         private readonly EquipmentContext _context;
