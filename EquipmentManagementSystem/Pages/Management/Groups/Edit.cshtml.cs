@@ -45,6 +45,7 @@ namespace EquipmentManagementSystem.Pages.Management.Groups
 
             try
             {
+                Group.Name = Group.Name.Trim();
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)

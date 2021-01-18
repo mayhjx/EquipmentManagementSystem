@@ -36,6 +36,7 @@ namespace EquipmentManagementSystem.Pages.Management.Groups
                 return Page();
             }
 
+            Group.Name = Group.Name.Trim();
             _context.Groups.Add(Group);
             await _context.SaveChangesAsync();
 
