@@ -59,6 +59,11 @@ namespace EquipmentManagementSystem.Areas.Identity.Pages.Account.UserManagement
                 return Forbid();
             }
 
+            if (Input.Group == null)
+            {
+                Input.Group = "";
+            }
+
             var user = new User { UserName = Input.Number, Name = Input.Name, Email = Input.Email, Number = Input.Number, Group = Input.Group };
             var result = await _userManager.CreateAsync(user, Input.Password);
 
@@ -77,7 +82,6 @@ namespace EquipmentManagementSystem.Areas.Identity.Pages.Account.UserManagement
 
         public class InputForm
         {
-            [Required]
             [Display(Name = "项目组")]
             public string Group { get; set; }
 
@@ -89,7 +93,6 @@ namespace EquipmentManagementSystem.Areas.Identity.Pages.Account.UserManagement
             [Display(Name = "工号")]
             public string Number { get; set; }
 
-            [Required]
             [EmailAddress(ErrorMessage = "输入的值不是有效的邮箱格式")]
             [Display(Name = "邮箱")]
             public string Email { get; set; }

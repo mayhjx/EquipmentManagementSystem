@@ -95,6 +95,11 @@ namespace EquipmentManagementSystem.Areas.Identity.Pages.Account.UserManagement
                 "userToUpdate",
                 i => i.Group, i => i.Name, i => i.Number, i => i.Email))
             {
+                if (userToUpdate.Group == null)
+                {
+                    userToUpdate.Group = "";
+                }
+
                 userToUpdate.UserName = userToUpdate.Number;
                 // 删除已关联的角色
                 await _userManager.RemoveFromRolesAsync(userToUpdate, await _userManager.GetRolesAsync(userToUpdate));
