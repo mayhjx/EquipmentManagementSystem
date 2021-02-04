@@ -43,11 +43,11 @@ namespace EquipmentManagementSystem.Services
                 var latestDate = (await _instrumentRepository.GetLatestCalibratedDateOfInstrument(id)).GetValueOrDefault();
                 if (latestDate == System.DateTime.MinValue) continue; // 无校准日期
 
-                // 计划校准日期
                 var calibrateCycle = (await _instrumentRepository.GetById(id)).CalibrationCycle;
-                var planCalibarateDate = latestDate.AddYears(calibrateCycle);
+                var planCalibarateDate = latestDate.AddYears(calibrateCycle).Date; // 计划校准日期
+                var today = System.DateTime.Now.Date;
 
-                if(planCalibarateDate <= System.DateTime.Now || (planCalibarateDate - System.DateTime.Now).Days <= remindDay)
+                if(planCalibarateDate <= today || (planCalibarateDate - today).Days <= remindDay)
                 {
                     var group = (await _instrumentRepository.GetById(id)).Group;
                     toBeCalibrate.Add($"{group}:{id}:{planCalibarateDate.ToShortDateString()}");

@@ -119,8 +119,9 @@ namespace EMS.Test.InstrumentTest
             // Insert seed data into the database using one instance of the context
             using (var context = Utilities.CreateContext(options))
             {
-                context.Instruments.Add(new Instrument { ID = "FXS-YZ01", CalibrationCycle = 1, Group="VD" });
-                context.Calibrations.Add(new Calibration { InstrumentID = "FXS-YZ01", Date = System.DateTime.Now.AddDays(-380)});
+                var calibrationCycle = 1;
+                context.Instruments.Add(new Instrument { ID = "FXS-YZ01", CalibrationCycle = calibrationCycle, Group = "VD" });
+                context.Calibrations.Add(new Calibration { InstrumentID = "FXS-YZ01", Date = System.DateTime.Now.AddYears(-calibrationCycle) });
 
                 context.SaveChanges();
             }
@@ -140,18 +141,20 @@ namespace EMS.Test.InstrumentTest
         [Fact]
         public async Task GetToBeCalibateInstrument_29DaysLeftBeforePlanDate_ShouldBeReturnSingle()
         {
-            // 离计划校准时间还剩29天
             var options = new DbContextOptionsBuilder<EquipmentContext>()
                 .UseInMemoryDatabase(databaseName: nameof(GetToBeCalibateInstrument_29DaysLeftBeforePlanDate_ShouldBeReturnSingle))
                 .Options;
 
-            var day = System.DateTime.IsLeapYear(System.DateTime.Now.Year) ? 366-29 : 365-29;
-
             // Insert seed data into the database using one instance of the context
             using (var context = Utilities.CreateContext(options))
             {
-                context.Instruments.Add(new Instrument { ID = "FXS-YZ01", CalibrationCycle = 1, Group = "VD" });
-                context.Calibrations.Add(new Calibration { InstrumentID = "FXS-YZ01", Date = System.DateTime.Now.AddDays(-day) });
+                var calibrationCycle = 1;
+                context.Instruments.Add(new Instrument { ID = "FXS-YZ01", CalibrationCycle = calibrationCycle, Group = "VD" });
+                context.Calibrations.Add(new Calibration
+                {
+                    InstrumentID = "FXS-YZ01",
+                    Date = System.DateTime.Now.AddYears(-calibrationCycle).AddDays(30) // 离计划校准时间还剩29天
+                });
 
                 context.SaveChanges();
             }
@@ -171,18 +174,20 @@ namespace EMS.Test.InstrumentTest
         [Fact]
         public async Task GetToBeCalibateInstrument_31DaysLeftBeforePlanDate_ShouldBeReturnEmpty()
         {
-            // 离计划校准时间还剩31天
             var options = new DbContextOptionsBuilder<EquipmentContext>()
                 .UseInMemoryDatabase(databaseName: nameof(GetToBeCalibateInstrument_31DaysLeftBeforePlanDate_ShouldBeReturnEmpty))
                 .Options;
 
-            var day = System.DateTime.IsLeapYear(System.DateTime.Now.Year) ? 366 - 32 : 365 - 32;
-
             // Insert seed data into the database using one instance of the context
             using (var context = Utilities.CreateContext(options))
             {
-                context.Instruments.Add(new Instrument { ID = "FXS-YZ01", CalibrationCycle = 1, Group = "VD" });
-                context.Calibrations.Add(new Calibration { InstrumentID = "FXS-YZ01", Date = System.DateTime.Now.AddDays(-day)});
+                var calibrationCycle = 1;
+                context.Instruments.Add(new Instrument { ID = "FXS-YZ01", CalibrationCycle = calibrationCycle, Group = "VD" });
+                context.Calibrations.Add(new Calibration
+                {
+                    InstrumentID = "FXS-YZ01",
+                    Date = System.DateTime.Now.AddYears(-calibrationCycle).AddDays(32) // 离计划校准时间还剩31天
+                });
 
                 context.SaveChanges();
             }
