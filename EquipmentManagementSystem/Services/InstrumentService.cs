@@ -29,7 +29,7 @@ namespace EquipmentManagementSystem.Services
                 var instruments = _instrumentRepository.GetAllInstrumentIdByProject(project);
                 result.AddRange(instruments);
             }
-            return result.Distinct().ToList();
+            return result.Distinct().OrderBy(i=>i).ToList();
         }
 
         public async Task<List<string>> GetToBeCalibateInstrument()
