@@ -41,12 +41,13 @@ namespace EMS.Test.UsageRecordTest
         }
 
         [Fact]
-        public async Task Handler_UpdateUsageRecordWithOwned_ShouldSucceed()
+        public async Task Handler_UpdateUsageRecordWithOwningGroup_ShouldSucceed()
         {
-            var resource = new UsageRecord { Operator = "Test" ,GroupName="Group"};
+            // 同一项目组内，技术员可以修改他人新建的记录
+            var resource = new UsageRecord { Operator = "User 2", GroupName ="Group"};
             var user = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim> {
                 new Claim(ClaimTypes.Role, Constants.TechnicianRole),
-                new Claim(ClaimTypes.GivenName, "Test"),
+                new Claim(ClaimTypes.GivenName, "User 1"),
                 new Claim("Group", "Group"),
             }));
             var requirement = new OperationAuthorizationRequirement { Name = Constants.UpdateOperationName };
@@ -59,12 +60,14 @@ namespace EMS.Test.UsageRecordTest
         }
 
         [Fact]
-        public async Task Handler_UpdateUsageRecordWithIllegalUser_ShouldFail()
+        public async Task Handler_UpdateUsageRecordWithIllegalGroup_ShouldFail()
         {
-            var resource = new UsageRecord { Operator = "Test 1" };
+            // 技术员不可以修改其他项目组人员新建的记录
+            var resource = new UsageRecord { Operator = "Test 1", GroupName = "Group 2" };
             var user = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim> {
                 new Claim(ClaimTypes.Role, Constants.TechnicianRole),
                 new Claim(ClaimTypes.GivenName, "Test 2"),
+                new Claim("Group", "Group 1"),
             }));
             var requirement = new OperationAuthorizationRequirement { Name = Constants.UpdateOperationName };
 
