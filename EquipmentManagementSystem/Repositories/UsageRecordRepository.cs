@@ -21,6 +21,7 @@ namespace EquipmentManagementSystem.Repositories
                 .Where(i => i.InstrumentID == instrumentId)
                 .Where(i => i.BeginTime.GetValueOrDefault().Year == date.Year)
                 .Where(i => i.BeginTime.GetValueOrDefault().Month == date.Month)
+                .OrderBy(i=> i.BeginTime)
                 .ToList();
         }
 
