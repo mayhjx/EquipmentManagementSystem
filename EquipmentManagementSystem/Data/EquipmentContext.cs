@@ -33,6 +33,7 @@ namespace EquipmentManagementSystem.Data
         public DbSet<Project> Projects { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<UsageRecord> UsageRecords { get; set; }
+        public DbSet<UsageRecordOfYuanSu> UsageRecordOfYuanSu { get; set; }
         public DbSet<MaintenanceRecord> MaintenanceRecords { get; set; }
         public DbSet<MaintenanceContent> MaintenanceContents { get; set; }
         public DbSet<InstrumentAcceptance> InstrumentAcceptances { get; set; }
