@@ -7,7 +7,7 @@ $(document).ready(function () {
         });
         var activeTab = localStorage.getItem('activeTab');
         if (activeTab) {
-            $('.nav-usageRecord a[href="' + activeTab + '"]').tab('show');
+            $('.nav-record a[href="' + activeTab + '"]').tab('show');
         }
     }
     else {
