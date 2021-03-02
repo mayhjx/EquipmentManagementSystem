@@ -41,6 +41,12 @@ table th, td {
     text-align: center;
 }
 
+    td.sensitivity, td.massResolution,
+    td.massAxis, td.oxide,
+    td.doubleCharge, td.mass78 {
+        text-align: right;
+    }
+
 tr.update-row {
     background-color: moccasin;
     display: none;
@@ -90,8 +96,11 @@ td.days {
     height: 40px;
 }
 
+td.sensitivityRSD{
+    font-size:13px;
+}
 
-/* usage record table 列宽 */
+/* 液质使用记录表列宽 */
 col.time {
     width: 160px;
 }
@@ -157,66 +166,96 @@ div.button {
     justify-content: space-around;
 }
 
-input[type="datetime-local"] {
+/* 元素使用记录表列宽 */
+col.sensitivity {
+    width: 50px;
+}
+
+col.massResolution {
+    width: 50px;
+}
+
+col.massAxis {
+    width: 50px;
+}
+
+col.oxide {
+    width: 55px;
+}
+
+col.doubleCharge {
+    width: 55px;
+}
+
+col.mass78 {
+    width: 50px;
+}
+
+input {
     width: 100%;
     box-sizing: border-box;
 }
 
-input#UsageRecord_SampleNumber,
-input#usageRecord_SampleNumber {
-    width: 100%;
-    box-sizing: border-box;
-}
+    input[type="datetime-local"] {
+        width: 100%;
+        box-sizing: border-box;
+    }
 
-input#UsageRecord_SystemOneBatchNumber,
-input#usageRecord_SystemOneBatchNumber,
-input#UsageRecord_SystemTwoBatchNumber,
-input#usageRecord_SystemTwoBatchNumber {
-    width: 100%;
-    box-sizing: border-box;
-}
+    input#UsageRecord_SampleNumber,
+    input#usageRecord_SampleNumber {
+        width: 100%;
+        box-sizing: border-box;
+    }
 
-input#UsageRecord_SystemOneColumnNumber,
-input#UsageRecord_SystemTwoColumnNumber,
-input#usageRecord_SystemOneColumnNumber,
-input#usageRecord_SystemTwoColumnNumber {
-    width: 40%;
-    box-sizing: border-box;
-}
+    input#UsageRecord_SystemOneBatchNumber,
+    input#usageRecord_SystemOneBatchNumber,
+    input#UsageRecord_SystemTwoBatchNumber,
+    input#usageRecord_SystemTwoBatchNumber {
+        width: 100%;
+        box-sizing: border-box;
+    }
 
-input#UsageRecord_SystemOneColumnPressure,
-input#usageRecord_SystemOneColumnPressure,
-input#UsageRecord_SystemTwoColumnPressure,
-input#usageRecord_SystemTwoColumnPressure {
-    width: 30%;
-    box-sizing: border-box;
-}
+    input#UsageRecord_SystemOneColumnNumber,
+    input#UsageRecord_SystemTwoColumnNumber,
+    input#usageRecord_SystemOneColumnNumber,
+    input#usageRecord_SystemTwoColumnNumber {
+        width: 40%;
+        box-sizing: border-box;
+    }
 
-input#UsageRecord_LowVacuumDegree,
-input#UsageRecord_HighVacuumDegree,
-input#usageRecord_LowVacuumDegree,
-input#usageRecord_HighVacuumDegree {
-    width: 45%;
-    box-sizing: border-box;
-}
+    input#UsageRecord_SystemOneColumnPressure,
+    input#usageRecord_SystemOneColumnPressure,
+    input#UsageRecord_SystemTwoColumnPressure,
+    input#usageRecord_SystemTwoColumnPressure {
+        width: 30%;
+        box-sizing: border-box;
+    }
 
-input#UsageRecord_BlankSignal, input#usageRecord_BlankSignal,
-input#UsageRecord_SystemOneTestSignal, input#UsageRecord_SystemTwoTestSignal,
-input#usageRecord_SystemOneTestSignal, input#usageRecord_SystemTwoTestSignal {
-    width: 100%;
-    box-sizing: border-box;
-    text-align: right;
-}
+    input#UsageRecord_LowVacuumDegree,
+    input#UsageRecord_HighVacuumDegree,
+    input#usageRecord_LowVacuumDegree,
+    input#usageRecord_HighVacuumDegree {
+        width: 45%;
+        box-sizing: border-box;
+    }
 
-input[name="UsageRecord.Operator"],
-input[name="usageRecord.Operator"] {
-    width: 100%;
-    box-sizing: border-box;
-}
+    input#UsageRecord_BlankSignal, input#usageRecord_BlankSignal,
+    input#UsageRecord_SystemOneTestSignal, input#UsageRecord_SystemTwoTestSignal,
+    input#usageRecord_SystemOneTestSignal, input#usageRecord_SystemTwoTestSignal {
+        width: 100%;
+        box-sizing: border-box;
+        text-align: right;
+    }
 
-input[type="number"] {
-    text-align: right;
-}
+    input[name="UsageRecord.Operator"],
+    input[name="usageRecord.Operator"] {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    input[type="number"] {
+        text-align: right;
+    }
 
 select {
     height: 30px;
@@ -229,6 +268,7 @@ select {
 
 textarea {
     width: 100%;
+    margin-top: 5px;
     box-sizing: border-box;
 }
 
@@ -241,19 +281,29 @@ p.text-vertical {
 @media print {
     @page {
         size: A4 landscape;
-        margin-top: 0.7cm;
-        margin-bottom: 0.7cm;
+        margin:auto;
+        /*margin-top: 0.7cm;
+        margin-bottom: 0.7cm;*/
     }
 
     table {
         width: 100%;
+        page-break-inside: auto;
         table-layout: fixed;
         font-family: 'Times New Roman',sans-serif;
     }
 
-    thead, tbody, tfoot, th, tr, td {
-        break-inside: avoid;
+    tr {
         page-break-inside: avoid;
+        page-break-after: auto;
+    }
+
+    thead {
+        display: table-header-group;
+    }
+
+    tfoot {
+        display: table-footer-group;
     }
 
     colgroup {
@@ -266,6 +316,10 @@ p.text-vertical {
 
     tbody {
         font-size: 20px;
+    }
+
+    td.sensitivityRSD{
+        font-size:20px;
     }
 
     tfoot {
@@ -308,6 +362,12 @@ p.text-vertical {
 
     .hide-in-print {
         display: none;
+    }
+
+    td.sensitivity, td.massResolution,
+    td.massAxis, td.oxide, 
+    td.doubleCharge, td.mass78{
+        font-size:28px;
     }
 }
 
