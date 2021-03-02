@@ -11,12 +11,12 @@
     <div class="card-header p-0 border-bottom-0">
         <div class="card-title">
             <ul class="nav nav-tabs">
-                <li class="nav-usageRecord">
+                <li class="nav-record">
                     <a class="nav-link active" id="maintenance-record-tab" data-toggle="pill" href="#maintenance-record" role="tab" aria-controls="maintenance-record" aria-selected="true">
                         <h5 class="text-dark">维护记录</h5>
                     </a>
                 </li>
-                <li class="nav-usageRecord">
+                <li class="nav-record">
                     <a class="nav-link" id="usage-record-tab" data-toggle="pill" href="#usage-record" role="tab" aria-controls="usage-record" aria-selected="false">
                         <h5 class="text-dark">使用记录</h5>
                     </a>
@@ -55,9 +55,368 @@
             {
                 <p>当前用户所在项目组无可用仪器，请先在设备档案中设置检测项目</p>
             }
+            else if (Model.Search.SelectedICPMSInstrument)
+            {
+                // 选择了ICP-MS设备
+                @*元素项目维护记录*@
+                <div class="tab-pane fade table-responsive active show" id="maintenance-record" role="tabpanel" aria-labelledby="maintenance-record-tab">
+                    TODO
+                </div>
+
+                @*元素项目使用记录*@
+                <div id="usage-record" class="tab-pane fade table-responsive" role="tabpanel" aria-labelledby="usage-record-tab">
+                    <table id="usage-record">
+                        <colgroup>
+                            <col class="time">
+                            <col class="time">
+                            <col class="sensitivity">
+                            <col class="sensitivity">
+                            <col class="sensitivity">
+                            <col class="sensitivity">
+                            <col class="sensitivity">
+                            <col class="sensitivity">
+                            <col class="massResolution">
+                            <col class="massResolution">
+                            <col class="massResolution">
+                            <col class="massAxis">
+                            <col class="massAxis">
+                            <col class="massAxis">
+                            <col class="oxide">
+                            <col class="doubleCharge">
+                            <col class="mass78">
+                            <col class="operator">
+                            <col class="remark">
+                            <col class="button">
+                        </colgroup>
+                        <thead>
+                            <tr class="title">
+                                <th colspan="19">
+                                    <h5>Agilent 7900 ICP-MS 使用记录表(He模式)</h5>
+                                    <h5>Agilent 7900 ICP-MS Use Form</h5>
+                                </th>
+                            </tr>
+                            <tr class="small-title">
+                                <td colspan="10" class="text-left">仪器编号(Instrument No.)：@(Model.Search?.Instrument)</td>
+                                <td colspan="9" class="text-right">表号(Form)：GZKM-SOP0314.06.01</td>
+                            </tr>
+                            <tr>
+                                <td class="time" rowspan="2">
+                                    开始时间<br />
+                                    Start up time
+                                </td>
+                                <td class="time" rowspan="2">
+                                    结束时间<br />
+                                    Shut down time
+                                </td>
+                                <td colspan="6">
+                                    灵敏度(10<sup>4</sup>cps)<br />
+                                    Sensitivity
+                                </td>
+                                <td colspan="3">
+                                    分辨率<br />
+                                    Mass Resolution
+                                </td>
+                                <td colspan="3">
+                                    质量轴(amu)<br />
+                                    Mass Axis
+                                </td>
+                                <td rowspan="2">
+                                    CeO/Ce<br />
+                                    (%)
+                                </td>
+                                <td rowspan="2">
+                                    Ce<sup>2+</sup>/Ce<br />
+                                    (%)
+                                </td>
+                                <td rowspan="2">
+                                    Mass<br />
+                                    78
+                                </td>
+                                <td rowspan="2">
+                                    操作者<br />
+                                    Operator
+                                </td>
+                                <td rowspan="2">
+                                    备注<br />
+                                    Remark
+                                </td>
+                                <td class="button" rowspan="2">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Co(59)
+                                </td>
+                                <td class="sensitivityRSD">
+                                    RSD(%)
+                                </td>
+                                <td>
+                                    Y(89)
+                                </td>
+                                <td class="sensitivityRSD">
+                                    RSD(%)
+                                </td>
+                                <td>
+                                    Ti(205)
+                                </td>
+                                <td class="sensitivityRSD">
+                                    RSD(%)
+                                </td>
+                                <td>
+                                    Co(59)
+                                </td>
+                                <td>
+                                    Y(89)
+                                </td>
+                                <td>
+                                    Ti(205)
+                                </td>
+                                <td>
+                                    Co(59)
+                                </td>
+                                <td>
+                                    Y(89)
+                                </td>
+                                <td>
+                                    Ti(205)
+                                </td>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr class="tfoot">
+                                <td colspan="2">
+                                    评估意见：<br />
+                                    (Evaluator comments)
+                                </td>
+                                <td colspan="6"></td>
+                                <td colspan="2">
+                                    评估人/日期<br />
+                                    (Evaluator/Date)
+                                </td>
+                                <td colspan="4"></td>
+                                <td colspan="2">
+                                    审批人/日期<br />
+                                    (Approver/Date)
+                                </td>
+                                <td colspan="3"></td>
+                            </tr>
+                            <tr class="tfoot">
+                                <td colspan="2">
+                                    备注<br />
+                                    Remark
+                                </td>
+                                <td colspan="17">
+                                    调谐参数要求(0.1秒，10.0ppb 调谐液，单管)：
+                                    A.灵敏度(He Mode)：Co(59) ≥ 10,000，Y(89) ≥ 10,000，Ti(205) ≥ 10,000；
+                                    B.分辨率(at 10%)：0.65 ~ 0.80；
+                                    C.质量轴：±0.05amu；
+                                    D.氧化物：CeO/Ce ≤ 3.0%；
+                                    E.双电荷：Ce<sup>2+</sup>/Ce ≤ 3.0%；
+                                    F.Mass 78 ≤ 4；
+                                    G.RSD ≤ 5.0%；
+                                </td>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            @* view-row *@
+                            @foreach (var usageRecord in Model.ListOfYuanSuUsageRecord)
+                            {
+                                <tr class="view-row">
+                                    <td class="time">@usageRecord.BeginTime.GetValueOrDefault().ToString("yyyy-MM-dd HH:mm")</td>
+                                    <td class="time">@(usageRecord.EndTime != null ? usageRecord.EndTime.GetValueOrDefault().ToString("yyyy-MM-dd HH:mm") : "")</td>
+                                    <td class="sensitivity">@usageRecord.SensitivityCo.ToString("0.0")</td>
+                                    <td class="sensitivity">@usageRecord.SensitivityCoRSD.ToString("0.0")</td>
+                                    <td class="sensitivity">@usageRecord.SensitivityY.ToString("0.0")</td>
+                                    <td class="sensitivity">@usageRecord.SensitivityYRSD.ToString("0.0")</td>
+                                    <td class="sensitivity">@usageRecord.SensitivityTi.ToString("0.0") </td>
+                                    <td class="sensitivity">@usageRecord.SensitivityTiRSD.ToString("0.0")</td>
+                                    <td class="massResolution">@usageRecord.MassResolutionCo.ToString("0.00")</td>
+                                    <td class="massResolution">@usageRecord.MassResolutionY.ToString("0.00")</td>
+                                    <td class="massResolution">@usageRecord.MassResolutionTi.ToString("0.00")</td>
+                                    <td class="massAxis">@usageRecord.MassAxisCo.ToString("0.00")</td>
+                                    <td class="massAxis">@usageRecord.MassAxisY.ToString("0.00")</td>
+                                    <td class="massAxis">@usageRecord.MassAxisTi.ToString("0.00")</td>
+                                    <td class="oxide">@usageRecord.OxideOfCe.ToString("0.0")</td>
+                                    <td class="doubleCharge">@usageRecord.DoubleChargeOfCe.ToString("0.0")</td>
+                                    <td class="mass78">@usageRecord.Mass78.ToString("0.0")</td>
+                                    <td>@usageRecord.Operator</td>
+                                    <td class="remark">
+                                        @if (!string.IsNullOrEmpty(usageRecord.Remark))
+                                        {
+                                            @Html.DisplayFor(item => usageRecord.Remark)
+                                        }
+                                        else
+                                        {
+                                            <h6 class="text-center hide-in-screen">/</h6>
+                                        }
+                                    </td>
+                                    <td class="button">
+                                        <div class="button">
+                                            @if ((await AuthorizationService.AuthorizeAsync(User, usageRecord, Operations.Update)).Succeeded)
+                                            {
+                                                <button class="edit-btn btn btn-sm btn-outline-primary" data-id="@usageRecord.Id">编辑</button>
+                                            }
+                                            @if ((await AuthorizationService.AuthorizeAsync(User, usageRecord, Operations.Delete)).Succeeded)
+                                            {
+                                                <button class="delete-usage-record-btn btn btn-sm btn-outline-danger" data-id="@usageRecord.Id">删除</button>
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                                @* update-row *@
+                                <tr class="update-row">
+                                    <td class="time">
+                                        <input form="edit-form" name="id" asp-for="@usageRecord.Id" type="hidden" disabled />
+                                        <input form="edit-form" asp-for="@usageRecord.InstrumentID" type="hidden" disabled />
+                                        <input form="edit-form" asp-for="@usageRecord.ProjectName" type="hidden" disabled />
+                                        <input form="edit-form" asp-for="@usageRecord.BeginTime" required disabled />
+                                    </td>
+                                    <td class="time">
+                                        <input form="edit-form" asp-for="@usageRecord.EndTime" disabled />
+                                    </td>
+                                    <td class="sensitivity">
+                                        <input form="edit-form" type="number" min="0" step="0.1" asp-for="@usageRecord.SensitivityCo" disabled />
+                                    </td>
+                                    <td class="sensitivity">
+                                        <input form="edit-form" type="number" min="0" step="0.1" asp-for="@usageRecord.SensitivityCoRSD" disabled />
+                                    </td>
+                                    <td class="sensitivity">
+                                        <input form="edit-form" type="number" min="0" step="0.1" asp-for="@usageRecord.SensitivityY" disabled />
+                                    </td>
+                                    <td class="sensitivity">
+                                        <input form="edit-form" type="number" min="0" step="0.1" asp-for="@usageRecord.SensitivityYRSD" disabled />
+                                    </td>
+                                    <td class="sensitivity">
+                                        <input form="edit-form" type="number" min="0" step="0.1" asp-for="@usageRecord.SensitivityTi" disabled />
+                                    </td>
+                                    <td class="sensitivity">
+                                        <input form="edit-form" type="number" min="0" step="0.1" asp-for="@usageRecord.SensitivityTiRSD" disabled />
+                                    </td>
+
+                                    <td class="massResolution">
+                                        <input form="edit-form" type="number" min="0" step="0.01" asp-for="@usageRecord.MassResolutionCo" disabled />
+                                    </td>
+                                    <td class="massResolution">
+                                        <input form="edit-form" type="number" min="0" step="0.01" asp-for="@usageRecord.MassResolutionY" disabled />
+                                    </td>
+                                    <td class="massResolution">
+                                        <input form="edit-form" type="number" min="0" step="0.01" asp-for="@usageRecord.MassResolutionTi" disabled />
+                                    </td>
+
+                                    <td class="massAxis">
+                                        <input form="edit-form" type="number" min="0" step="0.01" asp-for="@usageRecord.MassAxisCo" disabled />
+                                    </td>
+                                    <td class="massAxis">
+                                        <input form="edit-form" type="number" min="0" step="0.01" asp-for="@usageRecord.MassAxisY" disabled />
+                                    </td>
+                                    <td class="massAxis">
+                                        <input form="edit-form" type="number" min="0" step="0.01" asp-for="@usageRecord.MassAxisTi" disabled />
+                                    </td>
+
+                                    <td class="oxide">
+                                        <input form="edit-form" type="number" min="0" step="0.1" asp-for="@usageRecord.OxideOfCe" disabled />
+                                    </td>
+                                    <td class="doubleCharge">
+                                        <input form="edit-form" type="number" min="0" step="0.1" asp-for="@usageRecord.DoubleChargeOfCe" disabled />
+                                    </td>
+                                    <td class="mass78">
+                                        <input form="edit-form" type="number" min="0" step="0.1" asp-for="@usageRecord.Mass78" disabled />
+                                    </td>
+                                    <td>
+                                        <input form="edit-form" asp-for="@usageRecord.Operator" required disabled />
+                                    </td>
+                                    <td class="remark">
+                                        <textarea form="edit-form" asp-for="@usageRecord.Remark" placeholder="限20字以内" style="margin-top:5px" disabled></textarea>
+                                    </td>
+                                    <td class="button">
+                                        <div class="button">
+                                            <button class="update-btn btn btn-sm btn-success" form="edit-form" disabled>保存</button>
+                                            <button type="button" class="cancel-btn btn btn-sm btn-secondary" disabled>取消</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+
+                            @* create-row *@
+                            <tr id="create-row">
+                                <td class="time">
+                                    <input form="create-form" asp-for="UsageRecordOfYuanSu.InstrumentID" type="hidden" />
+                                    <input form="create-form" asp-for="UsageRecordOfYuanSu.ProjectName" type="hidden" />
+                                    <input form="create-form" asp-for="UsageRecordOfYuanSu.BeginTime" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" required />
+                                </td>
+                                <td class="time">
+                                    <input form="create-form" asp-for="UsageRecordOfYuanSu.EndTime" />
+                                </td>
+                                <td class="sensitivity">
+                                    <input form="create-form" type="number" min="0" step="0.1" asp-for="UsageRecordOfYuanSu.SensitivityCo" />
+                                </td>
+                                <td class="sensitivity">
+                                    <input form="create-form" type="number" min="0" step="0.1" asp-for="UsageRecordOfYuanSu.SensitivityCoRSD" />
+                                </td>
+                                <td class="sensitivity">
+                                    <input form="create-form" type="number" min="0" step="0.1" asp-for="UsageRecordOfYuanSu.SensitivityY" />
+                                </td>
+                                <td class="sensitivity">
+                                    <input form="create-form" type="number" min="0" step="0.1" asp-for="UsageRecordOfYuanSu.SensitivityYRSD" />
+                                </td>
+                                <td class="sensitivity">
+                                    <input form="create-form" type="number" min="0" step="0.1" asp-for="UsageRecordOfYuanSu.SensitivityTi" />
+                                </td>
+                                <td class="sensitivity">
+                                    <input form="create-form" type="number" min="0" step="0.1" asp-for="UsageRecordOfYuanSu.SensitivityTiRSD" />
+                                </td>
+
+                                <td class="massResolution">
+                                    <input form="create-form" type="number" min="0" step="0.01" asp-for="UsageRecordOfYuanSu.MassResolutionCo" />
+                                </td>
+                                <td class="massResolution">
+                                    <input form="create-form" type="number" min="0" step="0.01" asp-for="UsageRecordOfYuanSu.MassResolutionY" />
+                                </td>
+                                <td class="massResolution">
+                                    <input form="create-form" type="number" min="0" step="0.01" asp-for="UsageRecordOfYuanSu.MassResolutionTi" />
+                                </td>
+
+                                <td class="massAxis">
+                                    <input form="create-form" type="number" min="0" step="0.01" asp-for="UsageRecordOfYuanSu.MassAxisCo" />
+                                </td>
+                                <td class="massAxis">
+                                    <input form="create-form" type="number" min="0" step="0.01" asp-for="UsageRecordOfYuanSu.MassAxisY" />
+                                </td>
+                                <td class="massAxis">
+                                    <input form="create-form" type="number" min="0" step="0.01" asp-for="UsageRecordOfYuanSu.MassAxisTi" />
+                                </td>
+
+                                <td class="oxide">
+                                    <input form="create-form" type="number" min="0" step="0.1" asp-for="UsageRecordOfYuanSu.OxideOfCe" />
+                                </td>
+                                <td class="doubleCharge">
+                                    <input form="create-form" type="number" min="0" step="0.1" asp-for="UsageRecordOfYuanSu.DoubleChargeOfCe" />
+                                </td>
+                                <td class="mass78">
+                                    <input form="create-form" type="number" min="0" step="0.1" asp-for="UsageRecordOfYuanSu.Mass78" />
+                                </td>
+                                <td>
+                                    <input form="create-form" asp-for="UsageRecordOfYuanSu.Operator" required />
+                                </td>
+                                <td class="remark">
+                                    <textarea form="create-form" asp-for="UsageRecordOfYuanSu.Remark" placeholder="限20字以内" rows="1" style="margin-top:5px"></textarea>
+                                </td>
+                                <td class="button">
+                                    <button form="create-form" id="create-btn" class="btn btn-block btn-primary">新建</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <audit-trail-grouping-by-pk Logs="Model.UsageAuditTrailLogs" modal-id="usageAuditTrailLog"></audit-trail-grouping-by-pk>
+                    <button type="button" class="btn btn-outline-primary my-1" onclick="createReport()">导出</button>
+                </div>
+
+                <form id="create-form" method="post" asp-page="UsageRecordsOfYuanSu/Create" hidden></form>
+                <form id="edit-form" method="post" asp-page="UsageRecordsOfYuanSu/Edit" hidden></form>
+                <form id="delete-form" method="post" asp-page="UsageRecordsOfYuanSu/Delete" hidden></form>
+            }
             else
             {
-                @*维护记录*@
+                @*液质维护记录*@
                 int columnNumber = 31; // 固定显示31天
                 int totalColSpan = 33;
                 string InstrumentPlatform = Model.Platform;
@@ -274,9 +633,9 @@
                     <button type="button" class="btn btn-outline-primary my-1" onclick="createReport()">导出</button>
                 </div>
 
-                @*使用记录*@
+                @*液质使用记录*@
                 string emptyValue = "N/A";
-                <div class="tab-pane fade table-responsive" id="usage-record" role="tabpanel" aria-labelledby="usage-record-tab">
+                <div id="usage-record" class="tab-pane fade table-responsive" role="tabpanel" aria-labelledby="usage-record-tab">
                     <table id="usage-record">
                         <colgroup>
                             <col class="time">
@@ -900,20 +1259,47 @@
                     <audit-trail-grouping-by-pk Logs="Model.UsageAuditTrailLogs" modal-id="usageAuditTrailLog"></audit-trail-grouping-by-pk>
                     <button type="button" class="btn btn-outline-primary my-1" onclick="createReport()">导出</button>
                 </div>
+
+                <form id="create-form" method="post" asp-page="UsageRecords/Create" hidden></form>
+                <form id="edit-form" method="post" asp-page="UsageRecords/Edit" hidden></form>
+                <form id="delete-form" method="post" asp-page="UsageRecords/Delete" hidden></form>
             }
         </div>
     </div>
 </div>
 
-<form id="create-form" method="post" asp-page="UsageRecords/Create" hidden></form>
-<form id="edit-form" method="post" asp-page="UsageRecords/Edit" hidden></form>
-<form id="delete-form" method="post" asp-page="UsageRecords/Delete" hidden></form>
-
 <link rel="stylesheet" href="~/css/Record.css" asp-append-version="true">
 @section Scripts {
-    <script src="~/js/Records.js" asp-append-version="true"></script>
-    <script src="~/js/MaintenanceRecord.js" asp-append-version="true"></script>
+    @if (Model.Search.SelectedICPMSInstrument)
+    {
+        <script src="~/js/YuanSuUsageRecord.js" asp-append-version="true"></script>
+    }
+    else
+    {
+        <script src="~/js/Records.js" asp-append-version="true"></script>
+        <script src="~/js/MaintenanceRecord.js" asp-append-version="true"></script>
+    }
+
     <script>
+        $(".edit-btn").click(function () {
+            // 将其他已在编辑状态的行取消编辑
+            $(".cancel-btn").click();
+            var RowOfViewRecord = $(this).closest("tr");
+            // 选定行的下一行是编辑行
+            var RowOfEditRecord = RowOfViewRecord.next("tr");
+            RowOfViewRecord.hide();
+            RowOfEditRecord.show();
+            RowOfEditRecord.find(":disabled").prop("disabled", false);
+        });
+
+        $(".cancel-btn").click(function () {
+            var RowOfEditRecord = $(this).closest("tr");
+            var RowOfViewRecord = RowOfEditRecord.prev("tr");
+            RowOfEditRecord.hide();
+            RowOfEditRecord.find("input,button,textarea,select").prop("disabled", true);
+            RowOfViewRecord.show();
+        });
+
         function createReport() {
             var activeTab = $(`a[href="${localStorage.getItem('activeTab')}"]`).children().text();
             document.title = `@(Model.Search.Instrument)_@(Model.Search.Date.ToString("yyyyMM"))_${activeTab}表` ;
