@@ -35,25 +35,6 @@ $(document).ready(function () {
     });
 })
 
-$(".edit-btn").click(function () {
-    // 将其他已在编辑状态的行取消编辑
-    $(".cancel-btn").click();
-    var RowOfViewRecord = $(this).closest("tr");
-    // 选定行的下一行是编辑行
-    var RowOfEditRecord = RowOfViewRecord.next("tr");
-    RowOfViewRecord.hide();
-    RowOfEditRecord.show();
-    RowOfEditRecord.find(":disabled").prop("disabled", false);
-});
-
-$(".cancel-btn").click(function () {
-    var RowOfEditRecord = $(this).closest("tr");
-    var RowOfViewRecord = RowOfEditRecord.prev("tr");
-    RowOfEditRecord.hide();
-    RowOfEditRecord.find("input,button,textarea,select").prop("disabled", true);
-    RowOfViewRecord.show();
-});
-
 $(".delete-usage-record-btn").click(function () {
     if (!confirm("确认删除该条记录？")) {
         return false;
