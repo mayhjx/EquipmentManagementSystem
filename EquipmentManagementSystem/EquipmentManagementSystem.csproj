@@ -13,6 +13,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Data\Migrations\Equipment\20210301061651_test0301.cs" />
+	  <Compile Remove="Data\Migrations\Equipment\20210301061651_test0301.Designer.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <None Remove=".gitignore" />
 	</ItemGroup>
 
@@ -38,21 +43,21 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.7" />
-		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.7" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.7" />
-		<PackageReference Include="Microsoft.EntityFrameWorkCore.design" Version="3.1.7">
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.12" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.12" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.12" />
+		<PackageReference Include="Microsoft.EntityFrameWorkCore.design" Version="3.1.12">
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.EntityFrameWorkCore.Sqlite" Version="3.1.7" />
-		<PackageReference Include="Microsoft.EntityFrameWorkCore.Sqlserver" Version="3.1.7" />
-		<PackageReference Include="Microsoft.EntityFrameWorkCore.tools" Version="3.1.7">
+		<PackageReference Include="Microsoft.EntityFrameWorkCore.Sqlite" Version="3.1.12" />
+		<PackageReference Include="Microsoft.EntityFrameWorkCore.Sqlserver" Version="3.1.12" />
+		<PackageReference Include="Microsoft.EntityFrameWorkCore.tools" Version="3.1.12">
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.7" />
-		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.design" Version="3.1.4" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.12" />
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.design" Version="3.1.5" />
 	</ItemGroup>
 
 </Project>
