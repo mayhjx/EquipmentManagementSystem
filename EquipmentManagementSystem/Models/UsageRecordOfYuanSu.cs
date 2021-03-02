@@ -69,6 +69,7 @@ namespace EquipmentManagementSystem.Models
         public string Operator { get; set; }
 
         [Display(Name = "备注")]
+        [StringLength(20)]
         public string Remark { get; set; }
     }
 }
