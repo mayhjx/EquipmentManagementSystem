@@ -27,6 +27,9 @@ namespace EquipmentManagementSystem.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
         public DateTime? EndTime { get; set; }
 
+        [Display(Name = "操作者")]
+        public string Operator { get; set; }
+
         [Display(Name = "日维护")]
         public string Daily { get; set; }
 
@@ -52,6 +55,11 @@ namespace EquipmentManagementSystem.Models
         public void SetMonthly(string[] content)
         {
             Monthly = string.Join(",", content);
+        }
+
+        public List<string> GetMonthly()
+        {
+            return Monthly?.Split(",").ToList();
         }
 
         public void SetHalfYearly(string[] content)
