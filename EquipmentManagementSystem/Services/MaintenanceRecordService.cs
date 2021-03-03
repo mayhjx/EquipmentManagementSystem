@@ -148,6 +148,7 @@ namespace EquipmentManagementSystem.Services
             // 一个月固定31天
             var recordId = InitialList(31);
 
+            // 待重构，合并液质和元素维护记录方法，将记录id作为参数
             List<MaintenanceRecord> records = _recordRepository.GetAllByInstrumentIdAndYearAndMonth(instrumentId, month);
 
             foreach (var record in records)
