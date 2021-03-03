@@ -78,6 +78,7 @@ namespace EquipmentManagementSystem.Areas.Identity
                 services.AddTransient<IAuthorizationHandler, UsageRecordAuthorizationHandler>();
                 services.AddTransient<IAuthorizationHandler, UsageRecordOfYuanSuAuthorizationHandler>();
                 services.AddTransient<IAuthorizationHandler, MaintenanceRecordAuthorizationHandler>();
+                services.AddTransient<IAuthorizationHandler, MaintenanceRecordOfYuanSuAuthorizationHandler>();
 
                 services.AddTransient<IAuthorizationHandler, WorkOrderAuthorizationHandler>();
                 services.AddTransient<IAuthorizationHandler, MalfunctionInfoAuthorizationHandler>();
