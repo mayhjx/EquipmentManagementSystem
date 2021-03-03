@@ -36,6 +36,7 @@ namespace EquipmentManagementSystem.Pages.Management.MaintenanceContents
             new SelectListItem { Value = "周维护", Text = "周维护" },
             new SelectListItem { Value = "月度维护", Text = "月度维护"  },
             new SelectListItem { Value = "季度维护", Text = "季度维护"  },
+            new SelectListItem { Value = "半年维护", Text = "半年维护"  },
             new SelectListItem { Value = "年度维护", Text = "年度维护"  },
             new SelectListItem { Value = "临时维护", Text = "临时维护"  },
         };
