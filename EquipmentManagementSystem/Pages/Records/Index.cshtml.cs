@@ -20,6 +20,7 @@ namespace EquipmentManagementSystem.Pages.Records
         private readonly IUsageRecordRepository _usageRecordRepository;
         private readonly IUsageRecordOfYuanSuRepository _usageRecordOfYuanSuRepository;
         private readonly IMaintenanceRecordRepository _maintenanceRecordRepository;
+        private readonly IMaintenanceRecordOfYuanSuRepository _maintenanceRecordOfYuanSuRepository;
         private readonly IMaintenanceRecordService _maintenanceRecordService;
         private readonly IMaintenanceContentRepository _maintenanceContentRepository;
 
@@ -64,7 +65,7 @@ namespace EquipmentManagementSystem.Pages.Records
         public string Platform { get; private set; }
         public string InstrumentModel { get; private set; }
 
-        #region 液质使用记录表相关属性
+        #region 液质使用记录表相关
         public string MobilePhaseOrCarrierGas { get; private set; }
         public string ColumnPressureUnit { get; private set; }
         public string VacuumDegreeUnit { get; private set; }
@@ -79,7 +80,7 @@ namespace EquipmentManagementSystem.Pages.Records
         public int TotalS2BatchNumber { get; private set; }
         #endregion
 
-        #region 维护记录表相关属性
+        #region 液质维护记录表相关
         public List<string> RecordsIdOfMonth { get; private set; }
         public List<string> DailyMaintenanceContent { get; private set; }
         public List<string> WeeklyMaintenanceContent { get; private set; }
@@ -98,9 +99,14 @@ namespace EquipmentManagementSystem.Pages.Records
         public IEnumerable<IGrouping<string, AuditTrailLog>> MaintenanceAuditTrailLogs { get; private set; }
         #endregion
 
-        #region 元素项目使用记录
+        #region 元素项目使用记录相关
         public UsageRecordOfYuanSu UsageRecordOfYuanSu { get; set; }
         public List<UsageRecordOfYuanSu> ListOfYuanSuUsageRecord { get; private set; }
+        #endregion
+
+        #region 元素项目维护记录相关
+        public MaintenanceRecordOfYuanSu MaintenanceRecordOfYuanSu { get; set; }
+        public List<MaintenanceRecordOfYuanSu> ListOfYuanSuMaintenanceRecord { get; private set; }
         #endregion
 
         public async Task<IActionResult> OnGetAsync(string instrumentId, DateTime? date, string statusMessage)
@@ -131,6 +137,8 @@ namespace EquipmentManagementSystem.Pages.Records
             {
                 StatusMessage = statusMessage;
             }
+
+            Platform = (await _instrumentRepository.GetById(instrumentId))?.Platform;
 
             // 选择了ICP-MS仪器编号
             if (Search.SelectedICPMSInstrument)
@@ -175,7 +183,6 @@ namespace EquipmentManagementSystem.Pages.Records
                     Operator = _userResolverService.GetUserName()
                 };
 
-                Platform = (await _instrumentRepository.GetById(instrumentId))?.Platform;
                 InstrumentModel = await _instrumentRepository.GetModelById(instrumentId);
 
                 UsageRecords = _usageRecordRepository.GetAllByInstrumentIdAndMonthOfBeginTime(instrumentId, date.GetValueOrDefault());

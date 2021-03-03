@@ -55,1019 +55,1412 @@
             {
                 <p>当前用户所在项目组无可用仪器，请先在设备档案中设置检测项目</p>
             }
-            else if (Model.Search.SelectedICPMSInstrument)
-            {
-                // 选择了ICP-MS设备
-                @*元素项目维护记录*@
-                <div class="tab-pane fade table-responsive active show" id="maintenance-record" role="tabpanel" aria-labelledby="maintenance-record-tab">
-                    TODO
-                </div>
-
-                @*元素项目使用记录*@
-                <div id="usage-record" class="tab-pane fade table-responsive" role="tabpanel" aria-labelledby="usage-record-tab">
-                    <table id="usage-record">
-                        <colgroup>
-                            <col class="time">
-                            <col class="time">
-                            <col class="sensitivity">
-                            <col class="sensitivity">
-                            <col class="sensitivity">
-                            <col class="sensitivity">
-                            <col class="sensitivity">
-                            <col class="sensitivity">
-                            <col class="massResolution">
-                            <col class="massResolution">
-                            <col class="massResolution">
-                            <col class="massAxis">
-                            <col class="massAxis">
-                            <col class="massAxis">
-                            <col class="oxide">
-                            <col class="doubleCharge">
-                            <col class="mass78">
-                            <col class="operator">
-                            <col class="remark">
-                            <col class="button">
-                        </colgroup>
-                        <thead>
-                            <tr class="title">
-                                <th colspan="19">
-                                    <h5>Agilent 7900 ICP-MS 使用记录表(He模式)</h5>
-                                    <h5>Agilent 7900 ICP-MS Use Form</h5>
-                                </th>
-                            </tr>
-                            <tr class="small-title">
-                                <td colspan="10" class="text-left">仪器编号(Instrument No.)：@(Model.Search?.Instrument)</td>
-                                <td colspan="9" class="text-right">表号(Form)：GZKM-SOP0314.06.01</td>
-                            </tr>
-                            <tr>
-                                <td class="time" rowspan="2">
-                                    开始时间<br />
-                                    Start up time
-                                </td>
-                                <td class="time" rowspan="2">
-                                    结束时间<br />
-                                    Shut down time
-                                </td>
-                                <td colspan="6">
-                                    灵敏度(10<sup>4</sup>cps)<br />
-                                    Sensitivity
-                                </td>
-                                <td colspan="3">
-                                    分辨率<br />
-                                    Mass Resolution
-                                </td>
-                                <td colspan="3">
-                                    质量轴(amu)<br />
-                                    Mass Axis
-                                </td>
-                                <td rowspan="2">
-                                    CeO/Ce<br />
-                                    (%)
-                                </td>
-                                <td rowspan="2">
-                                    Ce<sup>2+</sup>/Ce<br />
-                                    (%)
-                                </td>
-                                <td rowspan="2">
-                                    Mass<br />
-                                    78
-                                </td>
-                                <td rowspan="2">
-                                    操作者<br />
-                                    Operator
-                                </td>
-                                <td rowspan="2">
-                                    备注<br />
-                                    Remark
-                                </td>
-                                <td class="button" rowspan="2">&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Co(59)
-                                </td>
-                                <td class="sensitivityRSD">
-                                    RSD(%)
-                                </td>
-                                <td>
-                                    Y(89)
-                                </td>
-                                <td class="sensitivityRSD">
-                                    RSD(%)
-                                </td>
-                                <td>
-                                    Ti(205)
-                                </td>
-                                <td class="sensitivityRSD">
-                                    RSD(%)
-                                </td>
-                                <td>
-                                    Co(59)
-                                </td>
-                                <td>
-                                    Y(89)
-                                </td>
-                                <td>
-                                    Ti(205)
-                                </td>
-                                <td>
-                                    Co(59)
-                                </td>
-                                <td>
-                                    Y(89)
-                                </td>
-                                <td>
-                                    Ti(205)
-                                </td>
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr class="tfoot">
-                                <td colspan="2">
-                                    评估意见：<br />
-                                    (Evaluator comments)
-                                </td>
-                                <td colspan="6"></td>
-                                <td colspan="2">
-                                    评估人/日期<br />
-                                    (Evaluator/Date)
-                                </td>
-                                <td colspan="4"></td>
-                                <td colspan="2">
-                                    审批人/日期<br />
-                                    (Approver/Date)
-                                </td>
-                                <td colspan="3"></td>
-                            </tr>
-                            <tr class="tfoot">
-                                <td colspan="2">
-                                    备注<br />
-                                    Remark
-                                </td>
-                                <td colspan="17">
-                                    调谐参数要求(0.1秒，10.0ppb 调谐液，单管)：
-                                    A.灵敏度(He Mode)：Co(59) ≥ 10,000，Y(89) ≥ 10,000，Ti(205) ≥ 10,000；
-                                    B.分辨率(at 10%)：0.65 ~ 0.80；
-                                    C.质量轴：±0.05amu；
-                                    D.氧化物：CeO/Ce ≤ 3.0%；
-                                    E.双电荷：Ce<sup>2+</sup>/Ce ≤ 3.0%；
-                                    F.Mass 78 ≤ 4；
-                                    G.RSD ≤ 5.0%；
-                                </td>
-                            </tr>
-                        </tfoot>
-                        <tbody>
-                            @* view-row *@
-                            @foreach (var usageRecord in Model.ListOfYuanSuUsageRecord)
-                            {
-                                <tr class="view-row">
-                                    <td class="time">@usageRecord.BeginTime.GetValueOrDefault().ToString("yyyy-MM-dd HH:mm")</td>
-                                    <td class="time">@(usageRecord.EndTime != null ? usageRecord.EndTime.GetValueOrDefault().ToString("yyyy-MM-dd HH:mm") : "")</td>
-                                    <td class="sensitivity">@usageRecord.SensitivityCo.ToString("0.0")</td>
-                                    <td class="sensitivity">@usageRecord.SensitivityCoRSD.ToString("0.0")</td>
-                                    <td class="sensitivity">@usageRecord.SensitivityY.ToString("0.0")</td>
-                                    <td class="sensitivity">@usageRecord.SensitivityYRSD.ToString("0.0")</td>
-                                    <td class="sensitivity">@usageRecord.SensitivityTi.ToString("0.0") </td>
-                                    <td class="sensitivity">@usageRecord.SensitivityTiRSD.ToString("0.0")</td>
-                                    <td class="massResolution">@usageRecord.MassResolutionCo.ToString("0.00")</td>
-                                    <td class="massResolution">@usageRecord.MassResolutionY.ToString("0.00")</td>
-                                    <td class="massResolution">@usageRecord.MassResolutionTi.ToString("0.00")</td>
-                                    <td class="massAxis">@usageRecord.MassAxisCo.ToString("0.00")</td>
-                                    <td class="massAxis">@usageRecord.MassAxisY.ToString("0.00")</td>
-                                    <td class="massAxis">@usageRecord.MassAxisTi.ToString("0.00")</td>
-                                    <td class="oxide">@usageRecord.OxideOfCe.ToString("0.0")</td>
-                                    <td class="doubleCharge">@usageRecord.DoubleChargeOfCe.ToString("0.0")</td>
-                                    <td class="mass78">@usageRecord.Mass78.ToString("0.0")</td>
-                                    <td>@usageRecord.Operator</td>
-                                    <td class="remark">
-                                        @if (!string.IsNullOrEmpty(usageRecord.Remark))
-                                        {
-                                            @Html.DisplayFor(item => usageRecord.Remark)
-                                        }
-                                        else
-                                        {
-                                            <h6 class="text-center hide-in-screen">/</h6>
-                                        }
-                                    </td>
-                                    <td class="button">
-                                        <div class="button">
-                                            @if ((await AuthorizationService.AuthorizeAsync(User, usageRecord, Operations.Update)).Succeeded)
-                                            {
-                                                <button class="edit-btn btn btn-sm btn-outline-primary" data-id="@usageRecord.Id">编辑</button>
-                                            }
-                                            @if ((await AuthorizationService.AuthorizeAsync(User, usageRecord, Operations.Delete)).Succeeded)
-                                            {
-                                                <button class="delete-usage-record-btn btn btn-sm btn-outline-danger" data-id="@usageRecord.Id">删除</button>
-                                            }
-                                        </div>
-                                    </td>
-                                </tr>
-                                @* update-row *@
-                                <tr class="update-row">
-                                    <td class="time">
-                                        <input form="edit-form" name="id" asp-for="@usageRecord.Id" type="hidden" disabled />
-                                        <input form="edit-form" asp-for="@usageRecord.InstrumentID" type="hidden" disabled />
-                                        <input form="edit-form" asp-for="@usageRecord.ProjectName" type="hidden" disabled />
-                                        <input form="edit-form" asp-for="@usageRecord.BeginTime" required disabled />
-                                    </td>
-                                    <td class="time">
-                                        <input form="edit-form" asp-for="@usageRecord.EndTime" disabled />
-                                    </td>
-                                    <td class="sensitivity">
-                                        <input form="edit-form" type="number" min="0" step="0.1" asp-for="@usageRecord.SensitivityCo" disabled />
-                                    </td>
-                                    <td class="sensitivity">
-                                        <input form="edit-form" type="number" min="0" step="0.1" asp-for="@usageRecord.SensitivityCoRSD" disabled />
-                                    </td>
-                                    <td class="sensitivity">
-                                        <input form="edit-form" type="number" min="0" step="0.1" asp-for="@usageRecord.SensitivityY" disabled />
-                                    </td>
-                                    <td class="sensitivity">
-                                        <input form="edit-form" type="number" min="0" step="0.1" asp-for="@usageRecord.SensitivityYRSD" disabled />
-                                    </td>
-                                    <td class="sensitivity">
-                                        <input form="edit-form" type="number" min="0" step="0.1" asp-for="@usageRecord.SensitivityTi" disabled />
-                                    </td>
-                                    <td class="sensitivity">
-                                        <input form="edit-form" type="number" min="0" step="0.1" asp-for="@usageRecord.SensitivityTiRSD" disabled />
-                                    </td>
-
-                                    <td class="massResolution">
-                                        <input form="edit-form" type="number" min="0" step="0.01" asp-for="@usageRecord.MassResolutionCo" disabled />
-                                    </td>
-                                    <td class="massResolution">
-                                        <input form="edit-form" type="number" min="0" step="0.01" asp-for="@usageRecord.MassResolutionY" disabled />
-                                    </td>
-                                    <td class="massResolution">
-                                        <input form="edit-form" type="number" min="0" step="0.01" asp-for="@usageRecord.MassResolutionTi" disabled />
-                                    </td>
-
-                                    <td class="massAxis">
-                                        <input form="edit-form" type="number" min="0" step="0.01" asp-for="@usageRecord.MassAxisCo" disabled />
-                                    </td>
-                                    <td class="massAxis">
-                                        <input form="edit-form" type="number" min="0" step="0.01" asp-for="@usageRecord.MassAxisY" disabled />
-                                    </td>
-                                    <td class="massAxis">
-                                        <input form="edit-form" type="number" min="0" step="0.01" asp-for="@usageRecord.MassAxisTi" disabled />
-                                    </td>
-
-                                    <td class="oxide">
-                                        <input form="edit-form" type="number" min="0" step="0.1" asp-for="@usageRecord.OxideOfCe" disabled />
-                                    </td>
-                                    <td class="doubleCharge">
-                                        <input form="edit-form" type="number" min="0" step="0.1" asp-for="@usageRecord.DoubleChargeOfCe" disabled />
-                                    </td>
-                                    <td class="mass78">
-                                        <input form="edit-form" type="number" min="0" step="0.1" asp-for="@usageRecord.Mass78" disabled />
-                                    </td>
-                                    <td>
-                                        <input form="edit-form" asp-for="@usageRecord.Operator" required disabled />
-                                    </td>
-                                    <td class="remark">
-                                        <textarea form="edit-form" asp-for="@usageRecord.Remark" placeholder="限20字以内" disabled></textarea>
-                                    </td>
-                                    <td class="button">
-                                        <div class="button">
-                                            <button class="update-btn btn btn-sm btn-success" form="edit-form" disabled>保存</button>
-                                            <button type="button" class="cancel-btn btn btn-sm btn-secondary" disabled>取消</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            }
-
-                            @* create-row *@
-                            <tr id="create-row">
-                                <td class="time">
-                                    <input form="create-form" asp-for="UsageRecordOfYuanSu.InstrumentID" type="hidden" />
-                                    <input form="create-form" asp-for="UsageRecordOfYuanSu.ProjectName" type="hidden" />
-                                    <input form="create-form" asp-for="UsageRecordOfYuanSu.BeginTime" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" required />
-                                </td>
-                                <td class="time">
-                                    <input form="create-form" asp-for="UsageRecordOfYuanSu.EndTime" />
-                                </td>
-                                <td class="sensitivity">
-                                    <input form="create-form" type="number" min="0" step="0.1" asp-for="UsageRecordOfYuanSu.SensitivityCo" />
-                                </td>
-                                <td class="sensitivity">
-                                    <input form="create-form" type="number" min="0" step="0.1" asp-for="UsageRecordOfYuanSu.SensitivityCoRSD" />
-                                </td>
-                                <td class="sensitivity">
-                                    <input form="create-form" type="number" min="0" step="0.1" asp-for="UsageRecordOfYuanSu.SensitivityY" />
-                                </td>
-                                <td class="sensitivity">
-                                    <input form="create-form" type="number" min="0" step="0.1" asp-for="UsageRecordOfYuanSu.SensitivityYRSD" />
-                                </td>
-                                <td class="sensitivity">
-                                    <input form="create-form" type="number" min="0" step="0.1" asp-for="UsageRecordOfYuanSu.SensitivityTi" />
-                                </td>
-                                <td class="sensitivity">
-                                    <input form="create-form" type="number" min="0" step="0.1" asp-for="UsageRecordOfYuanSu.SensitivityTiRSD" />
-                                </td>
-
-                                <td class="massResolution">
-                                    <input form="create-form" type="number" min="0" step="0.01" asp-for="UsageRecordOfYuanSu.MassResolutionCo" />
-                                </td>
-                                <td class="massResolution">
-                                    <input form="create-form" type="number" min="0" step="0.01" asp-for="UsageRecordOfYuanSu.MassResolutionY" />
-                                </td>
-                                <td class="massResolution">
-                                    <input form="create-form" type="number" min="0" step="0.01" asp-for="UsageRecordOfYuanSu.MassResolutionTi" />
-                                </td>
-
-                                <td class="massAxis">
-                                    <input form="create-form" type="number" min="0" step="0.01" asp-for="UsageRecordOfYuanSu.MassAxisCo" />
-                                </td>
-                                <td class="massAxis">
-                                    <input form="create-form" type="number" min="0" step="0.01" asp-for="UsageRecordOfYuanSu.MassAxisY" />
-                                </td>
-                                <td class="massAxis">
-                                    <input form="create-form" type="number" min="0" step="0.01" asp-for="UsageRecordOfYuanSu.MassAxisTi" />
-                                </td>
-
-                                <td class="oxide">
-                                    <input form="create-form" type="number" min="0" step="0.1" asp-for="UsageRecordOfYuanSu.OxideOfCe" />
-                                </td>
-                                <td class="doubleCharge">
-                                    <input form="create-form" type="number" min="0" step="0.1" asp-for="UsageRecordOfYuanSu.DoubleChargeOfCe" />
-                                </td>
-                                <td class="mass78">
-                                    <input form="create-form" type="number" min="0" step="0.1" asp-for="UsageRecordOfYuanSu.Mass78" />
-                                </td>
-                                <td>
-                                    <input form="create-form" asp-for="UsageRecordOfYuanSu.Operator" required />
-                                </td>
-                                <td class="remark">
-                                    <textarea form="create-form" asp-for="UsageRecordOfYuanSu.Remark" placeholder="限20字以内" rows="1"></textarea>
-                                </td>
-                                <td class="button">
-                                    <button form="create-form" id="create-btn" class="btn btn-block btn-primary">新建</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <audit-trail-grouping-by-pk Logs="Model.UsageAuditTrailLogs" modal-id="usageAuditTrailLog"></audit-trail-grouping-by-pk>
-                    <button type="button" class="btn btn-outline-primary my-1" onclick="createReport()">导出</button>
-                </div>
-
-                <form id="create-form" method="post" asp-page="UsageRecordsOfYuanSu/Create" hidden></form>
-                <form id="edit-form" method="post" asp-page="UsageRecordsOfYuanSu/Edit" hidden></form>
-                <form id="delete-form" method="post" asp-page="UsageRecordsOfYuanSu/Delete" hidden></form>
-            }
             else
             {
-                @*液质维护记录*@
-                int columnNumber = 31; // 固定显示31天
-                int totalColSpan = 33;
-                string InstrumentPlatform = Model.Platform;
-                <div class="tab-pane fade table-responsive active show" id="maintenance-record" role="tabpanel" aria-labelledby="maintenance-record-tab">
-                    <table id="maintenance-record">
-                        <thead>
-                            <tr class="title">
-                                <th colspan="@totalColSpan">
-                                    <h5>
-                                        @(InstrumentPlatform == "LCMS" ? "液相色谱串联质谱联用仪维护记录表" :
+                if (Model.Search.SelectedICPMSInstrument)
+                {
+                    // 选择了ICP-MS设备
+                    @*元素项目维护记录*@
+                    int columnNumber = 31; // 固定显示31天
+                    int totalColSpan = 33;
+                    string InstrumentPlatform = Model.Platform;
+                    <div class="tab-pane fade table-responsive active show" id="maintenance-record" role="tabpanel" aria-labelledby="maintenance-record-tab">
+                        <table id="maintenance-record">
+                            <thead>
+                                <tr class="title">
+                                    <th colspan="@totalColSpan">
+                                        <h5>
+                                            @(InstrumentPlatform == "LCMS" ? "液相色谱串联质谱联用仪维护记录表" :
                                             InstrumentPlatform == "GCMS" ? "气质联用仪维护记录表" :
-                                            InstrumentPlatform == "UPLC" ? "超高效液相色谱仪维护记录表" : "_______________维护记录表")
-                                    </h5>
-                                    <h5>
-                                        @(InstrumentPlatform == "LCMS" ? "LC-MS/MS Maintenance Form" :
+                                            InstrumentPlatform == "UPLC" ? "超高效液相色谱仪维护记录表" :
+                                            InstrumentPlatform == "MS" ? "ICP-MS维护记录表" : "_______________维护记录表")
+                                        </h5>
+                                        <h5>
+                                            @(InstrumentPlatform == "LCMS" ? "LC-MS/MS Maintenance Form" :
                                             InstrumentPlatform == "GCMS" ? "GC-MS Maintenance Form" :
-                                            InstrumentPlatform == "UPLC" ? "UHPLC Maintenance Form" : "_______________Maintenance Form")
-                                    </h5>
-                                </th>
-                            </tr>
-                            <tr class="small-title">
-                                <td colspan="12" style="text-align:left;"> @Model.Search.Date.ToString(@"yyyy 年 \Year MM 月 \M\on\t\h")</td>
-                                <td colspan="10" style="text-align:left;">仪器编号 No.：@(Model.Search.Instrument)</td>
-                                <td colspan="11" style="text-align:right;">
-                                    @(InstrumentPlatform == "LCMS" ? "表号 Form：KM-SOP0314.202.02" :
+                                            InstrumentPlatform == "UPLC" ? "UHPLC Maintenance Form" :
+                                            InstrumentPlatform == "MS" ? "ICP-MS Maintenance Form" : "_______________Maintenance Form")
+                                        </h5>
+                                    </th>
+                                </tr>
+                                <tr class="small-title">
+                                    <td colspan="12" style="text-align:left;"> @Model.Search.Date.ToString(@"yyyy 年 \Year MM 月 \M\on\t\h")</td>
+                                    <td colspan="10" style="text-align:left;">仪器编号 No.：@(Model.Search.Instrument)</td>
+                                    <td colspan="11" style="text-align:right;">
+                                        @(InstrumentPlatform == "LCMS" ? "表号 Form：KM-SOP0314.202.02" :
                                         InstrumentPlatform == "GCMS" ? "表号 Form：KM-SOP0314.201.02" :
-                                        InstrumentPlatform == "UPLC" ? "表号 Form：KM-SOP0314.204.02" : "表号 Form：KM-SOP0314. _____ .02")
-                                </td>
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr class="tfoot">
-                                <td colspan="@totalColSpan" style="text-align:left;padding-left:10px;">
-                                    备注 remark：Y，该工作日已完成该项维护； N，经评估该工作日无需进行该项维护。
-                                </td>
-                            </tr>
-                            <tr class="tfoot">
-                                <td colspan="@totalColSpan">使用回顾</td>
-                            </tr>
-                            <tr class="tfoot">
-                                <td>评估意见<br />Comment</td>
-                                <td colspan="@(totalColSpan - 19)"></td>
-                                <td colspan="4">评估人/日期<br />Evaluator/Date</td>
-                                <td colspan="5"></td>
-                                <td colspan="4">审批人/日期<br />Approver/Date</td>
-                                <td colspan="5"></td>
-                            </tr>
-                        </tfoot>
-                        <tbody>
-                            <tr class="days">
-                                <td></td>
-                                <td>日期 Date</td>
-                                @for (int i = 1; i <= columnNumber; i++)
-                                {
-                                    var id = @Model.RecordsIdOfMonth[i - 1];
-                                    var daysInMonth = DateTime.DaysInMonth(Model.Search.Date.Year, Model.Search.Date.Month);
-                                    // 计算某月份的总天数，如果小于31天，多出来的那几天不显示新建，编辑，删除选项
-                                    if (i <= daysInMonth)
+                                        InstrumentPlatform == "UPLC" ? "表号 Form：KM-SOP0314.204.02" :
+                                        InstrumentPlatform == "MS" ? "表号 Form：GZKM-SOP0314.06.03" : "表号 Form：KM-SOP0314. ____.____")
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                @*<tr class="tfoot">
+                                        <td colspan="@totalColSpan">使用回顾</td>
+                                    </tr>*@
+                                <tr class="tfoot">
+                                    <td colspan="2">评估意见</td>
+                                    <td colspan="@(totalColSpan - 20)"></td>
+                                    <td colspan="4">评估者/日期</td>
+                                    <td colspan="5"></td>
+                                    <td colspan="4">审批人/日期</td>
+                                    <td colspan="5"></td>
+                                </tr>
+                                <tr class="tfoot">
+                                    <td colspan="2">备注 Remark：</td>
+                                    <td colspan="@(totalColSpan-2)" style="text-align:left;padding-left:10px;">
+                                        Y：该工作日已完成该项维护； N：经评估，该工作日无需进行该项维护。
+                                    </td>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                <tr class="days">
+                                    <td></td>
+                                    <td class="text-left pl-2">维护内容/执行日期 <br />(contents/date)</td>
+                                    @for (int i = 1; i <= columnNumber; i++)
                                     {
-                                        var selectedDate = new DateTime(Model.Search.Date.Year, Model.Search.Date.Month, i, 8, 30, 00);
-                                        <td class="days">
-                                            <span class="hide-in-screen">@i</span>
+                                        var id = @Model.RecordsIdOfMonth[i - 1];
+                                        var daysInMonth = DateTime.DaysInMonth(Model.Search.Date.Year, Model.Search.Date.Month);
+                                        // 计算某月份的总天数，如果小于31天，多出来的那几天不显示新建，编辑，删除选项
+                                        if (i <= daysInMonth)
+                                        {
+                                            var selectedDate = new DateTime(Model.Search.Date.Year, Model.Search.Date.Month, i, 8, 30, 00);
+                                            <td class="days">
+                                                <span class="hide-in-screen">@i</span>
 
-                                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                @i
-                                            </a>
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                @if (!string.IsNullOrEmpty(Model.DailyMaintenanceOperator[i - 1]))
-                                                {
-                                                    var maintenanceRecord = Model.MaintenanceRecords.SingleOrDefault(i => i.Id == int.Parse(id));
-
-                                                    @if ((await AuthorizationService.AuthorizeAsync(User, maintenanceRecord, Operations.Update)).Succeeded)
+                                                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    @i
+                                                </a>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                    @if (!string.IsNullOrEmpty(Model.DailyMaintenanceOperator[i - 1]))
                                                     {
-                                                        <a class="dropdown-item" asp-page="MaintenanceRecords/Edit" asp-route-Id="@id">编辑</a>
+                                                        var maintenanceRecord = Model.MaintenanceRecords.SingleOrDefault(i => i.Id == int.Parse(id));
+
+                                                        @if ((await AuthorizationService.AuthorizeAsync(User, maintenanceRecord, Operations.Update)).Succeeded)
+                                                        {
+                                                            <a class="dropdown-item" asp-page="MaintenanceRecordsOfYuanSu/Edit" asp-route-Id="@id">编辑</a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="dropdown-item">-</span>
+                                                        }
+                                                        @if ((await AuthorizationService.AuthorizeAsync(User, maintenanceRecord, Operations.Delete)).Succeeded)
+                                                        {
+                                                            <a class="dropdown-item delete-maintenance-record-btn" href="#" data-id="@id">删除</a>
+                                                        }
                                                     }
                                                     else
                                                     {
-                                                        <span class="dropdown-item">-</span>
+                                                        @if ((await AuthorizationService.AuthorizeAsync(User, Model.MaintenanceRecord, Operations.Create)).Succeeded)
+                                                        {
+                                                            <a class="dropdown-item"
+                                                               asp-page="MaintenanceRecordsOfYuanSu/Create"
+                                                               asp-route-instrumentId="@Model.Search.Instrument"
+                                                               asp-route-beginTime="@selectedDate.ToString("yyyy-MM-ddTHH:mm")">
+                                                                新建
+                                                            </a>
+                                                        }
                                                     }
-                                                    @if ((await AuthorizationService.AuthorizeAsync(User, maintenanceRecord, Operations.Delete)).Succeeded)
-                                                    {
-                                                        <a class="dropdown-item delete-maintenance-record-btn" href="#" data-id="@id">删除</a>
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    @if ((await AuthorizationService.AuthorizeAsync(User, Model.MaintenanceRecord, Operations.Create)).Succeeded)
-                                                    {
-                                                        <a class="dropdown-item"
-                                                           asp-page="MaintenanceRecords/Create"
-                                                           asp-route-instrumentId="@Model.Search.Instrument"
-                                                           asp-route-beginTime="@selectedDate.ToString("yyyy-MM-ddTHH:mm")">
-                                                            新建
-                                                        </a>
-                                                    }
-                                                }
-                                            </div>
-                                        </td>
-                                    }
-                                    else
-                                    {
-                                        <td class="days">
-                                            <span>@i</span>
-                                        </td>
-                                    }
-                                }
-                            </tr>
-                            <tr>
-                                <td class="left" rowspan="@(Model.DailyMaintenanceContent.Count+2)">
-                                    日常维护<br />Daily
-                                </td>
-                            </tr>
-                            @foreach (var content in Model.DailyMaintenanceContent)
-                            {
-                                <tr>
-                                    <td class="maintenance-content">@content</td>
-                                    @foreach (var yOrN in Model.DailyMaintenanceSituation[content])
-                                    {
-                                        <td>@yOrN</td>
-                                    }
-                                </tr>
-                            }
-                            <tr>
-                                <td class="operator text-bold">操作者</td>
-                                @foreach (var op in Model.DailyMaintenanceOperator)
-                                {
-                                    <td><p class="operator text-vertical">@op</p></td>
-                                }
-                            </tr>
-                            <tr>
-                                <td class="left" rowspan="@(Model.WeeklyMaintenanceContent.Count+2)">
-                                    周维护<br />Weekly
-                                </td>
-                            </tr>
-                            @{
-                                // 周维护有4个，每个维护内容占用的colspan
-                                var colSpanOfWeekly = new int[] { 7, 8, 8, 8 };
-                            }
-                            @foreach (var content in Model.WeeklyMaintenanceContent)
-                            {
-                                <tr>
-                                    <td class="maintenance-content">@content</td>
-                                    @for (int i = 0; i < colSpanOfWeekly.Length; i++)
-                                    {
-                                        var yOrN = Model.WeekyMaintenanceSituation[content][i];
-                                        <td colspan="@colSpanOfWeekly[i]">@yOrN</td>
-                                    }
-                                </tr>
-                            }
-                            <tr>
-                                <td class="operator text-bold">操作者</td>
-                                @for (int i = 0; i < colSpanOfWeekly.Length; i++)
-                                {
-                                    var op = Model.WeeklyMaintenanceOperator[i];
-                                    <td colspan="@colSpanOfWeekly[i]">@op</td>
-                                }
-                            </tr>
-                            @{
-                                var otherRowSpan = 5;
-                                var rowOfTemporary = 1;
-                                if (InstrumentPlatform == "LCMS")
-                                {
-                                    otherRowSpan = 7;
-                                    rowOfTemporary = 3;
-                                }
-                                else if (InstrumentPlatform == "GCMS")
-                                {
-                                    otherRowSpan = 10;
-                                    rowOfTemporary = 6;
-                                }
-                                else if (InstrumentPlatform == "UPLC")
-                                {
-                                    otherRowSpan = 12;
-                                    rowOfTemporary = 8;
-                                }
-                            }
-                            <tr>
-                                <td class="left" rowspan="@otherRowSpan">
-                                    其他<br />Others
-                                </td>
-                            </tr>
-                            @foreach (var tem in Model.TemporaryMaintenanceRecord)
-                            {
-                                <tr>
-                                    <td class="maintenance-content">临时维护<br />操作者/日期</td>
-                                    <td colspan="@columnNumber">
-                                        @tem
-                                    </td>
-                                </tr>
-                            }
-                            @for (int i = 1; i <= rowOfTemporary - Model.TemporaryMaintenanceRecord.Count; i++)
-                            {
-                                // 补充行
-                                <tr>
-                                    <td class="maintenance-content">临时维护<br />操作者/日期</td>
-                                    <td colspan="@columnNumber"></td>
-                                </tr>
-                            }
-                            <tr>
-                                <td class="maintenance-content">月度维护<br />操作者/日期</td>
-                                <td colspan="@columnNumber">@Model.MonthlyMaintenanceRecord</td>
-                            </tr>
-                            <tr>
-                                <td class="maintenance-content">季度维护<br />操作者/日期</td>
-                                <td colspan="@columnNumber">@Model.QuarterlyMaintenanceRecord</td>
-                            </tr>
-                            <tr>
-                                <td class="maintenance-content">年度维护<br />操作者/日期</td>
-                                <td colspan="@columnNumber">@Model.YearlyMaintenanceRecord</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <audit-trail-grouping-by-pk Logs="Model.MaintenanceAuditTrailLogs" modal-id="maintenanceAuditTrailLog"></audit-trail-grouping-by-pk>
-                    <button type="button" class="btn btn-outline-primary my-1" onclick="createReport()">导出</button>
-                </div>
-
-                @*液质使用记录*@
-                string emptyValue = "N/A";
-                <div id="usage-record" class="tab-pane fade table-responsive" role="tabpanel" aria-labelledby="usage-record-tab">
-                    <table id="usage-record">
-                        <colgroup>
-                            <col class="time">
-                            <col class="time">
-                            <col class="projectname">
-                            <col class="columnnumber">
-                            <col class="mobilephase">
-                            <col class="samplenumber">
-                            <col class="batchnumber">
-                            <col class="column">
-                            <col class="ionsource">
-                            <col class="detector">
-                            <col class="vacuumdegree">
-                            <col class="blank">
-                            <col class="test">
-                            <col class="operator">
-                            <col class="remark">
-                            <col class="button">
-                        </colgroup>
-                        <thead class="text-nowrap">
-                            <tr class="title">
-                                <th colspan="13">
-                                    <h5>色谱质谱联用设备使用通用记录表</h5>
-                                    <h5>UHPLC, LC-MS/MS, GC-MS Use Form</h5>
-                                </th>
-                            </tr>
-                            <tr class="small-title">
-                                <td colspan="6" class="text-left">仪器编号：@(Model.Search?.Instrument)&nbsp; 仪器型号：@(Model.InstrumentModel)</td>
-                                <td colspan="6" class="text-right">KM-SOP0314.202.01</td>
-                            </tr>
-                            <tr class="head">
-                                <td class="time">
-                                    开始时间<br />
-                                    Start up time
-                                </td>
-                                <td class="time">
-                                    结束时间<br />
-                                    Shut down time
-                                </td>
-                                <td class="projectname">
-                                    检测项目<br />
-                                    Test Item
-                                </td>
-                                <td class="columnnumber">
-                                    色谱柱编号<br />
-                                    Column number
-                                </td>
-                                <td class="mobilephase" style="text-align:left;padding-left:10px;">
-                                    <i class="far fa-@(Model.MobilePhaseOrCarrierGas == "mobilephase" ? "check-" : "")square" aria-hidden="true"></i>
-                                    流动相<br />
-                                    Liquid phase<br />
-                                    <i class="far fa-@(Model.MobilePhaseOrCarrierGas == "gas" ? "check-" : "")square" aria-hidden="true"></i>
-                                    载气<br />
-                                    Carrier Gas
-                                </td>
-                                <td class="samplenumber">临床样数量</td>
-                                <td class="batchnumber">Batch样品量</td>
-                                <td class="column" style="text-align:left;padding-left:10px;">
-                                    压力<br />
-                                    Pressure<br />
-                                    <i class="far fa-@(Model.ColumnPressureUnit == "PSI" ? "check-" : "")square" aria-hidden="true"></i> PSI<br />
-                                    <i class="far fa-@(Model.ColumnPressureUnit == "Bar" ? "check-" : "")square" aria-hidden="true"></i> Bar<br />
-                                    <i class="far fa-@(Model.ColumnPressureUnit == "MPa" ? "check-" : "")square" aria-hidden="true"></i> MPa<br />
-                                    <i class="far fa-@(Model.ColumnPressureUnit == "kPa" ? "check-" : "")square" aria-hidden="true"></i> kPa
-                                </td>
-                                <td class="ionsource">
-                                    离子源<br />
-                                    Ion Source
-                                </td>
-                                <td class="detector">
-                                    检测器<br />
-                                    Detector
-                                </td>
-                                <td class="vacuumdegree" style="text-align:left;padding-left:10px;">
-                                    真空度<br />
-                                    Vacuum<br />
-                                    <i class="far fa-@(Model.VacuumDegreeUnit.Contains("torr") ? "check-" : "")square" aria-hidden="true"></i> torr<br />
-                                    <i class="far fa-@(Model.VacuumDegreeUnit.Contains("Pa") ? "check-" : "")square" aria-hidden="true"></i> Pa
-                                </td>
-                                <td class="blank">
-                                    空白<br />
-                                    Blank
-                                </td>
-                                <td class="test">
-                                    信号<br />
-                                    Signal
-                                </td>
-                                <td>
-                                    操作者<br />
-                                    Operator
-                                </td>
-                                <td>
-                                    备注<br />
-                                    Remark
-                                </td>
-                                <td class="button">&nbsp;</td>
-                            </tr>
-                            <tr class="view-head">
-                                <td class="time">
-                                    开始时间
-                                </td>
-                                <td class="time">
-                                    结束时间
-                                </td>
-                                <td class="projectname">
-                                    检测项目
-                                </td>
-                                <td class="columnnumber">
-                                    色谱柱编号
-                                </td>
-                                <td class="mobilephase">
-                                    流动相/载气
-                                </td>
-                                <td class="samplenumber">
-                                    临床样数量
-                                </td>
-                                <td class="batchnumber">
-                                    Batch样品量
-                                </td>
-                                <td class="column">
-                                    色谱柱编号/压力（@Model.ColumnPressureUnit）
-                                </td>
-                                <td class="ionsource">
-                                    离子源
-                                </td>
-                                <td class="detector">
-                                    检测器
-                                </td>
-                                <td class="vacuumdegree">
-                                    真空度（@Model.VacuumDegreeUnit）
-                                </td>
-                                <td class="blank">
-                                    Blank信号
-                                </td>
-                                <td class="test">
-                                    Test信号
-                                </td>
-                                <td>
-                                    操作者
-                                </td>
-                                <td class="">
-                                    备注
-                                </td>
-                                <td class="button">&nbsp;</td>
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr class="total">
-                                <td colspan="12" style="text-align:left;padding-left:10px;">
-                                    总计：
-                                    使用时长：@Model.TotalHours.ToString("F1") 小时，
-                                    临床样数量：@Model.TotalSampleNumber 个，
-                                    Batch样品量：@Model.TotalBatchNumber 个
-                                    @if (Model.TotalS2BatchNumber != 0)
-                                    {
-                                        <text>（其中S1 Batch样品量：@Model.TotalS1BatchNumber 个，S2 Batch样品量：@Model.TotalS2BatchNumber 个）。</text>
-                                    }
-                                </td>
-                            </tr>
-                            <tr class="tfoot">
-                                <td colspan="13" style="text-align:left;padding-left:10px;">
-                                    说明：
-                                    <ol>
-                                        <li>
-                                            流动相/载气：@string.Join(" ", Model.MobilePhaseList).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
-                                        </li>
-                                        <li>
-                                            色谱柱编号：@string.Join(" ", Model.ColumnTypeList).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
-                                        </li>
-                                        <li>
-                                            离子源：@string.Join(" ", Model.IonSourceList).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
-                                        </li>
-                                        <li>
-                                            检测器：@string.Join(" ", Model.DetectorList).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
-                                        </li>
-                                    </ol>
-                                </td>
-                            </tr>
-                            <tr class="tfoot">
-                                <td colspan="13" class="text-center border border-dark">
-                                    使用回顾
-                                </td>
-                            </tr>
-                            <tr class="tfoot">
-                                <td colspan="2">
-                                    评估意见：<br />
-                                    (Evaluator comments)
-                                </td>
-                                <td colspan="3"></td>
-                                <td colspan="2">
-                                    评估人/日期<br />
-                                    (Evaluator/Date)
-                                </td>
-                                <td colspan="2"></td>
-                                <td colspan="2">
-                                    审批人/日期<br />
-                                    (Approver/Date)
-                                </td>
-                                <td colspan="2"></td>
-                            </tr>
-                        </tfoot>
-                        <tbody>
-                            @{
-                                string GetKeyByValue(Dictionary<char, string> dic, string value)
-                                {
-                                    // 字典里是所有记录的值,没有数据表示不适用,返回N/A
-                                    if (dic.Count == 0) return emptyValue;
-                                    string key = string.Empty;
-                                    if (string.IsNullOrEmpty(value)) return key;
-
-                                    foreach (KeyValuePair<char, string> kvp in dic)
-                                    {
-                                        if (value.Contains(kvp.Value))
-                                        {
-                                            key += " | " + kvp.Key;
-                                        }
-                                    }
-                                    return key.Substring(2);
-                                }
-                            }
-                            @foreach (var usageRecord in Model.UsageRecords)
-                            {
-                                @* view row *@
-                                <tr class="view-row">
-                                    <td class="time">@Html.DisplayFor(item => usageRecord.BeginTime)</td>
-                                    <td class="time">@Html.DisplayFor(item => usageRecord.EndTime)</td>
-                                    <td class="projectname">@Html.DisplayFor(item => usageRecord.ProjectName)</td>
-                                    <td class="columnnumber">
-                                        @if (!string.IsNullOrEmpty(usageRecord.ColumnType))
-                                        {
-                                            @GetKeyByValue(Model.ColumnTypeList, usageRecord.ColumnType)
+                                                </div>
+                                            </td>
                                         }
                                         else
                                         {
-                                            <span>@emptyValue</span>
+                                            <td class="days">
+                                                <span>@i</span>
+                                            </td>
                                         }
-                                        @*@if (usageRecord.SystemOneColumnNumber != null && usageRecord.SystemTwoColumnNumber != null)
+                                    }
+                                </tr>
+                                <tr>
+                                    <td class="left" rowspan="@(Model.DailyMaintenanceContent.Count+2)">
+                                        日维护<br />Daily<br />maintenance
+                                    </td>
+                                </tr>
+                                @foreach (var content in Model.DailyMaintenanceContent)
+                                {
+                                    <tr>
+                                        <td class="maintenance-content">@content</td>
+                                        @foreach (var yOrN in Model.DailyMaintenanceSituation[content])
+                                        {
+                                            <td>@yOrN</td>
+                                        }
+                                    </tr>
+                                }
+                                <tr>
+                                    <td class="operator">操作者(operator)</td>
+                                    @foreach (var op in Model.DailyMaintenanceOperator)
+                                    {
+                                        <td><p class="operator text-vertical">@op</p></td>
+                                    }
+                                </tr>
+                                <tr>
+                                    <td class="left" rowspan="4">
+                                        月维护<br />Monthly<br />maintenance
+                                    </td>
+                                </tr>
+                                @{
+                                    // 4个维护内容占用的colspan
+                                    var colSpanOfWeekly = new int[] { 7, 8, 8, 8 };
+                                    var monthlyContent = new string[] { "清洗采样锥/截取锥", "更换内标管/进样管", "清洗采样锥/截取锥", "清洗六通阀(7900)" };
+                                }
+                                @*@foreach (var content in Model.WeeklyMaintenanceContent)
+        {
+            <tr>
+                <td class="maintenance-content">@content</td>
+                @for (int i = 0; i < colSpanOfWeekly.Length; i++)
+                {
+                    var yOrN = Model.WeekyMaintenanceSituation[content][i];
+                    <td colspan="@colSpanOfWeekly[i]">@yOrN</td>
+                }
+            </tr>
+        }*@
+                                <tr>
+                                    <td class="text-left pl-2">维护内容(content)</td>
+                                    @for (int i = 0; i < monthlyContent.Length; i++)
+                                    {
+                                        var content = monthlyContent[i];
+                                        <td colspan="@colSpanOfWeekly[i]">@content</td>
+                                    }
+                                </tr>
+                                <tr>
+                                    <td class="text-left pl-2">日期(date)</td>
+                                    @for (int i = 0; i < monthlyContent.Length; i++)
+                                    {
+                                        var date = "Date";
+                                        <td colspan="@colSpanOfWeekly[i]">@date</td>
+                                    }
+                                </tr>
+                                <tr>
+                                    <td class="operator">操作者(operator)</td>
+                                    @for (int i = 0; i < colSpanOfWeekly.Length; i++)
+                                    {
+                                        var op = "Operator";
+                                        <td colspan="@colSpanOfWeekly[i]">@op</td>
+                                    }
+                                </tr>
+
+                                <tr>
+                                    <td class="left" rowspan="4">
+                                        临时维护<br />Temporary<br />maintenance
+                                    </td>
+                                </tr>
+                                @{
+                                    // 4个维护内容占用的colspan
+                                    var colSpanOfTemporary = new int[] { 7, 8, 8, 8 };
+                                }
+                                <tr>
+                                    <td class="text-left pl-2">维护内容(content)</td>
+                                    @for (int i = 0; i < monthlyContent.Length; i++)
+                                    {
+                                        var content = "Content";
+                                        <td colspan="@colSpanOfTemporary[i]">@content</td>
+                                    }
+                                </tr>
+                                <tr>
+                                    <td class="text-left pl-2">日期(date)</td>
+                                    @for (int i = 0; i < monthlyContent.Length; i++)
+                                    {
+                                        var date = "Date";
+                                        <td colspan="@colSpanOfTemporary[i]">@date</td>
+                                    }
+                                </tr>
+                                <tr>
+                                    <td class="operator">操作者(operator)</td>
+                                    @for (int i = 0; i < colSpanOfTemporary.Length; i++)
+                                    {
+                                        var op = "Operator";
+                                        <td colspan="@colSpanOfTemporary[i]">@op</td>
+                                    }
+                                </tr>
+
+                                @*@{
+                                    var otherRowSpan = 5;
+                                    var rowOfTemporary = 1;
+                                    if (InstrumentPlatform == "LCMS")
+                                    {
+                                        otherRowSpan = 7;
+                                        rowOfTemporary = 3;
+                                    }
+                                    else if (InstrumentPlatform == "GCMS")
+                                    {
+                                        otherRowSpan = 10;
+                                        rowOfTemporary = 6;
+                                    }
+                                    else if (InstrumentPlatform == "UPLC")
+                                    {
+                                        otherRowSpan = 12;
+                                        rowOfTemporary = 8;
+                                    }
+                                }*@
+                                <tr>
+                                    <td class="left" rowspan="3">
+                                        半年维护<br />Half-yearly<br />maintenance
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">仪器除尘<br />操作者/日期</td>
+                                    <td colspan="13"></td>
+                                    <td colspan="4">循环水机换水<br />操作者/日期</td>
+                                    <td colspan="13"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">机械泵维护<br />操作者/日期</td>
+                                    <td colspan="13"></td>
+                                    <td colspan="4">清洗透镜<br />操作者/日期</td>
+                                    <td colspan="13"></td>
+                                </tr>
+
+                                @*@foreach (var tem in Model.TemporaryMaintenanceRecord)
+                                {
+                                    <tr>
+                                        <td class="maintenance-content">临时维护<br />操作者/日期</td>
+                                        <td colspan="@columnNumber">
+                                            @tem
+                                        </td>
+                                    </tr>
+                                }
+                                @for (int i = 1; i <= rowOfTemporary - Model.TemporaryMaintenanceRecord.Count; i++)
+                                {
+                                    // 补充行
+                                    <tr>
+                                        <td class="maintenance-content">临时维护<br />操作者/日期</td>
+                                        <td colspan="@columnNumber"></td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <td class="maintenance-content">月度维护<br />操作者/日期</td>
+                                    <td colspan="@columnNumber">@Model.MonthlyMaintenanceRecord</td>
+                                </tr>
+                                <tr>
+                                    <td class="maintenance-content">季度维护<br />操作者/日期</td>
+                                    <td colspan="@columnNumber">@Model.QuarterlyMaintenanceRecord</td>
+                                </tr>
+                                <tr>
+                                    <td class="maintenance-content">年度维护<br />操作者/日期</td>
+                                    <td colspan="@columnNumber">@Model.YearlyMaintenanceRecord</td>
+                                </tr>*@
+                            </tbody>
+                        </table>
+                        <audit-trail-grouping-by-pk Logs="Model.MaintenanceAuditTrailLogs" modal-id="maintenanceAuditTrailLog"></audit-trail-grouping-by-pk>
+                        <button type="button" class="btn btn-outline-primary my-1" onclick="createReport()">导出</button>
+                    </div>
+
+                    @*元素项目使用记录*@
+                    <div id="usage-record" class="tab-pane fade table-responsive" role="tabpanel" aria-labelledby="usage-record-tab">
+                        <table id="usage-record">
+                            <colgroup>
+                                <col class="time">
+                                <col class="time">
+                                <col class="sensitivity">
+                                <col class="sensitivity">
+                                <col class="sensitivity">
+                                <col class="sensitivity">
+                                <col class="sensitivity">
+                                <col class="sensitivity">
+                                <col class="massResolution">
+                                <col class="massResolution">
+                                <col class="massResolution">
+                                <col class="massAxis">
+                                <col class="massAxis">
+                                <col class="massAxis">
+                                <col class="oxide">
+                                <col class="doubleCharge">
+                                <col class="mass78">
+                                <col class="operator">
+                                <col class="remark">
+                                <col class="button">
+                            </colgroup>
+                            <thead>
+                                <tr class="title">
+                                    <th colspan="19">
+                                        <h5>Agilent 7900 ICP-MS 使用记录表(He模式)</h5>
+                                        <h5>Agilent 7900 ICP-MS Use Form</h5>
+                                    </th>
+                                </tr>
+                                <tr class="small-title">
+                                    <td colspan="10" class="text-left">仪器编号(Instrument No.)：@(Model.Search?.Instrument)</td>
+                                    <td colspan="9" class="text-right">表号(Form)：GZKM-SOP0314.06.01</td>
+                                </tr>
+                                <tr>
+                                    <td class="time" rowspan="2">
+                                        开始时间<br />
+                                        Start up time
+                                    </td>
+                                    <td class="time" rowspan="2">
+                                        结束时间<br />
+                                        Shut down time
+                                    </td>
+                                    <td colspan="6">
+                                        灵敏度(10<sup>4</sup>cps)<br />
+                                        Sensitivity
+                                    </td>
+                                    <td colspan="3">
+                                        分辨率<br />
+                                        Mass Resolution
+                                    </td>
+                                    <td colspan="3">
+                                        质量轴(amu)<br />
+                                        Mass Axis
+                                    </td>
+                                    <td rowspan="2">
+                                        CeO/Ce<br />
+                                        (%)
+                                    </td>
+                                    <td rowspan="2">
+                                        Ce<sup>2+</sup>/Ce<br />
+                                        (%)
+                                    </td>
+                                    <td rowspan="2">
+                                        Mass<br />
+                                        78
+                                    </td>
+                                    <td rowspan="2">
+                                        操作者<br />
+                                        Operator
+                                    </td>
+                                    <td rowspan="2">
+                                        备注<br />
+                                        Remark
+                                    </td>
+                                    <td class="button" rowspan="2">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Co(59)
+                                    </td>
+                                    <td class="sensitivityRSD">
+                                        RSD(%)
+                                    </td>
+                                    <td>
+                                        Y(89)
+                                    </td>
+                                    <td class="sensitivityRSD">
+                                        RSD(%)
+                                    </td>
+                                    <td>
+                                        Ti(205)
+                                    </td>
+                                    <td class="sensitivityRSD">
+                                        RSD(%)
+                                    </td>
+                                    <td>
+                                        Co(59)
+                                    </td>
+                                    <td>
+                                        Y(89)
+                                    </td>
+                                    <td>
+                                        Ti(205)
+                                    </td>
+                                    <td>
+                                        Co(59)
+                                    </td>
+                                    <td>
+                                        Y(89)
+                                    </td>
+                                    <td>
+                                        Ti(205)
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr class="tfoot">
+                                    <td colspan="2">
+                                        评估意见：<br />
+                                        (Evaluator comments)
+                                    </td>
+                                    <td colspan="6"></td>
+                                    <td colspan="2">
+                                        评估人/日期<br />
+                                        (Evaluator/Date)
+                                    </td>
+                                    <td colspan="4"></td>
+                                    <td colspan="2">
+                                        审批人/日期<br />
+                                        (Approver/Date)
+                                    </td>
+                                    <td colspan="3"></td>
+                                </tr>
+                                <tr class="tfoot">
+                                    <td colspan="2">
+                                        备注<br />
+                                        Remark
+                                    </td>
+                                    <td colspan="17">
+                                        调谐参数要求(0.1秒，10.0ppb 调谐液，单管)：
+                                        A.灵敏度(He Mode)：Co(59) ≥ 10,000，Y(89) ≥ 10,000，Ti(205) ≥ 10,000；
+                                        B.分辨率(at 10%)：0.65 ~ 0.80；
+                                        C.质量轴：±0.05amu；
+                                        D.氧化物：CeO/Ce ≤ 3.0%；
+                                        E.双电荷：Ce<sup>2+</sup>/Ce ≤ 3.0%；
+                                        F.Mass 78 ≤ 4；
+                                        G.RSD ≤ 5.0%；
+                                    </td>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                @* view-row *@
+                                @foreach (var usageRecord in Model.ListOfYuanSuUsageRecord)
+                                {
+                                    <tr class="view-row">
+                                        <td class="time">@usageRecord.BeginTime.GetValueOrDefault().ToString("yyyy-MM-dd HH:mm")</td>
+                                        <td class="time">@(usageRecord.EndTime != null ? usageRecord.EndTime.GetValueOrDefault().ToString("yyyy-MM-dd HH:mm") : "")</td>
+                                        <td class="sensitivity">@usageRecord.SensitivityCo.ToString("0.0")</td>
+                                        <td class="sensitivity">@usageRecord.SensitivityCoRSD.ToString("0.0")</td>
+                                        <td class="sensitivity">@usageRecord.SensitivityY.ToString("0.0")</td>
+                                        <td class="sensitivity">@usageRecord.SensitivityYRSD.ToString("0.0")</td>
+                                        <td class="sensitivity">@usageRecord.SensitivityTi.ToString("0.0") </td>
+                                        <td class="sensitivity">@usageRecord.SensitivityTiRSD.ToString("0.0")</td>
+                                        <td class="massResolution">@usageRecord.MassResolutionCo.ToString("0.00")</td>
+                                        <td class="massResolution">@usageRecord.MassResolutionY.ToString("0.00")</td>
+                                        <td class="massResolution">@usageRecord.MassResolutionTi.ToString("0.00")</td>
+                                        <td class="massAxis">@usageRecord.MassAxisCo.ToString("0.00")</td>
+                                        <td class="massAxis">@usageRecord.MassAxisY.ToString("0.00")</td>
+                                        <td class="massAxis">@usageRecord.MassAxisTi.ToString("0.00")</td>
+                                        <td class="oxide">@usageRecord.OxideOfCe.ToString("0.0")</td>
+                                        <td class="doubleCharge">@usageRecord.DoubleChargeOfCe.ToString("0.0")</td>
+                                        <td class="mass78">@usageRecord.Mass78.ToString("0.0")</td>
+                                        <td>@usageRecord.Operator</td>
+                                        <td class="remark">
+                                            @if (!string.IsNullOrEmpty(usageRecord.Remark))
                                             {
-                                                <text>S1：</text>
-                                                @GetKeyByValue(Model.ColumnNumberList, usageRecord.SystemOneColumnNumber)
-                                                <br />
-                                                <text>S2：</text>
-                                                @GetKeyByValue(Model.ColumnNumberList, usageRecord.SystemTwoColumnNumber)
+                                                @Html.DisplayFor(item => usageRecord.Remark)
                                             }
-                                            else if (usageRecord.SystemOneColumnNumber != null)
+                                            else
                                             {
-                                                @GetKeyByValue(Model.ColumnNumberList, usageRecord.SystemOneColumnNumber)
+                                                <h6 class="text-center hide-in-screen">/</h6>
                                             }
-                                            else if (usageRecord.SystemTwoColumnNumber != null)
+                                        </td>
+                                        <td class="button">
+                                            <div class="button">
+                                                @if ((await AuthorizationService.AuthorizeAsync(User, usageRecord, Operations.Update)).Succeeded)
+                                                {
+                                                    <button class="edit-btn btn btn-sm btn-outline-primary" data-id="@usageRecord.Id">编辑</button>
+                                                }
+                                                @if ((await AuthorizationService.AuthorizeAsync(User, usageRecord, Operations.Delete)).Succeeded)
+                                                {
+                                                    <button class="delete-usage-record-btn btn btn-sm btn-outline-danger" data-id="@usageRecord.Id">删除</button>
+                                                }
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @* update-row *@
+                                    <tr class="update-row">
+                                        <td class="time">
+                                            <input form="edit-form" name="id" asp-for="@usageRecord.Id" type="hidden" disabled />
+                                            <input form="edit-form" asp-for="@usageRecord.InstrumentID" type="hidden" disabled />
+                                            <input form="edit-form" asp-for="@usageRecord.ProjectName" type="hidden" disabled />
+                                            <input form="edit-form" asp-for="@usageRecord.BeginTime" required disabled />
+                                        </td>
+                                        <td class="time">
+                                            <input form="edit-form" asp-for="@usageRecord.EndTime" disabled />
+                                        </td>
+                                        <td class="sensitivity">
+                                            <input form="edit-form" type="number" min="0" step="0.1" asp-for="@usageRecord.SensitivityCo" disabled />
+                                        </td>
+                                        <td class="sensitivity">
+                                            <input form="edit-form" type="number" min="0" step="0.1" asp-for="@usageRecord.SensitivityCoRSD" disabled />
+                                        </td>
+                                        <td class="sensitivity">
+                                            <input form="edit-form" type="number" min="0" step="0.1" asp-for="@usageRecord.SensitivityY" disabled />
+                                        </td>
+                                        <td class="sensitivity">
+                                            <input form="edit-form" type="number" min="0" step="0.1" asp-for="@usageRecord.SensitivityYRSD" disabled />
+                                        </td>
+                                        <td class="sensitivity">
+                                            <input form="edit-form" type="number" min="0" step="0.1" asp-for="@usageRecord.SensitivityTi" disabled />
+                                        </td>
+                                        <td class="sensitivity">
+                                            <input form="edit-form" type="number" min="0" step="0.1" asp-for="@usageRecord.SensitivityTiRSD" disabled />
+                                        </td>
+
+                                        <td class="massResolution">
+                                            <input form="edit-form" type="number" min="0" step="0.01" asp-for="@usageRecord.MassResolutionCo" disabled />
+                                        </td>
+                                        <td class="massResolution">
+                                            <input form="edit-form" type="number" min="0" step="0.01" asp-for="@usageRecord.MassResolutionY" disabled />
+                                        </td>
+                                        <td class="massResolution">
+                                            <input form="edit-form" type="number" min="0" step="0.01" asp-for="@usageRecord.MassResolutionTi" disabled />
+                                        </td>
+
+                                        <td class="massAxis">
+                                            <input form="edit-form" type="number" min="0" step="0.01" asp-for="@usageRecord.MassAxisCo" disabled />
+                                        </td>
+                                        <td class="massAxis">
+                                            <input form="edit-form" type="number" min="0" step="0.01" asp-for="@usageRecord.MassAxisY" disabled />
+                                        </td>
+                                        <td class="massAxis">
+                                            <input form="edit-form" type="number" min="0" step="0.01" asp-for="@usageRecord.MassAxisTi" disabled />
+                                        </td>
+
+                                        <td class="oxide">
+                                            <input form="edit-form" type="number" min="0" step="0.1" asp-for="@usageRecord.OxideOfCe" disabled />
+                                        </td>
+                                        <td class="doubleCharge">
+                                            <input form="edit-form" type="number" min="0" step="0.1" asp-for="@usageRecord.DoubleChargeOfCe" disabled />
+                                        </td>
+                                        <td class="mass78">
+                                            <input form="edit-form" type="number" min="0" step="0.1" asp-for="@usageRecord.Mass78" disabled />
+                                        </td>
+                                        <td>
+                                            <input form="edit-form" asp-for="@usageRecord.Operator" required disabled />
+                                        </td>
+                                        <td class="remark">
+                                            <textarea form="edit-form" asp-for="@usageRecord.Remark" placeholder="限20字以内" disabled></textarea>
+                                        </td>
+                                        <td class="button">
+                                            <div class="button">
+                                                <button class="update-btn btn btn-sm btn-success" form="edit-form" disabled>保存</button>
+                                                <button type="button" class="cancel-btn btn btn-sm btn-secondary" disabled>取消</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+
+                                @* create-row *@
+                                <tr id="create-row">
+                                    <td class="time">
+                                        <input form="create-form" asp-for="UsageRecordOfYuanSu.InstrumentID" type="hidden" />
+                                        <input form="create-form" asp-for="UsageRecordOfYuanSu.ProjectName" type="hidden" />
+                                        <input form="create-form" asp-for="UsageRecordOfYuanSu.BeginTime" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" required />
+                                    </td>
+                                    <td class="time">
+                                        <input form="create-form" asp-for="UsageRecordOfYuanSu.EndTime" />
+                                    </td>
+                                    <td class="sensitivity">
+                                        <input form="create-form" type="number" min="0" step="0.1" asp-for="UsageRecordOfYuanSu.SensitivityCo" />
+                                    </td>
+                                    <td class="sensitivity">
+                                        <input form="create-form" type="number" min="0" step="0.1" asp-for="UsageRecordOfYuanSu.SensitivityCoRSD" />
+                                    </td>
+                                    <td class="sensitivity">
+                                        <input form="create-form" type="number" min="0" step="0.1" asp-for="UsageRecordOfYuanSu.SensitivityY" />
+                                    </td>
+                                    <td class="sensitivity">
+                                        <input form="create-form" type="number" min="0" step="0.1" asp-for="UsageRecordOfYuanSu.SensitivityYRSD" />
+                                    </td>
+                                    <td class="sensitivity">
+                                        <input form="create-form" type="number" min="0" step="0.1" asp-for="UsageRecordOfYuanSu.SensitivityTi" />
+                                    </td>
+                                    <td class="sensitivity">
+                                        <input form="create-form" type="number" min="0" step="0.1" asp-for="UsageRecordOfYuanSu.SensitivityTiRSD" />
+                                    </td>
+
+                                    <td class="massResolution">
+                                        <input form="create-form" type="number" min="0" step="0.01" asp-for="UsageRecordOfYuanSu.MassResolutionCo" />
+                                    </td>
+                                    <td class="massResolution">
+                                        <input form="create-form" type="number" min="0" step="0.01" asp-for="UsageRecordOfYuanSu.MassResolutionY" />
+                                    </td>
+                                    <td class="massResolution">
+                                        <input form="create-form" type="number" min="0" step="0.01" asp-for="UsageRecordOfYuanSu.MassResolutionTi" />
+                                    </td>
+
+                                    <td class="massAxis">
+                                        <input form="create-form" type="number" min="0" step="0.01" asp-for="UsageRecordOfYuanSu.MassAxisCo" />
+                                    </td>
+                                    <td class="massAxis">
+                                        <input form="create-form" type="number" min="0" step="0.01" asp-for="UsageRecordOfYuanSu.MassAxisY" />
+                                    </td>
+                                    <td class="massAxis">
+                                        <input form="create-form" type="number" min="0" step="0.01" asp-for="UsageRecordOfYuanSu.MassAxisTi" />
+                                    </td>
+
+                                    <td class="oxide">
+                                        <input form="create-form" type="number" min="0" step="0.1" asp-for="UsageRecordOfYuanSu.OxideOfCe" />
+                                    </td>
+                                    <td class="doubleCharge">
+                                        <input form="create-form" type="number" min="0" step="0.1" asp-for="UsageRecordOfYuanSu.DoubleChargeOfCe" />
+                                    </td>
+                                    <td class="mass78">
+                                        <input form="create-form" type="number" min="0" step="0.1" asp-for="UsageRecordOfYuanSu.Mass78" />
+                                    </td>
+                                    <td>
+                                        <input form="create-form" asp-for="UsageRecordOfYuanSu.Operator" required />
+                                    </td>
+                                    <td class="remark">
+                                        <textarea form="create-form" asp-for="UsageRecordOfYuanSu.Remark" placeholder="限20字以内" rows="1"></textarea>
+                                    </td>
+                                    <td class="button">
+                                        <button form="create-form" id="create-btn" class="btn btn-block btn-primary">新建</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <audit-trail-grouping-by-pk Logs="Model.UsageAuditTrailLogs" modal-id="usageAuditTrailLog"></audit-trail-grouping-by-pk>
+                        <button type="button" class="btn btn-outline-primary my-1" onclick="createReport()">导出</button>
+                    </div>
+
+                    <form id="create-form" method="post" asp-page="UsageRecordsOfYuanSu/Create" hidden></form>
+                    <form id="edit-form" method="post" asp-page="UsageRecordsOfYuanSu/Edit" hidden></form>
+                    <form id="delete-form" method="post" asp-page="UsageRecordsOfYuanSu/Delete" hidden></form>
+                }
+                else
+                {
+                    @*液质维护记录*@
+                    int columnNumber = 31; // 固定显示31天
+                    int totalColSpan = 33;
+                    string InstrumentPlatform = Model.Platform;
+                    <div class="tab-pane fade table-responsive active show" id="maintenance-record" role="tabpanel" aria-labelledby="maintenance-record-tab">
+                        <table id="maintenance-record">
+                            <thead>
+                                <tr class="title">
+                                    <th colspan="@totalColSpan">
+                                        <h5>
+                                            @(InstrumentPlatform == "LCMS" ? "液相色谱串联质谱联用仪维护记录表" :
+                                            InstrumentPlatform == "GCMS" ? "气质联用仪维护记录表" :
+                                            InstrumentPlatform == "UPLC" ? "超高效液相色谱仪维护记录表" : "_______________维护记录表")
+                                        </h5>
+                                        <h5>
+                                            @(InstrumentPlatform == "LCMS" ? "LC-MS/MS Maintenance Form" :
+                                            InstrumentPlatform == "GCMS" ? "GC-MS Maintenance Form" :
+                                            InstrumentPlatform == "UPLC" ? "UHPLC Maintenance Form" : "_______________Maintenance Form")
+                                        </h5>
+                                    </th>
+                                </tr>
+                                <tr class="small-title">
+                                    <td colspan="12" style="text-align:left;"> @Model.Search.Date.ToString(@"yyyy 年 \Year MM 月 \M\on\t\h")</td>
+                                    <td colspan="10" style="text-align:left;">仪器编号 No.：@(Model.Search.Instrument)</td>
+                                    <td colspan="11" style="text-align:right;">
+                                        @(InstrumentPlatform == "LCMS" ? "表号 Form：KM-SOP0314.202.02" :
+                                        InstrumentPlatform == "GCMS" ? "表号 Form：KM-SOP0314.201.02" :
+                                        InstrumentPlatform == "UPLC" ? "表号 Form：KM-SOP0314.204.02" : "表号 Form：KM-SOP0314. _____ .02")
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr class="tfoot">
+                                    <td colspan="@totalColSpan" style="text-align:left;padding-left:10px;">
+                                        备注 remark：Y，该工作日已完成该项维护； N，经评估该工作日无需进行该项维护。
+                                    </td>
+                                </tr>
+                                <tr class="tfoot">
+                                    <td colspan="@totalColSpan">使用回顾</td>
+                                </tr>
+                                <tr class="tfoot">
+                                    <td>评估意见<br />Comment</td>
+                                    <td colspan="@(totalColSpan - 19)"></td>
+                                    <td colspan="4">评估人/日期<br />Evaluator/Date</td>
+                                    <td colspan="5"></td>
+                                    <td colspan="4">审批人/日期<br />Approver/Date</td>
+                                    <td colspan="5"></td>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                <tr class="days">
+                                    <td></td>
+                                    <td>日期 Date</td>
+                                    @for (int i = 1; i <= columnNumber; i++)
+                                    {
+                                        var id = @Model.RecordsIdOfMonth[i - 1];
+                                        var daysInMonth = DateTime.DaysInMonth(Model.Search.Date.Year, Model.Search.Date.Month);
+                                        // 计算某月份的总天数，如果小于31天，多出来的那几天不显示新建，编辑，删除选项
+                                        if (i <= daysInMonth)
+                                        {
+                                            var selectedDate = new DateTime(Model.Search.Date.Year, Model.Search.Date.Month, i, 8, 30, 00);
+                                            <td class="days">
+                                                <span class="hide-in-screen">@i</span>
+
+                                                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    @i
+                                                </a>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                    @if (!string.IsNullOrEmpty(Model.DailyMaintenanceOperator[i - 1]))
+                                                    {
+                                                        var maintenanceRecord = Model.MaintenanceRecords.SingleOrDefault(i => i.Id == int.Parse(id));
+
+                                                        @if ((await AuthorizationService.AuthorizeAsync(User, maintenanceRecord, Operations.Update)).Succeeded)
+                                                        {
+                                                            <a class="dropdown-item" asp-page="MaintenanceRecords/Edit" asp-route-Id="@id">编辑</a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="dropdown-item">-</span>
+                                                        }
+                                                        @if ((await AuthorizationService.AuthorizeAsync(User, maintenanceRecord, Operations.Delete)).Succeeded)
+                                                        {
+                                                            <a class="dropdown-item delete-maintenance-record-btn" href="#" data-id="@id">删除</a>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        @if ((await AuthorizationService.AuthorizeAsync(User, Model.MaintenanceRecord, Operations.Create)).Succeeded)
+                                                        {
+                                                            <a class="dropdown-item"
+                                                               asp-page="MaintenanceRecords/Create"
+                                                               asp-route-instrumentId="@Model.Search.Instrument"
+                                                               asp-route-beginTime="@selectedDate.ToString("yyyy-MM-ddTHH:mm")">
+                                                                新建
+                                                            </a>
+                                                        }
+                                                    }
+                                                </div>
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td class="days">
+                                                <span>@i</span>
+                                            </td>
+                                        }
+                                    }
+                                </tr>
+                                <tr>
+                                    <td class="left" rowspan="@(Model.DailyMaintenanceContent.Count+2)">
+                                        日常维护<br />Daily
+                                    </td>
+                                </tr>
+                                @foreach (var content in Model.DailyMaintenanceContent)
+                                {
+                                    <tr>
+                                        <td class="maintenance-content">@content</td>
+                                        @foreach (var yOrN in Model.DailyMaintenanceSituation[content])
+                                        {
+                                            <td>@yOrN</td>
+                                        }
+                                    </tr>
+                                }
+                                <tr>
+                                    <td class="operator text-bold">操作者</td>
+                                    @foreach (var op in Model.DailyMaintenanceOperator)
+                                    {
+                                        <td><p class="operator text-vertical">@op</p></td>
+                                    }
+                                </tr>
+                                <tr>
+                                    <td class="left" rowspan="@(Model.WeeklyMaintenanceContent.Count+2)">
+                                        周维护<br />Weekly
+                                    </td>
+                                </tr>
+                                @{
+                                    // 周维护有4个，每个维护内容占用的colspan
+                                    var colSpanOfWeekly = new int[] { 7, 8, 8, 8 };
+                                }
+                                @foreach (var content in Model.WeeklyMaintenanceContent)
+                                {
+                                    <tr>
+                                        <td class="maintenance-content">@content</td>
+                                        @for (int i = 0; i < colSpanOfWeekly.Length; i++)
+                                        {
+                                            var yOrN = Model.WeekyMaintenanceSituation[content][i];
+                                            <td colspan="@colSpanOfWeekly[i]">@yOrN</td>
+                                        }
+                                    </tr>
+                                }
+                                <tr>
+                                    <td class="operator text-bold">操作者</td>
+                                    @for (int i = 0; i < colSpanOfWeekly.Length; i++)
+                                    {
+                                        var op = Model.WeeklyMaintenanceOperator[i];
+                                        <td colspan="@colSpanOfWeekly[i]">@op</td>
+                                    }
+                                </tr>
+                                @{
+                                    var otherRowSpan = 5;
+                                    var rowOfTemporary = 1;
+                                    if (InstrumentPlatform == "LCMS")
+                                    {
+                                        otherRowSpan = 7;
+                                        rowOfTemporary = 3;
+                                    }
+                                    else if (InstrumentPlatform == "GCMS")
+                                    {
+                                        otherRowSpan = 10;
+                                        rowOfTemporary = 6;
+                                    }
+                                    else if (InstrumentPlatform == "UPLC")
+                                    {
+                                        otherRowSpan = 12;
+                                        rowOfTemporary = 8;
+                                    }
+                                }
+                                <tr>
+                                    <td class="left" rowspan="@otherRowSpan">
+                                        其他<br />Others
+                                    </td>
+                                </tr>
+                                @foreach (var tem in Model.TemporaryMaintenanceRecord)
+                                {
+                                    <tr>
+                                        <td class="maintenance-content">临时维护<br />操作者/日期</td>
+                                        <td colspan="@columnNumber">
+                                            @tem
+                                        </td>
+                                    </tr>
+                                }
+                                @for (int i = 1; i <= rowOfTemporary - Model.TemporaryMaintenanceRecord.Count; i++)
+                                {
+                                    // 补充行
+                                    <tr>
+                                        <td class="maintenance-content">临时维护<br />操作者/日期</td>
+                                        <td colspan="@columnNumber"></td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <td class="maintenance-content">月度维护<br />操作者/日期</td>
+                                    <td colspan="@columnNumber">@Model.MonthlyMaintenanceRecord</td>
+                                </tr>
+                                <tr>
+                                    <td class="maintenance-content">季度维护<br />操作者/日期</td>
+                                    <td colspan="@columnNumber">@Model.QuarterlyMaintenanceRecord</td>
+                                </tr>
+                                <tr>
+                                    <td class="maintenance-content">年度维护<br />操作者/日期</td>
+                                    <td colspan="@columnNumber">@Model.YearlyMaintenanceRecord</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <audit-trail-grouping-by-pk Logs="Model.MaintenanceAuditTrailLogs" modal-id="maintenanceAuditTrailLog"></audit-trail-grouping-by-pk>
+                        <button type="button" class="btn btn-outline-primary my-1" onclick="createReport()">导出</button>
+                    </div>
+
+                    @*液质使用记录*@
+                    string emptyValue = "N/A";
+                    <div id="usage-record" class="tab-pane fade table-responsive" role="tabpanel" aria-labelledby="usage-record-tab">
+                        <table id="usage-record">
+                            <colgroup>
+                                <col class="time">
+                                <col class="time">
+                                <col class="projectname">
+                                <col class="columnnumber">
+                                <col class="mobilephase">
+                                <col class="samplenumber">
+                                <col class="batchnumber">
+                                <col class="column">
+                                <col class="ionsource">
+                                <col class="detector">
+                                <col class="vacuumdegree">
+                                <col class="blank">
+                                <col class="test">
+                                <col class="operator">
+                                <col class="remark">
+                                <col class="button">
+                            </colgroup>
+                            <thead class="text-nowrap">
+                                <tr class="title">
+                                    <th colspan="13">
+                                        <h5>色谱质谱联用设备使用通用记录表</h5>
+                                        <h5>UHPLC, LC-MS/MS, GC-MS Use Form</h5>
+                                    </th>
+                                </tr>
+                                <tr class="small-title">
+                                    <td colspan="6" class="text-left">仪器编号：@(Model.Search?.Instrument)&nbsp; 仪器型号：@(Model.InstrumentModel)</td>
+                                    <td colspan="6" class="text-right">KM-SOP0314.202.01</td>
+                                </tr>
+                                <tr class="head">
+                                    <td class="time">
+                                        开始时间<br />
+                                        Start up time
+                                    </td>
+                                    <td class="time">
+                                        结束时间<br />
+                                        Shut down time
+                                    </td>
+                                    <td class="projectname">
+                                        检测项目<br />
+                                        Test Item
+                                    </td>
+                                    <td class="columnnumber">
+                                        色谱柱编号<br />
+                                        Column number
+                                    </td>
+                                    <td class="mobilephase" style="text-align:left;padding-left:10px;">
+                                        <i class="far fa-@(Model.MobilePhaseOrCarrierGas == "mobilephase" ? "check-" : "")square" aria-hidden="true"></i>
+                                        流动相<br />
+                                        Liquid phase<br />
+                                        <i class="far fa-@(Model.MobilePhaseOrCarrierGas == "gas" ? "check-" : "")square" aria-hidden="true"></i>
+                                        载气<br />
+                                        Carrier Gas
+                                    </td>
+                                    <td class="samplenumber">临床样数量</td>
+                                    <td class="batchnumber">Batch样品量</td>
+                                    <td class="column" style="text-align:left;padding-left:10px;">
+                                        压力<br />
+                                        Pressure<br />
+                                        <i class="far fa-@(Model.ColumnPressureUnit == "PSI" ? "check-" : "")square" aria-hidden="true"></i> PSI<br />
+                                        <i class="far fa-@(Model.ColumnPressureUnit == "Bar" ? "check-" : "")square" aria-hidden="true"></i> Bar<br />
+                                        <i class="far fa-@(Model.ColumnPressureUnit == "MPa" ? "check-" : "")square" aria-hidden="true"></i> MPa<br />
+                                        <i class="far fa-@(Model.ColumnPressureUnit == "kPa" ? "check-" : "")square" aria-hidden="true"></i> kPa
+                                    </td>
+                                    <td class="ionsource">
+                                        离子源<br />
+                                        Ion Source
+                                    </td>
+                                    <td class="detector">
+                                        检测器<br />
+                                        Detector
+                                    </td>
+                                    <td class="vacuumdegree" style="text-align:left;padding-left:10px;">
+                                        真空度<br />
+                                        Vacuum<br />
+                                        <i class="far fa-@(Model.VacuumDegreeUnit.Contains("torr") ? "check-" : "")square" aria-hidden="true"></i> torr<br />
+                                        <i class="far fa-@(Model.VacuumDegreeUnit.Contains("Pa") ? "check-" : "")square" aria-hidden="true"></i> Pa
+                                    </td>
+                                    <td class="blank">
+                                        空白<br />
+                                        Blank
+                                    </td>
+                                    <td class="test">
+                                        信号<br />
+                                        Signal
+                                    </td>
+                                    <td>
+                                        操作者<br />
+                                        Operator
+                                    </td>
+                                    <td>
+                                        备注<br />
+                                        Remark
+                                    </td>
+                                    <td class="button">&nbsp;</td>
+                                </tr>
+                                <tr class="view-head">
+                                    <td class="time">
+                                        开始时间
+                                    </td>
+                                    <td class="time">
+                                        结束时间
+                                    </td>
+                                    <td class="projectname">
+                                        检测项目
+                                    </td>
+                                    <td class="columnnumber">
+                                        色谱柱编号
+                                    </td>
+                                    <td class="mobilephase">
+                                        流动相/载气
+                                    </td>
+                                    <td class="samplenumber">
+                                        临床样数量
+                                    </td>
+                                    <td class="batchnumber">
+                                        Batch样品量
+                                    </td>
+                                    <td class="column">
+                                        色谱柱编号/压力（@Model.ColumnPressureUnit）
+                                    </td>
+                                    <td class="ionsource">
+                                        离子源
+                                    </td>
+                                    <td class="detector">
+                                        检测器
+                                    </td>
+                                    <td class="vacuumdegree">
+                                        真空度（@Model.VacuumDegreeUnit）
+                                    </td>
+                                    <td class="blank">
+                                        Blank信号
+                                    </td>
+                                    <td class="test">
+                                        Test信号
+                                    </td>
+                                    <td>
+                                        操作者
+                                    </td>
+                                    <td class="">
+                                        备注
+                                    </td>
+                                    <td class="button">&nbsp;</td>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr class="total">
+                                    <td colspan="12" style="text-align:left;padding-left:10px;">
+                                        总计：
+                                        使用时长：@Model.TotalHours.ToString("F1") 小时，
+                                        临床样数量：@Model.TotalSampleNumber 个，
+                                        Batch样品量：@Model.TotalBatchNumber 个
+                                        @if (Model.TotalS2BatchNumber != 0)
+                                        {
+                                            <text>（其中S1 Batch样品量：@Model.TotalS1BatchNumber 个，S2 Batch样品量：@Model.TotalS2BatchNumber 个）。</text>
+                                        }
+                                    </td>
+                                </tr>
+                                <tr class="tfoot">
+                                    <td colspan="13" style="text-align:left;padding-left:10px;">
+                                        说明：
+                                        <ol>
+                                            <li>
+                                                流动相/载气：@string.Join(" ", Model.MobilePhaseList).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
+                                            </li>
+                                            <li>
+                                                色谱柱编号：@string.Join(" ", Model.ColumnTypeList).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
+                                            </li>
+                                            <li>
+                                                离子源：@string.Join(" ", Model.IonSourceList).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
+                                            </li>
+                                            <li>
+                                                检测器：@string.Join(" ", Model.DetectorList).Replace('[', ' ').Replace(']', ' ').Replace(',', '.')
+                                            </li>
+                                        </ol>
+                                    </td>
+                                </tr>
+                                <tr class="tfoot">
+                                    <td colspan="13" class="text-center border border-dark">
+                                        使用回顾
+                                    </td>
+                                </tr>
+                                <tr class="tfoot">
+                                    <td colspan="2">
+                                        评估意见：<br />
+                                        (Evaluator comments)
+                                    </td>
+                                    <td colspan="3"></td>
+                                    <td colspan="2">
+                                        评估人/日期<br />
+                                        (Evaluator/Date)
+                                    </td>
+                                    <td colspan="2"></td>
+                                    <td colspan="2">
+                                        审批人/日期<br />
+                                        (Approver/Date)
+                                    </td>
+                                    <td colspan="2"></td>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                @{
+                                    string GetKeyByValue(Dictionary<char, string> dic, string value)
+                                    {
+                                        // 字典里是所有记录的值,没有数据表示不适用,返回N/A
+                                        if (dic.Count == 0) return emptyValue;
+                                        string key = string.Empty;
+                                        if (string.IsNullOrEmpty(value)) return key;
+
+                                        foreach (KeyValuePair<char, string> kvp in dic)
+                                        {
+                                            if (value.Contains(kvp.Value))
                                             {
-                                                @GetKeyByValue(Model.ColumnNumberList, usageRecord.SystemTwoColumnNumber)
+                                                key += " | " + kvp.Key;
+                                            }
+                                        }
+                                        return key.Substring(2);
+                                    }
+                                }
+                                @foreach (var usageRecord in Model.UsageRecords)
+                                {
+                                    @* view row *@
+                                    <tr class="view-row">
+                                        <td class="time">@Html.DisplayFor(item => usageRecord.BeginTime)</td>
+                                        <td class="time">@Html.DisplayFor(item => usageRecord.EndTime)</td>
+                                        <td class="projectname">@Html.DisplayFor(item => usageRecord.ProjectName)</td>
+                                        <td class="columnnumber">
+                                            @if (!string.IsNullOrEmpty(usageRecord.ColumnType))
+                                            {
+                                                @GetKeyByValue(Model.ColumnTypeList, usageRecord.ColumnType)
                                             }
                                             else
                                             {
                                                 <span>@emptyValue</span>
-                                            }*@
-                                    </td>
-                                    <td class="mobilephase">@GetKeyByValue(Model.MobilePhaseList, usageRecord.MobilePhase)</td>
-                                    <td class="samplenumber">
-                                        @if (usageRecord.SampleNumber != null)
-                                        {
-                                            @Html.DisplayFor(item => usageRecord.SampleNumber)
-                                        }
-                                        else
-                                        {
-                                            <span>@emptyValue</span>
-                                        }
-                                    </td>
-                                    <td class="batchnumber">
-                                        @if (usageRecord.SystemOneBatchNumber != null && usageRecord.SystemTwoBatchNumber != null)
-                                        {
-                                            <text>S1：</text>
-                                            @Html.DisplayFor(item => usageRecord.SystemOneBatchNumber)
-                                            <br />
-                                            <text>S2：</text>
-                                            @Html.DisplayFor(item => usageRecord.SystemTwoBatchNumber)
-                                        }
-                                        else if (usageRecord.SystemOneBatchNumber != null)
-                                        {
-                                            @Html.DisplayFor(item => usageRecord.SystemOneBatchNumber)
-                                        }
-                                        else if (usageRecord.SystemTwoBatchNumber != null)
-                                        {
-                                            @Html.DisplayFor(item => usageRecord.SystemTwoBatchNumber)
-                                        }
-                                        else
-                                        {
-                                            <span>@emptyValue</span>
-                                        }
-                                    </td>
-                                    <td class="column">
-                                        @if (usageRecord.SystemOneColumnPressure != null && usageRecord.SystemTwoColumnPressure != null)
-                                        {
-                                            <text>S1：</text>
-                                            <span class="hide-in-print">@Html.DisplayFor(item => usageRecord.SystemOneColumnNumber) / </span>
-                                            @Html.DisplayFor(item => usageRecord.SystemOneColumnPressure)
-                                            <br />
-                                            <text>S2：</text>
-                                            <span class="hide-in-print">@Html.DisplayFor(item => usageRecord.SystemTwoColumnNumber) / </span>
-                                            @Html.DisplayFor(item => usageRecord.SystemTwoColumnPressure)
-                                        }
-                                        else if (usageRecord.SystemOneColumnPressure != null)
-                                        {
-                                            <span class="hide-in-print">@Html.DisplayFor(item => usageRecord.SystemOneColumnNumber) / </span>
-                                            @Html.DisplayFor(item => usageRecord.SystemOneColumnPressure)
-                                        }
-                                        else if (usageRecord.SystemTwoColumnPressure != null)
-                                        {
-                                            <span class="hide-in-print">@Html.DisplayFor(item => usageRecord.SystemTwoColumnNumber) / </span>
-                                            @Html.DisplayFor(item => usageRecord.SystemTwoColumnPressure)
-                                        }
-                                        else
-                                        {
-                                            <span>@emptyValue</span>
-                                        }
-                                    </td>
-                                    <td class="ionsource">@GetKeyByValue(Model.IonSourceList, usageRecord.IonSource)</td>
-                                    <td class="detector">@GetKeyByValue(Model.DetectorList, usageRecord.Detector)</td>
-                                    <td class="vacuumdegree">
-                                        @if (usageRecord.LowVacuumDegree != null && usageRecord.HighVacuumDegree != null)
-                                        {
-                                            <text>低真空：</text>
-                                            @(usageRecord.LowVacuumDegree) @(usageRecord.LowVacuumDegreeUnit.Split(" ")[0])
-                                            <br />
-                                            <text>高真空：</text>
-                                            @(usageRecord.HighVacuumDegree) @(usageRecord.HighVacuumDegreeUnit.Split(" ")[0])
-                                        }
-                                        else if (usageRecord.LowVacuumDegree != null)
-                                        {
-                                            @(usageRecord.LowVacuumDegree) @(usageRecord.LowVacuumDegreeUnit.Split(" ")[0])
-                                        }
-                                        else if (usageRecord.HighVacuumDegree != null)
-                                        {
-                                            @(usageRecord.HighVacuumDegree) @(usageRecord.HighVacuumDegreeUnit.Split(" ")[0])
-                                        }
-                                        else
-                                        {
-                                            <span>@emptyValue</span>
-                                        }
-                                    </td>
-                                    <td class="blank">
-                                        @if (usageRecord.BlankSignal != null)
-                                        {
-                                            @usageRecord.BlankSignal.GetValueOrDefault().ToString("0.0e+0")
-                                        }
-                                        else
-                                        {
-                                            <span>@emptyValue</span>
-                                        }
-                                    </td>
-                                    <td class="test">
-                                        @if (usageRecord.SystemOneTestSignal != null && usageRecord.SystemTwoTestSignal != null)
-                                        {
-                                            <text>S1：</text>
-                                            @(usageRecord.SystemOneTestSignal.GetValueOrDefault().ToString("0.0e+0"))
-                                            <br />
-                                            <text>S2：</text>
-                                            @(usageRecord.SystemTwoTestSignal.GetValueOrDefault().ToString("0.0e+0"))
-                                        }
-                                        else if (usageRecord.SystemOneTestSignal != null)
-                                        {
-                                            @(usageRecord.SystemOneTestSignal.GetValueOrDefault().ToString("0.0e+0"))
-                                        }
-                                        else if (usageRecord.SystemTwoTestSignal != null)
-                                        {
-                                            @(usageRecord.SystemTwoTestSignal.GetValueOrDefault().ToString("0.0e+0"))
-                                        }
-                                        else
-                                        {
-                                            <span>@emptyValue</span>
-                                        }
-                                    </td>
-                                    <td>@Html.DisplayFor(item => usageRecord.Operator)</td>
-                                    <td class="remark">
-                                        @if (!string.IsNullOrEmpty(usageRecord.Remark))
-                                        {
-                                            @Html.DisplayFor(item => usageRecord.Remark)
-                                        }
-                                        else
-                                        {
-                                            <h6 class="text-center hide-in-screen">/</h6>
-                                        }
-                                    </td>
-                                    <td class="button">
-                                        <div class="button">
-                                            @if ((await AuthorizationService.AuthorizeAsync(User, usageRecord, Operations.Update)).Succeeded)
-                                            {
-                                                <button class="edit-btn btn btn-sm btn-outline-primary" data-id="@usageRecord.Id">编辑</button>
                                             }
-                                            @if ((await AuthorizationService.AuthorizeAsync(User, usageRecord, Operations.Delete)).Succeeded)
+                                            @*@if (usageRecord.SystemOneColumnNumber != null && usageRecord.SystemTwoColumnNumber != null)
+                                                {
+                                                    <text>S1：</text>
+                                                    @GetKeyByValue(Model.ColumnNumberList, usageRecord.SystemOneColumnNumber)
+                                                    <br />
+                                                    <text>S2：</text>
+                                                    @GetKeyByValue(Model.ColumnNumberList, usageRecord.SystemTwoColumnNumber)
+                                                }
+                                                else if (usageRecord.SystemOneColumnNumber != null)
+                                                {
+                                                    @GetKeyByValue(Model.ColumnNumberList, usageRecord.SystemOneColumnNumber)
+                                                }
+                                                else if (usageRecord.SystemTwoColumnNumber != null)
+                                                {
+                                                    @GetKeyByValue(Model.ColumnNumberList, usageRecord.SystemTwoColumnNumber)
+                                                }
+                                                else
+                                                {
+                                                    <span>@emptyValue</span>
+                                                }*@
+                                        </td>
+                                        <td class="mobilephase">@GetKeyByValue(Model.MobilePhaseList, usageRecord.MobilePhase)</td>
+                                        <td class="samplenumber">
+                                            @if (usageRecord.SampleNumber != null)
                                             {
-                                                <button class="delete-usage-record-btn btn btn-sm btn-outline-danger" data-id="@usageRecord.Id">删除</button>
+                                                @Html.DisplayFor(item => usageRecord.SampleNumber)
                                             }
-                                        </div>
-                                    </td>
-                                </tr>
-                                @* update-row *@
-                                <tr class="update-row">
+                                            else
+                                            {
+                                                <span>@emptyValue</span>
+                                            }
+                                        </td>
+                                        <td class="batchnumber">
+                                            @if (usageRecord.SystemOneBatchNumber != null && usageRecord.SystemTwoBatchNumber != null)
+                                            {
+                                                <text>S1：</text>
+                                                @Html.DisplayFor(item => usageRecord.SystemOneBatchNumber)
+                                                <br />
+                                                <text>S2：</text>
+                                                @Html.DisplayFor(item => usageRecord.SystemTwoBatchNumber)
+                                            }
+                                            else if (usageRecord.SystemOneBatchNumber != null)
+                                            {
+                                                @Html.DisplayFor(item => usageRecord.SystemOneBatchNumber)
+                                            }
+                                            else if (usageRecord.SystemTwoBatchNumber != null)
+                                            {
+                                                @Html.DisplayFor(item => usageRecord.SystemTwoBatchNumber)
+                                            }
+                                            else
+                                            {
+                                                <span>@emptyValue</span>
+                                            }
+                                        </td>
+                                        <td class="column">
+                                            @if (usageRecord.SystemOneColumnPressure != null && usageRecord.SystemTwoColumnPressure != null)
+                                            {
+                                                <text>S1：</text>
+                                                <span class="hide-in-print">@Html.DisplayFor(item => usageRecord.SystemOneColumnNumber) / </span>
+                                                @Html.DisplayFor(item => usageRecord.SystemOneColumnPressure)
+                                                <br />
+                                                <text>S2：</text>
+                                                <span class="hide-in-print">@Html.DisplayFor(item => usageRecord.SystemTwoColumnNumber) / </span>
+                                                @Html.DisplayFor(item => usageRecord.SystemTwoColumnPressure)
+                                            }
+                                            else if (usageRecord.SystemOneColumnPressure != null)
+                                            {
+                                                <span class="hide-in-print">@Html.DisplayFor(item => usageRecord.SystemOneColumnNumber) / </span>
+                                                @Html.DisplayFor(item => usageRecord.SystemOneColumnPressure)
+                                            }
+                                            else if (usageRecord.SystemTwoColumnPressure != null)
+                                            {
+                                                <span class="hide-in-print">@Html.DisplayFor(item => usageRecord.SystemTwoColumnNumber) / </span>
+                                                @Html.DisplayFor(item => usageRecord.SystemTwoColumnPressure)
+                                            }
+                                            else
+                                            {
+                                                <span>@emptyValue</span>
+                                            }
+                                        </td>
+                                        <td class="ionsource">@GetKeyByValue(Model.IonSourceList, usageRecord.IonSource)</td>
+                                        <td class="detector">@GetKeyByValue(Model.DetectorList, usageRecord.Detector)</td>
+                                        <td class="vacuumdegree">
+                                            @if (usageRecord.LowVacuumDegree != null && usageRecord.HighVacuumDegree != null)
+                                            {
+                                                <text>低真空：</text>
+                                                @(usageRecord.LowVacuumDegree) @(usageRecord.LowVacuumDegreeUnit.Split(" ")[0])
+                                                <br />
+                                                <text>高真空：</text>
+                                                @(usageRecord.HighVacuumDegree) @(usageRecord.HighVacuumDegreeUnit.Split(" ")[0])
+                                            }
+                                            else if (usageRecord.LowVacuumDegree != null)
+                                            {
+                                                @(usageRecord.LowVacuumDegree) @(usageRecord.LowVacuumDegreeUnit.Split(" ")[0])
+                                            }
+                                            else if (usageRecord.HighVacuumDegree != null)
+                                            {
+                                                @(usageRecord.HighVacuumDegree) @(usageRecord.HighVacuumDegreeUnit.Split(" ")[0])
+                                            }
+                                            else
+                                            {
+                                                <span>@emptyValue</span>
+                                            }
+                                        </td>
+                                        <td class="blank">
+                                            @if (usageRecord.BlankSignal != null)
+                                            {
+                                                @usageRecord.BlankSignal.GetValueOrDefault().ToString("0.0e+0")
+                                            }
+                                            else
+                                            {
+                                                <span>@emptyValue</span>
+                                            }
+                                        </td>
+                                        <td class="test">
+                                            @if (usageRecord.SystemOneTestSignal != null && usageRecord.SystemTwoTestSignal != null)
+                                            {
+                                                <text>S1：</text>
+                                                @(usageRecord.SystemOneTestSignal.GetValueOrDefault().ToString("0.0e+0"))
+                                                <br />
+                                                <text>S2：</text>
+                                                @(usageRecord.SystemTwoTestSignal.GetValueOrDefault().ToString("0.0e+0"))
+                                            }
+                                            else if (usageRecord.SystemOneTestSignal != null)
+                                            {
+                                                @(usageRecord.SystemOneTestSignal.GetValueOrDefault().ToString("0.0e+0"))
+                                            }
+                                            else if (usageRecord.SystemTwoTestSignal != null)
+                                            {
+                                                @(usageRecord.SystemTwoTestSignal.GetValueOrDefault().ToString("0.0e+0"))
+                                            }
+                                            else
+                                            {
+                                                <span>@emptyValue</span>
+                                            }
+                                        </td>
+                                        <td>@Html.DisplayFor(item => usageRecord.Operator)</td>
+                                        <td class="remark">
+                                            @if (!string.IsNullOrEmpty(usageRecord.Remark))
+                                            {
+                                                @Html.DisplayFor(item => usageRecord.Remark)
+                                            }
+                                            else
+                                            {
+                                                <h6 class="text-center hide-in-screen">/</h6>
+                                            }
+                                        </td>
+                                        <td class="button">
+                                            <div class="button">
+                                                @if ((await AuthorizationService.AuthorizeAsync(User, usageRecord, Operations.Update)).Succeeded)
+                                                {
+                                                    <button class="edit-btn btn btn-sm btn-outline-primary" data-id="@usageRecord.Id">编辑</button>
+                                                }
+                                                @if ((await AuthorizationService.AuthorizeAsync(User, usageRecord, Operations.Delete)).Succeeded)
+                                                {
+                                                    <button class="delete-usage-record-btn btn btn-sm btn-outline-danger" data-id="@usageRecord.Id">删除</button>
+                                                }
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @* update-row *@
+                                    <tr class="update-row">
+                                        <td class="time">
+                                            <input form="edit-form" name="id" type="hidden" asp-for="@usageRecord.Id" disabled />
+                                            <input form="edit-form" type="hidden" asp-for="@usageRecord.InstrumentID" disabled />
+                                            <input form="edit-form" asp-for="@usageRecord.BeginTime" required disabled />
+                                        </td>
+                                        <td class="time">
+                                            <input form="edit-form" asp-for="@usageRecord.EndTime" disabled />
+                                        </td>
+                                        <td class="projectname">
+                                            <select form="edit-form" class="select-project" asp-for="@usageRecord.ProjectName" asp-items="@Model.ProjectsSelectList" disabled></select>
+                                        </td>
+                                        <td class="columnnumber">色谱柱编号</td>
+                                        <td class="mobilephase">流动相</td>
+                                        <td class="samplenumber">
+                                            <input form="edit-form" min="0" step="1" asp-for="@usageRecord.SampleNumber" disabled />
+                                        </td>
+                                        <td class="batchnumber">
+                                            <input form="edit-form" min="0" step="1" asp-for="@usageRecord.SystemOneBatchNumber" placeholder="S1" disabled />
+                                            <br />
+                                            <input form="edit-form" min="0" step="1" asp-for="@usageRecord.SystemTwoBatchNumber" placeholder="S2" disabled />
+                                        </td>
+                                        <td class="column">
+                                            <input form="edit-form" asp-for="@usageRecord.SystemOneColumnNumber" placeholder="S1编号" disabled />
+                                            <input form="edit-form" type="number" min="0" step="any" asp-for="@usageRecord.SystemOneColumnPressure" placeholder="S1压力" disabled />
+                                            <select form="edit-form" asp-for="@usageRecord.SystemOneColumnPressureUnit" disabled>
+                                                <option value="MPa">MPa</option>
+                                                <option value="kPa">kPa</option>
+                                                <option value="Bar">Bar</option>
+                                                <option value="PSI">PSI</option>
+                                            </select>
+                                            <br />
+                                            <input form="edit-form" asp-for="@usageRecord.SystemTwoColumnNumber" placeholder="S2编号" disabled />
+                                            <input form="edit-form" type="number" min="0" step="any" asp-for="@usageRecord.SystemTwoColumnPressure" placeholder="S2压力" disabled />
+                                            <select form="edit-form" asp-for="@usageRecord.SystemTwoColumnPressureUnit" disabled>
+                                                <option value="MPa">MPa</option>
+                                                <option value="kPa">kPa</option>
+                                                <option value="Bar">Bar</option>
+                                                <option value="PSI">PSI</option>
+                                            </select>
+                                        </td>
+                                        <td class="ionsource">离子源</td>
+                                        <td class="detector">检测器</td>
+                                        <td class="vacuumdegree">
+                                            <input form="edit-form"
+                                                   asp-for="@usageRecord.LowVacuumDegree"
+                                                   pattern="^[<>]?[0-9.]+$"
+                                                   title="请输入数值，首位可为“<”或“>”"
+                                                   placeholder="低真空" disabled />
+                                            <select form="edit-form" asp-for="@usageRecord.LowVacuumDegreeUnit" disabled>
+                                                <option value="e-3 torr">e-3 torr</option>
+                                                <option value="e-4 torr">e-4 torr</option>
+                                                <option value="e-5 torr">e-5 torr</option>
+                                                <option value="e-6 torr">e-6 torr</option>
+                                                <option value="e+2 Pa">e+2 Pa</option>
+                                                <option value="e+1 Pa">e+1 Pa</option>
+                                                <option value="e-3 Pa">e-3 Pa</option>
+                                                <option value="e-4 Pa">e-4 Pa</option>
+                                            </select>
+                                            <br />
+                                            <input form="edit-form"
+                                                   asp-for="@usageRecord.HighVacuumDegree"
+                                                   pattern="^[<>]?[0-9.]+$"
+                                                   title="请输入数值，首位可为“<”或“>”"
+                                                   placeholder="高真空" disabled />
+                                            <select form="edit-form" asp-for="@usageRecord.HighVacuumDegreeUnit" disabled>
+                                                <option value="e-3 torr">e-3 torr</option>
+                                                <option value="e-4 torr">e-4 torr</option>
+                                                <option value="e-5 torr">e-5 torr</option>
+                                                <option value="e-6 torr">e-6 torr</option>
+                                                <option value="e+2 Pa">e+2 Pa</option>
+                                                <option value="e+1 Pa">e+1 Pa</option>
+                                                <option value="e-3 Pa">e-3 Pa</option>
+                                                <option value="e-4 Pa">e-4 Pa</option>
+                                            </select>
+                                        </td>
+                                        <td class="blank">
+                                            <input form="edit-form" asp-for="@usageRecord.BlankSignal"
+                                                   pattern="^[+-]?[\d]+([\.][\d]+)?([Ee][+-]?[\d]+)?$"
+                                                   title="请使用科学计数法，例：3.1e+05，如果是N/A的话不需要输入。"
+                                                   disabled />
+                                        </td>
+                                        <td class="test">
+                                            <input form="edit-form" asp-for="@usageRecord.SystemOneTestSignal"
+                                                   placeholder="S1"
+                                                   pattern="^[+-]?[\d]+([\.][\d]+)?([Ee][+-]?[\d]+)?$"
+                                                   title="请使用科学计数法，例：3.1e+05，如果是N/A的话不需要输入。"
+                                                   disabled />
+                                            <br />
+                                            <input form="edit-form" asp-for="@usageRecord.SystemTwoTestSignal"
+                                                   placeholder="S2"
+                                                   pattern="^[+-]?[\d]+([\.][\d]+)?([Ee][+-]?[\d]+)?$"
+                                                   title="请使用科学计数法，例：3.1e+05，如果是N/A的话不需要输入。"
+                                                   disabled />
+                                        </td>
+                                        <td>
+                                            <input form="edit-form" asp-for="@usageRecord.Operator" disabled required />
+                                        </td>
+                                        <td class="remark">
+                                            <textarea form="edit-form" asp-for="@usageRecord.Remark" placeholder="限20字以内" disabled></textarea>
+                                        </td>
+                                        <td class="button">
+                                            <div class="button">
+                                                <button class="update-btn btn btn-sm btn-success" form="edit-form" disabled>保存</button>
+                                                <button type="button" class="cancel-btn btn btn-sm btn-secondary" disabled>取消</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                                @* create-row *@
+                                <tr id="create-row">
                                     <td class="time">
-                                        <input form="edit-form" name="id" type="hidden" asp-for="@usageRecord.Id" disabled />
-                                        <input form="edit-form" type="hidden" asp-for="@usageRecord.InstrumentID" disabled />
-                                        <input form="edit-form" asp-for="@usageRecord.BeginTime" required disabled />
+                                        <input form="create-form" asp-for="UsageRecord.InstrumentID" type="hidden" />
+                                        <input form="create-form" asp-for="UsageRecord.BeginTime" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" required />
                                     </td>
                                     <td class="time">
-                                        <input form="edit-form" asp-for="@usageRecord.EndTime" disabled />
+                                        <input form="create-form" asp-for="UsageRecord.EndTime" />
                                     </td>
                                     <td class="projectname">
-                                        <select form="edit-form" class="select-project" asp-for="@usageRecord.ProjectName" asp-items="@Model.ProjectsSelectList" disabled></select>
+                                        <select form="create-form" class="select-project" asp-for="UsageRecord.ProjectName" asp-items="@Model.ProjectsSelectList">
+                                        </select>
                                     </td>
                                     <td class="columnnumber">色谱柱编号</td>
                                     <td class="mobilephase">流动相</td>
                                     <td class="samplenumber">
-                                        <input form="edit-form" min="0" step="1" asp-for="@usageRecord.SampleNumber" disabled />
+                                        <input form="create-form" min="0" step="1" asp-for="UsageRecord.SampleNumber" />
                                     </td>
                                     <td class="batchnumber">
-                                        <input form="edit-form" min="0" step="1" asp-for="@usageRecord.SystemOneBatchNumber" placeholder="S1" disabled />
+                                        <input form="create-form" min="0" step="1" asp-for="UsageRecord.SystemOneBatchNumber" placeholder="S1" />
                                         <br />
-                                        <input form="edit-form" min="0" step="1" asp-for="@usageRecord.SystemTwoBatchNumber" placeholder="S2" disabled />
+                                        <input form="create-form" min="0" step="1" asp-for="UsageRecord.SystemTwoBatchNumber" placeholder="S2" />
                                     </td>
                                     <td class="column">
-                                        <input form="edit-form" asp-for="@usageRecord.SystemOneColumnNumber" placeholder="S1编号" disabled />
-                                        <input form="edit-form" type="number" min="0" step="any" asp-for="@usageRecord.SystemOneColumnPressure" placeholder="S1压力" disabled />
-                                        <select form="edit-form" asp-for="@usageRecord.SystemOneColumnPressureUnit" disabled>
+                                        <input form="create-form" asp-for="UsageRecord.SystemOneColumnNumber" placeholder="S1编号" />
+                                        <input form="create-form" type="number" min="0" step="any" asp-for="UsageRecord.SystemOneColumnPressure" placeholder="S1压力" />
+                                        <select form="create-form" asp-for="UsageRecord.SystemOneColumnPressureUnit">
                                             <option value="MPa">MPa</option>
                                             <option value="kPa">kPa</option>
                                             <option value="Bar">Bar</option>
                                             <option value="PSI">PSI</option>
                                         </select>
                                         <br />
-                                        <input form="edit-form" asp-for="@usageRecord.SystemTwoColumnNumber" placeholder="S2编号" disabled />
-                                        <input form="edit-form" type="number" min="0" step="any" asp-for="@usageRecord.SystemTwoColumnPressure" placeholder="S2压力" disabled />
-                                        <select form="edit-form" asp-for="@usageRecord.SystemTwoColumnPressureUnit" disabled>
+                                        <input form="create-form" asp-for="UsageRecord.SystemTwoColumnNumber" placeholder="S2编号" />
+                                        <input form="create-form" type="number" min="0" step="any" asp-for="UsageRecord.SystemTwoColumnPressure" placeholder="S2压力" />
+                                        <select form="create-form" asp-for="UsageRecord.SystemTwoColumnPressureUnit">
                                             <option value="MPa">MPa</option>
                                             <option value="kPa">kPa</option>
                                             <option value="Bar">Bar</option>
@@ -1077,12 +1470,12 @@
                                     <td class="ionsource">离子源</td>
                                     <td class="detector">检测器</td>
                                     <td class="vacuumdegree">
-                                        <input form="edit-form"
-                                               asp-for="@usageRecord.LowVacuumDegree"
+                                        <input form="create-form"
+                                               asp-for="UsageRecord.LowVacuumDegree"
                                                pattern="^[<>]?[0-9.]+$"
                                                title="请输入数值，首位可为“<”或“>”"
-                                               placeholder="低真空" disabled />
-                                        <select form="edit-form" asp-for="@usageRecord.LowVacuumDegreeUnit" disabled>
+                                               placeholder="低真空" />
+                                        <select form="create-form" asp-for="UsageRecord.LowVacuumDegreeUnit">
                                             <option value="e-3 torr">e-3 torr</option>
                                             <option value="e-4 torr">e-4 torr</option>
                                             <option value="e-5 torr">e-5 torr</option>
@@ -1093,12 +1486,12 @@
                                             <option value="e-4 Pa">e-4 Pa</option>
                                         </select>
                                         <br />
-                                        <input form="edit-form"
-                                               asp-for="@usageRecord.HighVacuumDegree"
+                                        <input form="create-form"
+                                               asp-for="UsageRecord.HighVacuumDegree"
                                                pattern="^[<>]?[0-9.]+$"
                                                title="请输入数值，首位可为“<”或“>”"
-                                               placeholder="高真空" disabled />
-                                        <select form="edit-form" asp-for="@usageRecord.HighVacuumDegreeUnit" disabled>
+                                               placeholder="高真空" />
+                                        <select form="create-form" asp-for="UsageRecord.HighVacuumDegreeUnit">
                                             <option value="e-3 torr">e-3 torr</option>
                                             <option value="e-4 torr">e-4 torr</option>
                                             <option value="e-5 torr">e-5 torr</option>
@@ -1110,159 +1503,50 @@
                                         </select>
                                     </td>
                                     <td class="blank">
-                                        <input form="edit-form" asp-for="@usageRecord.BlankSignal"
+                                        <input form="create-form" asp-for="UsageRecord.BlankSignal"
                                                pattern="^[+-]?[\d]+([\.][\d]+)?([Ee][+-]?[\d]+)?$"
-                                               title="请使用科学计数法，例：3.1e+05，如果是N/A的话不需要输入。"
-                                               disabled />
+                                               title="请使用科学计数法，例：3.1e+05，如果是N/A的话不需要输入。" />
                                     </td>
                                     <td class="test">
-                                        <input form="edit-form" asp-for="@usageRecord.SystemOneTestSignal"
+                                        <input form="create-form" asp-for="UsageRecord.SystemOneTestSignal"
                                                placeholder="S1"
                                                pattern="^[+-]?[\d]+([\.][\d]+)?([Ee][+-]?[\d]+)?$"
-                                               title="请使用科学计数法，例：3.1e+05，如果是N/A的话不需要输入。"
-                                               disabled />
+                                               title="请使用科学计数法，例：3.1e+05，如果是N/A的话不需要输入。" />
                                         <br />
-                                        <input form="edit-form" asp-for="@usageRecord.SystemTwoTestSignal"
+                                        <input form="create-form" asp-for="UsageRecord.SystemTwoTestSignal"
                                                placeholder="S2"
                                                pattern="^[+-]?[\d]+([\.][\d]+)?([Ee][+-]?[\d]+)?$"
-                                               title="请使用科学计数法，例：3.1e+05，如果是N/A的话不需要输入。"
-                                               disabled />
+                                               title="请使用科学计数法，例：3.1e+05，如果是N/A的话不需要输入。" />
                                     </td>
                                     <td>
-                                        <input form="edit-form" asp-for="@usageRecord.Operator" disabled required />
+                                        <input form="create-form" asp-for="UsageRecord.Operator" required />
                                     </td>
                                     <td class="remark">
-                                        <textarea form="edit-form" asp-for="@usageRecord.Remark" placeholder="限20字以内" disabled></textarea>
+                                        <textarea form="create-form" asp-for="UsageRecord.Remark" placeholder="限20字以内"></textarea>
                                     </td>
                                     <td class="button">
-                                        <div class="button">
-                                            <button class="update-btn btn btn-sm btn-success" form="edit-form" disabled>保存</button>
-                                            <button type="button" class="cancel-btn btn btn-sm btn-secondary" disabled>取消</button>
-                                        </div>
+                                        <button form="create-form" id="create-btn" class="btn btn-block btn-primary">新建</button>
                                     </td>
                                 </tr>
-                            }
-                            @* create-row *@
-                            <tr id="create-row">
-                                <td class="time">
-                                    <input form="create-form" asp-for="UsageRecord.InstrumentID" type="hidden" />
-                                    <input form="create-form" asp-for="UsageRecord.BeginTime" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" required />
-                                </td>
-                                <td class="time">
-                                    <input form="create-form" asp-for="UsageRecord.EndTime" />
-                                </td>
-                                <td class="projectname">
-                                    <select form="create-form" class="select-project" asp-for="UsageRecord.ProjectName" asp-items="@Model.ProjectsSelectList">
-                                    </select>
-                                </td>
-                                <td class="columnnumber">色谱柱编号</td>
-                                <td class="mobilephase">流动相</td>
-                                <td class="samplenumber">
-                                    <input form="create-form" min="0" step="1" asp-for="UsageRecord.SampleNumber" />
-                                </td>
-                                <td class="batchnumber">
-                                    <input form="create-form" min="0" step="1" asp-for="UsageRecord.SystemOneBatchNumber" placeholder="S1" />
-                                    <br />
-                                    <input form="create-form" min="0" step="1" asp-for="UsageRecord.SystemTwoBatchNumber" placeholder="S2" />
-                                </td>
-                                <td class="column">
-                                    <input form="create-form" asp-for="UsageRecord.SystemOneColumnNumber" placeholder="S1编号" />
-                                    <input form="create-form" type="number" min="0" step="any" asp-for="UsageRecord.SystemOneColumnPressure" placeholder="S1压力" />
-                                    <select form="create-form" asp-for="UsageRecord.SystemOneColumnPressureUnit">
-                                        <option value="MPa">MPa</option>
-                                        <option value="kPa">kPa</option>
-                                        <option value="Bar">Bar</option>
-                                        <option value="PSI">PSI</option>
-                                    </select>
-                                    <br />
-                                    <input form="create-form" asp-for="UsageRecord.SystemTwoColumnNumber" placeholder="S2编号" />
-                                    <input form="create-form" type="number" min="0" step="any" asp-for="UsageRecord.SystemTwoColumnPressure" placeholder="S2压力" />
-                                    <select form="create-form" asp-for="UsageRecord.SystemTwoColumnPressureUnit">
-                                        <option value="MPa">MPa</option>
-                                        <option value="kPa">kPa</option>
-                                        <option value="Bar">Bar</option>
-                                        <option value="PSI">PSI</option>
-                                    </select>
-                                </td>
-                                <td class="ionsource">离子源</td>
-                                <td class="detector">检测器</td>
-                                <td class="vacuumdegree">
-                                    <input form="create-form"
-                                           asp-for="UsageRecord.LowVacuumDegree"
-                                           pattern="^[<>]?[0-9.]+$"
-                                           title="请输入数值，首位可为“<”或“>”"
-                                           placeholder="低真空" />
-                                    <select form="create-form" asp-for="UsageRecord.LowVacuumDegreeUnit">
-                                        <option value="e-3 torr">e-3 torr</option>
-                                        <option value="e-4 torr">e-4 torr</option>
-                                        <option value="e-5 torr">e-5 torr</option>
-                                        <option value="e-6 torr">e-6 torr</option>
-                                        <option value="e+2 Pa">e+2 Pa</option>
-                                        <option value="e+1 Pa">e+1 Pa</option>
-                                        <option value="e-3 Pa">e-3 Pa</option>
-                                        <option value="e-4 Pa">e-4 Pa</option>
-                                    </select>
-                                    <br />
-                                    <input form="create-form"
-                                           asp-for="UsageRecord.HighVacuumDegree"
-                                           pattern="^[<>]?[0-9.]+$"
-                                           title="请输入数值，首位可为“<”或“>”"
-                                           placeholder="高真空" />
-                                    <select form="create-form" asp-for="UsageRecord.HighVacuumDegreeUnit">
-                                        <option value="e-3 torr">e-3 torr</option>
-                                        <option value="e-4 torr">e-4 torr</option>
-                                        <option value="e-5 torr">e-5 torr</option>
-                                        <option value="e-6 torr">e-6 torr</option>
-                                        <option value="e+2 Pa">e+2 Pa</option>
-                                        <option value="e+1 Pa">e+1 Pa</option>
-                                        <option value="e-3 Pa">e-3 Pa</option>
-                                        <option value="e-4 Pa">e-4 Pa</option>
-                                    </select>
-                                </td>
-                                <td class="blank">
-                                    <input form="create-form" asp-for="UsageRecord.BlankSignal"
-                                           pattern="^[+-]?[\d]+([\.][\d]+)?([Ee][+-]?[\d]+)?$"
-                                           title="请使用科学计数法，例：3.1e+05，如果是N/A的话不需要输入。" />
-                                </td>
-                                <td class="test">
-                                    <input form="create-form" asp-for="UsageRecord.SystemOneTestSignal"
-                                           placeholder="S1"
-                                           pattern="^[+-]?[\d]+([\.][\d]+)?([Ee][+-]?[\d]+)?$"
-                                           title="请使用科学计数法，例：3.1e+05，如果是N/A的话不需要输入。" />
-                                    <br />
-                                    <input form="create-form" asp-for="UsageRecord.SystemTwoTestSignal"
-                                           placeholder="S2"
-                                           pattern="^[+-]?[\d]+([\.][\d]+)?([Ee][+-]?[\d]+)?$"
-                                           title="请使用科学计数法，例：3.1e+05，如果是N/A的话不需要输入。" />
-                                </td>
-                                <td>
-                                    <input form="create-form" asp-for="UsageRecord.Operator" required />
-                                </td>
-                                <td class="remark">
-                                    <textarea form="create-form" asp-for="UsageRecord.Remark" placeholder="限20字以内"></textarea>
-                                </td>
-                                <td class="button">
-                                    <button form="create-form" id="create-btn" class="btn btn-block btn-primary">新建</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="remark">
-                        <h6>说明：</h6>
-                        <ol>
-                            <li>单系统仪器填写S1对应的输入框；</li>
-                            <li>真空度单位，色谱柱编号、单位自动预设为上一次填写的值；</li>
-                            <li>新建记录时请确认当前色谱柱编号是否正确；</li>
-                            <li>Blank和Test信号请使用科学计数法填写，如果没有的话，不需要输入任何值。</li>
-                        </ol>
+                            </tbody>
+                        </table>
+                        <div class="remark">
+                            <h6>说明：</h6>
+                            <ol>
+                                <li>单系统仪器填写S1对应的输入框；</li>
+                                <li>真空度单位，色谱柱编号、单位自动预设为上一次填写的值；</li>
+                                <li>新建记录时请确认当前色谱柱编号是否正确；</li>
+                                <li>Blank和Test信号请使用科学计数法填写，如果没有的话，不需要输入任何值。</li>
+                            </ol>
+                        </div>
+                        <audit-trail-grouping-by-pk Logs="Model.UsageAuditTrailLogs" modal-id="usageAuditTrailLog"></audit-trail-grouping-by-pk>
+                        <button type="button" class="btn btn-outline-primary my-1" onclick="createReport()">导出</button>
                     </div>
-                    <audit-trail-grouping-by-pk Logs="Model.UsageAuditTrailLogs" modal-id="usageAuditTrailLog"></audit-trail-grouping-by-pk>
-                    <button type="button" class="btn btn-outline-primary my-1" onclick="createReport()">导出</button>
-                </div>
 
-                <form id="create-form" method="post" asp-page="UsageRecords/Create" hidden></form>
-                <form id="edit-form" method="post" asp-page="UsageRecords/Edit" hidden></form>
-                <form id="delete-form" method="post" asp-page="UsageRecords/Delete" hidden></form>
+                    <form id="create-form" method="post" asp-page="UsageRecords/Create" hidden></form>
+                    <form id="edit-form" method="post" asp-page="UsageRecords/Edit" hidden></form>
+                    <form id="delete-form" method="post" asp-page="UsageRecords/Delete" hidden></form>
+                }
             }
         </div>
     </div>
