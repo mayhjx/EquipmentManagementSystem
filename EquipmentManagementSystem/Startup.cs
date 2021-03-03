@@ -46,6 +46,7 @@ namespace EquipmentManagementSystem
             services.AddTransient<IUsageRecordOfYuanSuRepository, UsageRecordOfYuanSuRepository>();
             services.AddTransient<IMalfunctionRepository, MalfunctionRepository>();
             services.AddTransient<IMaintenanceRecordRepository, MaintenanceRecordRepository>();
+            services.AddTransient<IMaintenanceRecordOfYuanSuRepository, MaintenanceRecordOfYuanSuRepository>();
             services.AddTransient<IMaintenanceContentRepository, MaintenanceContentRepository>();
             services.AddTransient<IMaintenanceRecordService, MaintenanceRecordService>();
             services.AddTransient<IReportService, ReportService>();
