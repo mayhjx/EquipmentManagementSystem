@@ -35,6 +35,7 @@ namespace EquipmentManagementSystem.Data
         public DbSet<UsageRecord> UsageRecords { get; set; }
         public DbSet<UsageRecordOfYuanSu> UsageRecordOfYuanSu { get; set; }
         public DbSet<MaintenanceRecord> MaintenanceRecords { get; set; }
+        public DbSet<MaintenanceRecordOfYuanSu> MaintenanceRecordOfYuanSu { get; set; }
         public DbSet<MaintenanceContent> MaintenanceContents { get; set; }
         public DbSet<InstrumentAcceptance> InstrumentAcceptances { get; set; }
         public DbSet<AuditTrailLog> AuditTrailLogs { get; set; }

@@ -4,14 +4,16 @@ using EquipmentManagementSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EquipmentManagementSystem.Migrations
 {
     [DbContext(typeof(EquipmentContext))]
-    partial class EquipmentContextModelSnapshot : ModelSnapshot
+    [Migration("20210303080858_add_yuansu_maintenancerecord")]
+    partial class add_yuansu_maintenancerecord
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
