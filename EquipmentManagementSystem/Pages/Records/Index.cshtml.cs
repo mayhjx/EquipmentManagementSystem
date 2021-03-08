@@ -31,6 +31,7 @@ namespace EquipmentManagementSystem.Pages.Records
             IUsageRecordRepository usageRecordRepository,
             IUsageRecordOfYuanSuRepository usageRecordOfYuanSuRepository,
             IMaintenanceRecordRepository maintenanceRecordRepository,
+            IMaintenanceRecordOfYuanSuRepository maintenanceRecordOfYuanSuRepository,
             IMaintenanceRecordService maintenanceRecordService,
             IMaintenanceContentRepository maintenanceContentRepository,
             IInstrumentService instrumentService)
@@ -42,6 +43,7 @@ namespace EquipmentManagementSystem.Pages.Records
             _usageRecordRepository = usageRecordRepository;
             _usageRecordOfYuanSuRepository = usageRecordOfYuanSuRepository;
             _maintenanceRecordRepository = maintenanceRecordRepository;
+            _maintenanceRecordOfYuanSuRepository = maintenanceRecordOfYuanSuRepository;
             _maintenanceRecordService = maintenanceRecordService;
             _maintenanceContentRepository = maintenanceContentRepository;
 
@@ -80,7 +82,7 @@ namespace EquipmentManagementSystem.Pages.Records
         public int TotalS2BatchNumber { get; private set; }
         #endregion
 
-        #region 液质维护记录表相关
+        #region 维护记录表相关
         public List<string> RecordsIdOfMonth { get; private set; }
         public List<string> DailyMaintenanceContent { get; private set; }
         public List<string> WeeklyMaintenanceContent { get; private set; }
@@ -156,7 +158,8 @@ namespace EquipmentManagementSystem.Pages.Records
                 #endregion
 
                 #region 元素维护登记表相关
-
+                ListOfYuanSuMaintenanceRecord = _maintenanceRecordOfYuanSuRepository.GetAllByInstrumentIdAndYearAndMonth(instrumentId, date);
+                RecordsIdOfMonth = _maintenanceRecordService.GetRecordIdOfMonth(ListOfYuanSuMaintenanceRecord);
                 #endregion
 
                 // 当前仪器和月份的操作日志
@@ -202,7 +205,7 @@ namespace EquipmentManagementSystem.Pages.Records
 
                 #region 液质维护记录表相关
                 MaintenanceRecords = _maintenanceRecordRepository.GetAllByInstrumentIdAndYearAndMonth(instrumentId, date);
-                RecordsIdOfMonth = _maintenanceRecordService.GetRecordIdOfMonth(instrumentId, date.GetValueOrDefault());
+                RecordsIdOfMonth = _maintenanceRecordService.GetRecordIdOfMonth(MaintenanceRecords);
                 DailyMaintenanceContent = _maintenanceContentRepository.GetDailyContentByInstrumentPlatform(Platform);
                 WeeklyMaintenanceContent = _maintenanceContentRepository.GetWeeklyContentByInstrumentPlatform(Platform);
                 DailyMaintenanceOperator = _maintenanceRecordService.GetDailyMaintenanceOperatorOfMonth(instrumentId, date.GetValueOrDefault());
@@ -210,17 +213,14 @@ namespace EquipmentManagementSystem.Pages.Records
                 WeeklyMaintenanceOperator = _maintenanceRecordService.GetWeeklyMaintenanceOperatorOfMonth(instrumentId, date.GetValueOrDefault());
                 WeekyMaintenanceSituation = await _maintenanceRecordService.GetWeeklyMaintenanceSituationOfMonth(instrumentId, date.GetValueOrDefault());
 
-                MonthlyMaintenanceRecord = MaintenanceRecords.Where(i => !string.IsNullOrEmpty(i.Monthly))
-                    .Select(i => $"{i.Monthly} {i.Operator}/{i.BeginTime.GetValueOrDefault():yyyy-MM-dd}")
-                    .FirstOrDefault();
+                MonthlyMaintenanceRecord = string.Join("            ",MaintenanceRecords.Where(i => !string.IsNullOrEmpty(i.Monthly))
+                    .Select(i => $"{i.Monthly} {i.Operator}/{i.BeginTime.GetValueOrDefault():yyyy-MM-dd}"));
 
-                QuarterlyMaintenanceRecord = MaintenanceRecords.Where(i => !string.IsNullOrEmpty(i.Quarterly))
-                    .Select(i => $"{i.Quarterly} {i.Operator}/{i.BeginTime.GetValueOrDefault():yyyy-MM-dd}")
-                    .FirstOrDefault();
+                QuarterlyMaintenanceRecord = string.Join("            ", MaintenanceRecords.Where(i => !string.IsNullOrEmpty(i.Quarterly))
+                    .Select(i => $"{i.Quarterly} {i.Operator}/{i.BeginTime.GetValueOrDefault():yyyy-MM-dd}"));
 
-                YearlyMaintenanceRecord = MaintenanceRecords.Where(i => !string.IsNullOrEmpty(i.Yearly))
-                    .Select(i => $"{i.Yearly} {i.Operator}/{i.BeginTime.GetValueOrDefault():yyyy-MM-dd}")
-                    .FirstOrDefault();
+                YearlyMaintenanceRecord = string.Join("            ", MaintenanceRecords.Where(i => !string.IsNullOrEmpty(i.Yearly))
+                    .Select(i => $"{i.Yearly} {i.Operator}/{i.BeginTime.GetValueOrDefault():yyyy-MM-dd}"));
 
                 TemporaryMaintenanceRecord = MaintenanceRecords.Where(i => !string.IsNullOrEmpty(i.Temporary))
                     .OrderBy(i => i.BeginTime)
