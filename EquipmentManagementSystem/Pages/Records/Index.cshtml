@@ -70,16 +70,10 @@
                                 <tr class="title">
                                     <th colspan="@totalColSpan">
                                         <h5>
-                                            @(InstrumentPlatform == "LCMS" ? "液相色谱串联质谱联用仪维护记录表" :
-                                            InstrumentPlatform == "GCMS" ? "气质联用仪维护记录表" :
-                                            InstrumentPlatform == "UPLC" ? "超高效液相色谱仪维护记录表" :
-                                            InstrumentPlatform == "MS" ? "ICP-MS维护记录表" : "_______________维护记录表")
+                                            ICP-MS维护记录表
                                         </h5>
                                         <h5>
-                                            @(InstrumentPlatform == "LCMS" ? "LC-MS/MS Maintenance Form" :
-                                            InstrumentPlatform == "GCMS" ? "GC-MS Maintenance Form" :
-                                            InstrumentPlatform == "UPLC" ? "UHPLC Maintenance Form" :
-                                            InstrumentPlatform == "MS" ? "ICP-MS Maintenance Form" : "_______________Maintenance Form")
+                                            ICP-MS Maintenance Form
                                         </h5>
                                     </th>
                                 </tr>
@@ -87,10 +81,7 @@
                                     <td colspan="12" style="text-align:left;"> @Model.Search.Date.ToString(@"yyyy 年 \Year MM 月 \M\on\t\h")</td>
                                     <td colspan="10" style="text-align:left;">仪器编号 No.：@(Model.Search.Instrument)</td>
                                     <td colspan="11" style="text-align:right;">
-                                        @(InstrumentPlatform == "LCMS" ? "表号 Form：KM-SOP0314.202.02" :
-                                        InstrumentPlatform == "GCMS" ? "表号 Form：KM-SOP0314.201.02" :
-                                        InstrumentPlatform == "UPLC" ? "表号 Form：KM-SOP0314.204.02" :
-                                        InstrumentPlatform == "MS" ? "表号 Form：GZKM-SOP0314.06.03" : "表号 Form：KM-SOP0314. ____.____")
+                                        表号 Form：GZKM-SOP0314.06.03
                                     </td>
                                 </tr>
                             </thead>
@@ -134,7 +125,7 @@
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                                     @if (!string.IsNullOrEmpty(Model.DailyMaintenanceOperator[i - 1]))
                                                     {
-                                                        var maintenanceRecord = Model.MaintenanceRecords.SingleOrDefault(i => i.Id == int.Parse(id));
+                                                        var maintenanceRecord = Model.ListOfYuanSuMaintenanceRecord.SingleOrDefault(i => i.Id == int.Parse(id));
 
                                                         @if ((await AuthorizationService.AuthorizeAsync(User, maintenanceRecord, Operations.Update)).Succeeded)
                                                         {
@@ -205,16 +196,16 @@
                                     var monthlyContent = new string[] { "清洗采样锥/截取锥", "更换内标管/进样管", "清洗采样锥/截取锥", "清洗六通阀(7900)" };
                                 }
                                 @*@foreach (var content in Model.WeeklyMaintenanceContent)
-        {
-            <tr>
-                <td class="maintenance-content">@content</td>
-                @for (int i = 0; i < colSpanOfWeekly.Length; i++)
-                {
-                    var yOrN = Model.WeekyMaintenanceSituation[content][i];
-                    <td colspan="@colSpanOfWeekly[i]">@yOrN</td>
-                }
-            </tr>
-        }*@
+                                    {
+                                        <tr>
+                                            <td class="maintenance-content">@content</td>
+                                            @for (int i = 0; i < colSpanOfWeekly.Length; i++)
+                                            {
+                                                var yOrN = Model.WeekyMaintenanceSituation[content][i];
+                                                <td colspan="@colSpanOfWeekly[i]">@yOrN</td>
+                                            }
+                                        </tr>
+                                    }*@
                                 <tr>
                                     <td class="text-left pl-2">维护内容(content)</td>
                                     @for (int i = 0; i < monthlyContent.Length; i++)
@@ -275,24 +266,24 @@
                                 </tr>
 
                                 @*@{
-                                    var otherRowSpan = 5;
-                                    var rowOfTemporary = 1;
-                                    if (InstrumentPlatform == "LCMS")
-                                    {
-                                        otherRowSpan = 7;
-                                        rowOfTemporary = 3;
-                                    }
-                                    else if (InstrumentPlatform == "GCMS")
-                                    {
-                                        otherRowSpan = 10;
-                                        rowOfTemporary = 6;
-                                    }
-                                    else if (InstrumentPlatform == "UPLC")
-                                    {
-                                        otherRowSpan = 12;
-                                        rowOfTemporary = 8;
-                                    }
-                                }*@
+                                        var otherRowSpan = 5;
+                                        var rowOfTemporary = 1;
+                                        if (InstrumentPlatform == "LCMS")
+                                        {
+                                            otherRowSpan = 7;
+                                            rowOfTemporary = 3;
+                                        }
+                                        else if (InstrumentPlatform == "GCMS")
+                                        {
+                                            otherRowSpan = 10;
+                                            rowOfTemporary = 6;
+                                        }
+                                        else if (InstrumentPlatform == "UPLC")
+                                        {
+                                            otherRowSpan = 12;
+                                            rowOfTemporary = 8;
+                                        }
+                                    }*@
                                 <tr>
                                     <td class="left" rowspan="3">
                                         半年维护<br />Half-yearly<br />maintenance
@@ -312,34 +303,34 @@
                                 </tr>
 
                                 @*@foreach (var tem in Model.TemporaryMaintenanceRecord)
-                                {
+                                    {
+                                        <tr>
+                                            <td class="maintenance-content">临时维护<br />操作者/日期</td>
+                                            <td colspan="@columnNumber">
+                                                @tem
+                                            </td>
+                                        </tr>
+                                    }
+                                    @for (int i = 1; i <= rowOfTemporary - Model.TemporaryMaintenanceRecord.Count; i++)
+                                    {
+                                        // 补充行
+                                        <tr>
+                                            <td class="maintenance-content">临时维护<br />操作者/日期</td>
+                                            <td colspan="@columnNumber"></td>
+                                        </tr>
+                                    }
                                     <tr>
-                                        <td class="maintenance-content">临时维护<br />操作者/日期</td>
-                                        <td colspan="@columnNumber">
-                                            @tem
-                                        </td>
+                                        <td class="maintenance-content">月度维护<br />操作者/日期</td>
+                                        <td colspan="@columnNumber">@Model.MonthlyMaintenanceRecord</td>
                                     </tr>
-                                }
-                                @for (int i = 1; i <= rowOfTemporary - Model.TemporaryMaintenanceRecord.Count; i++)
-                                {
-                                    // 补充行
                                     <tr>
-                                        <td class="maintenance-content">临时维护<br />操作者/日期</td>
-                                        <td colspan="@columnNumber"></td>
+                                        <td class="maintenance-content">季度维护<br />操作者/日期</td>
+                                        <td colspan="@columnNumber">@Model.QuarterlyMaintenanceRecord</td>
                                     </tr>
-                                }
-                                <tr>
-                                    <td class="maintenance-content">月度维护<br />操作者/日期</td>
-                                    <td colspan="@columnNumber">@Model.MonthlyMaintenanceRecord</td>
-                                </tr>
-                                <tr>
-                                    <td class="maintenance-content">季度维护<br />操作者/日期</td>
-                                    <td colspan="@columnNumber">@Model.QuarterlyMaintenanceRecord</td>
-                                </tr>
-                                <tr>
-                                    <td class="maintenance-content">年度维护<br />操作者/日期</td>
-                                    <td colspan="@columnNumber">@Model.YearlyMaintenanceRecord</td>
-                                </tr>*@
+                                    <tr>
+                                        <td class="maintenance-content">年度维护<br />操作者/日期</td>
+                                        <td colspan="@columnNumber">@Model.YearlyMaintenanceRecord</td>
+                                    </tr>*@
                             </tbody>
                         </table>
                         <audit-trail-grouping-by-pk Logs="Model.MaintenanceAuditTrailLogs" modal-id="maintenanceAuditTrailLog"></audit-trail-grouping-by-pk>
@@ -900,15 +891,15 @@
                                 }
                                 <tr>
                                     <td class="maintenance-content">月度维护<br />操作者/日期</td>
-                                    <td colspan="@columnNumber">@Model.MonthlyMaintenanceRecord</td>
+                                    <td colspan="@columnNumber" class="keep-space-wrap">@Model.MonthlyMaintenanceRecord</td>
                                 </tr>
                                 <tr>
                                     <td class="maintenance-content">季度维护<br />操作者/日期</td>
-                                    <td colspan="@columnNumber">@Model.QuarterlyMaintenanceRecord</td>
+                                    <td colspan="@columnNumber" class="keep-space-wrap">@Model.QuarterlyMaintenanceRecord</td>
                                 </tr>
                                 <tr>
                                     <td class="maintenance-content">年度维护<br />操作者/日期</td>
-                                    <td colspan="@columnNumber">@Model.YearlyMaintenanceRecord</td>
+                                    <td colspan="@columnNumber" class="keep-space-wrap">@Model.YearlyMaintenanceRecord</td>
                                 </tr>
                             </tbody>
                         </table>

@@ -278,6 +278,10 @@ p.text-vertical {
     font-size: 14px;
 }
 
+.keep-space-wrap{
+    white-space:pre-wrap;
+}
+
 @media print {
     @page {
         size: A4 landscape;
