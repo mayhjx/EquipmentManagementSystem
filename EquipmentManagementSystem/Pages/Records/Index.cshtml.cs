@@ -232,6 +232,9 @@ namespace EquipmentManagementSystem.Pages.Records
                     .OrderBy(i => i.BeginTime)
                     .Select(i => $"{i.Other} {i.Operator}/{i.BeginTime.GetValueOrDefault():yyyy-MM-dd}")
                     .ToList());
+
+                // 解决较新的Temporary记录在旧的Other记录前面的问题
+                TemporaryMaintenanceRecord = TemporaryMaintenanceRecord.OrderBy(i => i.Split("/")[1]).ToList();
                 #endregion
 
                 // 当前仪器和月份的操作日志
