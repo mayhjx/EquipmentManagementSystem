@@ -26,4 +26,14 @@ namespace EquipmentManagementSystem.Models
         [Display(Name = "剩余天数提醒")]
         public int RemindTime { get; set; }
     }
+
+    public class MaintenanceType
+    {
+        public static readonly string Daily = "日常维护";
+        public static readonly string Weekly = "周维护";
+        public static readonly string Monthly = "月度维护";
+        public static readonly string Quarterly = "季度维护";
+        public static readonly string HalfYearly = "半年维护";
+        public static readonly string Yearly = "年度维护";
+    }
 }
