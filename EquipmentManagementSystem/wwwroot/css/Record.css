@@ -41,11 +41,15 @@ table th, td {
     text-align: center;
 }
 
-    td.sensitivity, td.massResolution,
-    td.massAxis, td.oxide,
-    td.doubleCharge, td.mass78 {
-        text-align: right;
-    }
+.view-row td.sensitivity,
+.view-row td.massResolution,
+.view-row td.massAxis,
+.view-row td.oxide,
+.view-row td.doubleCharge,
+.view-row td.mass78 {
+    text-align: right;
+    padding-right: 3px;
+}
 
 tr.update-row {
     background-color: moccasin;
