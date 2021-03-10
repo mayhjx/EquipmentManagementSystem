@@ -20,7 +20,6 @@ namespace EquipmentManagementSystem.Pages.Records
         private readonly IUsageRecordRepository _usageRecordRepository;
         private readonly IUsageRecordOfYuanSuRepository _usageRecordOfYuanSuRepository;
         private readonly IMaintenanceRecordRepository _maintenanceRecordRepository;
-        private readonly IMaintenanceRecordOfYuanSuRepository _maintenanceRecordOfYuanSuRepository;
         private readonly IMaintenanceRecordService _maintenanceRecordService;
         private readonly IMaintenanceContentRepository _maintenanceContentRepository;
 
@@ -31,7 +30,6 @@ namespace EquipmentManagementSystem.Pages.Records
             IUsageRecordRepository usageRecordRepository,
             IUsageRecordOfYuanSuRepository usageRecordOfYuanSuRepository,
             IMaintenanceRecordRepository maintenanceRecordRepository,
-            IMaintenanceRecordOfYuanSuRepository maintenanceRecordOfYuanSuRepository,
             IMaintenanceRecordService maintenanceRecordService,
             IMaintenanceContentRepository maintenanceContentRepository,
             IInstrumentService instrumentService)
@@ -43,7 +41,6 @@ namespace EquipmentManagementSystem.Pages.Records
             _usageRecordRepository = usageRecordRepository;
             _usageRecordOfYuanSuRepository = usageRecordOfYuanSuRepository;
             _maintenanceRecordRepository = maintenanceRecordRepository;
-            _maintenanceRecordOfYuanSuRepository = maintenanceRecordOfYuanSuRepository;
             _maintenanceRecordService = maintenanceRecordService;
             _maintenanceContentRepository = maintenanceContentRepository;
 
