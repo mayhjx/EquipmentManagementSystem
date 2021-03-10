@@ -110,11 +110,6 @@ namespace EquipmentManagementSystem.Pages.Records
         public List<UsageRecordOfYuanSu> ListOfYuanSuUsageRecord { get; private set; }
         #endregion
 
-        //#region 元素项目维护记录相关
-        //public MaintenanceRecordOfYuanSu MaintenanceRecordOfYuanSu { get; set; }
-        //public List<MaintenanceRecordOfYuanSu> ListOfYuanSuMaintenanceRecord { get; private set; }
-        //#endregion
-
         public async Task<IActionResult> OnGetAsync(string instrumentId, DateTime? date, string statusMessage)
         {
             if (instrumentId == null)
@@ -146,7 +141,6 @@ namespace EquipmentManagementSystem.Pages.Records
 
             Platform = (await _instrumentRepository.GetById(instrumentId))?.Platform;
 
-
             // 选择了ICP-MS仪器编号
             if (Search.SelectedICPMSInstrument)
             {
@@ -161,10 +155,7 @@ namespace EquipmentManagementSystem.Pages.Records
                     Operator = _userResolverService.GetUserName()
                 };
 
-                //#region 元素维护登记表相关
-                //ListOfYuanSuMaintenanceRecord = _maintenanceRecordOfYuanSuRepository.GetAllByInstrumentIdAndYearAndMonth(instrumentId, date);
-                //RecordsIdOfMonth = _maintenanceRecordService.GetRecordIdOfMonth(ListOfYuanSuMaintenanceRecord);
-                //#endregion
+                TotalHours = _usageRecordOfYuanSuRepository.GetTotalUsageHoursOfRecords(ListOfYuanSuUsageRecord);
 
                 // 当前仪器和月份的操作日志
                 UsageAuditTrailLogs = _auditTrailRepository.GetAuditTrailLogsGroupingByPKOfInstrumentId(new UsageRecordOfYuanSu().GetType().Name, Search.Instrument, Search.Date);
