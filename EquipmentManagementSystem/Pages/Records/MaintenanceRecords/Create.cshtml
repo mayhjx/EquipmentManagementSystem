@@ -5,7 +5,11 @@
     ViewData["Title"] = "新建";
 }
 
-
+<style>
+    form ul:empty{
+        background-color:red;
+    }
+</style>
 <div class="card">
     <div class="card-header">
         <h4>维护登记</h4>
@@ -18,21 +22,6 @@
                     <div class="form-group">
                         <label asp-for="MaintenanceRecord.InstrumentID" class="control-label"></label>
                         <input id="instrumentId" asp-for="MaintenanceRecord.InstrumentID" class="form-control" value="@Model.SelectedInstrumentId" readonly required />
-
-                        @*<select id="instrumentId" class="custom-select" asp-for="MaintenanceRecord.InstrumentId">
-                                <option value="" selected disabled hidden>---请选择---</option>
-                                @foreach (var id in Model.InstrumentSelectList)
-                                {
-                                    if (id == Model.SelectedInstrumentId)
-                                    {
-                                        <option value="@id" selected>@id</option>
-                                    }
-                                    else
-                                    {
-                                        <option value="@id">@id</option>
-                                    }
-                                }
-                            </select>*@
                     </div>
                     <div class="form-group">
                         <label asp-for="MaintenanceRecord.BeginTime" class="control-label"></label>
@@ -60,42 +49,43 @@
                                     <input type="checkbox" value="日常维护" id="Daily" class="form-check-input" />
                                     <label for="Daily" class="form-check-label text-bold">日常维护</label>
                                 </div>
-                                <ul id="日常维护">
-                                </ul>
+                                <ul id="日常维护"></ul>
                             </div>
                             <div class="col-xl-4 col-12">
                                 <div class="form-check">
                                     <input type="checkbox" value="周维护" id="Weekly" class="form-check-input" />
                                     <label for="Weekly" class="form-check-label text-bold">周维护</label>
                                 </div>
-                                <ul id="周维护">
-                                </ul>
+                                <ul id="周维护"></ul>
                             </div>
                             <div class="col-xl-4 col-12">
                                 <div class="form-check">
                                     <input type="checkbox" value="月度维护" id="Monthly" class="form-check-input" />
                                     <label for="Monthly" class="form-check-label text-bold">月度维护</label>
                                 </div>
-                                <ul id="月度维护">
-                                </ul>
+                                <ul id="月度维护"></ul>
                             </div>
-                        </div>
-                        <div class="form-row">
+                            @*</div><div class="form-row">*@
                             <div class="col-xl-4 col-12">
                                 <div class="form-check">
                                     <input type="checkbox" value="季度维护" id="Quarterly" class="form-check-input" />
                                     <label for="Quarterly" class="form-check-label text-bold">季度维护</label>
                                 </div>
-                                <ul id="季度维护">
-                                </ul>
+                                <ul id="季度维护"></ul>
+                            </div>
+                            <div class="col-xl-4 col-12">
+                                <div class="form-check">
+                                    <input type="checkbox" value="半年维护" id="HalfYearly" class="form-check-input" />
+                                    <label for="HalfYearly" class="form-check-label text-bold">半年维护</label>
+                                </div>
+                                <ul id="半年维护"></ul>
                             </div>
                             <div class="col-xl-4 col-12">
                                 <div class="form-check">
                                     <input type="checkbox" value="年度维护" id="Yearly" class="form-check-input" />
                                     <label for="Yearly" class="form-check-label text-bold">年度维护</label>
                                 </div>
-                                <ul id="年度维护">
-                                </ul>
+                                <ul id="年度维护"></ul>
                             </div>
                             <div class="col-xl-4 col-12">
                                 <div class="form-check">
@@ -103,6 +93,7 @@
                                     <label for="Temporarily" class="form-check-label text-bold">临时维护</label>
                                 </div>
                                 <ul id="临时维护">
+
                                 </ul>
                                 <div class="form-group pl-3" id="otherContent">
                                     <label for="other">其他：</label>

@@ -40,6 +40,8 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
         [BindProperty]
         public string[] QuarterlyMaintenanceContent { get; set; }
         [BindProperty]
+        public string[] HalfYearlyMaintenanceContent { get; set; }
+        [BindProperty]
         public string[] YearlyMaintenanceContent { get; set; }
         [BindProperty]
         public string[] TemporaryMaintenanceContent { get; set; }
@@ -105,6 +107,7 @@ namespace EquipmentManagementSystem.Pages.MaintenanceRecords
                 MaintenanceRecord.SetWeekly(WeeklyMaintenanceContent);
                 MaintenanceRecord.SetMonthly(MonthlyMaintenanceContent);
                 MaintenanceRecord.SetQuarterly(QuarterlyMaintenanceContent);
+                MaintenanceRecord.SetHalfYearly(HalfYearlyMaintenanceContent);
                 MaintenanceRecord.SetYearly(YearlyMaintenanceContent);
                 MaintenanceRecord.SetTemporary(TemporaryMaintenanceContent);
                 MaintenanceRecord.SetOther(OtherMaintenanceContent);
