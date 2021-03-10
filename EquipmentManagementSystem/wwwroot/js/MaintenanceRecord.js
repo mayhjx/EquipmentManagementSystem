@@ -53,32 +53,45 @@ function getContentOfInstrument(instrumentId) {
             $.each(data, function (i, item) {
                 // 为了分开保存不同类型的维护内容
                 let name = "";
-                if (item.type == "日常维护") {
-                    name = "dailyMaintenanceContent";
-                } else if (item.type == "周维护") {
-                    name = "weeklyMaintenanceContent";
-                } else if (item.type == "月度维护") {
-                    name = "monthlyMaintenanceContent";
-                } else if (item.type == "季度维护") {
-                    name = "quarterlyMaintenanceContent";
-                } else if (item.type == "年度维护") {
-                    name = "yearlyMaintenanceContent";
-                } else if (item.type == "临时维护") {
-                    name = "temporaryMaintenanceContent";
+                switch (item.type) {
+                    case "日常维护":
+                        name = "daily";
+                        break;
+                    case "周维护":
+                        name = "weekly";
+                        break;
+                    case "月度维护":
+                        name = "monthly";
+                        break;
+                    case "季度维护":
+                        name = "quarterly";
+                        break;
+                    case "半年维护":
+                        name = "halfYearly";
+                        break;
+                    case "年度维护":
+                        name = "yearly";
+                        break;
+                    case "临时维护":
+                        name = "temporary";
+                        break;
                 }
 
                 $(`ul#${item.type}`).append(`<li>
-                                            <input type="checkbox" id="Content-${i}" class="content" name="${name}" value="${item.text}" />
+                                            <input type="checkbox" id="Content-${i}" class="content" 
+                                                    name="${name}MaintenanceContent" value="${item.text}" />
                                             <label class="form-check-label" for="Content-${i}">${item.text}</label>
-                                        </li>`)
+                                             </li>`)
             });
         }
         else {
             alert(data);
         }
+
+        // 删除没有维护内容的类型
+        document.querySelectorAll("ul:empty").forEach(ul => ul.parentElement.style = "display:none;");
     });
 }
-
 
 $(".delete-maintenance-record-btn").click(function () {
     if (!confirm("确认删除该条记录？")) {
