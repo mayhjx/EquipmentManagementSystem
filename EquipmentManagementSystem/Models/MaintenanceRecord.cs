@@ -41,6 +41,9 @@ namespace EquipmentManagementSystem.Models
         [Display(Name = "季度维护")]
         public string Quarterly { get; set; }
 
+        [Display(Name = "半年维护")]
+        public string HalfYearly { get; set; }
+
         [Display(Name = "年度维护")]
         public string Yearly { get; set; }
 
@@ -91,6 +94,16 @@ namespace EquipmentManagementSystem.Models
         public List<string> GetQuarterly()
         {
             return Quarterly?.Split(",").ToList();
+        }
+
+        public void SetHalfYearly(string[] content)
+        {
+            HalfYearly = string.Join(",", content);
+        }
+
+        public List<string> GetHalfYearly()
+        {
+            return HalfYearly?.Split(",").ToList();
         }
 
         public void SetYearly(string[] content)
