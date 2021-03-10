@@ -17,14 +17,9 @@ namespace EquipmentManagementSystem.Repositories
             return _context.MaintenanceContents.Where(i => i.InstrumentPlatform == platform).ToList();
         }
 
-        public List<string> GetDailyContentByInstrumentPlatform(string platform)
+        public List<string> GetMaintenanceContentByInstrumentPlatform(string platform, string maintenanceType)
         {
-            return _context.MaintenanceContents.Where(i => i.InstrumentPlatform == platform).Where(i => i.Type == "日常维护").Select(i => i.Text).ToList();
-        }
-
-        public List<string> GetWeeklyContentByInstrumentPlatform(string platform)
-        {
-            return _context.MaintenanceContents.Where(i => i.InstrumentPlatform == platform).Where(i => i.Type == "周维护").Select(i => i.Text).ToList();
+            return _context.MaintenanceContents.Where(i => i.InstrumentPlatform == platform).Where(i => i.Type == maintenanceType).Select(i => i.Text).ToList();
         }
 
         public int GetMaintenanceCycleOfPlatform(string platform, string maintenanceType, string content)
