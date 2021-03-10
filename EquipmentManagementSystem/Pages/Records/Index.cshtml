@@ -60,283 +60,6 @@
                 if (Model.Search.SelectedICPMSInstrument)
                 {
                     // 选择了ICP-MS设备
-                    @*元素项目维护记录*@
-                    int columnNumber = 31; // 固定显示31天
-                    int totalColSpan = 33;
-                    string InstrumentPlatform = Model.Platform;
-                    <div class="tab-pane fade table-responsive active show" id="maintenance-record" role="tabpanel" aria-labelledby="maintenance-record-tab">
-                        <table id="maintenance-record">
-                            <thead>
-                                <tr class="title">
-                                    <th colspan="@totalColSpan">
-                                        <h5>
-                                            ICP-MS维护记录表
-                                        </h5>
-                                        <h5>
-                                            ICP-MS Maintenance Form
-                                        </h5>
-                                    </th>
-                                </tr>
-                                <tr class="small-title">
-                                    <td colspan="12" style="text-align:left;"> @Model.Search.Date.ToString(@"yyyy 年 \Year MM 月 \M\on\t\h")</td>
-                                    <td colspan="10" style="text-align:left;">仪器编号 No.：@(Model.Search.Instrument)</td>
-                                    <td colspan="11" style="text-align:right;">
-                                        表号 Form：GZKM-SOP0314.06.03
-                                    </td>
-                                </tr>
-                            </thead>
-                            <tfoot>
-                                @*<tr class="tfoot">
-                                        <td colspan="@totalColSpan">使用回顾</td>
-                                    </tr>*@
-                                <tr class="tfoot">
-                                    <td colspan="2">评估意见</td>
-                                    <td colspan="@(totalColSpan - 20)"></td>
-                                    <td colspan="4">评估者/日期</td>
-                                    <td colspan="5"></td>
-                                    <td colspan="4">审批人/日期</td>
-                                    <td colspan="5"></td>
-                                </tr>
-                                <tr class="tfoot">
-                                    <td colspan="2">备注 Remark：</td>
-                                    <td colspan="@(totalColSpan-2)" style="text-align:left;padding-left:10px;">
-                                        Y：该工作日已完成该项维护； N：经评估，该工作日无需进行该项维护。
-                                    </td>
-                                </tr>
-                            </tfoot>
-                            <tbody>
-                                <tr class="days">
-                                    <td></td>
-                                    <td class="text-left pl-2">维护内容/执行日期 <br />(contents/date)</td>
-                                    @for (int i = 1; i <= columnNumber; i++)
-                                    {
-                                        var id = @Model.RecordsIdOfMonth[i - 1];
-                                        var daysInMonth = DateTime.DaysInMonth(Model.Search.Date.Year, Model.Search.Date.Month);
-                                        // 计算某月份的总天数，如果小于31天，多出来的那几天不显示新建，编辑，删除选项
-                                        if (i <= daysInMonth)
-                                        {
-                                            var selectedDate = new DateTime(Model.Search.Date.Year, Model.Search.Date.Month, i, 8, 30, 00);
-                                            <td class="days">
-                                                <span class="hide-in-screen">@i</span>
-
-                                                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    @i
-                                                </a>
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                    @if (!string.IsNullOrEmpty(Model.DailyMaintenanceOperator[i - 1]))
-                                                    {
-                                                        var maintenanceRecord = Model.ListOfYuanSuMaintenanceRecord.SingleOrDefault(i => i.Id == int.Parse(id));
-
-                                                        @if ((await AuthorizationService.AuthorizeAsync(User, maintenanceRecord, Operations.Update)).Succeeded)
-                                                        {
-                                                            <a class="dropdown-item" asp-page="MaintenanceRecordsOfYuanSu/Edit" asp-route-Id="@id">编辑</a>
-                                                        }
-                                                        else
-                                                        {
-                                                            <span class="dropdown-item">-</span>
-                                                        }
-                                                        @if ((await AuthorizationService.AuthorizeAsync(User, maintenanceRecord, Operations.Delete)).Succeeded)
-                                                        {
-                                                            <a class="dropdown-item delete-maintenance-record-btn" href="#" data-id="@id">删除</a>
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        @if ((await AuthorizationService.AuthorizeAsync(User, Model.MaintenanceRecord, Operations.Create)).Succeeded)
-                                                        {
-                                                            <a class="dropdown-item"
-                                                               asp-page="MaintenanceRecordsOfYuanSu/Create"
-                                                               asp-route-instrumentId="@Model.Search.Instrument"
-                                                               asp-route-beginTime="@selectedDate.ToString("yyyy-MM-ddTHH:mm")">
-                                                                新建
-                                                            </a>
-                                                        }
-                                                    }
-                                                </div>
-                                            </td>
-                                        }
-                                        else
-                                        {
-                                            <td class="days">
-                                                <span>@i</span>
-                                            </td>
-                                        }
-                                    }
-                                </tr>
-                                <tr>
-                                    <td class="left" rowspan="@(Model.DailyMaintenanceContent.Count+2)">
-                                        日维护<br />Daily<br />maintenance
-                                    </td>
-                                </tr>
-                                @foreach (var content in Model.DailyMaintenanceContent)
-                                {
-                                    <tr>
-                                        <td class="maintenance-content">@content</td>
-                                        @foreach (var yOrN in Model.DailyMaintenanceSituation[content])
-                                        {
-                                            <td>@yOrN</td>
-                                        }
-                                    </tr>
-                                }
-                                <tr>
-                                    <td class="operator">操作者(operator)</td>
-                                    @foreach (var op in Model.DailyMaintenanceOperator)
-                                    {
-                                        <td><p class="operator text-vertical">@op</p></td>
-                                    }
-                                </tr>
-                                <tr>
-                                    <td class="left" rowspan="4">
-                                        月维护<br />Monthly<br />maintenance
-                                    </td>
-                                </tr>
-                                @{
-                                    // 4个维护内容占用的colspan
-                                    var colSpanOfWeekly = new int[] { 7, 8, 8, 8 };
-                                    var monthlyContent = new string[] { "清洗采样锥/截取锥", "更换内标管/进样管", "清洗采样锥/截取锥", "清洗六通阀(7900)" };
-                                }
-                                @*@foreach (var content in Model.WeeklyMaintenanceContent)
-                                    {
-                                        <tr>
-                                            <td class="maintenance-content">@content</td>
-                                            @for (int i = 0; i < colSpanOfWeekly.Length; i++)
-                                            {
-                                                var yOrN = Model.WeekyMaintenanceSituation[content][i];
-                                                <td colspan="@colSpanOfWeekly[i]">@yOrN</td>
-                                            }
-                                        </tr>
-                                    }*@
-                                <tr>
-                                    <td class="text-left pl-2">维护内容(content)</td>
-                                    @for (int i = 0; i < monthlyContent.Length; i++)
-                                    {
-                                        var content = monthlyContent[i];
-                                        <td colspan="@colSpanOfWeekly[i]">@content</td>
-                                    }
-                                </tr>
-                                <tr>
-                                    <td class="text-left pl-2">日期(date)</td>
-                                    @for (int i = 0; i < monthlyContent.Length; i++)
-                                    {
-                                        var date = "Date";
-                                        <td colspan="@colSpanOfWeekly[i]">@date</td>
-                                    }
-                                </tr>
-                                <tr>
-                                    <td class="operator">操作者(operator)</td>
-                                    @for (int i = 0; i < colSpanOfWeekly.Length; i++)
-                                    {
-                                        var op = "Operator";
-                                        <td colspan="@colSpanOfWeekly[i]">@op</td>
-                                    }
-                                </tr>
-
-                                <tr>
-                                    <td class="left" rowspan="4">
-                                        临时维护<br />Temporary<br />maintenance
-                                    </td>
-                                </tr>
-                                @{
-                                    // 4个维护内容占用的colspan
-                                    var colSpanOfTemporary = new int[] { 7, 8, 8, 8 };
-                                }
-                                <tr>
-                                    <td class="text-left pl-2">维护内容(content)</td>
-                                    @for (int i = 0; i < monthlyContent.Length; i++)
-                                    {
-                                        var content = "Content";
-                                        <td colspan="@colSpanOfTemporary[i]">@content</td>
-                                    }
-                                </tr>
-                                <tr>
-                                    <td class="text-left pl-2">日期(date)</td>
-                                    @for (int i = 0; i < monthlyContent.Length; i++)
-                                    {
-                                        var date = "Date";
-                                        <td colspan="@colSpanOfTemporary[i]">@date</td>
-                                    }
-                                </tr>
-                                <tr>
-                                    <td class="operator">操作者(operator)</td>
-                                    @for (int i = 0; i < colSpanOfTemporary.Length; i++)
-                                    {
-                                        var op = "Operator";
-                                        <td colspan="@colSpanOfTemporary[i]">@op</td>
-                                    }
-                                </tr>
-
-                                @*@{
-                                        var otherRowSpan = 5;
-                                        var rowOfTemporary = 1;
-                                        if (InstrumentPlatform == "LCMS")
-                                        {
-                                            otherRowSpan = 7;
-                                            rowOfTemporary = 3;
-                                        }
-                                        else if (InstrumentPlatform == "GCMS")
-                                        {
-                                            otherRowSpan = 10;
-                                            rowOfTemporary = 6;
-                                        }
-                                        else if (InstrumentPlatform == "UPLC")
-                                        {
-                                            otherRowSpan = 12;
-                                            rowOfTemporary = 8;
-                                        }
-                                    }*@
-                                <tr>
-                                    <td class="left" rowspan="3">
-                                        半年维护<br />Half-yearly<br />maintenance
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3">仪器除尘<br />操作者/日期</td>
-                                    <td colspan="13"></td>
-                                    <td colspan="4">循环水机换水<br />操作者/日期</td>
-                                    <td colspan="13"></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3">机械泵维护<br />操作者/日期</td>
-                                    <td colspan="13"></td>
-                                    <td colspan="4">清洗透镜<br />操作者/日期</td>
-                                    <td colspan="13"></td>
-                                </tr>
-
-                                @*@foreach (var tem in Model.TemporaryMaintenanceRecord)
-                                    {
-                                        <tr>
-                                            <td class="maintenance-content">临时维护<br />操作者/日期</td>
-                                            <td colspan="@columnNumber">
-                                                @tem
-                                            </td>
-                                        </tr>
-                                    }
-                                    @for (int i = 1; i <= rowOfTemporary - Model.TemporaryMaintenanceRecord.Count; i++)
-                                    {
-                                        // 补充行
-                                        <tr>
-                                            <td class="maintenance-content">临时维护<br />操作者/日期</td>
-                                            <td colspan="@columnNumber"></td>
-                                        </tr>
-                                    }
-                                    <tr>
-                                        <td class="maintenance-content">月度维护<br />操作者/日期</td>
-                                        <td colspan="@columnNumber">@Model.MonthlyMaintenanceRecord</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="maintenance-content">季度维护<br />操作者/日期</td>
-                                        <td colspan="@columnNumber">@Model.QuarterlyMaintenanceRecord</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="maintenance-content">年度维护<br />操作者/日期</td>
-                                        <td colspan="@columnNumber">@Model.YearlyMaintenanceRecord</td>
-                                    </tr>*@
-                            </tbody>
-                        </table>
-                        <audit-trail-grouping-by-pk Logs="Model.MaintenanceAuditTrailLogs" modal-id="maintenanceAuditTrailLog"></audit-trail-grouping-by-pk>
-                        <button type="button" class="btn btn-outline-primary my-1" onclick="createReport()">导出</button>
-                    </div>
-
                     @*元素项目使用记录*@
                     <div id="usage-record" class="tab-pane fade table-responsive" role="tabpanel" aria-labelledby="usage-record-tab">
                         <table id="usage-record">
@@ -365,13 +88,13 @@
                             <thead>
                                 <tr class="title">
                                     <th colspan="19">
-                                        <h5>Agilent 7900 ICP-MS 使用记录表(He模式)</h5>
-                                        <h5>Agilent 7900 ICP-MS Use Form</h5>
+                                        <h5>电感耦合等离子体质谱仪使用记录表(He模式)</h5>
+                                        <h5>ICP-MS Use Form</h5>
                                     </th>
                                 </tr>
                                 <tr class="small-title">
                                     <td colspan="10" class="text-left">仪器编号(Instrument No.)：@(Model.Search?.Instrument)</td>
-                                    <td colspan="9" class="text-right">表号(Form)：GZKM-SOP0314.06.01</td>
+                                    <td colspan="9" class="text-right">表号(Form)：GZKM-SOP0314.__.__</td>
                                 </tr>
                                 <tr>
                                     <td class="time" rowspan="2">
@@ -690,229 +413,6 @@
                 }
                 else
                 {
-                    @*液质维护记录*@
-                    int columnNumber = 31; // 固定显示31天
-                    int totalColSpan = 33;
-                    string InstrumentPlatform = Model.Platform;
-                    <div class="tab-pane fade table-responsive active show" id="maintenance-record" role="tabpanel" aria-labelledby="maintenance-record-tab">
-                        <table id="maintenance-record">
-                            <thead>
-                                <tr class="title">
-                                    <th colspan="@totalColSpan">
-                                        <h5>
-                                            @(InstrumentPlatform == "LCMS" ? "液相色谱串联质谱联用仪维护记录表" :
-                                            InstrumentPlatform == "GCMS" ? "气质联用仪维护记录表" :
-                                            InstrumentPlatform == "UPLC" ? "超高效液相色谱仪维护记录表" : "_______________维护记录表")
-                                        </h5>
-                                        <h5>
-                                            @(InstrumentPlatform == "LCMS" ? "LC-MS/MS Maintenance Form" :
-                                            InstrumentPlatform == "GCMS" ? "GC-MS Maintenance Form" :
-                                            InstrumentPlatform == "UPLC" ? "UHPLC Maintenance Form" : "_______________Maintenance Form")
-                                        </h5>
-                                    </th>
-                                </tr>
-                                <tr class="small-title">
-                                    <td colspan="12" style="text-align:left;"> @Model.Search.Date.ToString(@"yyyy 年 \Year MM 月 \M\on\t\h")</td>
-                                    <td colspan="10" style="text-align:left;">仪器编号 No.：@(Model.Search.Instrument)</td>
-                                    <td colspan="11" style="text-align:right;">
-                                        @(InstrumentPlatform == "LCMS" ? "表号 Form：KM-SOP0314.202.02" :
-                                        InstrumentPlatform == "GCMS" ? "表号 Form：KM-SOP0314.201.02" :
-                                        InstrumentPlatform == "UPLC" ? "表号 Form：KM-SOP0314.204.02" : "表号 Form：KM-SOP0314. _____ .02")
-                                    </td>
-                                </tr>
-                            </thead>
-                            <tfoot>
-                                <tr class="tfoot">
-                                    <td colspan="@totalColSpan" style="text-align:left;padding-left:10px;">
-                                        备注 remark：Y，该工作日已完成该项维护； N，经评估该工作日无需进行该项维护。
-                                    </td>
-                                </tr>
-                                <tr class="tfoot">
-                                    <td colspan="@totalColSpan">使用回顾</td>
-                                </tr>
-                                <tr class="tfoot">
-                                    <td>评估意见<br />Comment</td>
-                                    <td colspan="@(totalColSpan - 19)"></td>
-                                    <td colspan="4">评估人/日期<br />Evaluator/Date</td>
-                                    <td colspan="5"></td>
-                                    <td colspan="4">审批人/日期<br />Approver/Date</td>
-                                    <td colspan="5"></td>
-                                </tr>
-                            </tfoot>
-                            <tbody>
-                                <tr class="days">
-                                    <td></td>
-                                    <td>日期 Date</td>
-                                    @for (int i = 1; i <= columnNumber; i++)
-                                    {
-                                        var id = @Model.RecordsIdOfMonth[i - 1];
-                                        var daysInMonth = DateTime.DaysInMonth(Model.Search.Date.Year, Model.Search.Date.Month);
-                                        // 计算某月份的总天数，如果小于31天，多出来的那几天不显示新建，编辑，删除选项
-                                        if (i <= daysInMonth)
-                                        {
-                                            var selectedDate = new DateTime(Model.Search.Date.Year, Model.Search.Date.Month, i, 8, 30, 00);
-                                            <td class="days">
-                                                <span class="hide-in-screen">@i</span>
-
-                                                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    @i
-                                                </a>
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                    @if (!string.IsNullOrEmpty(Model.DailyMaintenanceOperator[i - 1]))
-                                                    {
-                                                        var maintenanceRecord = Model.MaintenanceRecords.SingleOrDefault(i => i.Id == int.Parse(id));
-
-                                                        @if ((await AuthorizationService.AuthorizeAsync(User, maintenanceRecord, Operations.Update)).Succeeded)
-                                                        {
-                                                            <a class="dropdown-item" asp-page="MaintenanceRecords/Edit" asp-route-Id="@id">编辑</a>
-                                                        }
-                                                        else
-                                                        {
-                                                            <span class="dropdown-item">-</span>
-                                                        }
-                                                        @if ((await AuthorizationService.AuthorizeAsync(User, maintenanceRecord, Operations.Delete)).Succeeded)
-                                                        {
-                                                            <a class="dropdown-item delete-maintenance-record-btn" href="#" data-id="@id">删除</a>
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        @if ((await AuthorizationService.AuthorizeAsync(User, Model.MaintenanceRecord, Operations.Create)).Succeeded)
-                                                        {
-                                                            <a class="dropdown-item"
-                                                               asp-page="MaintenanceRecords/Create"
-                                                               asp-route-instrumentId="@Model.Search.Instrument"
-                                                               asp-route-beginTime="@selectedDate.ToString("yyyy-MM-ddTHH:mm")">
-                                                                新建
-                                                            </a>
-                                                        }
-                                                    }
-                                                </div>
-                                            </td>
-                                        }
-                                        else
-                                        {
-                                            <td class="days">
-                                                <span>@i</span>
-                                            </td>
-                                        }
-                                    }
-                                </tr>
-                                <tr>
-                                    <td class="left" rowspan="@(Model.DailyMaintenanceContent.Count+2)">
-                                        日常维护<br />Daily
-                                    </td>
-                                </tr>
-                                @foreach (var content in Model.DailyMaintenanceContent)
-                                {
-                                    <tr>
-                                        <td class="maintenance-content">@content</td>
-                                        @foreach (var yOrN in Model.DailyMaintenanceSituation[content])
-                                        {
-                                            <td>@yOrN</td>
-                                        }
-                                    </tr>
-                                }
-                                <tr>
-                                    <td class="operator text-bold">操作者</td>
-                                    @foreach (var op in Model.DailyMaintenanceOperator)
-                                    {
-                                        <td><p class="operator text-vertical">@op</p></td>
-                                    }
-                                </tr>
-                                <tr>
-                                    <td class="left" rowspan="@(Model.WeeklyMaintenanceContent.Count+2)">
-                                        周维护<br />Weekly
-                                    </td>
-                                </tr>
-                                @{
-                                    // 周维护有4个，每个维护内容占用的colspan
-                                    var colSpanOfWeekly = new int[] { 7, 8, 8, 8 };
-                                }
-                                @foreach (var content in Model.WeeklyMaintenanceContent)
-                                {
-                                    <tr>
-                                        <td class="maintenance-content">@content</td>
-                                        @for (int i = 0; i < colSpanOfWeekly.Length; i++)
-                                        {
-                                            var yOrN = Model.WeekyMaintenanceSituation[content][i];
-                                            <td colspan="@colSpanOfWeekly[i]">@yOrN</td>
-                                        }
-                                    </tr>
-                                }
-                                <tr>
-                                    <td class="operator text-bold">操作者</td>
-                                    @for (int i = 0; i < colSpanOfWeekly.Length; i++)
-                                    {
-                                        var op = Model.WeeklyMaintenanceOperator[i];
-                                        <td colspan="@colSpanOfWeekly[i]">@op</td>
-                                    }
-                                </tr>
-                                @{
-                                    var otherRowSpan = 5;
-                                    var rowOfTemporary = 1;
-                                    if (InstrumentPlatform == "LCMS")
-                                    {
-                                        otherRowSpan = 7;
-                                        rowOfTemporary = 3;
-                                    }
-                                    else if (InstrumentPlatform == "GCMS")
-                                    {
-                                        otherRowSpan = 10;
-                                        rowOfTemporary = 6;
-                                    }
-                                    else if (InstrumentPlatform == "UPLC")
-                                    {
-                                        otherRowSpan = 12;
-                                        rowOfTemporary = 8;
-                                    }
-                                }
-                                <tr>
-                                    <td class="left" rowspan="@otherRowSpan">
-                                        其他<br />Others
-                                    </td>
-                                </tr>
-                                @for (int i = 0; i <= Model.TemporaryMaintenanceRecord.Count - 1; i += 2)
-                                {
-                                    // 每两条记录放一行
-                                    <tr>
-                                        <td class="maintenance-content">临时维护<br />操作者/日期</td>
-                                        <td colspan="@columnNumber">
-                                            @Model.TemporaryMaintenanceRecord[i]
-                                            @if (Model.TemporaryMaintenanceRecord.Count > (i + 1))
-                                            {
-                                                <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
-                                                @Model.TemporaryMaintenanceRecord[i + 1]
-                                            }
-                                        </td>
-                                    </tr>
-                                }
-                                @for (int i = 1; i <= rowOfTemporary - Model.TemporaryMaintenanceRecord.Count; i++)
-                                {
-                                    // 补充行
-                                    <tr>
-                                        <td class="maintenance-content">临时维护<br />操作者/日期</td>
-                                        <td colspan="@columnNumber"></td>
-                                    </tr>
-                                }
-                                <tr>
-                                    <td class="maintenance-content">月度维护<br />操作者/日期</td>
-                                    <td colspan="@columnNumber" class="keep-space-wrap">@Model.MonthlyMaintenanceRecord</td>
-                                </tr>
-                                <tr>
-                                    <td class="maintenance-content">季度维护<br />操作者/日期</td>
-                                    <td colspan="@columnNumber" class="keep-space-wrap">@Model.QuarterlyMaintenanceRecord</td>
-                                </tr>
-                                <tr>
-                                    <td class="maintenance-content">年度维护<br />操作者/日期</td>
-                                    <td colspan="@columnNumber" class="keep-space-wrap">@Model.YearlyMaintenanceRecord</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <audit-trail-grouping-by-pk Logs="Model.MaintenanceAuditTrailLogs" modal-id="maintenanceAuditTrailLog"></audit-trail-grouping-by-pk>
-                        <button type="button" class="btn btn-outline-primary my-1" onclick="createReport()">导出</button>
-                    </div>
-
                     @*液质使用记录*@
                     string emptyValue = "N/A";
                     <div id="usage-record" class="tab-pane fade table-responsive" role="tabpanel" aria-labelledby="usage-record-tab">
@@ -1544,6 +1044,273 @@
                     <form id="edit-form" method="post" asp-page="UsageRecords/Edit" hidden></form>
                     <form id="delete-form" method="post" asp-page="UsageRecords/Delete" hidden></form>
                 }
+
+                @*维护记录*@
+                int columnNumber = 31; // 固定显示31天
+                int totalColSpan = 33;
+                string InstrumentPlatform = Model.Platform;
+                <div class="tab-pane fade table-responsive active show" id="maintenance-record" role="tabpanel" aria-labelledby="maintenance-record-tab">
+                    <table id="maintenance-record">
+                        <thead>
+                            <tr class="title">
+                                <th colspan="@totalColSpan">
+                                    <h5>
+                                        @(InstrumentPlatform == "LCMS" ? "液相色谱串联质谱联用仪维护记录表" :
+                                            InstrumentPlatform == "GCMS" ? "气质联用仪维护记录表" :
+                                            InstrumentPlatform == "UPLC" ? "超高效液相色谱仪维护记录表" :
+                                            InstrumentPlatform == "MS" ? "电感耦合等离子体质谱仪维护记录表" :
+                                            "_______________维护记录表")
+                                    </h5>
+                                    <h5>
+                                        @(InstrumentPlatform == "LCMS" ? "LC-MS/MS Maintenance Form" :
+                                            InstrumentPlatform == "GCMS" ? "GC-MS Maintenance Form" :
+                                            InstrumentPlatform == "UPLC" ? "UHPLC Maintenance Form" :
+                                            InstrumentPlatform == "MS" ? "ICP-MS Maintenance Form" :
+                                            "_______________Maintenance Form")
+                                    </h5>
+                                </th>
+                            </tr>
+                            <tr class="small-title">
+                                <td colspan="12" style="text-align:left;"> @Model.Search.Date.ToString(@"yyyy 年 \Year MM 月 \M\on\t\h")</td>
+                                <td colspan="10" style="text-align:left;">仪器编号 No.：@(Model.Search.Instrument)</td>
+                                <td colspan="11" style="text-align:right;">
+                                    @(InstrumentPlatform == "LCMS" ? "表号 Form：KM-SOP0314.202.02" :
+                                        InstrumentPlatform == "GCMS" ? "表号 Form：KM-SOP0314.201.02" :
+                                        InstrumentPlatform == "UPLC" ? "表号 Form：KM-SOP0314.204.02" :
+                                        InstrumentPlatform == "MS" ? "表号 Form：GZKM-SOP0314.06.03" : "表号 Form：KM-SOP0314. ___ . ___")
+                                </td>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr class="tfoot">
+                                <td colspan="@totalColSpan" style="text-align:left;padding-left:10px;">
+                                    备注 remark：Y，该工作日已完成该项维护； N，经评估该工作日无需进行该项维护。
+                                </td>
+                            </tr>
+                            <tr class="tfoot">
+                                <td colspan="@totalColSpan">使用回顾 Review</td>
+                            </tr>
+                            <tr class="tfoot">
+                                <td>评估意见<br />Comment</td>
+                                <td colspan="@(totalColSpan - 19)"></td>
+                                <td colspan="4">评估人/日期<br />Evaluator/Date</td>
+                                <td colspan="5"></td>
+                                <td colspan="4">审批人/日期<br />Approver/Date</td>
+                                <td colspan="5"></td>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            <tr class="days">
+                                <td></td>
+                                <td>日期 Date</td>
+                                @for (int i = 1; i <= columnNumber; i++)
+                                {
+                                    var id = @Model.RecordsIdOfMonth[i - 1];
+                                    var daysInMonth = DateTime.DaysInMonth(Model.Search.Date.Year, Model.Search.Date.Month);
+                                    // 计算某月份的总天数，如果小于31天，多出来的那几天不显示新建，编辑，删除选项
+                                    if (i <= daysInMonth)
+                                    {
+                                        var selectedDate = new DateTime(Model.Search.Date.Year, Model.Search.Date.Month, i, 8, 30, 00);
+                                        <td class="days">
+                                            <span class="hide-in-screen">@i</span>
+
+                                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                @i
+                                            </a>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                @if (!string.IsNullOrEmpty(Model.DailyMaintenanceOperator[i - 1]))
+                                                {
+                                                    var maintenanceRecord = Model.MaintenanceRecords.SingleOrDefault(i => i.Id == int.Parse(id));
+
+                                                    @if ((await AuthorizationService.AuthorizeAsync(User, maintenanceRecord, Operations.Update)).Succeeded)
+                                                    {
+                                                        <a class="dropdown-item" asp-page="MaintenanceRecords/Edit" asp-route-Id="@id">编辑</a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="dropdown-item">-</span>
+                                                    }
+                                                    @if ((await AuthorizationService.AuthorizeAsync(User, maintenanceRecord, Operations.Delete)).Succeeded)
+                                                    {
+                                                        <a class="dropdown-item delete-maintenance-record-btn" href="#" data-id="@id">删除</a>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    @if ((await AuthorizationService.AuthorizeAsync(User, Model.MaintenanceRecord, Operations.Create)).Succeeded)
+                                                    {
+                                                        <a class="dropdown-item"
+                                                           asp-page="MaintenanceRecords/Create"
+                                                           asp-route-instrumentId="@Model.Search.Instrument"
+                                                           asp-route-beginTime="@selectedDate.ToString("yyyy-MM-ddTHH:mm")">
+                                                            新建
+                                                        </a>
+                                                    }
+                                                }
+                                            </div>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="days">
+                                            <span>@i</span>
+                                        </td>
+                                    }
+                                }
+                            </tr>
+                            @if (Model.DailyMaintenanceContent.Count > 0)
+                            {
+                                <tr>
+                                    <td class="left" rowspan="@(Model.DailyMaintenanceContent.Count+2)">
+                                        日常维护<br />Daily
+                                    </td>
+                                </tr>
+                                @foreach (var content in Model.DailyMaintenanceContent)
+                                {
+                                    <tr>
+                                        <td class="maintenance-content">@content</td>
+                                        @foreach (var yOrN in Model.DailyMaintenanceSituation[content])
+                                        {
+                                            <td>@yOrN</td>
+                                        }
+                                    </tr>
+                                }
+                                <tr>
+                                    <td class="operator text-bold">操作者</td>
+                                    @foreach (var op in Model.DailyMaintenanceOperator)
+                                    {
+                                        <td><p class="operator text-vertical">@op</p></td>
+                                    }
+                                </tr>
+                            }
+
+                            @if (Model.WeeklyMaintenanceContent.Count > 0)
+                            {
+                                <tr>
+                                    <td class="left" rowspan="@(Model.WeeklyMaintenanceContent.Count+2)">
+                                        周维护<br />Weekly
+                                    </td>
+                                </tr>
+
+                                // 周维护有4个，每个维护内容占用的colspan
+                                var colSpanOfWeekly = new int[] { 7, 8, 8, 8 };
+                                @foreach (var content in Model.WeeklyMaintenanceContent)
+                                {
+                                    <tr>
+                                        <td class="maintenance-content">@content</td>
+                                        @for (int i = 0; i < colSpanOfWeekly.Length; i++)
+                                        {
+                                            var yOrN = Model.WeekyMaintenanceSituation[content][i];
+                                            <td colspan="@colSpanOfWeekly[i]">@yOrN</td>
+                                        }
+                                    </tr>
+                                }
+                                <tr>
+                                    <td class="operator text-bold">操作者</td>
+                                    @for (int i = 0; i < colSpanOfWeekly.Length; i++)
+                                    {
+                                        var op = Model.WeeklyMaintenanceOperator[i];
+                                        <td colspan="@colSpanOfWeekly[i]">@op</td>
+                                    }
+                                </tr>
+                            }
+
+                            @{
+                                int otherRowSpan;
+                                int rowOfTemporary = 0;
+                                int rowOfMonth;
+                                int rowOfQuarter;
+                                int rowOfHalfYear;
+                                int rowOfYear;
+
+                                switch (InstrumentPlatform)
+                                {
+                                    case "MS":
+                                        rowOfTemporary = 4;
+                                        break;
+                                    case "LCMS":
+                                        rowOfTemporary = 3;
+                                        break;
+                                    case "GCMS":
+                                        rowOfTemporary = 6;
+                                        break;
+                                    case "UPLC":
+                                        rowOfTemporary = 8;
+                                        break;
+                                }
+
+                                rowOfMonth = Model.MonthlyMaintenanceContent.Any() ? 1 : 0;
+                                rowOfQuarter = Model.QuarterlyMaintenanceContent.Any() ? 1 : 0;
+                                rowOfHalfYear = Model.HalfYearlyMaintenanceContent.Any() ? 1 : 0;
+                                rowOfYear = Model.YearlyMaintenanceContent.Any() ? 1 : 0;
+
+                                otherRowSpan = 1 + rowOfMonth +
+                                            rowOfQuarter +
+                                            rowOfHalfYear +
+                                            rowOfYear +
+                                            rowOfTemporary;
+                            }
+                            <tr>
+                                <td class="left" rowspan="@otherRowSpan">
+                                    其他<br />Others
+                                </td>
+                            </tr>
+                            @for (int i = 0; i <= Model.TemporaryMaintenanceRecord.Count - 1; i += 2)
+                            {
+                                // 每两条记录放一行
+                                <tr>
+                                    <td class="maintenance-content">临时维护<br />操作者/日期</td>
+                                    <td colspan="@columnNumber">
+                                        @Model.TemporaryMaintenanceRecord[i]
+                                        @if (Model.TemporaryMaintenanceRecord.Count > (i + 1))
+                                        {
+                                            <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
+                                            @Model.TemporaryMaintenanceRecord[i + 1]
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                            @for (int i = 1; i <= rowOfTemporary - Math.Ceiling(Model.TemporaryMaintenanceRecord.Count / 2.0); i++)
+                            {
+                                // 插入补充行
+                                <tr>
+                                    <td class="maintenance-content">临时维护<br />操作者/日期</td>
+                                    <td colspan="@columnNumber"></td>
+                                </tr>
+                            }
+                            @if (rowOfMonth > 0)
+                            {
+                                <tr>
+                                    <td class="maintenance-content">月度维护<br />操作者/日期</td>
+                                    <td colspan="@columnNumber" class="keep-space-wrap">@Model.MonthlyMaintenanceRecord</td>
+                                </tr>
+                            }
+                            @if (rowOfQuarter > 0)
+                            {
+                                <tr>
+                                    <td class="maintenance-content">季度维护<br />操作者/日期</td>
+                                    <td colspan="@columnNumber" class="keep-space-wrap">@Model.QuarterlyMaintenanceRecord</td>
+                                </tr>
+                            }
+                            @if (rowOfHalfYear > 0)
+                            {
+                                <tr>
+                                    <td class="maintenance-content">半年维护<br />操作者/日期</td>
+                                    <td colspan="@columnNumber" class="keep-space-wrap">@Model.HalfYearlyMaintenanceRecord</td>
+                                </tr>
+                            }
+                            @if (rowOfYear > 0)
+                            {
+                                <tr>
+                                    <td class="maintenance-content">年度维护<br />操作者/日期</td>
+                                    <td colspan="@columnNumber" class="keep-space-wrap">@Model.YearlyMaintenanceRecord</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <audit-trail-grouping-by-pk Logs="Model.MaintenanceAuditTrailLogs" modal-id="maintenanceAuditTrailLog"></audit-trail-grouping-by-pk>
+                    <button type="button" class="btn btn-outline-primary my-1" onclick="createReport()">导出</button>
+                </div>
             }
         </div>
     </div>
@@ -1558,8 +1325,8 @@
     else
     {
         <script src="~/js/Records.js" asp-append-version="true"></script>
-        <script src="~/js/MaintenanceRecord.js" asp-append-version="true"></script>
     }
+    <script src="~/js/MaintenanceRecord.js" asp-append-version="true"></script>
 
     <script>
         $(".edit-btn").click(function () {
