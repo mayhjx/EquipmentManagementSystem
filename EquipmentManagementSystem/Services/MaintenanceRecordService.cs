@@ -36,7 +36,7 @@ namespace EquipmentManagementSystem.Services
                 platform = instrument.Platform;
             }
 
-            List<string> contents = _contentRepository.GetDailyContentByInstrumentPlatform(platform);
+            List<string> contents = _contentRepository.GetMaintenanceContentByInstrumentPlatform(platform, MaintenanceType.Daily);
             List<MaintenanceRecord> records = _recordRepository.GetAllByInstrumentIdAndYearAndMonth(instrumentId, month);
 
             foreach (var content in contents)
@@ -85,7 +85,7 @@ namespace EquipmentManagementSystem.Services
                 platform = instrument.Platform;
             }
 
-            List<string> contents = _contentRepository.GetWeeklyContentByInstrumentPlatform(platform);
+            List<string> contents = _contentRepository.GetMaintenanceContentByInstrumentPlatform(platform, MaintenanceType.Weekly);
             List<MaintenanceRecord> records = _recordRepository.GetAllByInstrumentIdAndYearAndMonth(instrumentId, month);
 
             var recordsHasWeekly = records.Where(i => !string.IsNullOrEmpty(i.Weekly)).ToList();
@@ -143,15 +143,13 @@ namespace EquipmentManagementSystem.Services
             return list;
         }
 
-        public List<string> GetRecordIdOfMonth(string instrumentId, DateTime month)
+        // 返回某月每天对应的记录Id，用于Ajax请求
+        public List<string> GetRecordIdOfMonth(List<MaintenanceRecord> maintenanceRecords)
         {
             // 一个月固定31天
             var recordId = InitialList(31);
 
-            // 待重构，合并液质和元素维护记录方法，将记录id作为参数
-            List<MaintenanceRecord> records = _recordRepository.GetAllByInstrumentIdAndYearAndMonth(instrumentId, month);
-
-            foreach (var record in records)
+            foreach (var record in maintenanceRecords)
             {
                 var day = record.BeginTime.GetValueOrDefault().Day;
                 var id = record.Id.ToString();

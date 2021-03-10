@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using static EquipmentManagementSystem.Pages.IndexModel;
+using EquipmentManagementSystem.Models;
 
 namespace EquipmentManagementSystem.Interfaces
 {
@@ -13,7 +14,8 @@ namespace EquipmentManagementSystem.Interfaces
         /// <param name="instrumentId"></param>
         /// <param name="month"></param>
         /// <returns></returns>
-        List<string> GetRecordIdOfMonth(string instrumentId, DateTime month);
+        List<string> GetRecordIdOfMonth(List<MaintenanceRecord> maintenanceRecords);
+
         /// <summary>
         /// 返回某个月份某台仪器的日常维护情况
         /// </summary>
