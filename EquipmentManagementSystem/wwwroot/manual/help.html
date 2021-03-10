@@ -7,12 +7,64 @@
     <style>
         body {
             background-color: white;
+            font-size: 18px;
+        }
+
+        table {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        tr, th, td {
+            border: 1px solid;
         }
     </style>
 </head>
 
 <body>
-    <h1>Q1：在使用登记表的项目名称没有我的项目</h1>
+    <h2>帮助文档</h2>
+    <ol>
+        <li>
+            <p>
+                为什么在仪器使用登记表的检测项目中没有我的项目？<br />
+                答：首先确认是否有在后台新建项目；如果已新建，确认在设备档案中已将该项目和对应的检测仪器关联。
+            </p>
+        </li>
+        <li>
+            <p>
+                为什么我刚新建了一条仪器使用记录，但是不可以进行编辑？<br />
+                答：首先确认该记录的操作者是否是当前用户，<br />
+                如果是，确认该条使用记录中的检测项目和当前用户是否属于同一个项目组，如果是，用户可编辑该记录，否则不可编辑。<br />
+                例如，某用户属于CAH项目组，某台仪器的检测项目有CAH和Ald。对于该用户，其权限如下：
+            </p>
+            <div>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>检测项目</td>
+                            <td>所属项目组</td>
+                            <td>用户是否可新建记录</td>
+                            <td>用户是否可编辑记录</td>
+                        </tr>
+                        <tr>
+                            <td>CAH</td>
+                            <td>CAH项目组</td>
+                            <td>Y</td>
+                            <td>Y</td>
+                        </tr>
+                        <tr>
+                            <td>Ald</td>
+                            <td>儿茶酚胺激素组</td>
+                            <td>Y</td>
+                            <td>N</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </li>
+        <li>...</li>
+    </ol>
+
 </body>
 
 </html>
