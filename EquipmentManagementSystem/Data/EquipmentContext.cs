@@ -32,6 +32,7 @@ namespace EquipmentManagementSystem.Data
         public DbSet<Assert> Asserts { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Group> Groups { get; set; }
+        public DbSet<RecordTableSetting> RecordTableSettings { get; set; }
         public DbSet<UsageRecord> UsageRecords { get; set; }
         public DbSet<UsageRecordOfYuanSu> UsageRecordOfYuanSu { get; set; }
         public DbSet<MaintenanceRecord> MaintenanceRecords { get; set; }

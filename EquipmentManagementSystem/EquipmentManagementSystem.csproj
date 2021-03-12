@@ -12,6 +12,11 @@
 		<None Remove="wwwroot\uploadFiles\**" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Compile Remove="Data\Migrations\Equipment\20210312011559_Add_RecordTableSetting.cs" />
+	  <Compile Remove="Data\Migrations\Equipment\20210312011559_Add_RecordTableSetting.Designer.cs" />
+	</ItemGroup>
+
 	
 	<ItemGroup>
 	  <None Remove=".gitignore" />

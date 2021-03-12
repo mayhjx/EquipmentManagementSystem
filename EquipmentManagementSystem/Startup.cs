@@ -48,6 +48,7 @@ namespace EquipmentManagementSystem
             services.AddTransient<IMaintenanceRecordRepository, MaintenanceRecordRepository>();
             services.AddTransient<IMaintenanceContentRepository, MaintenanceContentRepository>();
             services.AddTransient<IMaintenanceRecordService, MaintenanceRecordService>();
+            services.AddTransient<IRecordTableSettingRepository, RecordTableSettingRepository>();
             services.AddTransient<IReportService, ReportService>();
         }
 
