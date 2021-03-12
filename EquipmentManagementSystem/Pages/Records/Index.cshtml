@@ -88,13 +88,13 @@
                             <thead>
                                 <tr class="title">
                                     <th colspan="19">
-                                        <h5>电感耦合等离子体质谱仪使用记录表(He模式)</h5>
-                                        <h5>ICP-MS Use Form</h5>
+                                        <h5>@(Model.UsageRecordChineseTitle ?? "_______________使用记录表")</h5>
+                                        <h5>@(Model.UsageRecordEnglishTitle ?? "_______________Use Form")</h5>
                                     </th>
                                 </tr>
                                 <tr class="small-title">
                                     <td colspan="10" class="text-left">仪器编号(Instrument No.)：@(Model.Search?.Instrument)</td>
-                                    <td colspan="9" class="text-right">表号(Form)：GZKM-SOP0314.__.__</td>
+                                    <td colspan="9" class="text-right">表号(Form)：@(Model.UsageRecordTableNumber ?? "KM-SOP0314.__.__")</td>
                                 </tr>
                                 <tr>
                                     <td class="time" rowspan="2">
@@ -448,13 +448,13 @@
                             <thead class="text-nowrap">
                                 <tr class="title">
                                     <th colspan="13">
-                                        <h5>色谱质谱联用设备使用通用记录表</h5>
-                                        <h5>UHPLC, LC-MS/MS, GC-MS Use Form</h5>
+                                        <h5>@(Model.UsageRecordChineseTitle ?? "_______________使用记录表")</h5>
+                                        <h5>@(Model.UsageRecordEnglishTitle ?? "_______________Use Form")</h5>
                                     </th>
                                 </tr>
                                 <tr class="small-title">
                                     <td colspan="6" class="text-left">仪器编号：@(Model.Search?.Instrument)&nbsp; 仪器型号：@(Model.InstrumentModel)</td>
-                                    <td colspan="6" class="text-right">KM-SOP0314.202.01</td>
+                                    <td colspan="6" class="text-right">表号：@(Model.UsageRecordTableNumber ?? "KM-SOP0314.__.__")</td>
                                 </tr>
                                 <tr class="head">
                                     <td class="time">
@@ -1065,18 +1065,10 @@
                             <tr class="title">
                                 <th colspan="@totalColSpan">
                                     <h5>
-                                        @(InstrumentPlatform == "LCMS" ? "液相色谱串联质谱联用仪维护记录表" :
-                                            InstrumentPlatform == "GCMS" ? "气质联用仪维护记录表" :
-                                            InstrumentPlatform == "UPLC" ? "超高效液相色谱仪维护记录表" :
-                                            InstrumentPlatform == "MS" ? "电感耦合等离子体质谱仪维护记录表" :
-                                            "_______________维护记录表")
+                                        @(Model.MaintenanceRecordChineseTitle ?? "_______________维护记录表")
                                     </h5>
                                     <h5>
-                                        @(InstrumentPlatform == "LCMS" ? "LC-MS/MS Maintenance Form" :
-                                            InstrumentPlatform == "GCMS" ? "GC-MS Maintenance Form" :
-                                            InstrumentPlatform == "UPLC" ? "UHPLC Maintenance Form" :
-                                            InstrumentPlatform == "MS" ? "ICP-MS Maintenance Form" :
-                                            "_______________Maintenance Form")
+                                        @(Model.MaintenanceRecordEnglishTitle ?? "_______________Maintenance Form")
                                     </h5>
                                 </th>
                             </tr>
@@ -1084,10 +1076,7 @@
                                 <td colspan="12" style="text-align:left;"> @Model.Search.Date.ToString(@"yyyy 年 \Year MM 月 \M\on\t\h")</td>
                                 <td colspan="10" style="text-align:left;">仪器编号 No.：@(Model.Search.Instrument)</td>
                                 <td colspan="11" style="text-align:right;">
-                                    @(InstrumentPlatform == "LCMS" ? "表号 Form：KM-SOP0314.202.02" :
-                                        InstrumentPlatform == "GCMS" ? "表号 Form：KM-SOP0314.201.02" :
-                                        InstrumentPlatform == "UPLC" ? "表号 Form：KM-SOP0314.204.02" :
-                                        InstrumentPlatform == "MS" ? "表号 Form：GZKM-SOP0314.06.03" : "表号 Form：KM-SOP0314. ___ . ___")
+                                    表号 Form：@(Model.MaintenanceRecordTableNumber ?? "KM-SOP0314.__.__")
                                 </td>
                             </tr>
                         </thead>

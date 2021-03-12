@@ -22,6 +22,7 @@ namespace EquipmentManagementSystem.Pages.Records
         private readonly IMaintenanceRecordRepository _maintenanceRecordRepository;
         private readonly IMaintenanceRecordService _maintenanceRecordService;
         private readonly IMaintenanceContentRepository _maintenanceContentRepository;
+        private readonly IRecordTableSettingRepository _recordTableSettingRepository;
 
         public IndexModel(IAuditTrailRepository auditTrailRepository,
             IUserResolverService userResolverService,
@@ -32,7 +33,8 @@ namespace EquipmentManagementSystem.Pages.Records
             IMaintenanceRecordRepository maintenanceRecordRepository,
             IMaintenanceRecordService maintenanceRecordService,
             IMaintenanceContentRepository maintenanceContentRepository,
-            IInstrumentService instrumentService)
+            IInstrumentService instrumentService,
+            IRecordTableSettingRepository recordTableSettingRepository)
         {
             _auditTrailRepository = auditTrailRepository;
             _userResolverService = userResolverService;
@@ -43,6 +45,7 @@ namespace EquipmentManagementSystem.Pages.Records
             _maintenanceRecordRepository = maintenanceRecordRepository;
             _maintenanceRecordService = maintenanceRecordService;
             _maintenanceContentRepository = maintenanceContentRepository;
+            _recordTableSettingRepository = recordTableSettingRepository;
 
             Search = new SearchForm(instrumentService, instrumentRepository, _userResolverService);
         }
@@ -60,6 +63,14 @@ namespace EquipmentManagementSystem.Pages.Records
         [BindProperty]
         public UsageRecord UsageRecord { get; set; }
         public MaintenanceRecord MaintenanceRecord { get; private set; } = new MaintenanceRecord(); // for authorization
+
+        public string UsageRecordChineseTitle { get; private set; }
+        public string UsageRecordEnglishTitle { get; private set; }
+        public string UsageRecordTableNumber { get; private set; }
+
+        public string MaintenanceRecordChineseTitle { get; private set; }
+        public string MaintenanceRecordEnglishTitle { get; private set; }
+        public string MaintenanceRecordTableNumber { get; private set; }
 
         public string Platform { get; private set; }
         public string InstrumentModel { get; private set; }
@@ -141,6 +152,14 @@ namespace EquipmentManagementSystem.Pages.Records
 
             Platform = (await _instrumentRepository.GetById(instrumentId))?.Platform;
 
+            UsageRecordChineseTitle = _recordTableSettingRepository.GetUsageRecordChineseTitle(instrumentId);
+            UsageRecordEnglishTitle = _recordTableSettingRepository.GetUsageRecordEnglishTitle(instrumentId);
+            UsageRecordTableNumber= _recordTableSettingRepository.GetUsageRecordTableNumber(instrumentId);
+
+            MaintenanceRecordChineseTitle = _recordTableSettingRepository.GetMaintenanceRecordChineseTitle(instrumentId);
+            MaintenanceRecordEnglishTitle = _recordTableSettingRepository.GetMaintenanceRecordEnglishTitle(instrumentId);
+            MaintenanceRecordTableNumber = _recordTableSettingRepository.GetMaintenanceRecordTableNumber(instrumentId);
+
             // 选择了ICP-MS仪器编号
             if (Search.SelectedICPMSInstrument)
             {
@@ -213,7 +232,7 @@ namespace EquipmentManagementSystem.Pages.Records
             QuarterlyMaintenanceContent = _maintenanceContentRepository.GetMaintenanceContentByInstrumentPlatform(Platform, MaintenanceType.Quarterly);
             HalfYearlyMaintenanceContent = _maintenanceContentRepository.GetMaintenanceContentByInstrumentPlatform(Platform, MaintenanceType.HalfYearly);
             YearlyMaintenanceContent = _maintenanceContentRepository.GetMaintenanceContentByInstrumentPlatform(Platform, MaintenanceType.Yearly);
-           
+
             DailyMaintenanceOperator = _maintenanceRecordService.GetDailyMaintenanceOperatorOfMonth(instrumentId, date.GetValueOrDefault());
             DailyMaintenanceSituation = await _maintenanceRecordService.GetDailyMaintenanceSituationOfMonth(instrumentId, date.GetValueOrDefault());
 
@@ -285,7 +304,7 @@ namespace EquipmentManagementSystem.Pages.Records
 
         [Display(Name = "设备编号")]
         public string Instrument { get; set; }
-        public bool SelectedICPMSInstrument => Instrument.Contains("MS"); 
+        public bool SelectedICPMSInstrument => Instrument.Contains("MS");
         public List<string> InstrumentSelectList { get; set; }
     }
 }
