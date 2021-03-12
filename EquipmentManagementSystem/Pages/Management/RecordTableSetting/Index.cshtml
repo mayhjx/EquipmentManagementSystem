@@ -1,0 +1,195 @@
+﻿@page
+@model EquipmentManagementSystem.Pages.Management.RecordTableSetting.IndexModel
+@{
+    ViewData["Title"] = "后台管理";
+}
+
+<div class="card">
+    <h4 class="card-header">
+        记录表设置
+    </h4>
+    <div class="card-body">
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <th>仪器编号</th>
+                    <th>使用表中文标题</th>
+                    <th>使用表英文标题</th>
+                    <th>使用表表号</th>
+                    <th>维护表中文标题</th>
+                    <th>维护表英文标题</th>
+                    <th>维护表表号</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var line in Model.TableSettings)
+                {
+                    <tr class="view-row">
+                        <td>
+                            @line.InstrumentID
+                        </td>
+                        <td>
+                            @line.UsageRecordTableChineseTitle
+                        </td>
+                        <td>
+                            @line.UsageRecordTableEnglishTitle
+                        </td>
+                        <td>
+                            @line.UsageRecordTableNumber
+                        </td>
+                        <td>
+                            @line.MaintenanceRecordTableChineseTitle
+                        </td>
+                        <td>
+                            @line.MaintenanceRecordTableEnglishTitle
+                        </td>
+                        <td>
+                            @line.MaintenanceRecordTableNumber
+                        </td>
+                        <td class="text-nowrap">
+                            <button class="edit-btn  btn btn-outline-primary btn-sm">编辑</button>
+                            <button class="delete-btn  btn btn-outline-danger btn-sm" data-id="@line.Id">删除</button>
+                        </td>
+                    </tr>
+
+                    <tr class="update-row">
+                        <td>
+                            <input form="update-form" name="id" value="@line.Id" hidden disabled />
+                            <input form="update-form" asp-for="RecordTableSettingToUpdate.Id" value="@line.Id" hidden disabled />
+                            <select form="update-form" asp-for="RecordTableSettingToUpdate.InstrumentID" disabled>
+                                @foreach (var id in Model.InstrumentIds)
+                                {
+                                    if (id == line.InstrumentID)
+                                    {
+                                        <option selected>@id</option>
+                                    }
+                                    else
+                                    {
+                                        <option>@id</option>
+                                    }
+                                }
+                            </select>
+                        </td>
+                        <td>
+                            <input form="update-form" asp-for="RecordTableSettingToUpdate.UsageRecordTableChineseTitle" value="@line.UsageRecordTableChineseTitle" disabled />
+                        </td>
+                        <td>
+                            <input form="update-form" asp-for="RecordTableSettingToUpdate.UsageRecordTableEnglishTitle" value="@line.UsageRecordTableEnglishTitle" disabled />
+                        </td>
+                        <td>
+                            <input form="update-form" asp-for="RecordTableSettingToUpdate.UsageRecordTableNumber" value="@line.UsageRecordTableNumber" disabled />
+                        </td>
+                        <td>
+                            <input form="update-form" asp-for="RecordTableSettingToUpdate.MaintenanceRecordTableChineseTitle" value="@line.MaintenanceRecordTableChineseTitle" disabled />
+                        </td>
+                        <td>
+                            <input form="update-form" asp-for="RecordTableSettingToUpdate.MaintenanceRecordTableEnglishTitle" value="@line.MaintenanceRecordTableEnglishTitle" disabled />
+                        </td>
+                        <td>
+                            <input form="update-form" asp-for="RecordTableSettingToUpdate.MaintenanceRecordTableNumber" value="@line.MaintenanceRecordTableNumber" disabled />
+                        </td>
+                        <td>
+                            <input form="update-form" class="btn btn-outline-success btn-sm" type="submit" value="保存" disabled />
+                            <button class="cancel-btn btn btn-outline-secondary btn-sm">取消</button>
+                        </td>
+                    </tr>
+                }
+                <tr class="create-row">
+                    <td>
+                        <select form="create-form" asp-for="RecordTableSetting.InstrumentID">
+                            @foreach (var id in Model.InstrumentIds)
+                            {
+                                <option>@id</option>
+                            }
+                        </select>
+                    </td>
+                    <td>
+                        <input form="create-form" asp-for="RecordTableSetting.UsageRecordTableChineseTitle" />
+                    </td>
+                    <td>
+                        <input form="create-form" asp-for="RecordTableSetting.UsageRecordTableEnglishTitle" />
+                    </td>
+                    <td>
+                        <input form="create-form" asp-for="RecordTableSetting.UsageRecordTableNumber" />
+                    </td>
+                    <td>
+                        <input form="create-form" asp-for="RecordTableSetting.MaintenanceRecordTableChineseTitle" />
+                    </td>
+                    <td>
+                        <input form="create-form" asp-for="RecordTableSetting.MaintenanceRecordTableEnglishTitle" />
+                    </td>
+                    <td>
+                        <input form="create-form" asp-for="RecordTableSetting.MaintenanceRecordTableNumber" />
+                    </td>
+                    <td>
+                        <input type="submit" form="create-form" class="btn btn-outline-primary btn-sm btn-block" value="新建" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <form id="create-form" method="post"></form>
+        <form id="update-form" method="post"></form>
+        <form id="delete-form" method="post" asp-action="Delete"></form>
+        <style>
+            .update-row {
+                display: none;
+            }
+
+            tbody tr:hover {
+                background-color: moccasin;
+            }
+        </style>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(".edit-btn").on('click', function () {
+            // 将其他已在编辑状态的行取消编辑
+            $(".cancel-btn").click();
+            var rowOfViewRecord = $(this).closest("tr");
+            // 选定行的下一行是编辑行
+            var rowOfEditRecord = rowOfViewRecord.next("tr");
+            rowOfViewRecord.hide();
+            rowOfEditRecord.show();
+            rowOfEditRecord.find(":disabled").prop("disabled", false);
+        });
+
+        $(".cancel-btn").on('click', function () {
+            var rowOfEditRecord = $(this).closest("tr");
+            var rowOfViewRecord = rowOfEditRecord.prev("tr");
+            rowOfEditRecord.hide();
+            rowOfEditRecord.find("input,button,textarea,select").prop("disabled", true);
+            rowOfViewRecord.show();
+        });
+
+        $(".delete-btn").on('click', function () {
+            if (!confirm("确认删除该条记录？")) {
+                return false;
+            };
+
+            let idToDelete = $(this).attr('data-id');
+            let rowToDelete = $(this).closest('tr');
+            //console.log(idToDelete);
+
+            var request = $.ajax({
+                url: "?handler=Delete",
+                method: "post",
+                data: { id: idToDelete },
+                dataType: "Json",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("MY-XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                }
+            });
+            request.done(function (msg) {
+                //alert("记录删除成功");
+                rowToDelete.remove();
+            });
+            request.fail(function (msg) {
+                alert("删除失败，请刷新后重试");
+            });
+        });
+    </script>
+}
