@@ -19,14 +19,15 @@ EquipmentContext中仪器和故障部分分开
 附件保存到物理磁盘，数据库仅保存路径
 使用登记导出功能
 维护登记导出功能
-日志
+操作日志
+使用记录显示总时长，总标本量，总batch样品量
+看板待维护设备显示季度和年度维护
 
 TODO:
 忘记密码
-使用记录显示总时长，总标本量，总batch样品量
 报表显示每月的使用率，故障率
-看板待维护设备显示季度和年度维护
 记住上次选择的仪器编号
+系统日志
 
 20201221
 设备主任最高权限，其他主任一般
@@ -44,5 +45,4 @@ https://www.smashingmagazine.com/2015/01/designing-for-print-with-css/
 table-layout:https://css-tricks.com/almanac/properties/t/table-layout/
 
 要实现跟踪编辑操作的话，要先获取对应的记录，然后使用TryUpdateModelAsync等方法更新记录，才能通过ChangeTracker获取真正的旧值和新值。
-
 http://blog.stoverud.no/posts/how-to-unit-test-asp-net-core-authorizationhandler/
