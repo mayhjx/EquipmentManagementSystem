@@ -228,6 +228,7 @@
                                 @foreach (var usageRecord in Model.ListOfYuanSuUsageRecord)
                                 {
                                     <tr class="view-row">
+                                        @* 未传入ProjectName字段，但对于元素组来说不需要区分具体的检测项目是什么，先默认为Null *@
                                         <td class="time">@usageRecord.BeginTime.GetValueOrDefault().ToString("yyyy-MM-dd HH:mm")</td>
                                         <td class="time">@(usageRecord.EndTime != null ? usageRecord.EndTime.GetValueOrDefault().ToString("yyyy-MM-dd HH:mm") : "")</td>
                                         <td class="sensitivity">@usageRecord.SensitivityCo.ToString("0.0")</td>
