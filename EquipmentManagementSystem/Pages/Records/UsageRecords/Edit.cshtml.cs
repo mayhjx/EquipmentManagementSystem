@@ -68,11 +68,11 @@ namespace EquipmentManagementSystem.Pages.Records.UsageRecords
                 await _usageRecordRepo.Update(UsageRecord);
                 message = "修改成功";
 
-                return RedirectToPage("../Index", new { instrumentId = UsageRecord.InstrumentID, statusMessage = message });
+                return RedirectToPage("../Index", new { instrumentId = UsageRecord.InstrumentID, date=UsageRecord.BeginTime, statusMessage = message });
             }
 
             message = "修改失败，请刷新后重试！";
-            return RedirectToPage("../Index", new { instrumentId = UsageRecord.InstrumentID, statusMessage = message });
+            return RedirectToPage("../Index", new { instrumentId = UsageRecord.InstrumentID, date = UsageRecord.BeginTime, statusMessage = message });
         }
     }
 }
