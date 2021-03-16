@@ -471,8 +471,10 @@
                                         Test Item
                                     </td>
                                     <td class="columnnumber">
-                                        色谱柱编号<br />
-                                        Column number
+                                        色谱柱<br />
+                                        编号<br />
+                                        Column<br />
+                                        number
                                     </td>
                                     <td class="mobilephase" style="text-align:left;padding-left:10px;">
                                         <i class="far fa-@(Model.MobilePhaseOrCarrierGas == "mobilephase" ? "check-" : "")square" aria-hidden="true"></i>
@@ -484,12 +486,12 @@
                                     </td>
                                     <td class="samplenumber">临床样数量</td>
                                     <td class="batchnumber">Batch样品量</td>
-                                    <td class="column" style="text-align:left;padding-left:10px;">
+                                    <td class="column">
                                         压力<br />
                                         Pressure<br />
-                                        <i class="far fa-@(Model.ColumnPressureUnit == "PSI" ? "check-" : "")square" aria-hidden="true"></i> PSI<br />
+                                        <i class="far fa-@(Model.ColumnPressureUnit == "PSI" ? "check-" : "")square" aria-hidden="true"></i> PSI
                                         <i class="far fa-@(Model.ColumnPressureUnit == "Bar" ? "check-" : "")square" aria-hidden="true"></i> Bar<br />
-                                        <i class="far fa-@(Model.ColumnPressureUnit == "MPa" ? "check-" : "")square" aria-hidden="true"></i> MPa<br />
+                                        <i class="far fa-@(Model.ColumnPressureUnit == "MPa" ? "check-" : "")square" aria-hidden="true"></i> MPa
                                         <i class="far fa-@(Model.ColumnPressureUnit == "kPa" ? "check-" : "")square" aria-hidden="true"></i> kPa
                                     </td>
                                     <td class="ionsource">
@@ -500,10 +502,10 @@
                                         检测器<br />
                                         Detector
                                     </td>
-                                    <td class="vacuumdegree" style="text-align:left;padding-left:10px;">
+                                    <td class="vacuumdegree">
                                         真空度<br />
                                         Vacuum<br />
-                                        <i class="far fa-@(Model.VacuumDegreeUnit.Contains("torr") ? "check-" : "")square" aria-hidden="true"></i> torr<br />
+                                        <i class="far fa-@(Model.VacuumDegreeUnit.Contains("torr") ? "check-" : "")square" aria-hidden="true"></i> torr
                                         <i class="far fa-@(Model.VacuumDegreeUnit.Contains("Pa") ? "check-" : "")square" aria-hidden="true"></i> Pa
                                     </td>
                                     <td class="blank">
@@ -582,7 +584,7 @@
                                         Batch样品量：@Model.TotalBatchNumber 个
                                         @if (Model.TotalS2BatchNumber != 0)
                                         {
-                                            <text>（其中S1 Batch样品量：@Model.TotalS1BatchNumber 个，S2 Batch样品量：@Model.TotalS2BatchNumber 个）。</text>
+                                            <span>（其中S1 Batch样品量：@Model.TotalS1BatchNumber 个，S2 Batch样品量：@Model.TotalS2BatchNumber 个）。</span>
                                         }
                                     </td>
                                 </tr>
@@ -657,32 +659,12 @@
                                         <td class="columnnumber">
                                             @if (!string.IsNullOrEmpty(usageRecord.ColumnType))
                                             {
-                                                @GetKeyByValue(Model.ColumnTypeList, usageRecord.ColumnType)
+                                                <span>@GetKeyByValue(Model.ColumnTypeList, usageRecord.ColumnType)</span>
                                             }
                                             else
                                             {
                                                 <span>@emptyValue</span>
                                             }
-                                            @*@if (usageRecord.SystemOneColumnNumber != null && usageRecord.SystemTwoColumnNumber != null)
-                                                {
-                                                    <text>S1：</text>
-                                                    @GetKeyByValue(Model.ColumnNumberList, usageRecord.SystemOneColumnNumber)
-                                                    <br />
-                                                    <text>S2：</text>
-                                                    @GetKeyByValue(Model.ColumnNumberList, usageRecord.SystemTwoColumnNumber)
-                                                }
-                                                else if (usageRecord.SystemOneColumnNumber != null)
-                                                {
-                                                    @GetKeyByValue(Model.ColumnNumberList, usageRecord.SystemOneColumnNumber)
-                                                }
-                                                else if (usageRecord.SystemTwoColumnNumber != null)
-                                                {
-                                                    @GetKeyByValue(Model.ColumnNumberList, usageRecord.SystemTwoColumnNumber)
-                                                }
-                                                else
-                                                {
-                                                    <span>@emptyValue</span>
-                                                }*@
                                         </td>
                                         <td class="mobilephase">@GetKeyByValue(Model.MobilePhaseList, usageRecord.MobilePhase)</td>
                                         <td class="samplenumber">
@@ -698,19 +680,18 @@
                                         <td class="batchnumber">
                                             @if (usageRecord.SystemOneBatchNumber != null && usageRecord.SystemTwoBatchNumber != null)
                                             {
-                                                <text>S1：</text>
-                                                @Html.DisplayFor(item => usageRecord.SystemOneBatchNumber)
-                                                <br />
-                                                <text>S2：</text>
-                                                @Html.DisplayFor(item => usageRecord.SystemTwoBatchNumber)
+                                                <span>S1:</span>
+                                                <span>@Html.DisplayFor(item => usageRecord.SystemOneBatchNumber)</span><br />
+                                                <span>S2:</span>
+                                                <span>@Html.DisplayFor(item => usageRecord.SystemTwoBatchNumber)</span>
                                             }
                                             else if (usageRecord.SystemOneBatchNumber != null)
                                             {
-                                                @Html.DisplayFor(item => usageRecord.SystemOneBatchNumber)
+                                                <span>@Html.DisplayFor(item => usageRecord.SystemOneBatchNumber)</span>
                                             }
                                             else if (usageRecord.SystemTwoBatchNumber != null)
                                             {
-                                                @Html.DisplayFor(item => usageRecord.SystemTwoBatchNumber)
+                                                <span>@Html.DisplayFor(item => usageRecord.SystemTwoBatchNumber)</span>
                                             }
                                             else
                                             {
@@ -720,23 +701,24 @@
                                         <td class="column">
                                             @if (usageRecord.SystemOneColumnPressure != null && usageRecord.SystemTwoColumnPressure != null)
                                             {
-                                                <text>S1：</text>
+                                                <span>S1:</span>
                                                 <span class="hide-in-print">@Html.DisplayFor(item => usageRecord.SystemOneColumnNumber) / </span>
-                                                @Html.DisplayFor(item => usageRecord.SystemOneColumnPressure)
-                                                <br />
-                                                <text>S2：</text>
+                                                <span>@(usageRecord.SystemOneColumnPressure.GetValueOrDefault().ToString("0.0"))</span>
+                                                <span class="hide-in-screen"> | </span>
+                                                <br class="hide-in-print" />
+                                                <span>S2:</span>
                                                 <span class="hide-in-print">@Html.DisplayFor(item => usageRecord.SystemTwoColumnNumber) / </span>
-                                                @Html.DisplayFor(item => usageRecord.SystemTwoColumnPressure)
+                                                <span>@(usageRecord.SystemTwoColumnPressure.GetValueOrDefault().ToString("0.0"))</span>
                                             }
                                             else if (usageRecord.SystemOneColumnPressure != null)
                                             {
                                                 <span class="hide-in-print">@Html.DisplayFor(item => usageRecord.SystemOneColumnNumber) / </span>
-                                                @Html.DisplayFor(item => usageRecord.SystemOneColumnPressure)
+                                                <span>@(usageRecord.SystemOneColumnPressure.GetValueOrDefault().ToString("0.0"))</span>
                                             }
                                             else if (usageRecord.SystemTwoColumnPressure != null)
                                             {
                                                 <span class="hide-in-print">@Html.DisplayFor(item => usageRecord.SystemTwoColumnNumber) / </span>
-                                                @Html.DisplayFor(item => usageRecord.SystemTwoColumnPressure)
+                                                <span>@(usageRecord.SystemTwoColumnPressure.GetValueOrDefault().ToString("0.0"))</span>
                                             }
                                             else
                                             {
@@ -748,19 +730,40 @@
                                         <td class="vacuumdegree">
                                             @if (usageRecord.LowVacuumDegree != null && usageRecord.HighVacuumDegree != null)
                                             {
-                                                <text>低真空：</text>
-                                                @(usageRecord.LowVacuumDegree) @(usageRecord.LowVacuumDegreeUnit.Split(" ")[0])
-                                                <br />
-                                                <text>高真空：</text>
-                                                @(usageRecord.HighVacuumDegree) @(usageRecord.HighVacuumDegreeUnit.Split(" ")[0])
+                                                float lowVacuumDegreeToFloatFormat = 0f;
+                                                float highVacuumDegreeToFloatFormat = 0f;
+                                                <span>Low:</span>
+                                                <span>
+                                                    @(float.TryParse(usageRecord.LowVacuumDegree, out lowVacuumDegreeToFloatFormat) ?
+                                                        lowVacuumDegreeToFloatFormat.ToString("0.0") :
+                                                        usageRecord.LowVacuumDegree)@(usageRecord.LowVacuumDegreeUnit.Split(" ")[0])
+                                                </span>
+                                                <span class="hide-in-screen"> | </span>
+                                                <br class="hide-in-print" />
+                                                <span>High:</span>
+                                                <span>
+                                                    @(float.TryParse(usageRecord.HighVacuumDegree, out highVacuumDegreeToFloatFormat) ?
+                                                        highVacuumDegreeToFloatFormat.ToString("0.0") :
+                                                        usageRecord.HighVacuumDegree)@(usageRecord.HighVacuumDegreeUnit.Split(" ")[0])
+                                                </span>
                                             }
                                             else if (usageRecord.LowVacuumDegree != null)
                                             {
-                                                @(usageRecord.LowVacuumDegree) @(usageRecord.LowVacuumDegreeUnit.Split(" ")[0])
+                                                float lowVacuumDegreeToFloatFormat = 0f;
+                                                <span>
+                                                    @(float.TryParse(usageRecord.LowVacuumDegree, out lowVacuumDegreeToFloatFormat) ?
+                                                        lowVacuumDegreeToFloatFormat.ToString("0.0") :
+                                                        usageRecord.LowVacuumDegree)@(usageRecord.LowVacuumDegreeUnit.Split(" ")[0])
+                                                </span>
                                             }
                                             else if (usageRecord.HighVacuumDegree != null)
                                             {
-                                                @(usageRecord.HighVacuumDegree) @(usageRecord.HighVacuumDegreeUnit.Split(" ")[0])
+                                                float highVacuumDegreeToFloatFormat = 0f;
+                                                <span>
+                                                    @(float.TryParse(usageRecord.HighVacuumDegree, out highVacuumDegreeToFloatFormat) ?
+                                                        highVacuumDegreeToFloatFormat.ToString("0.0") :
+                                                        usageRecord.HighVacuumDegree)@(usageRecord.HighVacuumDegreeUnit.Split(" ")[0])
+                                                </span>
                                             }
                                             else
                                             {
@@ -770,7 +773,7 @@
                                         <td class="blank">
                                             @if (usageRecord.BlankSignal != null)
                                             {
-                                                @usageRecord.BlankSignal.GetValueOrDefault().ToString("0.0e+0")
+                                                <span>@usageRecord.BlankSignal.GetValueOrDefault().ToString("0.0e+0")</span>
                                             }
                                             else
                                             {
@@ -780,19 +783,20 @@
                                         <td class="test">
                                             @if (usageRecord.SystemOneTestSignal != null && usageRecord.SystemTwoTestSignal != null)
                                             {
-                                                <text>S1：</text>
-                                                @(usageRecord.SystemOneTestSignal.GetValueOrDefault().ToString("0.0e+0"))
-                                                <br />
-                                                <text>S2：</text>
-                                                @(usageRecord.SystemTwoTestSignal.GetValueOrDefault().ToString("0.0e+0"))
+                                                <span>S1:</span>
+                                                <span>@(usageRecord.SystemOneTestSignal.GetValueOrDefault().ToString("0.0e+0"))</span>
+                                                <span class="hide-in-screen"> | </span>
+                                                <br class="hide-in-print"/>
+                                                <span>S2:</span>
+                                                <span>@(usageRecord.SystemTwoTestSignal.GetValueOrDefault().ToString("0.0e+0"))</span>
                                             }
                                             else if (usageRecord.SystemOneTestSignal != null)
                                             {
-                                                @(usageRecord.SystemOneTestSignal.GetValueOrDefault().ToString("0.0e+0"))
+                                                <span>@(usageRecord.SystemOneTestSignal.GetValueOrDefault().ToString("0.0e+0"))</span>
                                             }
                                             else if (usageRecord.SystemTwoTestSignal != null)
                                             {
-                                                @(usageRecord.SystemTwoTestSignal.GetValueOrDefault().ToString("0.0e+0"))
+                                                <span>@(usageRecord.SystemTwoTestSignal.GetValueOrDefault().ToString("0.0e+0"))</span>
                                             }
                                             else
                                             {

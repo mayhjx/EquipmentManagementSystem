@@ -289,9 +289,7 @@ p.text-vertical {
 @media print {
     @page {
         size: A4 landscape;
-        margin:auto;
-        /*margin-top: 0.7cm;
-        margin-bottom: 0.7cm;*/
+        margin: auto;
     }
 
     table {
@@ -307,31 +305,93 @@ p.text-vertical {
     }
 
     thead {
-        display: table-header-group;
-    }
-
-    tfoot {
-        display: table-footer-group;
-    }
-
-    colgroup {
-        display: none;
-    }
-
-    thead {
         font-size: 22px;
+        display: table-header-group;
     }
 
     tbody {
         font-size: 20px;
     }
 
-    td.sensitivityRSD{
-        font-size:20px;
-    }
-
     tfoot {
         font-size: 20px;
+        display: table-footer-group;
+    }
+
+    td.sensitivity, td.massResolution,
+    td.massAxis, td.oxide,
+    td.doubleCharge, td.mass78 {
+        font-size: 24px;
+    }
+
+    /* 色谱使用记录表打印时列宽 */
+    col.time {
+        width: 90px;
+    }
+
+    col.projectname {
+        width: 50px;
+    }
+
+    col.columnnumber {
+        width: 45px;
+    }
+
+    col.mobilephase {
+        width: 65px;
+    }
+
+    col.samplenumber {
+        display: none;
+    }
+
+    col.batchnumber {
+        display: none;
+    }
+
+    col.column {
+        width: 110px;
+    }
+
+    col.ionsource {
+        width: 55px;
+    }
+
+    col.detector {
+        width: 48px;
+    }
+
+    col.vacuumdegree {
+        width: 135px;
+    }
+
+    col.blank {
+        width: 45px;
+    }
+
+    col.test {
+        width: 135px;
+    }
+
+    col.operator {
+        width: 55px;
+    }
+
+    col.remark {
+        width: 100px;
+    }
+
+    col.button {
+        display: none;
+    }
+/*
+    colgroup {
+        display: none;
+    }*/
+
+    /*元素使用记录表*/
+    td.sensitivityRSD{
+        font-size:20px;
     }
 
     tr.total {
@@ -371,12 +431,6 @@ p.text-vertical {
     .hide-in-print {
         display: none;
     }
-
-    td.sensitivity, td.massResolution,
-    td.massAxis, td.oxide, 
-    td.doubleCharge, td.mass78{
-        font-size:28px;
-    }
 }
 
 /* 不显示表格标题和注脚、维护记录日期行的数字、使用记录表格的色谱柱，流动相，离子源和检测器信息 */
@@ -402,6 +456,10 @@ p.text-vertical {
     .mobilephase,
     .ionsource,
     .detector {
+        display: none;
+    }
+
+    .hide-in-screen {
         display: none;
     }
 }
