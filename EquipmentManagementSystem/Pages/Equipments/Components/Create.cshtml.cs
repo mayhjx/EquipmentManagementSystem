@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace EquipmentManagementSystem.Pages.Components
 {
-    [Authorize(Roles = "设备管理员, 设备主任")]
+    [Authorize(Roles = "设备管理员, 中心主任")]
     public class CreateModel : PageModel
     {
         private readonly EquipmentContext _context;

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EquipmentManagementSystem.Pages.Components
 {
-    [Authorize(Roles = "设备主任")]
+    [Authorize(Roles = "中心主任")]
     public class DeleteModel : PageModel
     {
         private readonly EquipmentManagementSystem.Data.EquipmentContext _context;
