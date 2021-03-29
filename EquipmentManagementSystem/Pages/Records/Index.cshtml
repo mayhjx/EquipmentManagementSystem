@@ -337,7 +337,7 @@
                                         </td>
                                         <td class="button">
                                             <div class="button">
-                                                <button class="update-btn btn btn-sm btn-success" form="edit-form" disabled>保存</button>
+                                                <button id="edit-btn" class="update-btn btn btn-sm btn-success" form="edit-form" disabled>保存</button>
                                                 <button type="button" class="cancel-btn btn btn-sm btn-secondary" disabled>取消</button>
                                             </div>
                                         </td>
@@ -936,7 +936,7 @@
                                         </td>
                                         <td class="button">
                                             <div class="button">
-                                                <button class="update-btn btn btn-sm btn-success" form="edit-form" disabled>保存</button>
+                                                <button id="edit-btn" class="update-btn btn btn-sm btn-success" form="edit-form" disabled>保存</button>
                                                 <button type="button" class="cancel-btn btn btn-sm btn-secondary" disabled>取消</button>
                                             </div>
                                         </td>
@@ -1344,6 +1344,20 @@
     <script src="~/js/MaintenanceRecord.js" asp-append-version="true"></script>
 
     <script>
+        $("button#create-btn").on('click', function () {
+            // 避免用户双击新建按钮后生成两条一样的记录
+            $("form#create-form").submit();
+            console.log("create-btn disabled");
+            $(this).prop('disabled', true);
+        });
+
+        $("button#edit-btn").on('click', function () {
+            // 避免用户双击编辑按钮后生成两条一样的记录
+            $("form#edit-form").submit();
+            console.log("edit-btn disabled");
+            $(this).prop('disabled', true);
+        });
+
         $(".edit-btn").click(function () {
             // 将其他已在编辑状态的行取消编辑
             $(".cancel-btn").click();
