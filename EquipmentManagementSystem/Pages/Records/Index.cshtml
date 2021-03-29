@@ -337,7 +337,7 @@
                                         </td>
                                         <td class="button">
                                             <div class="button">
-                                                <button id="edit-btn" class="update-btn btn btn-sm btn-success" form="edit-form" disabled>保存</button>
+                                                <button id="update-btn" class="update-btn btn btn-sm btn-success" form="edit-form" disabled>保存</button>
                                                 <button type="button" class="cancel-btn btn btn-sm btn-secondary" disabled>取消</button>
                                             </div>
                                         </td>
@@ -936,7 +936,7 @@
                                         </td>
                                         <td class="button">
                                             <div class="button">
-                                                <button id="edit-btn" class="update-btn btn btn-sm btn-success" form="edit-form" disabled>保存</button>
+                                                <button id="update-btn" class="update-btn btn btn-sm btn-success" form="edit-form" disabled>保存</button>
                                                 <button type="button" class="cancel-btn btn btn-sm btn-secondary" disabled>取消</button>
                                             </div>
                                         </td>
@@ -1351,7 +1351,7 @@
             $(this).prop('disabled', true);
         });
 
-        $("button#edit-btn").on('click', function () {
+        $("button#update-btn").on('click', function () {
             // 避免用户双击编辑按钮后生成两条一样的记录
             $("form#edit-form").submit();
             console.log("edit-btn disabled");
