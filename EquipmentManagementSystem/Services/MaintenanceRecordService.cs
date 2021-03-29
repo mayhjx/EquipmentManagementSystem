@@ -65,7 +65,8 @@ namespace EquipmentManagementSystem.Services
             foreach (var record in records)
             {
                 var day = record.BeginTime.GetValueOrDefault().Day;
-                var Operator = !string.IsNullOrEmpty(record.Daily) ? record.Operator : "/";
+                //var Operator = !string.IsNullOrEmpty(record.Daily) ? record.Operator : "/";
+                var Operator = record.Operator;
                 dailyMaintenanceOperator[day - 1] = Operator;
             }
 
