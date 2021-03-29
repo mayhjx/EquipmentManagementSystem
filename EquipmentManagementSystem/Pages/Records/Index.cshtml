@@ -791,7 +791,7 @@
                                                 <span>S1:</span>
                                                 <span>@(usageRecord.SystemOneTestSignal.GetValueOrDefault().ToString("0.0e+0"))</span>
                                                 <span class="hide-in-screen"> | </span>
-                                                <br class="hide-in-print"/>
+                                                <br class="hide-in-print" />
                                                 <span>S2:</span>
                                                 <span>@(usageRecord.SystemTwoTestSignal.GetValueOrDefault().ToString("0.0e+0"))</span>
                                             }
@@ -1110,16 +1110,17 @@
                         </tfoot>
                         <tbody>
                             <tr class="days">
-                                <td></td>
+                                <td>&nbsp;</td>
                                 <td>日期 Date</td>
                                 @for (int i = 1; i <= columnNumber; i++)
                                 {
-                                    var id = @Model.RecordsIdOfMonth[i - 1];
+                                    var id = Model.RecordsIdOfMonth[i - 1];
                                     var daysInMonth = DateTime.DaysInMonth(Model.Search.Date.Year, Model.Search.Date.Month);
                                     // 计算某月份的总天数，如果小于31天，多出来的那几天不显示新建，编辑，删除选项
                                     if (i <= daysInMonth)
                                     {
                                         var selectedDate = new DateTime(Model.Search.Date.Year, Model.Search.Date.Month, i, 8, 30, 00);
+                                        var maintenanceRecord = Model.MaintenanceRecords.SingleOrDefault(i => int.TryParse(id, out int intId) && i.Id == intId);
                                         <td class="days">
                                             <span class="hide-in-screen">@i</span>
 
@@ -1127,10 +1128,8 @@
                                                 @i
                                             </a>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                @if (!string.IsNullOrEmpty(Model.DailyMaintenanceOperator[i - 1]))
+                                                @if (maintenanceRecord != null)
                                                 {
-                                                    var maintenanceRecord = Model.MaintenanceRecords.SingleOrDefault(i => i.Id == int.Parse(id));
-
                                                     @if ((await AuthorizationService.AuthorizeAsync(User, maintenanceRecord, Operations.Update)).Succeeded)
                                                     {
                                                         <a class="dropdown-item" asp-page="MaintenanceRecords/Edit" asp-route-Id="@id">编辑</a>
@@ -1188,7 +1187,14 @@
                                     <td class="operator text-bold">操作者</td>
                                     @foreach (var op in Model.DailyMaintenanceOperator)
                                     {
-                                        <td><p class="operator text-vertical">@op</p></td>
+                                        if (!string.IsNullOrEmpty(op))
+                                        {
+                                            <td><p class="operator text-vertical">@op</p></td>
+                                        }
+                                        else
+                                        {
+                                            <td></td>
+                                        }
                                     }
                                 </tr>
                             }
@@ -1358,6 +1364,9 @@
         });
 
         function createReport() {
+            // 维护记录表中用户未填写的地方填充“/”
+            $("table#maintenance-record tbody td:empty").html("<span class='hide-in-screen'>/</span>");
+
             var activeTab = $(`a[href="${localStorage.getItem('activeTab')}"]`).children().text();
             document.title = `@(Model.Search.Instrument)_@(Model.Search.Date.ToString("yyyyMM"))_${activeTab}表` ;
             window.print();
