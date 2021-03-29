@@ -276,6 +276,7 @@
                                             <input form="edit-form" name="id" asp-for="@usageRecord.Id" type="hidden" disabled />
                                             <input form="edit-form" asp-for="@usageRecord.InstrumentID" type="hidden" disabled />
                                             <input form="edit-form" asp-for="@usageRecord.ProjectName" type="hidden" disabled />
+                                            <input form="edit-form" asp-for="@usageRecord.Operator"  type="hidden" disabled />
                                             <input form="edit-form" asp-for="@usageRecord.BeginTime" required disabled />
                                         </td>
                                         <td class="time">
@@ -330,7 +331,7 @@
                                             <input form="edit-form" type="number" min="0" step="0.1" asp-for="@usageRecord.Mass78" disabled />
                                         </td>
                                         <td>
-                                            <input form="edit-form" asp-for="@usageRecord.Operator" required disabled />
+                                            @usageRecord.Operator
                                         </td>
                                         <td class="remark">
                                             <textarea form="edit-form" asp-for="@usageRecord.Remark" placeholder="限20字以内" disabled></textarea>
@@ -349,6 +350,7 @@
                                     <td class="time">
                                         <input form="create-form" asp-for="UsageRecordOfYuanSu.InstrumentID" type="hidden" />
                                         <input form="create-form" asp-for="UsageRecordOfYuanSu.ProjectName" type="hidden" />
+                                        <input form="create-form" asp-for="UsageRecordOfYuanSu.Operator" type="hidden" />
                                         <input form="create-form" asp-for="UsageRecordOfYuanSu.BeginTime" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" required />
                                     </td>
                                     <td class="time">
@@ -403,7 +405,7 @@
                                         <input form="create-form" type="number" min="0" step="0.1" asp-for="UsageRecordOfYuanSu.Mass78" />
                                     </td>
                                     <td>
-                                        <input form="create-form" asp-for="UsageRecordOfYuanSu.Operator" required />
+                                        @Model.UsageRecordOfYuanSu.Operator
                                     </td>
                                     <td class="remark">
                                         <textarea form="create-form" asp-for="UsageRecordOfYuanSu.Remark" placeholder="限20字以内" rows="1"></textarea>
@@ -837,6 +839,7 @@
                                         <td class="time">
                                             <input form="edit-form" name="id" type="hidden" asp-for="@usageRecord.Id" disabled />
                                             <input form="edit-form" type="hidden" asp-for="@usageRecord.InstrumentID" disabled />
+                                            <input form="edit-form" type="hidden" asp-for="@usageRecord.Operator" disabled />
                                             <input form="edit-form" asp-for="@usageRecord.BeginTime" required disabled />
                                         </td>
                                         <td class="time">
@@ -929,7 +932,7 @@
                                                    disabled />
                                         </td>
                                         <td>
-                                            <input form="edit-form" asp-for="@usageRecord.Operator" disabled required />
+                                            @usageRecord.Operator
                                         </td>
                                         <td class="remark">
                                             <textarea form="edit-form" asp-for="@usageRecord.Remark" placeholder="限20字以内" disabled></textarea>
@@ -946,6 +949,7 @@
                                 <tr id="create-row">
                                     <td class="time">
                                         <input form="create-form" asp-for="UsageRecord.InstrumentID" type="hidden" />
+                                        <input form="create-form" asp-for="UsageRecord.Operator" type="hidden" />
                                         <input form="create-form" asp-for="UsageRecord.BeginTime" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" required />
                                     </td>
                                     <td class="time">
@@ -1036,7 +1040,7 @@
                                                title="请使用科学计数法，例：3.1e+05，如果是N/A的话不需要输入。" />
                                     </td>
                                     <td>
-                                        <input form="create-form" asp-for="UsageRecord.Operator" required />
+                                        @Model.UsageRecord.Operator
                                     </td>
                                     <td class="remark">
                                         <textarea form="create-form" asp-for="UsageRecord.Remark" placeholder="限20字以内"></textarea>
