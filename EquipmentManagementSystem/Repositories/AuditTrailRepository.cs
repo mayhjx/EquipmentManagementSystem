@@ -22,8 +22,9 @@ namespace EquipmentManagementSystem.Repositories
 
             if (date != null)
             {
-                result = result.Where(l => l.DateChanged.Year == date.GetValueOrDefault().Year &&
-                                            l.DateChanged.Month == date.GetValueOrDefault().Month);
+                // 一条记录可能在1月份创建，但在2月份进行了编辑，如果只查找等于date的记录的话，无法看到2月份的编辑操作
+                result = result.Where(l => l.DateChanged.Year >= date.GetValueOrDefault().Year &&
+                                            l.DateChanged.Month >= date.GetValueOrDefault().Month);
             }
 
             if (pk != null)
@@ -40,8 +41,9 @@ namespace EquipmentManagementSystem.Repositories
 
             if (date != null)
             {
-                result = result.Where(l => l.DateChanged.Year == date.GetValueOrDefault().Year &&
-                                            l.DateChanged.Month == date.GetValueOrDefault().Month);
+                // 一条记录可能在1月份创建，但在2月份进行了编辑，如果只查找等于date的记录的话，无法看到2月份的编辑操作
+                result = result.Where(l => l.DateChanged.Year >= date.GetValueOrDefault().Year &&
+                                            l.DateChanged.Month >= date.GetValueOrDefault().Month);
             }
 
             return result.AsEnumerable().GroupBy(i => i.PrimaryKeyValue.ToString());
@@ -53,8 +55,9 @@ namespace EquipmentManagementSystem.Repositories
 
             if (date != null)
             {
-                result = result.Where(l => l.DateChanged.Year == date.GetValueOrDefault().Year &&
-                                            l.DateChanged.Month == date.GetValueOrDefault().Month);
+                // 一条记录可能在1月份创建，但在2月份进行了编辑，如果只查找等于date的记录的话，无法看到2月份的编辑操作
+                result = result.Where(l => l.DateChanged.Year >= date.GetValueOrDefault().Year &&
+                                            l.DateChanged.Month >= date.GetValueOrDefault().Month);
             }
 
             return result.AsEnumerable()
